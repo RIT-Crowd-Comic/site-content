@@ -4,7 +4,7 @@
   Main project font
   */
   font-family: 'Back-Issues-BB';
-  src: url('BackIssuesBb.ttf') format('truetype');
+  src: url('fonts/BackIssuesBb.ttf') format('truetype');
   font-style: normal;
   font-weight: normal;
 }
@@ -15,7 +15,7 @@
   Main project font
   */
   font-family: 'Back-Issues-BB';
-  src: url('BackIssuesBbItalic.ttf') format('truetype');
+  src: url('fonts/BackIssuesBbItalic.ttf') format('truetype');
   font-style: italic;
   font-weight: normal;
 }
@@ -26,12 +26,13 @@
   Main project font
   */
   font-family: 'Back-Issues-BB';
-  src: url('BackIssuesBbBoldItalic.ttf') format('truetype');
+  src: url('fonts/BackIssuesBbBoldItalic.ttf') format('truetype');
   font-style: normal;
   font-weight: bold;
 }
 .App {
   font-family: "Back-Issues-BB";
+  color: black;
   text-align: center;
 }
 
@@ -53,12 +54,24 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  
+
 }
 
 .App-link {
   color: #61dafb;
+}
+
+#buble
+{
+  background-image: url('images/crowd_comic_elements13.png');
+  width: 400px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: calc(20px + 2vmin);
 }
 
 @keyframes App-logo-spin {
