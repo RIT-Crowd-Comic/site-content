@@ -1,4 +1,37 @@
+@font-face
+{
+  /*
+  Main project font
+  */
+  font-family: 'Back-Issues-BB';
+  src: url('BackIssuesBb.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face
+{
+  /*
+  Main project font
+  */
+  font-family: 'Back-Issues-BB';
+  src: url('BackIssuesBbItalic.ttf') format('truetype');
+  font-style: italic;
+  font-weight: normal;
+}
+
+@font-face
+{
+  /*
+  Main project font
+  */
+  font-family: 'Back-Issues-BB';
+  src: url('BackIssuesBbBoldItalic.ttf') format('truetype');
+  font-style: normal;
+  font-weight: bold;
+}
 .App {
+  font-family: "Back-Issues-BB";
   text-align: center;
 }
 
