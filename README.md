@@ -3,11 +3,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, install all dependencies using ```npm i```
-
-Then, run the development server with ```npm run dev```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Install all dependencies using ```npm i```
+2. Run the development server with ```npm run dev```
+3. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
