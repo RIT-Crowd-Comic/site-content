@@ -2,17 +2,9 @@ import Image from "next/image"
 
 export default function Home() {
   return (
-    // <Head>
-    //   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    //   <title>Crowd Comic</title>
-    // <!-- external resources links -->
-    // <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    // </Head>
-    
     <main>
       <div className="hero">
-        <Image src="public\Crowd_Comic_Logo.svg" alt="Crowd Comic Logo" width={560} height={120}/>
+        <Image src="./Crowd_Comic_Logo.svg" alt="Crowd Comic Logo" width={390} height={256}/>
       </div>
       <div className="mission">
         <h2>Mission</h2>

@@ -1,10 +1,7 @@
-import React, { Component } from 'react'
-import Link from 'next/link'
-
-class Hero extends Component {
-    render(){
-      return(
-        <></>
-      )
-  }
+const Hero = () => {
+  return (
+    <></>
+  )
 }
+
+export default Hero;

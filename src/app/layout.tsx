@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import React from "react";
-import { Inter, Ceviche_One, Comic_Neue } from "next/font/google";
+import { Inter} from "next/font/google";
 import 'bootstrap/dist/css/bootstrap.css';
 import "../styles/globals.css";
 import BootstrapClient from "../scripts/BootstrapClient";
