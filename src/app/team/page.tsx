@@ -23,13 +23,13 @@ const TeamPage = () => {
         {/* Professors */}
         <div className="professors">
             <div id="prof1">
-              <Image src="" alt="" placeholder="blur"/>
+              {/* <Image src="" alt="" placeholder="blur"/> */}
             </div>
             <div id="prof2">
-              <Image src="" alt="" placeholder="blur"/>
+              {/* <Image src="" alt="" placeholder="blur"/> */}
             </div>
             <div id="prof3">
-              <Image src="" alt="" placeholder="blur"/>
+              {/* <Image src="" alt="" placeholder="blur"/> */}
             </div>
         </div>
         {/* /Professors */}
