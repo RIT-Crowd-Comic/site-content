@@ -16,6 +16,30 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 Use ```npm run lint``` or ```npm run lint:fix``` to check code before committing
 These also run during a push and pull request
 
+## Adding Google Fonts
+
+1. Add in the desired font to the ```import { } from "next/font/google";``` in layout.tsx
+2. Under the creating font variables section, create a const variable and add [font arguments](https://nextjs.org/docs/app/api-reference/components/font) like seen here (note that the only argument entirely necessary is variable as it will be used in CSS, please use the convention of ```--font-ex-name```)
+```
+const cevicheOne = Ceviche_One({
+  subsets: ["latin"],
+  weight:'400',
+  display: 'swap',
+  variable: '--font-ceviche-one'
+});
+```
+3. Add in ```${fontVarName.variable}``` to the html's property className in layout.tsx's RootLayout's return
+4. In the CSS file, please add the variable name for reference under     
+```
+       /* font variables:
+        Inter: --font-inter
+        Ceviche One: --font-ceviche-one
+        Comic Neue: --font-comic-neue
+         */
+```
+
+If using a local font instead of a Google font, please reference [Next.js's documentation for font optimization](https://nextjs.org/docs/app/building-your-application/optimizing/fonts#using-multiple-fonts).
+
 ## Learn More
 
 To learn more about Next.js and/or Bootstrap, take a look at the following resources:
