@@ -5,7 +5,12 @@
     --secondary-color: #FFD172;
     --accent-color: #009BC6;
     --background-color: #101A37;
-
+  
+    --grayscale-primary-color: #929292;
+    --grayscale-background-color: #494949;
+    --grayscale-text-bg-color: #FFFFFF;
+    --grayscale-text-color: #000000;
+  
     /* font variables:
         Inter: --font-inter
         Ceviche One: --font-ceviche-one
@@ -13,23 +18,23 @@
          */
 }
 
-.navbar, .footer{
+.navbar, .footer
+{
     font-family: var(--font-inter);
+    font-style: normal;
     font-weight: 300;
 }
 
 .navbar
 {
-    overflow: hidden;
-    background-color: var(--primary-color);
-    position: sticky;
+    background-color: var(--grayscale-primary-color);
 }
 
 body, html
 {
     width: 100%;
     font-family: var(--font-comic-neue);
-    font-weight: 400;
+    background-color: var(--grayscale-background-color);
 }
 
 .hero
@@ -49,18 +54,31 @@ h2, button{
 }
 
 .mission h2{
-    color:#FFD172;
-    background-color:#902421;
+    color: var(--grayscale-text-color);
+    background-color: var(--grayscale-text-bg-color);
 }
 
 .mission p
 {
-    color: black;
-    background-color: #FFD172;
+    color: var(--grayscale-text-color);
+    background-color: var(--grayscale-text-bg-color);
 }
 
-#section_footer{
-    background-color: var(--primary-color); 
+.read
+{
+    color: var(--grayscale-text-color);
+    background-color: var(--grayscale-text-bg-color);
+}
+
+.create
+{
+    color: var(--grayscale-text-color);
+    background-color: var(--grayscale-text-bg-color);
+}
+
+#section_footer
+{
+    background-color: var(--grayscale-text-bg-color); 
     width: 100%;
     font-size: 15px;
     padding: 30px 0;
