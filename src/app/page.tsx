@@ -1,38 +1,10 @@
 import Image from "next/image"
-import Head from 'next/head'
-import {Inter} from 'next/font/google'
-import styles from "./page.module.css"
-// import {Navbar} from "./components/NavBar"
-// import {footer} from "./components/Footer"
 
 export default function Home() {
   return (
-    // <Head>
-    //   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    //   <title>Crowd Comic</title>
-    // <!-- external resources links -->
-    // <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    // <!-- font links -->
-    // <link rel="preconnect" href="https://fonts.googleapis.com">
-    // <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    // <link href="https://fonts.googleapis.com/css2?family=Ceviche+One&display=swap" rel="stylesheet">
-
-    // <link rel="preconnect" href="https://fonts.googleapis.com">
-    // <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    // <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-
-    // <link rel="preconnect" href="https://fonts.googleapis.com">
-    // <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    // <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
-
-    // </Head>
-    
     <main>
-      {/* <NavBar /> */}
-
       <div className="hero">
-        <Image src="media/Crowd_Comic_Logo.svg" alt="Crowd Comic Logo"/>
+        <Image src="./Crowd_Comic_Logo.svg" alt="Crowd Comic Logo" width={390} height={256}/>
       </div>
       <div className="mission">
         <h2>Mission</h2>
@@ -69,8 +41,6 @@ export default function Home() {
       <div className="our-team">
         <button>Our Team</button>
       </div>
-
-      {/* <Footer /> */}
     </main>
   );
 }
