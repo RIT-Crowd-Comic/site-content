@@ -7,5 +7,5 @@
     "import/no-unresolved": "error",
     "import/named": "error"
   },
-  "globals": {"JSX": "readonly"}
+  "globals": {"TSX": "readonly"}
 }
