@@ -1,14 +1,20 @@
 :root
 {
+    /* color variables */
     --primary-color: #D91911; /* or #902421 */
     --secondary-color: #FFD172;
     --accent-color: #009BC6;
     --background-color: #101A37;
+
+    /* font variables:
+        Inter: --font-inter
+        Ceviche One: --font-ceviche-one
+        Comic Neue: --font-comic-neue
+         */
 }
 
 .navbar, .footer{
-    font-family: 'Inter';
-    font-style: normal;
+    font-family: var(--font-inter);
     font-weight: 300;
 }
 
@@ -22,8 +28,8 @@
 body, html
 {
     width: 100%;
-    font-family: 'Comic Neue';
-    font-weight: 400; 
+    font-family: var(--font-comic-neue);
+    font-weight: 400;
 }
 
 .hero
@@ -33,8 +39,13 @@ body, html
 }
 
 h2, button{
-    font-family: 'Ceviche One';
+    font-family: var(--font-ceviche-one);
     font-weight: 400;
+}
+
+.login{
+    font-family: var(--font-inter);
+    font-weight: 500;
 }
 
 .mission h2{
@@ -61,14 +72,14 @@ h2, button{
         height: 60px;
         color: var(--secondary-color);
         text-align: left;
-        font-family: 'Ceviche One';
+        font-family: var(--font-ceviche-one);
         font-size: 30px;
         font-weight: 400;
     }
 
     .footer-nav-list li
     {
-        font-family: 'Comic Neue';
+        font-family: var(--font-comic-neue);
         font-size: 15px;
         display: inline-block;
     }

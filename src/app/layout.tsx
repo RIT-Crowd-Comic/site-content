@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import React from "react";
-import { Inter} from "next/font/google";
+import { Inter, Ceviche_One, Comic_Neue } from "next/font/google";
 import 'bootstrap/dist/css/bootstrap.css';
 import "../styles/globals.css";
 import BootstrapClient from "../scripts/BootstrapClient";
@@ -9,8 +9,26 @@ import BootstrapClient from "../scripts/BootstrapClient";
 import Navbar from "../components/NavBar"
 import Footer from "../components/footer"
 
-//declaring fonts
-const inter = Inter({ subsets: ["latin"] });
+//creating font variables
+const inter = Inter({ 
+  subsets: ["latin"], 
+  display: 'swap',
+  variable: '--font-inter' 
+});
+
+const cevicheOne = Ceviche_One({
+  subsets: ["latin"],
+  weight:'400',
+  display: 'swap',
+  variable: '--font-ceviche-one'
+});
+
+const comicNeue = Comic_Neue({
+  subsets: ["latin"],
+  weight: ['400','700'],
+  display: 'swap',
+  variable: '--font-comic-neue'
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,8 +41,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className={`${inter.variable} ${cevicheOne.variable} ${comicNeue.variable}`}>
+      <body>
         <BootstrapClient />
         <Navbar />
         {children}
