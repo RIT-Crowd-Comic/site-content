@@ -5,10 +5,11 @@ import 'bootstrap/dist/css/bootstrap.css';
 import "../styles/globals.css";
 import BootstrapClient from "../scripts/BootstrapClient";
 
+//importing components
 import Navbar from "../components/NavBar"
 import Footer from "../components/footer"
 
-//declaring const variables
+//declaring fonts
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,10 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar/>
-        <BootstrapClient/>
-        <Footer/>
+        <BootstrapClient />
+        <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );
