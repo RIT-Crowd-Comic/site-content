@@ -38,7 +38,7 @@ const cevicheOne = Ceviche_One({
          */
 ```
 
-If using a local font instead of a Google font, please reference [Next.js's documentataion for font optimization](https://nextjs.org/docs/app/building-your-application/optimizing/fonts#using-multiple-fonts).
+If using a local font instead of a Google font, please reference [Next.js's documentation for font optimization](https://nextjs.org/docs/app/building-your-application/optimizing/fonts#using-multiple-fonts).
 
 ## Learn More
 
