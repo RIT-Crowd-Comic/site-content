@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <main>
       <div className="hero">
-        <Image src="./Crowd_Comic_Logo.svg" alt="Crowd Comic Logo" width={390} height={256}/>
+        <Image src="../Crowd_Comic_Logo.svg" alt="Crowd Comic Logo" width={390} height={256}/>
       </div>
       <div className="mission">
         <h2>Mission</h2>

@@ -1,4 +1,5 @@
 // import Image from 'next/image'
+import Filter from "@/components/Filter"
 
 const TeamPage = () => {
   return (
@@ -8,9 +9,7 @@ const TeamPage = () => {
       {/* Content */}
       <div className="content">
         <h1 className="teamTitle">Meet the Creators!</h1>
-
-        {/* Insert Filter component here */}
-          
+        <Filter />
         {/* Creator Group */}
         <div className="creatorGroup" id="2024">
           <h2 className="chapterTitle">Chapter 2024</h2>
