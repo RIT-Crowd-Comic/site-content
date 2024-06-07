@@ -66,8 +66,8 @@ h2, button{
 {
     color: var(--grayscale-text-color);
     background-color: var(--grayscale-text-bg-color);
-    border: 20px solid transparent;
-    border-image: url(../../public/images/mission\ box\ -\ big.svg) 15% stretch;
+    border: 25px solid transparent;
+    border-image: url(../../public/images/mission\ box\ -\ big.svg) 18% stretch;
 }
 
 .read
