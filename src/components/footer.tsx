@@ -1,40 +1,40 @@
 import Link from 'next/link'
+import '../styles/globals.css'
 // <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 const Footer = () => {
+    const current_year = new Date().getFullYear();
     return (
-        <div id='section-footer'>
-            <div className='text-center py-4'></div>
-            {/* Grid Container */}
-            <div className="container mx-auto px-4 h-full">
-                <div className="row">
-                    {/* Links */}
-                    <div className="col-md-6 col-sm-6">
-                        <div className="footer-nav">
-                            <Link href="#">Crowd Comic</Link>
-                            <ul className="footer-nav-list justify-between">
-                                <li><Link href="../app" className='btn btn-link'>Home</Link></li>
-                                <li><Link href="./team" className='btn btn-link'>Team</Link></li>
-                                <li><Link href="" className='btn btn-link'>Comic</Link></li>
-                            </ul>
-                        </div>
-                    </div>
-                    {/* /Links */}
-
-                    {/* Socials */}
-                    <div className="col-md-6 col-sm-6">
-                        <ul className="social">
-                            <li><Link href="" className="fa fa-linkedin"></Link></li>
-                            <li><Link href="" className="fa fa-facebook"></Link></li>
-                            <li><Link href=""><i className="fab fa-twitter"></i></Link></li>
+        <div className="container-fluid pt-3 bg-dark">
+            <div className="row">
+                {/* Links */}
+                <div className="col-sm-3 col-sm-6">
+                    <div className="footer-nav">
+                        <Link href="#">Crowd Comic</Link>
+                        <></>
+                        <ul className="footer-nav-list">
+                            <li><Link href="../app">Home</Link></li>
+                            <li><Link href="./team" >Team</Link></li>
+                            <li><Link href="">Comic</Link></li>
                         </ul>
                     </div>
-                    {/* /Socials */}
                 </div>
+                {/* /Links */}
+
+                {/* Socials */}
+                <div className="col-md-6 col-sm-6 footer-right">
+                    <ul className="social">
+                        <li><Link href=""><i className="fa fa-linkedin"></i></Link></li>
+                        <li><Link href=""><i className="fa fa-facebook"></i></Link></li>
+                        <li><Link href=""><i className="fab fa-github"></i></Link></li>
+                    </ul>
+                </div>
+                {/* /Socials */}
             </div>
-            {/* Grid Container */}
-        </div>
-        // section footer   
+            <div className='row justify-content-center'>
+                <p className='copyright'>Copyright © {current_year}</p>  
+            </div>
+        </div>  
     )
 }
 

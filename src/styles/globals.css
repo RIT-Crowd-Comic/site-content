@@ -76,67 +76,77 @@ h2, button{
     background-color: var(--grayscale-text-bg-color);
 }
 
-#section_footer
-{
+.footer{
     background-color: var(--grayscale-text-bg-color); 
     width: 100%;
-    font-size: 15px;
-    padding: 30px 0;
+    justify-content: space-between;
+}
+
+ .footer-nav
+{
+    justify-content: flex-start;
+    margin-left: 10px;
+    font-family: 'Ceviche One';
+    font-size: larger;
+    font-weight: 400;
+}
+
+.footer-nav-list {
+    justify-content: space-between;
+    padding: 0;
+}
+
+.footer-nav-list li
+{
+    font-family: 'Comic Neue';
+    font-size: medium;
+    display: inline-block;
+    padding-right: 10px;
+}
+
+.social
+{
+    justify-content: space-between;
+    text-align: right;
+    margin-top: 15px;
+    padding: 10px;
+}
+
+.social li
+{
+    display: inline-block;
+    padding-left: 5px;
+}
+
+.footer-nav-list a, .footer-nav a
+{
+    text-decoration: none;
+    /* color: var(--secondary-color); */
+    color:var(--grayscale-text-bg-color)
+}
+
+.footer-nav-list a:hover, .footer-nav a:hover
+{
+    color: var(--grayscale-primary-color);
+}
+
+.fa
+{
+    width: 30px;
+    border-radius: 50%;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
     text-align: center;
+    padding: 10px 20px;
+}
 
-    .footer-nav
-    {
-        justify-content: flex-start;
-        height: 60px;
-        color: var(--secondary-color);
-        text-align: left;
-        font-family: var(--font-ceviche-one);
-        font-size: 30px;
-        font-weight: 400;
-    }
+.fa:hover
+{
+    opacity: 0.7;
+}
 
-    .footer-nav-list li
-    {
-        font-family: var(--font-comic-neue);
-        font-size: 15px;
-        display: inline-block;
-    }
-
-    .social
-    {
-        justify-content: flex-end;
-        text-align: right;
-        margin-top: 30px;
-    }
-
-    .social li
-    {
-        display: inline-block;
-    }
-
-    a
-    {
-        text-decoration: none;
-        color: var(--secondary-color);
-    }
-
-    a:hover
-    {
-        color: var(--accent-color);
-    }
-
-    .fa
-    {
-        padding: 6px;
-        width: 30px;
-        border-radius: 100%;
-        background-color: var(--secondary-color);
-        color: var(--primary-color);
-        text-align: center;
-    }
-
-    .fa:hover
-    {
-        opacity: 0.7;
-    }
+.copyright{
+    color: var(--grayscale-primary-color);
+    font-size:medium;
+    text-align: center;
 }
