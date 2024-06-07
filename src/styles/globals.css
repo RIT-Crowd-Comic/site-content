@@ -37,13 +37,17 @@ body, html
     background-color: var(--grayscale-background-color);
 }
 
+main{
+    padding: 20px 0;
+}
+
 .hero
 {
     /* background-image: (insert background image here);     */
     text-align: center;
 }
 
-h2, button{
+h1, button{
     font-family: var(--font-ceviche-one);
     font-weight: 400;
 }
@@ -76,6 +80,45 @@ h2, button{
     background-color: var(--grayscale-text-bg-color);
 }
 
+.teamTitle{
+    font-size: 50px;
+}
+
+.filter .btn{
+    font-size: 15px;
+    font-weight: 700;
+    justify-content: center;
+    color: var(--grayscale-primary-color);
+}
+
+.filter .btn:hover{
+    color: var(--grayscale-text-bg-color);
+    background-color: var(--grayscale-text-color);
+    border: var(--grayscale-primary-color) 2px solid;
+}
+
+.creatorGroup{
+    border: 2px solid var(--grayscale-primary-color);
+}
+
+.chapterTitle{
+    font-family: 'Ceviche One';
+    font-size: 20px;
+    /* border: 2px solid var(--grayscale-primary-color);   */
+}
+
+.professors{
+    display: inline-Flex;
+    text-align: center;
+    border: 5px solid;
+    justify-content: center;
+}
+
+.prof-item{
+    border: #009BC6 2px solid;
+    margin: 0;
+}
+
 .footer{
     background-color: var(--grayscale-text-bg-color); 
     width: 100%;
@@ -85,7 +128,6 @@ h2, button{
  .footer-nav
 {
     justify-content: flex-start;
-    margin-left: 10px;
     font-family: 'Ceviche One';
     font-size: larger;
     font-weight: 400;
@@ -115,14 +157,14 @@ h2, button{
 .social li
 {
     display: inline-block;
-    padding-left: 5px;
+    padding: 6px;
 }
 
 .footer-nav-list a, .footer-nav a
 {
     text-decoration: none;
     /* color: var(--secondary-color); */
-    color:var(--grayscale-text-bg-color)
+    color:var(--grayscale-text-bg-color);
 }
 
 .footer-nav-list a:hover, .footer-nav a:hover
@@ -150,3 +192,38 @@ h2, button{
     font-size:medium;
     text-align: center;
 }
+
+/* X-Small devices (portrait phones, less than 576px)
+No media query for `xs` since this is the default in Bootstrap */
+
+/* Small devices (landscape phones, 576px and up) */
+/* @media (min-width: 576px) { 
+    main{
+        padding: 30px;
+    }
+} */
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    main{
+        padding: 30px;
+    }
+    .professors{
+        width: 70%;
+        margin: 10px 100px;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+    main{
+        padding: 30px 100px;
+    }
+
+ }
+
+/* X-Large devices (large desktops, 1200px and up) */
+/* @media (min-width: 1200px) { ... } */
+
+/* XX-Large devices (larger desktops, 1400px and up) */
+/* @media (min-width: 1400px) { ... } */
