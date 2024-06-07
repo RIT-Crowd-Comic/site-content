@@ -1,11 +1,10 @@
 import Image from "next/image"
+import Hero from "../components/Hero"
 
 export default function Home() {
   return (
     <main>
-      <div className="hero">
-        <Image src="../images/Crowd_Comic_Logo_BW.svg" alt="Crowd Comic Logo" width={390} height={256} />
-      </div>
+      <Hero/>      
       <div className="mission">
         <h2>Mission</h2>
         <p>
