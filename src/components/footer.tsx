@@ -8,8 +8,8 @@ const Footer = () => {
         <div className="container-fluid pt-3 bg-dark">
             <div className="row">
                 {/* Links */}
-                <div className="col-sm-3 col-sm-6">
-                    <div className="footer-nav">
+                <div className="col">
+                    <div className="footer-nav px-4">
                         <Link href="#">Crowd Comic</Link>
                         <></>
                         <ul className="footer-nav-list">
@@ -22,16 +22,16 @@ const Footer = () => {
                 {/* /Links */}
 
                 {/* Socials */}
-                <div className="col-md-6 col-sm-6 footer-right">
+                <div className="col">
                     <ul className="social">
                         <li><Link href=""><i className="fa fa-linkedin"></i></Link></li>
                         <li><Link href=""><i className="fa fa-facebook"></i></Link></li>
-                        <li><Link href=""><i className="fab fa-github"></i></Link></li>
+                        <li><Link href=""><i className="fa fa-github"></i></Link></li>
                     </ul>
                 </div>
                 {/* /Socials */}
             </div>
-            <div className='row justify-content-center'>
+            <div className='row'>
                 <p className='copyright'>Copyright © {current_year}</p>  
             </div>
         </div>  
