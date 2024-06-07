@@ -13,7 +13,7 @@ const Footer = () => {
                         <Link href="#">Crowd Comic</Link>
                         <></>
                         <ul className="footer-nav-list">
-                            <li><Link href="../app">Home</Link></li>
+                            <li><Link href="../">Home</Link></li>
                             <li><Link href="./team" >Team</Link></li>
                             <li><Link href="">Comic</Link></li>
                         </ul>

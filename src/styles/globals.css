@@ -39,7 +39,9 @@ body, html
 
 .hero
 {
-    /* background-image: (insert background image here);     */
+    background-image: url(../../public/images/splash_screen.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
     text-align: center;
 }
 
@@ -56,12 +58,16 @@ h2, button{
 .mission h2{
     color: var(--grayscale-text-color);
     background-color: var(--grayscale-text-bg-color);
+    border: 10px solid transparent;
+    border-image: url(../../public/images/mission\ box\ -\ small.svg) 20% round;
 }
 
 .mission p
 {
     color: var(--grayscale-text-color);
     background-color: var(--grayscale-text-bg-color);
+    border: 25px solid transparent;
+    border-image: url(../../public/images/mission\ box\ -\ big.svg) 20% round;
 }
 
 .read
@@ -70,10 +76,35 @@ h2, button{
     background-color: var(--grayscale-text-bg-color);
 }
 
+.read h2{
+    border: 10px solid transparent;
+    border-image: url(../../public/images/read\ box\ -\ small.svg) 20% round;
+}
+
+.read p{
+    border: 25px solid transparent;
+    border-image: url(../../public/images/read\ box\ -\ big.svg) 20% round;
+}
+
 .create
 {
     color: var(--grayscale-text-color);
     background-color: var(--grayscale-text-bg-color);
+}
+
+.create h2{
+    border: 10px solid transparent;
+    border-image: url(../../public/images/create\ box\ -\ small.svg) 20% round;
+}
+
+.create p{
+    border: 25px solid transparent;
+    border-image: url(../../public/images/create\ box\ -\ big.svg) 20% round;
+}
+
+.read button, .create button{
+    border: 10px solid transparent;
+    border-image: url(../../public/images/read\ box\ -\ button.svg) 20% round;
 }
 
 .footer{
@@ -86,7 +117,7 @@ h2, button{
 {
     justify-content: flex-start;
     margin-left: 10px;
-    font-family: 'Ceviche One';
+    font-family: var(--font-ceviche-one);
     font-size: larger;
     font-weight: 400;
 }
@@ -98,7 +129,7 @@ h2, button{
 
 .footer-nav-list li
 {
-    font-family: 'Comic Neue';
+    font-family: var(--font-comic-neue);
     font-size: medium;
     display: inline-block;
     padding-right: 10px;
