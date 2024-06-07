@@ -43,7 +43,9 @@ main{
 
 .hero
 {
-    /* background-image: (insert background image here);     */
+    background-image: url(../../public/images/splash_screen.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
     text-align: center;
 }
 
@@ -60,12 +62,16 @@ h1, button{
 .mission h2{
     color: var(--grayscale-text-color);
     background-color: var(--grayscale-text-bg-color);
+    border: 10px solid transparent;
+    border-image: url(../../public/images/mission\ box\ -\ small.svg) 20% stretch;
 }
 
 .mission p
 {
     color: var(--grayscale-text-color);
     background-color: var(--grayscale-text-bg-color);
+    border: 25px solid transparent;
+    border-image: url(../../public/images/mission\ box\ -\ big.svg) 20% stretch;
 }
 
 .read
@@ -74,11 +80,35 @@ h1, button{
     background-color: var(--grayscale-text-bg-color);
 }
 
+.read h2{
+    border: 10px solid transparent;
+    border-image: url(../../public/images/read\ box\ -\ small.svg) 20% stretch;
+}
+
+.read p{
+    border: 25px solid transparent;
+    border-image: url(../../public/images/read\ box\ -\ big.svg) 20% stretch;
+}
+
 .create
 {
     color: var(--grayscale-text-color);
     background-color: var(--grayscale-text-bg-color);
 }
+
+.create h2{
+    border: 10px solid transparent;
+    border-image: url(../../public/images/create\ box\ -\ small.svg) 20% stretch;
+}
+
+.create p{
+    border: 25px solid transparent;
+    border-image: url(../../public/images/create\ box\ -\ big.svg) 20% stretch;
+}
+
+.read button, .create button{
+    border: 10px solid transparent;
+    border-image: url(../../public/images/read\ box\ -\ button.svg) 20% stretch;
 
 .teamTitle{
     font-size: 50px;
@@ -128,7 +158,8 @@ h1, button{
  .footer-nav
 {
     justify-content: flex-start;
-    font-family: 'Ceviche One';
+    margin-left: 10px;
+    font-family: var(--font-ceviche-one);
     font-size: larger;
     font-weight: 400;
 }
@@ -140,7 +171,7 @@ h1, button{
 
 .footer-nav-list li
 {
-    font-family: 'Comic Neue';
+    font-family: var(--font-comic-neue);
     font-size: medium;
     display: inline-block;
     padding-right: 10px;
