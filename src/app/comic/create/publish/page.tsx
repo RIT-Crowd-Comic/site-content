@@ -9,15 +9,18 @@ const Publish = () => {
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Panel 3"></button>
             </div>
             <div className="carousel-inner">
-                {/* temp values for testing purposes */}
+                {/* temp values for testing purposes, will be filled in with correct uploaded panels through js */}
                 <div className="carousel-item active">
-                    <Image src="/images/Crowd_Comic_Logo_BW.svg" className="d-block" alt="..." width={400} height={200} />
+                    <Image id="first-panel" src="/images/Crowd_Comic_Logo_BW.svg" className="d-block" alt="..." width={400} height={200} />
                 </div>
                 <div className="carousel-item">
-                    <Image src="/images/Crowd_Comic_Logo.svg" className="d-block" alt="..." width={400} height={200} />
+                    <Image id="second-panel" src="/images/Crowd_Comic_Logo.svg" className="d-block" alt="..." width={400} height={200} />
                 </div>
-                <div className="carousel-item">
-                    <Image src="/images/Crowd_Comic_Favicon.svg" className="d-block" alt="..." width={400} height={200} />
+                <div className="carousel-item" id="branch-hook-img" >
+                    <Image id="third-panel" src="/images/Crowd_Comic_Favicon.svg" className="d-block" alt="..." width={400} height={200} useMap="#panel-map"/>
+                    <map name="panel-map">
+                        
+                    </map>
                 </div>
             </div>
             <button className="carousel-control-prev" type="button" data-bs-target="#panel-overview" data-bs-slide="prev">
@@ -30,17 +33,17 @@ const Publish = () => {
             </button>
         </div>
         <div className="branch-hooks">
-            <div className="branch-hook-controls">
-                <button className="add-branch-hook">Add Hook</button>
-                <button className="remove-branch-hook">Remove Hook</button>
+            <div id="branch-hook-controls">
+                <button id="add-branch-hook">Add Hook</button>
+                <button id="remove-branch-hook">Remove Hook</button>
             </div>
             <div className="branch-hook-text">
                 <h2>MINIMUM OF 3 TOTAL BRANCHES REQUIRED</h2>
-                
-                <p id="num-hooks ">You Currently Have 0 Hooks Placed.</p>
+                {/* temp text, will be updated through js when above buttons are pressed */}
+                <p id="num-hooks">You Currently Have 0 Hooks Placed.</p>
             </div>
         </div>
-        <button className="publish-btn">Publish</button>
+        <button id="publish-btn">Publish</button>
     </>);
 }
 
