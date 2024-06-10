@@ -9,17 +9,17 @@ const Publish = () => {
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Panel 3"></button>
             </div>
             <div className="carousel-inner">
-                {/* temp values for testing purposes, will be filled in with correct uploaded panels and vals through js */}
+                {/* temp vals for testing purposes, will be filled in with correct uploaded panels and vals through js */}
+                {/* uses placeholder class for images to be replaced with user uploaded images */}
                 <div className="carousel-item active">
-                    <Image id="first-panel" src="/images/Crowd_Comic_Logo_BW.svg" className="d-block" alt="..." width={400} height={200} />
+                    <Image id="first-panel" src="/" className="d-block placeholder-" alt="..." width={400} height={200} />
                 </div>
                 <div className="carousel-item">
-                    <Image id="second-panel" src="/images/Crowd_Comic_Logo.svg" className="d-block" alt="..." width={400} height={200} />
+                    <Image id="second-panel" src="/" className="d-block placeholder" alt="..." width={400} height={200} />
                 </div>
                 <div className="carousel-item" id="branch-hook-img" >
-                    <Image id="third-panel" src="/images/Crowd_Comic_Favicon.svg" className="d-block" alt="..." width={400} height={200} useMap="#panel-map" />
-                    {/* map of img containing clickable areas/sections (areas will be added when user clicks add branch hook and defines a section of the img they want to be a hook,
-                        these will be able to be later removed through remove branch hook button in js) */}
+                    <Image id="third-panel" src="/" className="d-block placeholder" alt="..." width={400} height={200} useMap="#panel-map" />
+                    {/* map of img containing clickable areas/sections defined by user*/}
                     <map name="panel-map">
                         {/* ex clickable area
                         <area shape="rect" coords="290,172,333,250" alt="Phone" href="phone.htm" /> */}
@@ -42,7 +42,7 @@ const Publish = () => {
             </div>
             <div className="branch-hook-text">
                 <h2>MINIMUM OF 3 TOTAL BRANCHES REQUIRED</h2>
-                {/* starting text, will be updated through js when either add or remove branch hook button is pressed */}
+                {/* starting text to be updated when either add or remove branch hook button is pressed */}
                 <p id="num-hooks">You Currently Have 0 Hooks Placed.</p>
             </div>
         </div>
