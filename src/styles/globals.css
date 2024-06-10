@@ -37,13 +37,86 @@ body, html
     background-color: var(--grayscale-background-color);
 }
 
-.hero
-{
-    background-image: url(../../public/images/splash_screen.svg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    text-align: center;
-}
+@media screen and (max-width:768px) {
+    .hero
+    {
+        height: 500px;
+    }
+
+    .heroimg
+    {
+        height: 500px;
+    }
+
+    .rightspikes
+    {
+        height: 500px;
+        max-width: 600px;
+        position:absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .leftspikes
+    {
+        height: 500px;
+        max-width: 600px;
+        position:absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .splashlogo
+    {
+        width: 50%;
+        max-width: 300px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+  }
+
+  @media screen and (min-width:769px) {
+    .hero
+    {
+        max-height: 300px;
+        overflow: auto;
+    }
+
+    .heroimg
+    {
+        max-height: 300px;
+    }
+
+    .rightspikes
+    {
+        max-height: 300px;
+        max-width: 600px;
+        position:absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .leftspikes
+    {
+        max-height: 300px;
+        max-width: 600px;
+        position:absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .splashlogo
+    {
+        width: 50%;
+        max-width: 300px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    }
 
 h2, button{
     font-family: var(--font-ceviche-one);
@@ -181,3 +254,4 @@ h2, button{
     font-size:medium;
     text-align: center;
 }
+
