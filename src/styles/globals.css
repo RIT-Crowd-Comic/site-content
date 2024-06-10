@@ -73,7 +73,6 @@ h2, button{
 .read
 {
     color: var(--grayscale-text-color);
-    background-color: var(--grayscale-text-bg-color);
 }
 
 .read h2{
@@ -83,13 +82,12 @@ h2, button{
 
 .read p{
     border: 20px solid transparent;
-    border-image: url(../../public/images/read\ box\ -\ big.svg) 15% stretch;
-}
+    border-image: url(../../public/images/read\ box\ -\ big.svg) 15% fill stretch;
+} 
 
 .create
 {
     color: var(--grayscale-text-color);
-    background-color: var(--grayscale-text-bg-color);
 }
 
 .create h2{
@@ -99,7 +97,7 @@ h2, button{
 
 .create p{
     border: 20px solid transparent;
-    border-image: url(../../public/images/create\ box\ -\ big.svg) 15% stretch;
+    border-image: url(../../public/images/create\ box\ -\ big.svg) 15% fill stretch;
 }
 
 .read button, .create button{
