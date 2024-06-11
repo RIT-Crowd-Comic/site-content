@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Hero from "../components/Hero"
-
+import Link
+ from "next/link";
 export default function Home() {
   return (
     <main>
@@ -24,7 +25,7 @@ export default function Home() {
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem explicabo pariatur facere.
             Soluta culpa dolorum eius explicabo eum officia magnam!
           </p>
-          <button>Read Now</button>
+          <button><Link href="/comic">Read Now</Link></button>
         </div>
         <div className="create">
           <h2>Create</h2>
