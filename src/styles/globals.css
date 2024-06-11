@@ -41,7 +41,7 @@ main{
     padding: 20px 0;
 }
 
-h1, button{
+h2, button{
     font-family: var(--font-ceviche-one);
     font-weight: 400;
 }
@@ -96,7 +96,6 @@ h1, button{
     border: 20px solid transparent;
     border-image: url(../../public/images/Header\ Box.svg) 30% fill stretch;
     z-index: 1;
-
 }
 
 .create p{
@@ -109,9 +108,17 @@ h1, button{
 .read button, .create button{
     position: relative;
     border: 10px solid transparent;
-    border-image: url(../../public/images/Button\ Box.svg) 13% fill stretch;
+    background: url(../../public/images/Button\ Box.svg) no-repeat center/cover;
+    width: 30vw;
     z-index: 1;
     margin-bottom: 40px;  
+}
+
+.col-auto button
+{
+    font-size: 5vw;
+    display: flex;
+    justify-content: center;
 }
 
 .teamTitle{
