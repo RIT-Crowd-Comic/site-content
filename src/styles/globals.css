@@ -37,6 +37,7 @@ body, html
     background-color: var(--grayscale-background-color);
 }
 
+<<<<<<< goose-hero-image
 @media screen and (max-width:768px) {
     .hero
     {
@@ -120,8 +121,21 @@ body, html
         transform: translate(-50%, -50%);
     }
     }
+=======
+main{
+    padding: 20px 0;
+}
 
-h2, button{
+.hero
+{
+    background-image: url(../../public/images/splash_screen.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+}
+>>>>>>> main
+
+h1, button{
     font-family: var(--font-ceviche-one);
     font-weight: 400;
 }
@@ -135,7 +149,7 @@ h2, button{
     color: var(--grayscale-text-color);
     background-color: var(--grayscale-text-bg-color);
     border: 20px solid transparent;
-    border-image: url(../../public/images/mission\ box\ -\ small.svg) 30% fill stretch;
+    border-image: url(../../public/images/Header\ Box.svg) 30% fill stretch;
 }
 
 .mission p
@@ -143,7 +157,7 @@ h2, button{
     color: var(--grayscale-text-color);
     background-color: var(--grayscale-text-bg-color);
     border: 25px solid transparent;
-    border-image: url(../../public/images/mission\ box\ -\ big.svg) 18% stretch;
+    border-image: url(../../public/images/Mission\ Box.svg) 18% stretch;
 }
 
 .read
@@ -154,12 +168,12 @@ h2, button{
 
 .read h2{
     border: 20px solid transparent;
-    border-image: url(../../public/images/read\ box\ -\ small.svg) 30% fill stretch;
+    border-image: url(../../public/images/Header\ Box.svg) 30% fill stretch;
 }
 
 .read p{
     border: 20px solid transparent;
-    border-image: url(../../public/images/read\ box\ -\ big.svg) 15% stretch;
+    border-image: url(../../public/images/Read\ Box.svg) 15% stretch;
 }
 
 .create
@@ -170,17 +184,56 @@ h2, button{
 
 .create h2{
     border: 20px solid transparent;
-    border-image: url(../../public/images/create\ box\ -\ small.svg) 30% fill stretch;
+    border-image: url(../../public/images/Header\ Box.svg) 30% fill stretch;
 }
 
 .create p{
     border: 20px solid transparent;
-    border-image: url(../../public/images/create\ box\ -\ big.svg) 15% stretch;
+    border-image: url(../../public/images/Create\ Box.svg) 15% stretch;
 }
 
 .read button, .create button{
     border: 10px solid transparent;
-    border-image: url(../../public/images/read\ box\ -\ button.svg) 13% fill stretch;
+    border-image: url(../../public/images/Button\ Box.svg) 13% fill stretch;
+}
+
+.teamTitle{
+    font-size: 50px;
+}
+
+.filter .btn{
+    font-size: 15px;
+    font-weight: 700;
+    justify-content: center;
+    color: var(--grayscale-primary-color);
+}
+
+.filter .btn:hover{
+    color: var(--grayscale-text-bg-color);
+    background-color: var(--grayscale-text-color);
+    border: var(--grayscale-primary-color) 2px solid;
+}
+
+.creatorGroup{
+    border: 2px solid var(--grayscale-primary-color);
+}
+
+.chapterTitle{
+    font-family: 'Ceviche One';
+    font-size: 20px;
+    /* border: 2px solid var(--grayscale-primary-color);   */
+}
+
+.professors{
+    display: inline-Flex;
+    text-align: center;
+    border: 5px solid;
+    justify-content: center;
+}
+
+.prof-item{
+    border: #009BC6 2px solid;
+    margin: 0;
 }
 
 .footer{
@@ -192,7 +245,6 @@ h2, button{
  .footer-nav
 {
     justify-content: flex-start;
-    margin-left: 10px;
     font-family: var(--font-ceviche-one);
     font-size: larger;
     font-weight: 400;
@@ -222,14 +274,14 @@ h2, button{
 .social li
 {
     display: inline-block;
-    padding-left: 5px;
+    padding: 6px;
 }
 
 .footer-nav-list a, .footer-nav a
 {
     text-decoration: none;
     /* color: var(--secondary-color); */
-    color:var(--grayscale-text-bg-color)
+    color:var(--grayscale-text-bg-color);
 }
 
 .footer-nav-list a:hover, .footer-nav a:hover
@@ -258,3 +310,41 @@ h2, button{
     text-align: center;
 }
 
+<<<<<<< goose-hero-image
+=======
+
+/* X-Small devices (portrait phones, less than 576px)
+No media query for `xs` since this is the default in Bootstrap */
+
+/* Small devices (landscape phones, 576px and up) */
+/* @media (min-width: 576px) { 
+    main{
+        padding: 30px;
+    }
+} */
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    main{
+        padding: 30px;
+    }
+    .professors{
+        width: 70%;
+        margin: 10px 100px;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+    main{
+        padding: 30px 100px;
+    }
+
+ }
+
+/* X-Large devices (large desktops, 1200px and up) */
+/* @media (min-width: 1200px) { ... } */
+
+/* XX-Large devices (larger desktops, 1400px and up) */
+/* @media (min-width: 1400px) { ... } */
+>>>>>>> main
