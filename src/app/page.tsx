@@ -4,7 +4,7 @@ import Hero from "../components/Hero"
 export default function Home() {
   return (
     <main>
-      <Hero/>      
+      <Hero />
       <div className="mission">
         <h2>Mission</h2>
         <p>
@@ -17,27 +17,65 @@ export default function Home() {
         <Image src="" alt="" />
         <Image src="" alt="" />
       </div>
-      <div className="read-and-create">
+      <div className="container read-and-create">
         <div className="read">
-          <h2>Read</h2>
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem explicabo pariatur facere.
-            Soluta culpa dolorum eius explicabo eum officia magnam!
-          </p>
-          <button>Read Now</button>
+          <div className="row">
+            <div className="col-auto">
+              <h2>Read</h2>
+            </div>
+            <div className="col"></div>
+          </div>
+          <div className="row">
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem explicabo pariatur facere.
+              Soluta culpa dolorum eius explicabo eum officia magnam! 
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem explicabo pariatur facere.
+              Soluta culpa dolorum eius explicabo eum officia magnam!
+            </p>
+          </div>
+          <div className="row">
+            <div className="col"></div>
+            <div className="col-auto">
+              <button>Read Now</button>
+            </div>
+            <div className="col"></div>
+          </div>
         </div>
         <div className="create">
-          <h2>Create</h2>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae aliquam animi cumque
-            reiciendis?
-            Aliquam reiciendis molestiae cumque pariatur hic qui!
-          </p>
-          <button>Create Now</button>
+          <div className="row">
+            <div className="col">
+            </div>
+            <div className="col-auto">
+              <h2>Create</h2>
+            </div>
+          </div>
+          <div className="row">
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae aliquam animi cumque
+              reiciendis?
+              Aliquam reiciendis molestiae cumque pariatur hic qui! 
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae aliquam animi cumque
+              reiciendis?
+              Aliquam reiciendis molestiae cumque pariatur hic qui!
+            </p>
+          </div>
+          <div className="row">
+            <div className="col"></div>
+            <div className="col-auto">
+              <button>Create Now</button>
+            </div>
+            <div className="col"></div>
+          </div>
         </div>
       </div>
-      <div className="our-team">
+      <div className="container our-team">
+      <div className="row">
+            <div className="col"></div>
+            <div className="col-auto">
         <button>Our Team</button>
+        </div>
+            <div className="col"></div>
+          </div>
       </div>
     </main>
   );

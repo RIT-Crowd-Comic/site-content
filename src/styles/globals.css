@@ -37,103 +37,9 @@ body, html
     background-color: var(--grayscale-background-color);
 }
 
-<<<<<<< goose-hero-image
-@media screen and (max-width:768px) {
-    .hero
-    {
-        height: 500px;
-    }
-
-    .heroimg
-    {
-        height: 500px;
-    }
-
-    .rightspikes
-    {
-        height: 500px;
-        max-width: 600px;
-        position:absolute;
-        right: 0;
-        top: 0;
-    }
-
-    .leftspikes
-    {
-        height: 500px;
-        max-width: 600px;
-        position:absolute;
-        left: 0;
-        top: 0;
-    }
-
-    .splashlogo
-    {
-        width: 50%;
-        height: auto;
-        max-width: 300px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-  }
-
-  @media screen and (min-width:769px) {
-    .hero
-    {
-        height: 300px;
-        overflow: auto;
-        position: relative;
-    }
-
-    .heroimg
-    {
-        max-height: 300px;
-    }
-
-    .rightspikes
-    {
-        max-height: 300px;
-        max-width: 600px;
-        position:absolute;
-        right: 0;
-        top: 0;
-    }
-
-    .leftspikes
-    {
-        max-height: 300px;
-        max-width: 600px;
-        position:absolute;
-        left: 0;
-        top: 0;
-    }
-
-    .splashlogo
-    {
-        width: 50%;
-        height: auto;
-        max-width: 300px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    }
-=======
 main{
     padding: 20px 0;
 }
-
-.hero
-{
-    background-image: url(../../public/images/splash_screen.svg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    text-align: center;
-}
->>>>>>> main
 
 h1, button{
     font-family: var(--font-ceviche-one);
@@ -163,38 +69,49 @@ h1, button{
 .read
 {
     color: var(--grayscale-text-color);
-    background-color: var(--grayscale-text-bg-color);
 }
 
 .read h2{
+    position: relative;
     border: 20px solid transparent;
     border-image: url(../../public/images/Header\ Box.svg) 30% fill stretch;
+    z-index: 1;
 }
 
 .read p{
     border: 20px solid transparent;
-    border-image: url(../../public/images/Read\ Box.svg) 15% stretch;
-}
+
+    border-image: url(../../public/images/Read\ Box.svg) 15% fill stretch;
+    margin-top: -35px;
+    margin-bottom: -20px;
+} 
 
 .create
 {
     color: var(--grayscale-text-color);
-    background-color: var(--grayscale-text-bg-color);
 }
 
 .create h2{
+    position: relative;
     border: 20px solid transparent;
     border-image: url(../../public/images/Header\ Box.svg) 30% fill stretch;
+    z-index: 1;
+
 }
 
 .create p{
     border: 20px solid transparent;
-    border-image: url(../../public/images/Create\ Box.svg) 15% stretch;
+    border-image: url(../../public/images/Create\ Box.svg) 15% fill stretch;
+    margin-top: -35px;
+    margin-bottom: -20px;
 }
 
 .read button, .create button{
+    position: relative;
     border: 10px solid transparent;
     border-image: url(../../public/images/Button\ Box.svg) 13% fill stretch;
+    z-index: 1;
+    margin-bottom: 40px;  
 }
 
 .teamTitle{
@@ -310,18 +227,53 @@ h1, button{
     text-align: center;
 }
 
-<<<<<<< goose-hero-image
-=======
-
 /* X-Small devices (portrait phones, less than 576px)
 No media query for `xs` since this is the default in Bootstrap */
 
 /* Small devices (landscape phones, 576px and up) */
-/* @media (min-width: 576px) { 
+ @media (min-width: 576px) { 
     main{
         padding: 30px;
     }
-} */
+   .hero
+    {
+        height: 500px;
+    }
+
+    .heroimg
+    {
+        height: 500px;
+    }
+
+    .rightspikes
+    {
+        height: 500px;
+        max-width: 600px;
+        position:absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .leftspikes
+    {
+        height: 500px;
+        max-width: 600px;
+        position:absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .splashlogo
+    {
+        width: 50%;
+        height: auto;
+        max-width: 300px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+} 
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) { 
@@ -331,6 +283,46 @@ No media query for `xs` since this is the default in Bootstrap */
     .professors{
         width: 70%;
         margin: 10px 100px;
+    }
+  .hero
+    {
+        height: 300px;
+        overflow: auto;
+        position: relative;
+    }
+
+    .heroimg
+    {
+        max-height: 300px;
+    }
+
+    .rightspikes
+    {
+        max-height: 300px;
+        max-width: 600px;
+        position:absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .leftspikes
+    {
+        max-height: 300px;
+        max-width: 600px;
+        position:absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .splashlogo
+    {
+        width: 50%;
+        height: auto;
+        max-width: 300px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 }
 
@@ -347,4 +339,3 @@ No media query for `xs` since this is the default in Bootstrap */
 
 /* XX-Large devices (larger desktops, 1400px and up) */
 /* @media (min-width: 1400px) { ... } */
->>>>>>> main
