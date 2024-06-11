@@ -1,20 +1,23 @@
 import Image from "next/image";
-import FirstComicPanel from "../../../public/comic-panels/first_panel.png"
-import SecondComicPanel from "../../../public/comic-panels/second_panel.png"
-import ThirdComicPanel from "../../../public/comic-panels/third_panel.png"
-import UpdatePanelSet from "@/scripts/read.js"
 
-const Read = () => {
-    return(<>
+//imported base trunk panels as static images
+import baseFirstPanel from "../../../public/comic-panels/first_panel.png";
+import baseSecondPanel from "../../../public/comic-panels/second_panel.png";
+import baseThirdPanel from "../../../public/comic-panels/third_panel.png";
+
+//set the base trunks to display by default on read
+const Read = ({ firstPanelImage = baseFirstPanel, secondPanelImage = baseSecondPanel, 
+    thirdPanelImage = baseThirdPanel }) => {
+    return (<>
         <div id="comic-panels">
             <div className="first-panel">
-                <Image id="first-img" src="/comic-panels/first_panel.png" alt="" width={900} height={600} />
+                <Image id="first-img" src={firstPanelImage} alt="" width={900} height={600} />
             </div>
             <div className="second-panel">
-                <Image id="second-img" src="/comic-panels/second_panel.png" alt="" width={900} height={600} />
+                <Image id="second-img" src={secondPanelImage} alt="" width={900} height={600} />
             </div>
             <div className="third-panel">
-                <Image id="third-img" src="/comic-panels/third_panel.png" alt="" width={900} height={600} />
+                <Image id="third-img" src={thirdPanelImage} alt="" width={900} height={600} />
             </div>
         </div>
         <div id="branch hooks">
