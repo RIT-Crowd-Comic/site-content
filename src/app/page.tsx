@@ -23,12 +23,12 @@ export default function Home() {
             <div className="col-auto">
               <h2>Read</h2>
             </div>
-            <div className="col">
-
-            </div>
+            <div className="col"></div>
           </div>
           <div className="row">
             <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem explicabo pariatur facere.
+              Soluta culpa dolorum eius explicabo eum officia magnam! 
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem explicabo pariatur facere.
               Soluta culpa dolorum eius explicabo eum officia magnam!
             </p>
@@ -51,6 +51,9 @@ export default function Home() {
           </div>
           <div className="row">
             <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae aliquam animi cumque
+              reiciendis?
+              Aliquam reiciendis molestiae cumque pariatur hic qui! 
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae aliquam animi cumque
               reiciendis?
               Aliquam reiciendis molestiae cumque pariatur hic qui!

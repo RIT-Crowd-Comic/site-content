@@ -76,13 +76,17 @@ h2, button{
 }
 
 .read h2{
+    position: relative;
     border: 20px solid transparent;
     border-image: url(../../public/images/read\ box\ -\ small.svg) 30% fill stretch;
+    z-index: 1;
 }
 
 .read p{
     border: 20px solid transparent;
     border-image: url(../../public/images/read\ box\ -\ big.svg) 15% fill stretch;
+    margin-top: -35px;
+    margin-bottom: -20px;
 } 
 
 .create
@@ -91,18 +95,25 @@ h2, button{
 }
 
 .create h2{
+    position: relative;
     border: 20px solid transparent;
     border-image: url(../../public/images/create\ box\ -\ small.svg) 30% fill stretch;
+    z-index: 1;
 }
 
 .create p{
     border: 20px solid transparent;
     border-image: url(../../public/images/create\ box\ -\ big.svg) 15% fill stretch;
+    margin-top: -35px;
+    margin-bottom: -20px;
 }
 
 .read button, .create button{
+    position: relative;
     border: 10px solid transparent;
     border-image: url(../../public/images/read\ box\ -\ button.svg) 13% fill stretch;
+    z-index: 1;
+    margin-bottom: 40px;
 }
 
 .footer{
