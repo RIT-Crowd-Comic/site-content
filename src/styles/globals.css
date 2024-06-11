@@ -227,53 +227,59 @@ h1, button{
     text-align: center;
 }
 
+main{
+    padding: 30px;
+}
+
+.hero
+{
+    height: 500px;
+}
+
+.heroimg
+{
+    height: 500px;
+}
+
+.rightspikes
+{
+    height: 500px;
+    max-width: 600px;
+    position:absolute;
+    right: 0;
+    top: 0;
+}
+
+.leftspikes
+{
+    height: 500px;
+    max-width: 600px;
+    position:absolute;
+    left: 0;
+    top: 0;
+}
+
+.splashlogo
+{
+    width: 50%;
+    height: auto;
+    max-width: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 /* X-Small devices (portrait phones, less than 576px)
 No media query for `xs` since this is the default in Bootstrap */
 
 /* Small devices (landscape phones, 576px and up) */
- @media (min-width: 576px) { 
+
+ /* @media (min-width: 576px) { 
     main{
         padding: 30px;
     }
-   .hero
-    {
-        height: 500px;
-    }
-
-    .heroimg
-    {
-        height: 500px;
-    }
-
-    .rightspikes
-    {
-        height: 500px;
-        max-width: 600px;
-        position:absolute;
-        right: 0;
-        top: 0;
-    }
-
-    .leftspikes
-    {
-        height: 500px;
-        max-width: 600px;
-        position:absolute;
-        left: 0;
-        top: 0;
-    }
-
-    .splashlogo
-    {
-        width: 50%;
-        height: auto;
-        max-width: 300px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-} 
+}  */
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) { 
@@ -287,7 +293,6 @@ No media query for `xs` since this is the default in Bootstrap */
   .hero
     {
         height: 300px;
-        overflow: auto;
         position: relative;
     }
 
