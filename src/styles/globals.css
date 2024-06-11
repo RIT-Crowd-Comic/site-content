@@ -63,7 +63,7 @@ h1, button{
     color: var(--grayscale-text-color);
     background-color: var(--grayscale-text-bg-color);
     border: 20px solid transparent;
-    border-image: url(../../public/images/mission\ box\ -\ small.svg) 30% fill stretch;
+    border-image: url(../../public/images/Header\ Box.svg) 30% fill stretch;
 }
 
 .mission p
@@ -71,7 +71,7 @@ h1, button{
     color: var(--grayscale-text-color);
     background-color: var(--grayscale-text-bg-color);
     border: 25px solid transparent;
-    border-image: url(../../public/images/mission\ box\ -\ big.svg) 18% stretch;
+    border-image: url(../../public/images/Mission\ Box.svg) 18% stretch;
 }
 
 .read
@@ -82,12 +82,12 @@ h1, button{
 
 .read h2{
     border: 20px solid transparent;
-    border-image: url(../../public/images/read\ box\ -\ small.svg) 30% fill stretch;
+    border-image: url(../../public/images/Header\ Box.svg) 30% fill stretch;
 }
 
 .read p{
     border: 20px solid transparent;
-    border-image: url(../../public/images/read\ box\ -\ big.svg) 15% stretch;
+    border-image: url(../../public/images/Read\ Box.svg) 15% stretch;
 }
 
 .create
@@ -98,17 +98,17 @@ h1, button{
 
 .create h2{
     border: 20px solid transparent;
-    border-image: url(../../public/images/create\ box\ -\ small.svg) 30% fill stretch;
+    border-image: url(../../public/images/Header\ Box.svg) 30% fill stretch;
 }
 
 .create p{
     border: 20px solid transparent;
-    border-image: url(../../public/images/create\ box\ -\ big.svg) 15% stretch;
+    border-image: url(../../public/images/Create\ Box.svg) 15% stretch;
 }
 
 .read button, .create button{
     border: 10px solid transparent;
-    border-image: url(../../public/images/read\ box\ -\ button.svg) 13% fill stretch;
+    border-image: url(../../public/images/Button\ Box.svg) 13% fill stretch;
 }
 
 .teamTitle{
