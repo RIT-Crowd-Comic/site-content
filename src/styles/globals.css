@@ -215,6 +215,7 @@ h2, button{
 .fa
 {
     width: 30px;
+    height: 30px;
     border-radius: 50%;
     background-color: var(--secondary-color);
     color: var(--primary-color);
@@ -225,6 +226,23 @@ h2, button{
 .fa:hover
 {
     opacity: 0.7;
+}
+
+.icondiv
+{
+    position:relative;
+    width: 25px;
+    height: 25px;
+}
+
+.icondiv:hover
+{
+    opacity: 0.7;
+}
+
+.iconcolor
+{
+    filter: invert(79%) sepia(16%) saturate(1167%) hue-rotate(354deg) brightness(103%) contrast(104%);
 }
 
 .copyright{
@@ -239,17 +257,17 @@ main{
 
 .hero
 {
-    height: 500px;
+    height: 300px;
 }
 
 .heroimg
 {
-    height: 500px;
+    height: 300px;
 }
 
 .rightspikes
 {
-    height: 500px;
+    height: 300px;
     max-width: 600px;
     position:absolute;
     right: 0;
@@ -258,7 +276,7 @@ main{
 
 .leftspikes
 {
-    height: 500px;
+    height: 300px;
     max-width: 600px;
     position:absolute;
     left: 0;
@@ -267,7 +285,7 @@ main{
 
 .splashlogo
 {
-    width: 50%;
+    width: 70%;
     height: auto;
     max-width: 300px;
     position: absolute;

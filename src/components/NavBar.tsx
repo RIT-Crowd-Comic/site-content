@@ -9,7 +9,7 @@ const NavBar = () => {
           <Image src="../images/Crowd_Comic_Favicon_BW.svg" alt="Crowd Comic Favicon" width={78} height={46} />
         </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
+          <Image src="../images/BurgerMenu.svg" alt="Crowd Comic Favicon" width={78} height={46} />
         </button>
         <div className="offcanvas offcanvas-end" tabIndex={-1} id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
           <div className="offcanvas-header">
