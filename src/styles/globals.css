@@ -55,7 +55,7 @@ h2, button{
     color: var(--grayscale-text-color);
     background-color: var(--grayscale-text-bg-color);
     border: 20px solid transparent;
-    border-image: url(../../public/images/Header\ Box.svg) 30% fill stretch;
+    border-image: url(../../public/images/Header\ Box\ Right.svg) 30% fill stretch;
 }
 
 .mission p
@@ -74,14 +74,14 @@ h2, button{
 .read h2{
     position: relative;
     border: 20px solid transparent;
-    border-image: url(../../public/images/Header\ Box.svg) 30% fill stretch;
+    background: url(../../public/images/Header\ Box\ Left.svg) no-repeat center/cover;
     z-index: 1;
 }
 
 .read p{
     border: 20px solid transparent;
 
-    border-image: url(../../public/images/Read\ Box.svg) 15% fill stretch;
+    background: url(../../public/images/Read\ Box.svg) no-repeat center/cover;
     margin-top: -35px;
     margin-bottom: -20px;
 } 
@@ -94,15 +94,19 @@ h2, button{
 .create h2{
     position: relative;
     border: 20px solid transparent;
-    border-image: url(../../public/images/Header\ Box.svg) 30% fill stretch;
+    background: url(../../public/images/Header\ Box\ Right.svg) no-repeat center/cover;
     z-index: 1;
 }
 
 .create p{
     border: 20px solid transparent;
-    border-image: url(../../public/images/Create\ Box.svg) 15% fill stretch;
-    margin-top: -35px;
-    margin-bottom: -20px;
+    background: url(../../public/images/Create\ Box.svg) no-repeat center/cover;
+    height: 35vh;
+    width: 80vw;
+    font-size: 4vw;
+    padding-left: 5vw;
+    margin-top: -4.5vh;
+    margin-bottom: -2vh;
 }
 
 .read button, .create button{
@@ -110,15 +114,10 @@ h2, button{
     border: 10px solid transparent;
     background: url(../../public/images/Button\ Box.svg) no-repeat center/cover;
     width: 30vw;
+    font-size: 5vw;
     z-index: 1;
     margin-bottom: 40px;  
-}
-
-.col-auto button
-{
-    font-size: 5vw;
-    display: flex;
-    justify-content: center;
+    margin-top: -10px;
 }
 
 .teamTitle{

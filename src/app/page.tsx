@@ -28,7 +28,7 @@ export default function Home() {
           <div className="row">
             <p>
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem explicabo pariatur facere.
-              Soluta culpa dolorum eius explicabo eum officia magnam! 
+              Soluta culpa dolorum eius explicabo eum officia magnam!
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem explicabo pariatur facere.
               Soluta culpa dolorum eius explicabo eum officia magnam!
             </p>
@@ -50,14 +50,14 @@ export default function Home() {
             </div>
           </div>
           <div className="row">
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae aliquam animi cumque
-              reiciendis?
-              Aliquam reiciendis molestiae cumque pariatur hic qui! 
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae aliquam animi cumque
-              reiciendis?
-              Aliquam reiciendis molestiae cumque pariatur hic qui!
-            </p>
+              <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae aliquam animi cumque
+                reiciendis?
+                Aliquam reiciendis molestiae cumque pariatur hic qui!
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae aliquam animi cumque
+                reiciendis?
+                Aliquam reiciendis molestiae cumque pariatur hic qui!
+              </p>
           </div>
           <div className="row">
             <div className="col"></div>
@@ -69,14 +69,14 @@ export default function Home() {
         </div>
       </div>
       <div className="container our-team">
-      <div className="row">
-            <div className="col"></div>
-            <div className="col-auto">
-        <button>Our Team</button>
-        </div>
-            <div className="col"></div>
+        <div className="row">
+          <div className="col"></div>
+          <div className="col-auto">
+            <button>Our Team</button>
           </div>
+          <div className="col"></div>
+        </div>
       </div>
-    </main>
+    </main >
   );
 }
