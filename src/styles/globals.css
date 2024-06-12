@@ -41,7 +41,7 @@ main{
     padding: 20px 0;
 }
 
-h1, button{
+h2, button{
     font-family: var(--font-ceviche-one);
     font-weight: 400;
 }
@@ -55,7 +55,7 @@ h1, button{
     color: var(--grayscale-text-color);
     background-color: var(--grayscale-text-bg-color);
     border: 20px solid transparent;
-    border-image: url(../../public/images/Header\ Box.svg) 30% fill stretch;
+    border-image: url(../../public/images/Header\ Box\ Right.svg) 30% fill stretch;
 }
 
 .mission p
@@ -74,14 +74,14 @@ h1, button{
 .read h2{
     position: relative;
     border: 20px solid transparent;
-    border-image: url(../../public/images/Header\ Box.svg) 30% fill stretch;
+    background: url(../../public/images/Header\ Box\ Left.svg) no-repeat center/cover;
     z-index: 1;
 }
 
 .read p{
     border: 20px solid transparent;
 
-    border-image: url(../../public/images/Read\ Box.svg) 15% fill stretch;
+    background: url(../../public/images/Read\ Box.svg) no-repeat center/cover;
     margin-top: -35px;
     margin-bottom: -20px;
 } 
@@ -94,24 +94,30 @@ h1, button{
 .create h2{
     position: relative;
     border: 20px solid transparent;
-    border-image: url(../../public/images/Header\ Box.svg) 30% fill stretch;
+    background: url(../../public/images/Header\ Box\ Right.svg) no-repeat center/cover;
     z-index: 1;
-
 }
 
 .create p{
     border: 20px solid transparent;
-    border-image: url(../../public/images/Create\ Box.svg) 15% fill stretch;
-    margin-top: -35px;
-    margin-bottom: -20px;
+    background: url(../../public/images/Create\ Box.svg) no-repeat center/cover;
+    height: 35vh;
+    width: 80vw;
+    font-size: 4vw;
+    padding-left: 5vw;
+    margin-top: -4.5vh;
+    margin-bottom: -2vh;
 }
 
 .read button, .create button{
     position: relative;
     border: 10px solid transparent;
-    border-image: url(../../public/images/Button\ Box.svg) 13% fill stretch;
+    background: url(../../public/images/Button\ Box.svg) no-repeat center/cover;
+    width: 30vw;
+    font-size: 5vw;
     z-index: 1;
     margin-bottom: 40px;  
+    margin-top: -10px;
 }
 
 .teamTitle{
@@ -237,6 +243,7 @@ h1, button{
 .fa
 {
     width: 30px;
+    height: 30px;
     border-radius: 50%;
     background-color: var(--secondary-color);
     color: var(--primary-color);
@@ -247,6 +254,23 @@ h1, button{
 .fa:hover
 {
     opacity: 0.7;
+}
+
+.icondiv
+{
+    position:relative;
+    width: 25px;
+    height: 25px;
+}
+
+.icondiv:hover
+{
+    opacity: 0.7;
+}
+
+.iconcolor
+{
+    filter: invert(79%) sepia(16%) saturate(1167%) hue-rotate(354deg) brightness(103%) contrast(104%);
 }
 
 .copyright{
@@ -261,17 +285,17 @@ main{
 
 .hero
 {
-    height: 500px;
+    height: 300px;
 }
 
 .heroimg
 {
-    height: 500px;
+    height: 300px;
 }
 
 .rightspikes
 {
-    height: 500px;
+    height: 300px;
     max-width: 600px;
     position:absolute;
     right: 0;
@@ -280,7 +304,7 @@ main{
 
 .leftspikes
 {
-    height: 500px;
+    height: 300px;
     max-width: 600px;
     position:absolute;
     left: 0;
@@ -289,7 +313,7 @@ main{
 
 .splashlogo
 {
-    width: 50%;
+    width: 70%;
     height: auto;
     max-width: 300px;
     position: absolute;
