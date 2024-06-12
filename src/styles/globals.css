@@ -41,7 +41,7 @@ main{
     padding: 20px 0;
 }
 
-h2, button{
+h2, button, .teamTitle{
     font-family: var(--font-ceviche-one);
     font-weight: 400;
     font-size: 8vw;
@@ -140,17 +140,45 @@ h2, button{
     font-size: 50px;
 }
 
-.filter .btn{
-    font-size: 15px;
+.filter {
+    font-size: 18px;
     font-weight: 700;
     justify-content: center;
+    color: var(--grayscale-text-color);
+    display: inline-block;
+    justify-content: center;
+    text-align: center;
+    border-color: var(--grayscale-text-color);
+}
+
+.filter .accordion-button:hover{
+    color: var(--grayscale-text-bg-color);
+    background-color: var(--grayscale-text-color);
+}
+
+.accordion-body{
+    background-color: var(--grayscale-background-color);
+}
+
+.clearAll{
+    color:var(--grayscale-text-bg-color);  
+}
+
+.clearAll:hover{
     color: var(--grayscale-primary-color);
 }
 
-.filter .btn:hover{
-    color: var(--grayscale-text-bg-color);
-    background-color: var(--grayscale-text-color);
-    border: var(--grayscale-primary-color) 2px solid;
+.form-control, .form-select{
+    background-color: var(--grayscale-primary-color);
+    color: var(--grayscale-text-color);
+}
+
+.form-control{
+    border-radius: 6px 0 0 6px;
+}
+
+.form-select option{
+    background-color: var(--grayscale-text-bg-color);   
 }
 
 .creatorGroup{
@@ -330,12 +358,11 @@ No media query for `xs` since this is the default in Bootstrap */
         width: 70%;
         margin: 10px 100px;
     }
-  .hero
+   .hero
     {
         height: 300px;
         position: relative;
     }
-
     .heroimg
     {
         max-height: 300px;
