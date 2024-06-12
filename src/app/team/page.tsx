@@ -1,5 +1,6 @@
 import Image from 'next/image'
-import Filter from "@/components/Filter"
+import Filter from '@/components/Filter'
+import Card from '@/components/Card'
 
 const TeamPage = () => {
   return (
@@ -11,7 +12,11 @@ const TeamPage = () => {
         {/* Creator Group */}
         <div className="creatorGroup p-3 pb-4 m-4" id="2024">
           <h2 className="chapterTitle py-1">Chapter 2024</h2>
-          {/* Insert JS to create creator panels */}
+          <div className='container'>
+            <div className='row justify-content-md-center'>
+              <Card />
+            </div>
+          </div>
         </div>
         {/* /Creator Group */}
 

@@ -56,7 +56,7 @@ h2, button, .teamTitle{
     color: var(--grayscale-text-color);
     background-color: var(--grayscale-text-bg-color);
     border: 20px solid transparent;
-    border-image: url(../../public/images/Header\ Box\ Right.svg) 30% fill stretch;
+    border-image: url(../../public/images/background-boxes/Header_Box.sv) 30% fill stretch;
 }
 
 .mission p
@@ -64,7 +64,7 @@ h2, button, .teamTitle{
     color: var(--grayscale-text-color);
     background-color: var(--grayscale-text-bg-color);
     border: 25px solid transparent;
-    border-image: url(../../public/images/Mission\ Box.svg) 18% stretch;
+    border-image: url(../../public/images/background-boxes/Mission_Box.svg) 18% stretch;
 }
 
 .read
@@ -75,7 +75,7 @@ h2, button, .teamTitle{
 .read h2{
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/Header\ Box\ Left.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/Header_Box.svg) no-repeat center/contain;
     padding: 7vw;
     margin-left: -10vw;
     z-index: 1;
@@ -83,7 +83,7 @@ h2, button, .teamTitle{
 }
 
 .readimg{
-    background: url(../../public/images/Read\ Box.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/Read_Box.svg)) no-repeat center/contain;
     height: 60vw;
     font-size: 3.5vw;
     padding-top: 7vw;
@@ -99,7 +99,10 @@ h2, button, .teamTitle{
 .create h2{
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/Header\ Box\ Right.svg) no-repeat center/contain;
+}
+
+.create p{
+    background: url(../../public/images/background-boxes/Create_Box.svg) no-repeat center/contain;
     z-index: 1;
     padding-top: 7vw;
     padding-bottom: 7vw;
@@ -110,26 +113,28 @@ h2, button, .teamTitle{
 }
 
 .createimg{
-    background: url(../../public/images/Create\ Box.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/Create_Box.svg) no-repeat center/contain;
     height: 60vw;
     font-size: 3.5vw;
     padding-top: 6vw;
     padding-left: 5vw;
 }
+
 .read button{
     position: relative;
     border: 10px solid transparent;
-    background: url(../../public/images/Button\ Box.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
     margin-top: -10vw;
     margin-right: 3vw;
     padding: 7vw;
     font-size: 6vw;
     z-index: 1;
 }
+
 .create button{
     position: relative;
     border: 10px solid transparent;
-    background: url(../../public/images/Button\ Box.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
     margin-top: -10vw;
     padding: 6vw;
     font-size: 6vw;
