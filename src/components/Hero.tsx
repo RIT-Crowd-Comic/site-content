@@ -1,9 +1,9 @@
 import Image from "next/image";
 
-import logo from "../../public/images/Crowd_Comic_Logo_BW.svg";
-import leftspikes from "../../public/images/splash_screen_leftspikes_bw.svg";
-import rightspikes from "../../public/images/splash_screen_rightspikes_bw.svg"
-import background from "../../public/images/splash_screen_bg_bw.svg";
+import logo from "../../public/images/logos/Crowd_Comic_Logo_BW.svg";
+import leftspikes from "../../public/images/splash/splash_screen_leftspikes_bw.svg";
+import rightspikes from "../../public/images/splash/splash_screen_rightspikes_bw.svg"
+import background from "../../public/images/splash/splash_screen_bg_bw.svg";
 
 const Hero = () => {
   return (

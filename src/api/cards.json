@@ -1,30 +1,30 @@
 {
   "cards":  [
     {
-      "name": "Goose",
+      "name": "Chloe",
       "role": "Designer",
-      "img": "@/images/Crowd_Comic_Favicon_BW.svg",
+      "img": "/images/people/Chloe-Moon.png",
       "year": 2024,
       "linkedin": "https://linkedin.com"
     },
     {
       "name": "Pierce",
       "role": "Designer",
-      "img": "@/images/Crowd_Comic_Favicon_BW.svg",
+      "img": "../images/logos/Crowd_Comic_Favicon_BW.svg",
       "year": 2024,
       "linkedin": "https://linkedin.com"
     },
     {
       "name": "Justin",
       "role": "Lead Designer",
-      "img": "@/images/Crowd_Comic_Favicon_BW.svg",
+      "img": "../images/logos/Crowd_Comic_Favicon_BW.svg",
       "year": 2024,
       "linkedin": "https://linkedin.com"
     },
     {
       "name": "Yu Ling",
       "role": "Designer",
-      "img": "@/images/Crowd_Comic_Favicon_BW.svg",
+      "img": "../images/logos/Crowd_Comic_Favicon_BW.svg",
       "year": 2024,
       "linkedin": "https://linkedin.com"
     }
