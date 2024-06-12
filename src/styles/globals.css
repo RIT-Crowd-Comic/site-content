@@ -138,6 +138,14 @@ h1, button{
     background-color: var(--grayscale-background-color);
 }
 
+.clearAll{
+    color:var(--grayscale-text-bg-color);  
+}
+
+.clearAll:hover{
+    color: var(--grayscale-primary-color);
+}
+
 .form-control, .form-select{
     background-color: var(--grayscale-primary-color);
     color: var(--grayscale-text-color);
@@ -310,12 +318,11 @@ No media query for `xs` since this is the default in Bootstrap */
         width: 70%;
         margin: 10px 100px;
     }
-  .hero
+   .hero
     {
         height: 300px;
         position: relative;
     }
-
     .heroimg
     {
         max-height: 300px;

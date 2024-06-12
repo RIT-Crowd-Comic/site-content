@@ -5,28 +5,6 @@ import '../styles/globals.css'
 
 const Filter = () => {
     return (
-        // <div className="filter" id="filter-heading">
-        //     <div className='card'>
-        //         <div className='card-header m-0' id='filterOpt'>
-        //             <h5>
-        //                 <button 
-        //                     className="btn px-5 border border-2 rounded collapsed" 
-        //                     type="button" data-toggle="collapse" 
-        //                     data-target="#collapseForm" 
-        //                     aria-expanded="false"
-        //                     aria-controls="collapseForm">
-        //                     Filter
-        //                 </button>
-        //             </h5>
-        //             <div className='collapse' id="collapseForm" aria-expanded="true" data-parent="filter-heading">
-        //                 <div className='card-body'>
-        //                     Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, c
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     </div>
-        // </div>
-
         <div className="accordion filter mx-3">
         <div className="accordion-item">
           <h3 className="accordion-header">
@@ -36,12 +14,12 @@ const Filter = () => {
           </h3>
           <div id="collapseForm" className="accordion-collapse collapse" aria-labelledby="Filter Content">
             <div className="accordion-body"> 
-                <button type="button" className="btn btn-dark btn-sm m-2 d-flex justify-content-end">Clear All</button>
-                <div className='d-grid gap-2 d-md-flex justify-content-center'>
+                <button type="button" className="clearAll btn btn-link btn-sm m-2 px-3 py-1 d-inline-flex-end">Clear All</button>
+                <div className='filterOpt d-grid gap-2 d-md-flex justify-content-center'>
                     {/* Search box */}
                     <div className="input-group container-fluid" aria-label="Searchbox">
                         <div className="form-outline" data-mdb-input-init>
-                            <input type="search" className="form-control" placeholder='Searching for...' />
+                            <input type="search" className="form-control" placeholder='Search by name...' />
                         </div>
                         <button type="button" className="btn btn-dark px-3" data-mdb-ripple-init>
                             <i className="fas fa-search"></i>
