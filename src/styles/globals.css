@@ -41,7 +41,7 @@ main{
     padding: 20px 0;
 }
 
-h2, button{
+h2, button, .teamTitle{
     font-family: var(--font-ceviche-one);
     font-weight: 400;
 }
