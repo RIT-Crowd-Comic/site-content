@@ -44,6 +44,7 @@ main{
 h2, button{
     font-family: var(--font-ceviche-one);
     font-weight: 400;
+    font-size: 8vw;
 }
 
 .login{
@@ -74,17 +75,21 @@ h2, button{
 .read h2{
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/Header\ Box\ Left.svg) no-repeat center/cover;
+    background: url(../../public/images/Header\ Box\ Left.svg) no-repeat center/contain;
+    padding: 7vw;
+    margin-left: -10vw;
     z-index: 1;
+    margin-bottom: -19vw;
 }
 
-.read p{
-    border: 20px solid transparent;
-
-    background: url(../../public/images/Read\ Box.svg) no-repeat center/cover;
-    margin-top: -35px;
-    margin-bottom: -20px;
-} 
+.readimg{
+    background: url(../../public/images/Read\ Box.svg) no-repeat center/contain;
+    height: 60vw;
+    font-size: 3.5vw;
+    padding-top: 7vw;
+    padding-left: 3vw;
+    padding-right: 3vw;
+}
 
 .create
 {
@@ -94,30 +99,41 @@ h2, button{
 .create h2{
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/Header\ Box\ Right.svg) no-repeat center/cover;
+    background: url(../../public/images/Header\ Box\ Right.svg) no-repeat center/contain;
     z-index: 1;
+    padding-top: 7vw;
+    padding-bottom: 7vw;
+    padding-left: 6vw;
+    padding-right: 9vw;
+    margin-right: -11vw;
+    margin-bottom: -18vw;
 }
 
-.create p{
-    border: 20px solid transparent;
-    background: url(../../public/images/Create\ Box.svg) no-repeat center/cover;
-    height: 35vh;
-    width: 80vw;
-    font-size: 4vw;
+.createimg{
+    background: url(../../public/images/Create\ Box.svg) no-repeat center/contain;
+    height: 60vw;
+    font-size: 3.5vw;
+    padding-top: 6vw;
     padding-left: 5vw;
-    margin-top: -4.5vh;
-    margin-bottom: -2vh;
 }
-
-.read button, .create button{
+.read button{
     position: relative;
     border: 10px solid transparent;
-    background: url(../../public/images/Button\ Box.svg) no-repeat center/cover;
-    width: 30vw;
-    font-size: 5vw;
+    background: url(../../public/images/Button\ Box.svg) no-repeat center/contain;
+    margin-top: -10vw;
+    margin-right: 3vw;
+    padding: 7vw;
+    font-size: 6vw;
     z-index: 1;
-    margin-bottom: 40px;  
-    margin-top: -10px;
+}
+.create button{
+    position: relative;
+    border: 10px solid transparent;
+    background: url(../../public/images/Button\ Box.svg) no-repeat center/contain;
+    margin-top: -10vw;
+    padding: 6vw;
+    font-size: 6vw;
+    z-index: 1;
 }
 
 .teamTitle{

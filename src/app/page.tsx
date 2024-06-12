@@ -17,7 +17,7 @@ export default function Home() {
         <Image src="" alt="" />
         <Image src="" alt="" />
       </div>
-      <div className="container read-and-create">
+      <div className="container-fluid read-and-create">
         <div className="read">
           <div className="row">
             <div className="col-auto">
@@ -25,7 +25,7 @@ export default function Home() {
             </div>
             <div className="col"></div>
           </div>
-          <div className="row">
+          <div className="readimg row">
             <p>
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem explicabo pariatur facere.
               Soluta culpa dolorum eius explicabo eum officia magnam!
@@ -33,6 +33,7 @@ export default function Home() {
               Soluta culpa dolorum eius explicabo eum officia magnam!
             </p>
           </div>
+          
           <div className="row">
             <div className="col"></div>
             <div className="col-auto">
@@ -49,15 +50,15 @@ export default function Home() {
               <h2>Create</h2>
             </div>
           </div>
-          <div className="row">
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae aliquam animi cumque
-                reiciendis?
-                Aliquam reiciendis molestiae cumque pariatur hic qui!
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae aliquam animi cumque
-                reiciendis?
-                Aliquam reiciendis molestiae cumque pariatur hic qui!
-              </p>
+          <div className="createimg row">
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae aliquam animi cumque
+              reiciendis?
+              Aliquam reiciendis molestiae cumque pariatur hic qui!
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae aliquam animi cumque
+              reiciendis?
+              Aliquam reiciendis molestiae cumque pariatur hic qui!
+            </p>
           </div>
           <div className="row">
             <div className="col"></div>
