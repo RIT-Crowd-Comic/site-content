@@ -41,9 +41,10 @@ main{
     padding: 20px 0;
 }
 
-h1, button{
+h2, button, .teamTitle{
     font-family: var(--font-ceviche-one);
     font-weight: 400;
+    font-size: 8vw;
 }
 
 .login{
@@ -55,7 +56,7 @@ h1, button{
     color: var(--grayscale-text-color);
     background-color: var(--grayscale-text-bg-color);
     border: 20px solid transparent;
-    border-image: url(../../public/images/background-boxes/Header_Box.svg) 30% fill stretch;
+    border-image: url(../../public/images/background-boxes/Header_Box.sv) 30% fill stretch;
 }
 
 .mission p
@@ -74,17 +75,21 @@ h1, button{
 .read h2{
     position: relative;
     border: 20px solid transparent;
-    border-image: url(../../public/images/background-boxes/Header_Box.svg) 30% fill stretch;
+    background: url(../../public/images/background-boxes/Header_Box.svg) no-repeat center/contain;
+    padding: 7vw;
+    margin-left: -10vw;
     z-index: 1;
+    margin-bottom: -19vw;
 }
 
-.read p{
-    border: 20px solid transparent;
-
-    border-image: url(../../public/images/background-boxes/Read_Box.svg) 15% fill stretch;
-    margin-top: -35px;
-    margin-bottom: -20px;
-} 
+.readimg{
+    background: url(../../public/images/background-boxes/Read_Box.svg)) no-repeat center/contain;
+    height: 60vw;
+    font-size: 3.5vw;
+    padding-top: 7vw;
+    padding-left: 3vw;
+    padding-right: 3vw;
+}
 
 .create
 {
@@ -94,41 +99,91 @@ h1, button{
 .create h2{
     position: relative;
     border: 20px solid transparent;
-    border-image: url(../../public/images/background-boxes/Header_Box.svg) 30% fill stretch;
-    z-index: 1;
-
 }
 
 .create p{
-    border: 20px solid transparent;
-    border-image: url(../../public/images/background-boxes/Create_Box.svg) 15% fill stretch;
-    margin-top: -35px;
-    margin-bottom: -20px;
+    background: url(../../public/images/background-boxes/Create_Box.svg) no-repeat center/contain;
+    z-index: 1;
+    padding-top: 7vw;
+    padding-bottom: 7vw;
+    padding-left: 6vw;
+    padding-right: 9vw;
+    margin-right: -11vw;
+    margin-bottom: -18vw;
 }
 
-.read button, .create button{
+.createimg{
+    background: url(../../public/images/background-boxes/Create_Box.svg) no-repeat center/contain;
+    height: 60vw;
+    font-size: 3.5vw;
+    padding-top: 6vw;
+    padding-left: 5vw;
+}
+
+.read button{
     position: relative;
     border: 10px solid transparent;
-    border-image: url(../../public/images/background-boxes/Button_Box.svg) 13% fill stretch;
+    background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
+    margin-top: -10vw;
+    margin-right: 3vw;
+    padding: 7vw;
+    font-size: 6vw;
     z-index: 1;
-    margin-bottom: 40px;  
+}
+
+.create button{
+    position: relative;
+    border: 10px solid transparent;
+    background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
+    margin-top: -10vw;
+    padding: 6vw;
+    font-size: 6vw;
+    z-index: 1;
 }
 
 .teamTitle{
     font-size: 50px;
 }
 
-.filter .btn{
-    font-size: 15px;
+.filter {
+    font-size: 18px;
     font-weight: 700;
     justify-content: center;
+    color: var(--grayscale-text-color);
+    display: inline-block;
+    justify-content: center;
+    text-align: center;
+    border-color: var(--grayscale-text-color);
+}
+
+.filter .accordion-button:hover{
+    color: var(--grayscale-text-bg-color);
+    background-color: var(--grayscale-text-color);
+}
+
+.accordion-body{
+    background-color: var(--grayscale-background-color);
+}
+
+.clearAll{
+    color:var(--grayscale-text-bg-color);  
+}
+
+.clearAll:hover{
     color: var(--grayscale-primary-color);
 }
 
-.filter .btn:hover{
-    color: var(--grayscale-text-bg-color);
-    background-color: var(--grayscale-text-color);
-    border: var(--grayscale-primary-color) 2px solid;
+.form-control, .form-select{
+    background-color: var(--grayscale-primary-color);
+    color: var(--grayscale-text-color);
+}
+
+.form-control{
+    border-radius: 6px 0 0 6px;
+}
+
+.form-select option{
+    background-color: var(--grayscale-text-bg-color);   
 }
 
 .creatorGroup{
@@ -209,6 +264,7 @@ h1, button{
 .fa
 {
     width: 30px;
+    height: 30px;
     border-radius: 50%;
     background-color: var(--secondary-color);
     color: var(--primary-color);
@@ -219,6 +275,23 @@ h1, button{
 .fa:hover
 {
     opacity: 0.7;
+}
+
+.icondiv
+{
+    position:relative;
+    width: 25px;
+    height: 25px;
+}
+
+.icondiv:hover
+{
+    opacity: 0.7;
+}
+
+.iconcolor
+{
+    filter: invert(79%) sepia(16%) saturate(1167%) hue-rotate(354deg) brightness(103%) contrast(104%);
 }
 
 .copyright{
@@ -233,17 +306,17 @@ main{
 
 .hero
 {
-    height: 500px;
+    height: 300px;
 }
 
 .heroimg
 {
-    height: 500px;
+    height: 300px;
 }
 
 .rightspikes
 {
-    height: 500px;
+    height: 300px;
     max-width: 600px;
     position:absolute;
     right: 0;
@@ -252,7 +325,7 @@ main{
 
 .leftspikes
 {
-    height: 500px;
+    height: 300px;
     max-width: 600px;
     position:absolute;
     left: 0;
@@ -261,7 +334,7 @@ main{
 
 .splashlogo
 {
-    width: 50%;
+    width: 70%;
     height: auto;
     max-width: 300px;
     position: absolute;
@@ -290,12 +363,11 @@ No media query for `xs` since this is the default in Bootstrap */
         width: 70%;
         margin: 10px 100px;
     }
-  .hero
+   .hero
     {
         height: 300px;
         position: relative;
     }
-
     .heroimg
     {
         max-height: 300px;
