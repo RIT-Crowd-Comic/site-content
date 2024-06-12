@@ -118,17 +118,37 @@ h1, button{
     font-size: 50px;
 }
 
-.filter .btn{
-    font-size: 15px;
+.filter {
+    font-size: 18px;
     font-weight: 700;
     justify-content: center;
-    color: var(--grayscale-primary-color);
+    color: var(--grayscale-text-color);
+    display: inline-block;
+    justify-content: center;
+    text-align: center;
+    border-color: var(--grayscale-text-color);
 }
 
-.filter .btn:hover{
+.filter .accordion-button:hover{
     color: var(--grayscale-text-bg-color);
     background-color: var(--grayscale-text-color);
-    border: var(--grayscale-primary-color) 2px solid;
+}
+
+.accordion-body{
+    background-color: var(--grayscale-background-color);
+}
+
+.form-control, .form-select{
+    background-color: var(--grayscale-primary-color);
+    color: var(--grayscale-text-color);
+}
+
+.form-control{
+    border-radius: 6px 0 0 6px;
+}
+
+.form-select option{
+    background-color: var(--grayscale-text-bg-color);   
 }
 
 .creatorGroup{
