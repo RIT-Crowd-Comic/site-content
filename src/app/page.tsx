@@ -5,12 +5,26 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <div className="mission">
-        <h2>Mission</h2>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis eum exercitationem maxime ab eveniet? Ducimus, sunt. Tempore porro, sapiente commodi ipsa veritatis sequi? Inventore quasi placeat fugit, perferendis velit hic, dolorem deleniti saepe at, assumenda similique quis esse atque nobis!
-        </p>
-        <h2>What can I do?</h2>
+      <div className="container-fluid">
+          <div className="mission row">
+            <div className="col"></div>
+            <div className="col-auto">
+              <h2>Mission</h2>
+            </div>
+          </div>
+          <div className="missionimg row">
+          <p>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis eum exercitationem maxime ab eveniet? Ducimus, sunt. Tempore porro, sapiente commodi ipsa veritatis sequi? Inventore quasi placeat fugit, perferendis velit hic, dolorem deleniti saepe at, assumenda similique quis esse atque nobis!
+          </p>
+        </div>
+        <div className="whatcanido">
+          <div className="row">
+            <div className="col"></div>
+            <div className="col-auto">
+            <h2>What can I do?</h2>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="preview">
         <Image src="" alt="" />
@@ -33,7 +47,7 @@ export default function Home() {
               Soluta culpa dolorum eius explicabo eum officia magnam!
             </p>
           </div>
-          
+
           <div className="row">
             <div className="col"></div>
             <div className="col-auto">

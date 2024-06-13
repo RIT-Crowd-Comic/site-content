@@ -45,6 +45,7 @@ h2, button, .teamTitle{
     font-family: var(--font-ceviche-one);
     font-weight: 400;
     font-size: 8vw;
+    color: var(--grayscale-text-color);
 }
 
 .login{
@@ -53,23 +54,41 @@ h2, button, .teamTitle{
 }
 
 .mission h2{
-    color: var(--grayscale-text-color);
-    background-color: var(--grayscale-text-bg-color);
-    border: 20px solid transparent;
-    border-image: url(../../public/images/background-boxes/Header_Box_Right.svg) 30% fill stretch;
+    position: relative;
+    background: url(../../public/images/background-boxes/Header_Box_Right.svg) no-repeat center/contain;
+    padding: 6vw;
+    padding-right: 8vw;
+    z-index: 1;
+    margin-top: 5vw;
+    margin-bottom: -4vw;
+    margin-right: -5vw
 }
 
-.mission p
-{
-    color: var(--grayscale-text-color);
-    background-color: var(--grayscale-text-bg-color);
-    border: 25px solid transparent;
-    border-image: url(../../public/images/background-boxes/Mission_Box.svg) 18% stretch;
+.whatcanido h2{
+    position: relative;
+    background: url(../../public/images/background-boxes/Header_Box_Right.svg) no-repeat center/contain;
+    padding: 6vw;
+    padding-left: 4vw;
+    padding-bottom: 8vw;
+    z-index: 1;
+    margin-top: -15vw;
+    margin-bottom: -4vw;
+    margin-right: -7vw;
+    font-size: 7vw;
 }
 
-.read
+.missionimg
 {
     color: var(--grayscale-text-color);
+    background: url(../../public/images/background-boxes/Mission_Box.svg) no-repeat center/contain;
+    height: 60vw;
+    margin-left: -8vw;
+    margin-right: 2vw;
+    margin-top: -10vw;
+    font-size: 3.5vw;
+    padding-top: 10vw;
+    padding-left: 8vw;
+    
 }
 
 .read h2{
@@ -78,43 +97,44 @@ h2, button, .teamTitle{
     background: url(../../public/images/background-boxes/Header_Box_Left.svg) no-repeat center/contain;
     padding: 7vw;
     margin-left: -12vw;
-    z-index: 1;
     margin-bottom: -19vw;
+    margin-top: -6vw;
+    z-index: 1;
+    
 }
 
 .readimg{
+    color: var(--grayscale-text-color);
     background: url(../../public/images/background-boxes/Read_Box.svg) no-repeat center/contain;
     height: 60vw;
     font-size: 3.5vw;
     padding-top: 7vw;
     padding-left: 3vw;
     padding-right: 3vw;
-}
-
-.create
-{
-    color: var(--grayscale-text-color);
+    margin-bottom: -7vw
 }
 
 .create h2{
     position: relative;
     border: 20px solid transparent;
     background: url(../../public/images/background-boxes/Header_Box_Right.svg) no-repeat center/contain;
-    z-index: 1;
     padding-top: 7vw;
     padding-bottom: 7vw;
     padding-left: 6vw;
     padding-right: 9vw;
     margin-right: -13vw;
     margin-bottom: -17vw;
+    margin-top: -8vw;
+    z-index: 1;
 }
 
 .createimg{
     background: url(../../public/images/background-boxes/Create_Box.svg) no-repeat center/contain;
     height: 60vw;
     font-size: 3.5vw;
-    padding-top: 6vw;
+    padding-top: 7vw;
     padding-left: 5vw;
+    margin-bottom: -7vw
 }
 
 .read button{
@@ -123,7 +143,8 @@ h2, button, .teamTitle{
     background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
     margin-top: -10vw;
     margin-right: 3vw;
-    padding: 7vw;
+    padding: 6vw;
+    padding-bottom: 7vw;
     font-size: 6vw;
     z-index: 1;
 }
@@ -133,7 +154,8 @@ h2, button, .teamTitle{
     border: 10px solid transparent;
     background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
     margin-top: -10vw;
-    padding: 6vw;
+    padding: 5vw;
+    padding-bottom: 7vw;
     font-size: 6vw;
     z-index: 1;
 }
