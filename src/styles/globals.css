@@ -37,9 +37,9 @@ body, html
     background-color: var(--grayscale-background-color);
 }
 
-main{
+/* main{
     padding: 20px 0;
-}
+} */
 
 h2, button, .teamTitle{
     font-family: var(--font-ceviche-one);
@@ -227,11 +227,9 @@ h2, button, .teamTitle{
 .chapterTitle{
     font-family: 'Ceviche One';
     font-size: 20px;
-    /* border: 2px solid var(--grayscale-primary-color);   */
 }
 
 .professors{
-    display: inline-Flex;
     text-align: center;
     border: 5px solid;
     justify-content: center;
@@ -240,6 +238,46 @@ h2, button, .teamTitle{
 .prof-item{
     border: #009BC6 2px solid;
     margin: 0;
+    overflow: hidden;
+}
+
+.professors .text{
+    background-color: var(--grayscale-text-bg-color);
+    color: var(--grayscale-text-color);
+    border: solid 2px var(--grayscale-text-color);
+    margin: 0;
+    padding: 2px 2px;
+    font-size: 1rem;
+    font-weight: bolder;
+    overflow: hidden;
+}
+
+.top-left{
+    position: absolute;
+    left: 5vw; 
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 28vw;
+    transform: skew(-15deg) translate(0,-20px);
+}
+
+.bottom{
+    position: absolute;
+    left: 10; 
+    right: 10; 
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 25vw;
+    /* transform: translate(-1vw,0); */
+}
+
+.top-right{
+    position: absolute;
+    right: 5vw;
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 28vw;
+    transform: skew(15deg) translate(0, -20px);
 }
 
 .footer{
