@@ -1,10 +1,11 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import Filter from '@/components/Filter'
 import Card from '@/components/Card'
 
 const TeamPage = () => {
   return (
-    <main>
+    <main className='teamPage'>
       {/* Content */}
       <div className="content text-center">
         <h1 className="teamTitle">Meet the Creators!</h1>
@@ -21,16 +22,25 @@ const TeamPage = () => {
         {/* /Creator Group */}
 
         {/* Professors */}
-        <div className="professors p-3 container">
+        <div className="professors p-3">
           <div className='row'>
             <div className="prof-item col" id="prof1">
-              <Image src="/" alt="professor panel" width="300" height="100"/>
+              <Link href="https:www.linkedin.com">
+                <h3 className='text top-left'>Jake Adams</h3>
+                <Image className ="" src="/images/people/Jake_Adams.png" alt="professor panel" width="150" height="150"/>
+              </Link>
             </div>
-            <div className="prof-item col" id="prof2">
-              <Image src="/" alt="professor panel" width="300" height="100"/>
+            <div className="prof-item col py-2" id="prof2">
+              <Link href="https:www.linkedin.com">
+                <Image src="/images/people/Sten_Placeholder.jpg" alt="professor panel" width="150" height="150"/>
+                <h3 className='text bottom'>Sten McKinzie</h3>
+              </Link>
             </div>
             <div className="prof-item col" id="prof3">
-              <Image src="/" alt="professor panel" width="300" height="100"/>
+              <Link href="https:www.linkedin.com">
+                <h3 className='text top-right'>Travis Stodter</h3>
+                <Image src="/images/people/travis_stodter_white.png" alt="professor panel" width="150" height="150"/>
+              </Link>
             </div>
           </div>
         </div>
