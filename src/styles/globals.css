@@ -138,6 +138,21 @@ h2, button, .teamTitle{
     z-index: 1;
 }
 
+.our-team
+{
+    background: url(../../public/images/background-boxes/OurTeam_Background.svg) no-repeat center/contain;
+    padding: 6vw;
+}
+
+.our-team button
+{
+    position: relative;
+    border: transparent;
+    background: url(../../public/images/background-boxes/Team_Box.svg) no-repeat center/contain;
+    padding: 5vw;
+    font-size: 6vw;
+}
+
 .teamTitle{
     font-size: 50px;
 }
