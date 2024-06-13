@@ -3,7 +3,7 @@ export interface PanelSet{
     parent_branch_uuid:string,
     image_paths: string[],
     branches: Branch[]
-};
+}
 export interface Branch{
     panel: number,
     x: number,
