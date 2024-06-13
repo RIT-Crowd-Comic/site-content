@@ -2,7 +2,6 @@
 
 import {useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import PublishButton from "./PublishButton";
 import {PanelSet, Branch} from "./PanelSet";
 
 
@@ -36,7 +35,7 @@ const BranchPlacer = () => {
         }
     }
 
-    const addHook = (panel:number) => {
+    const addBranchHook = (panel:number) => {
         if(!adding){ //makes sure the user clicked add hook before 
             console.log("you aren't adding yet");
             return;
@@ -68,7 +67,7 @@ const BranchPlacer = () => {
         console.log("No longer adding");
     }
 
-    const removeHook = () => {
+    const removeBranchHook = () => {
         let bholder = ps.branches;
         for(let i = 0; i < 3; i++){
             if(i == branCount){
@@ -79,13 +78,23 @@ const BranchPlacer = () => {
                 break;
             }
         }
+
+        setPs((prevPs) => {
+            return {
+                current_panel_set_uuid: prevPs.current_panel_set_uuid,
+                parent_branch_uuid: prevPs.parent_branch_uuid,
+                image_paths: prevPs.image_paths,
+                branches: bholder //updating branches with new hook
+            }
+        });
+
         console.log("Removing Hook");
         setBranch(branCount - 1);
         console.log("branch hook added. Total branch hooks: " + (branCount - 1));
     }
 
     const pushToLocalStorage = () => {
-        
+
     }
 
     return (<>
@@ -99,13 +108,13 @@ const BranchPlacer = () => {
                 {/* temp vals for testing purposes, will be filled in with correct uploaded panels and vals through js */}
                 {/* uses placeholder class for images to be replaced with user uploaded images */}
                 <div className="carousel-item active">
-                    <img id="first-panel" onClick={() => { addHook(1) }} src={ps.image_paths[0]} className="d-block placeholder-" alt="..." width={400} height={200} />
+                    <img id="first-panel" onClick={() => { addBranchHook(1) }} src={ps.image_paths[0]} className="d-block placeholder-" alt="..." width={400} height={200} />
                 </div>
                 <div className="carousel-item">
-                    <img id="second-panel" onClick={() => { addHook(2) }} src={ps.image_paths[1]} className="d-block placeholder" alt="..." width={400} height={200} />
+                    <img id="second-panel" onClick={() => { addBranchHook(2) }} src={ps.image_paths[1]} className="d-block placeholder" alt="..." width={400} height={200} />
                 </div>
                 <div className="carousel-item" id="branch-hook-img" >
-                    <img id="third-panel" onClick={() => { addHook(3) }} src={ps.image_paths[2]} className="d-block placeholder" alt="..." width={400} height={200} useMap="#panel-map" />
+                    <img id="third-panel" onClick={() => { addBranchHook(3) }} src={ps.image_paths[2]} className="d-block placeholder" alt="..." width={400} height={200} useMap="#panel-map" />
                     {/* map of img containing clickable areas/sections defined by user*/}
                     <map name="panel-map">
                         {/* ex clickable area
@@ -125,7 +134,7 @@ const BranchPlacer = () => {
         <div className="branch-hooks">
             <div id="branch-hook-controls">
                 <button id="add-branch-hook" onClick={startAdd}>Add Hook</button>
-                <button id="remove-branch-hook" onClick={removeHook}>Remove Hook</button>
+                <button id="remove-branch-hook" onClick={removeBranchHook}>Remove Hook</button>
             </div>
             <div className="branch-hook-text">
                 <h2>MINIMUM OF 3 TOTAL BRANCHES REQUIRED</h2>
