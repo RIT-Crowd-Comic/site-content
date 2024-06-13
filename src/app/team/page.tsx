@@ -12,8 +12,8 @@ const TeamPage = () => {
         {/* Creator Group */}
         <div className="creatorGroup p-3 pb-4 m-4" id="2024">
           <h2 className="chapterTitle py-1">Chapter 2024</h2>
-          <div className='container'>
-            <div className='row justify-content-md-center'>
+          <div className='container-fluid'>
+            <div className='row'>
               <Card />
             </div>
           </div>
