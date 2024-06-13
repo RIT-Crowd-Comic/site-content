@@ -56,7 +56,7 @@ h2, button, .teamTitle{
     color: var(--grayscale-text-color);
     background-color: var(--grayscale-text-bg-color);
     border: 20px solid transparent;
-    border-image: url(../../public/images/background-boxes/Header_Box.svg) 30% fill stretch;
+    border-image: url(../../public/images/background-boxes/Header_Box_Right.svg) 30% fill stretch;
 }
 
 .mission p
@@ -75,9 +75,9 @@ h2, button, .teamTitle{
 .read h2{
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/background-boxes/Header_Box.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/Header_Box_Left.svg) no-repeat center/contain;
     padding: 7vw;
-    margin-left: -10vw;
+    margin-left: -12vw;
     z-index: 1;
     margin-bottom: -19vw;
 }
@@ -99,17 +99,14 @@ h2, button, .teamTitle{
 .create h2{
     position: relative;
     border: 20px solid transparent;
-}
-
-.create p{
-    background: url(../../public/images/background-boxes/Create_Box.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/Header_Box_Right.svg) no-repeat center/contain;
     z-index: 1;
     padding-top: 7vw;
     padding-bottom: 7vw;
     padding-left: 6vw;
     padding-right: 9vw;
-    margin-right: -11vw;
-    margin-bottom: -18vw;
+    margin-right: -13vw;
+    margin-bottom: -17vw;
 }
 
 .createimg{
