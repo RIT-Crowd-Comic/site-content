@@ -5,6 +5,7 @@ import "../../styles/read.css";
 import baseFirstPanel from "../../../public/comic-panels/first_panel.png";
 import baseSecondPanel from "../../../public/comic-panels/second_panel.png";
 import baseThirdPanel from "../../../public/comic-panels/third_panel.png";
+import Link from "next/link";
 
 //set the base trunks to display by default on read
 const Read = ({ firstPanelImage = baseFirstPanel, secondPanelImage = baseSecondPanel, 
@@ -22,7 +23,7 @@ const Read = ({ firstPanelImage = baseFirstPanel, secondPanelImage = baseSecondP
                 <Image id="third-img" src={thirdPanelImage} alt="" width={900} height={600} />
                 <div className="third-panel-container">
                     <button id="second-branch-hook" className="branch-hook">Branch 2</button>
-                    <button id="third-branch-hook" className="branch-hook">Branch 3</button>
+                    <button id="third-branch-hook" className="branch-hook"><Link href="/comic/create">Branch 3</Link></button>
                 </div>
             </div>
         </div>
