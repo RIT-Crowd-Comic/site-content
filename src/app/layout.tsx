@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import "../styles/globals.css";
 import BootstrapClient from "../scripts/BootstrapClient";
 
-import localFont from '@next/font/local';
+import localFont from 'next/font/local';
 
 //importing components
 import Navbar from "../components/NavBar"
