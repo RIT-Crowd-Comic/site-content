@@ -33,8 +33,19 @@
 body, html
 {
     width: 100%;
-    font-family: var(--font-comic-neue);
+    font-family: var(--font-back-issues);
     background-color: var(--grayscale-background-color);
+}
+
+body
+{
+    background-image: radial-gradient(
+      circle at center,
+      #3b3b3b 0.25rem,
+      transparent 0
+    ), radial-gradient(circle at center, #3b3b3b 0.25rem, transparent 0);
+  background-size: 1.3rem 1.3rem;
+  background-position: 0 0, 0.65rem 0.65rem;
 }
 
 /* main{
@@ -80,15 +91,13 @@ h2, button {
 .missionimg
 {
     color: var(--grayscale-text-color);
-    background: url(../../public/images/background-boxes/Mission_Box.svg) no-repeat center/contain;
-    height: 60vw;
-    margin-left: -8vw;
-    margin-right: 2vw;
-    margin-top: -10vw;
-    font-size: 3.5vw;
-    padding-top: 10vw;
+    background: url(../../public/images/background-boxes/Mission_Box.svg) no-repeat;
+    background-size: 100% 100%;
+    height: 100vw;
+    margin: -30vw 2vw -15vw -8vw;
+    padding-top: 28vw;
     padding-left: 8vw;
-    
+    font-size: 3.3vw;
 }
 
 .read h2{
@@ -107,7 +116,7 @@ h2, button {
     color: var(--grayscale-text-color);
     background: url(../../public/images/background-boxes/Read_Box.svg) no-repeat center/contain;
     height: 60vw;
-    font-size: 3.5vw;
+    font-size: 3.3vw;
     padding-top: 7vw;
     padding-left: 3vw;
     padding-right: 3vw;
@@ -131,9 +140,9 @@ h2, button {
 .createimg{
     background: url(../../public/images/background-boxes/Create_Box.svg) no-repeat center/contain;
     height: 60vw;
-    font-size: 3.5vw;
+    font-size: 3.3vw;
     padding-top: 7vw;
-    padding-left: 5vw;
+    padding-left: 4vw;
     margin-bottom: -7vw
 }
 
