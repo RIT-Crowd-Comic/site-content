@@ -1,6 +1,6 @@
 'use client';
-import Image from 'next/image'
-import ImagePreview from '@/components/ImagePreview';
+import ImagePreview from '../../../components/ImagePreview';
+import Link from 'next/link';
 import '../../../styles/createPage.css';
 
 const Create = () => {
@@ -11,8 +11,7 @@ const Create = () => {
             <ImagePreview panelNum={3}/>
         </div>
         
-        <button>Continue</button>
-        <a href="./publish/page.tsx">Visit W3Schools</a>
+        <Link href="/comic/create/publish">Continue</Link>
     </>
     );
 }
