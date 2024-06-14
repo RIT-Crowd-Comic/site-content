@@ -150,7 +150,7 @@ h2, button {
     position: relative;
     border: 10px solid transparent;
     background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
-    margin-top: -10vw;
+    margin-top: -5vw;
     margin-right: 3vw;
     padding: 6vw;
     padding-bottom: 7vw;
@@ -162,7 +162,7 @@ h2, button {
     position: relative;
     border: 10px solid transparent;
     background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
-    margin-top: -10vw;
+    margin-top: -5vw;
     padding: 5vw;
     padding-bottom: 7vw;
     font-size: 6vw;
