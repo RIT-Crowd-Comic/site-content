@@ -1,4 +1,9 @@
+'use client';
 import Image from "next/image";
+
+const image1Link = localStorage.getItem("image-1");
+const image2Link = localStorage.getItem("image-2");
+const image3Link = localStorage.getItem("image-3");
 
 const Publish = () => {
     return (<>
@@ -12,13 +17,13 @@ const Publish = () => {
                 {/* temp vals for testing purposes, will be filled in with correct uploaded panels and vals through js */}
                 {/* uses placeholder class for images to be replaced with user uploaded images */}
                 <div className="carousel-item active">
-                    <Image id="first-panel" src="/" className="d-block placeholder-" alt="..." width={400} height={200} />
+                    <Image id="first-panel" src={image1Link? image1Link : "/images/previewPlaceholder.png"} className="d-block placeholder-" alt="..." width={400} height={200} />
                 </div>
                 <div className="carousel-item">
-                    <Image id="second-panel" src="/" className="d-block placeholder" alt="..." width={400} height={200} />
+                    <Image id="second-panel" src={image2Link? image2Link : "/images/previewPlaceholder.png"} className="d-block placeholder" alt="..." width={400} height={200} />
                 </div>
                 <div className="carousel-item" id="branch-hook-img" >
-                    <Image id="third-panel" src="/" className="d-block placeholder" alt="..." width={400} height={200} useMap="#panel-map" />
+                    <Image id="third-panel" src={image3Link? image3Link : "/images/previewPlaceholder.png"} className="d-block placeholder" alt="..." width={400} height={200} useMap="#panel-map" />
                     {/* map of img containing clickable areas/sections defined by user*/}
                     <map name="panel-map">
                         {/* ex clickable area
