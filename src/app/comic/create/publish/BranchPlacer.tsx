@@ -98,7 +98,18 @@ const BranchPlacer = () => {
     }
 
     const pushToLocalStorage = () => {
-
+        setPs((prevPs) => {
+            return {
+                current_panel_set_uuid: prevPs.current_panel_set_uuid,
+                parent_branch_uuid: prevPs.parent_branch_uuid,
+                image_paths: [image1Link? image1Link : "/images/previewPlaceholder.png",
+                    image2Link? image2Link : "/images/previewPlaceholder.png",
+                    image3Link? image3Link : "/images/previewPlaceholder.png"],
+                branches: prevPs.branches
+            }
+        });
+        console.log("Publishing to local storage at: " + ps.current_panel_set_uuid);
+        localStorage.setItem(ps.current_panel_set_uuid, JSON.stringify(ps));
     }
 
     return (<>
