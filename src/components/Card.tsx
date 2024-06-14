@@ -5,7 +5,7 @@ import Link from 'next/link';
 export default async function Page()
 {
   return (
-    <div className="d-flex flex-wrap justify-content-center ">
+    <div className="d-flex flex-wrap justify-content-center">
       {Cards.cards.map(person =>
         {return <div className={`card person-panel border-black border-3 m-1 ${person.year}`} key={person.name}>
           <Link href={person.linkedin}>
