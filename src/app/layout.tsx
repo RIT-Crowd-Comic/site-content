@@ -5,11 +5,36 @@ import 'bootstrap/dist/css/bootstrap.css';
 import "../styles/globals.css";
 import BootstrapClient from "../scripts/BootstrapClient";
 
+import localFont from '@next/font/local';
+
 //importing components
 import Navbar from "../components/NavBar"
 import Footer from "../components/footer"
 
 //creating font variables
+const backIssues = localFont({
+  src: 
+  [
+    {
+      path: './fonts/BackIssuesBB_reg.otf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: './fonts/BackIssuesBB_ital.otf',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: './fonts/BackIssuesBB_boldital.otf',
+      weight: '700',
+      style: 'italic',
+    },
+  ],
+  display: 'swap',
+  variable: '--font-back-issues',
+})
+
 const inter = Inter({ 
   subsets: ["latin"], 
   display: 'swap',
@@ -41,7 +66,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${cevicheOne.variable} ${comicNeue.variable}`}>
+    <html lang="en" className={`${inter.variable} ${cevicheOne.variable} ${comicNeue.variable} ${backIssues.variable}`}>
       <body>
         <BootstrapClient />
         <Navbar />
