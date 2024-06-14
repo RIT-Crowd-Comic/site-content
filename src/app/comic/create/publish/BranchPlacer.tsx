@@ -1,4 +1,5 @@
 "use client";
+import '../../../../styles/publish.css'
 
 import {useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -148,6 +149,7 @@ const BranchPlacer = () => {
                 <span className="visually-hidden">Next</span>
             </button>
         </div>
+        <div className="button-container">
         <div className="branch-hooks">
             <div id="branch-hook-controls">
                 <button id="add-branch-hook" onClick={startAdd}>Add Hook</button>
@@ -160,6 +162,7 @@ const BranchPlacer = () => {
             </div>
         </div>
         <button onClick={pushToLocalStorage} id="publish-btn">Publish</button>
+        </div>
     </>);
 }
 
