@@ -110,6 +110,8 @@ const BranchPlacer = () => {
         });
         console.log("Publishing to local storage at: " + ps.current_panel_set_uuid);
         localStorage.setItem(ps.current_panel_set_uuid, JSON.stringify(ps));
+
+        window.location.href = "/comic"
     }
 
     return (<>
