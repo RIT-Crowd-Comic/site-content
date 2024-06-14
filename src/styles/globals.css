@@ -363,7 +363,9 @@ h2, button, .teamTitle{
 
 .iconcolor
 {
-    filter: invert(79%) sepia(16%) saturate(1167%) hue-rotate(354deg) brightness(103%) contrast(104%);
+    filter: invert(100%);
+    /* filter: invert(79%) sepia(16%) saturate(1167%) hue-rotate(354deg) brightness(103%) contrast(104%); */
+    /* Yellow icons ^ */
 }
 
 .copyright{
