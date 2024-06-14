@@ -41,7 +41,7 @@ body, html
     padding: 20px 0;
 } */
 
-h2, button, .teamTitle{
+h2, button {
     font-family: var(--font-ceviche-one);
     font-weight: 400;
     font-size: 8vw;
@@ -225,8 +225,9 @@ h2, button, .teamTitle{
 }
 
 .chapterTitle{
-    font-family: 'Ceviche One';
-    font-size: 20px;
+    font-family: var(--font-ceviche-one);
+    font-size: 2rem;
+    color: var(--grayscale-text-color);
 }
 
 .professors{
@@ -417,10 +418,11 @@ main{
     transform: translate(-50%, -50%);
 }
 
-.card
+.person-panel
 {
     width: 300px;
-    height: 310px;
+    height: 315px;
+    border-radius: 0;
 }
 
 a
@@ -432,9 +434,17 @@ a
 .card-header, .card-footer
 {
     font-size: 1.5rem;
+    border-color: black;
+    border-width: 2px;
+    background-color: #aaaaaa;
 }
 
-
+.teamTitle
+{
+    font-family: var(--font-ceviche-one);
+    font-size: 4rem;
+    color: var(--grayscale-text-color);
+}
 /* X-Small devices (portrait phones, less than 576px)
 No media query for `xs` since this is the default in Bootstrap */
 
