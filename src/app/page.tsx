@@ -27,9 +27,9 @@ export default function Home() {
         </div>
       </div>
       <div className="preview">
-        <Image src="" alt="" />
-        <Image src="" alt="" />
-        <Image src="" alt="" />
+        {/* <Image src="#" alt="" />
+        <Image src="#" alt="" />
+        <Image src="#" alt="" /> */}
       </div>
       <div className="container-fluid read-and-create">
         <div className="read">
