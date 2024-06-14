@@ -184,7 +184,7 @@ h2, button {
     font-weight: 700;
     justify-content: center;
     color: var(--grayscale-text-color);
-    display: inline-block;
+    display:grid;
     justify-content: center;
     text-align: center;
     border-color: var(--grayscale-text-color);
@@ -269,7 +269,6 @@ h2, button {
     margin-left: auto; 
     margin-right: auto; 
     width: 25vw;
-    /* transform: translate(-1vw,0); */
 }
 
 .top-right{
@@ -465,7 +464,7 @@ No media query for `xs` since this is the default in Bootstrap */
         width: 70%;
         margin: 10px 100px;
     }
-   .hero
+    .hero
     {
         height: 300px;
         position: relative;
@@ -502,6 +501,22 @@ No media query for `xs` since this is the default in Bootstrap */
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+    }
+    .form-control{
+        width: 200px;
+    }
+    .form-select{
+    
+    }
+    .input-group{
+    }
+    #search-button{
+        width: 40px;
+        height: 30px;
+    }
+    .filterOpt{
+        /* display:inline-flex; */
+        /* display: grid; */
     }
 }
 
