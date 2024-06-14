@@ -1,4 +1,6 @@
+'use client';
 import Image from "next/image";
+
 
 import process from "node:process";
 import * as fs from "fs";
