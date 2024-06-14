@@ -421,7 +421,7 @@ main{
 .person-panel
 {
     width: 300px;
-    height: 315px;
+    height: 290px;
     border-radius: 0;
 }
 
@@ -433,7 +433,7 @@ a
 
 .card-header, .card-footer
 {
-    font-size: 1.5rem;
+    font-size: 1rem;
     border-color: black;
     border-width: 2px;
     background-color: #aaaaaa;
