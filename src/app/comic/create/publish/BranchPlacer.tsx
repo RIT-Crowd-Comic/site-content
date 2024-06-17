@@ -108,7 +108,7 @@ const BranchPlacer = () => {
     //packages ps and then pushes it to local storage
     const pushToLocalStorage = () => {
         setPs((prevPs) => {
-            return {
+            return { //sets the image paths of the previously uploaded images into ps
                 current_panel_set_uuid: prevPs.current_panel_set_uuid,
                 parent_branch_uuid: prevPs.parent_branch_uuid,
                 image_paths: [image1Link? image1Link : "/images/previewPlaceholder.png",
