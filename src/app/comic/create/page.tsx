@@ -1,3 +1,4 @@
+//This is the create page where image files are uploaded
 'use client';
 import ImagePreview from '../../../components/ImagePreview';
 import Link from 'next/link';

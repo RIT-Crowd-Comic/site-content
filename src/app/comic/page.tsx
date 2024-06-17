@@ -1,3 +1,4 @@
+//This is the reading page where the user can read panels and click on branch hooks to pull up new panels
 import Image from "next/image";
 import "../../styles/read.css";
 
