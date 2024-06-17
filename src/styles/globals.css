@@ -241,12 +241,11 @@ h2, button {
 
 .professors{
     text-align: center;
-    border: 5px solid;
+    /* border: 5px solid; */
     justify-content: center;
 }
 
 .prof-item{
-    border: #009BC6 2px solid;
     margin: 0;
     overflow: hidden;
 }
@@ -254,7 +253,7 @@ h2, button {
 .professors .text{
     background-color: var(--grayscale-text-bg-color);
     color: var(--grayscale-text-color);
-    border: solid 2px var(--grayscale-text-color);
+    border: solid 3px var(--grayscale-text-color);
     margin: 0;
     padding: 2px 2px;
     font-size: 1rem;
@@ -273,8 +272,8 @@ h2, button {
 
 .bottom{
     position: absolute;
-    left: 10; 
-    right: 10; 
+    left: 38%; 
+    right: 35%; 
     margin-left: auto; 
     margin-right: auto; 
     width: 25vw;
@@ -287,6 +286,16 @@ h2, button {
     margin-right: auto; 
     width: 28vw;
     transform: skew(15deg) translate(0, -20px);
+}
+
+.prof-img{
+    width: 30vw;
+    height: 30vw;
+    padding: 0;
+    margin: 0;
+    max-width: 250px;
+    max-height: 250px;
+    /* border: #D91911 solid 2px; */
 }
 
 .footer{
@@ -464,14 +473,16 @@ No media query for `xs` since this is the default in Bootstrap */
     }
 }  */
 
+
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) { 
     main{
         padding: 30px;
     }
     .professors{
-        width: 70%;
-        margin: 10px 100px;
+        /* width: 70%; */
+        /* margin: 10px 100px; */
+        margin: 20px;
     }
     .hero
     {
@@ -534,7 +545,27 @@ No media query for `xs` since this is the default in Bootstrap */
     main{
         padding: 30px 100px;
     }
-
+    .professors .text{
+        font-size: 1.2rem;
+        max-width: 250px;
+    }
+    .top-left{
+        position: absolute;
+        left: 10%;
+        margin-left: auto;
+    }
+    .top-right{
+        position: absolute;
+        align-self: flex-end;
+        right: 10%;
+        margin-right: auto;
+    }
+    .bottom{
+        position: absolute;
+        left: 38%;
+        right: 35%;
+        margin: 0 auto;
+    }
  }
 
 /* X-Large devices (large desktops, 1200px and up) */
