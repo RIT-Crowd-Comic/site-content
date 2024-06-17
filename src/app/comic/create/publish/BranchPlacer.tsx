@@ -32,6 +32,7 @@ const BranchPlacer = () => {
 
     const [ps, setPs] = useState<PanelSet>(startPs);
     
+    //Puts the user in adding mode so they can then click on the panels to add hooks
     const startAdd = () => {
         console.log("You have reached maximum amount of branches");
         if(branCount < 3 ){
@@ -40,6 +41,9 @@ const BranchPlacer = () => {
         }
     }
 
+    /*
+    Adds a branch hook to ps with a new branch
+    */
     const addBranchHook = (panel:number) => {
         if(!adding){ //makes sure the user clicked add hook before 
             console.log("you aren't adding yet");
@@ -72,6 +76,9 @@ const BranchPlacer = () => {
         console.log("No longer adding");
     }
 
+    /*
+    Removes the most recent branch and returns that branch to default
+    */
     const removeBranchHook = () => {
         let bholder = ps.branches;
         for(let i = 0; i < 3; i++){
@@ -98,6 +105,7 @@ const BranchPlacer = () => {
         console.log("branch hook added. Total branch hooks: " + (branCount - 1));
     }
 
+    //packages ps and then pushes it to local storage
     const pushToLocalStorage = () => {
         setPs((prevPs) => {
             return {
