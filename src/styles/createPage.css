@@ -1,0 +1,10 @@
+/*img
+{
+    filter: grayscale(100);
+}*/
+#imagePreviews
+{
+    display: flex;
+    justify-content: center;
+    gap: 10rem;
+}

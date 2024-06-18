@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Hero from "../components/Hero"
-
+import Link
+ from "next/link";
 export default function Home() {
   return (
     <main>
@@ -51,7 +52,7 @@ export default function Home() {
           <div className="row">
             <div className="col"></div>
             <div className="col-auto">
-              <button>Read Now</button>
+              <button><Link href="/comic">Read Now</Link></button>
             </div>
             <div className="col"></div>
           </div>

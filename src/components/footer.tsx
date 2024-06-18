@@ -14,12 +14,12 @@ const Footer = () => {
                 {/* Links */}
                 <div className="col">
                     <div className="footer-nav px-4">
-                        <Link href="#">Crowd Comic</Link>
+                        <Link href="/">Crowd Comic</Link>
                         <></>
                         <ul className="footer-nav-list">
-                            <li><Link href="../">Home</Link></li>
-                            <li><Link href="./team" >Team</Link></li>
-                            <li><Link href="">Comic</Link></li>
+                            <li><Link href="/">Home</Link></li>
+                            <li><Link href="/team" >Team</Link></li>
+                            <li><Link href="/comic">Comic</Link></li>
                         </ul>
                     </div>
                 </div>

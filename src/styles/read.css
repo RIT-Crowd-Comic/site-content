@@ -1,0 +1,51 @@
+#comic-panels {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .first-panel,
+.second-panel,
+.third-panel {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
+  button:hover{
+    background-color: darkgray;
+  }
+
+.branch-hook {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform:translateX(-50%);
+    padding: 5px 10px;
+  }
+
+#first-branch-hook{
+    top: 5%;
+    left: 17%;
+}
+
+#second-branch-hook{
+    top: 60%;
+    left: 15%;
+}
+
+#third-branch-hook{
+    top: 45%;
+    left: 75%;
+}
+
+#back-button {
+    display: block;
+    margin: 20px auto;
+    font-size: 24px;
+  }

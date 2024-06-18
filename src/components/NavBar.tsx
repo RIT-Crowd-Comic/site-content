@@ -25,7 +25,7 @@ const NavBar = () => {
                 <Link className="nav-link" id="teamLink" href="../team">Team</Link>
               </li>
               <li className="nav-item ps-4">
-                <Link className="nav-link" id="comicLink" href="">Comic</Link>
+                <Link className="nav-link" id="comicLink" href="/comic">Comic</Link>
               </li>
               <li className="nav-item ps-3">
                 <button className="btn btn-outline-dark">Login</button>
