@@ -1,7 +1,12 @@
 import Image from "next/image"
 import Hero from "../components/Hero"
+import topMission from "../../public/images/background-boxes/crowd_comic_-_top_mission_box.svg";
+import bottomMission from "../../public/images/background-boxes/crowd_comic_-_bottom_mission_box.svg";
+import middleMission from "../../public/images/background-boxes/crowd_comic_-_middle_mission_box.svg";
+
 import Link
  from "next/link";
+
 export default function Home() {
   return (
     <main>
@@ -13,11 +18,19 @@ export default function Home() {
               <h2>Mission</h2>
             </div>
           </div>
-          <div className="missionimg row">
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis eum exercitationem maxime ab eveniet? Ducimus, sunt. Tempore porro, sapiente commodi ipsa veritatis sequi? Inventore quasi placeat fugit, perferendis velit hic, dolorem deleniti saepe at, assumenda similique quis esse.
-          </p>
-        </div>
+
+          <div className="missionimg row card">
+            <div className="card-img-overlay">
+              <Image className="bottomMission card-img-top" src={bottomMission} alt="" />
+              <Image className="topMission card-img-top" src={topMission} alt="" />
+            </div>  
+            <div className="card-body">
+              <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis eum exercitationem maxime ab eveniet? Ducimus, sunt. Tempore porro, sapiente commodi ipsa veritatis sequi? Inventore quasi placeat fugit, perferendis velit hic, dolorem deleniti saepe at, assumenda similique quis esse atque nobis!
+              </p>
+            </div>
+          </div>
+
         <div className="whatcanido">
           <div className="row">
             <div className="col"></div>

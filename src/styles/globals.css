@@ -66,6 +66,13 @@ h2, button {
     font-weight: 500;
 }
 
+.card
+{
+    --bs-card-bg: transparent;
+    border: none;
+    --bs-card-img-overlay-padding: none;
+}
+
 .mission h2{
     position: relative;
     background: url(../../public/images/background-boxes/Header_Box_Right.svg) no-repeat center/contain;
@@ -92,15 +99,47 @@ h2, button {
 
 .missionimg
 {
-    color: var(--grayscale-text-color);
-    background: url(../../public/images/background-boxes/Mission_Box.svg) no-repeat;
-    background-size: 100% 100%;
-    height: 100vw;
-    margin: -30vw 2vw -15vw -8vw;
-    padding-top: 28vw;
-    padding-left: 8vw;
+    position: relative;
+
+    width: 90%;
+    height: auto;
+    margin: 0 auto;
     font-size: 3.3vw;
+
+    border: solid 3px red;
 }
+
+.middleMission
+{
+    padding-left: 35px;
+}
+
+.topMission
+{
+    position:absolute;
+    top: -20%;
+
+    height: auto;
+}
+
+.bottomMission
+{
+    position:absolute;
+    bottom: -10%;
+
+    height: auto;
+}
+
+.missionimg .card-img-top {
+    z-index: 0;
+}
+      
+.missionimg p {
+    position: relative;
+    z-index: 1;
+    padding: 0 10px 0 40px;
+}
+
 
 .read h2{
     position: relative;
@@ -111,7 +150,6 @@ h2, button {
     margin-bottom: -19vw;
     margin-top: -6vw;
     z-index: 1;
-    
 }
 
 .readimg{
@@ -548,6 +586,20 @@ No media query for `xs` since this is the default in Bootstrap */
         /* display:inline-flex; */
         /* display: grid; */
     }
+    .topMission
+    {
+        position:absolute;
+        top: -40%;
+    
+        height: auto;
+    }
+    .bottomMission
+    {
+        position:absolute;
+        bottom: -20%;
+
+        height: auto;
+    }
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -576,7 +628,7 @@ No media query for `xs` since this is the default in Bootstrap */
         right: 35%;
         margin: 0 auto;
     }
- }
+}
 
 /* X-Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) { 
