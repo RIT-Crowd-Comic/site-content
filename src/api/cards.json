@@ -1,0 +1,109 @@
+{
+  "cards":  [
+    {
+      "name": "Arthur Powers",
+      "role": "Developer",
+      "img": "/images/people/Arthur_Powers.png",
+      "year": "2024",
+      "linkedin": "https://linkedin.com"
+    },
+    {
+      "name": "Chloe Moon",
+      "role": "Designer",
+      "img": "/images/people/Chloe_Moon.png",
+      "year": "2024",
+      "linkedin": "https://linkedin.com"
+    },
+    {
+      "name": "Erin Ford",
+      "role": "Designer",
+      "img": "/images/people/Erin_Ford.png",
+      "year": "2024",
+      "linkedin": "https://linkedin.com"
+    },
+    {
+      "name": "Flynn Lundeen",
+      "role": "Designer",
+      "img": "/images/people/Flynn_Lundeen.png",
+      "year": "2024",
+      "linkedin": "https://linkedin.com"
+    },
+    {
+      "name": "Goose Tarlowski",
+      "role": "Designer",
+      "img": "/images/people/Goose_Tarlowski.png",
+      "year": "2024",
+      "linkedin": "https://linkedin.com"
+    },
+    {
+      "name": "Justin Baez",
+      "role": "Designer",
+      "img": "/images/people/Justin_Baez.png",
+      "year": "2024",
+      "linkedin": "https://linkedin.com"
+    },
+    {
+      "name": "Kovu Bentley",
+      "role": "Developer",
+      "img": "/images/people/Kovu_Bentley.png",
+      "year": "2024",
+      "linkedin": "https://linkedin.com"
+    },
+    {
+      "name": "Nick Altier",
+      "role": "Developer",
+      "img": "/images/people/Nick_Altier.png",
+      "year": "2024",
+      "linkedin": "https://linkedin.com"
+    },
+    {
+      "name": "Nick Bryan",
+      "role": "Designer",
+      "img": "/images/people/Nick_Bryan.png",
+      "year": "2024",
+      "linkedin": "https://linkedin.com"
+    },
+    {
+      "name": "Pierce Williams",
+      "role": "Designer",
+      "img": "/images/people/Pierce_Williams.png",
+      "year": "2024",
+      "linkedin": "https://linkedin.com"
+    },
+    {
+      "name": "Sofia Rivas",
+      "role": "Producer",
+      "img": "/images/people/Sofia_Rivas.png",
+      "year": "2024",
+      "linkedin": "https://linkedin.com"
+    },
+    {
+      "name": "Victoria Lau",
+      "role": "Designer",
+      "img": "/images/people/Victoria_Lau.png",
+      "year": "2024",
+      "linkedin": "https://linkedin.com"
+    },
+    {
+      "name": "Victoria Parsonage Ueda",
+      "role": "Developer",
+      "img": "/images/people/Victoria_Parsonage_Ueda.png",
+      "year": "2024",
+      "linkedin": "https://linkedin.com"
+    },
+    {
+      "name": "William Tallarico",
+      "role": "Developer",
+      "img": "/images/people/William_Tallarico.png",
+      "year": "2024",
+      "linkedin": "https://linkedin.com"
+    },
+    {
+      "name": "Yu Ling Dong",
+      "role": "Designer",
+      "img": "/images/people/YuLing_Dong.png",
+      "year": "2024",
+      "linkedin": "https://linkedin.com"
+    }
+  ]
+}

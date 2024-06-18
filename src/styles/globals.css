@@ -33,25 +33,32 @@
 body, html
 {
     width: 100%;
-    font-family: var(--font-comic-neue);
+    font-family: var(--font-back-issues);
     background-color: var(--grayscale-background-color);
+    overflow-x: hidden;
+    max-width: 100%;
 }
 
-main{
-    padding: 20px 0;
-}
-
-.hero
+body
 {
-    background-image: url(../../public/images/splash_screen.svg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    text-align: center;
+    background-image: radial-gradient(
+      circle at center,
+      #3b3b3b 0.25rem,
+      transparent 0
+    ), radial-gradient(circle at center, #3b3b3b 0.25rem, transparent 0);
+  background-size: 1.3rem 1.3rem;
+  background-position: 0 0, 0.65rem 0.65rem;
 }
 
-h1, button{
+/* main{
+    padding: 20px 0;
+} */
+
+h2, button {
     font-family: var(--font-ceviche-one);
     font-weight: 400;
+    font-size: 8vw;
+    color: var(--grayscale-text-color);
 }
 
 .login{
@@ -60,72 +67,170 @@ h1, button{
 }
 
 .mission h2{
-    color: var(--grayscale-text-color);
-    background-color: var(--grayscale-text-bg-color);
-    border: 20px solid transparent;
-    border-image: url(../../public/images/mission\ box\ -\ small.svg) 30% fill stretch;
+    position: relative;
+    background: url(../../public/images/background-boxes/Header_Box_Right.svg) no-repeat center/contain;
+    padding: 6vw;
+    padding-right: 8vw;
+    z-index: 1;
+    margin-top: 5vw;
+    margin-bottom: -4vw;
+    margin-right: -5vw
 }
 
-.mission p
-{
-    color: var(--grayscale-text-color);
-    background-color: var(--grayscale-text-bg-color);
-    border: 25px solid transparent;
-    border-image: url(../../public/images/mission\ box\ -\ big.svg) 18% stretch;
+.whatcanido h2{
+    position: relative;
+    background: url(../../public/images/background-boxes/Header_Box_Right.svg) no-repeat center/contain;
+    padding: 6vw;
+    padding-left: 4vw;
+    padding-bottom: 8vw;
+    z-index: 1;
+    margin-top: -15vw;
+    margin-bottom: -4vw;
+    margin-right: -7vw;
+    font-size: 7vw;
 }
 
-.read
+.missionimg
 {
     color: var(--grayscale-text-color);
-    background-color: var(--grayscale-text-bg-color);
+    background: url(../../public/images/background-boxes/Mission_Box.svg) no-repeat;
+    background-size: 100% 100%;
+    height: 100vw;
+    margin: -30vw 2vw -15vw -8vw;
+    padding-top: 28vw;
+    padding-left: 8vw;
+    font-size: 3.3vw;
 }
 
 .read h2{
+    position: relative;
     border: 20px solid transparent;
-    border-image: url(../../public/images/read\ box\ -\ small.svg) 30% fill stretch;
+    background: url(../../public/images/background-boxes/Header_Box_Left.svg) no-repeat center/contain;
+    padding: 7vw;
+    margin-left: -12vw;
+    margin-bottom: -19vw;
+    margin-top: -6vw;
+    z-index: 1;
+    
 }
 
-.read p{
-    border: 20px solid transparent;
-    border-image: url(../../public/images/read\ box\ -\ big.svg) 15% stretch;
-}
-
-.create
-{
+.readimg{
     color: var(--grayscale-text-color);
-    background-color: var(--grayscale-text-bg-color);
+    background: url(../../public/images/background-boxes/Read_Box.svg) no-repeat center/contain;
+    height: 60vw;
+    font-size: 3.3vw;
+    padding-top: 7vw;
+    padding-left: 3vw;
+    padding-right: 3vw;
+    margin-bottom: -7vw
 }
 
 .create h2{
+    position: relative;
     border: 20px solid transparent;
-    border-image: url(../../public/images/create\ box\ -\ small.svg) 30% fill stretch;
+    background: url(../../public/images/background-boxes/Header_Box_Right.svg) no-repeat center/contain;
+    padding-top: 7vw;
+    padding-bottom: 7vw;
+    padding-left: 6vw;
+    padding-right: 9vw;
+    margin-right: -13vw;
+    margin-bottom: -17vw;
+    margin-top: -8vw;
+    z-index: 1;
 }
 
-.create p{
-    border: 20px solid transparent;
-    border-image: url(../../public/images/create\ box\ -\ big.svg) 15% stretch;
+.createimg{
+    background: url(../../public/images/background-boxes/Create_Box.svg) no-repeat center/contain;
+    height: 60vw;
+    font-size: 3.3vw;
+    padding-top: 7vw;
+    padding-left: 4vw;
+    margin-bottom: -7vw
 }
 
-.read button, .create button{
+.read button{
+    position: relative;
     border: 10px solid transparent;
-    border-image: url(../../public/images/read\ box\ -\ button.svg) 13% fill stretch;
+    background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
+    margin-top: -5vw;
+    margin-right: 3vw;
+    padding: 6vw;
+    padding-bottom: 7vw;
+    font-size: 6vw;
+    z-index: 1;
 }
 
-.teamTitle{
+.create button{
+    position: relative;
+    border: 10px solid transparent;
+    background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
+    margin-top: -5vw;
+    padding: 5vw;
+    padding-bottom: 7vw;
+    font-size: 6vw;
+    z-index: 1;
+}
+
+.our-team
+{
+    background: url(../../public/images/background-boxes/OurTeam_Background.svg) no-repeat center/contain;
+    padding: 6vw;
+}
+
+.our-team button
+{
+    position: relative;
+    border: transparent;
+    background: url(../../public/images/background-boxes/Team_Box.svg) no-repeat center/contain;
+    padding: 5vw;
+    font-size: 6vw;
+}
+
+.teamTitle
+{
     font-size: 50px;
+    color: var(--grayscale-text-bg-color);
 }
 
-.filter .btn{
-    font-size: 15px;
+.filter {
+    font-size: 18px;
     font-weight: 700;
     justify-content: center;
+    color: var(--grayscale-text-color);
+    display:grid;
+    justify-content: center;
+    text-align: center;
+    border-color: var(--grayscale-text-color);
+}
+
+.filter .accordion-button:hover{
+    color: var(--grayscale-text-bg-color);
+    background-color: var(--grayscale-text-color);
+}
+
+.accordion-body{
+    background-color: var(--grayscale-background-color);
+}
+
+.clearAll{
+    color:var(--grayscale-text-bg-color);  
+}
+
+.clearAll:hover{
     color: var(--grayscale-primary-color);
 }
 
-.filter .btn:hover{
-    color: var(--grayscale-text-bg-color);
-    background-color: var(--grayscale-text-color);
-    border: var(--grayscale-primary-color) 2px solid;
+.form-control, .form-select{
+    background-color: var(--grayscale-primary-color);
+    color: var(--grayscale-text-color);
+}
+
+.form-control{
+    border-radius: 6px 0 0 6px;
+}
+
+.form-select option{
+    background-color: var(--grayscale-text-bg-color);   
 }
 
 .creatorGroup{
@@ -133,21 +238,69 @@ h1, button{
 }
 
 .chapterTitle{
-    font-family: 'Ceviche One';
-    font-size: 20px;
-    /* border: 2px solid var(--grayscale-primary-color);   */
+    font-family: var(--font-ceviche-one);
+    font-size: 2rem;
+    color: var(--grayscale-text-bg-color);
 }
 
 .professors{
-    display: inline-Flex;
     text-align: center;
-    border: 5px solid;
+    /* border: 5px solid; */
     justify-content: center;
 }
 
 .prof-item{
-    border: #009BC6 2px solid;
     margin: 0;
+    overflow: hidden;
+}
+
+.professors .text{
+    background-color: var(--grayscale-text-bg-color);
+    color: var(--grayscale-text-color);
+    border: solid 3px var(--grayscale-text-color);
+    margin: 0;
+    padding: 2px 2px;
+    font-size: 1rem;
+    font-weight: bolder;
+    overflow: hidden;
+}
+
+.top-left{
+    position: absolute;
+    left: 5vw; 
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 28vw;
+    transform: skew(-15deg) translate(0,-20px);
+}
+
+.bottom{
+    position: absolute;
+    left: 38%; 
+    right: 35%; 
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 25vw;
+}
+
+.top-right{
+    position: absolute;
+    right: 5vw;
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 28vw;
+    transform: skew(15deg) translate(0, -20px);
+}
+
+.prof-img{
+    width: 30vw;
+    height: 30vw;
+    padding: 0;
+    margin: 0;
+    max-width: 250px;
+    max-height: 250px;
+    filter: grayscale(1);
+    /* border: #D91911 solid 2px; */
 }
 
 .footer{
@@ -171,7 +324,7 @@ h1, button{
 
 .footer-nav-list li
 {
-    font-family: var(--font-comic-neue);
+    font-family: var(--font-back-issues);
     font-size: medium;
     display: inline-block;
     padding-right: 10px;
@@ -206,6 +359,7 @@ h1, button{
 .fa
 {
     width: 30px;
+    height: 30px;
     border-radius: 50%;
     background-color: var(--secondary-color);
     color: var(--primary-color);
@@ -218,22 +372,117 @@ h1, button{
     opacity: 0.7;
 }
 
+.icondiv
+{
+    position:relative;
+    width: 25px;
+    height: 25px;
+}
+
+.icondiv:hover
+{
+    opacity: 0.7;
+}
+
+.iconcolor
+{
+    filter: invert(100%);
+    /* filter: invert(79%) sepia(16%) saturate(1167%) hue-rotate(354deg) brightness(103%) contrast(104%); */
+    /* Yellow icons ^ */
+}
+
 .copyright{
     color: var(--grayscale-primary-color);
     font-size:medium;
     text-align: center;
 }
 
+main{
+    padding: 30px;
+}
 
+.hero
+{
+    height: 300px;
+}
+
+.heroimg
+{
+    height: 300px;
+}
+
+.rightspikes
+{
+    height: 300px;
+    max-width: 600px;
+    position:absolute;
+    right: 0;
+    top: 0;
+}
+
+.leftspikes
+{
+    height: 300px;
+    max-width: 600px;
+    position:absolute;
+    left: 0;
+    top: 0;
+}
+
+.splashlogo
+{
+    width: 70%;
+    height: auto;
+    max-width: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.person-panel
+{
+    width: 300px;
+    height: 290px;
+    border-radius: 0;
+}
+
+.portrait
+{
+    filter: grayscale(1);
+}
+
+a
+{
+    color: black;
+    text-decoration: none;
+}
+
+.card-header, .card-footer
+{
+    font-size: 1rem;
+    border-color: black;
+    border-width: 2px;
+    background-color: #aaaaaa;
+}
+
+.teamTitle
+{
+    font-family: var(--font-ceviche-one);
+    font-size: 4rem;
+    color: var(--grayscale-text-bg-color);
+}
 /* X-Small devices (portrait phones, less than 576px)
 No media query for `xs` since this is the default in Bootstrap */
 
 /* Small devices (landscape phones, 576px and up) */
-/* @media (min-width: 576px) { 
+
+ /* @media (min-width: 576px) { 
     main{
         padding: 30px;
     }
-} */
+}  */
+
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) { 
@@ -241,8 +490,63 @@ No media query for `xs` since this is the default in Bootstrap */
         padding: 30px;
     }
     .professors{
-        width: 70%;
-        margin: 10px 100px;
+        /* width: 70%; */
+        /* margin: 10px 100px; */
+        margin: 20px;
+    }
+    .hero
+    {
+        height: 300px;
+        position: relative;
+    }
+    .heroimg
+    {
+        max-height: 300px;
+    }
+
+    .rightspikes
+    {
+        max-height: 300px;
+        max-width: 600px;
+        position:absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .leftspikes
+    {
+        max-height: 300px;
+        max-width: 600px;
+        position:absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .splashlogo
+    {
+        width: 50%;
+        height: auto;
+        max-width: 300px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .form-control{
+        width: 200px;
+    }
+    .form-select{
+    
+    }
+    .input-group{
+    }
+    #search-button{
+        width: 40px;
+        height: 30px;
+    }
+    .filterOpt{
+        /* display:inline-flex; */
+        /* display: grid; */
     }
 }
 
@@ -251,11 +555,39 @@ No media query for `xs` since this is the default in Bootstrap */
     main{
         padding: 30px 100px;
     }
-
+    .professors .text{
+        font-size: 1.2rem;
+        max-width: 250px;
+    }
+    .top-left{
+        position: absolute;
+        left: 10%;
+        margin-left: auto;
+    }
+    .top-right{
+        position: absolute;
+        align-self: flex-end;
+        right: 10%;
+        margin-right: auto;
+    }
+    .bottom{
+        position: absolute;
+        left: 38%;
+        right: 35%;
+        margin: 0 auto;
+    }
  }
 
 /* X-Large devices (large desktops, 1200px and up) */
-/* @media (min-width: 1200px) { ... } */
+@media (min-width: 1200px) { 
+    .bottom{
+        left: 40%;
+    }
+}
 
 /* XX-Large devices (larger desktops, 1400px and up) */
-/* @media (min-width: 1400px) { ... } */
+@media (min-width: 1400px) { 
+    .bottom{
+        left: 41%;
+    }
+}
