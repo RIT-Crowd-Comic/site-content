@@ -1,9 +1,11 @@
 import Image from "next/image"
 import Hero from "../components/Hero"
-
 import topMission from "../../public/images/background-boxes/crowd_comic_-_top_mission_box.svg";
 import bottomMission from "../../public/images/background-boxes/crowd_comic_-_bottom_mission_box.svg";
 import middleMission from "../../public/images/background-boxes/crowd_comic_-_middle_mission_box.svg";
+
+import Link
+ from "next/link";
 
 export default function Home() {
   return (
@@ -16,6 +18,7 @@ export default function Home() {
               <h2>Mission</h2>
             </div>
           </div>
+
           <div className="missionimg row card">
             <div className="card-img-overlay">
               <Image className="bottomMission card-img-top" src={bottomMission} alt="" />
@@ -27,6 +30,7 @@ export default function Home() {
               </p>
             </div>
           </div>
+
         <div className="whatcanido">
           <div className="row">
             <div className="col"></div>
@@ -61,7 +65,7 @@ export default function Home() {
           <div className="row">
             <div className="col"></div>
             <div className="col-auto">
-              <button>Read Now</button>
+              <button><Link href="/comic">Read Now</Link></button>
             </div>
             <div className="col"></div>
           </div>

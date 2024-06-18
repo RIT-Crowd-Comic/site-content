@@ -35,6 +35,8 @@ body, html
     width: 100%;
     font-family: var(--font-back-issues);
     background-color: var(--grayscale-background-color);
+    overflow-x: hidden;
+    max-width: 100%;
 }
 
 body
@@ -222,8 +224,10 @@ h2, button {
     font-size: 6vw;
 }
 
-.teamTitle{
+.teamTitle
+{
     font-size: 50px;
+    color: var(--grayscale-text-bg-color);
 }
 
 .filter {
@@ -274,7 +278,7 @@ h2, button {
 .chapterTitle{
     font-family: var(--font-ceviche-one);
     font-size: 2rem;
-    color: var(--grayscale-text-color);
+    color: var(--grayscale-text-bg-color);
 }
 
 .professors{
@@ -333,6 +337,7 @@ h2, button {
     margin: 0;
     max-width: 250px;
     max-height: 250px;
+    filter: grayscale(1);
     /* border: #D91911 solid 2px; */
 }
 
@@ -357,7 +362,7 @@ h2, button {
 
 .footer-nav-list li
 {
-    font-family: var(--font-comic-neue);
+    font-family: var(--font-back-issues);
     font-size: medium;
     display: inline-block;
     padding-right: 10px;
@@ -480,6 +485,11 @@ main{
     border-radius: 0;
 }
 
+.portrait
+{
+    filter: grayscale(1);
+}
+
 a
 {
     color: black;
@@ -498,7 +508,7 @@ a
 {
     font-family: var(--font-ceviche-one);
     font-size: 4rem;
-    color: var(--grayscale-text-color);
+    color: var(--grayscale-text-bg-color);
 }
 /* X-Small devices (portrait phones, less than 576px)
 No media query for `xs` since this is the default in Bootstrap */

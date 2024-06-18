@@ -1,0 +1,45 @@
+.carousel-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .carousel-item {
+    left: -200px;
+  }
+  
+  .carousel-item img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .button-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .branch-hooks{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 24px;
+  }
+
+  #branch-hook-controls{
+    display: flex;
+    margin-bottom: 10px;
+    gap: 10px;
+  }
+
+  #publish-btn {
+    margin-top: 20px;
+    font-size: 30px;
+  }
+
+  button:hover{
+    background-color: darkgray;
+  }
+  
