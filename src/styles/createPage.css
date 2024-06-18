@@ -8,3 +8,9 @@
     justify-content: center;
     gap: 10rem;
 }
+canvas
+{
+    border-style: solid;
+    background-color: white;
+    cursor: pointer;
+}
