@@ -1,8 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { MouseEvent } from 'react';
-import { TouchEvent } from 'react';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
 const CreateToolsCanvas = () =>
@@ -33,7 +31,7 @@ const CreateToolsCanvas = () =>
 
         // Set default values for context here
         context.strokeStyle = "black";
-        context.lineWidth = 2;
+        context.lineWidth = 5;
         context.lineCap = "round";
         context.lineJoin = "round";
 
@@ -46,8 +44,10 @@ const CreateToolsCanvas = () =>
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
 
     // Begins the process of drawing the user's input to the canvas HTMLElement
-    function startDraw(event: MouseEvent)
+    function startDraw({nativeEvent})
     {
+        const {offsetX, offsetY} = nativeEvent;
+
         // Change the draw state to true as drawing has started
         setIsDrawing(true);
 
@@ -55,17 +55,19 @@ const CreateToolsCanvas = () =>
         contextReference.current?.beginPath();
         
         // Track the user's input
-        contextReference.current?.moveTo(event.clientX - canvasReference?.current?.offsetLeft, event.clientY - canvasReference?.current?.offsetTop);
+        contextReference.current?.moveTo(offsetX, offsetY);
     }
 
     // Draws the user's input to the canvas HTMLElement
-    function draw(event: MouseEvent)
+    function draw({nativeEvent})
     {
         // If the user is still drawing...
         if(isDrawing)
         {
+            const {offsetX, offsetY} = nativeEvent;
+
             // Draw a line at the user's current position
-            contextReference.current?.lineTo(event.clientX - canvasReference?.current?.offsetLeft, event.clientY - canvasReference?.current?.offsetTop);
+            contextReference.current?.lineTo(offsetX, offsetY);
 
             // TODO: Capture tool values and set them to the context here
             //contextReference.current?.strokeStyle = drawColor;
@@ -78,7 +80,7 @@ const CreateToolsCanvas = () =>
     }
 
     // Stops drawing to the canvas HTMLElement
-    function stopDraw(event: MouseEvent)
+    function stopDraw()
     {
         // Disables tracking the user's input and stops drawing to the canvas
         contextReference.current?.closePath();
@@ -106,6 +108,31 @@ const CreateToolsCanvas = () =>
                 //onTouchMove={draw}
                 //onTouchEnd={stop}
             />
+
+            <fieldset>
+                <legend>Tools</legend>
+
+                <div>
+                    <input 
+                        type="radio"
+                        id="pen"
+                        name="tools"
+                        value="pen"
+                        defaultChecked
+                    />
+                    <label htmlFor="pen">Pen</label>
+                </div>
+
+                <div>
+                    <input 
+                        type="radio"
+                        id="eraser"
+                        name="tools"
+                        value="eraser"
+                    />
+                    <label htmlFor="eraser">Eraser</label>
+                </div>
+            </fieldset>
         </div>
     )
 }
