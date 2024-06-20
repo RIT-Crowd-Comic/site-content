@@ -29,6 +29,10 @@ const CreateToolsCanvas = () =>
             return;
         }
 
+        //sets background to white
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
         // Set default values for context here
         context.strokeStyle = "black";
         context.lineWidth = 5;
@@ -144,6 +148,7 @@ const CreateToolsCanvas = () =>
             // Reset the source in case it is switching from the eraser tool
             contextReference.current.globalCompositeOperation="source-over";
             // Fill the canvas
+            contextReference.current.fillStyle = "#000000";
             contextReference.current?.fillRect(0, 0, canvasReference.current?.width, canvasReference.current?.height);
         }
     }
@@ -152,6 +157,8 @@ const CreateToolsCanvas = () =>
     function clearCanvas()
     {
         contextReference.current?.clearRect(0, 0, canvasReference.current?.width, canvasReference.current?.height);
+        contextReference.current.fillStyle = "#ffffff";
+        contextReference.current?.fillRect(0, 0, canvasReference.current?.width, canvasReference.current?.height);
     }
 
     // Undoes the last stroke to the canvas
