@@ -483,11 +483,15 @@ main{
     width: 300px;
     height: 290px;
     border-radius: 0;
+    position: relative;
+    background-color: white;
 }
 
 .portrait
 {
     filter: grayscale(1);
+    border: #000000;
+    border-width: 1px;
 }
 
 a
@@ -496,12 +500,26 @@ a
     text-decoration: none;
 }
 
-.card-header, .card-footer
+ .card-footer
 {
     font-size: 1rem;
     border-color: black;
     border-width: 2px;
-    background-color: #aaaaaa;
+    background: #aaaaaa;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.card-header
+{
+    font-size: 1rem;
+    border-color: black;
+    border-width: 2px;
+    background: #aaaaaa;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 
 .teamTitle
