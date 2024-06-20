@@ -43,6 +43,10 @@ const CreateToolsCanvas = () =>
     // Boolean used to determine if the user is still drawing (holding their mouse or touch down on the canvas)
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
 
+    // Array used to hold the history of edits made to the canvas.  Will be updated any time a change is made and will be used for undo and redo functionality
+    const [editHistory, setEditHistory] = useState([]);
+    const [historyIndex, setHistoryIndex] = useState(-1);
+
     // Create an enum with all of the different possible tool states
     const toolStates = Object.freeze({
         PEN: 0,
@@ -53,7 +57,7 @@ const CreateToolsCanvas = () =>
         STICKER: 5
     });
     // Holds a reference the currently selected tool 
-    const [toolSelected, setToolSelected] = useState<number>(0);
+    const [toolSelected, setToolSelected] = useState(0);
 
     // Find which radioButton is currently selected and update the state of the tool selected
     const findSelected = () =>
@@ -88,7 +92,10 @@ const CreateToolsCanvas = () =>
             // Draw a line at the user's current position
             contextReference.current?.lineTo(offsetX, offsetY);
 
-            // Change how user input is drawn based on the tool they've selected
+            /*  Change how user input is drawn based on the tool they've selected
+                Based on two different drawing types source-over vs destination-out
+                Source-over: Draws on top of prexisting canvas
+                Destination-out: Existing content is kept where it does not overlap with the new shape*/
             if(toolSelected == toolStates.PEN)
             {
                 contextReference.current.globalCompositeOperation="source-over";
@@ -107,19 +114,67 @@ const CreateToolsCanvas = () =>
     }
 
     // Stops drawing to the canvas HTMLElement
-    function stopDraw()
+    function stopDraw(event: MouseEvent)
     {
         // Disables tracking the user's input and stops drawing to the canvas
         contextReference.current?.closePath();
 
         // Change the draw state to false as there is nothing being drawn to the canvas
         setIsDrawing(false);
+
+        if(event.type != 'mouseout')
+        {
+            // Create a temp array in order to add to it (access to original is protected as it is a react state variable)
+            let newHistory = editHistory;
+            newHistory.push(contextReference.current?.getImageData(0, 0, canvasReference.current?.width, canvasReference.current?.height));
+
+            // Set the history array to the updated one
+            setEditHistory(newHistory);
+
+            // Update the current index
+            setHistoryIndex(historyIndex + 1);
+        }
+    }
+
+    // Fills the canvas with the current selected color
+    function fill()
+    {
+        if(toolSelected == toolStates.FILL)
+        {
+            // Reset the source in case it is switching from the eraser tool
+            contextReference.current.globalCompositeOperation="source-over";
+            // Fill the canvas
+            contextReference.current?.fillRect(0, 0, canvasReference.current?.width, canvasReference.current?.height);
+        }
     }
 
     // Erases everything from the current canvas layer
     function clearCanvas()
     {
         contextReference.current?.clearRect(0, 0, canvasReference.current?.width, canvasReference.current?.height);
+    }
+
+    // Undoes the last stroke to the canvas
+    function undo()
+    {
+        if(historyIndex < 0)
+        {
+            contextReference.current?.clearRect(0, 0, canvasReference.current?.width, canvasReference.current?.height);
+        }
+        else
+        {
+            setHistoryIndex(historyIndex - 1);
+            contextReference.current?.putImageData(editHistory[historyIndex], 0, 0);
+        }
+    }
+
+    function redo()
+    {
+        if(historyIndex > -1 && historyIndex <= editHistory.length - 1)
+        {
+            setHistoryIndex(historyIndex + 1);
+            contextReference.current?.putImageData(editHistory[historyIndex], 0, 0);
+        }
     }
 
     // Return the canvas HTMLElement and its associated functionality
@@ -140,7 +195,7 @@ const CreateToolsCanvas = () =>
 
                     <div id="fillTool">
                         <input type="radio" name="tools" id="fill" value={toolStates.FILL} onChange={findSelected}/>
-                        <label htmlFor="fill">Fill (NOT FUNCTIONAL)</label>
+                        <label htmlFor="fill">Fill</label>
                     </div>
 
                     <div id="shapeTool">
@@ -159,9 +214,9 @@ const CreateToolsCanvas = () =>
                     </div>
                 </div>
 
-                <button className="btn" id="redoButton">Redo (NOT FUNCTIONAL)</button>
-                <button className="btn" id="undoButton">Undo (NOT FUNCTIONAL)</button>
-                <button className="btn" id="clearButton" onClick={clearCanvas}>Clear</button>
+                <button className="btn" id="redoButton" onClick={redo}>Redo (NOT FUNCTIONAL)</button><br></br>
+                <button className="btn" id="undoButton" onClick={undo}>Undo (NOT FUNCTIONAL)</button><br></br>
+                <button className="btn" id="clearButton" onClick={clearCanvas}>Clear</button><br></br>
             </fieldset>
 
             <canvas id="canvas"
@@ -174,6 +229,7 @@ const CreateToolsCanvas = () =>
                 onMouseMove={draw}
                 onMouseUp={stopDraw}
                 onMouseOut={stopDraw}
+                onClick={fill}
 
                 // Mobile Events
                 //onTouchStart={startDraw}
