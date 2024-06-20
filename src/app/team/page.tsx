@@ -8,7 +8,7 @@ const TeamPage = () => {
     <main id='teamPage'>
       {/* Content */}
       <div className="content text-center">
-        <h1 className="teamTitle">Meet the Creators!</h1>
+        <h1 className="teamTitle">Meet the Creators!</h1> 
         <Filter />
         {/* Creator Group */}
         <div className="creatorGroup p-3 pb-4 m-4" id="2024">
