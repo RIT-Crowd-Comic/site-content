@@ -50,9 +50,7 @@ const CreateToolsCanvas = () =>
         FILL: 2,
         SHAPE: 3, 
         TEXT: 4,
-        STICKER: 5,
-        REDO: 6,
-        UNDO: 7
+        STICKER: 5
     });
     // Holds a reference the currently selected tool 
     const [toolSelected, setToolSelected] = useState<number>(0);
@@ -118,6 +116,12 @@ const CreateToolsCanvas = () =>
         setIsDrawing(false);
     }
 
+    // Erases everything from the current canvas layer
+    function clearCanvas()
+    {
+        contextReference.current?.clearRect(0, 0, canvasReference.current?.width, canvasReference.current?.height);
+    }
+
     // Return the canvas HTMLElement and its associated functionality
     return(
         <div id="createPage">
@@ -153,17 +157,11 @@ const CreateToolsCanvas = () =>
                         <input type="radio" name="tools" id="sticker" value={toolStates.STICKER} onChange={findSelected}/>
                         <label htmlFor="sticker">Sticker (NOT FUNCTIONAL)</label>
                     </div>
-
-                    <div id="redoTool">
-                        <input type="radio" name="tools" id="redo" value={toolStates.REDO} onChange={findSelected}/>
-                        <label htmlFor="redo">Redo (NOT FUNCTIONAL)</label>
-                    </div>
-
-                    <div id="undoTool">
-                        <input type="radio" name="tools" id="undo" value={toolStates.UNDO} onChange={findSelected}/>
-                        <label htmlFor="undo">Undo (NOT FUNCTIONAL)</label>
-                    </div>
                 </div>
+
+                <button className="btn" id="redoButton">Redo (NOT FUNCTIONAL)</button>
+                <button className="btn" id="undoButton">Undo (NOT FUNCTIONAL)</button>
+                <button className="btn" id="clearButton" onClick={clearCanvas}>Clear</button>
             </fieldset>
 
             <canvas id="canvas"
