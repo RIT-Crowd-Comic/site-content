@@ -1,12 +1,12 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
 const CreateToolsCanvas = () =>
 {
-    // Sets up the canvas to be edited
-    // Need to capture references to the HTML Elements.  This is performed in useEffect()
+    // Need to capture references to the HTML Elements.  canvasRef and contextRef is performed in useEffect().  
+    // Using useRef as this only needs to be done once and avoids rerendering the page.
     const canvasReference = useRef<HTMLCanvasElement | null>(null);
     const contextReference = useRef<CanvasRenderingContext2D>();
 
@@ -42,6 +42,27 @@ const CreateToolsCanvas = () =>
     // State Variables:
     // Boolean used to determine if the user is still drawing (holding their mouse or touch down on the canvas)
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
+
+    // Create an enum with all of the different possible tool states
+    const toolStates = Object.freeze({
+        PEN: 0,
+        ERASER: 1,
+        FILL: 2,
+        SHAPE: 3, 
+        TEXT: 4,
+        STICKER: 5,
+        REDO: 6,
+        UNDO: 7
+    });
+    // Holds a reference the currently selected tool 
+    const [toolSelected, setToolSelected] = useState<number>(0);
+
+    // Find which radioButton is currently selected and update the state of the tool selected
+    const findSelected = () =>
+    {
+        let buttonSelected = document.querySelector("input[name='tools']:checked");
+        setToolSelected(buttonSelected?.value);
+    }
 
     // Begins the process of drawing the user's input to the canvas HTMLElement
     function startDraw({nativeEvent})
@@ -89,6 +110,11 @@ const CreateToolsCanvas = () =>
         setIsDrawing(false);
     }
 
+    function test()
+    {
+        console.log(toolSelected);
+    }
+
     // Return the canvas HTMLElement and its associated functionality
     return(
         <div>
@@ -111,28 +137,50 @@ const CreateToolsCanvas = () =>
 
             <fieldset>
                 <legend>Tools</legend>
+                <div id="toolRadioSelects">
+                    <div id="penTool">
+                        <input type="radio" name="tools" id="pen" value={toolStates.PEN} defaultChecked onChange={findSelected}/>
+                        <label htmlFor="pen">Pen</label>
+                    </div>
 
-                <div>
-                    <input 
-                        type="radio"
-                        id="pen"
-                        name="tools"
-                        value="pen"
-                        defaultChecked
-                    />
-                    <label htmlFor="pen">Pen</label>
-                </div>
+                    <div id="eraserTool">
+                        <input type="radio" name="tools" id="eraser" value={toolStates.ERASER} onChange={findSelected}/>
+                        <label htmlFor="eraser">Eraser (NOT FUNCTIONAL)</label>
+                    </div>
 
-                <div>
-                    <input 
-                        type="radio"
-                        id="eraser"
-                        name="tools"
-                        value="eraser"
-                    />
-                    <label htmlFor="eraser">Eraser</label>
+                    <div id="fillTool">
+                        <input type="radio" name="tools" id="fill" value={toolStates.FILL} onChange={findSelected}/>
+                        <label htmlFor="eraser">Fill (NOT FUNCTIONAL)</label>
+                    </div>
+
+                    <div id="shapeTool">
+                        <input type="radio" name="tools" id="shape" value={toolStates.SHAPE} onChange={findSelected}/>
+                        <label htmlFor="eraser">Shape (NOT FUNCTIONAL)</label>
+                    </div>
+
+                    <div id="textTool">
+                        <input type="radio" name="tools" id="text" value={toolStates.TEXT} onChange={findSelected}/>
+                        <label htmlFor="eraser">Text (NOT FUNCTIONAL)</label>
+                    </div>
+
+                    <div id="stickerTool">
+                        <input type="radio" name="tools" id="sticker" value={toolStates.STICKER} onChange={findSelected}/>
+                        <label htmlFor="eraser">Sticker (NOT FUNCTIONAL)</label>
+                    </div>
+
+                    <div id="redoTool">
+                        <input type="radio" name="tools" id="redo" value={toolStates.REDO} onChange={findSelected}/>
+                        <label htmlFor="eraser">Redo (NOT FUNCTIONAL)</label>
+                    </div>
+
+                    <div id="undoTool">
+                        <input type="radio" name="tools" id="undo" value={toolStates.UNDO} onChange={findSelected}/>
+                        <label htmlFor="eraser">Undo (NOT FUNCTIONAL)</label>
+                    </div>
                 </div>
             </fieldset>
+
+            <button onClick={test}>Click me</button>
         </div>
     )
 }
