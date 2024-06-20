@@ -14,3 +14,16 @@ canvas
     background-color: white;
     cursor: pointer;
 }
+#createPage
+{
+    display: flex;
+    flex-direction: row;    
+}
+#toolRadioSelects
+{
+    order: 0;
+}
+#canvas
+{
+    order: 1;
+}

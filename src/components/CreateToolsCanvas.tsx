@@ -90,8 +90,16 @@ const CreateToolsCanvas = () =>
             // Draw a line at the user's current position
             contextReference.current?.lineTo(offsetX, offsetY);
 
-            // TODO: Capture tool values and set them to the context here
-            //contextReference.current?.strokeStyle = drawColor;
+            // Change how user input is drawn based on the tool they've selected
+            if(toolSelected == toolStates.PEN)
+            {
+                contextReference.current.globalCompositeOperation="source-over";
+            }
+            else if(toolSelected == toolStates.ERASER)
+            {
+                contextReference.current.globalCompositeOperation="destination-out";
+            }
+
             //contextReference.current?.lineWidth = drawWidth;
             //contextReference.current?.lineCap = "round";
             //contextReference.current?.lineJoin = "round";
@@ -110,14 +118,54 @@ const CreateToolsCanvas = () =>
         setIsDrawing(false);
     }
 
-    function test()
-    {
-        console.log(toolSelected);
-    }
-
     // Return the canvas HTMLElement and its associated functionality
     return(
-        <div>
+        <div id="createPage">
+            <fieldset>
+                <legend>Tools</legend>
+                <div id="toolRadioSelects">
+                    <div id="penTool">
+                        <input type="radio" name="tools" id="pen" value={toolStates.PEN} defaultChecked onChange={findSelected}/>
+                        <label htmlFor="pen">Pen</label>
+                    </div>
+
+                    <div id="eraserTool">
+                        <input type="radio" name="tools" id="eraser" value={toolStates.ERASER} onChange={findSelected}/>
+                        <label htmlFor="eraser">Eraser</label>
+                    </div>
+
+                    <div id="fillTool">
+                        <input type="radio" name="tools" id="fill" value={toolStates.FILL} onChange={findSelected}/>
+                        <label htmlFor="fill">Fill (NOT FUNCTIONAL)</label>
+                    </div>
+
+                    <div id="shapeTool">
+                        <input type="radio" name="tools" id="shape" value={toolStates.SHAPE} onChange={findSelected}/>
+                        <label htmlFor="shape">Shape (NOT FUNCTIONAL)</label>
+                    </div>
+
+                    <div id="textTool">
+                        <input type="radio" name="tools" id="text" value={toolStates.TEXT} onChange={findSelected}/>
+                        <label htmlFor="text">Text (NOT FUNCTIONAL)</label>
+                    </div>
+
+                    <div id="stickerTool">
+                        <input type="radio" name="tools" id="sticker" value={toolStates.STICKER} onChange={findSelected}/>
+                        <label htmlFor="sticker">Sticker (NOT FUNCTIONAL)</label>
+                    </div>
+
+                    <div id="redoTool">
+                        <input type="radio" name="tools" id="redo" value={toolStates.REDO} onChange={findSelected}/>
+                        <label htmlFor="redo">Redo (NOT FUNCTIONAL)</label>
+                    </div>
+
+                    <div id="undoTool">
+                        <input type="radio" name="tools" id="undo" value={toolStates.UNDO} onChange={findSelected}/>
+                        <label htmlFor="undo">Undo (NOT FUNCTIONAL)</label>
+                    </div>
+                </div>
+            </fieldset>
+
             <canvas id="canvas"
                 height="800px"
                 width="1200px"
@@ -134,53 +182,6 @@ const CreateToolsCanvas = () =>
                 //onTouchMove={draw}
                 //onTouchEnd={stop}
             />
-
-            <fieldset>
-                <legend>Tools</legend>
-                <div id="toolRadioSelects">
-                    <div id="penTool">
-                        <input type="radio" name="tools" id="pen" value={toolStates.PEN} defaultChecked onChange={findSelected}/>
-                        <label htmlFor="pen">Pen</label>
-                    </div>
-
-                    <div id="eraserTool">
-                        <input type="radio" name="tools" id="eraser" value={toolStates.ERASER} onChange={findSelected}/>
-                        <label htmlFor="eraser">Eraser (NOT FUNCTIONAL)</label>
-                    </div>
-
-                    <div id="fillTool">
-                        <input type="radio" name="tools" id="fill" value={toolStates.FILL} onChange={findSelected}/>
-                        <label htmlFor="eraser">Fill (NOT FUNCTIONAL)</label>
-                    </div>
-
-                    <div id="shapeTool">
-                        <input type="radio" name="tools" id="shape" value={toolStates.SHAPE} onChange={findSelected}/>
-                        <label htmlFor="eraser">Shape (NOT FUNCTIONAL)</label>
-                    </div>
-
-                    <div id="textTool">
-                        <input type="radio" name="tools" id="text" value={toolStates.TEXT} onChange={findSelected}/>
-                        <label htmlFor="eraser">Text (NOT FUNCTIONAL)</label>
-                    </div>
-
-                    <div id="stickerTool">
-                        <input type="radio" name="tools" id="sticker" value={toolStates.STICKER} onChange={findSelected}/>
-                        <label htmlFor="eraser">Sticker (NOT FUNCTIONAL)</label>
-                    </div>
-
-                    <div id="redoTool">
-                        <input type="radio" name="tools" id="redo" value={toolStates.REDO} onChange={findSelected}/>
-                        <label htmlFor="eraser">Redo (NOT FUNCTIONAL)</label>
-                    </div>
-
-                    <div id="undoTool">
-                        <input type="radio" name="tools" id="undo" value={toolStates.UNDO} onChange={findSelected}/>
-                        <label htmlFor="eraser">Undo (NOT FUNCTIONAL)</label>
-                    </div>
-                </div>
-            </fieldset>
-
-            <button onClick={test}>Click me</button>
         </div>
     )
 }
