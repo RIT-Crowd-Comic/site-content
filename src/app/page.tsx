@@ -1,40 +1,16 @@
 import Image from "next/image"
 import Hero from "../components/Hero"
 import Link from "next/link"
-
+import ScrollToTop from "../components/ScrollToTop"
 import topMission from "../../public/images/background-boxes/crowd_comic_-_top_mission_box.svg";
 import bottomMission from "../../public/images/background-boxes/crowd_comic_-_bottom_mission_box.svg";
 import middleMission from "../../public/images/background-boxes/crowd_comic_-_middle_mission_box.svg";
-import arrow from "../../public/images/Arrow.gif";
-
-import ScrollToTop from "../components/ScrollToTop"
 
 export default function Home() {
-  // const myButton = document.getElementById("backToTop");
-
-  // window.onscroll = function(){
-  //   scrollFunction(myButton);
-  // }
-
-  // function scrollFunction(myButton: HTMLElement | null) {
-  //   if (
-  //     document.body.scrollTop > 20 ||
-  //     document.documentElement.scrollTop > 20
-  //   ) {
-  //     myButton.style.display = "block";
-  //   } else {
-  //     myButton.style.display = "none";
-  //   }
-  // }
-  // window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  return (
+   return (
     <main>
       <Hero />
       <div className="container-fluid" id="mission-id">
-        {/* <Link href="#" type="button" className="btn btn-dark btn-floating btn-lg right" id="backToTop">
-          <Image src={arrow} alt="" fill={true} />
-        </Link> */}
         <ScrollToTop />
           <div className="mission row">
             <div className="col"></div>
