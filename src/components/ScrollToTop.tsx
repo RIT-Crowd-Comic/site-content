@@ -27,7 +27,7 @@ export default function ScrollToTop(){
   const [isVisible, setIsVisible] = useState(false)
 
   const toggleVisibility = () => {
-    if (window.pageYOffset > 300) {
+    if (window.scrollY > 200) {
       setIsVisible(true)
     } else {
       setIsVisible(false)
@@ -47,20 +47,8 @@ export default function ScrollToTop(){
   }, [])
 
   return (
-    <div className="fixed bottom-2 right-2">
-      <button
-        type="button"
-        onClick={scrollToTop}
-        // className="
-        //   isVisible ? 'opacity-100' : 'opacity-0',
-        //   'bg-pink-600 hover:bg-pink-700 focus:ring-pink-500 inline-flex items-center rounded-full p-3 text-white shadow-sm transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2',
-        // "
-        className="btn btn-floating btn-lg right" id="backToTop"
-        >
-        {/* <Link href="#" type="button" className="btn btn-dark btn-floating btn-lg right" id="backToTop"> */}
-            <Image src={arrow} alt="" fill={true} />
-        {/* </Link> */}
-      </button>
-    </div>
+    <button type="button" className="scollToTopBtn btn btn-floating btn-lg right" id="backToTop" onClick={scrollToTop}>
+        {isVisible && (<Image src={arrow} alt="" fill={true} />)}
+    </button>
   )
 }

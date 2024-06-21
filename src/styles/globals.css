@@ -516,6 +516,13 @@ main{
     left: 85vw;
     top: 85vh;
     z-index: 99;
+    border: none;
+}
+
+.scollToTopBtn{
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .person-panel
