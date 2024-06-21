@@ -136,7 +136,7 @@ h2, button {
     border: 20px solid transparent;
     background: url(../../public/images/background-boxes/Header_Box_Left.svg) no-repeat center/contain;
     padding: 7vw;
-    margin: -6vw 0vw -16vw -10vw;
+    margin: -6vw 0vw -17vw -10vw;
     z-index: 1;
 }
 
@@ -171,7 +171,7 @@ h2, button {
 .readimg p {
     position: relative;
     z-index: 1;
-    padding: 2vw 1vw 0 10vw;
+    padding: 3vw 1vw 3vw 7vw;
 }
 
 
@@ -192,7 +192,7 @@ h2, button {
     position: relative;
     width: 90%;
     height: auto;
-    margin: 8vw auto -10vw auto;
+    margin: 8vw auto -9vw auto;
     font-size: 3.3vw;
 }
 
@@ -219,7 +219,7 @@ h2, button {
 .createimg p {
     position: relative;
     z-index: 1;
-    padding: 2vw 1vw 0 10vw;
+    padding: 2vw 1vw 0 9vw;
     margin: -3vw 0vw 10vw 0vw;
 }
 
@@ -256,8 +256,7 @@ h2, button {
 
     background-size: 100% 100%;
 
-    margin: 0;
-    margin-left: -30px;
+    margin: 10vw 0vw 0vw -30px;
 
     text-align: center;
 }
