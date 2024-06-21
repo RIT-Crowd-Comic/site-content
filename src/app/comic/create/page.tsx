@@ -1,19 +1,27 @@
-//This is the create page where image files are uploaded
 'use client';
-import ImagePreview from '../../../components/ImagePreview';
+import CreateToolsCanvas from '../../../components/CreateToolsCanvas';
 import Link from 'next/link';
 import '../../../styles/createPage.css';
 
+const exportToPNG = () => {
+    //converts html canvas to png
+    const canvas = document.getElementById("canvas");
+    const imgURL = canvas.toDataURL("image/png");
+
+    //sets up downloading
+    let downloadLink = document.createElement('a');
+    downloadLink.download = 'canvas_image.png';
+    downloadLink.href = imgURL;
+    downloadLink.click();
+}
+
 const Create = () => {
-    return (<>
-        <div id="imagePreviews">
-            <ImagePreview panelNum={1}/>
-            <ImagePreview panelNum={2}/>
-            <ImagePreview panelNum={3}/>
-        </div>
-        
-        <Link href="/comic/create/publish">Continue</Link>
-    </>
+    return (
+        <>
+            <CreateToolsCanvas />
+            <button id='export-btn' onClick={exportToPNG}>Export To PNG</button>
+            <Link href="/comic/create/publish">Continue</Link>
+        </>
     );
 }
 

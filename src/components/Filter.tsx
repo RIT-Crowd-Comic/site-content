@@ -1,3 +1,5 @@
+'use client'
+
 import '../styles/globals.css'
 import search from '../../public/images/Search.svg'
 import Image from 'next/image'
@@ -5,11 +7,12 @@ import Image from 'next/image'
 // https://getbootstrap.com/docs/5.3/components/accordion/
 // https://getbootstrap.com/docs/5.3/forms/select/
 
-// const searchButton = document.getElementById('search-button');
-// const searchInput = document.getElementById('search-input');
-// searchButton.addEventListener('click', () => {
-//   const inputValue = searchInput.value;
-// });
+const searchButton = document.getElementById('search-button') as HTMLButtonElement;
+const searchInput = document.getElementById('search-input') as HTMLInputElement;
+searchButton?.addEventListener('click', () => {
+  const inputValue = searchInput?.value;
+  console.log(inputValue);
+});
 
 const Filter = () => {
     return (
