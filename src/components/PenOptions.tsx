@@ -20,7 +20,7 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor}) =>
     if(enabled)
     {
         return(
-            <div>
+            <div id="penTools">
                 <h3>Pen Tools</h3>
                 <div id="penSlider">
                     <label id="sliderLabel" htmlFor="penRange">Pen Size: {penSize}</label>

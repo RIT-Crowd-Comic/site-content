@@ -14,7 +14,7 @@ const EraserOptions = ({enabled, eraserSize, changeEraserSize}) =>
     if(enabled)
     {
         return(
-            <div>
+            <div id="eraserTools">
                 <h3>Eraser Tools</h3>
                 <div id="eraserSlider">
                     <label id="sliderLabel" htmlFor="eraserRange">Eraser Size: {eraserSize}</label>

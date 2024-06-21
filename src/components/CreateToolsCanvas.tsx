@@ -3,6 +3,7 @@ import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
 import EraserOptions from './EraserOptions';
 import PenOptions from './PenOptions';
+import FillOptions from './FillOptions';
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
 const CreateToolsCanvas = () =>
@@ -47,12 +48,14 @@ const CreateToolsCanvas = () =>
     // Boolean used to determine if the user is still drawing (holding their mouse or touch down on the canvas)
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
 
+    // --- ERASER TOOL ---
     // Boolean used to determine if the eraser tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
     const [eraserOptionsEnabled, setEraserOptionsEnabled] = useState<boolean>(false);
 
     // Integer used to specify the size of the eraser brush.  This is modified in the EraserOptions component
     const [eraserSize, setEraserSize] = useState<number>(10);
 
+    /// --- PEN TOOL ---
     // Boolean used to determine if the pen tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
     const [penOptionsEnabled, setPenOptionsEnabled] = useState<boolean>(true);
 
@@ -61,6 +64,13 @@ const CreateToolsCanvas = () =>
 
     // String used to specify the color of the pen brush.  This is modified in the PenOptions component
     const [penColor, setPenColor] = useState<string>("black");
+
+    // --- FILL TOOL ---
+    // Boolean used to determine if the fill tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
+    const [fillOptionsEnabled, setFillOptionsEnabled] = useState<boolean>(false);
+
+    // String used to specify the color of the fill tool.  This is modified in the FillOptions component
+    const [fillColor, setFillColor] = useState<string>("black");
     
 
     // Custom hook as there are two parts to the edit history: the history of changes as well as the index of what is currently on screen
@@ -98,11 +108,19 @@ const CreateToolsCanvas = () =>
         {
             setPenOptionsEnabled(true);
             setEraserOptionsEnabled(false);
+            setFillOptionsEnabled(false);
         }
         else if(buttonSelected?.value == toolStates.ERASER)
         {
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(true);
+            setFillOptionsEnabled(false);
+        }
+        else if(buttonSelected?.value == toolStates.FILL)
+        {
+            setPenOptionsEnabled(false);
+            setEraserOptionsEnabled(false);
+            setFillOptionsEnabled(true);
         }
         
     }
@@ -189,6 +207,7 @@ const CreateToolsCanvas = () =>
         if(toolSelected == toolStates.FILL)
         {
             // Fill the canvas
+            contextReference.current.fillStyle = fillColor;
             contextReference.current?.fillRect(0, 0, canvasReference.current?.width, canvasReference.current?.height);
         }
     }
@@ -285,6 +304,7 @@ const CreateToolsCanvas = () =>
             <div id="toolOptions">
                 <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor}/>
                 <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize}/>
+                <FillOptions enabled={fillOptionsEnabled} changeFillColor={setFillColor}/>
             </div>
         </div>
     )
