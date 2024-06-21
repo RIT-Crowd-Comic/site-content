@@ -124,7 +124,6 @@ const CreateToolsCanvas = () =>
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(true);
         }
-        
     }
 
     // Begins the process of drawing the user's input to the canvas HTMLElement
