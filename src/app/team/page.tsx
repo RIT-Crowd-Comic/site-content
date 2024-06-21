@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Filter from '@/components/Filter'
 import Card from '@/components/Card'
+import ScrollToTop from "@/components/ScrollToTop"
 
 const TeamPage = () => {
   return (
@@ -10,6 +11,7 @@ const TeamPage = () => {
       <div className="content text-center">
         <h1 className="teamTitle">Meet the Creators!</h1> 
         <Filter />
+        <ScrollToTop />
         {/* Creator Group */}
         <div className="creatorGroup p-3 pb-4 m-4" id="2024">
           <h2 className="chapterTitle py-1">Chapter 2024</h2>

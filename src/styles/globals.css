@@ -52,10 +52,6 @@ body
   background-position: 0 0, 0.65rem 0.65rem;
 }
 
-/* main{
-    padding: 20px 0;
-} */
-
 h2, button {
     font-family: var(--font-ceviche-one);
     font-weight: 400;
@@ -457,22 +453,6 @@ h2, button {
     color: var(--grayscale-primary-color);
 }
 
-.fa
-{
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
-    text-align: center;
-    padding: 10px 20px;
-}
-
-.fa:hover
-{
-    opacity: 0.7;
-}
-
 .icondiv
 {
     position:relative;
@@ -563,6 +543,23 @@ main{
     transform: translate(-50%, -50%);
 }
 
+#backToTop{
+    transform: rotate(-90deg);
+    width: 70px;
+    height: 40px;
+    position: fixed;
+    left: 85vw;
+    top: 85vh;
+    z-index: 99;
+    border: none;
+}
+
+.scollToTopBtn{
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
 .person-panel
 {
     width: 300px;
@@ -613,17 +610,20 @@ a
     font-size: 4rem;
     color: var(--grayscale-text-bg-color);
 }
+
+
 /* X-Small devices (portrait phones, less than 576px)
 No media query for `xs` since this is the default in Bootstrap */
 
 /* Small devices (landscape phones, 576px and up) */
 
- /* @media (min-width: 576px) { 
-    main{
-        padding: 30px;
+ @media (min-width: 576px) { 
+    #backToTop{
+        width: 80px;
+        height: 50px;
+        left: 87vw;
     }
-}  */
-
+} 
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) { 
@@ -669,6 +669,10 @@ No media query for `xs` since this is the default in Bootstrap */
         transform: translate(-50%, -50%);
     }
 
+    #backToTop{
+        left: 90vw;
+    }
+
     .our-team
     {
         background: url(../../public/images/background-boxes/Team_Banner.svg);
@@ -697,18 +701,9 @@ No media query for `xs` since this is the default in Bootstrap */
     .form-control{
         width: 200px;
     }
-    .form-select{
-    
-    }
-    .input-group{
-    }
     #search-button{
         width: 40px;
         height: 30px;
-    }
-    .filterOpt{
-        /* display:inline-flex; */
-        /* display: grid; */
     }
     .topMission
     {
@@ -758,6 +753,10 @@ No media query for `xs` since this is the default in Bootstrap */
         width: 300%;
         max-width: 500px;
     }
+    #backToTop{
+        width: 90px;
+        height: 60px;
+    }
     .professors .text{
         font-size: 1.2rem;
         max-width: 250px;
@@ -785,6 +784,10 @@ No media query for `xs` since this is the default in Bootstrap */
 @media (min-width: 1200px) { 
     .bottom{
         left: 40%;
+    }
+    #backToTop{
+        width: 100px;
+        height: 70px;
     }
 }
 

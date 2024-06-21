@@ -1,5 +1,7 @@
 import Image from "next/image"
 import Hero from "../components/Hero"
+import Link from "next/link"
+import ScrollToTop from "../components/ScrollToTop"
 import topMission from "../../public/images/background-boxes/crowd_comic_-_top_mission_box.svg";
 import bottomMission from "../../public/images/background-boxes/crowd_comic_-_bottom_mission_box.svg";
 import topRead from "../../public/images/background-boxes/crowd_comic_-_read_box_top.svg";
@@ -9,20 +11,18 @@ import bottomCreate from "../../public/images/background-boxes/crowd_comic_-_cre
 import comic from "../../public/images/GIFs/Comic.gif";
 
 
-import Link
-  from "next/link";
-
 export default function Home() {
-  return (
+   return (
     <main>
       <Hero />
-      <div>
-        <div className="mission row">
-          <div className="col"></div>
-          <div className="col-auto">
-            <h2>Mission</h2>
+      <div className="container-fluid" id="mission-id">
+        <ScrollToTop />
+          <div className="mission row">
+            <div className="col"></div>
+            <div className="col-auto">
+              <h2>Mission</h2>
+            </div>
           </div>
-        </div>
 
         <div className="missionimg row card">
           <div className="card-img-overlay">
@@ -117,3 +117,5 @@ export default function Home() {
     </main >
   );
 }
+
+
