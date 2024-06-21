@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 // *** Eraser Options is used in order to changed the different values associated with the eraser tool in CreateToolsCanvas ***
 const EraserOptions = ({enabled, eraserSize, changeEraserSize}) =>
 {

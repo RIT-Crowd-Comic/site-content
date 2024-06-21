@@ -2,6 +2,7 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
 import EraserOptions from './EraserOptions';
+import PenOptions from './PenOptions';
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
 const CreateToolsCanvas = () =>
@@ -52,6 +53,16 @@ const CreateToolsCanvas = () =>
     // Integer used to specify the size of the eraser brush.  This is modified in the EraserOptions component
     const [eraserSize, setEraserSize] = useState<number>(10);
 
+    // Boolean used to determine if the pen tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
+    const [penOptionsEnabled, setPenOptionsEnabled] = useState<boolean>(true);
+
+    // Integer used to specify the size of the pen brush.  This is modified in the PenOptions component
+    const [penSize, setPenSize] = useState<number>(10);
+
+    // String used to specify the color of the pen brush.  This is modified in the PenOptions component
+    const [penColor, setPenColor] = useState<string>("black");
+    
+
     // Custom hook as there are two parts to the edit history: the history of changes as well as the index of what is currently on screen
     /*const useHistory = (initialState) => {
         const [history, setHistory] = useState(initialState);
@@ -85,10 +96,12 @@ const CreateToolsCanvas = () =>
 
         if(buttonSelected?.value == toolStates.PEN)
         {
+            setPenOptionsEnabled(true);
             setEraserOptionsEnabled(false);
         }
         else if(buttonSelected?.value == toolStates.ERASER)
         {
+            setPenOptionsEnabled(false);
             setEraserOptionsEnabled(true);
         }
         
@@ -127,6 +140,8 @@ const CreateToolsCanvas = () =>
             if(toolSelected == toolStates.PEN)
             {
                 contextReference.current.globalCompositeOperation="source-over";
+                contextReference.current.lineWidth = penSize;
+                contextReference.current.strokeStyle = penColor;
             }
             else if(toolSelected == toolStates.ERASER)
             {
@@ -268,6 +283,7 @@ const CreateToolsCanvas = () =>
             />
 
             <div id="toolOptions">
+                <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor}/>
                 <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize}/>
             </div>
         </div>
