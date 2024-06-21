@@ -37,6 +37,8 @@ body, html
     background-color: var(--grayscale-background-color);
     overflow-x: hidden;
     max-width: 100%;
+
+    /* filter: grayscale(1); */
 }
 
 body
@@ -211,17 +213,47 @@ h2, button {
 
 .our-team
 {
-    background: url(../../public/images/background-boxes/OurTeam_Background.svg) no-repeat center/contain;
-    padding: 6vw;
+    background: url(../../public/images/background-boxes/Team_Banner_Mobile.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    width: 100vw;
+    height: 20vw;
+
+    padding: 0;
+
+    background-size: 100% 100%;
+
+    margin: 0;
+    margin-left: -30px;
+
+    text-align: center;
 }
 
 .our-team button
 {
+    background-color: var(--primary-color);
+    border: 3px solid black;
+    width: 30%;
+    height: 40%;
+
     position: relative;
-    border: transparent;
-    background: url(../../public/images/background-boxes/Team_Box.svg) no-repeat center/contain;
-    padding: 5vw;
+    padding: 0;
+
+    top: 30%;
     font-size: 6vw;
+
+    line-height: 0;
+}
+
+.our-team button:hover
+{
+    background-color: #910f0a;
+}
+.our-team button:active
+{
+    background-color: var(--secondary-color);
+    margin-top: 4px;
 }
 
 .teamTitle
@@ -425,7 +457,7 @@ h2, button {
 .iconcolor
 {
     filter: invert(100%);
-    /* filter: invert(79%) sepia(16%) saturate(1167%) hue-rotate(354deg) brightness(103%) contrast(104%); */
+    filter: invert(79%) sepia(16%) saturate(1167%) hue-rotate(354deg) brightness(103%) contrast(104%);
     /* Yellow icons ^ */
 }
 
@@ -441,30 +473,52 @@ main{
 
 .hero
 {
+    width: 100vw;
+    margin-left: -30px;
     height: 300px;
+
+    background-color: var(--background-color); 
+
+    background-image: linear-gradient(45deg, var(--background-color) 25%, #18264f 25%, #18264f 50%, var(--background-color) 50%, var(--background-color) 75%, #18264f 75%, #18264f 100%);
+    background-size: 11.31px 11.31px;
+
+    border: 5px solid black;
 }
 
-.heroimg
+.top-right-spikes, .bottom-right-spikes
 {
-    height: 300px;
-}
-
-.rightspikes
-{
-    height: 300px;
-    max-width: 600px;
+    max-height: 40%;
+    max-width: 30%;
     position:absolute;
     right: 0;
+}
+
+.top-right-spikes
+{
     top: 0;
 }
 
-.leftspikes
+.bottom-right-spikes
 {
-    height: 300px;
-    max-width: 600px;
+    bottom: 0;
+}
+
+.top-left-spikes, .bottom-left-spikes
+{
+    max-height: 40%;
+    max-width: 30%;
     position:absolute;
     left: 0;
+}
+
+.top-left-spikes
+{
     top: 0;
+}
+
+.bottom-left-spikes
+{
+    bottom: 0;
 }
 
 .splashlogo
@@ -552,41 +606,62 @@ No media query for `xs` since this is the default in Bootstrap */
     }
     .hero
     {
-        height: 300px;
+        width: 100vw;
+        height: 500px;
         position: relative;
     }
-    .heroimg
-    {
-        max-height: 300px;
-    }
 
-    .rightspikes
+    .top-right-spikes, .bottom-right-spikes
     {
-        max-height: 300px;
-        max-width: 600px;
+        max-height: 40%;
+        max-width: 30%;
         position:absolute;
         right: 0;
-        top: 0;
     }
 
-    .leftspikes
+    .top-left-spikes, .bottom-left-spikes
     {
-        max-height: 300px;
-        max-width: 600px;
+        max-height: 40%;
+        max-width: 30%;
         position:absolute;
         left: 0;
-        top: 0;
     }
 
     .splashlogo
     {
         width: 50%;
         height: auto;
-        max-width: 300px;
+        max-width: 400px;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+    }
+
+    .our-team
+    {
+        background: url(../../public/images/background-boxes/Team_Banner.svg);
+        background-size: contain;
+        background-repeat: no-repeat;
+
+        width: 80vw;
+        height: 25vw;
+
+        padding: 0;
+
+        background-size: 100% 100%;
+
+        text-align: center;
+        margin: 0 auto;
+    }
+    .our-team button
+    {
+        border: 5px solid black;
+        width: 25%;
+        height: 30%;
+
+        top: 35%;
+        font-size: 5vw;
     }
     .form-control{
         width: 200px;
@@ -624,6 +699,33 @@ No media query for `xs` since this is the default in Bootstrap */
 @media (min-width: 992px) { 
     main{
         padding: 30px 100px;
+    }
+    .hero
+    {
+        width: 100vw;
+        margin-left: -100px;
+        height: 500px;
+        position: relative;
+    }
+    .top-right-spikes, .bottom-right-spikes
+    {
+        max-height: 40%;
+        max-width: 30%;
+        position:absolute;
+        right: 0;
+    }
+
+    .top-left-spikes, .bottom-left-spikes
+    {
+        max-height: 40%;
+        max-width: 30%;
+        position:absolute;
+        left: 0;
+    }
+    .splashlogo
+    {
+        width: 300%;
+        max-width: 500px;
     }
     .professors .text{
         font-size: 1.2rem;

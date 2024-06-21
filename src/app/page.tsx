@@ -97,14 +97,8 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="container our-team">
-        <div className="row">
-          <div className="col"></div>
-          <div className="col-auto">
+      <div className="our-team">
             <button>Our Team</button>
-          </div>
-          <div className="col"></div>
-        </div>
       </div>
     </main >
   );
