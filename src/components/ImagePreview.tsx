@@ -3,8 +3,7 @@ import Image from 'next/image'
 import { useState } from 'react';
 import { ChangeEvent } from 'react';
 
-interface Props
-{
+interface Props {
     panelNum: number;
 }
 
@@ -15,7 +14,7 @@ const ImagePreview = ({panelNum} : Props) => {
     function handleChange(event:ChangeEvent)
     {
         // Create the file object from the file uploaded by the user
-        const file = event.target.files?.[0];
+        const file = (event.target as HTMLInputElement).files?.[0];
 
         // Make sure that the file exists
         // *TODO*: Come back and add some extra security here to make sure that the file is indeed an image
@@ -33,8 +32,7 @@ const ImagePreview = ({panelNum} : Props) => {
 
                 // Save the image to local storage for the publishing page
                 const setName = 'image-' + panelNum;
-                if(url)
-                {
+                if(url) {
                     localStorage.setItem(setName, String(url));
                 }
             });

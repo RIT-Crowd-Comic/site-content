@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import '../styles/globals.css'
 import search from '../../public/images/Search.svg'

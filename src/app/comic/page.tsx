@@ -1,16 +1,15 @@
 //This is the reading page where the user can read panels and click on branch hooks to pull up new panels
 import Image from "next/image";
 import "../../styles/read.css";
-
-//imported base trunk panels as static images
-import baseFirstPanel from "../../../public/comic-panels/first_panel.png";
-import baseSecondPanel from "../../../public/comic-panels/second_panel.png";
-import baseThirdPanel from "../../../public/comic-panels/third_panel.png";
 import Link from "next/link";
 
+//imported base trunk panels as static images
+const firstPanelImage = "/comic-panels/first_panel.png";
+const secondPanelImage = "/comic-panels/second_panel.png";
+const thirdPanelImage = "/public/comic-panels/third_panel.png";
+
 //set the base trunks to display by default on read
-const Read = ({ firstPanelImage = baseFirstPanel, secondPanelImage = baseSecondPanel, 
-    thirdPanelImage = baseThirdPanel }) => {
+const Read = () => {
     return (<>
         <div id="comic-panels">
             <div className="first-panel">

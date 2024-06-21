@@ -8,7 +8,7 @@ const CreateToolsCanvas = () =>
     // Need to capture references to the HTML Elements.  canvasRef and contextRef is performed in useEffect().  
     // Using useRef as this only needs to be done once and avoids rerendering the page.
     const canvasReference = useRef<HTMLCanvasElement | null>(null);
-    const contextReference = useRef<CanvasRenderingContext2D>();
+    const contextReference = useRef<CanvasRenderingContext2D | null>(null);
 
     // Call useEffect() in order obtain the value of the canvas after the first render
     // Pass in an empty array so that useEffect is only called once, after the initial render
@@ -44,7 +44,7 @@ const CreateToolsCanvas = () =>
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
 
     // Array used to hold the history of edits made to the canvas.  Will be updated any time a change is made and will be used for undo and redo functionality
-    const [editHistory, setEditHistory] = useState([]);
+    const [editHistory, setEditHistory] = useState<ImageData[]>([]);
     const [historyIndex, setHistoryIndex] = useState(-1);
 
     // Create an enum with all of the different possible tool states
@@ -62,12 +62,12 @@ const CreateToolsCanvas = () =>
     // Find which radioButton is currently selected and update the state of the tool selected
     const findSelected = () =>
     {
-        let buttonSelected = document.querySelector("input[name='tools']:checked");
-        setToolSelected(buttonSelected?.value);
+        let buttonSelected = document.querySelector("input[name='tools']:checked") as HTMLInputElement;
+        setToolSelected(Number(buttonSelected?.value));
     }
 
     // Begins the process of drawing the user's input to the canvas HTMLElement
-    function startDraw({nativeEvent})
+    function startDraw({nativeEvent}: MouseEvent)
     {
         const {offsetX, offsetY} = nativeEvent;
 
@@ -82,10 +82,10 @@ const CreateToolsCanvas = () =>
     }
 
     // Draws the user's input to the canvas HTMLElement
-    function draw({nativeEvent})
+    function draw({nativeEvent}: MouseEvent)
     {
         // If the user is still drawing...
-        if(isDrawing)
+        if(isDrawing && contextReference.current)
         {
             const {offsetX, offsetY} = nativeEvent;
 
@@ -122,11 +122,12 @@ const CreateToolsCanvas = () =>
         // Change the draw state to false as there is nothing being drawn to the canvas
         setIsDrawing(false);
 
-        if(event.type != 'mouseout')
+        if(event.type != 'mouseout' && canvasReference.current && contextReference.current)
         {
+            let xx = canvasReference.current.width;
             // Create a temp array in order to add to it (access to original is protected as it is a react state variable)
             let newHistory = editHistory;
-            newHistory.push(contextReference.current?.getImageData(0, 0, canvasReference.current?.width, canvasReference.current?.height));
+            newHistory.push(contextReference.current?.getImageData(0, 0, canvasReference.current.width, canvasReference.current.height));
 
             // Set the history array to the updated one
             setEditHistory(newHistory);
@@ -137,39 +138,47 @@ const CreateToolsCanvas = () =>
     }
 
     // Fills the canvas with the current selected color
-    function fill()
-    {
+    function fill() {
+        if (!canvasReference.current || !contextReference.current) {
+            throw new Error("Canvas or canvas context is null");
+        }
+
         if(toolSelected == toolStates.FILL)
         {
             // Reset the source in case it is switching from the eraser tool
             contextReference.current.globalCompositeOperation="source-over";
             // Fill the canvas
-            contextReference.current?.fillRect(0, 0, canvasReference.current?.width, canvasReference.current?.height);
+            contextReference.current.fillRect(0, 0, 
+                                              canvasReference.current.width, 
+                                              canvasReference.current.height);
         }
     }
 
     // Erases everything from the current canvas layer
-    function clearCanvas()
-    {
+    function clearCanvas() {
+        if (!canvasReference.current || !contextReference.current) {
+            throw new Error("Canvas or canvas context is null");
+        }
+        
         contextReference.current?.clearRect(0, 0, canvasReference.current?.width, canvasReference.current?.height);
     }
 
     // Undoes the last stroke to the canvas
-    function undo()
-    {
-        if(historyIndex < 0)
-        {
-            contextReference.current?.clearRect(0, 0, canvasReference.current?.width, canvasReference.current?.height);
+    function undo() {
+        if (!canvasReference.current || !contextReference.current) {
+            throw new Error("Canvas or canvas context is null");
         }
-        else
-        {
+
+        if(historyIndex < 0) {
+            contextReference.current?.clearRect(0, 0, canvasReference.current.width, canvasReference.current.height);
+        }
+        else {
             setHistoryIndex(historyIndex - 1);
             contextReference.current?.putImageData(editHistory[historyIndex], 0, 0);
         }
     }
 
-    function redo()
-    {
+    function redo() {
         if(historyIndex > -1 && historyIndex <= editHistory.length - 1)
         {
             setHistoryIndex(historyIndex + 1);
