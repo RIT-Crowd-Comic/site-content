@@ -14,6 +14,7 @@ const FillOptions = ({enabled, changeFillColor}) =>
     {
         return(
             <div id="fillTools">
+                <h3>Fill Tools</h3>
                 <div id="paletteButtons">
                     <button onClick={() => changeFillColor(color1)}></button>
                     <button onClick={() => changeFillColor(color2)}></button>

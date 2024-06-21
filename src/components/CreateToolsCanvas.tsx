@@ -35,8 +35,6 @@ const CreateToolsCanvas = () =>
         }
 
         // Set default values for context here
-        context.strokeStyle = "black";
-        context.lineWidth = 5;
         context.lineCap = "round";
         context.lineJoin = "round";
 
@@ -45,17 +43,24 @@ const CreateToolsCanvas = () =>
     }, [])
 
     // State Variables:
+    // --- DRAWING STATE ---
     // Boolean used to determine if the user is still drawing (holding their mouse or touch down on the canvas)
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
 
-    // --- ERASER TOOL ---
-    // Boolean used to determine if the eraser tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
-    const [eraserOptionsEnabled, setEraserOptionsEnabled] = useState<boolean>(false);
+    // --- TOOLS ---
+    // Create an enum with all of the different possible tool states
+    const toolStates = Object.freeze({
+        PEN: 0,
+        ERASER: 1,
+        FILL: 2,
+        SHAPE: 3, 
+        TEXT: 4,
+        STICKER: 5
+    });
+    // Holds a reference the currently selected tool 
+    const [toolSelected, setToolSelected] = useState(0);
 
-    // Integer used to specify the size of the eraser brush.  This is modified in the EraserOptions component
-    const [eraserSize, setEraserSize] = useState<number>(10);
-
-    /// --- PEN TOOL ---
+    // --- PEN TOOL ---
     // Boolean used to determine if the pen tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
     const [penOptionsEnabled, setPenOptionsEnabled] = useState<boolean>(true);
 
@@ -64,6 +69,13 @@ const CreateToolsCanvas = () =>
 
     // String used to specify the color of the pen brush.  This is modified in the PenOptions component
     const [penColor, setPenColor] = useState<string>("black");
+
+    // --- ERASER TOOL ---
+    // Boolean used to determine if the eraser tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
+    const [eraserOptionsEnabled, setEraserOptionsEnabled] = useState<boolean>(false);
+
+    // Integer used to specify the size of the eraser brush.  This is modified in the EraserOptions component
+    const [eraserSize, setEraserSize] = useState<number>(10);
 
     // --- FILL TOOL ---
     // Boolean used to determine if the fill tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
@@ -84,17 +96,7 @@ const CreateToolsCanvas = () =>
     const [editHistory, setEditHistory] = useState([]);
     const [historyIndex, setHistoryIndex] = useState(-1);*/
 
-    // Create an enum with all of the different possible tool states
-    const toolStates = Object.freeze({
-        PEN: 0,
-        ERASER: 1,
-        FILL: 2,
-        SHAPE: 3, 
-        TEXT: 4,
-        STICKER: 5
-    });
-    // Holds a reference the currently selected tool 
-    const [toolSelected, setToolSelected] = useState(0);
+
 
     // *** FUNCTIONS ***
 
