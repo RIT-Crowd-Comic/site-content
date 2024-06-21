@@ -27,3 +27,7 @@ canvas
 {
     order: 1;
 }
+#toolOptions
+{
+    order: 2;
+}

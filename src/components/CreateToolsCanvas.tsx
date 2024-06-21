@@ -1,10 +1,13 @@
 'use client';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
+import EraserOptions from './EraserOptions';
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
 const CreateToolsCanvas = () =>
 {
+    // *** VARIABLES ***
+
     // Need to capture references to the HTML Elements.  canvasRef and contextRef is performed in useEffect().  
     // Using useRef as this only needs to be done once and avoids rerendering the page.
     const canvasReference = useRef<HTMLCanvasElement | null>(null);
@@ -43,9 +46,22 @@ const CreateToolsCanvas = () =>
     // Boolean used to determine if the user is still drawing (holding their mouse or touch down on the canvas)
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
 
-    // Array used to hold the history of edits made to the canvas.  Will be updated any time a change is made and will be used for undo and redo functionality
+    // Boolean used to determine if the eraser tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
+    const [eraserOptionsEnabled, setEraserOptionsEnabled] = useState<boolean>(false);
+
+    // Integer used to specify the size of the eraser brush.  This is modified in the EraserOptions component
+    const [eraserSize, setEraserSize] = useState<number>(10);
+
+    // Custom hook as there are two parts to the edit history: the history of changes as well as the index of what is currently on screen
+    /*const useHistory = (initialState) => {
+        const [history, setHistory] = useState(initialState);
+
+        return [history, setHistory];
+    }
+    
+    
     const [editHistory, setEditHistory] = useState([]);
-    const [historyIndex, setHistoryIndex] = useState(-1);
+    const [historyIndex, setHistoryIndex] = useState(-1);*/
 
     // Create an enum with all of the different possible tool states
     const toolStates = Object.freeze({
@@ -59,11 +75,23 @@ const CreateToolsCanvas = () =>
     // Holds a reference the currently selected tool 
     const [toolSelected, setToolSelected] = useState(0);
 
+    // *** FUNCTIONS ***
+
     // Find which radioButton is currently selected and update the state of the tool selected
     const findSelected = () =>
     {
         let buttonSelected = document.querySelector("input[name='tools']:checked");
         setToolSelected(buttonSelected?.value);
+
+        if(buttonSelected?.value == toolStates.PEN)
+        {
+            setEraserOptionsEnabled(false);
+        }
+        else if(buttonSelected?.value == toolStates.ERASER)
+        {
+            setEraserOptionsEnabled(true);
+        }
+        
     }
 
     // Begins the process of drawing the user's input to the canvas HTMLElement
@@ -103,6 +131,7 @@ const CreateToolsCanvas = () =>
             else if(toolSelected == toolStates.ERASER)
             {
                 contextReference.current.globalCompositeOperation="destination-out";
+                contextReference.current.lineWidth = eraserSize;
             }
 
             //contextReference.current?.lineWidth = drawWidth;
@@ -125,15 +154,18 @@ const CreateToolsCanvas = () =>
         if(event.type != 'mouseout')
         {
             // Create a temp array in order to add to it (access to original is protected as it is a react state variable)
-            let newHistory = editHistory;
-            newHistory.push(contextReference.current?.getImageData(0, 0, canvasReference.current?.width, canvasReference.current?.height));
+            //let newHistory = editHistory;
+            //newHistory.push(contextReference.current?.getImageData(0, 0, canvasReference.current?.width, canvasReference.current?.height));
 
             // Set the history array to the updated one
-            setEditHistory(newHistory);
+            //setEditHistory(newHistory);
 
             // Update the current index
-            setHistoryIndex(historyIndex + 1);
+            //setHistoryIndex(historyIndex + 1);
         }
+
+        // Make sure to reverse the eraser input type
+        contextReference.current.globalCompositeOperation="source-over";
     }
 
     // Fills the canvas with the current selected color
@@ -141,8 +173,6 @@ const CreateToolsCanvas = () =>
     {
         if(toolSelected == toolStates.FILL)
         {
-            // Reset the source in case it is switching from the eraser tool
-            contextReference.current.globalCompositeOperation="source-over";
             // Fill the canvas
             contextReference.current?.fillRect(0, 0, canvasReference.current?.width, canvasReference.current?.height);
         }
@@ -155,7 +185,7 @@ const CreateToolsCanvas = () =>
     }
 
     // Undoes the last stroke to the canvas
-    function undo()
+    /*function undo()
     {
         if(historyIndex < 0)
         {
@@ -175,7 +205,7 @@ const CreateToolsCanvas = () =>
             setHistoryIndex(historyIndex + 1);
             contextReference.current?.putImageData(editHistory[historyIndex], 0, 0);
         }
-    }
+    }*/
 
     // Return the canvas HTMLElement and its associated functionality
     return(
@@ -214,8 +244,8 @@ const CreateToolsCanvas = () =>
                     </div>
                 </div>
 
-                <button className="btn" id="redoButton" onClick={redo}>Redo (NOT FUNCTIONAL)</button><br></br>
-                <button className="btn" id="undoButton" onClick={undo}>Undo (NOT FUNCTIONAL)</button><br></br>
+                <button className="btn" id="redoButton">Redo (NOT FUNCTIONAL)</button><br></br>
+                <button className="btn" id="undoButton">Undo (NOT FUNCTIONAL)</button><br></br>
                 <button className="btn" id="clearButton" onClick={clearCanvas}>Clear</button><br></br>
             </fieldset>
 
@@ -236,6 +266,10 @@ const CreateToolsCanvas = () =>
                 //onTouchMove={draw}
                 //onTouchEnd={stop}
             />
+
+            <div id="toolOptions">
+                <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize}/>
+            </div>
         </div>
     )
 }
