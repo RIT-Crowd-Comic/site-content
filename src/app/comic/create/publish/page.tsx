@@ -1,11 +1,6 @@
 //This is the publishing page for placing branch hooks
 'use client';
-import Image from "next/image";
 
-
-import process from "node:process";
-import * as fs from "fs";
-import path from "node:path";
 import BranchPlacer from "./BranchPlacer";
 
 

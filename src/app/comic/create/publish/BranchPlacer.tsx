@@ -3,14 +3,15 @@ import '../../../../styles/publish.css'
 
 import {useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import {PanelSet, Branch} from "./PanelSet";
+import {PanelSet} from "./PanelSet";
+import Image from 'next/image'
 
 
 const BranchPlacer = () => {
     const [branCount, setBranch] = useState(0);
     const [adding, setAdding] = useState(false);
-    const [parId, setparId] = useState(" ");
-    const [curId, setCurId] = useState(parId ? parId : uuidv4());
+    const [parId] = useState(" ");
+    const [curId] = useState(parId ? parId : uuidv4());
 
     const image1Link = localStorage.getItem("image-1");
     const image2Link = localStorage.getItem("image-2");
@@ -134,10 +135,10 @@ const BranchPlacer = () => {
                 {/* temp vals for testing purposes, will be filled in with correct uploaded panels and vals through js */}
                 {/* uses placeholder class for images to be replaced with user uploaded images */}
                 <div className="carousel-item active">
-                    <img id="first-panel" onClick={() => { addBranchHook(1) }} src={image1Link? image1Link : "/images/previewPlaceholder.png"} className="d-block placeholder-" alt="..." width={400} height={200} />
+                    <Image id="first-panel" onClick={() => { addBranchHook(1) }} src={image1Link? image1Link : "/images/previewPlaceholder.png"} className="d-block placeholder-" alt="..." width={400} height={200} />
                 </div>
                 <div className="carousel-item">
-                    <img id="second-panel" onClick={() => { addBranchHook(2) }} src={image2Link? image2Link : "/images/previewPlaceholder.png"} className="d-block placeholder" alt="..." width={400} height={200} />
+                    <Image id="second-panel" onClick={() => { addBranchHook(2) }} src={image2Link? image2Link : "/images/previewPlaceholder.png"} className="d-block placeholder" alt="..." width={400} height={200} />
                 </div>
                 <div className="carousel-item" id="branch-hook-img" >
                     <img id="third-panel" onClick={() => { addBranchHook(3) }} src={image3Link? image3Link : "/images/previewPlaceholder.png"} className="d-block placeholder" alt="..." width={400} height={200} useMap="#panel-map" />
