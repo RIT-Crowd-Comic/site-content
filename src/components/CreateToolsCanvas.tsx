@@ -1,10 +1,15 @@
 'use client';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
+import PenOptions from './PenOptions';
+import EraserOptions from './EraserOptions';
+import FillOptions from './FillOptions';
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
 const CreateToolsCanvas = () =>
 {
+    // *** VARIABLES ***
+    // --- CANVAS ---
     // Need to capture references to the HTML Elements.  canvasRef and contextRef is performed in useEffect().  
     // Using useRef as this only needs to be done once and avoids rerendering the page.
     const canvasReference = useRef<HTMLCanvasElement | null>(null);
@@ -30,8 +35,6 @@ const CreateToolsCanvas = () =>
         }
 
         // Set default values for context here
-        context.strokeStyle = "black";
-        context.lineWidth = 5;
         context.lineCap = "round";
         context.lineJoin = "round";
 
@@ -40,13 +43,11 @@ const CreateToolsCanvas = () =>
     }, [])
 
     // State Variables:
+    // --- DRAWING STATE ---
     // Boolean used to determine if the user is still drawing (holding their mouse or touch down on the canvas)
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
 
-    // Array used to hold the history of edits made to the canvas.  Will be updated any time a change is made and will be used for undo and redo functionality
-    const [editHistory, setEditHistory] = useState<ImageData[]>([]);
-    const [historyIndex, setHistoryIndex] = useState(-1);
-
+    // --- TOOLS ---
     // Create an enum with all of the different possible tool states
     const toolStates = Object.freeze({
         PEN: 0,
@@ -56,14 +57,71 @@ const CreateToolsCanvas = () =>
         TEXT: 4,
         STICKER: 5
     });
+
     // Holds a reference the currently selected tool 
     const [toolSelected, setToolSelected] = useState(0);
+
+    // --- PEN TOOL ---
+    // Boolean used to determine if the pen tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
+    const [penOptionsEnabled, setPenOptionsEnabled] = useState<boolean>(true);
+
+    // Integer used to specify the size of the pen brush.  This is modified in the PenOptions component
+    const [penSize, setPenSize] = useState<number>(10);
+
+    // String used to specify the color of the pen brush.  This is modified in the PenOptions component
+    const [penColor, setPenColor] = useState<string>("black");
+
+    // --- ERASER TOOL ---
+    // Boolean used to determine if the eraser tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
+    const [eraserOptionsEnabled, setEraserOptionsEnabled] = useState<boolean>(false);
+
+    // Integer used to specify the size of the eraser brush.  This is modified in the EraserOptions component
+    const [eraserSize, setEraserSize] = useState<number>(10);
+
+    // --- FILL TOOL ---
+    // Boolean used to determine if the fill tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
+    const [fillOptionsEnabled, setFillOptionsEnabled] = useState<boolean>(false);
+
+    // String used to specify the color of the fill tool.  This is modified in the FillOptions component
+    const [fillColor, setFillColor] = useState<string>("black");
+
+    // Custom hook as there are two parts to the edit history: the history of changes as well as the index of what is currently on screen
+    /*const useHistory = (initialState) => {
+        const [history, setHistory] = useState(initialState);
+
+        return [history, setHistory];
+    }*/
+
+    // Array used to hold the history of edits made to the canvas.  Will be updated any time a change is made and will be used for undo and redo functionality
+    /*const [editHistory, setEditHistory] = useState<ImageData[]>([]);
+    const [historyIndex, setHistoryIndex] = useState(-1);*/
+
+    // *** FUNCTIONS ***
 
     // Find which radioButton is currently selected and update the state of the tool selected
     const findSelected = () =>
     {
         let buttonSelected = document.querySelector("input[name='tools']:checked") as HTMLInputElement;
         setToolSelected(Number(buttonSelected?.value));
+
+        if(Number(buttonSelected?.value) == toolStates.PEN)
+        {
+            setPenOptionsEnabled(true);
+            setEraserOptionsEnabled(false);
+            setFillOptionsEnabled(false);
+        }
+        else if(Number(buttonSelected?.value) == toolStates.ERASER)
+        {
+            setPenOptionsEnabled(false);
+            setEraserOptionsEnabled(true);
+            setFillOptionsEnabled(false);
+        }
+        else if(Number(buttonSelected?.value) == toolStates.FILL)
+        {
+            setPenOptionsEnabled(false);
+            setEraserOptionsEnabled(false);
+            setFillOptionsEnabled(true);
+        }
     }
 
     // Begins the process of drawing the user's input to the canvas HTMLElement
@@ -99,15 +157,14 @@ const CreateToolsCanvas = () =>
             if(toolSelected == toolStates.PEN)
             {
                 contextReference.current.globalCompositeOperation="source-over";
+                contextReference.current.lineWidth = penSize;
+                contextReference.current.strokeStyle = penColor;
             }
             else if(toolSelected == toolStates.ERASER)
             {
                 contextReference.current.globalCompositeOperation="destination-out";
+                contextReference.current.lineWidth = eraserSize;
             }
-
-            //contextReference.current?.lineWidth = drawWidth;
-            //contextReference.current?.lineCap = "round";
-            //contextReference.current?.lineJoin = "round";
 
             contextReference?.current?.stroke();
         }
@@ -124,7 +181,7 @@ const CreateToolsCanvas = () =>
 
         if(event.type != 'mouseout' && canvasReference.current && contextReference.current)
         {
-            let xx = canvasReference.current.width;
+            /*let xx = canvasReference.current.width;
             // Create a temp array in order to add to it (access to original is protected as it is a react state variable)
             let newHistory = editHistory;
             newHistory.push(contextReference.current?.getImageData(0, 0, canvasReference.current.width, canvasReference.current.height));
@@ -133,7 +190,13 @@ const CreateToolsCanvas = () =>
             setEditHistory(newHistory);
 
             // Update the current index
-            setHistoryIndex(historyIndex + 1);
+            setHistoryIndex(historyIndex + 1);*/
+        }
+
+        // Make sure to reverse the eraser input type
+        if(contextReference.current)
+        {
+            contextReference.current.globalCompositeOperation="source-over";
         }
     }
 
@@ -145,9 +208,8 @@ const CreateToolsCanvas = () =>
 
         if(toolSelected == toolStates.FILL)
         {
-            // Reset the source in case it is switching from the eraser tool
-            contextReference.current.globalCompositeOperation="source-over";
             // Fill the canvas
+            contextReference.current.fillStyle = fillColor;
             contextReference.current.fillRect(0, 0, 
                                               canvasReference.current.width, 
                                               canvasReference.current.height);
@@ -165,7 +227,7 @@ const CreateToolsCanvas = () =>
 
     // Undoes the last stroke to the canvas
     function undo() {
-        if (!canvasReference.current || !contextReference.current) {
+        /*if (!canvasReference.current || !contextReference.current) {
             throw new Error("Canvas or canvas context is null");
         }
 
@@ -175,15 +237,15 @@ const CreateToolsCanvas = () =>
         else {
             setHistoryIndex(historyIndex - 1);
             contextReference.current?.putImageData(editHistory[historyIndex], 0, 0);
-        }
+        }*/
     }
 
     function redo() {
-        if(historyIndex > -1 && historyIndex <= editHistory.length - 1)
+        /*if(historyIndex > -1 && historyIndex <= editHistory.length - 1)
         {
             setHistoryIndex(historyIndex + 1);
             contextReference.current?.putImageData(editHistory[historyIndex], 0, 0);
-        }
+        }*/
     }
 
     // Return the canvas HTMLElement and its associated functionality
@@ -245,6 +307,12 @@ const CreateToolsCanvas = () =>
                 //onTouchMove={draw}
                 //onTouchEnd={stop}
             />
+
+            <div id="toolOptions">
+                <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor}/>
+                <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize}/>
+                <FillOptions enabled={fillOptionsEnabled} changeFillColor={setFillColor}/>
+            </div>
         </div>
     )
 }
