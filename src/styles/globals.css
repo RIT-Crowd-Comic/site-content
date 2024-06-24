@@ -404,6 +404,11 @@ h2, button {
     background-color: rgba(0,0,0,0.5);
 }
 
+.facultyGroup
+{
+    border: 2px solid var(--grayscale-primary-color);
+}
+
 .chapterTitle{
     font-family: var(--font-ceviche-one);
     font-size: 2rem;
