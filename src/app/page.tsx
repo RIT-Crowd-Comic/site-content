@@ -115,7 +115,7 @@ export default function Home() {
       </div>
       </section>
       <div className="our-team">
-            <button>Our Team</button>
+        <button><Link href="/team" >Our Team</Link></button>
       </div>
     </main >
   );
