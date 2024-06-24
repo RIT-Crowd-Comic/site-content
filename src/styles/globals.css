@@ -53,8 +53,8 @@ body
       #095e75 0.15rem,
       transparent 0
     ), radial-gradient(circle at center, #02627c 0.15rem, transparent 0);
-  background-size: 1.3rem 1.3rem;
-  background-position: 0 0, 0.65rem 0.65rem;
+    background-size: 1.3rem 1.3rem;
+    background-position: 0 0, 0.65rem 0.65rem;
 }
 
 h2, button {
@@ -308,16 +308,11 @@ h2, button {
     background: url(../../public/images/background-boxes/Team_Banner_Mobile.svg);
     background-size: contain;
     background-repeat: no-repeat;
-
     width: 100vw;
     height: 20vw;
-
     padding: 0;
-
     background-size: 100% 100%;
-
     margin: 50px 0 30px;
-
     text-align: center;
 }
 
@@ -327,13 +322,10 @@ h2, button {
     border: 3px solid black;
     width: 30%;
     height: 40%;
-
     position: relative;
     padding: 0;
-
     top: 30%;
     font-size: 6vw;
-
     line-height: 0;
 }
 
@@ -551,12 +543,9 @@ h2, button {
 {
     width: 100vw;
     height: 300px;
-
     background-color: var(--background-color); 
-
     background-image: linear-gradient(45deg, var(--background-color) 25%, #18264f 25%, #18264f 50%, var(--background-color) 50%, var(--background-color) 75%, #18264f 75%, #18264f 100%);
     background-size: 11.31px 11.31px;
-
     border: 5px solid black;
 }
 
@@ -607,21 +596,43 @@ h2, button {
     transform: translate(-50%, -50%);
 }
 
-#backToTop{
+/* Scroll to top button component */
+/* #scrollToTopBtn{
     transform: rotate(-90deg);
     width: 70px;
     height: 40px;
-    position: fixed;
-    left: 85vw;
-    top: 85vh;
-    z-index: 99;
+    cursor: pointer;
     border: none;
+    position: fixed;
+    bottom: 400px;
+    right: 0px;
+} */
+
+/* Scroll  to top button with Link*/
+.scroll-btn{
+    position: relative;
+    /* bottom: 0px; */
+    /* right: 0px; */
+    left: 20vw;
+    padding: 3vw 0vw 4vw 8vw;
+    margin-top: 40px;
+    z-index: 2;
 }
 
-.scollToTopBtn{
+#scroll-text{
+    color: var(--grayscale-text-bg-color);
+    justify-content:end;
+    font-size: 1rem;
+    margin-top: 40px;
+}
+
+#scrollToTopBtn{
+    transform: rotate(-90deg);
+    width: 70px;
+    height: 40px;
     cursor: pointer;
-    opacity: 1;
-    transition: opacity 0.3s ease-in-out;
+    border: none;
+    margin-top: 20px;
 }
 
 .person-panel
@@ -682,11 +693,27 @@ No media query for `xs` since this is the default in Bootstrap */
 /* Small devices (landscape phones, 576px and up) */
 
  @media (min-width: 576px) { 
-    #backToTop{
+   
+    .scroll-btn{
+        left: 30vw;
+        padding: 3vw 0vw 4vw 0vw;
+        margin-top: 30px;
+    }
+    
+    #scroll-text{
+        font-size: 1.2rem;
+        padding-top: 15px;
+        margin-top: 40px;
+    }
+
+    #scrollToTopBtn{
         width: 80px;
         height: 50px;
-        left: 87vw;
+        /* left: 87vw; */
+        padding-top: 15px;
+        margin-top: 20px;
     }
+
 } 
 
 /* Medium devices (tablets, 768px and up) */
@@ -730,8 +757,12 @@ No media query for `xs` since this is the default in Bootstrap */
         transform: translate(-50%, -50%);
     }
 
-    #backToTop{
-        left: 90vw;
+    .scroll-btn{
+        left: 35vw;
+    }
+
+    #scrollToTopBtn{
+        margin-top: 0px;
     }
 
     .preview
@@ -782,14 +813,10 @@ No media query for `xs` since this is the default in Bootstrap */
         background: url(../../public/images/background-boxes/Team_Banner.svg);
         background-size: contain;
         background-repeat: no-repeat;
-
         width: 80vw;
         height: 25vw;
-
         padding: 0;
-
         background-size: 100% 100%;
-
         text-align: center;
         margin: 60px auto 30px;
     }
@@ -798,7 +825,6 @@ No media query for `xs` since this is the default in Bootstrap */
         border: 5px solid black;
         width: 25%;
         height: 30%;
-
         top: 35%;
         font-size: 5vw;
     }
@@ -813,14 +839,12 @@ No media query for `xs` since this is the default in Bootstrap */
     {
         position:absolute;
         top: -40%;
-    
         height: auto;
     }
     .bottomMission
     {
         position:absolute;
         bottom: -20%;
-
         height: auto;
     }
 }
@@ -857,7 +881,7 @@ No media query for `xs` since this is the default in Bootstrap */
         width: 300%;
         max-width: 500px;
     }
-    #backToTop{
+    #scollToTopBtn{
         width: 90px;
         height: 60px;
     }
@@ -882,6 +906,11 @@ No media query for `xs` since this is the default in Bootstrap */
         right: 35%;
         margin: 0 auto;
     }
+
+    #scroll-text{
+        font-size: 1.5rem;
+    }
+  
     .preview
     {
         display:grid;
@@ -925,7 +954,7 @@ No media query for `xs` since this is the default in Bootstrap */
     .bottom{
         left: 40%;
     }
-    #backToTop{
+    #scollToTopBtn{
         width: 100px;
         height: 70px;
     }
