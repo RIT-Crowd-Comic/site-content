@@ -6,7 +6,7 @@ import Link from "next/link";
 //imported base trunk panels as static images
 const firstPanelImage = "/comic-panels/first_panel.png";
 const secondPanelImage = "/comic-panels/second_panel.png";
-const thirdPanelImage = "/public/comic-panels/third_panel.png";
+const thirdPanelImage = "/comic-panels/third_panel.png";
 
 //set the base trunks to display by default on read
 const Read = () => {
