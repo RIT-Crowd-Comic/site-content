@@ -30,10 +30,10 @@ export default function ScrollToTop(){
   }, [])
 
   return (
-    <div className="scroll-btn mb-6 mr-6 z-10">
-        <button type="button" className="btn btn-lg my-8 " id="scollToTopBtn" onClick={scrollToTop}>
-            {isVisible && (<Image src={arrow} alt="Scroll to top button" fill={true} />)}
-        </button>
+    <div className="">
+      <button type="button" className="mb-6 mr-6 z-10 btn btn-lg my-8 " id="scrollToTopBtn" onClick={scrollToTop}>
+        {isVisible && (<Image src={arrow} alt="Scroll to top button" fill={true} />)}
+      </button>
     </div>
   )
 }

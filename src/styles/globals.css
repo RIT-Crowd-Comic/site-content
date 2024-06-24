@@ -244,16 +244,11 @@ h2, button {
     background: url(../../public/images/background-boxes/Team_Banner_Mobile.svg);
     background-size: contain;
     background-repeat: no-repeat;
-
     width: 100vw;
     height: 20vw;
-
     padding: 0;
-
     background-size: 100% 100%;
-
     margin: 10vw 0vw 0vw -30px;
-
     text-align: center;
 }
 
@@ -263,13 +258,10 @@ h2, button {
     border: 3px solid black;
     width: 30%;
     height: 40%;
-
     position: relative;
     padding: 0;
-
     top: 30%;
     font-size: 6vw;
-
     line-height: 0;
 }
 
@@ -277,6 +269,7 @@ h2, button {
 {
     background-color: #910f0a;
 }
+
 .our-team button:active
 {
     background-color: var(--secondary-color);
@@ -540,23 +533,45 @@ main{
     transform: translate(-50%, -50%);
 }
 
-.scroll-btn{
-    position: fixed;
-    bottom: 0px;
-    right: 0px;
-}
-
-#scollToTopBtn{
+/* Scroll to top button component */
+/* #scrollToTopBtn{
     transform: rotate(-90deg);
     width: 70px;
     height: 40px;
     cursor: pointer;
     border: none;
-    /* position: absolute;
-    bottom:0; */
-    /* position: fixed;
-    left: 80%;
-    top:45%; */
+    position: fixed;
+    bottom: 400px;
+    right: 0px;
+} */
+
+/* Scroll  to top button with Link*/
+.scroll-btn{
+    position: relative;
+    /* bottom: 0px; */
+    /* right: 0px; */
+    left: 20vw;
+    padding: 3vw 0vw 4vw 8vw;
+    margin-top: 30px;
+    z-index: 2;
+    /* border: #D91911 2px solid; */
+}
+
+#scroll-text{
+    color: var(--grayscale-text-bg-color);
+    justify-content:end;
+    font-size: 1rem;
+    margin-top: 20px;
+    padding-top: 15px;
+    /* border: #D91911 2px solid; */
+}
+
+#scrollToTopBtn{
+    transform: rotate(-90deg);
+    width: 70px;
+    height: 40px;
+    cursor: pointer;
+    border: none;
 }
 
 .person-panel
@@ -617,11 +632,27 @@ No media query for `xs` since this is the default in Bootstrap */
 /* Small devices (landscape phones, 576px and up) */
 
  @media (min-width: 576px) { 
-    #scollToTopBtn{
+   
+    .scroll-btn{
+        left: 30vw;
+        padding: 3vw 0vw 4vw 0vw;
+        margin-top: 30px;
+    }
+    
+    #scroll-text{
+        font-size: 1.2rem;
+        padding-top: 15px;
+        margin-top: 40px;
+    }
+
+    #scrollToTopBtn{
         width: 80px;
         height: 50px;
         /* left: 87vw; */
+        padding-top: 15px;
+        margin-top: 20px;
     }
+
 } 
 
 /* Medium devices (tablets, 768px and up) */
@@ -668,23 +699,23 @@ No media query for `xs` since this is the default in Bootstrap */
         transform: translate(-50%, -50%);
     }
 
-    /* #scollToTopBtn{
-        left: 90vw;
-    } */
+    .scroll-btn{
+        left: 35vw;
+    }
+
+    #scrollToTopBtn{
+        margin-top: 0px;
+    }
 
     .our-team
     {
         background: url(../../public/images/background-boxes/Team_Banner.svg);
         background-size: contain;
         background-repeat: no-repeat;
-
         width: 80vw;
         height: 25vw;
-
         padding: 0;
-
         background-size: 100% 100%;
-
         text-align: center;
         margin: 0 auto;
     }
@@ -693,7 +724,6 @@ No media query for `xs` since this is the default in Bootstrap */
         border: 5px solid black;
         width: 25%;
         height: 30%;
-
         top: 35%;
         font-size: 5vw;
     }
@@ -708,14 +738,12 @@ No media query for `xs` since this is the default in Bootstrap */
     {
         position:absolute;
         top: -40%;
-    
         height: auto;
     }
     .bottomMission
     {
         position:absolute;
         bottom: -20%;
-
         height: auto;
     }
 }
@@ -776,6 +804,10 @@ No media query for `xs` since this is the default in Bootstrap */
         left: 38%;
         right: 35%;
         margin: 0 auto;
+    }
+
+    #scroll-text{
+        font-size: 1.5rem;
     }
 }
 

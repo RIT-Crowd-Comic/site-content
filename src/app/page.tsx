@@ -9,13 +9,14 @@ import bottomRead from "../../public/images/background-boxes/crowd_comic_-_read_
 import topCreate from "../../public/images/background-boxes/crowd_comic_-_create_box_top.svg";
 import bottomCreate from "../../public/images/background-boxes/crowd_comic_-_create_box_bottom.svg";
 import comic from "../../public/images/GIFs/Comic.gif";
+import arrow from "../../public/images/Arrow.gif"
 
 
 export default function Home() {
    return (
     <main>
       <Hero />
-      <ScrollToTop />
+      {/* <ScrollToTop /> */}
       <div className="container-fluid" id="mission-id">
         <div className="mission row">
           <div className="col"></div>
@@ -114,6 +115,12 @@ export default function Home() {
       <div className="our-team">
             <button>Our Team</button>
       </div>
+      <Link href="#" className="scroll-btn">
+        <strong id="scroll-text">Back to Top</strong>  
+        <button type="button" className="mb-6 mr-6 z-10 btn btn-lg my-8 " id="scrollToTopBtn">
+          <Image src={arrow} alt="Scroll to top button" fill={true} />
+        </button>
+    </Link>
     </main >
   );
 }
