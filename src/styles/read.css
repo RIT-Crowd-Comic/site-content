@@ -1,20 +1,29 @@
-#comic-panels {
+ #read-element {
+    margin: 9% 0px;
+    border: 2px solid white;
+  } 
+
+  #comic-panels {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     position: relative;
+    margin: 11% 1%;
+    justify-content: center;
+    border:2px solid white;
   }
 
-  .first-panel,
+.first-panel,
 .second-panel,
-.third-panel {
-  margin-bottom: 20px;
+.third-panel, .control-bar {
+  margin-left: 1%;
   position: relative;
 }
 
 button {
     padding: 10px 20px;
     font-size: 16px;
+    background-color: #009BC6;
   }
 
   button:hover{
@@ -44,8 +53,28 @@ button {
     left: 75%;
 }
 
-#back-button {
+.control-bar {
+  position: absolute;
+  background-color: rgb(94, 94, 94);
+  width:80px;
+  height:210px;
+  padding: 1% 0 0 0;
+  border-radius: 50px;
+  border: 2px solid white;
+  margin:auto 1%;
+  top:50%;
+  left:1%;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  transform: translate(-50%,-50%);
+}
+
+ #back-button, #hook-toggle, #layout-toggle {
     display: block;
-    margin: 20px auto;
-    font-size: 24px;
-  }
+    margin: 8px auto;
+    position: relative;
+    padding: 10px;
+    font-size: 18px;
+    width: 60px;
+    border: none;
+    background-color: rgb(94, 94, 94);
+  } 
