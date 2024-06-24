@@ -3,18 +3,18 @@
 import '../styles/globals.css'
 import search from '../../public/images/Search.svg'
 import Image from 'next/image'
+import { useState } from 'react';
 
 // https://getbootstrap.com/docs/5.3/components/accordion/
 // https://getbootstrap.com/docs/5.3/forms/select/
 
-const searchButton = document.getElementById('search-button') as HTMLButtonElement;
-const searchInput = document.getElementById('search-input') as HTMLInputElement;
-searchButton?.addEventListener('click', () => {
-  const inputValue = searchInput?.value;
-  console.log(inputValue);
-});
-
 const Filter = () => {
+    const [searchInput, setSearchInput] = useState('');
+
+    const handleSearchClick = () => {
+      console.log(searchInput);
+    };
+
     return (
         <div className="accordion filter mx-3">
           <div className="accordion-item">
@@ -30,9 +30,9 @@ const Filter = () => {
                       {/* Search box */}
                       <div className="input-group flex-wrap" aria-label="Searchbox">
                           <div className="form-outline" data-mdb-input-init>
-                            <input id="search-input" type="search" className="form-control mt-1 px-5 py-2" placeholder='Search by name...'/>
+                            <input id="search-input" type="search" className="form-control mt-1 px-5 py-2" placeholder='Search by name...' onChange={(e) => setSearchInput(e.target.value)}/>
                           </div>
-                          <button id="search-button" type="button" className="btn btn-outline-dark btn-secondary px-3 mt-1">
+                          <button id="search-button" type="button" className="btn btn-outline-dark btn-secondary px-3 mt-1" onClick={handleSearchClick}>
                             <Image className="searchbar p-2" src={search} alt="" fill={true}/>
                           </button>
                       </div>
