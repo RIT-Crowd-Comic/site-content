@@ -399,6 +399,11 @@ h2, button {
     border: 2px solid var(--grayscale-primary-color);
 }
 
+.facultyGroup
+{
+    border: 2px solid var(--grayscale-primary-color);
+}
+
 .chapterTitle{
     font-family: var(--font-ceviche-one);
     font-size: 2rem;
@@ -626,8 +631,8 @@ h2, button {
 
 .person-panel
 {
-    width: 300px;
-    height: 290px;
+    max-width: 300px;
+    max-height: 300px;
     border-radius: 0;
     position: relative;
     background-color: white;
