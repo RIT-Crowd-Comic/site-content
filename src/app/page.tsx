@@ -11,12 +11,18 @@ import bottomCreate from "../../public/images/background-boxes/crowd_comic_-_cre
 import comic from "../../public/images/GIFs/Comic.gif";
 import arrow from "../../public/images/Arrow.gif"
 
+// For the "preview comic" section
+import firstPanelImage from "../../public/comic-panels/first_panel.png";
+import secondPanelImage from "../../public/comic-panels/second_panel.png";
+import thirdPanelImage from "../../public/comic-panels/third_panel.png";
+import previewArrow from "../../public/images/Arrow.png";
 
 export default function Home() {
    return (
     <main>
       <Hero />
       {/* <ScrollToTop /> */}
+      <section className="main-section">
       <div className="container-fluid" id="mission-id">
         <div className="mission row">
           <div className="col"></div>
@@ -47,9 +53,11 @@ export default function Home() {
         </div>
       </div>
       <div className="preview">
-        {/* <Image src="#" alt="" />
-        <Image src="#" alt="" />
-        <Image src="#" alt="" /> */}
+        <Image className="panel-one preview-panels" src={firstPanelImage} alt="" />
+        <Image className="preview-arrow" src={previewArrow} alt=""></Image>
+        <Image className="panel-two preview-panels" src={secondPanelImage} alt="" />
+        <Image className="preview-arrow" src={previewArrow} alt=""></Image>
+        <Image className="panel-three preview-panels" src={thirdPanelImage} alt="" />
       </div>
       <div className="read-and-create">
         <div className="read">
@@ -112,8 +120,9 @@ export default function Home() {
           </div>
         </div>
       </div>
+      </section>
       <div className="our-team">
-            <button>Our Team</button>
+        <button><Link href="/team" >Our Team</Link></button>
       </div>
       <Link href="#" className="scroll-btn">
         <strong id="scroll-text">Back to Top</strong>  

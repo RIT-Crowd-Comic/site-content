@@ -5,7 +5,7 @@ import '../../../styles/createPage.css';
 
 const exportToPNG = () => {
     //converts html canvas to png
-    const canvas = document.getElementById("canvas");
+    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const imgURL = canvas.toDataURL("image/png");
 
     //sets up downloading

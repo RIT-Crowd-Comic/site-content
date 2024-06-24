@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import logo from "../../public/images/logos/Colored_Logo_With_Shadow.svg";
+import logo from "../../public/images/logos/Crowd_Comic_Logo_BW.svg";
 import topLeftSpikes from "../../public/images/splash/Spikes_Top_Left.svg";
 import bottomLeftSpikes from "../../public/images/splash/Spikes_Bottom_Left.svg"
 import topRightSpikes from "../../public/images/splash/Spikes_Top_Right.svg"

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Cards from '@/api/cards.json';
 import Image from 'next/image'
