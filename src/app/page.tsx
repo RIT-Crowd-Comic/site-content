@@ -15,14 +15,14 @@ export default function Home() {
    return (
     <main>
       <Hero />
+      <ScrollToTop />
       <div className="container-fluid" id="mission-id">
-        <ScrollToTop />
-          <div className="mission row">
-            <div className="col"></div>
-            <div className="col-auto">
-              <h2>Mission</h2>
-            </div>
+        <div className="mission row">
+          <div className="col"></div>
+          <div className="col-auto">
+            <h2>Mission</h2>
           </div>
+        </div>
 
         <div className="missionimg row card">
           <div className="card-img-overlay">

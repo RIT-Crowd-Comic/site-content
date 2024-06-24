@@ -48,8 +48,8 @@ body
       #095e75 0.15rem,
       transparent 0
     ), radial-gradient(circle at center, #02627c 0.15rem, transparent 0);
-  background-size: 1.3rem 1.3rem;
-  background-position: 0 0, 0.65rem 0.65rem;
+    background-size: 1.3rem 1.3rem;
+    background-position: 0 0, 0.65rem 0.65rem;
 }
 
 h2, button {
@@ -487,12 +487,9 @@ main{
     width: 100vw;
     margin-left: -30px;
     height: 300px;
-
     background-color: var(--background-color); 
-
     background-image: linear-gradient(45deg, var(--background-color) 25%, #18264f 25%, #18264f 50%, var(--background-color) 50%, var(--background-color) 75%, #18264f 75%, #18264f 100%);
     background-size: 11.31px 11.31px;
-
     border: 5px solid black;
 }
 
@@ -543,21 +540,23 @@ main{
     transform: translate(-50%, -50%);
 }
 
-#backToTop{
+.scroll-btn{
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+}
+
+#scollToTopBtn{
     transform: rotate(-90deg);
     width: 70px;
     height: 40px;
-    position: fixed;
-    left: 85vw;
-    top: 85vh;
-    z-index: 99;
-    border: none;
-}
-
-.scollToTopBtn{
     cursor: pointer;
-    opacity: 1;
-    transition: opacity 0.3s ease-in-out;
+    border: none;
+    /* position: absolute;
+    bottom:0; */
+    /* position: fixed;
+    left: 80%;
+    top:45%; */
 }
 
 .person-panel
@@ -618,10 +617,10 @@ No media query for `xs` since this is the default in Bootstrap */
 /* Small devices (landscape phones, 576px and up) */
 
  @media (min-width: 576px) { 
-    #backToTop{
+    #scollToTopBtn{
         width: 80px;
         height: 50px;
-        left: 87vw;
+        /* left: 87vw; */
     }
 } 
 
@@ -669,9 +668,9 @@ No media query for `xs` since this is the default in Bootstrap */
         transform: translate(-50%, -50%);
     }
 
-    #backToTop{
+    /* #scollToTopBtn{
         left: 90vw;
-    }
+    } */
 
     .our-team
     {
@@ -753,7 +752,7 @@ No media query for `xs` since this is the default in Bootstrap */
         width: 300%;
         max-width: 500px;
     }
-    #backToTop{
+    #scollToTopBtn{
         width: 90px;
         height: 60px;
     }
@@ -785,7 +784,7 @@ No media query for `xs` since this is the default in Bootstrap */
     .bottom{
         left: 40%;
     }
-    #backToTop{
+    #scollToTopBtn{
         width: 100px;
         height: 70px;
     }
