@@ -28,7 +28,7 @@ const NavBar = () => {
                 <Link className="nav-link" id="comicLink" href="/comic">Comic</Link>
               </li>
               <li className="nav-item ps-3">
-                <button className="btn btn-outline-dark">Login</button>
+                <button className="nav-btn btn btn-outline-dark">Login</button>
               </li>
             </ul>
           </div>

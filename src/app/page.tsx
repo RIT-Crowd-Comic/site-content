@@ -15,6 +15,8 @@ export default function Home() {
    return (
     <main>
       <Hero />
+
+      <section className="main-section">
       <div className="container-fluid" id="mission-id">
         <ScrollToTop />
           <div className="mission row">
@@ -111,8 +113,9 @@ export default function Home() {
           </div>
         </div>
       </div>
+      </section>
       <div className="our-team">
-            <button>Our Team</button>
+        <button><Link href="/team" >Our Team</Link></button>
       </div>
     </main >
   );
