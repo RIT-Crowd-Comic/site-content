@@ -2,6 +2,10 @@
 {
     filter: grayscale(100);
 }*/
+body
+{
+    color: white;
+}
 #imagePreviews
 {
     display: flex;
@@ -26,4 +30,8 @@ canvas
 #canvas
 {
     order: 1;
+}
+#toolOptions
+{
+    order: 2;
 }
