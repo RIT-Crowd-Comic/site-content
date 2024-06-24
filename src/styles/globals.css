@@ -283,12 +283,12 @@ h2, button {
 
 .panel-two
 {
-    margin: -7% auto 0;
+    margin: -5% auto 0;
 }
 
 .panel-three
 {
-    margin: -7% 0 0 auto;
+    margin: -5% 0 0 auto;
 }
 
 .preview-arrow
@@ -769,12 +769,12 @@ No media query for `xs` since this is the default in Bootstrap */
 
     .panel-two
     {
-        margin: -14% auto 0;
+        margin: -10% auto 0;
     }
 
     .panel-three
     {
-        margin: -14% 0 0 auto;
+        margin: -10% 0 0 auto;
     }
 
     .our-team
