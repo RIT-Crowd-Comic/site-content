@@ -21,7 +21,7 @@
 
 .navbar, .footer
 {
-    font-family: var(--font-inter);
+    font-family: var(--font-back-issues);
     font-style: normal;
     font-weight: 300;
 }
@@ -34,6 +34,12 @@
 .nav-link, .nav-btn
 {
     color: var(--grayscale-primary-color);
+    font-size: 1.5rem;
+}
+
+.offcanvas-header
+{
+    font-size: 1.5rem;
 }
 
 body, html
@@ -389,6 +395,18 @@ h2, button {
 
 .creatorGroup{
     border: 2px solid var(--grayscale-primary-color);
+    background-color: rgba(0,0,0,0.5);
+}
+
+.facultyGroup
+{
+    border: 2px solid var(--grayscale-primary-color);
+    background-color: rgba(0,0,0,0.5);
+}
+
+.facultyGroup
+{
+    border: 2px solid var(--grayscale-primary-color);
 }
 
 .chapterTitle{
@@ -637,8 +655,8 @@ h2, button {
 
 .person-panel
 {
-    width: 300px;
-    height: 290px;
+    max-width: 300px;
+    max-height: 300px;
     border-radius: 0;
     position: relative;
     background-color: white;
