@@ -120,7 +120,7 @@ export default function Home() {
         <button type="button" className="mb-6 mr-6 z-10 btn btn-lg my-8 " id="scrollToTopBtn">
           <Image src={arrow} alt="Scroll to top button" fill={true} />
         </button>
-    </Link>
+      </Link>
     </main >
   );
 }
