@@ -3,6 +3,8 @@ import Link from 'next/link'
 import Filter from '@/components/Filter'
 import Card from '@/components/Card'
 import ScrollToTop from "@/components/ScrollToTop"
+import arrow from "../../../public/images/Arrow.gif"
+import "../../styles/team.css"
 
 const TeamPage = () => {
   return (
@@ -11,7 +13,7 @@ const TeamPage = () => {
       <div className="content text-center">
         <h1 className="teamTitle">Meet the Creators!</h1> 
         <Filter />
-        <ScrollToTop />
+        {/* <ScrollToTop /> */}
         {/* Creator Group */}
         <div className="creatorGroup p-3 pb-4 m-4" id="2024">
           <h2 className="chapterTitle py-1">Chapter 2024</h2>
@@ -67,8 +69,17 @@ const TeamPage = () => {
           </div>
           </div>
         {/* /Professors */}
+      <div>
+        <Link href="#" className="scroll-btn align-bottom">
+          <strong id="scroll-text" className='align-text-bottom'>Back to Top</strong>  
+          <button type="button" className="mb-6 mr-6 z-10 btn btn-lg my-8 " id="scrollToTopBtn">
+            <Image src={arrow} alt="Scroll to top button" fill={true} />
+          </button>
+        </Link>
+      </div>
       {/* /Content */}
     </main>
+
   )
 }
 
