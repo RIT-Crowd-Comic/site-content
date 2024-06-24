@@ -10,6 +10,11 @@ import topCreate from "../../public/images/background-boxes/crowd_comic_-_create
 import bottomCreate from "../../public/images/background-boxes/crowd_comic_-_create_box_bottom.svg";
 import comic from "../../public/images/GIFs/Comic.gif";
 
+// For the "preview comic" section
+import firstPanelImage from "../../public/comic-panels/first_panel.png";
+import secondPanelImage from "../../public/comic-panels/second_panel.png";
+import thirdPanelImage from "../../public/comic-panels/third_panel.png";
+import previewArrow from "../../public/images/Arrow.png";
 
 export default function Home() {
    return (
@@ -48,9 +53,11 @@ export default function Home() {
         </div>
       </div>
       <div className="preview">
-        {/* <Image src="#" alt="" />
-        <Image src="#" alt="" />
-        <Image src="#" alt="" /> */}
+        <Image className="panel-one preview-panels" src={firstPanelImage} alt="" />
+        <Image className="preview-arrow" src={previewArrow} alt=""></Image>
+        <Image className="panel-two preview-panels" src={secondPanelImage} alt="" />
+        <Image className="preview-arrow" src={previewArrow} alt=""></Image>
+        <Image className="panel-three preview-panels" src={thirdPanelImage} alt="" />
       </div>
       <div className="read-and-create">
         <div className="read">
