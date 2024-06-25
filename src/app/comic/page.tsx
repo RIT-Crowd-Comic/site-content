@@ -1,11 +1,5 @@
 //This is the reading page where the user can read panels and click on branch hooks to pull up new panels
-import Image from "next/image";
 import "../../styles/read.css";
-import Link from "next/link";
-import ToggleButton from "../../components/ToggleButton";
-import Document from "next/document";
-
-import ComicPanels from "@/components/ComicPanels";
 import ReadPage from "@/components/ReadPage";
 
 //imported base trunk panels as static images
