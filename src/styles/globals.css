@@ -632,8 +632,8 @@ h2, button {
     /* bottom: 0px; */
     /* right: 0px; */
     left: 20vw;
-    padding: 3vw 0vw 4vw 8vw;
-    margin-top: 40px;
+    padding-left: 40px;
+    margin-top: 20px;
     z-index: 2;
 }
 
@@ -641,7 +641,7 @@ h2, button {
     color: var(--grayscale-text-bg-color);
     justify-content:end;
     font-size: 1rem;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 #scrollToTopBtn{
@@ -650,7 +650,6 @@ h2, button {
     height: 40px;
     cursor: pointer;
     border: none;
-    margin-top: 20px;
 }
 
 .person-panel
@@ -710,28 +709,25 @@ No media query for `xs` since this is the default in Bootstrap */
 
 /* Small devices (landscape phones, 576px and up) */
 
- @media (min-width: 576px) { 
+@media (min-width: 576px) { 
    
     .scroll-btn{
         left: 30vw;
-        padding: 3vw 0vw 4vw 0vw;
-        margin-top: 30px;
+        padding: 3vw 0vw 3vw 8vw;
+        margin-top: 0px;
     }
     
     #scroll-text{
         font-size: 1.2rem;
         padding-top: 15px;
-        margin-top: 40px;
     }
 
     #scrollToTopBtn{
         width: 80px;
         height: 50px;
-        /* left: 87vw; */
         padding-top: 15px;
-        margin-top: 20px;
+        margin-top: 0px;
     }
-
 } 
 
 /* Medium devices (tablets, 768px and up) */
@@ -779,17 +775,11 @@ No media query for `xs` since this is the default in Bootstrap */
         left: 35vw;
     }
 
-    #scrollToTopBtn{
-        margin-top: 0px;
-    }
-
     .preview
     {
         display:grid;
         grid-template-rows: repeat(3, auto);
-
         width: 80vw;
-
         margin: 30px auto 50px;
     }
 
@@ -797,9 +787,7 @@ No media query for `xs` since this is the default in Bootstrap */
     {
         width: 37%;
         height: auto;
-
         margin: 0 auto;
-
         border: 5px solid black;
     }
 
@@ -807,7 +795,6 @@ No media query for `xs` since this is the default in Bootstrap */
     {
         max-width: 100px;
         height: auto;
-
         margin: auto 0;
     }
 
@@ -934,17 +921,11 @@ No media query for `xs` since this is the default in Bootstrap */
         display:grid;
         grid-template-columns: repeat(2, 1fr auto) 1fr;
         grid-template-rows: none;
-
         column-gap: 0;
-
         width: 80vw;
-
         margin: 30px auto 100px;
-
         padding: 5px;
-
         background-color: var(--grayscale-background-color);
-
         border: 7px solid black;
     }
 
@@ -952,7 +933,6 @@ No media query for `xs` since this is the default in Bootstrap */
     {
         width: 100%;
         height: auto;
-
         margin: 0;
     }
 
@@ -960,9 +940,7 @@ No media query for `xs` since this is the default in Bootstrap */
     {
         max-width: 100px;
         height: auto;
-
         margin: auto 0;
-
         display: inline;
     }
 }
@@ -972,6 +950,7 @@ No media query for `xs` since this is the default in Bootstrap */
     .bottom{
         left: 40%;
     }
+
     #scollToTopBtn{
         width: 100px;
         height: 70px;
