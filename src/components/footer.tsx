@@ -9,8 +9,8 @@ import github from "../../public/images/Github.svg"
 const Footer = () => {
     const current_year = new Date().getFullYear();
     return (
-        <div className="container-fluid pt-3 bg-dark">
-            <div className="row">
+        <div className="container-fluid pt-3 bg-dark footer-bar">
+            {/* <div className="footer-base"> */}
                 {/* Links */}
                 <div className="col">
                     <div className="footer-nav px-4">
@@ -24,7 +24,9 @@ const Footer = () => {
                     </div>
                 </div>
                 {/* /Links */}
-
+                <div className='row'>
+                    <p className='copyright'>Copyright © {current_year}</p>  
+                </div>
                 {/* Socials */}
                 <div className="col">
                     <ul className="social">
@@ -55,10 +57,8 @@ const Footer = () => {
                     </ul>
                 </div>
                 {/* /Socials */}
-            </div>
-            <div className='row'>
-                <p className='copyright'>Copyright © {current_year}</p>  
-            </div>
+            {/* </div> */}
+            
         </div>  
     )
 }

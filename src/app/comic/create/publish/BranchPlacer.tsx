@@ -133,52 +133,61 @@ const BranchPlacer = () => {
     }
 
     return (<>
-        <div id="panel-overview" className="carousel slide">
-            <div className="carousel-indicators">
+    <div id="publishContainer">
+        <div id="publish-slideshow">
+            <div id="panel-overview" className="carousel slide">
+                {/* class= carousel-control-prev */}
+                <button className="carousel-controls" type="button" data-bs-target="#panel-overview" data-bs-slide="prev">
+                    <span className="carousel-control-prev-icon " aria-hidden="true"></span>
+                    <span className="visually-hidden">Previous</span>
+                </button>
+                {/* <divclassName="carousel-inner"> */}
+                <div className="carousel-view">
+                    {/* temp vals for testing purposes, will be filled in with correct uploaded panels and vals through js */}
+                    {/* uses placeholder class for images to be replaced with user uploaded images */}
+                    <div className="carousel-item active">
+                        {/* d-block placeholder- */}
+                        <img id="first-panel" onClick={() => { addBranchHook(1) }} src={imageLinks[0]} className="" alt="..." />
+                    </div>
+                    <div className="carousel-item">
+                        <img id="second-panel" onClick={() => { addBranchHook(2) }} src={imageLinks[1]} className="" alt="..."  />
+                    </div>
+                    <div className="carousel-item" id="branch-hook-img" >
+                        <img id="third-panel" onClick={() => { addBranchHook(3) }} src={imageLinks[2]} className="" alt="..."  useMap="#panel-map" />
+                        {/* map of img containing clickable areas/sections defined by user*/}
+                        <map name="panel-map">
+                            {/* ex clickable area
+                            <area shape="rect" coords="290,172,333,250" alt="Phone" href="phone.htm" /> */}
+                        </map>
+                    </div>
+                </div>
+            
+                {/*class= carousel-control-next  */}
+                <button className="carousel-controls" type="button" data-bs-target="#panel-overview" data-bs-slide="next">
+                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Next</span>
+                </button>
+                
+            </div>
+            <div className="carousel-place-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Panel 1"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Panel 2"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Panel 3"></button>
             </div>
-            <div className="carousel-inner">
-                {/* temp vals for testing purposes, will be filled in with correct uploaded panels and vals through js */}
-                {/* uses placeholder class for images to be replaced with user uploaded images */}
-                <div className="carousel-item active">
-                    <img id="first-panel" onClick={() => { addBranchHook(1) }} src={imageLinks[0]} className="d-block placeholder-" alt="..." width={400} height={200} />
-                </div>
-                <div className="carousel-item">
-                    <img id="second-panel" onClick={() => { addBranchHook(2) }} src={imageLinks[1]} className="d-block placeholder" alt="..." width={400} height={200} />
-                </div>
-                <div className="carousel-item" id="branch-hook-img" >
-                    <img id="third-panel" onClick={() => { addBranchHook(3) }} src={imageLinks[2]} className="d-block placeholder" alt="..." width={400} height={200} useMap="#panel-map" />
-                    {/* map of img containing clickable areas/sections defined by user*/}
-                    <map name="panel-map">
-                        {/* ex clickable area
-                        <area shape="rect" coords="290,172,333,250" alt="Phone" href="phone.htm" /> */}
-                    </map>
-                </div>
-            </div>
-            <button className="carousel-control-prev" type="button" data-bs-target="#panel-overview" data-bs-slide="prev">
-                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span className="visually-hidden">Previous</span>
-            </button>
-            <button className="carousel-control-next" type="button" data-bs-target="#panel-overview" data-bs-slide="next">
-                <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                <span className="visually-hidden">Next</span>
-            </button>
         </div>
         <div className="button-container">
-        <div className="branch-hooks">
-            <div id="branch-hook-controls">
-                <button id="add-branch-hook" onClick={startAdd}>Add Hook</button>
-                <button id="remove-branch-hook" onClick={removeBranchHook}>Remove Hook</button>
+            <div className="branch-hooks">
+                <div id="branch-hook-controls">
+                    <button id="add-branch-hook" className="branch-control-btn" onClick={startAdd}>Add Hook</button>
+                    <button id="remove-branch-hook" className="branch-control-btn" onClick={removeBranchHook}>Remove Hook</button>
+                </div>
+                <div className="branch-hook-text">
+                    <p>YOU HAVE {branCount} OF 3 TOTAL REQUIRED BRANCHES PLACED</p>
+                    {/* starting text to be updated when either add or remove branch hook button is pressed */}
+                </div>
             </div>
-            <div className="branch-hook-text">
-                <h2>MINIMUM OF 3 TOTAL BRANCHES REQUIRED</h2>
-                {/* starting text to be updated when either add or remove branch hook button is pressed */}
-                <p id="num-hooks">You Currently Have {branCount} Hooks Placed.</p>
-            </div>
+            <button onClick={pushToLocalStorage} id="publish-btn">Publish</button>
         </div>
-        <button onClick={pushToLocalStorage} id="publish-btn">Publish</button>
         </div>
     </>);
 }
