@@ -2,12 +2,12 @@ import Image from "next/image"
 import Hero from "../components/Hero"
 import Link from "next/link"
 import ScrollToTop from "../components/ScrollToTop"
-import topMission from "../../public/images/background-boxes/crowd_comic_-_top_mission_box.svg";
-import bottomMission from "../../public/images/background-boxes/crowd_comic_-_bottom_mission_box.svg";
-import topRead from "../../public/images/background-boxes/crowd_comic_-_read_box_top.svg";
-import bottomRead from "../../public/images/background-boxes/crowd_comic_-_read_box_bottom.svg";
-import topCreate from "../../public/images/background-boxes/crowd_comic_-_create_box_top.svg";
-import bottomCreate from "../../public/images/background-boxes/crowd_comic_-_create_box_bottom.svg";
+import topMission from "../../public/images/background-boxes/Mission_Top.svg";
+import bottomMission from "../../public/images/background-boxes/Mission_Bottom.svg";
+import topRead from "../../public/images/background-boxes/Read_Top.svg";
+import bottomRead from "../../public/images/background-boxes/Read_Bottom.svg";
+import topCreate from "../../public/images/background-boxes/Create_Top.svg";
+import bottomCreate from "../../public/images/background-boxes/Create_Bottom.svg";
 import comic from "../../public/images/GIFs/Comic.gif";
 import arrow from "../../public/images/Arrow.gif"
 
@@ -15,7 +15,6 @@ import arrow from "../../public/images/Arrow.gif"
 import firstPanelImage from "../../public/comic-panels/first_panel.png";
 import secondPanelImage from "../../public/comic-panels/second_panel.png";
 import thirdPanelImage from "../../public/comic-panels/third_panel.png";
-import previewArrow from "../../public/images/Arrow.png";
 
 export default function Home() {
    return (
@@ -54,9 +53,7 @@ export default function Home() {
       </div>
       <div className="preview">
         <Image className="panel-one preview-panels" src={firstPanelImage} alt="" />
-        <Image className="preview-arrow" src={previewArrow} alt=""></Image>
         <Image className="panel-two preview-panels" src={secondPanelImage} alt="" />
-        <Image className="preview-arrow" src={previewArrow} alt=""></Image>
         <Image className="panel-three preview-panels" src={thirdPanelImage} alt="" />
       </div>
       <div className="read-and-create">
