@@ -1,6 +1,7 @@
 'use client';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
+import paper, { project, tools } from 'paper/dist/paper-core';
 import PenOptions from './PenOptions';
 import EraserOptions from './EraserOptions';
 import FillOptions from './FillOptions';
@@ -25,6 +26,9 @@ const CreateToolsCanvas = () =>
         {
             return;
         }
+
+        // Create a view for the canvas (setup for layers)
+        paper.setup(canvas);
 
         const context = canvas.getContext("2d");
 

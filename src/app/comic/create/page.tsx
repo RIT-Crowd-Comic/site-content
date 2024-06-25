@@ -1,5 +1,6 @@
 'use client';
 import CreateToolsCanvas from '../../../components/CreateToolsCanvas';
+import CreateToolsCanvasPaperJS from '../../../components/CreateToolsCanvasPaperJS';
 import Link from 'next/link';
 import '../../../styles/createPage.css';
 
@@ -18,7 +19,7 @@ const exportToPNG = () => {
 const Create = () => {
     return (
         <>
-            <CreateToolsCanvas />
+            <CreateToolsCanvasPaperJS />
             <button id='export-btn' onClick={exportToPNG}>Export To PNG</button>
             <Link href="/comic/create/publish">Continue</Link>
         </>

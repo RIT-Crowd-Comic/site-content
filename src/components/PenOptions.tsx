@@ -2,16 +2,19 @@ import { useRef } from "react";
 
 interface Props
 {
-    enabled: Boolean;
-    penSize: number;
-    changePenSize: Function;
-    changePenColor: Function;
+    enabled: Boolean;               // Should the HTML of this component be displayed on the page currently?
+    penSize: number;                // Default size of the pen brush
+    changePenSize: Function;        // Method for setting the size of the pen brush
+    changePenColor: Function;       // Method for setting the color of the pen brush
 }
 
 // *** Pen Options is used in order to changed the different values associated with the pen tool in CreateToolsCanvas ***
 const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =>
 {
+    // Reference to the size slider HTML Element
     const sliderReference = useRef<HTMLInputElement>(null);
+
+    // Colors for the user to select.  Currently only a greyscale color palette
     const color1 = "rgb(255, 255, 255)";
     const color2 = "rgb(192, 192, 192)";
     const color3 = "rgb(128, 128, 128)";
@@ -40,6 +43,7 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
                     <input type="range" min="1" max="20" defaultValue={penSize} step="1" id="penRange" ref={sliderReference} onChange={updateSize}></input>
                 </div>
                 <div id="paletteButtons">
+                    <label id="colorLabel">Colors:</label>
                     <button onClick={() => changePenColor(color1)}></button>
                     <button onClick={() => changePenColor(color2)}></button>
                     <button onClick={() => changePenColor(color3)}></button>
