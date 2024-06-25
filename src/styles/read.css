@@ -1,15 +1,13 @@
+.footer-bar {
+  position: fixed;
+  margin: 0;
+  height: 100%;
+  padding-bottom: 0;
+}
+ 
  #read-element {
     margin: 9% 0px;
   } 
-
-  #comic-panels {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    position: relative;
-    margin: 10% 1%;
-    justify-content: center;
-  }
 
 .first-panel,
 .second-panel,
@@ -26,6 +24,35 @@ button {
 
   button:hover{
     background-color: #009BC6;
+  }
+
+  .branch-hook {
+    transition: all 0.2s linear 0s;
+    
+    &:before {
+      content: "\21E8";
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      left: 0px;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      font-size: 30px;
+      transform: scale(0,2);
+      transition: all 0.2s linear 0s;
+    }
+    
+    &:hover {
+      text-indent: -9999px;
+      
+      &:before {
+        transform: scale(1,1);
+        text-indent: 0;
+      }
+    }
   }
 
 .branch-hook {
@@ -52,13 +79,13 @@ button {
 }
 
 .control-bar {
-  position: absolute;
+  position: fixed;
   background-color: rgb(94, 94, 94);
   width:3%;
   height:19%;
   padding: 1% 0 0 0;
   border-radius: 50px;
-  border: 2px solid white;
+  border: none;
   margin:auto 1%;
   top:50%;
   left:1%;
@@ -66,7 +93,6 @@ button {
   transform: translate(-50%,-50%);
   min-width: 68px;
   min-height:215px;
-  z-index: 2;
 }
 
  #back-button, #hook-toggle, #layout-toggle {
@@ -79,3 +105,32 @@ button {
     border: none;
     background-color: rgb(94, 94, 94);
   } 
+
+  .row-panels#comic-panels{
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 20% 1%;
+    justify-content: center;
+    
+  }
+
+  .column-panels#comic-panels{
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 10% 1%;
+    justify-content: center;
+  }
+
+  img.row-panels{
+    width: 525px;
+    height:350px;
+  }
+
+  img.column-panels {
+    width:900px;
+    height: 600px;
+  }

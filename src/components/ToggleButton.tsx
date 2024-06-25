@@ -2,34 +2,26 @@
 import {useEffect, useState } from 'react';
 
 interface Props {
-    text:string,
-    id:string,
-    targetElement:string,
-    state1:string,
-    state2:string
+    setting:string,
+    setSetting:Function
 }
 
-const ToggleButton = ({text,id,targetElement,state1,state2}: Props) => {
+const ToggleButton = ({setting,setSetting}: Props) => {
 
     const toggleLayout = () => {
-        if(targetElement) {
-            /*if(targetElement.style.flexDirection == state1)
+            if(setting == 'row-panels')
                 {
-                targetElement.style.flexDirection = state2
+                setSetting('column-panels')
             }
-            else if(targetElement.style.flexDirection = state2)
+            else if(setting == 'column-panels')
             {
-                targetElement.style.flexDirection = state1
-            }*/
-        }
-        else
-        {
-            console.log("Error getting element. Revieved this for query: " + targetElement);
-        }
+                setSetting('row-panels')
+            }
+        console.log("changing to " + setting)
     }
 
     return (
-        <button onClick={toggleLayout} id={id}>{text}</button>
+        <button onClick={toggleLayout} id="layout-toggle">Layout</button>
     );
 }
 
