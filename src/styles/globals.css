@@ -19,11 +19,12 @@
          */
 }
 
-.navbar, .footer
+.navbar, .footer-bar
 {
     font-family: var(--font-inter);
     font-style: normal;
     font-weight: 300;
+    filter: grayscale(1); 
 }
 
 .navbar
@@ -38,7 +39,7 @@ body, html
     background-color: var(--background-color);
     overflow-x: hidden;
     max-width: 100%;
-    filter: grayscale(1); 
+    /* filter: grayscale(1);  */
 }
 
 body
@@ -431,7 +432,7 @@ h2, button {
 {
     justify-content: space-between;
     text-align: right;
-    margin-top: 15px;
+    margin-bottom: 15px;
     padding: 10px;
 }
 
