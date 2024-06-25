@@ -132,37 +132,6 @@ const CreateToolsCanvasPaperJS = () => {
         eraserPath.add(event.point);
     }
 
-    // --- SHAPE TOOL ---
-    // Array containing all created shapes
-    const [elements, setElements] = useState([]);
-    const[startPoint,setStartPoint] = useState(new paper.Point(0,0));
-    const[endPoint, setEndPoint] = useState(new paper.Point(0,0));
-    const[currentRect, setCurrentRect] = useState(new paper.Path.Rectangle(startPoint,endPoint));
-
-    // const makeRect = (from, to) => {
-    //     var rect = new paper.Path.Rectangle(from, to);
-    //     rect.strokeColor = 'black';
-    //     rect.strokeWidth = 3;
-    //     startPoint = from;
-    //     endPoint = to;
-    //     return rect;
-    // }
-
-    // The Shape Tool:
-    const [shapeTool, setShapeTool] = useState<paper.Tool>(new paper.Tool());
-
-    shapeTool.onMouseDown = function (event: MouseEvent) {
-        setStartPoint(event.point);
-    }
-
-    shapeTool.onMouseDrag = function (event: MouseEvent) {
-        setEndPoint(event.point);
-    }
-
-    shapeTool.onMouseUp = function (event: MouseEvent) {
-    }
-
-
     // --- FILL TOOL ---
     // Boolean used to determine if the fill tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
     const [fillOptionsEnabled, setFillOptionsEnabled] = useState<boolean>(false);
@@ -187,6 +156,43 @@ const CreateToolsCanvasPaperJS = () => {
         fillPath.blendMode = 'normal';
     }
 
+    // --- SHAPE TOOL ---
+    // Array containing all created shapes
+    const [elements, setElements] = useState([]);
+    const [elementIndex, setElementIndex] = useState(0);
+
+    //
+    const [startPoint, setStartPoint] = useState(new paper.Point(0, 0));
+    const [endPoint, setEndPoint] = useState(new paper.Point(0, 0));
+    const [currentRect, setCurrentRect] = useState(new paper.Path.Rectangle(startPoint, endPoint));
+    currentRect.strokeColor = new paper.Color('black');
+    currentRect.strokeWidth = 3;
+
+    //reset
+    const clearStates = () =>{
+        setStartPoint(new paper.Point(0,0));
+        setEndPoint(new paper.Point(0,0));
+        setCurrentRect(new paper.Path.Rectangle(startPoint, endPoint));
+    }
+    
+    // The Shape Tool:
+    const [shapeTool, setShapeTool] = useState<paper.Tool>(new paper.Tool());
+    shapeTool.minDistance = 4;
+    shapeTool.onMouseDown = function (event: MouseEvent) {
+        setStartPoint(event.point);
+    }
+
+    shapeTool.onMouseDrag = function (event: MouseEvent) {
+        setEndPoint(event.point);
+    }
+
+    shapeTool.onMouseUp = function (event: MouseEvent) {
+        setCurrentRect(new paper.Path.Rectangle(startPoint,endPoint));
+        //doesn't properly update the first time
+        setElements([...elements, currentRect]);
+        setElementIndex(index => index++);
+        clearStates();
+    }
 
     // *** FUNCTIONS ***
 
@@ -212,7 +218,7 @@ const CreateToolsCanvasPaperJS = () => {
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(true);
         }
-        else if (Number(buttonSelected?.value) == toolStates.SHAPE){
+        else if (Number(buttonSelected?.value) == toolStates.SHAPE) {
             shapeTool.activate();
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
@@ -242,6 +248,9 @@ const CreateToolsCanvasPaperJS = () => {
     // Erases everything from the current canvas layer
     const clearLayer = () => {
         canvasProject.activeLayer.removeChildren();
+        //
+        setElements([]);
+        setElementIndex(0);
     }
 
     const toggleLayerVisibility = (event: SyntheticEvent) => {
@@ -286,11 +295,6 @@ const CreateToolsCanvasPaperJS = () => {
                     <div id="shapeTool">
                         <input type="radio" name="tools" id="shape" value={toolStates.SHAPE} onChange={findSelected} />
                         <label htmlFor="shape">Shape (Rectangle)</label>
-                    </div>
-
-                    <div id="selectTool">
-                        <input type="radio" name="tools" id="select" value={toolStates.SELECT} onChange={findSelected} />
-                        <label htmlFor="select">Select</label>
                     </div>
 
                     <div id="textTool">
