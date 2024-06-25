@@ -1,7 +1,25 @@
 "use client"
 
 import Image from "next/image"
+
 import arrow from "../../public/images/Arrow.gif"
+
+
+// const isBrowser = () => typeof window !== 'undefined'; //The approach recommended by Next.js
+//   if (!isBrowser()) return;
+//   window.scrollTo({ top: 0, behavior: 'smooth' });  
+
+
+// export default function ScrollToTop() {
+//   return(
+//     <button >
+//         <Link href="#" type="button" className="btn btn-dark btn-floating btn-lg right" id="backToTop">
+//             <Image src={arrow} alt="" fill={true} />
+//         </Link>
+//     </button>
+//     // onClick={scrollToTop}
+//   );
+// }
 
 import { useEffect, useState } from 'react'
 
@@ -9,7 +27,7 @@ export default function ScrollToTop(){
   const [isVisible, setIsVisible] = useState(false)
 
   const toggleVisibility = () => {
-    if (window.scrollY > 100) {
+    if (window.scrollY > 200) {
       setIsVisible(true)
     } else {
       setIsVisible(false)
@@ -29,10 +47,8 @@ export default function ScrollToTop(){
   }, [])
 
   return (
-    <div className="">
-      <button type="button" className="mb-6 mr-6 z-10 btn btn-lg my-8 " id="scrollToTopBtn" onClick={scrollToTop}>
-        {isVisible && (<Image src={arrow} alt="Scroll to top button" fill={true} />)}
-      </button>
-    </div>
+    <button type="button" className="scollToTopBtn btn btn-floating btn-lg right" id="backToTop" onClick={scrollToTop}>
+        {isVisible && (<Image src={arrow} alt="" fill={true} />)}
+    </button>
   )
 }
