@@ -3,6 +3,8 @@ import Link from 'next/link'
 import Filter from '@/components/Filter'
 import Card from '@/components/Card'
 import ScrollToTop from "@/components/ScrollToTop"
+import arrow from "../../../public/images/Arrow.gif"
+import "../../styles/team.css"
 
 const TeamPage = () => {
   return (
@@ -11,7 +13,7 @@ const TeamPage = () => {
       <div className="content text-center">
         <h1 className="teamTitle">Meet the Creators!</h1> 
         <Filter />
-        <ScrollToTop />
+        {/* <ScrollToTop /> */}
         {/* Creator Group */}
         <div className="creatorGroup p-3 pb-4 m-4" id="2024">
           <h2 className="chapterTitle py-1">Chapter 2024</h2>
@@ -24,32 +26,60 @@ const TeamPage = () => {
         {/* /Creator Group */}
 
         {/* Professors */}
-        <div className="professors p-3">
-          <div className='row'>
-            <div className="prof-item col p-0" id="prof1">
+        <div className="facultyGroup d-flex flex-wrap justify-content-center p-3 pb-4 m-4">
+          <div className="card person-panel border border-black border-3 m-3">
+              <Image width={200} height={200} className="img-fluid portrait card-img w-100 h-100" alt="" src="/images/people/Jake_Adams.png"/>
               <Link href="https:www.linkedin.com">
-                <h3 className='text top-left'>Jake Adams</h3>
-                <Image className="prof-img" src="/images/people/Jake_Adams.png" alt="professor panel" width="150" height="150"/>
-              </Link>
-            </div>
-            <div className="prof-item col p-0" id="prof2">
-              <Link href="https:www.linkedin.com">
-                <Image className="prof-img" src="/images/people/Sten_Placeholder.jpg" alt="professor panel" width="150" height="150"/>
-                <h3 className='text bottom'>Sten McKinzie</h3>
-              </Link>
-            </div>
-            <div className="prof-item col p-0" id="prof3">
-              <Link href="https:www.linkedin.com">
-                <h3 className='text top-right'>Travis Stodter</h3>
-                <Image className="prof-img" src="/images/people/travis_stodter_white.png" alt="professor panel" width="150" height="150"/>
-              </Link>
-            </div>
+              <div className="card-img-overlay">
+                <div className="card-header p-2 rounded-0">
+                  Jake Adams
+                </div>
+                <div className={`card-footer p-2 rounded-0`}>
+                  Faculty Advisor
+                </div>
+              </div>
+            </Link>
           </div>
-        </div>
+          <div className="card person-panel border border-black border-3 m-3">
+              <Image width={200} height={200} className="img-fluid portrait card-img w-100 h-100" alt="" src="/images/people/Sten_Placeholder.jpg"/>
+              <Link href="https:www.linkedin.com">
+              <div className="card-img-overlay">
+                <div className="card-header p-2 rounded-0">
+                  Sten Mckinzie
+                </div>
+                <div className={`card-footer p-2 rounded-0`}>
+                  Faculty Advisor
+                </div>
+              </div>
+            </Link>
+          </div>
+          <div className="card person-panel border border-black border-3 m-3">
+              <Image width={200} height={200} className="img-fluid portrait card-img w-100 h-100" alt="" src="/images/people/travis_stodter_white.png"/>
+              <Link href="https:www.linkedin.com">
+              <div className="card-img-overlay">
+                <div className="card-header p-2 rounded-0">
+                  Travis Stodter
+                </div>
+                <div className={`card-footer p-2 rounded-0`}>
+                  Faculty Advisor
+                </div>
+              </div>
+            </Link>
+          </div>
+          </div>
+          </div>
         {/* /Professors */}
+      <div>
+        <Link href="#" className="scroll-btn align-bottom">
+          <strong id="scroll-text" className='align-text-bottom'>Back to Top</strong>  
+          <button type="button" className="mb-6 mr-6 z-10 btn btn-lg my-8 " id="scrollToTopBtn">
+            <Image src={arrow} alt="Scroll to top button" fill={true} />
+          </button>
+        </Link>
       </div>
       {/* /Content */}
     </main>
+
   )
 }
 

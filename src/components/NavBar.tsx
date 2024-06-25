@@ -14,7 +14,7 @@ const NavBar = () => {
         <div className="offcanvas offcanvas-end w-50" tabIndex={-1} id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
           <div className="offcanvas-header">
             <h5 className="offcanvas-header" id="offcanvasNavbarLabel">Crowd Comic</h5>
-            <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button type="button" className="btn-close h-25" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <div className="offcanvas-body">
             <ul className="navbar-nav justify-content-end flex-grow-1">
@@ -28,7 +28,7 @@ const NavBar = () => {
                 <Link className="nav-link" id="comicLink" href="/comic">Comic</Link>
               </li>
               <li className="nav-item ps-3">
-                <button className="btn btn-outline-dark">Login</button>
+                <button className="nav-btn btn btn-outline-dark">Login</button>
               </li>
             </ul>
           </div>

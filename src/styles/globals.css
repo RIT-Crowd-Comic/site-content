@@ -21,7 +21,7 @@
 
 .navbar, .footer-bar
 {
-    font-family: var(--font-inter);
+    font-family: var(--font-back-issues);
     font-style: normal;
     font-weight: 300;
     filter: grayscale(1); 
@@ -30,6 +30,17 @@
 .navbar
 {
     background-color: var(--primary-color);
+}
+
+.nav-link, .nav-btn
+{
+    color: var(--grayscale-primary-color);
+    font-size: 1.5rem;
+}
+
+.offcanvas-header
+{
+    font-size: 1.5rem;
 }
 
 body, html
@@ -49,8 +60,8 @@ body
       #095e75 0.15rem,
       transparent 0
     ), radial-gradient(circle at center, #02627c 0.15rem, transparent 0);
-  background-size: 1.3rem 1.3rem;
-  background-position: 0 0, 0.65rem 0.65rem;
+    background-size: 1.3rem 1.3rem;
+    background-position: 0 0, 0.65rem 0.65rem;
 }
 
 h2, button {
@@ -72,10 +83,16 @@ h2, button {
     --bs-card-img-overlay-padding: none;
 }
 
+.main-section
+{
+    padding: 30px;
+    height: 100%;
+}
+
 /* MISSION SECTION FORMATTING */
 .mission h2{
     position: relative;
-    background: url(../../public/images/background-boxes/Header_Box_Right.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/Read_Small.svg) no-repeat center/contain;
     padding: 6vw 8vw 6vw 6vw;
     z-index: 1;
     margin: 5vw -5vw -9vw 0; 
@@ -83,7 +100,7 @@ h2, button {
 
 .whatcanido h2{
     position: relative;
-    background: url(../../public/images/background-boxes/Header_Box_Right.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/Read_Small.svg) no-repeat center/contain;
     padding: 6vw 6vw 8vw 4vw;
     z-index: 1;
     margin: -10vw -7vw -4vw 0;
@@ -131,7 +148,7 @@ h2, button {
 .read h2{
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/background-boxes/Header_Box_Left.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/Create_Small.svg) no-repeat center/contain;
     padding: 7vw;
     margin: -6vw 0vw -17vw -10vw;
     z-index: 1;
@@ -144,7 +161,6 @@ h2, button {
     margin: 0 auto;
     font-size: 3.3vw;
 }
-
 
 .topRead
 {
@@ -159,7 +175,6 @@ h2, button {
     bottom: -10%;
     height: auto;
 }
-    
 
 .readimg .card-img-top {
     z-index: 0;
@@ -171,15 +186,15 @@ h2, button {
     padding: 3vw 1vw 3vw 7vw;
 }
 
-
 /* CREATE SECTION FORMATTING */
 .create{
     position: relative;
 }
+
 .create h2{
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/background-boxes/Header_Box_Right.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/Create_Small.svg) no-repeat center/contain;
     padding: 7vw 9vw 7vw 6vw;
     margin: -8vw -13vw -20vw 0vw;
     z-index: 1;
@@ -193,7 +208,6 @@ h2, button {
     font-size: 3.3vw;
 }
 
-
 .topCreate
 {
     position:absolute;
@@ -206,8 +220,7 @@ h2, button {
     position:absolute;
     bottom: -10%;
     height: auto;
-}
-    
+} 
 
 .createimg .card-img-top {
     z-index: 0;
@@ -240,21 +253,55 @@ h2, button {
     left: 13.5%;
 }
 
+/* COMIC PREVIEW */
+
+.preview
+{
+    display:grid;
+    grid-template-rows: repeat(3, auto);
+
+    width: 80vw;
+
+    margin: 30px auto 50px;
+}
+
+.preview-panels
+{
+    width: 65%;
+    height: auto;
+
+    margin: 0 auto;
+
+    border: 5px solid black;
+}
+
+.panel-one
+{
+    margin: 0;
+}
+
+.panel-two
+{
+    margin: -5% auto 0;
+}
+
+.panel-three
+{
+    margin: -5% 0 0 auto;
+}
+
+/* OUR TEAM BUTTON */
+
 .our-team
 {
     background: url(../../public/images/background-boxes/Team_Banner_Mobile.svg);
     background-size: contain;
     background-repeat: no-repeat;
-
     width: 100vw;
     height: 20vw;
-
     padding: 0;
-
     background-size: 100% 100%;
-
-    margin: 10vw 0vw 0vw -30px;
-
+    margin: 50px 0 30px;
     text-align: center;
 }
 
@@ -264,13 +311,10 @@ h2, button {
     border: 3px solid black;
     width: 30%;
     height: 40%;
-
     position: relative;
     padding: 0;
-
     top: 30%;
     font-size: 6vw;
-
     line-height: 0;
 }
 
@@ -278,6 +322,7 @@ h2, button {
 {
     background-color: #910f0a;
 }
+
 .our-team button:active
 {
     background-color: var(--secondary-color);
@@ -332,6 +377,18 @@ h2, button {
 }
 
 .creatorGroup{
+    border: 2px solid var(--grayscale-primary-color);
+    background-color: rgba(0,0,0,0.5);
+}
+
+.facultyGroup
+{
+    border: 2px solid var(--grayscale-primary-color);
+    background-color: rgba(0,0,0,0.5);
+}
+
+.facultyGroup
+{
     border: 2px solid var(--grayscale-primary-color);
 }
 
@@ -400,6 +457,8 @@ h2, button {
     filter: grayscale(1);
     /* border: #D91911 solid 2px; */
 }
+
+/* FOOTER */
 
 .footer{
     background-color: var(--grayscale-text-bg-color); 
@@ -479,21 +538,15 @@ h2, button {
     text-align: center;
 }
 
-main{
-    padding: 30px;
-}
+/* HERO */
 
 .hero
 {
     width: 100vw;
-    margin-left: -30px;
     height: 300px;
-
     background-color: var(--background-color); 
-
     background-image: linear-gradient(45deg, var(--background-color) 25%, #18264f 25%, #18264f 50%, var(--background-color) 50%, var(--background-color) 75%, #18264f 75%, #18264f 100%);
     background-size: 11.31px 11.31px;
-
     border: 5px solid black;
 }
 
@@ -544,27 +597,48 @@ main{
     transform: translate(-50%, -50%);
 }
 
-#backToTop{
+/* Scroll to top button component */
+/* #scrollToTopBtn{
     transform: rotate(-90deg);
     width: 70px;
     height: 40px;
-    position: fixed;
-    left: 85vw;
-    top: 85vh;
-    z-index: 99;
+    cursor: pointer;
     border: none;
+    position: fixed;
+    bottom: 400px;
+    right: 0px;
+} */
+
+/* Scroll  to top button with Link*/
+.scroll-btn{
+    position: relative;
+    /* bottom: 0px; */
+    /* right: 0px; */
+    left: 20vw;
+    padding-left: 40px;
+    margin-top: 20px;
+    z-index: 2;
 }
 
-.scollToTopBtn{
+#scroll-text{
+    color: var(--grayscale-text-bg-color);
+    justify-content:end;
+    font-size: 1rem;
+    margin-top: 20px;
+}
+
+#scrollToTopBtn{
+    transform: rotate(-90deg);
+    width: 70px;
+    height: 40px;
     cursor: pointer;
-    opacity: 1;
-    transition: opacity 0.3s ease-in-out;
+    border: none;
 }
 
 .person-panel
 {
-    width: 300px;
-    height: 290px;
+    max-width: 300px;
+    max-height: 300px;
     border-radius: 0;
     position: relative;
     background-color: white;
@@ -618,19 +692,29 @@ No media query for `xs` since this is the default in Bootstrap */
 
 /* Small devices (landscape phones, 576px and up) */
 
- @media (min-width: 576px) { 
-    #backToTop{
+@media (min-width: 576px) { 
+   
+    .scroll-btn{
+        left: 30vw;
+        padding: 3vw 0vw 3vw 8vw;
+        margin-top: 0px;
+    }
+    
+    #scroll-text{
+        font-size: 1.2rem;
+        padding-top: 15px;
+    }
+
+    #scrollToTopBtn{
         width: 80px;
         height: 50px;
-        left: 87vw;
+        padding-top: 15px;
+        margin-top: 0px;
     }
 } 
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) { 
-    main{
-        padding: 30px;
-    }
     .professors{
         /* width: 70%; */
         /* margin: 10px 100px; */
@@ -670,8 +754,39 @@ No media query for `xs` since this is the default in Bootstrap */
         transform: translate(-50%, -50%);
     }
 
-    #backToTop{
-        left: 90vw;
+    .scroll-btn{
+        left: 35vw;
+    }
+
+    .preview
+    {
+        display:grid;
+        grid-template-rows: repeat(3, auto);
+        width: 80vw;
+        margin: 30px auto 50px;
+    }
+
+    .preview-panels
+    {
+        width: 37%;
+        height: auto;
+        margin: 0 auto;
+        border: 5px solid black;
+    }
+
+    .panel-one
+    {
+        margin: 0;
+    }
+
+    .panel-two
+    {
+        margin: -10% auto 0;
+    }
+
+    .panel-three
+    {
+        margin: -10% 0 0 auto;
     }
 
     .our-team
@@ -679,23 +794,18 @@ No media query for `xs` since this is the default in Bootstrap */
         background: url(../../public/images/background-boxes/Team_Banner.svg);
         background-size: contain;
         background-repeat: no-repeat;
-
         width: 80vw;
         height: 25vw;
-
         padding: 0;
-
         background-size: 100% 100%;
-
         text-align: center;
-        margin: 0 auto;
+        margin: 60px auto 30px;
     }
     .our-team button
     {
         border: 5px solid black;
         width: 25%;
         height: 30%;
-
         top: 35%;
         font-size: 5vw;
     }
@@ -710,27 +820,25 @@ No media query for `xs` since this is the default in Bootstrap */
     {
         position:absolute;
         top: -40%;
-    
         height: auto;
     }
     .bottomMission
     {
         position:absolute;
         bottom: -20%;
-
         height: auto;
     }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) { 
-    main{
+    .main-section
+    {
         padding: 30px 100px;
     }
     .hero
     {
         width: 100vw;
-        margin-left: -100px;
         height: 500px;
         position: relative;
     }
@@ -754,7 +862,7 @@ No media query for `xs` since this is the default in Bootstrap */
         width: 300%;
         max-width: 500px;
     }
-    #backToTop{
+    #scollToTopBtn{
         width: 90px;
         height: 60px;
     }
@@ -786,7 +894,8 @@ No media query for `xs` since this is the default in Bootstrap */
     .bottom{
         left: 40%;
     }
-    #backToTop{
+
+    #scollToTopBtn{
         width: 100px;
         height: 70px;
     }

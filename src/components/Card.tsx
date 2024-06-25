@@ -3,21 +3,7 @@
 import Cards from '@/api/cards.json';
 import Image from 'next/image'
 import Link from 'next/link';
-import React, {useState, useEffect} from 'react';
-
-
-function Filter()
-{
-  useEffect(() =>
-  {
-    let panels = document.getElementsByClassName('Developer');
-
-    for (let i = 0; i < panels.length; i++)
-      {
-        panels[i].parentNode?.removeChild(panels[i]);
-      }
-  })
-}
+import React from 'react';
 
 export default function Page() {
   return (
