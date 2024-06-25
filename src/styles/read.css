@@ -21,11 +21,11 @@
 button {
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #009BC6;
+    background-color: darkgrey;
   }
 
   button:hover{
-    background-color: darkgray;
+    background-color: #009BC6;
   }
 
 .branch-hook {

@@ -2,6 +2,8 @@
 import Image from "next/image";
 import "../../styles/read.css";
 import Link from "next/link";
+import ToggleButton from "../../components/ToggleButton";
+import Document from "next/document";
 
 //imported base trunk panels as static images
 const firstPanelImage = "/comic-panels/first_panel.png";
@@ -14,7 +16,7 @@ const Read = () => {
         <div className="control-bar">
                 <button id="back-button">Back</button>
                 <button id="hook-toggle">Hook</button>
-                <button id="layout-toggle">Layout</button>
+                <ToggleButton text="Layout" id="layout-toggle" targetElement={""} state1="row" state2="column"/>
         </div>
         <div id="comic-panels">
             <div className="first-panel">
