@@ -33,8 +33,8 @@ export default function Home() {
 
         <div className="missionimg row card">
           <div className="card-img-overlay">
-            <Image className="bottomMission card-img-top" src={bottomMission} alt="" />
-            <Image className="topMission card-img-top" src={topMission} alt="" />
+            <Image className="bottomMission card-img-top" src={bottomMission} alt="Mission Textbox" />
+            <Image className="topMission card-img-top" src={topMission} alt="Mission Textbox" />
           </div>
           <div className="card-body">
             <p>
@@ -53,11 +53,11 @@ export default function Home() {
         </div>
       </div>
       <div className="preview">
-        <Image className="panel-one preview-panels" src={firstPanelImage} alt="" />
-        <Image className="preview-arrow" src={previewArrow} alt=""></Image>
-        <Image className="panel-two preview-panels" src={secondPanelImage} alt="" />
-        <Image className="preview-arrow" src={previewArrow} alt=""></Image>
-        <Image className="panel-three preview-panels" src={thirdPanelImage} alt="" />
+        <Image className="panel-one preview-panels" src={firstPanelImage} alt="Preview Panel" />
+        <Image className="preview-arrow" src={previewArrow} alt="Preview Arrow"></Image>
+        <Image className="panel-two preview-panels" src={secondPanelImage} alt="Preview Panel" />
+        <Image className="preview-arrow" src={previewArrow} alt="Preview Arrow"></Image>
+        <Image className="panel-three preview-panels" src={thirdPanelImage} alt="Preview Panel" />
       </div>
       <div className="read-and-create">
         <div className="read">
@@ -70,8 +70,8 @@ export default function Home() {
         </div>
         <div className="readimg row card">
           <div className="card-img-overlay">
-            <Image className="bottomRead card-img-top" src={bottomRead} alt="" />
-            <Image className="topRead card-img-top" src={topRead} alt="" />
+            <Image className="bottomRead card-img-top" src={bottomRead} alt="Read Textbox" />
+            <Image className="topRead card-img-top" src={topRead} alt="Read Textbox" />
           </div>
           <div className="card-body">
             <p>
@@ -92,8 +92,8 @@ export default function Home() {
           </div>
           <div className="createimg row card">
             <div className="card-img-overlay">
-              <Image className="bottomCreate card-img-top" src={bottomCreate} alt="" />
-              <Image className="topCreate card-img-top" src={topCreate} alt="" />
+              <Image className="bottomCreate card-img-top" src={bottomCreate} alt="Create Textbox" />
+              <Image className="topCreate card-img-top" src={topCreate} alt="Create Textbox" />
             </div>
             <div className="card-body">
               <p>
@@ -113,7 +113,7 @@ export default function Home() {
             <div className="col-auto">
               <div className="getStarted">
                 <button><Link href="/comic">Get Started</Link></button>
-                <Image className="comic card-img-top" src={comic} alt="" />
+                <Image className="comic card-img-top" src={comic} alt="Get Started Button" />
               </div>
             </div>
             <div className="col"></div>
@@ -124,12 +124,14 @@ export default function Home() {
       <div className="our-team">
         <button><Link href="/team" >Our Team</Link></button>
       </div>
-      <Link href="#" className="scroll-btn">
-        <strong id="scroll-text">Back to Top</strong>  
-        <button type="button" className="mb-6 mr-6 z-10 btn btn-lg my-8 " id="scrollToTopBtn">
-          <Image src={arrow} alt="Scroll to top button" fill={true} />
-        </button>
-      </Link>
+      <div className="back-to-top">
+        <Link href="#" className="scroll-btn">
+          <strong id="scroll-text">Back to Top</strong>  
+          <button type="button" className="mb-6 mr-6 z-10 btn btn-lg my-8 " id="scrollToTopBtn">
+            <Image src={arrow} alt="Scroll to top button" fill={true} />
+          </button>
+        </Link>
+      </div>
     </main >
   );
 }
