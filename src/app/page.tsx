@@ -9,6 +9,7 @@ import bottomRead from "../../public/images/background-boxes/Read_Bottom.svg";
 import topCreate from "../../public/images/background-boxes/Create_Top.svg";
 import bottomCreate from "../../public/images/background-boxes/Create_Bottom.svg";
 import comic from "../../public/images/GIFs/Comic.gif";
+import arrow from "../../public/images/Arrow.gif"
 
 // For the "preview comic" section
 import firstPanelImage from "../../public/comic-panels/first_panel.png";
@@ -19,16 +20,15 @@ export default function Home() {
    return (
     <main>
       <Hero />
-
+      {/* <ScrollToTop /> */}
       <section className="main-section">
       <div className="container-fluid" id="mission-id">
-        <ScrollToTop />
-          <div className="mission row">
-            <div className="col"></div>
-            <div className="col-auto">
-              <h2>Mission</h2>
-            </div>
+        <div className="mission row">
+          <div className="col"></div>
+          <div className="col-auto">
+            <h2>Mission</h2>
           </div>
+        </div>
 
         <div className="missionimg row card">
           <div className="card-img-overlay">
@@ -121,6 +121,12 @@ export default function Home() {
       <div className="our-team">
         <button><Link href="/team" >Our Team</Link></button>
       </div>
+      <Link href="#" className="scroll-btn">
+        <strong id="scroll-text">Back to Top</strong>  
+        <button type="button" className="mb-6 mr-6 z-10 btn btn-lg my-8 " id="scrollToTopBtn">
+          <Image src={arrow} alt="Scroll to top button" fill={true} />
+        </button>
+      </Link>
     </main >
   );
 }

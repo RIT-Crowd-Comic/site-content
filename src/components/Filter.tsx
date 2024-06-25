@@ -38,14 +38,14 @@ const Filter = () => {
                       </div>
                       {/* Role */}
                       <select className="form-select role m-1" aria-label="Role Filter">
-                          <option selected disabled>Role</option>
+                          <option value="Role" disabled>Role</option>
                           <option value="1">Designer</option>
                           <option value="2">Developer</option>
                           <option value="3">Producer</option>
                       </select> 
                       {/* Year */}
                       <select className="form-select year m-1" aria-label="Year Filter">
-                          <option selected disabled>Year</option>
+                          <option value="Year" disabled>Year</option>
                           <option value="1">2024</option>
                       </select> 
                   </div>
