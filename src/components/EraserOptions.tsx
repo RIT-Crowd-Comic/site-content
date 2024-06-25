@@ -2,14 +2,15 @@ import { useRef } from "react";
 
 interface Props 
 {
-    enabled: Boolean;
-    eraserSize: number;
-    changeEraserSize: Function;
+    enabled: Boolean;               // Should the HTML of this component be displayed on the page currently?
+    eraserSize: number;             // Default size of the eraser brush
+    changeEraserSize: Function;     // Method for setting the size of the eraser brush
 }
 
 // *** Eraser Options is used in order to changed the different values associated with the eraser tool in CreateToolsCanvas ***
 const EraserOptions = ({enabled, eraserSize, changeEraserSize} : Props) =>
 {
+    // Reference to the size slider HTML Element
     const sliderReference = useRef<HTMLInputElement>(null);
 
     // Whenever the slider is adjusted, change the value of eraserSize.  This will update the label text as well as the value in the parent CreateCanvasTools component
