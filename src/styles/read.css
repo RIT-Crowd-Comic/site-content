@@ -1,6 +1,5 @@
  #read-element {
     margin: 9% 0px;
-    border: 2px solid white;
   } 
 
   #comic-panels {
@@ -10,14 +9,13 @@
     position: relative;
     margin: 11% 1%;
     justify-content: center;
-    border:2px solid white;
   }
 
 .first-panel,
 .second-panel,
 .third-panel, .control-bar {
-  margin-left: 1%;
   position: relative;
+  border: 20px solid black;
 }
 
 button {
@@ -56,8 +54,8 @@ button {
 .control-bar {
   position: absolute;
   background-color: rgb(94, 94, 94);
-  width:80px;
-  height:210px;
+  width:3%;
+  height:19%;
   padding: 1% 0 0 0;
   border-radius: 50px;
   border: 2px solid white;
@@ -66,6 +64,9 @@ button {
   left:1%;
   -ms-transform: translateX(-50%) translateY(-50%);
   transform: translate(-50%,-50%);
+  min-width: 68px;
+  min-height:215px;
+  z-index: 2;
 }
 
  #back-button, #hook-toggle, #layout-toggle {

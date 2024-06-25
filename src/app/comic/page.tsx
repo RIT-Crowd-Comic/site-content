@@ -28,7 +28,7 @@ const Read = () => {
                 <Image id="third-img" src={thirdPanelImage} alt="" width={525} height={350} />
                 <div className="third-panel-container">
                     <button id="second-branch-hook" className="branch-hook">2</button>
-                    <button id="third-branch-hook" className="branch-hook">3<Link href="/comic/create"></Link></button>
+                    <button id="third-branch-hook" className="branch-hook"><Link href="/comic/create">3</Link></button>
                 </div>
             </div>
         </div>
