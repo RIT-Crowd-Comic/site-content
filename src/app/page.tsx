@@ -2,12 +2,21 @@ import Image from "next/image"
 import Hero from "../components/Hero"
 import Link from "next/link"
 import ScrollToTop from "../components/ScrollToTop"
+
+// Mobile Assets
 import topMission from "../../public/images/background-boxes/Mission_Top.svg";
 import bottomMission from "../../public/images/background-boxes/Mission_Bottom.svg";
 import topRead from "../../public/images/background-boxes/Read_Top.svg";
 import bottomRead from "../../public/images/background-boxes/Read_Bottom.svg";
 import topCreate from "../../public/images/background-boxes/Create_Top.svg";
 import bottomCreate from "../../public/images/background-boxes/Create_Bottom.svg";
+
+// Desktop Assets
+import desktopLeftMission from "../../public/images/background-boxes/Desktop_Mission_Left.svg"
+import desktopRightMission from "../../public/images/background-boxes/Desktop_Mission_Right.svg"
+import desktopRead from "../../public/images/background-boxes/Desktop_Read.svg"
+import desktopCreate from "../../public/images/background-boxes/Desktop_Create.svg"
+
 import comic from "../../public/images/GIFs/Comic.gif";
 import arrow from "../../public/images/Arrow.gif"
 
@@ -34,6 +43,9 @@ export default function Home() {
           <div className="card-img-overlay">
             <Image className="bottomMission card-img-top" src={bottomMission} alt="" />
             <Image className="topMission card-img-top" src={topMission} alt="" />
+
+            <Image className="leftMission card-img-top" src={desktopLeftMission} alt="" />
+            <Image className="rightMission card-img-top" src={desktopRightMission} alt="" />
           </div>
           <div className="card-body">
             <p>
@@ -69,6 +81,8 @@ export default function Home() {
           <div className="card-img-overlay">
             <Image className="bottomRead card-img-top" src={bottomRead} alt="" />
             <Image className="topRead card-img-top" src={topRead} alt="" />
+
+            <Image className="desktopRead card-img-top" src={desktopRead} alt="" />
           </div>
           <div className="card-body">
             <p>
@@ -91,6 +105,8 @@ export default function Home() {
             <div className="card-img-overlay">
               <Image className="bottomCreate card-img-top" src={bottomCreate} alt="" />
               <Image className="topCreate card-img-top" src={topCreate} alt="" />
+
+              <Image className="desktopCreate card-img-top" src={desktopCreate} alt="" />
             </div>
             <div className="card-body">
               <p>

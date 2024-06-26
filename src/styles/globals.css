@@ -133,6 +133,12 @@ h2, button {
     height: auto;
 }
 
+.leftMission, .rightMission
+{
+    display:none;
+}
+
+
 .missionimg .card-img-top {
     z-index: 0;
 }
@@ -185,6 +191,11 @@ h2, button {
     padding: 3vw 1vw 3vw 7vw;
 }
 
+.desktopRead
+{
+    display: none;
+}
+
 /* CREATE SECTION FORMATTING */
 .create{
     position: relative;
@@ -230,6 +241,11 @@ h2, button {
     z-index: 1;
     padding: 2vw 1vw 0 9vw;
     margin: -3vw 0vw 10vw 0vw;
+}
+
+.desktopCreate
+{
+    display: none;
 }
 
 .getStarted button{
@@ -885,6 +901,135 @@ No media query for `xs` since this is the default in Bootstrap */
         left: 38%;
         right: 35%;
         margin: 0 auto;
+    }
+
+    /* MISSION */
+    .mission h2
+    {
+        background: url(../../public/images/background-boxes/Desktop_Mission_Small.svg) no-repeat center/contain;
+
+        padding: 3rem;
+        margin: 0;
+    }
+
+    .whatcanido h2
+    {
+        background: url(../../public/images/background-boxes/Desktop_What_Can_I_Do.svg) no-repeat center/contain;
+
+        padding: 2rem;
+        margin: 0;
+    }
+
+    .missionimg
+    {
+        font-size: 1.5vw;
+
+        width: 90vw;
+        margin: 0 -5vw;
+    }
+
+    .missionimg p
+    {
+        background-color: var(--secondary-color);
+
+        border: solid 5px black;
+        
+        padding: 1rem;
+        width: 70%;
+        margin: 15% auto 0;
+    }
+
+    .topMission, .bottomMission
+    {
+        display: none;
+    }
+
+    .leftMission, .rightMission
+    {
+        display:inline;
+
+        position:absolute;
+        height: auto;
+    }
+
+    /* READ */
+    .read h2
+    {
+        background: url(../../public/images/background-boxes/Desktop_Read_Small.svg) no-repeat center/contain;
+
+        padding: 4rem;
+        margin: 0;
+    }
+
+    .readimg
+    {
+        font-size: 1.5vw;
+
+        width: 90vw;
+        margin: 0 -5vw;
+    }
+
+    .readimg p
+    {
+        background-color: var(--secondary-color);
+
+        border: solid 5px black;
+
+        padding: 1rem;
+        width: 70%;
+        margin: 15% auto 0;
+    }
+
+    .topRead, .bottomRead
+    {
+        display: none;
+    }
+
+    .desktopRead
+    {
+        display:inline;
+        position:absolute;
+        height: auto;
+    }
+
+    /* CREATE */
+    .create h2
+    {
+        background: url(../../public/images/background-boxes/Desktop_Create_Small.svg) no-repeat center/contain;
+
+        padding: 4rem;
+        margin: 0;
+    }
+
+    .createimg
+    {
+        font-size: 1.5vw;
+
+        width: 90vw;
+        margin: 0 -5vw;
+    }
+
+    .createimg p
+    {
+        background-color: var(--secondary-color);
+
+        border: solid 5px black;
+
+        padding: 1rem;
+        width: 70%;
+        margin: 15% auto 0;
+    }
+
+    .topCreate, .bottomCreate
+    {
+        display: none;
+    }
+
+    .desktopCreate
+    {
+        display:inline;
+        position:absolute;
+        height: auto;
     }
 }
 
