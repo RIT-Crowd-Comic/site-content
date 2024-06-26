@@ -91,7 +91,7 @@ h2, button {
 /* MISSION SECTION FORMATTING */
 .mission h2{
     position: relative;
-    background: url(../../public/images/background-boxes/Read_Small.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/bw/Read_Small_BW.svg) no-repeat center/contain;
     padding: 6vw 8vw 6vw 6vw;
     z-index: 1;
     margin: 5vw -5vw -9vw 0; 
@@ -99,7 +99,7 @@ h2, button {
 
 .whatcanido h2{
     position: relative;
-    background: url(../../public/images/background-boxes/Read_Small.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/bw/Read_Small_BW.svg) no-repeat center/contain;
     padding: 6vw 6vw 8vw 4vw;
     z-index: 1;
     margin: -10vw -7vw -4vw 0;
@@ -153,7 +153,7 @@ h2, button {
 .read h2{
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/background-boxes/Create_Small.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/bw/Create_Small_BW.svg) no-repeat center/contain;
     padding: 7vw;
     margin: -6vw 0vw -17vw -10vw;
     z-index: 1;
@@ -204,7 +204,7 @@ h2, button {
 .create h2{
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/background-boxes/Create_Small.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/bw/Create_Small_BW.svg) no-repeat center/contain;
     padding: 7vw 9vw 7vw 6vw;
     margin: -8vw -13vw -20vw 0vw;
     z-index: 1;
@@ -599,8 +599,8 @@ h2, button {
 {
     width: 100vw;
     height: 300px;
-    background-color: var(--background-color); 
-    background-image: linear-gradient(45deg, var(--background-color) 25%, #18264f 25%, #18264f 50%, var(--background-color) 50%, var(--background-color) 75%, #18264f 75%, #18264f 100%);
+    background-color: #009BC6;
+    background-image: linear-gradient(45deg, #0e7491 25%, #0b5e75 25%, #0b5e75 50%, #0e7491 50%, #0e7491 75%, #0b5e75 75%, #0b5e75 100%);
     background-size: 11.31px 11.31px;
     border: 5px solid black;
 }
@@ -977,7 +977,7 @@ No media query for `xs` since this is the default in Bootstrap */
     /* MISSION */
     .mission h2
     {
-        background: url(../../public/images/background-boxes/Desktop_Mission_Small.svg) no-repeat center/contain;
+        background: url(../../public/images/background-boxes/bw/Desktop_Mission_Small_BW.svg) no-repeat center/contain;
 
         padding: 3rem;
         margin: 0;
@@ -985,7 +985,7 @@ No media query for `xs` since this is the default in Bootstrap */
 
     .whatcanido h2
     {
-        background: url(../../public/images/background-boxes/Desktop_What_Can_I_Do.svg) no-repeat center/contain;
+        background: url(../../public/images/background-boxes/bw/Desktop_What_Can_I_Do_BW.svg) no-repeat center/contain;
 
         padding: 2rem;
         margin: 0;
@@ -1026,7 +1026,7 @@ No media query for `xs` since this is the default in Bootstrap */
     /* READ */
     .read h2
     {
-        background: url(../../public/images/background-boxes/Desktop_Read_Small.svg) no-repeat center/contain;
+        background: url(../../public/images/background-boxes/bw/Desktop_Read_Small_BW.svg) no-repeat center/contain;
 
         padding: 4rem;
         margin: 0;
@@ -1066,7 +1066,7 @@ No media query for `xs` since this is the default in Bootstrap */
     /* CREATE */
     .create h2
     {
-        background: url(../../public/images/background-boxes/Desktop_Create_Small.svg) no-repeat center/contain;
+        background: url(../../public/images/background-boxes/bw/Desktop_Create_Small_BW.svg) no-repeat center/contain;
 
         padding: 4rem;
         margin: 0;
