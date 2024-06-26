@@ -155,7 +155,6 @@ const CreateToolsCanvasPaperJS = () => {
         fillPath.blendMode = 'normal';
     }
 
-    //CAUSES ISSUES WHICH LEAD TO THE CREATE SCREEN NOT LOADING, DELETE RELOAD AND IT SHOULD WORK AGAIN
     // --- SHAPE TOOL ---
     // Points describing the rectangle's dimensions (start and end)
     const [startPoint, setStartPoint] = useState(new paper.Point(0, 0));
@@ -167,10 +166,14 @@ const CreateToolsCanvasPaperJS = () => {
     // Array containing all created shapes (only rectangles currently)
     const [elements, setElements] = useState([]);
 
+    //Boolean to check if user dragged mouse (so rect doesn't accidently run on a mouse click)
+    const [mouseDragged, setMouseDragged] = useState(false);
+
     // Resets states back to initial state so next created rect does not conflict with previous rect
     const clearStates = () => {
         setStartPoint(new paper.Point(0, 0));
         setEndPoint(new paper.Point(0, 0));
+        setMouseDragged(false);
     }
 
     // The Shape Tool:
@@ -180,23 +183,26 @@ const CreateToolsCanvasPaperJS = () => {
     //currently works so that rectangle is drawn after user releases button
     //sets where the mouse is first clicked as the first point of the rectangle
     shapeTool.onMouseDown = function (event: MouseEvent) {
-        //make it so if user doesn't drag, not changed
         setStartPoint(event.point);
     }
 
     //sets where the mouse is dragged as the last point of the rectangle
     shapeTool.onMouseDrag = function (event: MouseEvent) {
         setEndPoint(event.point);
+        setMouseDragged(true);
     }
 
     //once rect is created: adds it to elements array and then clears the states
     shapeTool.onMouseUp = function () {
-        //creates & draws current rect to canvas
-        currentRect = new paper.Path.Rectangle(startPoint, endPoint);
-        currentRect.strokeColor = new paper.Color('black');
-        currentRect.strokeWidth = 3;
+        //creates & draws current rect to canvas if mouse was dragged
+        if (mouseDragged) {
+            console.log("runs!")
+            currentRect = new paper.Path.Rectangle(startPoint, endPoint);
+            currentRect.strokeColor = new paper.Color('black');
+            currentRect.strokeWidth = 3;
 
-        setElements(prevState => [...prevState, currentRect]);
+            setElements(prevState => [...prevState, currentRect]);
+        }
         clearStates();
     }
 
@@ -206,19 +212,18 @@ const CreateToolsCanvasPaperJS = () => {
     //   }, [elements]);
 
     // --- SELECT TOOL ---
-    //
+    // String describing action user is doing (moving, resizing, rotating, etc.)
     const [selectAction, setSelectAction] = useState("none");
-    let elementBounds;
 
-    //
+    //index of element being changed
     const [changedElementIndex, setChangedElementIndex] = useState(-1);
 
     // The Select Tool:
     const [selectTool, setSelectTool] = useState<paper.Tool>(new paper.Tool());
 
+    //sets action of user depending on where element is clicked
     selectTool.onMouseDown = function (event: MouseEvent) {
-        //if (!elements) return; ?
-
+        //if clicked within element, sets the action to moving
         for (let i = 0; i < elements.length; i++) {
             if (elements[i].contains(event.point)) {
                 setSelectAction("moving");
@@ -253,12 +258,15 @@ const CreateToolsCanvasPaperJS = () => {
         //         }
         //     }
     }
+
+    //changes the element according to the selectAction
     selectTool.onMouseDrag = function (event: MouseEvent) {
+        //element changes position to where the mouse is if action is moving
         if (selectAction == "moving") {
-            //element changes position to where mouse is
             elements[changedElementIndex].position = event.point;
             return;
         }
+
         //ref
         //edits created path rect to add end point as new point of rect
         // //is reflected visually in drag (resizes as user drags move)
