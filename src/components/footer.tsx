@@ -13,7 +13,7 @@ const Footer = () => {
             <div className="row">
                 {/* Links */}
                 <div className="col">
-                    <div className="footer-nav px-4">
+                    <div className="footer-nav">
                         <Link href="/">Crowd Comic</Link>
                         <></>
                         <ul className="footer-nav-list">
