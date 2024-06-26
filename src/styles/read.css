@@ -1,8 +1,8 @@
 body{
-  background-image: url("/images/background-app-splash.png");
-  background-repeat: no-repeat;
+  background-image: url("/images/background-app-tile.png");
+
   background-position: center;
-  background-size: cover;
+  background-size:auto;
   background-color: rgb(39, 39, 39);
 }
 
