@@ -31,13 +31,13 @@ export default function Home() {
       <Hero />
       {/* <ScrollToTop /> */}
       <section className="main-section">
-        <div className="container-fluid" id="mission-id">
-          <div className="mission row">
-            <div className="col"></div>
-            <div className="col-auto">
-              <h2>Mission</h2>
-            </div>
+      <div className="missionsec">
+        <div className="mission row">
+          <div className="col"></div>
+          <div className="col-auto">
+            <h2>Mission</h2>
           </div>
+        </div>
           <div className="missionimg row card">
             <div className="card-img-overlay">
               <Image className="bottomMission card-img-top" src={bottomMission} alt="" />
