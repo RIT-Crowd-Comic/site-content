@@ -81,7 +81,7 @@ const CreateToolsCanvasPaperJS = () => {
 
     // The Pen Tool:
     const [penTool, setPenTool] = useState<paper.Tool>(new paper.Tool());
-    let penPath;
+    let penPath: paper.Path | undefined;
 
     // Begins the process of drawing the user's input to the canvas HTMLElement
     penTool.onMouseDown = function () {
@@ -94,8 +94,8 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     // Continues drawing the user's input to the canvas HTMLElement
-    penTool.onMouseDrag = function (event: MouseEvent) {
-        penPath.add(event.point);
+    penTool.onMouseDrag = function(event: paper.ToolEvent) {   
+        penPath?.add(event.point);
     }
 
     // --- ERASER TOOL ---
@@ -107,7 +107,7 @@ const CreateToolsCanvasPaperJS = () => {
 
     // The Eraser Tool:
     const [eraserTool, setEraserTool] = useState<paper.Tool>(new paper.Tool());
-    let eraserPath;
+    let eraserPath: paper.Path | undefined;
 
     // Begins the process of drawing the user's input to the canvas HTMLElement
     eraserTool.onMouseDown = function () {
@@ -127,8 +127,9 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     // Continues drawing the user's input to the canvas HTMLElement
-    eraserTool.onMouseDrag = function (event: MouseEvent) {
-        eraserPath.add(event.point);
+    eraserTool.onMouseDrag = function(event: paper.ToolEvent) 
+    {   
+        eraserPath?.add(event.point);
     }
 
     // --- FILL TOOL ---
@@ -161,10 +162,10 @@ const CreateToolsCanvasPaperJS = () => {
     const [endPoint, setEndPoint] = useState(new paper.Point(0, 0));
 
     // The current rectangle being created
-    let currentRect;
+    let currentRect: paper.Path.Rectangle | undefined;
 
     // Array containing all created shapes (only rectangles currently)
-    const [elements, setElements] = useState([]);
+    const [elements, setElements] = useState([] as paper.Path[]);
 
     //Boolean to check if user dragged mouse (so rect doesn't accidently run on a mouse click)
     const [mouseDragged, setMouseDragged] = useState(false);
@@ -182,12 +183,12 @@ const CreateToolsCanvasPaperJS = () => {
 
     //currently works so that rectangle is drawn after user releases button
     //sets where the mouse is first clicked as the first point of the rectangle
-    shapeTool.onMouseDown = function (event: MouseEvent) {
+    shapeTool.onMouseDown = function (event: paper.ToolEvent) {
         setStartPoint(event.point);
     }
 
     //sets where the mouse is dragged as the last point of the rectangle
-    shapeTool.onMouseDrag = function (event: MouseEvent) {
+    shapeTool.onMouseDrag = function (event: paper.ToolEvent) {
         setEndPoint(event.point);
         setMouseDragged(true);
     }
@@ -200,7 +201,7 @@ const CreateToolsCanvasPaperJS = () => {
             currentRect.strokeColor = new paper.Color('black');
             currentRect.strokeWidth = 3;
 
-            setElements(prevState => [...prevState, currentRect]);
+            setElements(prevState => [...prevState, currentRect as paper.Path.Rectangle]);
         }
         clearStates();
     }
@@ -221,7 +222,12 @@ const CreateToolsCanvasPaperJS = () => {
     const [selectTool, setSelectTool] = useState<paper.Tool>(new paper.Tool());
 
     //sets action of user depending on where element is clicked
+<<<<<<< HEAD
     selectTool.onMouseDown = function (event: MouseEvent) {
+=======
+    selectTool.onMouseDown = function (event: paper.ToolEvent) {
+        //if clicked within element, sets the action to moving
+>>>>>>> main
         for (let i = 0; i < elements.length; i++) {
             //runs if clicked on the corners of an element (segments to check if clicked on rect, tolerance for precision)
             if (elements[i].hitTest(event.point, { segments: true, tolerance: 7 })) {
@@ -259,7 +265,7 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     //changes the element according to the selectAction
-    selectTool.onMouseDrag = function (event: MouseEvent) {
+    selectTool.onMouseDrag = function (event: paper.ToolEvent) {
         //element changes position to where the mouse is if action is moving
         if (selectAction == "moving") {
             elements[changedElementIndex].position = event.point;
@@ -368,11 +374,14 @@ const CreateToolsCanvasPaperJS = () => {
         setElements([]);
     }
 
-    const toggleLayerVisibility = (event: SyntheticEvent) => {
-        if (layer1Reference.current && event.target.value == 1) {
+    const toggleLayerVisibility = (event : ChangeEvent<HTMLInputElement>) =>
+    {
+        if(layer1Reference.current && event.target.value === '1')
+        {
             layer1Reference.current.visible = !layer1Reference.current.visible;
         }
-        else if (layer2Reference.current && event.target.value == 2) {
+        else if(layer2Reference.current && event.target.value === '2')
+        {
             layer2Reference.current.visible = !layer2Reference.current.visible;
         }
     }
