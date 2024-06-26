@@ -258,6 +258,35 @@ h2, button {
     z-index: 2;
 }
 
+/* .getStarted:hover{
+    display: inline-block;
+}
+
+.getStarted {
+    z-index: 2;
+    overflow: hidden; 
+} */
+
+/* .getStarted button{ */
+    /* position: relative;
+    border: 10px solid transparent;
+    background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
+    margin: -20vw;
+    padding: 5vw 5vw 7vw 10vw;
+    font-size: 6vw; 
+    z-index: 2;    */
+    /* display: none; */
+/* }
+
+.getStarted:hover{ */
+    /* display: inline; */
+    /* position: relative;
+    border: 10px solid transparent; */
+    /* background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain; */
+    /* font-size: 6vw;
+    z-index: 2;  */
+/* } */
+
 .comic{
     position: absolute;
     border: 10px solid transparent;
@@ -284,9 +313,7 @@ h2, button {
 {
     width: 65%;
     height: auto;
-
     margin: 0 auto;
-
     border: 5px solid black;
 }
 
@@ -322,8 +349,8 @@ h2, button {
 
 .our-team button
 {
-    background-color: var(--primary-color);
-    border: 3px solid black;
+    background-color: var(--grayscale-primary-color);
+    border: 3px solid var(--grayscale-text-color);
     width: 30%;
     height: 40%;
     position: relative;
@@ -331,11 +358,44 @@ h2, button {
     top: 30%;
     font-size: 6vw;
     line-height: 0;
+    overflow: hidden;
 }
 
+/* Hover Animation Option 1*/
+/* .our-team button:hover
+{
+    background-color:var(--grayscale-primary-color);
+    transform: scale(1.1);
+    text-shadow:2px 2px 0 rgba(0,0,0,.4);
+    transition: ease-in-out .2s;
+} */
+
+/* Hover Animation Option 2*/
+/* .our-team button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--grayscale-text-bg-color);
+    transition: ease 1s;
+    z-index: -10;
+    transform: translateX(-100%);
+}
+
+.our-team button:hover::before {
+    transform: translateX(0);
+} */
+
+/* Hover Animation Option 3*/
 .our-team button:hover
 {
-    background-color: #910f0a;
+    background-color: var(--grayscale-text-bg-color);
+    border: 5px solid var(--grayscale-text-color);
+    box-shadow: 10px 10px var(--grayscale-background-color);
+    transform: translate(-5px,-5px);
+    transition: ease-in-out .3s;
 }
 
 .our-team button:active
@@ -519,7 +579,6 @@ h2, button {
 .footer-nav-list a, .footer-nav a
 {
     text-decoration: none;
-    /* color: var(--secondary-color); */
     color:var(--grayscale-text-bg-color);
 }
 
@@ -625,6 +684,11 @@ h2, button {
 } */
 
 /* Scroll  to top button with Link*/
+.back-to-top{
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
 .scroll-btn{
     position: relative;
     /* bottom: 0px; */
@@ -640,6 +704,7 @@ h2, button {
     justify-content:end;
     font-size: 1rem;
     margin-top: 20px;
+    text-decoration: none;
 }
 
 #scrollToTopBtn{
@@ -649,6 +714,30 @@ h2, button {
     cursor: pointer;
     border: none;
 }
+
+#scroll-text:hover{
+    text-decoration: underline;
+}
+
+#scrollToTopBtn:hover{
+    transform: rotate(-90deg) scale(1.2);
+}
+
+/* #scroll-text::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--grayscale-text-bg-color);
+    transition: 1s ease-out;
+    transform: translateX(-100%); 
+}
+
+#scroll-text:hover::before{
+    transform: translateX(0);
+} */
 
 .person-panel
 {
