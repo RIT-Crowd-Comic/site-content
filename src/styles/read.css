@@ -3,6 +3,7 @@ body{
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  background-color: rgb(39, 39, 39);
 }
 
 .footer-bar {
