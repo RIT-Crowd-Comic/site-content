@@ -94,7 +94,7 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     // Continues drawing the user's input to the canvas HTMLElement
-    penTool.onMouseDrag = function(event: paper.ToolEvent) {   
+    penTool.onMouseDrag = function (event: paper.ToolEvent) {
         penPath?.add(event.point);
     }
 
@@ -127,8 +127,7 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     // Continues drawing the user's input to the canvas HTMLElement
-    eraserTool.onMouseDrag = function(event: paper.ToolEvent) 
-    {   
+    eraserTool.onMouseDrag = function (event: paper.ToolEvent) {
         eraserPath?.add(event.point);
     }
 
@@ -206,11 +205,6 @@ const CreateToolsCanvasPaperJS = () => {
         clearStates();
     }
 
-    //test to see if array updates properly
-    // useEffect(() => {
-    //     console.log(elements);
-    //   }, [elements]);
-
     // --- SELECT TOOL ---
     // String describing action user is doing (moving, resizing, rotating, etc.)
     const [selectAction, setSelectAction] = useState("none");
@@ -227,7 +221,26 @@ const CreateToolsCanvasPaperJS = () => {
         for (let i = 0; i < elements.length; i++) {
             //runs if clicked on the corners of an element (segments to check if clicked on rect, tolerance for precision)
             if (elements[i].hitTest(event.point, { segments: true, tolerance: 7 })) {
-            
+                setChangedElementIndex(i);
+
+                //ctrl click to rotate (for now)
+                if (event.modifiers.control) {
+                    setSelectAction("rotating");
+                } else {
+                    setSelectAction("resizing");
+                    // let i;
+                    // for (i = 0; i < elements[i].segments.length; i++) {
+                    //     let p = elements[i].segments[i].point;
+                    //     if (p.isClose(event.point, 3)) {
+                    //         break;
+                    //     }
+                    // }
+
+                    // var opposite = (i + 2) % 4;
+                    // elements[i].data.from = elements[i].segments[opposite].point;
+                    // elements[i].data.to = elements[i].segments[i].point;
+                }
+                return;
             }
             //if clicked within element, sets the action to moving
             else if (elements[i].contains(event.point)) {
@@ -236,28 +249,6 @@ const CreateToolsCanvasPaperJS = () => {
                 return;
             }
         }
-        //ref
-        //             if (event.modifiers.control) {
-        //                 elements[i].rect.data.state = 'rotating';
-        //                 setChangedElementIndex(i);
-        //             } else {
-        //                 elements[i].rect.data.state = 'resizing';
-        //                 var i;
-        //                 for (i = 0; i < elements[i].rect.segments.length; i++) {
-        //                     var p = elements[i].rect.segments[i].point;
-        //                     if (p.isClose(event.point, 3)) {
-        //                         break;
-        //                     }
-        //                 }
-
-        //                 var opposite = (i + 2) % 4;
-        //                 elements[i].rect.data.from = elements[i].rect.segments[opposite].point;
-        //                 elements[i].rect.data.to = elements[i].rect.segments[i].point;
-        //                 setChangedElementIndex(i);
-        //             }
-        //             return;
-        //         }
-        //     }
     }
 
     //changes the element according to the selectAction
@@ -267,8 +258,6 @@ const CreateToolsCanvasPaperJS = () => {
             elements[changedElementIndex].position = event.point;
             return;
         }
-
-        //ref
         //  else if (rects[changedRectIndex].rect.data.state === 'resizing') {
         //      // scale by distance from down point
         //          //calc scale coefficients and store current position
@@ -306,6 +295,11 @@ const CreateToolsCanvasPaperJS = () => {
         setSelectAction("none");
         setChangedElementIndex(-1);
     }
+
+    //test to see if selectAction updates properly
+    useEffect(() => {
+        console.log(selectAction);
+      }, [selectAction]);
 
     // *** FUNCTIONS ***
     // Find which radioButton is currently selected and update the state of the tool selected
@@ -370,14 +364,11 @@ const CreateToolsCanvasPaperJS = () => {
         setElements([]);
     }
 
-    const toggleLayerVisibility = (event : ChangeEvent<HTMLInputElement>) =>
-    {
-        if(layer1Reference.current && event.target.value === '1')
-        {
+    const toggleLayerVisibility = (event: ChangeEvent<HTMLInputElement>) => {
+        if (layer1Reference.current && event.target.value === '1') {
             layer1Reference.current.visible = !layer1Reference.current.visible;
         }
-        else if(layer2Reference.current && event.target.value === '2')
-        {
+        else if (layer2Reference.current && event.target.value === '2') {
             layer2Reference.current.visible = !layer2Reference.current.visible;
         }
     }
