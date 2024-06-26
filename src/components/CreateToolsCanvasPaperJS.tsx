@@ -161,10 +161,8 @@ const CreateToolsCanvasPaperJS = () => {
     const [startPoint, setStartPoint] = useState(new paper.Point(0, 0));
     const [endPoint, setEndPoint] = useState(new paper.Point(0, 0));
 
-    // The current rectangle being created as well as the stroke adjustments
-    const [currentRect, setCurrentRect] = useState(new paper.Path.Rectangle(startPoint, endPoint));
-    currentRect.strokeColor = new paper.Color('black');
-    currentRect.strokeWidth = 3;
+    // The current rectangle being created
+    let currentRect;
 
     // Array containing all created shapes (only rectangles currently)
     const [elements, setElements] = useState([]);
@@ -173,15 +171,16 @@ const CreateToolsCanvasPaperJS = () => {
     const clearStates = () => {
         setStartPoint(new paper.Point(0, 0));
         setEndPoint(new paper.Point(0, 0));
-        setCurrentRect(new paper.Path.Rectangle(startPoint, endPoint));
     }
 
     // The Shape Tool:
     const [shapeTool, setShapeTool] = useState<paper.Tool>(new paper.Tool());
     shapeTool.minDistance = 2;
 
+    //currently works so that rectangle is drawn after user releases button
     //sets where the mouse is first clicked as the first point of the rectangle
     shapeTool.onMouseDown = function (event: MouseEvent) {
+        //make it so if user doesn't drag, not changed
         setStartPoint(event.point);
     }
 
@@ -192,7 +191,11 @@ const CreateToolsCanvasPaperJS = () => {
 
     //once rect is created: adds it to elements array and then clears the states
     shapeTool.onMouseUp = function () {
-        setCurrentRect(new paper.Path.Rectangle(startPoint, endPoint));
+        //creates & draws current rect to canvas
+        currentRect = new paper.Path.Rectangle(startPoint, endPoint);
+        currentRect.strokeColor = new paper.Color('black');
+        currentRect.strokeWidth = 3;
+
         setElements(prevState => [...prevState, currentRect]);
         clearStates();
     }
