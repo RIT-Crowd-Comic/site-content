@@ -196,7 +196,6 @@ const CreateToolsCanvasPaperJS = () => {
     shapeTool.onMouseUp = function () {
         //creates & draws current rect to canvas if mouse was dragged
         if (mouseDragged) {
-            console.log("runs!")
             currentRect = new paper.Path.Rectangle(startPoint, endPoint);
             currentRect.strokeColor = new paper.Color('black');
             currentRect.strokeWidth = 3;
