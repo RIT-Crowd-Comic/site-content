@@ -404,12 +404,6 @@ h2, button {
     margin-top: 4px;
 }
 
-.teamTitle
-{
-    font-size: 50px;
-    color: var(--grayscale-text-bg-color);
-}
-
 .filter {
     font-size: 18px;
     font-weight: 700;
@@ -468,7 +462,16 @@ h2, button {
 }
 
 .chapterTitle{
-    font-family: var(--font-ceviche-one);
+    font-family: var(--font-back-issues);
+    font-weight: bold;
+    font-size: 2rem;
+    color: var(--grayscale-text-bg-color);
+}
+
+.facultyTitle
+{
+    font-family: var(--font-back-issues);
+    font-weight: bold;
     font-size: 2rem;
     color: var(--grayscale-text-bg-color);
 }
@@ -785,8 +788,9 @@ a
 
 .teamTitle
 {
-    font-family: var(--font-ceviche-one);
-    font-size: 4rem;
+    font-family: var(--font-back-issues);
+    font-size: 3rem;
+    font-weight: bold;
     color: var(--grayscale-text-bg-color);
 }
 
