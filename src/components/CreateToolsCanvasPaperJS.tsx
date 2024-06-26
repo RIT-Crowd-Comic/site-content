@@ -162,10 +162,10 @@ const CreateToolsCanvasPaperJS = () => {
     const [endPoint, setEndPoint] = useState(new paper.Point(0, 0));
 
     // The current rectangle being created
-    let currentRect;
+    let currentRect: paper.Path.Rectangle | undefined;
 
     // Array containing all created shapes (only rectangles currently)
-    const [elements, setElements] = useState([]);
+    const [elements, setElements] = useState([] as paper.Path[]);
 
     //Boolean to check if user dragged mouse (so rect doesn't accidently run on a mouse click)
     const [mouseDragged, setMouseDragged] = useState(false);
@@ -183,12 +183,12 @@ const CreateToolsCanvasPaperJS = () => {
 
     //currently works so that rectangle is drawn after user releases button
     //sets where the mouse is first clicked as the first point of the rectangle
-    shapeTool.onMouseDown = function (event: MouseEvent) {
+    shapeTool.onMouseDown = function (event: paper.ToolEvent) {
         setStartPoint(event.point);
     }
 
     //sets where the mouse is dragged as the last point of the rectangle
-    shapeTool.onMouseDrag = function (event: MouseEvent) {
+    shapeTool.onMouseDrag = function (event: paper.ToolEvent) {
         setEndPoint(event.point);
         setMouseDragged(true);
     }
@@ -201,7 +201,7 @@ const CreateToolsCanvasPaperJS = () => {
             currentRect.strokeColor = new paper.Color('black');
             currentRect.strokeWidth = 3;
 
-            setElements(prevState => [...prevState, currentRect]);
+            setElements(prevState => [...prevState, currentRect as paper.Path.Rectangle]);
         }
         clearStates();
     }
@@ -222,7 +222,7 @@ const CreateToolsCanvasPaperJS = () => {
     const [selectTool, setSelectTool] = useState<paper.Tool>(new paper.Tool());
 
     //sets action of user depending on where element is clicked
-    selectTool.onMouseDown = function (event: MouseEvent) {
+    selectTool.onMouseDown = function (event: paper.ToolEvent) {
         //if clicked within element, sets the action to moving
         for (let i = 0; i < elements.length; i++) {
             if (elements[i].contains(event.point)) {
@@ -234,7 +234,7 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     //changes the element according to the selectAction
-    selectTool.onMouseDrag = function (event: MouseEvent) {
+    selectTool.onMouseDrag = function (event: paper.ToolEvent) {
         //element changes position to where the mouse is if action is moving
         if (selectAction == "moving") {
             elements[changedElementIndex].position = event.point;
