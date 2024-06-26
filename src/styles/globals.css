@@ -1,17 +1,17 @@
-:root
-{
+:root {
     /* color variables */
-    --primary-color: #D91911; /* or #902421 */
+    --primary-color: #D91911;
+    /* or #902421 */
     --secondary-color: #FFD172;
     --tertiary-color: #902421;
     --accent-color: #009BC6;
     --background-color: #070e23;
-  
+
     --grayscale-primary-color: #929292;
     --grayscale-background-color: #494949;
     --grayscale-text-bg-color: #FFFFFF;
     --grayscale-text-color: #000000;
-  
+
     /* font variables:
         Inter: --font-inter
         Ceviche One: --font-ceviche-one
@@ -19,31 +19,29 @@
          */
 }
 
-.navbar, .footer
-{
+.navbar,
+.footer {
     font-family: var(--font-back-issues);
     font-style: normal;
     font-weight: 300;
 }
 
-.navbar
-{
+.navbar {
     background-color: var(--primary-color);
 }
 
-.nav-link, .nav-btn
-{
+.nav-link,
+.nav-btn {
     color: var(--grayscale-primary-color);
     font-size: 1.5rem;
 }
 
-.offcanvas-header
-{
+.offcanvas-header {
     font-size: 1.5rem;
 }
 
-body, html
-{
+body,
+html {
     width: 100%;
     font-family: var(--font-back-issues);
     background-color: var(--background-color);
@@ -52,66 +50,51 @@ body, html
     filter: grayscale(1);
 }
 
-body
-{
-    background-image: radial-gradient(
-      circle at center,
-      #095e75 0.15rem,
-      transparent 0
-    ), radial-gradient(circle at center, #02627c 0.15rem, transparent 0);
+body {
+    background-image: radial-gradient(circle at center,
+            #095e75 0.15rem,
+            transparent 0), radial-gradient(circle at center, #02627c 0.15rem, transparent 0);
     background-size: 1.3rem 1.3rem;
     background-position: 0 0, 0.65rem 0.65rem;
 }
 
-h2, button {
-    font-family: var(--font-ceviche-one);
-    font-weight: 400;
-    font-size: 8vw;
-    color: var(--grayscale-text-color);
+h2,
+button {
+    font-family: var(--font-back-issues);
+    font-weight: bold;
+    font-size: 6vw;
+    color: var(--accent-color);
 }
 
-.login{
+.login {
     font-family: var(--font-inter);
     font-weight: 500;
 }
 
-.card
-{
+.card {
     --bs-card-bg: transparent;
     border: none;
     --bs-card-img-overlay-padding: none;
 }
 
-.main-section
-{
-    padding: 30px;
+.main-section {
     height: 100%;
 }
 
 /* MISSION SECTION FORMATTING */
-.mission h2{
+.mission h2 {
     position: relative;
-    background: url(../../public/images/background-boxes/Read_Small.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/Create_Small.svg) no-repeat center/contain;
     padding: 6vw 8vw 6vw 6vw;
     z-index: 1;
-    margin: 5vw -5vw -9vw 0; 
+    margin: 5vh 2vw auto auto;
 }
 
-.whatcanido h2{
-    position: relative;
-    background: url(../../public/images/background-boxes/Read_Small.svg) no-repeat center/contain;
-    padding: 6vw 6vw 8vw 4vw;
-    z-index: 1;
-    margin: -10vw -7vw -4vw 0;
-    font-size: 7vw;
-}
-
-.missionimg
-{
+.missionimg {
     position: relative;
     width: 90%;
     height: auto;
-    margin: 0 auto;
+    margin: -5vh auto auto auto;
     font-size: 3.3vw;
     /* 
     TESTING BOX
@@ -119,144 +102,141 @@ h2, button {
     */
 }
 
-.topMission
-{
-    position:absolute;
-    top: -20%;
+.topMission {
+    position: absolute;
+    top: -5%;
     height: auto;
+    width: 90vw;
 }
 
-.bottomMission
-{
-    position:absolute;
-    bottom: -10%;
+.bottomMission {
+    position: absolute;
+    bottom: -5%;
     height: auto;
+    width: 90vw;
 }
 
 .missionimg .card-img-top {
     z-index: 0;
 }
-      
+
 .missionimg p {
     position: relative;
     z-index: 1;
-    padding: 2vw 1vw 0 10vw;
+    margin: 0 auto;
+    padding: 4vh 10vw;
 }
 
 /* READ SECTION FORMATTING */
-.read h2{
+.read h2 {
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/background-boxes/Create_Small.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/Read_Small.svg) no-repeat center/contain;
     padding: 7vw;
-    margin: -6vw 0vw -17vw -10vw;
+    margin: -5vh auto;
     z-index: 1;
 }
 
-.readimg{
+.readimg {
     position: relative;
     width: 90%;
     height: auto;
-    margin: 0 auto;
     font-size: 3.3vw;
+    margin: -5vh auto auto 10vw;
 }
 
-.topRead
-{
-    position:absolute;
-    top: -20%;
+.topRead {
+    position: absolute;
     height: auto;
+    width: 83vw;
 }
 
-.bottomRead
-{
-    position:absolute;
-    bottom: -10%;
+.bottomRead {
+    position: absolute;
+    bottom: 0%;
     height: auto;
+    width: 83vw;
 }
 
 .readimg .card-img-top {
     z-index: 0;
 }
-      
+
 .readimg p {
     position: relative;
     z-index: 1;
-    padding: 3vw 1vw 3vw 7vw;
+    padding: 5vh 10vw 5vh 5vw;
 }
 
 /* CREATE SECTION FORMATTING */
-.create{
+.create {
     position: relative;
 }
 
-.create h2{
+.create h2 {
     position: relative;
     border: 20px solid transparent;
     background: url(../../public/images/background-boxes/Create_Small.svg) no-repeat center/contain;
     padding: 7vw 9vw 7vw 6vw;
-    margin: -8vw -13vw -20vw 0vw;
+    margin: 0 auto;
     z-index: 1;
 }
 
-.createimg{
+.createimg {
     position: relative;
     width: 90%;
     height: auto;
-    margin: 8vw auto -9vw auto;
+    margin: -9vh auto -10vw 6vw;
     font-size: 3.3vw;
 }
 
-.topCreate
-{
-    position:absolute;
-    top: -20%;
+.topCreate {
+    position: absolute;
     height: auto;
+    width: 85vw;
 }
 
-.bottomCreate
-{
-    position:absolute;
-    bottom: -10%;
+.bottomCreate {
+    position: absolute;
+    bottom: 0%;
     height: auto;
-} 
+    width: 85vw;
+}
 
 .createimg .card-img-top {
     z-index: 0;
 }
-      
+
 .createimg p {
     position: relative;
     z-index: 1;
-    padding: 2vw 1vw 0 9vw;
-    margin: -3vw 0vw 10vw 0vw;
+    padding: 5vh 10vw 4vh 9vw;
 }
 
-.getStarted button{
+.getStarted button {
     position: relative;
     border: 10px solid transparent;
     background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
-    margin: -20vw;
-    padding: 5vw 5vw 7vw 10vw;
-    font-size: 6vw;
+    margin: -10vh auto;
+    padding: 5vw 5vw 7vw 8vw;
+    font-size: 4.5vw;
     z-index: 2;
 }
 
-.comic{
+.comic {
     position: absolute;
     border: 10px solid transparent;
-    width: 25vw;
-    height: 25vw;
+    width: auto;
+    height: 30vw;
     z-index: 3;
-    top: 81.5%;
-    left: 13.5%;
+    top: 83%;
+    left: 7%;
 }
 
 /* COMIC PREVIEW */
 
-.preview
-{
-    display:grid;
+.preview {
+    display: grid;
     grid-template-rows: repeat(3, auto);
 
     width: 80vw;
@@ -264,8 +244,7 @@ h2, button {
     margin: 30px auto 50px;
 }
 
-.preview-panels
-{
+.preview-panels {
     width: 65%;
     height: auto;
 
@@ -274,25 +253,21 @@ h2, button {
     border: 5px solid black;
 }
 
-.panel-one
-{
+.panel-one {
     margin: 0;
 }
 
-.panel-two
-{
+.panel-two {
     margin: -5% auto 0;
 }
 
-.panel-three
-{
+.panel-three {
     margin: -5% 0 0 auto;
 }
 
 /* OUR TEAM BUTTON */
 
-.our-team
-{
+.our-team {
     background: url(../../public/images/background-boxes/Team_Banner_Mobile.svg);
     background-size: contain;
     background-repeat: no-repeat;
@@ -300,36 +275,32 @@ h2, button {
     height: 20vw;
     padding: 0;
     background-size: 100% 100%;
-    margin: 50px 0 30px;
+    margin: 6vh 0 3vh;
     text-align: center;
 }
 
-.our-team button
-{
+.our-team button {
     background-color: var(--primary-color);
     border: 3px solid black;
-    width: 30%;
-    height: 40%;
+    width: 40%;
+    height: 50%;
     position: relative;
     padding: 0;
     top: 30%;
-    font-size: 6vw;
+    font-size: 4vw;
     line-height: 0;
 }
 
-.our-team button:hover
-{
+.our-team button:hover {
     background-color: #910f0a;
 }
 
-.our-team button:active
-{
+.our-team button:active {
     background-color: var(--secondary-color);
     margin-top: 4px;
 }
 
-.teamTitle
-{
+.teamTitle {
     font-size: 50px;
     color: var(--grayscale-text-bg-color);
 }
@@ -339,76 +310,75 @@ h2, button {
     font-weight: 700;
     justify-content: center;
     color: var(--grayscale-text-color);
-    display:grid;
+    display: grid;
     justify-content: center;
     text-align: center;
     border-color: var(--grayscale-text-color);
 }
 
-.filter .accordion-button:hover{
+.filter .accordion-button:hover {
     color: var(--grayscale-text-bg-color);
     background-color: var(--grayscale-text-color);
 }
 
-.accordion-body{
+.accordion-body {
     background-color: var(--grayscale-background-color);
 }
 
-.clearAll{
-    color:var(--grayscale-text-bg-color);  
+.clearAll {
+    color: var(--grayscale-text-bg-color);
 }
 
-.clearAll:hover{
+.clearAll:hover {
     color: var(--grayscale-primary-color);
 }
 
-.form-control, .form-select{
+.form-control,
+.form-select {
     background-color: var(--grayscale-primary-color);
     color: var(--grayscale-text-color);
 }
 
-.form-control{
+.form-control {
     border-radius: 6px 0 0 6px;
 }
 
-.form-select option{
-    background-color: var(--grayscale-text-bg-color);   
+.form-select option {
+    background-color: var(--grayscale-text-bg-color);
 }
 
-.creatorGroup{
+.creatorGroup {
     border: 2px solid var(--grayscale-primary-color);
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-.facultyGroup
-{
+.facultyGroup {
     border: 2px solid var(--grayscale-primary-color);
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-.facultyGroup
-{
+.facultyGroup {
     border: 2px solid var(--grayscale-primary-color);
 }
 
-.chapterTitle{
+.chapterTitle {
     font-family: var(--font-ceviche-one);
     font-size: 2rem;
     color: var(--grayscale-text-bg-color);
 }
 
-.professors{
+.professors {
     text-align: center;
     /* border: 5px solid; */
     justify-content: center;
 }
 
-.prof-item{
+.prof-item {
     margin: 0;
     overflow: hidden;
 }
 
-.professors .text{
+.professors .text {
     background-color: var(--grayscale-text-bg-color);
     color: var(--grayscale-text-color);
     border: solid 3px var(--grayscale-text-color);
@@ -419,34 +389,34 @@ h2, button {
     overflow: hidden;
 }
 
-.top-left{
+.top-left {
     position: absolute;
-    left: 5vw; 
-    margin-left: auto; 
-    margin-right: auto; 
+    left: 5vw;
+    margin-left: auto;
+    margin-right: auto;
     width: 28vw;
-    transform: skew(-15deg) translate(0,-20px);
+    transform: skew(-15deg) translate(0, -20px);
 }
 
-.bottom{
+.bottom {
     position: absolute;
-    left: 38%; 
-    right: 35%; 
-    margin-left: auto; 
-    margin-right: auto; 
+    left: 38%;
+    right: 35%;
+    margin-left: auto;
+    margin-right: auto;
     width: 25vw;
 }
 
-.top-right{
+.top-right {
     position: absolute;
     right: 5vw;
-    margin-left: auto; 
-    margin-right: auto; 
+    margin-left: auto;
+    margin-right: auto;
     width: 28vw;
     transform: skew(15deg) translate(0, -20px);
 }
 
-.prof-img{
+.prof-img {
     width: 30vw;
     height: 30vw;
     padding: 0;
@@ -459,134 +429,123 @@ h2, button {
 
 /* FOOTER */
 
-.footer{
-    background-color: var(--grayscale-text-bg-color); 
+.footer {
+    background-color: var(--grayscale-text-bg-color);
     width: 100%;
     justify-content: space-between;
 }
 
- .footer-nav
-{
+.footer-nav {
     justify-content: flex-start;
-    font-family: var(--font-ceviche-one);
-    font-size: larger;
-    font-weight: 400;
+    font-family: var(--font-back-issues);
+    font-size: 5vw;
+    font-weight: bold;
+    padding: 1vh 0vw 0vh 5vw;
 }
 
 .footer-nav-list {
     justify-content: space-between;
-    padding: 0;
+    font-weight: 400;
+    font-size: 4.5vw;
+    padding: 1vh 0vw 0vh 5vw;
 }
 
-.footer-nav-list li
-{
+.footer-nav-list li {
     font-family: var(--font-back-issues);
-    font-size: medium;
     display: inline-block;
-    padding-right: 10px;
+    padding-right: 4vw;
 }
 
-.social
-{
+.social {
     justify-content: space-between;
     text-align: right;
     margin-top: 15px;
     padding: 10px;
 }
 
-.social li
-{
+.social li {
     display: inline-block;
     padding: 6px;
 }
 
-.footer-nav-list a, .footer-nav a
-{
+.footer-nav-list a,
+.footer-nav a {
     text-decoration: none;
     /* color: var(--secondary-color); */
-    color:var(--grayscale-text-bg-color);
+    color: var(--grayscale-text-bg-color);
 }
 
-.footer-nav-list a:hover, .footer-nav a:hover
-{
+.footer-nav-list a:hover,
+.footer-nav a:hover {
     color: var(--grayscale-primary-color);
 }
 
-.icondiv
-{
-    position:relative;
+.icondiv {
+    position: relative;
     width: 25px;
     height: 25px;
 }
 
-.icondiv:hover
-{
+.icondiv:hover {
     opacity: 0.7;
 }
 
-.iconcolor
-{
+.iconcolor {
     filter: invert(100%);
     filter: invert(79%) sepia(16%) saturate(1167%) hue-rotate(354deg) brightness(103%) contrast(104%);
     /* Yellow icons ^ */
 }
 
-.copyright{
+.copyright {
     color: var(--grayscale-primary-color);
-    font-size:medium;
+    font-size: medium;
     text-align: center;
 }
 
 /* HERO */
 
-.hero
-{
+.hero {
     width: 100vw;
     height: 300px;
-    background-color: var(--background-color); 
+    background-color: var(--background-color);
     background-image: linear-gradient(45deg, var(--background-color) 25%, #18264f 25%, #18264f 50%, var(--background-color) 50%, var(--background-color) 75%, #18264f 75%, #18264f 100%);
     background-size: 11.31px 11.31px;
     border: 5px solid black;
 }
 
-.top-right-spikes, .bottom-right-spikes
-{
+.top-right-spikes,
+.bottom-right-spikes {
     max-height: 40%;
     max-width: 30%;
-    position:absolute;
+    position: absolute;
     right: 0;
 }
 
-.top-right-spikes
-{
+.top-right-spikes {
     top: 0;
 }
 
-.bottom-right-spikes
-{
+.bottom-right-spikes {
     bottom: 0;
 }
 
-.top-left-spikes, .bottom-left-spikes
-{
+.top-left-spikes,
+.bottom-left-spikes {
     max-height: 40%;
     max-width: 30%;
-    position:absolute;
+    position: absolute;
     left: 0;
 }
 
-.top-left-spikes
-{
+.top-left-spikes {
     top: 0;
 }
 
-.bottom-left-spikes
-{
+.bottom-left-spikes {
     bottom: 0;
 }
 
-.splashlogo
-{
+.splashlogo {
     width: 70%;
     height: auto;
     max-width: 300px;
@@ -609,7 +568,7 @@ h2, button {
 } */
 
 /* Scroll  to top button with Link*/
-.scroll-btn{
+.scroll-btn {
     position: relative;
     /* bottom: 0px; */
     /* right: 0px; */
@@ -619,14 +578,14 @@ h2, button {
     z-index: 2;
 }
 
-#scroll-text{
+#scroll-text {
     color: var(--grayscale-text-bg-color);
-    justify-content:end;
+    justify-content: end;
     font-size: 1rem;
     margin-top: 20px;
 }
 
-#scrollToTopBtn{
+#scrollToTopBtn {
     transform: rotate(-90deg);
     width: 70px;
     height: 40px;
@@ -634,8 +593,7 @@ h2, button {
     border: none;
 }
 
-.person-panel
-{
+.person-panel {
     max-width: 300px;
     max-height: 300px;
     border-radius: 0;
@@ -643,21 +601,18 @@ h2, button {
     background-color: white;
 }
 
-.portrait
-{
+.portrait {
     filter: grayscale(1);
     border: #000000;
     border-width: 1px;
 }
 
-a
-{
+a {
     color: black;
     text-decoration: none;
 }
 
- .card-footer
-{
+.card-footer {
     font-size: 1rem;
     border-color: black;
     border-width: 2px;
@@ -667,8 +622,7 @@ a
     width: 100%;
 }
 
-.card-header
-{
+.card-header {
     font-size: 1rem;
     border-color: black;
     border-width: 2px;
@@ -678,8 +632,7 @@ a
     width: 100%;
 }
 
-.teamTitle
-{
+.teamTitle {
     font-family: var(--font-ceviche-one);
     font-size: 4rem;
     color: var(--grayscale-text-bg-color);
@@ -691,59 +644,58 @@ No media query for `xs` since this is the default in Bootstrap */
 
 /* Small devices (landscape phones, 576px and up) */
 
-@media (min-width: 576px) { 
-   
-    .scroll-btn{
+@media (min-width: 576px) {
+
+    .scroll-btn {
         left: 30vw;
         padding: 3vw 0vw 3vw 8vw;
         margin-top: 0px;
     }
-    
-    #scroll-text{
+
+    #scroll-text {
         font-size: 1.2rem;
         padding-top: 15px;
     }
 
-    #scrollToTopBtn{
+    #scrollToTopBtn {
         width: 80px;
         height: 50px;
         padding-top: 15px;
         margin-top: 0px;
     }
-} 
+}
 
 /* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) { 
-    .professors{
+@media (min-width: 768px) {
+    .professors {
         /* width: 70%; */
         /* margin: 10px 100px; */
         margin: 20px;
     }
-    .hero
-    {
+
+    .hero {
         width: 100vw;
         height: 500px;
         position: relative;
     }
 
-    .top-right-spikes, .bottom-right-spikes
-    {
+    .top-right-spikes,
+    .bottom-right-spikes {
         max-height: 40%;
         max-width: 30%;
-        position:absolute;
+        position: absolute;
         right: 0;
     }
 
-    .top-left-spikes, .bottom-left-spikes
-    {
+    .top-left-spikes,
+    .bottom-left-spikes {
         max-height: 40%;
         max-width: 30%;
-        position:absolute;
+        position: absolute;
         left: 0;
     }
 
-    .splashlogo
-    {
+    .splashlogo {
         width: 50%;
         height: auto;
         max-width: 400px;
@@ -753,134 +705,191 @@ No media query for `xs` since this is the default in Bootstrap */
         transform: translate(-50%, -50%);
     }
 
-    .scroll-btn{
+    .scroll-btn {
         left: 35vw;
     }
 
-    .preview
-    {
-        display:grid;
+    .preview {
+        display: grid;
         grid-template-rows: repeat(3, auto);
         width: 80vw;
         margin: 30px auto 50px;
     }
 
-    .preview-panels
-    {
+    .preview-panels {
         width: 37%;
         height: auto;
         margin: 0 auto;
         border: 5px solid black;
     }
 
-    .panel-one
-    {
+    .panel-one {
         margin: 0;
     }
 
-    .panel-two
-    {
+    .panel-two {
         margin: -10% auto 0;
     }
 
-    .panel-three
-    {
+    .panel-three {
         margin: -10% 0 0 auto;
     }
 
-    .our-team
-    {
+    .our-team {
         background: url(../../public/images/background-boxes/Team_Banner.svg);
         background-size: contain;
         background-repeat: no-repeat;
-        width: 80vw;
-        height: 25vw;
+        width: 100vw;
+        height: 30vw;
         padding: 0;
         background-size: 100% 100%;
         text-align: center;
-        margin: 60px auto 30px;
+        margin: 2vh auto 1vh;
     }
-    .our-team button
-    {
+
+    .our-team button {
         border: 5px solid black;
-        width: 25%;
-        height: 30%;
-        top: 35%;
+        width: 35%;
+        height: 40%;
+        top: 32%;
         font-size: 5vw;
     }
-    .form-control{
+
+    .form-control {
         width: 200px;
     }
-    #search-button{
+
+    #search-button {
         width: 40px;
         height: 30px;
     }
-    .topMission
-    {
-        position:absolute;
-        top: -40%;
-        height: auto;
+
+    .mission h2 {
+        margin: 5vh 1vw auto auto;
     }
-    .bottomMission
-    {
-        position:absolute;
-        bottom: -20%;
-        height: auto;
+
+    .missionimg {
+        margin: -5vh auto 15vh auto;
+    }
+
+    .topMission {
+        top: -10%;
+    }
+
+    .bottomMission {
+        bottom: -15%;
+    }
+
+    .missionimg p {
+        padding: 4vh 8vw 4vh 10vw;
+    }
+
+    .readimg {
+        margin: -5vh auto auto 10vw;
+    }
+
+    .topRead {
+        top: -5%;
+    }
+
+    .bottomRead {
+        bottom: -15%;
+    }
+
+    .readimg p {
+        padding: 5vh 14vw 5vh 5vw;
+    }
+
+    .create h2 {
+        margin: 7vh auto;
+    }
+
+    .createimg {
+        margin: -15vh auto 3vh 6vw;
+    }
+
+    .topCreate {
+        top: -10%;
+    }
+
+    .bottomCreate {
+        bottom: -15%;
+    }
+
+    .createimg p {
+        padding: 5vh 10vw 4vh 9vw;
+    }
+
+    .getStarted button {
+        margin: -10vh auto;
+        padding: 5vw 5vw 7vw 8vw;
+    }
+
+    .comic {
+        width: auto;
+        height: 25vw;
+        top: 86%;
+        left: 10.5%;
     }
 }
 
 /* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) { 
-    .main-section
-    {
+@media (min-width: 992px) {
+    .main-section {
         padding: 30px 100px;
     }
-    .hero
-    {
+
+    .hero {
         width: 100vw;
         height: 500px;
         position: relative;
     }
-    .top-right-spikes, .bottom-right-spikes
-    {
+
+    .top-right-spikes,
+    .bottom-right-spikes {
         max-height: 40%;
         max-width: 30%;
-        position:absolute;
+        position: absolute;
         right: 0;
     }
 
-    .top-left-spikes, .bottom-left-spikes
-    {
+    .top-left-spikes,
+    .bottom-left-spikes {
         max-height: 40%;
         max-width: 30%;
-        position:absolute;
+        position: absolute;
         left: 0;
     }
-    .splashlogo
-    {
+
+    .splashlogo {
         width: 300%;
         max-width: 500px;
     }
-    #scollToTopBtn{
+
+    #scollToTopBtn {
         width: 90px;
         height: 60px;
     }
-    .professors .text{
+
+    .professors .text {
         font-size: 1.2rem;
         max-width: 250px;
     }
-    .top-left{
+
+    .top-left {
         position: absolute;
         left: 10%;
         margin-left: auto;
     }
-    .top-right{
+
+    .top-right {
         position: absolute;
         align-self: flex-end;
         right: 10%;
         margin-right: auto;
     }
-    .bottom{
+
+    .bottom {
         position: absolute;
         left: 38%;
         right: 35%;
@@ -889,20 +898,20 @@ No media query for `xs` since this is the default in Bootstrap */
 }
 
 /* X-Large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) { 
-    .bottom{
+@media (min-width: 1200px) {
+    .bottom {
         left: 40%;
     }
 
-    #scollToTopBtn{
+    #scollToTopBtn {
         width: 100px;
         height: 70px;
     }
 }
 
 /* XX-Large devices (larger desktops, 1400px and up) */
-@media (min-width: 1400px) { 
-    .bottom{
+@media (min-width: 1400px) {
+    .bottom {
         left: 41%;
     }
 }

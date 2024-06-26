@@ -22,7 +22,7 @@ export default function Home() {
       <Hero />
       {/* <ScrollToTop /> */}
       <section className="main-section">
-      <div className="container-fluid" id="mission-id">
+      <div className="missionsec">
         <div className="mission row">
           <div className="col"></div>
           <div className="col-auto">
@@ -30,7 +30,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="missionimg row card">
+        <div className="missionimg card">
           <div className="card-img-overlay">
             <Image className="bottomMission card-img-top" src={bottomMission} alt="" />
             <Image className="topMission card-img-top" src={topMission} alt="" />
@@ -39,15 +39,6 @@ export default function Home() {
             <p>
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis eum exercitationem maxime ab eveniet? Ducimus, sunt. Tempore porro, sapiente commodi ipsa veritatis sequi? Inventore quasi placeat fugit, perferendis velit hic, dolorem deleniti saepe at, assumenda similique quis esse atque nobis!
             </p>
-          </div>
-        </div>
-
-        <div className="whatcanido">
-          <div className="row">
-            <div className="col"></div>
-            <div className="col-auto">
-              <h2>What can I do?</h2>
-            </div>
           </div>
         </div>
       </div>
