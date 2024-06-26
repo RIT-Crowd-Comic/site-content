@@ -25,6 +25,7 @@ const CreateToolsCanvasPaperJS = () => {
     // Call useEffect() in order obtain the value of the canvas after the first render
     // Pass in an empty array so that useEffect is only called once, after the initial render
     useEffect(() => {
+        
         const canvas = canvasReference.current;
 
         // If canvas is null, return out
@@ -156,10 +157,8 @@ const CreateToolsCanvasPaperJS = () => {
         fillPath.blendMode = 'normal';
     }
 
+    //CAUSES ISSUES WHICH LEAD TO THE CREATE SCREEN NOT LOADING, DELETE RELOAD AND IT SHOULD WORK AGAIN
     // --- SHAPE TOOL ---
-    // Array containing all created shapes
-    const [elements, setElements] = useState([]);
-    const [elementIndex, setElementIndex] = useState(0);
 
     //
     const [startPoint, setStartPoint] = useState(new paper.Point(0, 0));
@@ -168,16 +167,20 @@ const CreateToolsCanvasPaperJS = () => {
     currentRect.strokeColor = new paper.Color('black');
     currentRect.strokeWidth = 3;
 
+    // Array containing all created shapes
+    const [elements, setElements] = useState([currentRect]);
+
     //reset
-    const clearStates = () =>{
-        setStartPoint(new paper.Point(0,0));
-        setEndPoint(new paper.Point(0,0));
+    const clearStates = () => {
+        setStartPoint(new paper.Point(0, 0));
+        setEndPoint(new paper.Point(0, 0));
         setCurrentRect(new paper.Path.Rectangle(startPoint, endPoint));
     }
-    
+
     // The Shape Tool:
     const [shapeTool, setShapeTool] = useState<paper.Tool>(new paper.Tool());
     shapeTool.minDistance = 4;
+
     shapeTool.onMouseDown = function (event: MouseEvent) {
         setStartPoint(event.point);
     }
@@ -187,10 +190,9 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     shapeTool.onMouseUp = function (event: MouseEvent) {
-        setCurrentRect(new paper.Path.Rectangle(startPoint,endPoint));
-        //doesn't properly update the first time
-        setElements([...elements, currentRect]);
-        setElementIndex(index => index++);
+        setCurrentRect(new paper.Path.Rectangle(startPoint, endPoint));
+
+        setElements(prevState => [...prevState, currentRect]);
         clearStates();
     }
 
@@ -248,9 +250,9 @@ const CreateToolsCanvasPaperJS = () => {
     // Erases everything from the current canvas layer
     const clearLayer = () => {
         canvasProject.activeLayer.removeChildren();
-        //
+        //needs to be edited later so only elements on the layer are removed from the array
+        //specific array for elements on each layer
         setElements([]);
-        setElementIndex(0);
     }
 
     const toggleLayerVisibility = (event: SyntheticEvent) => {
@@ -296,6 +298,8 @@ const CreateToolsCanvasPaperJS = () => {
                         <input type="radio" name="tools" id="shape" value={toolStates.SHAPE} onChange={findSelected} />
                         <label htmlFor="shape">Shape (Rectangle)</label>
                     </div>
+
+
 
                     <div id="textTool">
                         <input type="radio" name="tools" id="text" value={toolStates.TEXT} onChange={findSelected} />
