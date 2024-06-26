@@ -5,7 +5,7 @@ import paper, { project, tools } from 'paper/dist/paper-core';
 import PenOptions from './PenOptions';
 import EraserOptions from './EraserOptions';
 import FillOptions from './FillOptions';
-import { PaperOffset } from 'paperjs-offset'
+import  {PaperOffset}  from 'paperjs-offset';
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
 const CreateToolsCanvasPaperJS = () =>
@@ -137,66 +137,73 @@ const CreateToolsCanvasPaperJS = () =>
                 children: project.activeLayer.removeChildren(),
                 blendMode: 'source-out',
                 insert: false
-              })
+              });
           
               // combine the path and group in another group with a blend of 'source-over'
               mask = new paper.Group({
                 children: [eraserPath, tmpGroup],
                 blendMode: 'source-over'
-              })
+              });
+            console.log("ping");
     }
 
     // Continues drawing the user's input to the canvas HTMLElement
     eraserTool.onMouseDrag = function(event: MouseEvent) 
     {   
         eraserPath.add(event.point);
+        console.log("pang");
     }
 
     eraserTool.onMouseUp = function(event:MouseEvent)
     {
-        eraserPath.simplify()
-
-        var eraseRadius = (eraserSize * view.pixelRatio) / 2
+        eraserPath.simplify();
+        var temp = new paper.CompoundPath(eraserPath);
+        var eraseRadius = (eraserSize * view.pixelRatio) / 2;
     
         // find the offset path on each side of the line
         // this uses routines in the offset.js file
-        var deleteShape = PaperOffset.offset(PaperOffset.offset(eraserPath, -eraseRadius), 2 * eraseRadius, {join : 'round'})
+        //var temp = PaperOffset.offsetPath(eraserPath, -eraseRadius);
+        var deleteShape = PaperOffset.offsetStroke(temp, eraseRadius, {cap : 'round'});
         deleteShape.insert = false;
+        //temp.insert = false;
+        temp.remove();
         //var innerPath = PaperOffset.offset(eraserPath, -eraseRadius)
         
-        eraserPath.remove() // done w/ this now
+        eraserPath.remove(); // done w/ this now
 
         // unite the shape with the endcaps
         // this also removes all overlaps from the stroke
         //deleteShape = deleteShape.unite(deleteShape)
         
-        deleteShape.simplify()
+        deleteShape.simplify();
     
         // grab all the items from the tmpGroup in the mask group
-        var items = tmpGroup.getItems({ overlapping: deleteShape.bounds })
+        var items = tmpGroup.getItems({ overlapping: deleteShape.bounds });
     
         items.forEach(function(item) {
           var result = item.subtract(deleteShape, {
             trace: false,
             insert: false
-          }) // probably need to detect closed vs open path and tweak these settings
+          }); // probably need to detect closed vs open path and tweak these settings
     
           if (result.children) {
             // if result is compoundShape, yoink the individual paths out
-            item.parent.insertChildren(item.index, result.removeChildren())
-            item.remove()
+            item.parent.insertChildren(item.index, result.removeChildren());
+            item.remove();
           } else {
             if (result.length === 0) {
               // a fully erased path will still return a 0-length path object
-              item.remove()
+              item.remove();
             } else {
-              item.replaceWith(result)
+              item.replaceWith(result);
             }
           }
         })
     
-        project.activeLayer.addChildren(tmpGroup.removeChildren())
-        mask.remove()
+        canvasProject.activeLayer.addChildren(tmpGroup);
+        tmpGroup.removeChildren();
+        mask.remove();
+        console.log("pong");
     
     }
 
