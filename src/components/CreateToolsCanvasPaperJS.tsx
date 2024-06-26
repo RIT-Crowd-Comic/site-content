@@ -222,12 +222,8 @@ const CreateToolsCanvasPaperJS = () => {
     const [selectTool, setSelectTool] = useState<paper.Tool>(new paper.Tool());
 
     //sets action of user depending on where element is clicked
-<<<<<<< HEAD
-    selectTool.onMouseDown = function (event: MouseEvent) {
-=======
     selectTool.onMouseDown = function (event: paper.ToolEvent) {
         //if clicked within element, sets the action to moving
->>>>>>> main
         for (let i = 0; i < elements.length; i++) {
             //runs if clicked on the corners of an element (segments to check if clicked on rect, tolerance for precision)
             if (elements[i].hitTest(event.point, { segments: true, tolerance: 7 })) {
