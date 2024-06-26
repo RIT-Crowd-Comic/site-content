@@ -232,7 +232,7 @@ h2, button {
     margin: -3vw 0vw 10vw 0vw;
 }
 
-/* .getStarted button{
+.getStarted button{
     position: relative;
     border: 10px solid transparent;
     background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
@@ -242,36 +242,34 @@ h2, button {
     z-index: 2;  
 }
 
-.getStarted:hover{
+/* .getStarted:hover{
     display: inline-block;
+}
+
+.getStarted {
+    z-index: 2;
+    overflow: hidden; 
 } */
 
-/* .getStarted button{
-    display: none;
-    position: relative
-} */
-
-.getStarted button{
-    position: relative;
+/* .getStarted button{ */
+    /* position: relative;
     border: 10px solid transparent;
     background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
     margin: -20vw;
     padding: 5vw 5vw 7vw 10vw;
-    font-size: 6vw;
-    z-index: 2; 
+    font-size: 6vw; 
+    z-index: 2;    */
     /* display: none; */
-}
+/* }
 
-.getStarted:hover{
-    display: inline;
-    position: relative;
-    border: 10px solid transparent;
-    background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
-    /* margin: -20vw; */
-    /* padding: 5vw 5vw 7vw 10vw; */
-    font-size: 6vw;
-    z-index: 2; 
-}
+.getStarted:hover{ */
+    /* display: inline; */
+    /* position: relative;
+    border: 10px solid transparent; */
+    /* background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain; */
+    /* font-size: 6vw;
+    z-index: 2;  */
+/* } */
 
 .comic{
     position: absolute;
@@ -585,7 +583,6 @@ h2, button {
 .footer-nav-list a, .footer-nav a
 {
     text-decoration: none;
-    /* color: var(--secondary-color); */
     color:var(--grayscale-text-bg-color);
 }
 
@@ -711,6 +708,7 @@ h2, button {
     justify-content:end;
     font-size: 1rem;
     margin-top: 20px;
+    text-decoration: none;
 }
 
 #scrollToTopBtn{
@@ -720,6 +718,30 @@ h2, button {
     cursor: pointer;
     border: none;
 }
+
+#scroll-text:hover{
+    text-decoration: underline;
+}
+
+#scrollToTopBtn:hover{
+    transform: rotate(-90deg) scale(1.2);
+}
+
+/* #scroll-text::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--grayscale-text-bg-color);
+    transition: 1s ease-out;
+    transform: translateX(-100%); 
+}
+
+#scroll-text:hover::before{
+    transform: translateX(0);
+} */
 
 .person-panel
 {
