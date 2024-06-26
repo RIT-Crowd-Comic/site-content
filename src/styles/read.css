@@ -1,3 +1,10 @@
+body{
+  background-image: url("/images/background-app-splash.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
 .footer-bar {
   position: fixed;
   margin: 0;
@@ -61,7 +68,23 @@ button {
     left: 50%;
     transform:translateX(-50%);
     padding: 5px 10px;
+    width:35px;
   }
+
+.branch-hook.pop-hooks {
+  animation: pulse 1s infinite;
+  position: absolute;
+  border: 1px solid #FFD270;
+}
+
+@keyframes pulse {
+  0% {
+    outline: 1px solid #FFD270;
+  }
+  100% {
+    outline: 8px solid #ffd27050;
+  }
+}
 
 #first-branch-hook{
     top: 5%;
@@ -81,23 +104,21 @@ button {
 .control-bar {
   position: fixed;
   background-color: rgb(94, 94, 94);
-  width:3%;
-  height:19%;
-  padding: 1% 0 0 0;
+  width:80px;
+  height:230px;
+  padding: 25px 0 0 0;
   border-radius: 50px;
-  border: none;
+  border: 4px solid black;
   margin:auto 1%;
   top:50%;
   left:1%;
   -ms-transform: translateX(-50%) translateY(-50%);
   transform: translate(-50%,-50%);
-  min-width: 68px;
-  min-height:215px;
 }
 
- #back-button, #hook-toggle, #layout-toggle {
+ #back-button, #hooks-toggle, #layout-toggle {
     display: block;
-    margin: 8px auto;
+    margin: 0px auto;
     position: relative;
     padding: 10px;
     font-size: 18px;
@@ -106,12 +127,22 @@ button {
     background-color: rgb(94, 94, 94);
   } 
 
+  .button-icon{
+    width: 40px;
+    height: auto;
+  }
+
+  .button-icon:hover{
+    filter: brightness(0);
+  }
+
   .row-panels#comic-panels{
     flex-direction: row;
     display: flex;
     align-items: center;
     position: relative;
-    margin: 20% 1%;
+    margin: 15% 1%;
+    top:50%;
     justify-content: center;
     
   }
