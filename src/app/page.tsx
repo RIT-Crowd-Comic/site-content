@@ -4,18 +4,18 @@ import Link from "next/link"
 import ScrollToTop from "../components/ScrollToTop"
 
 // Mobile Assets
-import topMission from "../../public/images/background-boxes/Mission_Top.svg";
-import bottomMission from "../../public/images/background-boxes/Mission_Bottom.svg";
-import topRead from "../../public/images/background-boxes/Read_Top.svg";
-import bottomRead from "../../public/images/background-boxes/Read_Bottom.svg";
-import topCreate from "../../public/images/background-boxes/Create_Top.svg";
-import bottomCreate from "../../public/images/background-boxes/Create_Bottom.svg";
+import topMission from "../../public/images/background-boxes/bw/Mission_Top_BW.svg";
+import bottomMission from "../../public/images/background-boxes/bw/Mission_Bottom_BW.svg";
+import topRead from "../../public/images/background-boxes/bw/Read_Top_BW.svg";
+import bottomRead from "../../public/images/background-boxes/bw/Read_Bottom_BW.svg";
+import topCreate from "../../public/images/background-boxes/bw/Create_Top_BW.svg";
+import bottomCreate from "../../public/images/background-boxes/bw/Create_Bottom_BW.svg";
 
 // Desktop Assets
-import desktopLeftMission from "../../public/images/background-boxes/Desktop_Mission_Left.svg"
-import desktopRightMission from "../../public/images/background-boxes/Desktop_Mission_Right.svg"
-import desktopRead from "../../public/images/background-boxes/Desktop_Read.svg"
-import desktopCreate from "../../public/images/background-boxes/Desktop_Create.svg"
+import desktopLeftMission from "../../public/images/background-boxes/bw/Desktop_Mission_Left_BW.svg"
+import desktopRightMission from "../../public/images/background-boxes/bw/Desktop_Mission_Right_BW.svg"
+import desktopRead from "../../public/images/background-boxes/bw/Desktop_Read_BW.svg"
+import desktopCreate from "../../public/images/background-boxes/bw/Desktop_Create_BW.svg"
 
 import comic from "../../public/images/GIFs/Comic.gif";
 import arrow from "../../public/images/Arrow.gif"
