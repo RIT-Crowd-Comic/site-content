@@ -1,4 +1,3 @@
-'use client';
 import { MutableRefObject, SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
 import paper, { project, tools } from 'paper/dist/paper-core';
@@ -25,7 +24,6 @@ const CreateToolsCanvasPaperJS = () => {
     // Call useEffect() in order obtain the value of the canvas after the first render
     // Pass in an empty array so that useEffect is only called once, after the initial render
     useEffect(() => {
-        
         const canvas = canvasReference.current;
 
         // If canvas is null, return out
@@ -168,13 +166,14 @@ const CreateToolsCanvasPaperJS = () => {
     currentRect.strokeWidth = 3;
 
     // Array containing all created shapes
-    const [elements, setElements] = useState([currentRect]);
+    const [elements, setElements] = useState([]);
 
     //reset
     const clearStates = () => {
         setStartPoint(new paper.Point(0, 0));
         setEndPoint(new paper.Point(0, 0));
         setCurrentRect(new paper.Path.Rectangle(startPoint, endPoint));
+        console.log(elements);
     }
 
     // The Shape Tool:
@@ -191,13 +190,16 @@ const CreateToolsCanvasPaperJS = () => {
 
     shapeTool.onMouseUp = function (event: MouseEvent) {
         setCurrentRect(new paper.Path.Rectangle(startPoint, endPoint));
-
         setElements(prevState => [...prevState, currentRect]);
         clearStates();
     }
 
-    // *** FUNCTIONS ***
+    //test to see if array updates properly
+    // useEffect(() => {
+    //     console.log(elements);
+    //   }, [elements]);
 
+    // *** FUNCTIONS ***
     // Find which radioButton is currently selected and update the state of the tool selected
     const findSelected = () => {
         let buttonSelected = document.querySelector("input[name='tools']:checked") as HTMLInputElement;
