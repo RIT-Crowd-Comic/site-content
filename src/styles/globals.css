@@ -91,7 +91,7 @@ h2, button {
 /* MISSION SECTION FORMATTING */
 .mission h2{
     position: relative;
-    background: url(../../public/images/background-boxes/Header_Box_Right.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/Read_Small.svg) no-repeat center/contain;
     padding: 6vw 8vw 6vw 6vw;
     z-index: 1;
     margin: 5vw -5vw -9vw 0; 
@@ -99,7 +99,7 @@ h2, button {
 
 .whatcanido h2{
     position: relative;
-    background: url(../../public/images/background-boxes/Header_Box_Right.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/Read_Small.svg) no-repeat center/contain;
     padding: 6vw 6vw 8vw 4vw;
     z-index: 1;
     margin: -10vw -7vw -4vw 0;
@@ -133,6 +133,12 @@ h2, button {
     height: auto;
 }
 
+.leftMission, .rightMission
+{
+    display:none;
+}
+
+
 .missionimg .card-img-top {
     z-index: 0;
 }
@@ -147,7 +153,7 @@ h2, button {
 .read h2{
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/background-boxes/Header_Box_Left.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/Create_Small.svg) no-repeat center/contain;
     padding: 7vw;
     margin: -6vw 0vw -17vw -10vw;
     z-index: 1;
@@ -185,6 +191,11 @@ h2, button {
     padding: 3vw 1vw 3vw 7vw;
 }
 
+.desktopRead
+{
+    display: none;
+}
+
 /* CREATE SECTION FORMATTING */
 .create{
     position: relative;
@@ -193,7 +204,7 @@ h2, button {
 .create h2{
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/background-boxes/Header_Box_Right.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/Create_Small.svg) no-repeat center/contain;
     padding: 7vw 9vw 7vw 6vw;
     margin: -8vw -13vw -20vw 0vw;
     z-index: 1;
@@ -230,6 +241,11 @@ h2, button {
     z-index: 1;
     padding: 2vw 1vw 0 9vw;
     margin: -3vw 0vw 10vw 0vw;
+}
+
+.desktopCreate
+{
+    display: none;
 }
 
 .getStarted button{
@@ -303,14 +319,6 @@ h2, button {
     border: 5px solid black;
 }
 
-.preview-arrow
-{
-    max-width: 100px;
-    height: auto;
-
-    margin: auto 0;
-}
-
 .panel-one
 {
     margin: 0;
@@ -324,16 +332,6 @@ h2, button {
 .panel-three
 {
     margin: -5% 0 0 auto;
-}
-
-.preview-arrow
-{
-    max-width: 100px;
-    height: auto;
-
-    margin: auto 0;
-
-    display: none;
 }
 
 /* OUR TEAM BUTTON */
@@ -882,13 +880,6 @@ No media query for `xs` since this is the default in Bootstrap */
         border: 5px solid black;
     }
 
-    .preview-arrow
-    {
-        max-width: 100px;
-        height: auto;
-        margin: auto 0;
-    }
-
     .panel-one
     {
         margin: 0;
@@ -1003,36 +994,133 @@ No media query for `xs` since this is the default in Bootstrap */
         margin: 0 auto;
     }
 
-    #scroll-text{
-        font-size: 1.5rem;
-    }
-  
-    .preview
+    /* MISSION */
+    .mission h2
     {
-        display:grid;
-        grid-template-columns: repeat(2, 1fr auto) 1fr;
-        grid-template-rows: none;
-        column-gap: 0;
-        width: 80vw;
-        margin: 30px auto 100px;
-        padding: 5px;
-        background-color: var(--grayscale-background-color);
-        border: 7px solid black;
-    }
+        background: url(../../public/images/background-boxes/Desktop_Mission_Small.svg) no-repeat center/contain;
 
-    .preview-panels
-    {
-        width: 100%;
-        height: auto;
+        padding: 3rem;
         margin: 0;
     }
 
-    .preview-arrow
+    .whatcanido h2
     {
-        max-width: 100px;
+        background: url(../../public/images/background-boxes/Desktop_What_Can_I_Do.svg) no-repeat center/contain;
+
+        padding: 2rem;
+        margin: 0;
+    }
+
+    .missionimg
+    {
+        font-size: 1.5vw;
+
+        width: 90vw;
+        margin: 0 -5vw;
+    }
+
+    .missionimg p
+    {
+        background-color: var(--secondary-color);
+
+        border: solid 5px black;
+        
+        padding: 1rem;
+        width: 70%;
+        margin: 15% auto 0;
+    }
+
+    .topMission, .bottomMission
+    {
+        display: none;
+    }
+
+    .leftMission, .rightMission
+    {
+        display:inline;
+
+        position:absolute;
         height: auto;
-        margin: auto 0;
-        display: inline;
+    }
+
+    /* READ */
+    .read h2
+    {
+        background: url(../../public/images/background-boxes/Desktop_Read_Small.svg) no-repeat center/contain;
+
+        padding: 4rem;
+        margin: 0;
+    }
+
+    .readimg
+    {
+        font-size: 1.5vw;
+
+        width: 90vw;
+        margin: 0 -5vw;
+    }
+
+    .readimg p
+    {
+        background-color: var(--secondary-color);
+
+        border: solid 5px black;
+
+        padding: 1rem;
+        width: 70%;
+        margin: 15% auto 0;
+    }
+
+    .topRead, .bottomRead
+    {
+        display: none;
+    }
+
+    .desktopRead
+    {
+        display:inline;
+        position:absolute;
+        height: auto;
+    }
+
+    /* CREATE */
+    .create h2
+    {
+        background: url(../../public/images/background-boxes/Desktop_Create_Small.svg) no-repeat center/contain;
+
+        padding: 4rem;
+        margin: 0;
+    }
+
+    .createimg
+    {
+        font-size: 1.5vw;
+
+        width: 90vw;
+        margin: 0 -5vw;
+    }
+
+    .createimg p
+    {
+        background-color: var(--secondary-color);
+
+        border: solid 5px black;
+
+        padding: 1rem;
+        width: 70%;
+        margin: 15% auto 0;
+    }
+
+    .topCreate, .bottomCreate
+    {
+        display: none;
+    }
+
+    .desktopCreate
+    {
+        display:inline;
+        position:absolute;
+        height: auto;
     }
 }
 

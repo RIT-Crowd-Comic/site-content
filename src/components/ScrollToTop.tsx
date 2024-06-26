@@ -1,7 +1,6 @@
 "use client"
 
 import Image from "next/image"
-import Link from "next/link"
 import arrow from "../../public/images/Arrow.gif"
 
 import { useEffect, useState } from 'react'
