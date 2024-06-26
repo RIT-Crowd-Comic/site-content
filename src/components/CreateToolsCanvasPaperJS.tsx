@@ -84,7 +84,7 @@ const CreateToolsCanvasPaperJS = () =>
 
     // The Pen Tool:
     const [penTool, setPenTool] = useState<paper.Tool>(new paper.Tool());
-    let penPath;
+    let penPath: paper.Path | undefined;
 
     // Begins the process of drawing the user's input to the canvas HTMLElement
     penTool.onMouseDown = function()
@@ -98,9 +98,8 @@ const CreateToolsCanvasPaperJS = () =>
     }
 
     // Continues drawing the user's input to the canvas HTMLElement
-    penTool.onMouseDrag = function(event: MouseEvent) 
-    {   
-        penPath.add(event.point);
+    penTool.onMouseDrag = function(event: paper.ToolEvent) {   
+        penPath?.add(event.point);
     }
 
     // --- ERASER TOOL ---
@@ -112,7 +111,7 @@ const CreateToolsCanvasPaperJS = () =>
 
     // The Eraser Tool:
     const [eraserTool, setEraserTool] = useState<paper.Tool>(new paper.Tool());
-    let eraserPath;
+    let eraserPath: paper.Path | undefined;
 
     // Begins the process of drawing the user's input to the canvas HTMLElement
     eraserTool.onMouseDown = function()
@@ -133,9 +132,9 @@ const CreateToolsCanvasPaperJS = () =>
     }
 
     // Continues drawing the user's input to the canvas HTMLElement
-    eraserTool.onMouseDrag = function(event: MouseEvent) 
+    eraserTool.onMouseDrag = function(event: paper.ToolEvent) 
     {   
-        eraserPath.add(event.point);
+        eraserPath?.add(event.point);
     }
 
     // --- FILL TOOL ---
@@ -221,13 +220,13 @@ const CreateToolsCanvasPaperJS = () =>
         canvasProject.activeLayer.removeChildren();
     }
 
-    const toggleLayerVisibility = (event : SyntheticEvent) =>
+    const toggleLayerVisibility = (event : ChangeEvent<HTMLInputElement>) =>
     {
-        if(layer1Reference.current && event.target.value == 1)
+        if(layer1Reference.current && event.target.value === '1')
         {
             layer1Reference.current.visible = !layer1Reference.current.visible;
         }
-        else if(layer2Reference.current && event.target.value == 2)
+        else if(layer2Reference.current && event.target.value === '2')
         {
             layer2Reference.current.visible = !layer2Reference.current.visible;
         }
