@@ -133,6 +133,7 @@ const BranchPlacer = () => {
     }
 
     return (<>
+    <div className="background-image"></div>
     <div id="publishContainer">
         <div id="publish-slideshow">
             <div id="panel-overview" className="carousel slide">
@@ -182,7 +183,7 @@ const BranchPlacer = () => {
                     <button id="remove-branch-hook" className="branch-control-btn" onClick={removeBranchHook}>Remove Hook</button>
                 </div>
                 <div className="branch-hook-text">
-                    <p>YOU HAVE {branCount} OF 3 TOTAL REQUIRED BRANCHES PLACED</p>
+                    <p>{branCount} OF 3 REQUIRED BRANCHES PLACED</p>
                     {/* starting text to be updated when either add or remove branch hook button is pressed */}
                 </div>
             </div>
