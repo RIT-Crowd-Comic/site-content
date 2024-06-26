@@ -230,33 +230,7 @@ const CreateToolsCanvasPaperJS = () => {
                 setChangedElementIndex(i);
                 return;
             }
-            // else if(elements[i].hitTest(event.isPropagationStopped, {segments: true, tolerance: 3})){
-            //     console.log("runs");
-            // }
         }
-        //ref
-        //         else if (elements[i].rect.hitTest(event.point, { segments: true, tolerance: 3 })) {
-        //             if (event.modifiers.control) {
-        //                 elements[i].rect.data.state = 'rotating';
-        //                 setChangedElementIndex(i);
-        //             } else {
-        //                 elements[i].rect.data.state = 'resizing';
-        //                 var i;
-        //                 for (i = 0; i < elements[i].rect.segments.length; i++) {
-        //                     var p = elements[i].rect.segments[i].point;
-        //                     if (p.isClose(event.point, 3)) {
-        //                         break;
-        //                     }
-        //                 }
-
-        //                 var opposite = (i + 2) % 4;
-        //                 elements[i].rect.data.from = elements[i].rect.segments[opposite].point;
-        //                 elements[i].rect.data.to = elements[i].rect.segments[i].point;
-        //                 setChangedElementIndex(i);
-        //             }
-        //             return;
-        //         }
-        //     }
     }
 
     //changes the element according to the selectAction
@@ -266,46 +240,6 @@ const CreateToolsCanvasPaperJS = () => {
             elements[changedElementIndex].position = event.point;
             return;
         }
-
-        //ref
-        //edits created path rect to add end point as new point of rect
-        // //is reflected visually in drag (resizes as user drags move)
-        // if(changedRectIndex){
-        //     if (rects[changedRectIndex].rect.data.state === 'moving') {
-        //      rects[changedRectIndex].rect.position = rects[changedRectIndex].rect.position + e.point - e.lastPoint;
-        //      return;
-        //  }
-        //  else if (rects[changedRectIndex].rect.data.state === 'resizing') {
-        //      // scale by distance from down point
-        //          //calc scale coefficients and store current position
-        //  var scaleX = width/elem.bounds.width;
-        //  var scaleY = height/elem.bounds.height;
-        //  var prevPos = new Point(elem.bounds.x,elem.bounds.y);
-
-        //  //apply calc scaling
-        //  elem.scale(scaleX,scaleY);
-
-        //  //reposition the elem to previous pos(scaling moves the elem so we reset it's position);
-        //  var newPos = prevPos + new Point(elem.bounds.width/2,elem.bounds.height/2);
-        //  elem.position = newPos;
-        //      var bounds = rects[changedRectIndex].rect.data.bounds;
-        //      var scale = e.point.subtract(bounds.center).length /
-        //                      rects[changedRectIndex].rect.data.scaleBase.length;
-        //      var tlVec = bounds.topLeft.subtract(bounds.center).multiply(scale);
-        //      var brVec = bounds.bottomRight.subtract(bounds.center).multiply(scale);
-        //      var newBounds = new Rectangle(tlVec + bounds.center, brVec + bounds.center);        
-        //      rects[changedRectIndex].rect.bounds = newBounds;
-        //      return;
-        //  } else if (rects[changedRectIndex].rect.data.state === 'rotating') {
-        //      // rotate by difference of angles, relative to center, of
-        //      // the last two points.
-        //      var center = rects[changedRectIndex].rect.bounds.center;
-        //      var baseVec = center - e.lastPoint;
-        //      var nowVec = center - e.point;
-        //      var angle = nowVec.angle - baseVec.angle;
-        //      rects[changedRectIndex].rect.rotate(angle);
-        //      return;
-        //  }
     }
     selectTool.onMouseUp = function () {
         //resets select states
