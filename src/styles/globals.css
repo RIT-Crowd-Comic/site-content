@@ -258,34 +258,12 @@ h2, button {
     z-index: 2;
 }
 
-/* .getStarted:hover{
-    display: inline-block;
+.getStarted button:hover{
+    font-style: italic;
+    margin-left: -14vw;
+    padding-right: 6vw;
+    transition: ease-out .3s;
 }
-
-.getStarted {
-    z-index: 2;
-    overflow: hidden; 
-} */
-
-/* .getStarted button{ */
-    /* position: relative;
-    border: 10px solid transparent;
-    background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
-    margin: -20vw;
-    padding: 5vw 5vw 7vw 10vw;
-    font-size: 6vw; 
-    z-index: 2;    */
-    /* display: none; */
-/* }
-
-.getStarted:hover{ */
-    /* display: inline; */
-    /* position: relative;
-    border: 10px solid transparent; */
-    /* background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain; */
-    /* font-size: 6vw;
-    z-index: 2;  */
-/* } */
 
 .comic{
     position: absolute;
