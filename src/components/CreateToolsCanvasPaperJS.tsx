@@ -114,9 +114,9 @@ const CreateToolsCanvasPaperJS = () =>
     // The Eraser Tool:
     const [eraserTool, setEraserTool] = useState<paper.Tool>(new paper.Tool());
     eraserTool.minDistance = 10;
-    let eraserPath;
-    let tmpGroup;
-    let mask;
+    let eraserPath = useRef<paper.Path>(null);
+    let tmpGroup = useRef<paper.Group>(null);
+    let mask = useRef<paper.Group>(null);
 
     // Begins the process of drawing the user's input to the canvas HTMLElement
     eraserTool.onMouseDown = function()
@@ -200,7 +200,7 @@ const CreateToolsCanvasPaperJS = () =>
           }
         })
     
-        canvasProject.activeLayer.addChildren(tmpGroup);
+        project.activeLayer.addChildren(tmpGroup);
         tmpGroup.removeChildren();
         mask.remove();
         console.log("pong");
