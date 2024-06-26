@@ -208,23 +208,28 @@ const CreateToolsCanvasPaperJS = () => {
     // --- SELECT TOOL ---
     //
     const [selectAction, setSelectAction] = useState("none");
+    let elementBounds;
 
     //
-    const [changedElementIndex, setChangedElementIndex] = useState(0);
+    const [changedElementIndex, setChangedElementIndex] = useState(-1);
 
     // The Select Tool:
     const [selectTool, setSelectTool] = useState<paper.Tool>(new paper.Tool());
 
     selectTool.onMouseDown = function (event: MouseEvent) {
+        //if (!elements) return; ?
 
+        for (let i = 0; i < elements.length; i++) {
+            if (elements[i].contains(event.point)) {
+                setSelectAction("moving");
+                setChangedElementIndex(i);
+                return;
+            }
+            // else if(elements[i].hitTest(event.isPropagationStopped, {segments: true, tolerance: 3})){
+            //     console.log("runs");
+            // }
+        }
         //ref
-        // if (elements) {
-        //     for (var i = 0; i < elements.length; i++) {
-        //         if (elements[i].rect.contains(event.point)) {
-        //             setSelectAction("moving")
-        //             setChangedElementIndex(i);
-        //             return;
-        //         }
         //         else if (elements[i].rect.hitTest(event.point, { segments: true, tolerance: 3 })) {
         //             if (event.modifiers.control) {
         //                 elements[i].rect.data.state = 'rotating';
@@ -247,165 +252,210 @@ const CreateToolsCanvasPaperJS = () => {
         //             return;
         //         }
         //     }
+    }
+    selectTool.onMouseDrag = function (event: MouseEvent) {
+        if (selectAction == "moving") {
+            //element changes position to where mouse is
+            elements[changedElementIndex].position = event.point;
+            return;
         }
-        selectTool.onMouseDrag = function () {
+        //ref
+        //edits created path rect to add end point as new point of rect
+        // //is reflected visually in drag (resizes as user drags move)
+        // if(changedRectIndex){
+        //     if (rects[changedRectIndex].rect.data.state === 'moving') {
+        //      rects[changedRectIndex].rect.position = rects[changedRectIndex].rect.position + e.point - e.lastPoint;
+        //      return;
+        //  }
+        //  else if (rects[changedRectIndex].rect.data.state === 'resizing') {
+        //      // scale by distance from down point
+        //          //calc scale coefficients and store current position
+        //  var scaleX = width/elem.bounds.width;
+        //  var scaleY = height/elem.bounds.height;
+        //  var prevPos = new Point(elem.bounds.x,elem.bounds.y);
 
-        }
-        selectTool.onMouseUp = function () {
+        //  //apply calc scaling
+        //  elem.scale(scaleX,scaleY);
 
-        }
-
-        // *** FUNCTIONS ***
-        // Find which radioButton is currently selected and update the state of the tool selected
-        const findSelected = () => {
-            let buttonSelected = document.querySelector("input[name='tools']:checked") as HTMLInputElement;
-
-            if (Number(buttonSelected?.value) == toolStates.PEN) {
-                penTool.activate();
-                setPenOptionsEnabled(true);
-                setEraserOptionsEnabled(false);
-                setFillOptionsEnabled(false);
-            }
-            else if (Number(buttonSelected?.value) == toolStates.ERASER) {
-                eraserTool.activate();
-                setPenOptionsEnabled(false);
-                setEraserOptionsEnabled(true);
-                setFillOptionsEnabled(false);
-            }
-            else if (Number(buttonSelected?.value) == toolStates.FILL) {
-                fillTool.activate();
-                setPenOptionsEnabled(false);
-                setEraserOptionsEnabled(false);
-                setFillOptionsEnabled(true);
-            }
-            else if (Number(buttonSelected?.value) == toolStates.SHAPE) {
-                shapeTool.activate();
-                setPenOptionsEnabled(false);
-                setEraserOptionsEnabled(false);
-                setFillOptionsEnabled(false);
-            }
-            else if (Number(buttonSelected?.value) == toolStates.SELECT) {
-                selectTool.activate();
-                setPenOptionsEnabled(false);
-                setEraserOptionsEnabled(false);
-                setFillOptionsEnabled(false);
-            }
-        }
-
-        const changeLayer = () => {
-            let layerSelected = document.querySelector("input[name='layers']:checked") as HTMLInputElement;
-
-            switch (Number(layerSelected.value)) {
-                case 1:
-                    layer1Reference.current?.activate();
-                    //console.log(canvasProject.activeLayer);
-                    break;
-                case 2:
-                    layer2Reference.current?.activate();
-                    //console.log(canvasProject.activeLayer);
-                    break;
-                default:
-                    layer1Reference.current?.activate();
-                    //console.log(canvasProject.activeLayer);
-                    break;
-            }
-        }
-
-        // Erases everything from the current canvas layer
-        const clearLayer = () => {
-            canvasProject.activeLayer.removeChildren();
-            //needs to be edited later so only elements on the layer are removed from the array OR specific array for elements on each layer
-            setElements([]);
-        }
-
-        const toggleLayerVisibility = (event: SyntheticEvent) => {
-            if (layer1Reference.current && event.target.value == 1) {
-                layer1Reference.current.visible = !layer1Reference.current.visible;
-            }
-            else if (layer2Reference.current && event.target.value == 2) {
-                layer2Reference.current.visible = !layer2Reference.current.visible;
-            }
-        }
-
-        // Undoes the last stroke to the canvas
-        /*function undo() {
-            
-        }*/
-
-        /*function redo() {
-            
-        }*/
-
-        // Return the canvas HTMLElement and its associated functionality
-        return (
-            <div id="createPage">
-                <fieldset>
-                    <legend>Tools</legend>
-                    <div id="toolRadioSelects">
-                        <div id="penTool">
-                            <input type="radio" name="tools" id="pen" value={toolStates.PEN} defaultChecked onChange={findSelected} />
-                            <label htmlFor="pen">Pen</label>
-                        </div>
-
-                        <div id="eraserTool">
-                            <input type="radio" name="tools" id="eraser" value={toolStates.ERASER} onChange={findSelected} />
-                            <label htmlFor="eraser">Eraser</label>
-                        </div>
-
-                        <div id="fillTool">
-                            <input type="radio" name="tools" id="fill" value={toolStates.FILL} onChange={findSelected} />
-                            <label htmlFor="fill">Fill</label>
-                        </div>
-
-                        <div id="shapeTool">
-                            <input type="radio" name="tools" id="shape" value={toolStates.SHAPE} onChange={findSelected} />
-                            <label htmlFor="shape">Shape (Rectangle)</label>
-                        </div>
-
-                        <div id="textTool">
-                            <input type="radio" name="tools" id="text" value={toolStates.TEXT} onChange={findSelected} />
-                            <label htmlFor="text">Text (NOT FUNCTIONAL)</label>
-                        </div>
-
-                        <div id="stickerTool">
-                            <input type="radio" name="tools" id="sticker" value={toolStates.STICKER} onChange={findSelected} />
-                            <label htmlFor="sticker">Sticker (NOT FUNCTIONAL)</label>
-                        </div>
-
-                        <div id="selectTool">
-                            <input type="radio" name="tools" id="select" value={toolStates.SELECT} onChange={findSelected} />
-                            <label htmlFor="select">Select</label>
-                        </div>
-                    </div>
-
-                    <button className="btn" id="redoButton">Redo (NOT FUNCTIONAL)</button><br></br>
-                    <button className="btn" id="undoButton">Undo (NOT FUNCTIONAL)</button><br></br>
-                    <button className="btn" id="clearButton" onClick={clearLayer}>Clear</button><br></br>
-                </fieldset>
-
-                <canvas id="canvas" height="800px" width="1200px" ref={canvasReference} />
-
-                <div id="toolOptions">
-                    <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor} />
-                    <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize} />
-                    <FillOptions enabled={fillOptionsEnabled} changeFillColor={setFillColor} />
-                </div>
-
-                <div id="layerOptions">
-                    <div id="layer2">
-                        <input type="radio" name="layers" id="layer2" value='2' onChange={changeLayer} />
-                        <label htmlFor="layer2">Layer 2</label>
-                        <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} checked></input>
-                    </div>
-
-                    <div id="layer1">
-                        <input type="radio" name="layers" id="layer1" value='1' defaultChecked onChange={changeLayer} />
-                        <label htmlFor="layer1">Layer 1</label>
-                        <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} checked></input>
-                    </div>
-                </div>
-            </div>
-        )
+        //  //reposition the elem to previous pos(scaling moves the elem so we reset it's position);
+        //  var newPos = prevPos + new Point(elem.bounds.width/2,elem.bounds.height/2);
+        //  elem.position = newPos;
+        //      var bounds = rects[changedRectIndex].rect.data.bounds;
+        //      var scale = e.point.subtract(bounds.center).length /
+        //                      rects[changedRectIndex].rect.data.scaleBase.length;
+        //      var tlVec = bounds.topLeft.subtract(bounds.center).multiply(scale);
+        //      var brVec = bounds.bottomRight.subtract(bounds.center).multiply(scale);
+        //      var newBounds = new Rectangle(tlVec + bounds.center, brVec + bounds.center);        
+        //      rects[changedRectIndex].rect.bounds = newBounds;
+        //      return;
+        //  } else if (rects[changedRectIndex].rect.data.state === 'rotating') {
+        //      // rotate by difference of angles, relative to center, of
+        //      // the last two points.
+        //      var center = rects[changedRectIndex].rect.bounds.center;
+        //      var baseVec = center - e.lastPoint;
+        //      var nowVec = center - e.point;
+        //      var angle = nowVec.angle - baseVec.angle;
+        //      rects[changedRectIndex].rect.rotate(angle);
+        //      return;
+        //  }
+    }
+    selectTool.onMouseUp = function () {
+        //resets select states
+        setSelectAction("none");
+        setChangedElementIndex(-1);
     }
 
-    export default CreateToolsCanvasPaperJS
+    // *** FUNCTIONS ***
+    // Find which radioButton is currently selected and update the state of the tool selected
+    const findSelected = () => {
+        let buttonSelected = document.querySelector("input[name='tools']:checked") as HTMLInputElement;
+
+        if (Number(buttonSelected?.value) == toolStates.PEN) {
+            penTool.activate();
+            setPenOptionsEnabled(true);
+            setEraserOptionsEnabled(false);
+            setFillOptionsEnabled(false);
+        }
+        else if (Number(buttonSelected?.value) == toolStates.ERASER) {
+            eraserTool.activate();
+            setPenOptionsEnabled(false);
+            setEraserOptionsEnabled(true);
+            setFillOptionsEnabled(false);
+        }
+        else if (Number(buttonSelected?.value) == toolStates.FILL) {
+            fillTool.activate();
+            setPenOptionsEnabled(false);
+            setEraserOptionsEnabled(false);
+            setFillOptionsEnabled(true);
+        }
+        else if (Number(buttonSelected?.value) == toolStates.SHAPE) {
+            shapeTool.activate();
+            setPenOptionsEnabled(false);
+            setEraserOptionsEnabled(false);
+            setFillOptionsEnabled(false);
+        }
+        else if (Number(buttonSelected?.value) == toolStates.SELECT) {
+            selectTool.activate();
+            setPenOptionsEnabled(false);
+            setEraserOptionsEnabled(false);
+            setFillOptionsEnabled(false);
+        }
+    }
+
+    const changeLayer = () => {
+        let layerSelected = document.querySelector("input[name='layers']:checked") as HTMLInputElement;
+
+        switch (Number(layerSelected.value)) {
+            case 1:
+                layer1Reference.current?.activate();
+                //console.log(canvasProject.activeLayer);
+                break;
+            case 2:
+                layer2Reference.current?.activate();
+                //console.log(canvasProject.activeLayer);
+                break;
+            default:
+                layer1Reference.current?.activate();
+                //console.log(canvasProject.activeLayer);
+                break;
+        }
+    }
+
+    // Erases everything from the current canvas layer
+    const clearLayer = () => {
+        canvasProject.activeLayer.removeChildren();
+        //needs to be edited later so only elements on the layer are removed from the array OR specific array for elements on each layer
+        setElements([]);
+    }
+
+    const toggleLayerVisibility = (event: SyntheticEvent) => {
+        if (layer1Reference.current && event.target.value == 1) {
+            layer1Reference.current.visible = !layer1Reference.current.visible;
+        }
+        else if (layer2Reference.current && event.target.value == 2) {
+            layer2Reference.current.visible = !layer2Reference.current.visible;
+        }
+    }
+
+    // Undoes the last stroke to the canvas
+    /*function undo() {
+        
+    }*/
+
+    /*function redo() {
+        
+    }*/
+
+    // Return the canvas HTMLElement and its associated functionality
+    return (
+        <div id="createPage">
+            <fieldset>
+                <legend>Tools</legend>
+                <div id="toolRadioSelects">
+                    <div id="penTool">
+                        <input type="radio" name="tools" id="pen" value={toolStates.PEN} defaultChecked onChange={findSelected} />
+                        <label htmlFor="pen">Pen</label>
+                    </div>
+
+                    <div id="eraserTool">
+                        <input type="radio" name="tools" id="eraser" value={toolStates.ERASER} onChange={findSelected} />
+                        <label htmlFor="eraser">Eraser</label>
+                    </div>
+
+                    <div id="fillTool">
+                        <input type="radio" name="tools" id="fill" value={toolStates.FILL} onChange={findSelected} />
+                        <label htmlFor="fill">Fill</label>
+                    </div>
+
+                    <div id="shapeTool">
+                        <input type="radio" name="tools" id="shape" value={toolStates.SHAPE} onChange={findSelected} />
+                        <label htmlFor="shape">Shape (Rectangle)</label>
+                    </div>
+
+                    <div id="textTool">
+                        <input type="radio" name="tools" id="text" value={toolStates.TEXT} onChange={findSelected} />
+                        <label htmlFor="text">Text (NOT FUNCTIONAL)</label>
+                    </div>
+
+                    <div id="stickerTool">
+                        <input type="radio" name="tools" id="sticker" value={toolStates.STICKER} onChange={findSelected} />
+                        <label htmlFor="sticker">Sticker (NOT FUNCTIONAL)</label>
+                    </div>
+
+                    <div id="selectTool">
+                        <input type="radio" name="tools" id="select" value={toolStates.SELECT} onChange={findSelected} />
+                        <label htmlFor="select">Select</label>
+                    </div>
+                </div>
+
+                <button className="btn" id="redoButton">Redo (NOT FUNCTIONAL)</button><br></br>
+                <button className="btn" id="undoButton">Undo (NOT FUNCTIONAL)</button><br></br>
+                <button className="btn" id="clearButton" onClick={clearLayer}>Clear</button><br></br>
+            </fieldset>
+
+            <canvas id="canvas" height="800px" width="1200px" ref={canvasReference} />
+
+            <div id="toolOptions">
+                <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor} />
+                <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize} />
+                <FillOptions enabled={fillOptionsEnabled} changeFillColor={setFillColor} />
+            </div>
+
+            <div id="layerOptions">
+                <div id="layer2">
+                    <input type="radio" name="layers" id="layer2" value='2' onChange={changeLayer} />
+                    <label htmlFor="layer2">Layer 2</label>
+                    <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} checked></input>
+                </div>
+
+                <div id="layer1">
+                    <input type="radio" name="layers" id="layer1" value='1' defaultChecked onChange={changeLayer} />
+                    <label htmlFor="layer1">Layer 1</label>
+                    <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} checked></input>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default CreateToolsCanvasPaperJS
