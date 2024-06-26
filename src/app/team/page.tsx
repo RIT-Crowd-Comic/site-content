@@ -4,14 +4,13 @@ import Filter from '@/components/Filter'
 import Card from '@/components/Card'
 import ScrollToTop from "@/components/ScrollToTop"
 import arrow from "../../../public/images/Arrow.gif"
-import "../../styles/team.css"
 
 const TeamPage = () => {
   return (
     <main id='teamPage'>
       {/* Content */}
       <div className="content text-center">
-        <h1 className="teamTitle">Meet the Creators!</h1> 
+        <h1 className="teamTitle pt-5 pb-3">Meet the Creators!</h1> 
         <Filter />
         {/* <ScrollToTop /> */}
         {/* Creator Group */}
@@ -26,6 +25,9 @@ const TeamPage = () => {
         {/* /Creator Group */}
 
         {/* Professors */}
+        <div>
+          <h2 className="facultyTitle py-1">Faculty</h2>
+        </div>
         <div className="facultyGroup d-flex flex-wrap justify-content-center p-3 pb-4 m-4">
           <div className="card person-panel border border-black border-3 m-3">
               <Image width={200} height={200} className="img-fluid portrait card-img w-100 h-100" alt="" src="/images/people/Jake_Adams.png"/>
