@@ -258,6 +258,13 @@ h2, button {
     z-index: 2;
 }
 
+.getStarted button:hover{
+    font-style: italic;
+    margin-left: -14vw;
+    padding-right: 6vw;
+    transition: ease-out .3s;
+}
+
 .comic{
     position: absolute;
     border: 10px solid transparent;
@@ -284,9 +291,7 @@ h2, button {
 {
     width: 65%;
     height: auto;
-
     margin: 0 auto;
-
     border: 5px solid black;
 }
 
@@ -322,8 +327,8 @@ h2, button {
 
 .our-team button
 {
-    background-color: lightgray;
-    border: 3px solid black;
+    background-color: var(--grayscale-primary-color);
+    border: 3px solid var(--grayscale-text-color);
     width: 30%;
     height: 40%;
     position: relative;
@@ -331,23 +336,50 @@ h2, button {
     top: 30%;
     font-size: 6vw;
     line-height: 0;
+    overflow: hidden;
 }
 
+/* Hover Animation Option 1*/
+/* .our-team button:hover
+{
+    background-color:var(--grayscale-primary-color);
+    transform: scale(1.1);
+    text-shadow:2px 2px 0 rgba(0,0,0,.4);
+    transition: ease-in-out .2s;
+} */
+
+/* Hover Animation Option 2*/
+/* .our-team button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--grayscale-text-bg-color);
+    transition: ease 1s;
+    z-index: -10;
+    transform: translateX(-100%);
+}
+
+.our-team button:hover::before {
+    transform: translateX(0);
+} */
+
+/* Hover Animation Option 3*/
 .our-team button:hover
 {
-    background-color: #910f0a;
+    background-color: var(--grayscale-text-bg-color);
+    border: 5px solid var(--grayscale-text-color);
+    box-shadow: 10px 10px var(--grayscale-background-color);
+    transform: translate(-5px,-5px);
+    transition: ease-in-out .3s;
 }
 
 .our-team button:active
 {
     background-color: var(--secondary-color);
     margin-top: 4px;
-}
-
-.teamTitle
-{
-    font-size: 50px;
-    color: var(--grayscale-text-bg-color);
 }
 
 .filter {
@@ -408,7 +440,16 @@ h2, button {
 }
 
 .chapterTitle{
-    font-family: var(--font-ceviche-one);
+    font-family: var(--font-back-issues);
+    font-weight: bold;
+    font-size: 2rem;
+    color: var(--grayscale-text-bg-color);
+}
+
+.facultyTitle
+{
+    font-family: var(--font-back-issues);
+    font-weight: bold;
     font-size: 2rem;
     color: var(--grayscale-text-bg-color);
 }
@@ -519,7 +560,6 @@ h2, button {
 .footer-nav-list a, .footer-nav a
 {
     text-decoration: none;
-    /* color: var(--secondary-color); */
     color:var(--grayscale-text-bg-color);
 }
 
@@ -625,6 +665,11 @@ h2, button {
 } */
 
 /* Scroll  to top button with Link*/
+.back-to-top{
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
 .scroll-btn{
     position: relative;
     /* bottom: 0px; */
@@ -640,6 +685,7 @@ h2, button {
     justify-content:end;
     font-size: 1rem;
     margin-top: 20px;
+    text-decoration: none;
 }
 
 #scrollToTopBtn{
@@ -649,6 +695,30 @@ h2, button {
     cursor: pointer;
     border: none;
 }
+
+#scroll-text:hover{
+    text-decoration: underline;
+}
+
+#scrollToTopBtn:hover{
+    transform: rotate(-90deg) scale(1.2);
+}
+
+/* #scroll-text::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--grayscale-text-bg-color);
+    transition: 1s ease-out;
+    transform: translateX(-100%); 
+}
+
+#scroll-text:hover::before{
+    transform: translateX(0);
+} */
 
 .person-panel
 {
@@ -696,8 +766,9 @@ a
 
 .teamTitle
 {
-    font-family: var(--font-ceviche-one);
-    font-size: 4rem;
+    font-family: var(--font-back-issues);
+    font-size: 3rem;
+    font-weight: bold;
     color: var(--grayscale-text-bg-color);
 }
 
