@@ -84,7 +84,7 @@ button {
 /* MISSION SECTION FORMATTING */
 .mission h2 {
     position: relative;
-    background: url(../../public/images/background-boxes/Create_Small.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/bw/Create_Small_BW.svg) no-repeat center/contain;
     padding: 6vw 8vw 6vw 6vw;
     z-index: 1;
     margin: 5vh 2vw auto auto;
@@ -116,6 +116,12 @@ button {
     width: 90vw;
 }
 
+.leftMission, .rightMission
+{
+    display:none;
+}
+
+
 .missionimg .card-img-top {
     z-index: 0;
 }
@@ -131,7 +137,7 @@ button {
 .read h2 {
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/background-boxes/Read_Small.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/bw/Read_Small_BW.svg) no-repeat center/contain;
     padding: 7vw;
     margin: -5vh auto;
     z-index: 1;
@@ -168,6 +174,11 @@ button {
     padding: 5vh 10vw 5vh 5vw;
 }
 
+.desktopRead
+{
+    display: none;
+}
+
 /* CREATE SECTION FORMATTING */
 .create {
     position: relative;
@@ -176,7 +187,7 @@ button {
 .create h2 {
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/background-boxes/Create_Small.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/bw/Create_Small_BW.svg) no-repeat center/contain;
     padding: 7vw 9vw 7vw 6vw;
     margin: 0 auto;
     z-index: 1;
@@ -213,7 +224,12 @@ button {
     padding: 5vh 10vw 4vh 9vw;
 }
 
-.getStarted button {
+.desktopCreate
+{
+    display: none;
+}
+
+.getStarted button{
     position: relative;
     border: 10px solid transparent;
     background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
@@ -223,7 +239,14 @@ button {
     z-index: 2;
 }
 
-.comic {
+.getStarted button:hover{
+    font-style: italic;
+    margin-left: -14vw;
+    padding-right: 6vw;
+    transition: ease-out .3s;
+}
+
+.comic{
     position: absolute;
     border: 10px solid transparent;
     width: auto;
@@ -247,9 +270,7 @@ button {
 .preview-panels {
     width: 65%;
     height: auto;
-
     margin: 0 auto;
-
     border: 5px solid black;
 }
 
@@ -279,9 +300,10 @@ button {
     text-align: center;
 }
 
-.our-team button {
-    background-color: var(--primary-color);
-    border: 3px solid black;
+.our-team button
+{
+    background-color: var(--grayscale-primary-color);
+    border: 3px solid var(--grayscale-text-color);
     width: 40%;
     height: 50%;
     position: relative;
@@ -289,20 +311,50 @@ button {
     top: 30%;
     font-size: 4vw;
     line-height: 0;
+    overflow: hidden;
 }
 
-.our-team button:hover {
-    background-color: #910f0a;
+
+/* Hover Animation Option 1*/
+/* .our-team button:hover
+{
+    background-color:var(--grayscale-primary-color);
+    transform: scale(1.1);
+    text-shadow:2px 2px 0 rgba(0,0,0,.4);
+    transition: ease-in-out .2s;
+} */
+
+/* Hover Animation Option 2*/
+/* .our-team button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--grayscale-text-bg-color);
+    transition: ease 1s;
+    z-index: -10;
+    transform: translateX(-100%);
+}
+
+.our-team button:hover::before {
+    transform: translateX(0);
+} */
+
+/* Hover Animation Option 3*/
+.our-team button:hover
+{
+    background-color: var(--grayscale-text-bg-color);
+    border: 5px solid var(--grayscale-text-color);
+    box-shadow: 10px 10px var(--grayscale-background-color);
+    transform: translate(-5px,-5px);
+    transition: ease-in-out .3s;
 }
 
 .our-team button:active {
     background-color: var(--secondary-color);
     margin-top: 4px;
-}
-
-.teamTitle {
-    font-size: 50px;
-    color: var(--grayscale-text-bg-color);
 }
 
 .filter {
@@ -361,8 +413,17 @@ button {
     border: 2px solid var(--grayscale-primary-color);
 }
 
-.chapterTitle {
-    font-family: var(--font-ceviche-one);
+.chapterTitle{
+    font-family: var(--font-back-issues);
+    font-weight: bold;
+    font-size: 2rem;
+    color: var(--grayscale-text-bg-color);
+}
+
+.facultyTitle
+{
+    font-family: var(--font-back-issues);
+    font-weight: bold;
     font-size: 2rem;
     color: var(--grayscale-text-bg-color);
 }
@@ -473,6 +534,7 @@ button {
     text-decoration: none;
     /* color: var(--secondary-color); */
     color: var(--grayscale-text-bg-color);
+
 }
 
 .footer-nav-list a:hover,
@@ -507,8 +569,8 @@ button {
 .hero {
     width: 100vw;
     height: 300px;
-    background-color: var(--background-color);
-    background-image: linear-gradient(45deg, var(--background-color) 25%, #18264f 25%, #18264f 50%, var(--background-color) 50%, var(--background-color) 75%, #18264f 75%, #18264f 100%);
+    background-color: #009BC6;
+    background-image: linear-gradient(45deg, #0e7491 25%, #0b5e75 25%, #0b5e75 50%, #0e7491 50%, #0e7491 75%, #0b5e75 75%, #0b5e75 100%);
     background-size: 11.31px 11.31px;
     border: 5px solid black;
 }
@@ -568,7 +630,12 @@ button {
 } */
 
 /* Scroll  to top button with Link*/
-.scroll-btn {
+.back-to-top{
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.scroll-btn{
     position: relative;
     /* bottom: 0px; */
     /* right: 0px; */
@@ -583,6 +650,7 @@ button {
     justify-content: end;
     font-size: 1rem;
     margin-top: 20px;
+    text-decoration: none;
 }
 
 #scrollToTopBtn {
@@ -593,7 +661,32 @@ button {
     border: none;
 }
 
-.person-panel {
+#scroll-text:hover{
+    text-decoration: underline;
+}
+
+#scrollToTopBtn:hover{
+    transform: rotate(-90deg) scale(1.2);
+}
+
+/* #scroll-text::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--grayscale-text-bg-color);
+    transition: 1s ease-out;
+    transform: translateX(-100%); 
+}
+
+#scroll-text:hover::before{
+    transform: translateX(0);
+} */
+
+.person-panel
+{
     max-width: 300px;
     max-height: 300px;
     border-radius: 0;
@@ -632,9 +725,11 @@ a {
     width: 100%;
 }
 
-.teamTitle {
-    font-family: var(--font-ceviche-one);
-    font-size: 4rem;
+.teamTitle
+{
+    font-family: var(--font-back-issues);
+    font-size: 3rem;
+    font-weight: bold;
     color: var(--grayscale-text-bg-color);
 }
 
@@ -894,6 +989,135 @@ No media query for `xs` since this is the default in Bootstrap */
         left: 38%;
         right: 35%;
         margin: 0 auto;
+    }
+
+    /* MISSION */
+    .mission h2
+    {
+        background: url(../../public/images/background-boxes/bw/Desktop_Mission_Small_BW.svg) no-repeat center/contain;
+
+        padding: 3rem;
+        margin: 0;
+    }
+
+    .whatcanido h2
+    {
+        background: url(../../public/images/background-boxes/bw/Desktop_What_Can_I_Do_BW.svg) no-repeat center/contain;
+
+        padding: 2rem;
+        margin: 0;
+    }
+
+    .missionimg
+    {
+        font-size: 1.5vw;
+
+        width: 90vw;
+        margin: 0 -5vw;
+    }
+
+    .missionimg p
+    {
+        background-color: var(--secondary-color);
+
+        border: solid 5px black;
+        
+        padding: 1rem;
+        width: 70%;
+        margin: 15% auto 0;
+    }
+
+    .topMission, .bottomMission
+    {
+        display: none;
+    }
+
+    .leftMission, .rightMission
+    {
+        display:inline;
+
+        position:absolute;
+        height: auto;
+    }
+
+    /* READ */
+    .read h2
+    {
+        background: url(../../public/images/background-boxes/bw/Desktop_Read_Small_BW.svg) no-repeat center/contain;
+
+        padding: 4rem;
+        margin: 0;
+    }
+
+    .readimg
+    {
+        font-size: 1.5vw;
+
+        width: 90vw;
+        margin: 0 -5vw;
+    }
+
+    .readimg p
+    {
+        background-color: var(--secondary-color);
+
+        border: solid 5px black;
+
+        padding: 1rem;
+        width: 70%;
+        margin: 15% auto 0;
+    }
+
+    .topRead, .bottomRead
+    {
+        display: none;
+    }
+
+    .desktopRead
+    {
+        display:inline;
+        position:absolute;
+        height: auto;
+    }
+
+    /* CREATE */
+    .create h2
+    {
+        background: url(../../public/images/background-boxes/bw/Desktop_Create_Small_BW.svg) no-repeat center/contain;
+
+        padding: 4rem;
+        margin: 0;
+    }
+
+    .createimg
+    {
+        font-size: 1.5vw;
+
+        width: 90vw;
+        margin: 0 -5vw;
+    }
+
+    .createimg p
+    {
+        background-color: var(--secondary-color);
+
+        border: solid 5px black;
+
+        padding: 1rem;
+        width: 70%;
+        margin: 15% auto 0;
+    }
+
+    .topCreate, .bottomCreate
+    {
+        display: none;
+    }
+
+    .desktopCreate
+    {
+        display:inline;
+        position:absolute;
+        height: auto;
     }
 }
 

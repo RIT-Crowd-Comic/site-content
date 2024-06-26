@@ -8,5 +8,12 @@
     "import/no-unresolved": "error",
     "import/named": "error"
   },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
   "globals": {"TSX": "readonly"}
 }
