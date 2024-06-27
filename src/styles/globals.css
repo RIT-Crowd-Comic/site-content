@@ -242,17 +242,22 @@ button {
 .getStarted button {
     border: 10px solid transparent;
     background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
-
-    width: 40%;
+    filter: brightness(.5);
+    width: 60%;
     height: auto;
     margin: 0 auto;
-    padding: 5vw 0 6vw;
+    padding: 5vw 10vw 6vw;
     font-size: 4.5vw;
     z-index: 2;
 }
 
+.getStarted p
+{
+    padding: 0 7vw;
+}
+
 .getStarted button:active {
-    filter: brightness(.2);
+    filter: brightness(.3);
 }
 
 
@@ -294,7 +299,7 @@ button {
 
 .getStarted:hover button 
 {
-    filter: brightness(.5);
+    filter: brightness(1);
     transform: scale(1.1);
     transition: ease-in-out .5s;
 }
@@ -1139,6 +1144,9 @@ No media query for `xs` since this is the default in Bootstrap */
     .book-animation
     {
         background-image: url(../../public/images/GIFs/book-split/Frame1.gif); 
+
+        left: 7%;
+        top: -10%;
     }
 }
 
