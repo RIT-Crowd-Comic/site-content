@@ -7,7 +7,7 @@ html body{
   filter: grayscale(0);
 }
 
-
+/* 
 .footer-bar{
   position:fixed; 
   bottom:0;
@@ -17,7 +17,7 @@ html body{
   display:flex;
   justify-content:space-between;
   z-index:2;
-}
+} */
 
 .icondiv  img{
   filter:grayscale(0);
