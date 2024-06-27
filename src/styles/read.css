@@ -1,6 +1,6 @@
 
 html, body{
-  background-image: url("images/background-app-transparent.png");
+  background-image: url("/images/background-app-transparent.png");
   background-position: center;
   background-size:auto;
   background-color: rgb(48, 48, 48);
