@@ -212,36 +212,19 @@ const CreateToolsCanvasPaperJS = () => {
     //index of element being changed
     const [changedElementIndex, setChangedElementIndex] = useState(-1);
 
+    const [clickedPoint, setClickedPoint] = useState(new paper.Point(0, 0));
+
     // The Select Tool:
     const [selectTool, setSelectTool] = useState<paper.Tool>(new paper.Tool());
 
     //sets action of user depending on where element is clicked
     selectTool.onMouseDown = function (event: paper.ToolEvent) {
-        //if clicked within element, sets the action to moving
         for (let i = 0; i < elements.length; i++) {
             //runs if clicked on the corners of an element (segments to check if clicked on rect, tolerance for precision)
             if (elements[i].hitTest(event.point, { segments: true, tolerance: 7 })) {
                 setChangedElementIndex(i);
-
-                // code for potential implementation of rotation
-                // //ctrl click to rotate (for now)
-                // if (event.modifiers.control) {
-                //     setSelectAction("rotating");
-                // } else {
-
                 setSelectAction("resizing");
-                // let i;
-                // for (i = 0; i < elements[i].segments.length; i++) {
-                //     let p = elements[i].segments[i].point;
-                //     if (p.isClose(event.point, 3)) {
-                //         break;
-                //     }
-                // }
-
-                // var opposite = (i + 2) % 4;
-                // elements[i].data.from = elements[i].segments[opposite].point;
-                // elements[i].data.to = elements[i].segments[i].point;
-                // }
+                setClickedPoint(event.point);
                 return;
             }
             //if clicked within element, sets the action to moving
@@ -261,40 +244,23 @@ const CreateToolsCanvasPaperJS = () => {
             return;
         }
         else if (selectAction == 'resizing') {
-        //      // scale by distance from down point
-        //          //calc scale coefficients and store current position
-        //  var scaleX = width/elem.bounds.width;
-        //  var scaleY = height/elem.bounds.height;
-        //  var prevPos = new Point(elem.bounds.x,elem.bounds.y);
+            //
+            let segmentIndex;
+            for (segmentIndex = 0; segmentIndex < elements[changedElementIndex].segments.length; segmentIndex++) {
+                let p = elements[changedElementIndex].segments[segmentIndex].point;
+                if (p.isClose(event.point, 3)) {
+                    break;
+                }
+            }
+            let opposite = (segmentIndex + 2) % 4;
+            let oppositePoint = elements[changedElementIndex].segments[opposite].point;
 
-        //  //apply calc scaling
-        //  elem.scale(scaleX,scaleY);
+            elements[changedElementIndex].scale(
+                (event.point.x - oppositePoint.x)/elements[changedElementIndex].bounds.width,
+                (event.point.y - oppositePoint.y)/elements[changedElementIndex].bounds.height, oppositePoint);
 
-        //  //reposition the elem to previous pos(scaling moves the elem so we reset it's position);
-        //  var newPos = prevPos + new Point(elem.bounds.width/2,elem.bounds.height/2);
-        //  elem.position = newPos;
-        //      var bounds = rects[changedRectIndex].rect.data.bounds;
-        //      var scale = e.point.subtract(bounds.center).length /
-        //                      rects[changedRectIndex].rect.data.scaleBase.length;
-        //      var tlVec = bounds.topLeft.subtract(bounds.center).multiply(scale);
-        //      var brVec = bounds.bottomRight.subtract(bounds.center).multiply(scale);
-        //      var newBounds = new Rectangle(tlVec + bounds.center, brVec + bounds.center);        
-        //      rects[changedRectIndex].rect.bounds = newBounds;
-        //      return;
-
+            return;
         }
-
-        //code for potential implementatioin of rotating
-        //else if (rects[changedRectIndex].rect.data.state === 'rotating') {
-        //      // rotate by difference of angles, relative to center, of
-        //      // the last two points.
-        //      var center = rects[changedRectIndex].rect.bounds.center;
-        //      var baseVec = center - e.lastPoint;
-        //      var nowVec = center - e.point;
-        //      var angle = nowVec.angle - baseVec.angle;
-        //      rects[changedRectIndex].rect.rotate(angle);
-        //      return;
-        //  }
     }
     selectTool.onMouseUp = function () {
         //resets select states
