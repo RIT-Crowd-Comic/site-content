@@ -50,6 +50,7 @@ button {
   .branch-hook {
     transition: all 0.2s linear 0s;
     border-radius: 30%;
+    background-color: #ffffff00;
     
     &:before {
       content: "\21E8";
@@ -225,12 +226,12 @@ button {
     } 
 
     #back-button {
-      top:8vh;
+      top:9vh;
       left:3vw;
     }
 
     #hooks-toggle {
-      bottom:10vh;
+      bottom:11vh;
       right:3vw;
     }
   
