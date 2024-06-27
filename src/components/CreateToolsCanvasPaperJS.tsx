@@ -6,6 +6,7 @@ import PenOptions from './PenOptions';
 import EraserOptions from './EraserOptions';
 import FillOptions from './FillOptions';
 import  {PaperOffset}  from 'paperjs-offset';
+import { resolve } from 'path';
 
 paper.install(window);
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
@@ -158,6 +159,13 @@ const CreateToolsCanvasPaperJS = () =>
         console.log("pang");
     }
 
+    eraserTool.onMouseUp = function(event: MouseEvent)
+    {
+
+        canvasProject.activeLayer.rasterize({resolution: 300});
+        tmpGroup?.remove();
+        mask?.remove();
+    }
     // --- FILL TOOL ---
     // Boolean used to determine if the fill tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
     const [fillOptionsEnabled, setFillOptionsEnabled] = useState<boolean>(false);
