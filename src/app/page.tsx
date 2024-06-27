@@ -52,14 +52,6 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div className="whatcanido">
-            <div className="row">
-              <div className="col"></div>
-              <div className="col-auto">
-                <h2>What can I do?</h2>
-              </div>
-            </div>
-          </div>
           <div className="preview">
             <Image className="panel-one preview-panels" src={firstPanelImage} alt="" />
             <Image className="panel-two preview-panels" src={secondPanelImage} alt="" />
