@@ -11,11 +11,13 @@ const Footer = () => {
     return (
         <div className="container-fluid pt-3 bg-dark footer-bar">
             {/* <div className="footer-base"> */}
-                {/* Links */}
-                <div className="col">
+            {/* Links */}
+            <div className="row">
+                <div className="col-auto">
                     <div className="footer-nav">
-                        <Link href="/">Crowd Comic</Link>
-                        <></>
+                        <div className="footer-head">
+                            <Link href="/">Crowd Comic</Link>
+                        </div>
                         <ul className="footer-nav-list">
                             <li><Link href="/">Home</Link></li>
                             <li><Link href="/team" >Team</Link></li>
@@ -23,18 +25,13 @@ const Footer = () => {
                         </ul>
                     </div>
                 </div>
-                {/* /Links */}
-                <div className='row'>
-                    <p className='copyright'>Copyright © {current_year}</p>  
-                </div>
-                {/* Socials */}
                 <div className="col">
                     <ul className="social">
                         <li>
                             <Link href="">
-                                    <div className="icondiv">
-                                        <Image className="iconcolor" src={linkedin} alt="" fill={true} />
-                                    </div>
+                                <div className="icondiv">
+                                    <Image className="iconcolor" src={linkedin} alt="" fill={true} />
+                                </div>
                             </Link>
                         </li>
 
@@ -56,10 +53,19 @@ const Footer = () => {
                         </li>
                     </ul>
                 </div>
-                {/* /Socials */}
+            </div>
+            {/* /Links */}
+            <div className='row'>
+                <p className='copyright'>Copyright © {current_year}</p>
+            </div>
+            {/* Socials */}
+            <div className="row">
+
+            </div>
+            {/* /Socials */}
             {/* </div> */}
-            
-        </div>  
+
+        </div>
     )
 }
 
