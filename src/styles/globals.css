@@ -229,31 +229,79 @@ button {
     display: none;
 }
 
-.getStarted button {
+.getStarted {
+    width: 100vw;
+    height: auto;
+    margin: 10vh auto;
+
     position: relative;
+
+    text-align: center;
+}
+
+.getStarted button {
     border: 10px solid transparent;
     background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
-    margin: -10vh auto;
-    padding: 5vw 5vw 7vw 8vw;
+    filter: brightness(.5);
+    width: 60%;
+    height: auto;
+    margin: 0 auto;
+    padding: 5vw 10vw 6vw;
     font-size: 4.5vw;
     z-index: 2;
 }
 
-.getStarted button:hover {
-    font-style: italic;
-    margin-left: -14vw;
-    padding-right: 6vw;
-    transition: ease-out .3s;
+.getStarted p
+{
+    padding: 0 7vw;
 }
 
-.comic {
+.getStarted button:active {
+    filter: brightness(.3);
+}
+
+
+/* BOOK ANIMATION */
+
+@keyframes open
+{
+    0% {background-image: url(../../public/images/GIFs/book-split/Frame1.gif); }
+    5% {background-image: url(../../public/images/GIFs/book-split/Frame2.gif); }
+    20% {background-image: url(../../public/images/GIFs/book-split/Frame3.gif); }
+    45% {background-image: url(../../public/images/GIFs/book-split/Frame4.gif); }
+    60% {background-image: url(../../public/images/GIFs/book-split/Frame5.gif); }
+    75% {background-image: url(../../public/images/GIFs/book-split/Frame6.gif); }
+    90% {background-image: url(../../public/images/GIFs/book-split/Frame7.gif); }
+    100% {background-image: url(../../public/images/GIFs/book-split/Frame8.gif); }
+}
+
+.book-animation
+{
+    z-index: 99;
+    background-image: url(../../public/images/GIFs/book-split/Frame8.gif); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 35%;
+    height: 25vw;
+
+    animation: none;
+
     position: absolute;
-    border: 10px solid transparent;
-    width: auto;
-    height: 30vw;
-    z-index: 3;
-    top: 83%;
     left: 7%;
+    top: -5%;
+}
+
+.getStarted:hover .book-animation
+{
+    animation: open .5s;
+    animation-fill-mode: forwards;
+}
+
+.getStarted:hover button 
+{
+    filter: brightness(1);
+    transform: scale(1.1);
+    transition: ease-in-out .5s;
 }
 
 /* COMIC PREVIEW */
@@ -911,25 +959,13 @@ No media query for `xs` since this is the default in Bootstrap */
     .createimg p {
         padding: 5vh 10vw 4vh 9vw;
     }
-
-    .getStarted button {
-        margin: -10vh auto;
-        padding: 5vw 5vw 7vw 8vw;
-    }
-
-    .comic {
-        width: auto;
-        height: 25vw;
-        top: 86%;
-        left: 10.5%;
-    }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-    .main-section {
+    /* .main-section {
         padding: 30px 100px;
-    }
+    } */
 
     .hero {
         width: 100vw;
@@ -1103,6 +1139,14 @@ No media query for `xs` since this is the default in Bootstrap */
         display: inline;
         position: absolute;
         height: auto;
+    }
+
+    .book-animation
+    {
+        background-image: url(../../public/images/GIFs/book-split/Frame1.gif); 
+
+        left: 7%;
+        top: -10%;
     }
 }
 

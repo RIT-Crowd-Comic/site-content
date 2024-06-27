@@ -17,7 +17,6 @@ import desktopRightMission from "../../public/images/background-boxes/bw/Desktop
 import desktopRead from "../../public/images/background-boxes/bw/Desktop_Read_BW.svg"
 import desktopCreate from "../../public/images/background-boxes/bw/Desktop_Create_BW.svg"
 
-import comic from "../../public/images/GIFs/Comic.gif";
 import arrow from "../../public/images/Arrow.gif"
 
 // For the "preview comic" section
@@ -113,7 +112,7 @@ export default function Home() {
                 </div>
                 <div className="col-auto">
                   <div className="getStarted">
-                    <Image className="comic card-img-top" src={comic} alt="" />
+                    <div className="book-animation"></div>
                     <button><Link href="/comic">Get Started</Link></button>                
                   </div>
                 </div>
