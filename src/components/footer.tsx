@@ -12,7 +12,7 @@ const Footer = () => {
         <div className="container-fluid pt-3 bg-dark footer-bar">
             {/* <div className="footer-base"> */}
                 {/* Links */}
-                <div className="col">
+                {/* <div className="col"> */}
                     <div className="footer-nav">
                         <Link href="/">Crowd Comic</Link>
                         <></>
@@ -22,13 +22,11 @@ const Footer = () => {
                             <li><Link href="/comic">Comic</Link></li>
                         </ul>
                     </div>
-                </div>
+                {/* </div> */}
                 {/* /Links */}
-                <div className='row'>
-                    <p className='copyright'>Copyright © {current_year}</p>  
-                </div>
+                
                 {/* Socials */}
-                <div className="col">
+                <div className="social-div">
                     <ul className="social">
                         <li>
                             <Link href="">
@@ -57,6 +55,9 @@ const Footer = () => {
                     </ul>
                 </div>
                 {/* /Socials */}
+                <div className='copyright-div'>
+                    <p className='copyright'>Copyright © {current_year}</p>  
+                </div>
             {/* </div> */}
             
         </div>  
