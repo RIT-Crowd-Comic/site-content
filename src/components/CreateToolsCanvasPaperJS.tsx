@@ -4,6 +4,7 @@ import paper, { project, tool, tools } from 'paper/dist/paper-core';
 import PenOptions from './PenOptions';
 import EraserOptions from './EraserOptions';
 import FillOptions from './FillOptions';
+import test from 'node:test';
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
 const CreateToolsCanvasPaperJS = () => {
@@ -164,7 +165,7 @@ const CreateToolsCanvasPaperJS = () => {
     let currentRect: paper.Path.Rectangle | undefined;
 
     // Array containing all created shapes (only rectangles currently)
-    const [elements, setElements] = useState([] as paper.Path[]);
+    //const [elements, setElements] = useState([] as paper.Path[]);
 
     //Boolean to check if user dragged mouse (so rect doesn't accidently run on a mouse click)
     const [mouseDragged, setMouseDragged] = useState(false);
@@ -200,7 +201,7 @@ const CreateToolsCanvasPaperJS = () => {
             currentRect.strokeColor = new paper.Color('black');
             currentRect.strokeWidth = 3;
 
-            setElements(prevState => [...prevState, currentRect as paper.Path.Rectangle]);
+            //setElements(prevState => [...prevState, currentRect as paper.Path.Rectangle]);
         }
         clearStates();
     }
@@ -212,66 +213,68 @@ const CreateToolsCanvasPaperJS = () => {
     //index of element being changed
     const [changedElementIndex, setChangedElementIndex] = useState(-1);
 
-    const [clickedPoint, setClickedPoint] = useState(new paper.Point(0, 0));
-
     // The Select Tool:
     const [selectTool, setSelectTool] = useState<paper.Tool>(new paper.Tool());
 
     //sets action of user depending on where element is clicked
     selectTool.onMouseDown = function (event: paper.ToolEvent) {
-        for (let i = 0; i < elements.length; i++) {
-            //runs if clicked on the corners of an element (segments to check if clicked on rect, tolerance for precision)
-            if (elements[i].hitTest(event.point, { segments: true, tolerance: 7 })) {
-                setChangedElementIndex(i);
-                setSelectAction("resizing");
-                setClickedPoint(event.point);
-                return;
-            }
-            //if clicked within element, sets the action to moving
-            else if (elements[i].contains(event.point)) {
-                setSelectAction("moving");
-                setChangedElementIndex(i);
-                return;
-            }
-        }
+        // for (let i = 0; i < elements.length; i++) {
+        //     //runs if clicked on the corners of an element (segments to check if clicked on rect, tolerance for precision)
+        //     if (elements[i].hitTest(event.point, { segments: true, tolerance: 7 })) {
+        //         setChangedElementIndex(i);
+        //         setSelectAction("resizing");
+        //         return;
+        //     }
+        //     //if clicked within element, sets the action to moving
+        //     else if (elements[i].contains(event.point)) {
+        //         setSelectAction("moving");
+        //         setChangedElementIndex(i);
+        //         return;
+        //     }
+        // }
     }
 
     //changes the element according to the selectAction
     selectTool.onMouseDrag = function (event: paper.ToolEvent) {
-        //element changes position to where the mouse is if action is moving
-        if (selectAction == "moving") {
-            elements[changedElementIndex].position = event.point;
-            return;
-        }
-        else if (selectAction == 'resizing') {
-            //
-            let segmentIndex;
-            for (segmentIndex = 0; segmentIndex < elements[changedElementIndex].segments.length; segmentIndex++) {
-                let p = elements[changedElementIndex].segments[segmentIndex].point;
-                if (p.isClose(event.point, 3)) {
-                    break;
-                }
-            }
-            let opposite = (segmentIndex + 2) % 4;
-            let oppositePoint = elements[changedElementIndex].segments[opposite].point;
+        // //element changes position to where the mouse is if action is moving
+        // if (selectAction == "moving") {
+        //     elements[changedElementIndex].position = event.point;
+        //     return;
+        // }
+        // else if (selectAction == 'resizing') {
+        //     //ERROR: GETS SAME POINT EVERY TIME
+        //     //gets opposing segment and point
+        //     let segmentIndex;
+        //     for (segmentIndex = 0; segmentIndex < elements[changedElementIndex].segments.length; segmentIndex++) {
+        //         let p = elements[changedElementIndex].segments[segmentIndex].point;
+        //         if (p.isClose(event.point, 3)) {
+        //             break;
+        //         }
+        //     }
+        //     let oppositeSegmentIndex = (segmentIndex + 2) % 4;
+        //     //let oppositePoint = elements[changedElementIndex].segments[oppositeSegmentIndex].point;
 
-            elements[changedElementIndex].scale(
-                (event.point.x - oppositePoint.x)/elements[changedElementIndex].bounds.width,
-                (event.point.y - oppositePoint.y)/elements[changedElementIndex].bounds.height, oppositePoint);
+        //     let oppositePoint = new paper.Point(event.point.x-elements[changedElementIndex].bounds.width,
+        //         event.point.y - elements[changedElementIndex].bounds.height
+        //     );
 
-            return;
-        }
+        //     //test purposes
+        //     let testDrawnPoint = new paper.Path.Rectangle(oppositePoint, new paper.Size(10, 10));
+        //     testDrawnPoint.strokeColor = new paper.Color("red");
+        //     testDrawnPoint.strokeWidth = 10;
+
+        //     //scales based on scale factor (new size/old size) and around the opposite point
+        //     elements[changedElementIndex].scale(
+        //         (event.point.x - oppositePoint.x) / elements[changedElementIndex].bounds.width,
+        //         (event.point.y - oppositePoint.y) / elements[changedElementIndex].bounds.height, oppositePoint);
+        //     return;
+        // }
     }
     selectTool.onMouseUp = function () {
         //resets select states
-        setSelectAction("none");
-        setChangedElementIndex(-1);
+        //setSelectAction("none");
+        //setChangedElementIndex(-1);
     }
-
-    //test to see if selectAction updates properly
-    useEffect(() => {
-        console.log(selectAction);
-    }, [selectAction]);
 
     // *** FUNCTIONS ***
     // Find which radioButton is currently selected and update the state of the tool selected
@@ -302,12 +305,12 @@ const CreateToolsCanvasPaperJS = () => {
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
         }
-        else if (Number(buttonSelected?.value) == toolStates.SELECT) {
-            selectTool.activate();
-            setPenOptionsEnabled(false);
-            setEraserOptionsEnabled(false);
-            setFillOptionsEnabled(false);
-        }
+        // else if (Number(buttonSelected?.value) == toolStates.SELECT) {
+        //     selectTool.activate();
+        //     setPenOptionsEnabled(false);
+        //     setEraserOptionsEnabled(false);
+        //     setFillOptionsEnabled(false);
+        // }
     }
 
     const changeLayer = () => {
@@ -333,7 +336,7 @@ const CreateToolsCanvasPaperJS = () => {
     const clearLayer = () => {
         canvasProject.activeLayer.removeChildren();
         //needs to be edited later so only elements on the layer are removed from the array OR specific array for elements on each layer
-        setElements([]);
+        //setElements([]);
     }
 
     const toggleLayerVisibility = (event: ChangeEvent<HTMLInputElement>) => {
@@ -392,7 +395,7 @@ const CreateToolsCanvasPaperJS = () => {
 
                     <div id="selectTool">
                         <input type="radio" name="tools" id="select" value={toolStates.SELECT} onChange={findSelected} />
-                        <label htmlFor="select">Select</label>
+                        <label htmlFor="select">Select (NOT FUNCTIONAL)</label>
                     </div>
                 </div>
 
