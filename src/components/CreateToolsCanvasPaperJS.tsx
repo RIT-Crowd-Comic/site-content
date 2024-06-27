@@ -223,23 +223,25 @@ const CreateToolsCanvasPaperJS = () => {
             if (elements[i].hitTest(event.point, { segments: true, tolerance: 7 })) {
                 setChangedElementIndex(i);
 
-                //ctrl click to rotate (for now)
-                if (event.modifiers.control) {
-                    setSelectAction("rotating");
-                } else {
-                    setSelectAction("resizing");
-                    // let i;
-                    // for (i = 0; i < elements[i].segments.length; i++) {
-                    //     let p = elements[i].segments[i].point;
-                    //     if (p.isClose(event.point, 3)) {
-                    //         break;
-                    //     }
-                    // }
+                // code for potential implementation of rotation
+                // //ctrl click to rotate (for now)
+                // if (event.modifiers.control) {
+                //     setSelectAction("rotating");
+                // } else {
 
-                    // var opposite = (i + 2) % 4;
-                    // elements[i].data.from = elements[i].segments[opposite].point;
-                    // elements[i].data.to = elements[i].segments[i].point;
-                }
+                setSelectAction("resizing");
+                // let i;
+                // for (i = 0; i < elements[i].segments.length; i++) {
+                //     let p = elements[i].segments[i].point;
+                //     if (p.isClose(event.point, 3)) {
+                //         break;
+                //     }
+                // }
+
+                // var opposite = (i + 2) % 4;
+                // elements[i].data.from = elements[i].segments[opposite].point;
+                // elements[i].data.to = elements[i].segments[i].point;
+                // }
                 return;
             }
             //if clicked within element, sets the action to moving
@@ -258,7 +260,7 @@ const CreateToolsCanvasPaperJS = () => {
             elements[changedElementIndex].position = event.point;
             return;
         }
-        //  else if (rects[changedRectIndex].rect.data.state === 'resizing') {
+        else if (selectAction == 'resizing') {
         //      // scale by distance from down point
         //          //calc scale coefficients and store current position
         //  var scaleX = width/elem.bounds.width;
@@ -279,7 +281,11 @@ const CreateToolsCanvasPaperJS = () => {
         //      var newBounds = new Rectangle(tlVec + bounds.center, brVec + bounds.center);        
         //      rects[changedRectIndex].rect.bounds = newBounds;
         //      return;
-        //  } else if (rects[changedRectIndex].rect.data.state === 'rotating') {
+
+        }
+
+        //code for potential implementatioin of rotating
+        //else if (rects[changedRectIndex].rect.data.state === 'rotating') {
         //      // rotate by difference of angles, relative to center, of
         //      // the last two points.
         //      var center = rects[changedRectIndex].rect.bounds.center;
@@ -299,7 +305,7 @@ const CreateToolsCanvasPaperJS = () => {
     //test to see if selectAction updates properly
     useEffect(() => {
         console.log(selectAction);
-      }, [selectAction]);
+    }, [selectAction]);
 
     // *** FUNCTIONS ***
     // Find which radioButton is currently selected and update the state of the tool selected
