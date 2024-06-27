@@ -1,23 +1,27 @@
-html body{
+
+html, body{
   background-image: url("/images/background-app-transparent.png");
   background-position: center;
   background-size:auto;
   background-color: rgb(48, 48, 48);
   height: 100vh;
-  filter: grayscale(0);
+  filter: none;
 }
-
-/* 
+ 
 .footer-bar{
   position:fixed; 
   bottom:0;
   left:0;
   width:100vw;
-  max-height:90px;
   display:flex;
   justify-content:space-between;
   z-index:2;
-} */
+  font-size: 2em;
+} 
+
+.footer-head a {
+  font-size: 20px;
+}
 
 .icondiv  img{
   filter:grayscale(0);
@@ -51,7 +55,6 @@ button {
   .branch-hook {
     transition: all 0.2s linear 0s;
     border-radius: 30%;
-    background-color: #ffffff00;
     
     &:before {
       content: "\21E8";
@@ -82,7 +85,7 @@ button {
     }
   }
 
-.branch-hook {
+.branch-hook{
     position: absolute;
     top: 0;
     left: 50%;
@@ -91,6 +94,7 @@ button {
     width:35px;
     color: black;
   }
+
 
 .branch-hook.pop-hooks {
   animation: pulse 1s infinite;
@@ -136,7 +140,7 @@ button {
   }
   
 
-  @media (min-width: 1799px) {
+  @media (min-width: 1400px) {
     .row-panels#comic-panels{
       display: flex;
       flex-direction: row;
@@ -160,6 +164,7 @@ button {
     img.row-panels{
       width: 27vw;
       height:auto;
+      
     }
     
     img.column-panels {
@@ -198,7 +203,7 @@ button {
     } 
   }
   
-  @media (max-width: 1800px) {
+  @media (max-width: 1400px) {
     #comic-panels{
       display: flex;
       flex-direction: column;

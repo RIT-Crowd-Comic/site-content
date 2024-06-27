@@ -2,6 +2,8 @@
 import "../../styles/read.css";
 import ReadPage from "@/components/ReadPage";
 
+
+
 //imported base trunk panels as static images
 const firstPanelImage = "/comic-panels/first_panel.png";
 const secondPanelImage = "/comic-panels/second_panel.png";
