@@ -1,12 +1,13 @@
 'use client';
 import { MutableRefObject, SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
-import paper, { project, tools } from 'paper/dist/paper-core';
+import paper, { project, tools } from 'paper';
 import PenOptions from './PenOptions';
 import EraserOptions from './EraserOptions';
 import FillOptions from './FillOptions';
 import  {PaperOffset}  from 'paperjs-offset';
 
+paper.install(window);
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
 const CreateToolsCanvasPaperJS = () =>
 {
@@ -113,28 +114,31 @@ const CreateToolsCanvasPaperJS = () =>
 
     // The Eraser Tool:
     const [eraserTool, setEraserTool] = useState<paper.Tool>(new paper.Tool());
-    eraserTool.minDistance = 10;
-    let eraserPath = useRef<paper.Path>(null);
-    let tmpGroup = useRef<paper.Group>(null);
-    let mask = useRef<paper.Group>(null);
+    eraserTool.minDistance = 5;
+
+    let eraserPath = useRef<paper.Path>(null).current;
+    let tmpGroup = useRef<paper.Group>(null).current;
+    let mask = useRef<paper.Group>(null).current;
 
     // Begins the process of drawing the user's input to the canvas HTMLElement
     eraserTool.onMouseDown = function()
     {
-        eraserPath = new paper.Path();
+        let newPath = new paper.Path();
 
         // Although we are erasing the tool technically still needs a color for what would be drawn if we were using a different blendMode
-        eraserPath.strokeColor = new paper.Color("black");
-        eraserPath.strokeWidth = eraserSize * view.pixelRatio;
-        eraserPath.strokeCap = 'round';
-        eraserPath.strokeJoin = 'round';
+        newPath.strokeColor = new paper.Color("black");
+        newPath.strokeWidth = eraserSize * view.pixelRatio;
+        newPath.strokeCap = 'round';
+        newPath.strokeJoin = 'round';
+
+        eraserPath = newPath;
 
         /*  Change how user input is drawn based on the tool they've selected
             Based on two different drawing types source-over vs destination-out
             Source-over: Draws on top of prexisting canvas
             Destination-out: Existing content is kept where it does not overlap with the new shape*/ 
             tmpGroup = new paper.Group({
-                children: project.activeLayer.removeChildren(),
+                children: canvasProject.activeLayer.removeChildren(),
                 blendMode: 'source-out',
                 insert: false
               });
@@ -152,59 +156,6 @@ const CreateToolsCanvasPaperJS = () =>
     {   
         eraserPath.add(event.point);
         console.log("pang");
-    }
-
-    eraserTool.onMouseUp = function(event:MouseEvent)
-    {
-        eraserPath.simplify();
-        var temp = new paper.CompoundPath(eraserPath);
-        var eraseRadius = (eraserSize * view.pixelRatio) / 2;
-    
-        // find the offset path on each side of the line
-        // this uses routines in the offset.js file
-        //var temp = PaperOffset.offsetPath(eraserPath, -eraseRadius);
-        var deleteShape = PaperOffset.offsetStroke(temp, eraseRadius, {cap : 'round'});
-        deleteShape.insert = false;
-        //temp.insert = false;
-        temp.remove();
-        //var innerPath = PaperOffset.offset(eraserPath, -eraseRadius)
-        
-        eraserPath.remove(); // done w/ this now
-
-        // unite the shape with the endcaps
-        // this also removes all overlaps from the stroke
-        //deleteShape = deleteShape.unite(deleteShape)
-        
-        deleteShape.simplify();
-    
-        // grab all the items from the tmpGroup in the mask group
-        var items = tmpGroup.getItems({ overlapping: deleteShape.bounds });
-    
-        items.forEach(function(item) {
-          var result = item.subtract(deleteShape, {
-            trace: false,
-            insert: false
-          }); // probably need to detect closed vs open path and tweak these settings
-    
-          if (result.children) {
-            // if result is compoundShape, yoink the individual paths out
-            item.parent.insertChildren(item.index, result.removeChildren());
-            item.remove();
-          } else {
-            if (result.length === 0) {
-              // a fully erased path will still return a 0-length path object
-              item.remove();
-            } else {
-              item.replaceWith(result);
-            }
-          }
-        })
-    
-        project.activeLayer.addChildren(tmpGroup);
-        tmpGroup.removeChildren();
-        mask.remove();
-        console.log("pong");
-    
     }
 
     // --- FILL TOOL ---
