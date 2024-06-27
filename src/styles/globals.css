@@ -535,12 +535,19 @@ button {
 
 /* FOOTER */
 
-.footer {
+/* .footer {
     background-color: var(--grayscale-text-bg-color);
     width: 100%;
     justify-content: space-between;
+} */
+.footer-bar{
+    width:100vw;
+    max-height:90px;
+    display:flex;
+    justify-content:space-between;
+    flex-flow:row wrap;
+    z-index:5;
 }
-
 .footer-nav {
     justify-content: flex-start;
     font-family: var(--font-back-issues);
@@ -561,9 +568,11 @@ button {
 .footer-nav-list li {
     font-family: var(--font-back-issues);
     display: inline-block;
-    padding-right: 4vw;
+    padding-right: 3vw;
 }
-
+.social-div{
+    flex-basis:50%;
+}
 .social {
     justify-content: space-between;
     text-align: right;
@@ -609,6 +618,8 @@ button {
     color: var(--grayscale-primary-color);
     font-size: medium;
     text-align: center;
+    margin:0;
+    /* vertical-align:bottom; */
 }
 
 /* HERO */
@@ -777,15 +788,52 @@ a {
     font-weight: bold;
     color: var(--grayscale-text-bg-color);
 }
-
-
+@media (max-width: 576px) {
+    .footer-bar{
+        position:relative;
+        flex-direction:column;
+        max-height:none;
+    }
+    .footer-nav-list{
+        margin:0;
+    }
+    .copyright-div{
+        transform:translateY(0);
+    }
+   
+    .social{
+        text-align:left;
+        margin-bottom:0;
+        padding: 0;
+    }
+}
 /* X-Small devices (portrait phones, less than 576px)
 No media query for `xs` since this is the default in Bootstrap */
 
 /* Small devices (landscape phones, 576px and up) */
 
 @media (min-width: 576px) {
-
+    .footer-bar{
+        flex-flow:row wrap;
+        z-index:5;
+    }
+    .copyright-div{
+        transform:translateY(-75%);
+        flex-basis:100%;
+        text-align:center;
+        margin-bottom:10px;
+    }
+    .social-div{
+        flex-basis:50%;
+    }
+    .social{
+        text-align:right;
+        margin-bottom:0;
+        padding: 0;
+    }
+    .footer-nav{
+        flex-basis:50%;
+    }
     .scroll-btn {
         left: 30vw;
         padding: 3vw 0vw 3vw 8vw;
@@ -807,6 +855,11 @@ No media query for `xs` since this is the default in Bootstrap */
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
+    
+    
+    .copyright-div{
+        height:auto;
+    }
     .professors {
         /* width: 70%; */
         /* margin: 10px 100px; */

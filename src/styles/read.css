@@ -1,16 +1,27 @@
-body{
-  background-image: url("/images/background-app-tile.png");
-
+html body{
+  background-image: url("/images/background-app-transparent.png");
   background-position: center;
   background-size:auto;
-  background-color: rgb(39, 39, 39);
+  background-color: rgb(48, 48, 48);
+  height: 100vh;
+  filter: grayscale(0);
 }
 
-.footer-bar {
-  position: fixed;
-  margin: 0;
-  height: 100%;
-  padding-bottom: 0;
+/* 
+.footer-bar{
+  position:fixed; 
+  bottom:0;
+  left:0;
+  width:100vw;
+  max-height:90px;
+  display:flex;
+  justify-content:space-between;
+  z-index:2;
+} */
+
+.icondiv  img{
+  filter:grayscale(0);
+  filter: invert(1);
 }
  
  #read-element {
@@ -19,26 +30,32 @@ body{
 
 .first-panel,
 .second-panel,
-.third-panel, .control-bar {
+.third-panel {
   position: relative;
-  border: 20px solid black;
+  border: 5px solid rgb(0, 0, 0);
+  outline: 20px solid white;
+  margin: 10px 10px;
 }
 
 button {
-    padding: 10px 20px;
+  padding: 10px;
     font-size: 16px;
     background-color: darkgrey;
   }
 
   button:hover{
     background-color: #009BC6;
+    border: none; 
   }
 
   .branch-hook {
     transition: all 0.2s linear 0s;
+    border-radius: 30%;
+    background-color: #ffffff00;
     
     &:before {
       content: "\21E8";
+      color: #FFD270;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -54,11 +71,13 @@ button {
     }
     
     &:hover {
-      text-indent: -9999px;
-      
+      text-indent: -99999px;
+      animation: pulse 1s infinite;
+      background-color: #009BC6;
       &:before {
         transform: scale(1,1);
         text-indent: 0;
+        
       }
     }
   }
@@ -70,20 +89,20 @@ button {
     transform:translateX(-50%);
     padding: 5px 10px;
     width:35px;
+    color: black;
   }
 
 .branch-hook.pop-hooks {
   animation: pulse 1s infinite;
   position: absolute;
-  border: 1px solid #FFD270;
 }
 
 @keyframes pulse {
   0% {
-    outline: 1px solid #FFD270;
+    outline: 1px solid #009BC6;
   }
   100% {
-    outline: 8px solid #ffd27050;
+    outline: 8px solid #009bc65d;
   }
 }
 
@@ -102,67 +121,165 @@ button {
     left: 75%;
 }
 
-.control-bar {
-  position: fixed;
-  background-color: rgb(94, 94, 94);
-  width:80px;
-  height:230px;
-  padding: 25px 0 0 0;
-  border-radius: 50px;
-  border: 4px solid black;
-  margin:auto 1%;
-  top:50%;
-  left:1%;
-  -ms-transform: translateX(-50%) translateY(-50%);
-  transform: translate(-50%,-50%);
-}
-
- #back-button, #hooks-toggle, #layout-toggle {
-    display: block;
-    margin: 0px auto;
-    position: relative;
-    padding: 10px;
-    font-size: 18px;
-    width: 60px;
-    border: none;
-    background-color: rgb(94, 94, 94);
-  } 
-
   .button-icon{
     width: 40px;
     height: auto;
+    filter: invert(1);
   }
 
-  .button-icon:hover{
-    filter: brightness(0);
+  #hooks-toggle .button-icon:hover{
+    filter: invert(41%) sepia(97%) saturate(525%) hue-rotate(149deg) brightness(97%) contrast(105%)
   }
 
-  .row-panels#comic-panels{
-    flex-direction: row;
-    display: flex;
-    align-items: center;
-    position: relative;
-    margin: 15% 1%;
-    top:50%;
-    justify-content: center;
+  #back-button .button-icon:hover{
+    filter: invert(74%) sepia(51%) saturate(390%) hue-rotate(356deg) brightness(104%) contrast(101%);
+  }
+  
+
+  @media (min-width: 1799px) {
+    .row-panels#comic-panels{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      position: relative;
+      top:20vh;
+      margin:auto;
+      justify-content: center; 
+    }
+  
+    .column-panels#comic-panels{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      justify-content: center;
+      margin-bottom: 150px;
+      margin-top: 50px;
+    }
+  
+    img.row-panels{
+      width: 27vw;
+      height:auto;
+    }
     
+    img.column-panels {
+      width:900px;
+      height: 600px;
+    }
+
+    .control-bar {
+      position: fixed;
+      background-color: rgb(0, 0, 0);
+      width:80px;
+      height:230px;
+      padding: 25px 0 0 0;
+      border-radius: 50px;
+      border: 4px solid black; 
+      margin:auto 1%;
+      top:50%;
+      left:2%;
+      -ms-transform: translateX(-50%) translateY(-50%);
+      transform: translate(-50%,-50%);
+    }
+
+    #layout-toggle .button-icon:hover{
+      filter: invert(7%) sepia(99%) saturate(7263%) hue-rotate(357deg) brightness(106%) contrast(124%);
+    } 
+
+    #back-button, #hooks-toggle, #layout-toggle {
+      display: block;
+      margin: 0px auto;
+      position: relative;
+      padding: 10px;
+      font-size: 18px;
+      width: 60px;
+      border: none;
+      background-color: #ffffff00;
+    } 
+  }
+  
+  @media (max-width: 1800px) {
+    #comic-panels{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      justify-content: center;
+      margin-bottom: 150px;
+      margin-top: 50px;
+    }
+  
+    #comic-panels img {
+      width:900px;
+      height: 600px;
+    }
+
+    .control-bar {
+      visibility: hidden;
+    }
+
+    #back-button, #hooks-toggle {
+      visibility: visible;
+      position: fixed;
+      background-color: black;
+      border-radius: 50%;
+      border: none;
+    } 
+
+    #back-button {
+      top:9vh;
+      left:3vw;
+    }
+
+    #hooks-toggle {
+      bottom:11vh;
+      right:3vw;
+    }
+  
+    #layout-toggle .button-icon{
+      visibility: hidden;
+    } 
   }
 
-  .column-panels#comic-panels{
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    position: relative;
-    margin: 10% 1%;
-    justify-content: center;
-  }
+  @media (max-width: 1000px){
+    #comic-panels{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      justify-content: center;
+      margin-bottom: 150px;
+      margin-top: 50px;
+    }
+  
+    #comic-panels img {
+      width:80vw;
+      height: auto;
+    }
 
-  img.row-panels{
-    width: 525px;
-    height:350px;
-  }
+    .control-bar {
+      visibility: hidden;
+    }
 
-  img.column-panels {
-    width:900px;
-    height: 600px;
+    #back-button, #hooks-toggle {
+      visibility: visible;
+      position: fixed;
+      background-color: black;
+      border-radius: 50%;
+      border: none;
+    } 
+
+    #back-button {
+      top:8vh;
+      left:3vw;
+    }
+
+    #hooks-toggle {
+      bottom:10vh;
+      right:3vw;
+    }
+  
+    #layout-toggle .button-icon{
+      visibility: hidden;
+    } 
   }

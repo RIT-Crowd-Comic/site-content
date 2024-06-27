@@ -19,9 +19,9 @@ const ReadPage = () => {
         
         <ComicPanels setting={layout} hook_state={hooks} image_1={firstPanelImage} image_2={secondPanelImage} image_3={thirdPanelImage} />
         <div className="control-bar">
-                <button id="back-button"><img src="/images/back-button_desktop.png" className="button-icon"></img></button>
-                <IconToggleButton setting={hooks} setSetting={setHooks} state_1='base-hooks' state_2="pop-hooks" buttonId="hooks-toggle" source_1="/images/view-branch-button-off-desktop.png" source_2="/images/view-branch-button-on-desktop.png"/>
-                <IconToggleButton setting={layout} setSetting={setLayout} state_1='row-panels' state_2="column-panels" buttonId="layout-toggle" source_1="/images/panel-view-button-horizontal.png" source_2="/images/panel-view-button-vertical.png"/>
+                <button id="back-button"><img src="/images/back-button-pressed.png" className="button-icon"></img></button>
+                <IconToggleButton setting={hooks} setSetting={setHooks} state_1='base-hooks' state_2="pop-hooks" buttonId="hooks-toggle" source_1="/images/view-branch-button-off-pressed.png" source_2="/images/view-branch-button-on-pressed.png"/>
+                <IconToggleButton setting={layout} setSetting={setLayout} state_1='row-panels' state_2="column-panels" buttonId="layout-toggle" source_1="/images/panel-view-button-horizontal-pressed.png" source_2="/images/panel-view-button-vertical-pressed.png"/>
         </div>
     </>);
 }
