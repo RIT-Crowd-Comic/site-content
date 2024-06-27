@@ -4,6 +4,7 @@ html body{
   background-size:auto;
   background-color: rgb(48, 48, 48);
   height: 100vh;
+  filter: grayscale(0);
 }
 
 
