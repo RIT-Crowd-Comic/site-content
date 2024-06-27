@@ -1,23 +1,21 @@
 html body{
-  background-image: url("/images/background-app-transparent.png");
+  background-image: url("../../public/images/background-app-transparent.png");
   background-position: center;
   background-size:auto;
   background-color: rgb(48, 48, 48);
   height: 100vh;
-  filter: grayscale(0);
+  filter: none;
 }
-
-/* 
+ 
 .footer-bar{
   position:fixed; 
   bottom:0;
   left:0;
   width:100vw;
-  max-height:90px;
   display:flex;
   justify-content:space-between;
   z-index:2;
-} */
+} 
 
 .icondiv  img{
   filter:grayscale(0);
@@ -136,7 +134,7 @@ button {
   }
   
 
-  @media (min-width: 1799px) {
+  @media (min-width: 1400px) {
     .row-panels#comic-panels{
       display: flex;
       flex-direction: row;
@@ -198,7 +196,7 @@ button {
     } 
   }
   
-  @media (max-width: 1800px) {
+  @media (max-width: 1400px) {
     #comic-panels{
       display: flex;
       flex-direction: column;
@@ -241,7 +239,7 @@ button {
     } 
   }
 
-  @media (max-width: 1000px){
+  @media (max-width: 800px){
     #comic-panels{
       display: flex;
       flex-direction: column;

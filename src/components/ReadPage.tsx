@@ -27,7 +27,7 @@ const ReadPage = () => {
         <ComicPanels setting={layout} hook_state={hooks} image_1={firstPanelImage} image_2={secondPanelImage} image_3={thirdPanelImage} />
         <div className="control-bar">
                 <button id="back-button"><img src={backIcon} className="button-icon"></img></button>
-                <IconToggleButton setting={hooks} setSetting={setHooks} state_1='base-hooks' state_2="pop-hooks" buttonId="hooks-toggle" source_1={toggleHooksOn} source_2={toggleHooksOff}/>
+                <IconToggleButton setting={hooks} setSetting={setHooks} state_1='base-hooks' state_2="pop-hooks" buttonId="hooks-toggle" source_1={toggleHooksOff} source_2={toggleHooksOn}/>
                 <IconToggleButton setting={layout} setSetting={setLayout} state_1='row-panels' state_2="column-panels" buttonId="layout-toggle" source_1={toggleLayoutHorizIcon} source_2={toggleLayoutVertIcon}/>
         </div>
     </>);
