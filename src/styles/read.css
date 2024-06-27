@@ -187,7 +187,7 @@ button {
     filter: invert(1);
   }
 
-  /* #hooks-toggle .button-icon:hover{
+  #hooks-toggle .button-icon:hover{
     filter: invert(41%) sepia(97%) saturate(525%) hue-rotate(149deg) brightness(97%) contrast(105%)
   }
 
@@ -196,5 +196,5 @@ button {
   }
   #layout-toggle .button-icon:hover{
     filter: invert(7%) sepia(99%) saturate(7263%) hue-rotate(357deg) brightness(106%) contrast(124%);
-  } */
+  } 
 
