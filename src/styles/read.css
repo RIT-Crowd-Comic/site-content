@@ -1,5 +1,6 @@
+
 html, body{
-  background-image: url("../../public/images/background-app-transparent.png");
+  background-image: url("images/background-app-transparent.png");
   background-position: center;
   background-size:auto;
   background-color: rgb(48, 48, 48);
@@ -54,7 +55,6 @@ button {
   .branch-hook {
     transition: all 0.2s linear 0s;
     border-radius: 30%;
-    background-color: #ffffff00;
     
     &:before {
       content: "\21E8";
@@ -92,11 +92,7 @@ button {
     transform:translateX(-50%);
     padding: 5px 10px;
     width:35px;
-    color: #ffffff00;
-  }
-
-  .branch-hook a{
-    color: #ffffff00;
+    color: black;
   }
 
 
