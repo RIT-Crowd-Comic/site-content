@@ -12,8 +12,8 @@ const Footer = () => {
         <div className="container-fluid pt-3 bg-dark footer-bar">
             {/* <div className="footer-base"> */}
             {/* Links */}
-            <div className="row">
-                <div className="col-auto">
+            {/* <div className="row"> */}
+                {/* <div className="col-auto"> */}
                     <div className="footer-nav">
                         <div className="footer-head">
                             <Link href="/">Crowd Comic</Link>
@@ -24,8 +24,8 @@ const Footer = () => {
                             <li><Link href="/comic">Comic</Link></li>
                         </ul>
                     </div>
-                </div>
-                <div className="col">
+                {/* </div> */}
+                <div className="social-div">
                     <ul className="social">
                         <li>
                             <Link href="">
@@ -53,9 +53,9 @@ const Footer = () => {
                         </li>
                     </ul>
                 </div>
-            </div>
+            {/* </div> */}
             {/* /Links */}
-            <div className='row'>
+            <div className='copyright-div'>
                 <p className='copyright'>Copyright © {current_year}</p>
             </div>
             {/* Socials */}

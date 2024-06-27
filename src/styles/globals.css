@@ -542,7 +542,6 @@ button {
 } */
 .footer-bar{
     width:100vw;
-    max-height:90px;
     display:flex;
     justify-content:space-between;
     flex-flow:row wrap;
@@ -551,8 +550,8 @@ button {
 .footer-nav {
     justify-content: flex-start;
     font-family: var(--font-back-issues);
-    font-size: 5vw;
-    padding: 1vh 0vw 0vh 5vw;
+    font-size: 18px;
+    padding: 1vh 0vw 0vh 5px;
 }
 
 .footer-head {
@@ -561,7 +560,7 @@ button {
 
 .footer-nav-list {
     justify-content: space-between;
-    font-size: 4vw;
+    font-size: 16px;
     padding: 1vh 0vw 0vh 0vw;
 }
 
@@ -621,6 +620,9 @@ button {
     margin:0;
     /* vertical-align:bottom; */
 }
+/* .copyright-div{
+    width:100%;
+} */
 
 /* HERO */
 
