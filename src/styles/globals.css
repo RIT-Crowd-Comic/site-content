@@ -25,7 +25,7 @@
     font-family: var(--font-back-issues);
     font-style: normal;
     font-weight: 300;
-    filter: grayscale(1); 
+    filter: grayscale(1);
 }
 
 .navbar {
@@ -49,7 +49,7 @@ html {
     background-color: var(--background-color);
     overflow-x: hidden;
     max-width: 100%;
-    /* filter: grayscale(1);  */
+    filter: grayscale(1);
 }
 
 body {
@@ -65,7 +65,7 @@ button {
     font-family: var(--font-back-issues);
     font-weight: bold;
     font-size: 6vw;
-    color: var(--accent-color);
+    color: var(--grayscale-text-color);
 }
 
 .login {
@@ -118,9 +118,9 @@ button {
     width: 90vw;
 }
 
-.leftMission, .rightMission
-{
-    display:none;
+.leftMission,
+.rightMission {
+    display: none;
 }
 
 
@@ -176,8 +176,7 @@ button {
     padding: 5vh 10vw 5vh 5vw;
 }
 
-.desktopRead
-{
+.desktopRead {
     display: none;
 }
 
@@ -226,36 +225,83 @@ button {
     padding: 5vh 10vw 4vh 9vw;
 }
 
-.desktopCreate
-{
+.desktopCreate {
     display: none;
 }
 
-.getStarted button{
+.getStarted {
+    width: 100vw;
+    height: auto;
+    margin: 10vh auto;
+
     position: relative;
+
+    text-align: center;
+}
+
+.getStarted button {
     border: 10px solid transparent;
     background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
-    margin: -10vh auto;
-    padding: 5vw 5vw 7vw 8vw;
+    filter: brightness(.5);
+    width: 60%;
+    height: auto;
+    margin: 0 auto;
+    padding: 5vw 10vw 6vw;
     font-size: 4.5vw;
     z-index: 2;
 }
 
-.getStarted button:hover{
-    font-style: italic;
-    margin-left: -14vw;
-    padding-right: 6vw;
-    transition: ease-out .3s;
+.getStarted p
+{
+    padding: 0 7vw;
 }
 
-.comic{
+.getStarted button:active {
+    filter: brightness(.3);
+}
+
+
+/* BOOK ANIMATION */
+
+@keyframes open
+{
+    0% {background-image: url(../../public/images/GIFs/book-split/Frame1.gif); }
+    5% {background-image: url(../../public/images/GIFs/book-split/Frame2.gif); }
+    20% {background-image: url(../../public/images/GIFs/book-split/Frame3.gif); }
+    45% {background-image: url(../../public/images/GIFs/book-split/Frame4.gif); }
+    60% {background-image: url(../../public/images/GIFs/book-split/Frame5.gif); }
+    75% {background-image: url(../../public/images/GIFs/book-split/Frame6.gif); }
+    90% {background-image: url(../../public/images/GIFs/book-split/Frame7.gif); }
+    100% {background-image: url(../../public/images/GIFs/book-split/Frame8.gif); }
+}
+
+.book-animation
+{
+    z-index: 99;
+    background-image: url(../../public/images/GIFs/book-split/Frame8.gif); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 35%;
+    height: 25vw;
+
+    animation: none;
+
     position: absolute;
-    border: 10px solid transparent;
-    width: auto;
-    height: 30vw;
-    z-index: 3;
-    top: 83%;
     left: 7%;
+    top: -5%;
+}
+
+.getStarted:hover .book-animation
+{
+    animation: open .5s;
+    animation-fill-mode: forwards;
+}
+
+.getStarted:hover button 
+{
+    filter: brightness(1);
+    transform: scale(1.1);
+    transition: ease-in-out .5s;
 }
 
 /* COMIC PREVIEW */
@@ -302,8 +348,7 @@ button {
     text-align: center;
 }
 
-.our-team button
-{
+.our-team button {
     background-color: var(--grayscale-primary-color);
     border: 3px solid var(--grayscale-text-color);
     width: 40%;
@@ -345,12 +390,11 @@ button {
 } */
 
 /* Hover Animation Option 3*/
-.our-team button:hover
-{
+.our-team button:hover {
     background-color: var(--grayscale-text-bg-color);
     border: 5px solid var(--grayscale-text-color);
     box-shadow: 10px 10px var(--grayscale-background-color);
-    transform: translate(-5px,-5px);
+    transform: translate(-5px, -5px);
     transition: ease-in-out .3s;
 }
 
@@ -415,15 +459,14 @@ button {
     border: 2px solid var(--grayscale-primary-color);
 }
 
-.chapterTitle{
+.chapterTitle {
     font-family: var(--font-back-issues);
     font-weight: bold;
     font-size: 2rem;
     color: var(--grayscale-text-bg-color);
 }
 
-.facultyTitle
-{
+.facultyTitle {
     font-family: var(--font-back-issues);
     font-weight: bold;
     font-size: 2rem;
@@ -508,17 +551,18 @@ button {
 .footer-nav {
     justify-content: flex-start;
     font-family: var(--font-back-issues);
+    font-size: 5vw;
+    padding: 1vh 0vw 0vh 5vw;
+}
+
+.footer-head {
     font-weight: bold;
-    padding: 1vh 0vw 0vh 2vw;
-    flex-basis:50%;
 }
 
 .footer-nav-list {
-    justify-content: flex-start;
-    font-weight: 400;
-    padding-left:0;
-    /* font-size: 4.5vw; */
-    /* padding: 1vh 0vw 0vh 5vw; */
+    justify-content: space-between;
+    font-size: 4vw;
+    padding: 1vh 0vw 0vh 0vw;
 }
 
 .footer-nav-list li {
@@ -644,12 +688,12 @@ button {
 } */
 
 /* Scroll  to top button with Link*/
-.back-to-top{
+.back-to-top {
     padding-bottom: 10px;
     margin-bottom: 10px;
 }
 
-.scroll-btn{
+.scroll-btn {
     position: relative;
     /* bottom: 0px; */
     /* right: 0px; */
@@ -675,11 +719,11 @@ button {
     border: none;
 }
 
-#scroll-text:hover{
+#scroll-text:hover {
     text-decoration: underline;
 }
 
-#scrollToTopBtn:hover{
+#scrollToTopBtn:hover {
     transform: rotate(-90deg) scale(1.2);
 }
 
@@ -699,8 +743,7 @@ button {
     transform: translateX(0);
 } */
 
-.person-panel
-{
+.person-panel {
     max-width: 300px;
     max-height: 300px;
     border-radius: 0;
@@ -739,8 +782,7 @@ a {
     width: 100%;
 }
 
-.teamTitle
-{
+.teamTitle {
     font-family: var(--font-back-issues);
     font-size: 3rem;
     font-weight: bold;
@@ -970,25 +1012,13 @@ No media query for `xs` since this is the default in Bootstrap */
     .createimg p {
         padding: 5vh 10vw 4vh 9vw;
     }
-
-    .getStarted button {
-        margin: -10vh auto;
-        padding: 5vw 5vw 7vw 8vw;
-    }
-
-    .comic {
-        width: auto;
-        height: 25vw;
-        top: 86%;
-        left: 10.5%;
-    }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-    .main-section {
+    /* .main-section {
         padding: 30px 100px;
-    }
+    } */
 
     .hero {
         width: 100vw;
@@ -1048,73 +1078,66 @@ No media query for `xs` since this is the default in Bootstrap */
     }
 
     /* MISSION */
-    .mission h2
-    {
+    .mission h2 {
         background: url(../../public/images/background-boxes/bw/Desktop_Mission_Small_BW.svg) no-repeat center/contain;
 
         padding: 3rem;
         margin: 0;
     }
 
-    .whatcanido h2
-    {
+    .whatcanido h2 {
         background: url(../../public/images/background-boxes/bw/Desktop_What_Can_I_Do_BW.svg) no-repeat center/contain;
 
         padding: 2rem;
         margin: 0;
     }
 
-    .missionimg
-    {
+    .missionimg {
         font-size: 1.5vw;
 
         width: 90vw;
         margin: 0 -5vw;
     }
 
-    .missionimg p
-    {
+    .missionimg p {
         background-color: var(--secondary-color);
 
         border: solid 5px black;
-        
+
         padding: 1rem;
         width: 70%;
         margin: 15% auto 0;
     }
 
-    .topMission, .bottomMission
-    {
+    .topMission,
+    .bottomMission {
         display: none;
     }
 
-    .leftMission, .rightMission
-    {
-        display:inline;
+    .leftMission,
+    .rightMission {
+        display: inline;
 
-        position:absolute;
+        position: absolute;
         height: auto;
     }
 
     /* READ */
-    .read h2
-    {
+    .read h2 {
         background: url(../../public/images/background-boxes/bw/Desktop_Read_Small_BW.svg) no-repeat center/contain;
 
         padding: 4rem;
         margin: 0;
     }
 
-    .readimg
-    {
+    .readimg {
         font-size: 1.5vw;
 
         width: 90vw;
         margin: 0 -5vw;
     }
 
-    .readimg p
-    {
+    .readimg p {
         background-color: var(--secondary-color);
 
         border: solid 5px black;
@@ -1124,37 +1147,33 @@ No media query for `xs` since this is the default in Bootstrap */
         margin: 15% auto 0;
     }
 
-    .topRead, .bottomRead
-    {
+    .topRead,
+    .bottomRead {
         display: none;
     }
 
-    .desktopRead
-    {
-        display:inline;
-        position:absolute;
+    .desktopRead {
+        display: inline;
+        position: absolute;
         height: auto;
     }
 
     /* CREATE */
-    .create h2
-    {
+    .create h2 {
         background: url(../../public/images/background-boxes/bw/Desktop_Create_Small_BW.svg) no-repeat center/contain;
 
         padding: 4rem;
         margin: 0;
     }
 
-    .createimg
-    {
+    .createimg {
         font-size: 1.5vw;
 
         width: 90vw;
         margin: 0 -5vw;
     }
 
-    .createimg p
-    {
+    .createimg p {
         background-color: var(--secondary-color);
 
         border: solid 5px black;
@@ -1164,16 +1183,23 @@ No media query for `xs` since this is the default in Bootstrap */
         margin: 15% auto 0;
     }
 
-    .topCreate, .bottomCreate
-    {
+    .topCreate,
+    .bottomCreate {
         display: none;
     }
 
-    .desktopCreate
-    {
-        display:inline;
-        position:absolute;
+    .desktopCreate {
+        display: inline;
+        position: absolute;
         height: auto;
+    }
+
+    .book-animation
+    {
+        background-image: url(../../public/images/GIFs/book-split/Frame1.gif); 
+
+        left: 7%;
+        top: -10%;
     }
 }
 
