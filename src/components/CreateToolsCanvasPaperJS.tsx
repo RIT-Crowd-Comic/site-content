@@ -5,6 +5,7 @@ import PenOptions from './PenOptions';
 import EraserOptions from './EraserOptions';
 import FillOptions from './FillOptions';
 import ShapeOptions from './ShapeOptions';
+import StickerOptions from './StickerOptions';
 import test from 'node:test';
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
@@ -290,6 +291,38 @@ const CreateToolsCanvasPaperJS = () => {
         clearStates();
     }
 
+    // --- TEXT TOOL ---
+
+
+    // --- STICKER TOOL ---
+    // Boolean used to determine if the sticker tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
+    const [stickerOptionsEnabled, setStickerOptionsEnabled] = useState<boolean>(false);
+
+    // Link to the image being drawn to the screen
+    const [stickerLink, setStickerLink] = useState<string>("/stickers/monkey.png");
+
+    //Boolean to check if user dragged mouse (so sticker doesn't accidently run on a mouse click)
+    const [stickerMouseDragged, setStickerMouseDragged] = useState(false);
+
+    // The Sticker Tool:
+    const [stickerTool, setStickerTool] = useState<paper.Tool>(new paper.Tool());
+
+    stickerTool.onMouseDrag = function(event: paper.ToolEvent) {
+        setStickerMouseDragged(true);
+        let tempSticker = new paper.Raster(stickerLink);
+        tempSticker.position = event.point;
+        tempSticker.removeOnDrag();
+    }
+
+    stickerTool.onMouseUp = function (event: paper.ToolEvent) {
+        if(stickerMouseDragged == true)
+        {
+            let sticker = new paper.Raster(stickerLink);
+            sticker.position = event.point;
+        }
+        setStickerMouseDragged(false);
+    }
+
     // --- SELECT TOOL ---
     // String describing action user is doing (moving, resizing, rotating, etc.)
     const [selectAction, setSelectAction] = useState("none");
@@ -371,6 +404,7 @@ const CreateToolsCanvasPaperJS = () => {
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
             setshapeOptionsEnabled(false);
+            setStickerOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.ERASER) {
             eraserTool.activate();
@@ -378,6 +412,7 @@ const CreateToolsCanvasPaperJS = () => {
             setEraserOptionsEnabled(true);
             setFillOptionsEnabled(false);
             setshapeOptionsEnabled(false);
+            setStickerOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.FILL) {
             fillTool.activate();
@@ -385,6 +420,7 @@ const CreateToolsCanvasPaperJS = () => {
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(true);
             setshapeOptionsEnabled(false);
+            setStickerOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.SHAPE) {
             shapeTool.activate();
@@ -392,6 +428,15 @@ const CreateToolsCanvasPaperJS = () => {
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
             setshapeOptionsEnabled(true);
+            setStickerOptionsEnabled(false);
+        }
+        else if (Number(buttonSelected?.value) == toolStates.STICKER) {
+            stickerTool.activate();
+            setPenOptionsEnabled(false);
+            setEraserOptionsEnabled(false);
+            setFillOptionsEnabled(false);
+            setshapeOptionsEnabled(false);
+            setStickerOptionsEnabled(true);
         }
         // else if (Number(buttonSelected?.value) == toolStates.SELECT) {
         //     selectTool.activate();
@@ -478,7 +523,7 @@ const CreateToolsCanvasPaperJS = () => {
 
                     <div id="stickerTool">
                         <input type="radio" name="tools" id="sticker" value={toolStates.STICKER} onChange={findSelected} />
-                        <label htmlFor="sticker">Sticker (NOT FUNCTIONAL)</label>
+                        <label htmlFor="sticker">Sticker</label>
                     </div>
 
                     <div id="selectTool">
@@ -504,7 +549,8 @@ const CreateToolsCanvasPaperJS = () => {
                 <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize} />
                 <FillOptions enabled={fillOptionsEnabled} changeFillColor={setFillColor} />
                 <ShapeOptions enabled={shapeOptionsEnabled} shapeBorderSize={shapeBorderWidth} changeShapeBorderSize={setShapeBorderWidth} 
-                                changeShapeBorderColor={setShapeBorderColor} changeShapeFillColor={setShapeFillColor} changeShape={setShapeSelected}/>
+                                changeShapeBorderColor={setShapeBorderColor} changeShapeFillColor={setShapeFillColor} changeShape={setShapeSelected} />
+                <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
             </div>
 
             <div id="layerOptions">
