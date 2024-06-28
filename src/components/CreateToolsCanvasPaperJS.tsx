@@ -557,13 +557,13 @@ const CreateToolsCanvasPaperJS = () => {
                 <div id="layer2">
                     <input type="radio" name="layers" id="layer2" value='2' onChange={changeLayer} />
                     <label htmlFor="layer2">Layer 2</label>
-                    <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} checked></input>
+                    <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} defaultChecked></input>
                 </div>
 
                 <div id="layer1">
                     <input type="radio" name="layers" id="layer1" value='1' defaultChecked onChange={changeLayer} />
                     <label htmlFor="layer1">Layer 1</label>
-                    <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} checked></input>
+                    <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} defaultChecked></input>
                 </div>
             </div>
         </div>
