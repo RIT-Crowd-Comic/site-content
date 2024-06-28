@@ -16,13 +16,13 @@ const IconToggleButton = ({source_1,source_2,setting,setSetting,state_1,state_2,
     const toggleLayout = () => {
             if(setting == state_1)
                 {
-                setSetting(state_2)
-                setSource(source_2)
+                setSetting(state_2);
+                setSource(source_2);
             }
             else if(setting == state_2)
             {
-                setSetting(state_1)
-                setSource(source_1)
+                setSetting(state_1);
+                setSource(source_1);
             }
         console.log("changing to " + setting)
     }
