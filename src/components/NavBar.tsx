@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const NavBar = () => {
   return (
-    <nav className="navbar sticky-top navbar-expand-lg border-bottom">
+    <nav className="navbar sticky-top navbar-expand-lg">
       <div className="container-fluid">
         <Link className="navbar-brand" href="#">
           <Image src="../images/logos/Crowd_Comic_Favicon_BW.svg" alt="Crowd Comic Favicon" width={78} height={46} />
