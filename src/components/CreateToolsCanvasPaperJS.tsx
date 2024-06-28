@@ -4,6 +4,8 @@ import paper, { project, tool, tools } from 'paper/dist/paper-core';
 import PenOptions from './PenOptions';
 import EraserOptions from './EraserOptions';
 import FillOptions from './FillOptions';
+import ShapeOptions from './ShapeOptions';
+import StickerOptions from './StickerOptions';
 import test from 'node:test';
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
@@ -67,7 +69,8 @@ const CreateToolsCanvasPaperJS = () => {
         SHAPE: 3,
         TEXT: 4,
         STICKER: 5,
-        SELECT: 6
+        SELECT: 6,
+        TRANSFORM: 7
     });
 
     // --- PEN TOOL ---
@@ -108,28 +111,55 @@ const CreateToolsCanvasPaperJS = () => {
 
     // The Eraser Tool:
     const [eraserTool, setEraserTool] = useState<paper.Tool>(new paper.Tool());
-    let eraserPath: paper.Path | undefined;
+    eraserTool.minDistance = 5;
+
+    let eraserPath = useRef<paper.Path>(null).current;
+    let tmpGroup = useRef<paper.Group>(null).current;
+    let mask = useRef<paper.Group>(null).current;
 
     // Begins the process of drawing the user's input to the canvas HTMLElement
-    eraserTool.onMouseDown = function () {
-        eraserPath = new paper.Path();
+    eraserTool.onMouseDown = function()
+    {
+        let newPath = new paper.Path();
 
         // Although we are erasing the tool technically still needs a color for what would be drawn if we were using a different blendMode
-        eraserPath.strokeColor = new paper.Color("black");
-        eraserPath.strokeWidth = eraserSize;
-        eraserPath.strokeCap = 'round';
-        eraserPath.strokeJoin = 'round';
+        newPath.strokeColor = new paper.Color("black");
+        newPath.strokeWidth = eraserSize * view.pixelRatio;
+        newPath.strokeCap = 'round';
+        newPath.strokeJoin = 'round';
+
+        eraserPath = newPath;
 
         /*  Change how user input is drawn based on the tool they've selected
             Based on two different drawing types source-over vs destination-out
             Source-over: Draws on top of prexisting canvas
-            Destination-out: Existing content is kept where it does not overlap with the new shape*/
-        eraserPath.blendMode = 'destination-out';
+            Destination-out: Existing content is kept where it does not overlap with the new shape*/ 
+            tmpGroup = new paper.Group({
+                children: canvasProject.activeLayer.removeChildren(),
+                blendMode: 'source-out',
+                insert: false
+              });
+          
+              // combine the path and group in another group with a blend of 'source-over'
+              mask = new paper.Group({
+                children: [eraserPath, tmpGroup],
+                blendMode: 'source-over'
+              });
+            //console.log("ping");
     }
 
     // Continues drawing the user's input to the canvas HTMLElement
-    eraserTool.onMouseDrag = function (event: paper.ToolEvent) {
+    eraserTool.onMouseDrag = function(event: paper.ToolEvent) 
+    {   
         eraserPath?.add(event.point);
+        //console.log("pang");
+    }
+
+    eraserTool.onMouseUp = function()
+    {
+        canvasProject.activeLayer.rasterize({resolution: 300});
+        tmpGroup?.remove();
+        mask?.remove();
     }
 
     // --- FILL TOOL ---
@@ -157,12 +187,30 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     // --- SHAPE TOOL ---
+    // Boolean used to determine if the shape tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
+    const [shapeOptionsEnabled, setshapeOptionsEnabled] = useState<boolean>(false);
+
+    // String used to specify the color of the shapes border and fill
+    const [shapeBorderColor, setShapeBorderColor] = useState<string>("black");
+    const [shapeFillColor, setShapeFillColor] = useState<string>("rgba(0, 0, 0, 0)");
+
+    // Integer used to specify how thick the border surrounding the shape is
+    const [shapeBorderWidth, setShapeBorderWidth] = useState<number>(5);
+
     // Points describing the rectangle's dimensions (start and end)
     const [startPoint, setStartPoint] = useState(new paper.Point(0, 0));
     const [endPoint, setEndPoint] = useState(new paper.Point(0, 0));
 
-    // The current rectangle being created
-    let currentRect: paper.Path.Rectangle | undefined;
+    const shapeStates = Object.freeze({
+        RECTANGLE: 0,
+        LINE: 1,
+        ELLIPSE: 2
+    });
+
+    const [shapeSelected, setShapeSelected] = useState<number>(0); 
+
+    // The current potential shape being created
+    let currentShape: paper.Path;
 
     // Array containing all created shapes (only rectangles currently)
     //const [elements, setElements] = useState([] as paper.Path[]);
@@ -191,19 +239,88 @@ const CreateToolsCanvasPaperJS = () => {
     shapeTool.onMouseDrag = function (event: paper.ToolEvent) {
         setEndPoint(event.point);
         setMouseDragged(true);
+
+        let tempShape = new paper.Path;
+
+        if(shapeSelected == shapeStates.RECTANGLE)
+        {
+            tempShape = new paper.Path.Rectangle(startPoint, endPoint);
+            
+        }
+        else if(shapeSelected == shapeStates.LINE)
+        {
+            tempShape = new paper.Path.Line(startPoint, endPoint);
+        }
+        else if(shapeSelected == shapeStates.ELLIPSE)
+        {
+            tempShape = new paper.Path.Ellipse(new paper.Rectangle(startPoint, endPoint));
+        }
+
+        tempShape.fillColor = new paper.Color(shapeFillColor);
+        tempShape.strokeColor = new paper.Color(shapeBorderColor);
+        tempShape.strokeWidth = shapeBorderWidth;
+
+        tempShape.removeOnDrag();
     }
 
     //once rect is created: adds it to elements array and then clears the states
     shapeTool.onMouseUp = function () {
         //creates & draws current rect to canvas if mouse was dragged
         if (mouseDragged) {
-            currentRect = new paper.Path.Rectangle(startPoint, endPoint);
-            currentRect.strokeColor = new paper.Color('black');
-            currentRect.strokeWidth = 3;
+            if(shapeSelected == shapeStates.RECTANGLE)
+            {
+                currentShape = new paper.Path.Rectangle(startPoint, endPoint);
+                    
+            }
+            else if(shapeSelected == shapeStates.LINE)
+            {
+                currentShape = new paper.Path.Line(startPoint, endPoint);
+            }
+            else if(shapeSelected == shapeStates.ELLIPSE)
+            {
+                currentShape = new paper.Path.Ellipse(new paper.Rectangle(startPoint, endPoint));
+                console.log("up");
+            }
+
+            currentShape.fillColor = new paper.Color(shapeFillColor);
+            currentShape.strokeColor = new paper.Color(shapeBorderColor);
+            currentShape.strokeWidth = shapeBorderWidth;
 
             //setElements(prevState => [...prevState, currentRect as paper.Path.Rectangle]);
         }
         clearStates();
+    }
+
+    // --- TEXT TOOL ---
+
+
+    // --- STICKER TOOL ---
+    // Boolean used to determine if the sticker tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
+    const [stickerOptionsEnabled, setStickerOptionsEnabled] = useState<boolean>(false);
+
+    // Link to the image being drawn to the screen
+    const [stickerLink, setStickerLink] = useState<string>("/stickers/monkey.png");
+
+    //Boolean to check if user dragged mouse (so sticker doesn't accidently run on a mouse click)
+    const [stickerMouseDragged, setStickerMouseDragged] = useState(false);
+
+    // The Sticker Tool:
+    const [stickerTool, setStickerTool] = useState<paper.Tool>(new paper.Tool());
+
+    stickerTool.onMouseDrag = function(event: paper.ToolEvent) {
+        setStickerMouseDragged(true);
+        let tempSticker = new paper.Raster(stickerLink);
+        tempSticker.position = event.point;
+        tempSticker.removeOnDrag();
+    }
+
+    stickerTool.onMouseUp = function (event: paper.ToolEvent) {
+        if(stickerMouseDragged == true)
+        {
+            let sticker = new paper.Raster(stickerLink);
+            sticker.position = event.point;
+        }
+        setStickerMouseDragged(false);
     }
 
     // --- SELECT TOOL ---
@@ -286,24 +403,40 @@ const CreateToolsCanvasPaperJS = () => {
             setPenOptionsEnabled(true);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
+            setshapeOptionsEnabled(false);
+            setStickerOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.ERASER) {
             eraserTool.activate();
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(true);
             setFillOptionsEnabled(false);
+            setshapeOptionsEnabled(false);
+            setStickerOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.FILL) {
             fillTool.activate();
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(true);
+            setshapeOptionsEnabled(false);
+            setStickerOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.SHAPE) {
             shapeTool.activate();
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
+            setshapeOptionsEnabled(true);
+            setStickerOptionsEnabled(false);
+        }
+        else if (Number(buttonSelected?.value) == toolStates.STICKER) {
+            stickerTool.activate();
+            setPenOptionsEnabled(false);
+            setEraserOptionsEnabled(false);
+            setFillOptionsEnabled(false);
+            setshapeOptionsEnabled(false);
+            setStickerOptionsEnabled(true);
         }
         // else if (Number(buttonSelected?.value) == toolStates.SELECT) {
         //     selectTool.activate();
@@ -380,7 +513,7 @@ const CreateToolsCanvasPaperJS = () => {
 
                     <div id="shapeTool">
                         <input type="radio" name="tools" id="shape" value={toolStates.SHAPE} onChange={findSelected} />
-                        <label htmlFor="shape">Shape (Rectangle)</label>
+                        <label htmlFor="shape">Shape</label>
                     </div>
 
                     <div id="textTool">
@@ -390,12 +523,17 @@ const CreateToolsCanvasPaperJS = () => {
 
                     <div id="stickerTool">
                         <input type="radio" name="tools" id="sticker" value={toolStates.STICKER} onChange={findSelected} />
-                        <label htmlFor="sticker">Sticker (NOT FUNCTIONAL)</label>
+                        <label htmlFor="sticker">Sticker</label>
                     </div>
 
                     <div id="selectTool">
                         <input type="radio" name="tools" id="select" value={toolStates.SELECT} onChange={findSelected} />
                         <label htmlFor="select">Select (NOT FUNCTIONAL)</label>
+                    </div>
+
+                    <div id="transformTool">
+                        <input type="radio" name="tools" id="transform" value={toolStates.TRANSFORM} onChange={findSelected} />
+                        <label htmlFor="transform">Transform (NOT FUNCTIONAL)</label>
                     </div>
                 </div>
 
@@ -410,19 +548,22 @@ const CreateToolsCanvasPaperJS = () => {
                 <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor} />
                 <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize} />
                 <FillOptions enabled={fillOptionsEnabled} changeFillColor={setFillColor} />
+                <ShapeOptions enabled={shapeOptionsEnabled} shapeBorderSize={shapeBorderWidth} changeShapeBorderSize={setShapeBorderWidth} 
+                                changeShapeBorderColor={setShapeBorderColor} changeShapeFillColor={setShapeFillColor} changeShape={setShapeSelected} />
+                <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
             </div>
 
             <div id="layerOptions">
                 <div id="layer2">
                     <input type="radio" name="layers" id="layer2" value='2' onChange={changeLayer} />
                     <label htmlFor="layer2">Layer 2</label>
-                    <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} checked></input>
+                    <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} defaultChecked></input>
                 </div>
 
                 <div id="layer1">
                     <input type="radio" name="layers" id="layer1" value='1' defaultChecked onChange={changeLayer} />
                     <label htmlFor="layer1">Layer 1</label>
-                    <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} checked></input>
+                    <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} defaultChecked></input>
                 </div>
             </div>
         </div>
