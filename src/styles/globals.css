@@ -251,8 +251,7 @@ button {
     z-index: 2;
 }
 
-.getStarted p
-{
+.getStarted p {
     padding: 0 7vw;
 }
 
@@ -263,22 +262,43 @@ button {
 
 /* BOOK ANIMATION */
 
-@keyframes open
-{
-    0% {background-image: url(../../public/images/GIFs/book-split/Frame1.gif); }
-    5% {background-image: url(../../public/images/GIFs/book-split/Frame2.gif); }
-    20% {background-image: url(../../public/images/GIFs/book-split/Frame3.gif); }
-    45% {background-image: url(../../public/images/GIFs/book-split/Frame4.gif); }
-    60% {background-image: url(../../public/images/GIFs/book-split/Frame5.gif); }
-    75% {background-image: url(../../public/images/GIFs/book-split/Frame6.gif); }
-    90% {background-image: url(../../public/images/GIFs/book-split/Frame7.gif); }
-    100% {background-image: url(../../public/images/GIFs/book-split/Frame8.gif); }
+@keyframes open {
+    0% {
+        background-image: url(../../public/images/GIFs/book-split/Frame1.gif);
+    }
+
+    5% {
+        background-image: url(../../public/images/GIFs/book-split/Frame2.gif);
+    }
+
+    20% {
+        background-image: url(../../public/images/GIFs/book-split/Frame3.gif);
+    }
+
+    45% {
+        background-image: url(../../public/images/GIFs/book-split/Frame4.gif);
+    }
+
+    60% {
+        background-image: url(../../public/images/GIFs/book-split/Frame5.gif);
+    }
+
+    75% {
+        background-image: url(../../public/images/GIFs/book-split/Frame6.gif);
+    }
+
+    90% {
+        background-image: url(../../public/images/GIFs/book-split/Frame7.gif);
+    }
+
+    100% {
+        background-image: url(../../public/images/GIFs/book-split/Frame8.gif);
+    }
 }
 
-.book-animation
-{
+.book-animation {
     z-index: 99;
-    background-image: url(../../public/images/GIFs/book-split/Frame8.gif); 
+    background-image: url(../../public/images/GIFs/book-split/Frame8.gif);
     background-size: contain;
     background-repeat: no-repeat;
     width: 45%;
@@ -291,14 +311,12 @@ button {
     top: 5%;
 }
 
-.getStarted:hover .book-animation
-{
+.getStarted:hover .book-animation {
     animation: open .5s;
     animation-fill-mode: forwards;
 }
 
-.getStarted:hover button 
-{
+.getStarted:hover button {
     filter: brightness(1);
     transform: scale(1.1);
     transition: ease-in-out .5s;
@@ -540,13 +558,14 @@ button {
     width: 100%;
     justify-content: space-between;
 } */
-.footer-bar{
-    width:100vw;
-    display:flex;
-    justify-content:space-between;
-    flex-flow:row wrap;
-    z-index:5;
+.footer-bar {
+    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row wrap;
+    z-index: 5;
 }
+
 .footer-nav {
     justify-content: flex-start;
     font-family: var(--font-back-issues);
@@ -569,9 +588,11 @@ button {
     display: inline-block;
     padding-right: 3vw;
 }
-.social-div{
-    flex-basis:50%;
+
+.social-div {
+    flex-basis: 50%;
 }
+
 .social {
     justify-content: space-between;
     text-align: right;
@@ -617,9 +638,10 @@ button {
     color: var(--grayscale-primary-color);
     font-size: medium;
     text-align: center;
-    margin:0;
+    margin: 0;
     /* vertical-align:bottom; */
 }
+
 /* .copyright-div{
     width:100%;
 } */
@@ -790,52 +812,61 @@ a {
     font-weight: bold;
     color: var(--grayscale-text-bg-color);
 }
+
 @media (max-width: 576px) {
-    .footer-bar{
-        position:relative;
-        flex-direction:column;
-        max-height:none;
+    .footer-bar {
+        position: relative;
+        flex-direction: column;
+        max-height: none;
     }
-    .footer-nav-list{
-        margin:0;
+
+    .footer-nav-list {
+        margin: 0;
     }
-    .copyright-div{
-        transform:translateY(0);
+
+    .copyright-div {
+        transform: translateY(0);
     }
-   
-    .social{
-        text-align:left;
-        margin-bottom:0;
+
+    .social {
+        text-align: left;
+        margin-bottom: 0;
         padding: 0;
     }
 }
+
 /* X-Small devices (portrait phones, less than 576px)
 No media query for `xs` since this is the default in Bootstrap */
 
 /* Small devices (landscape phones, 576px and up) */
 
 @media (min-width: 576px) {
-    .footer-bar{
-        flex-flow:row wrap;
-        z-index:5;
+    .footer-bar {
+        flex-flow: row wrap;
+        z-index: 5;
     }
-    .copyright-div{
-        transform:translateY(-75%);
-        flex-basis:100%;
-        text-align:center;
-        margin-bottom:10px;
+
+    .copyright-div {
+        transform: translateY(-75%);
+        flex-basis: 100%;
+        text-align: center;
+        margin-bottom: 10px;
     }
-    .social-div{
-        flex-basis:50%;
+
+    .social-div {
+        flex-basis: 50%;
     }
-    .social{
-        text-align:right;
-        margin-bottom:0;
+
+    .social {
+        text-align: right;
+        margin-bottom: 0;
         padding: 0;
     }
-    .footer-nav{
-        flex-basis:50%;
+
+    .footer-nav {
+        flex-basis: 50%;
     }
+
     .scroll-btn {
         left: 30vw;
         padding: 3vw 0vw 3vw 8vw;
@@ -857,11 +888,12 @@ No media query for `xs` since this is the default in Bootstrap */
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-    
-    
-    .copyright-div{
-        height:auto;
+
+
+    .copyright-div {
+        height: auto;
     }
+
     .professors {
         /* width: 70%; */
         /* margin: 10px 100px; */
@@ -1084,26 +1116,26 @@ No media query for `xs` since this is the default in Bootstrap */
         margin: 0 auto;
     }
 
+    body p {
+        font-size: 1.5vw;
+    }
+
+    h2 {
+        font-size: 4vw;
+    }
+
+
+
     /* MISSION */
     .mission h2 {
         background: url(../../public/images/background-boxes/bw/Desktop_Mission_Small_BW.svg) no-repeat center/contain;
-
-        padding: 3rem;
-        margin: 0;
-    }
-
-    .whatcanido h2 {
-        background: url(../../public/images/background-boxes/bw/Desktop_What_Can_I_Do_BW.svg) no-repeat center/contain;
-
-        padding: 2rem;
-        margin: 0;
+        padding: 6vw;
+        margin: 10% auto;
     }
 
     .missionimg {
-        font-size: 1.5vw;
-
         width: 90vw;
-        margin: 0 -5vw;
+        margin: 0 auto;
     }
 
     .missionimg p {
@@ -1113,7 +1145,7 @@ No media query for `xs` since this is the default in Bootstrap */
 
         padding: 1rem;
         width: 70%;
-        margin: 15% auto 0;
+        margin: 0vw auto 15%;
     }
 
     .topMission,
@@ -1121,27 +1153,35 @@ No media query for `xs` since this is the default in Bootstrap */
         display: none;
     }
 
-    .leftMission,
+    .leftMission {
+        display: inline;
+
+        position: absolute;
+        height: auto;
+        margin: -18% auto;
+    }
+
     .rightMission {
         display: inline;
 
         position: absolute;
         height: auto;
+        margin: -3% auto;
     }
 
     /* READ */
     .read h2 {
         background: url(../../public/images/background-boxes/bw/Desktop_Read_Small_BW.svg) no-repeat center/contain;
 
-        padding: 4rem;
-        margin: 0;
+        padding: 6vw;
+        margin: 0 auto -10%;
     }
 
     .readimg {
         font-size: 1.5vw;
 
         width: 90vw;
-        margin: 0 -5vw;
+        margin: 0 auto;
     }
 
     .readimg p {
@@ -1151,7 +1191,7 @@ No media query for `xs` since this is the default in Bootstrap */
 
         padding: 1rem;
         width: 70%;
-        margin: 15% auto 0;
+        margin: 5% auto 5vw;
     }
 
     .topRead,
@@ -1163,21 +1203,22 @@ No media query for `xs` since this is the default in Bootstrap */
         display: inline;
         position: absolute;
         height: auto;
+        margin: -10% auto;
     }
 
     /* CREATE */
     .create h2 {
         background: url(../../public/images/background-boxes/bw/Desktop_Create_Small_BW.svg) no-repeat center/contain;
 
-        padding: 4rem;
-        margin: 0;
+        padding: 6vw;
+        margin: 0 auto -10%;
     }
 
     .createimg {
         font-size: 1.5vw;
 
         width: 90vw;
-        margin: 0 -5vw;
+        margin: 0 auto;
     }
 
     .createimg p {
@@ -1187,7 +1228,7 @@ No media query for `xs` since this is the default in Bootstrap */
 
         padding: 1rem;
         width: 70%;
-        margin: 15% auto 0;
+        margin: 5% auto 0;
     }
 
     .topCreate,
@@ -1199,6 +1240,7 @@ No media query for `xs` since this is the default in Bootstrap */
         display: inline;
         position: absolute;
         height: auto;
+        margin: -8% auto;
     }
 
     .getStarted
@@ -1212,6 +1254,14 @@ No media query for `xs` since this is the default in Bootstrap */
 
         left: -30%;
         top: -10%;
+    }
+
+    .getStarted button {
+        font-size: 4vw;
+    }
+
+    .our-team button {
+        font-size: 4vw;
     }
 }
 
