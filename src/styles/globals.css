@@ -19,7 +19,6 @@
          */
 }
 
-
 .navbar,
 .footer {
     font-family: var(--font-back-issues);
@@ -28,7 +27,7 @@
 }
 
 .navbar {
-    background-color: var(--primary-color);
+    background-color: var(--grayscale-background-color);
 }
 
 .nav-link,
@@ -45,17 +44,16 @@ body,
 html {
     width: 100%;
     font-family: var(--font-back-issues);
-    background-color: var(--background-color);
+    background-color: var(--grayscale-text-color);
     max-width: 100%;
-    filter: grayscale(1);
-
+    /* filter: grayscale(1); */
     padding-right: 0 !important;
 }
 
 body {
     background-image: radial-gradient(circle at center,
-            #095e75 0.15rem,
-            transparent 0), radial-gradient(circle at center, #02627c 0.15rem, transparent 0);
+            var(--grayscale-background-color) 0.15rem,
+            transparent 0), radial-gradient(circle at center, var(--grayscale-background-color) 0.15rem, transparent 0);
     background-size: 1.3rem 1.3rem;
     background-position: 0 0, 0.65rem 0.65rem;
 }
@@ -303,7 +301,7 @@ button {
     background-repeat: no-repeat;
     width: 45%;
     height: 25vw;
-
+    filter: grayscale(1);
     animation: none;
 
     position: absolute;
@@ -364,6 +362,7 @@ button {
     background-size: 100% 100%;
     margin: 6vh 0 3vh;
     text-align: center;
+    filter: grayscale(1);
 }
 
 .our-team button {
@@ -630,7 +629,7 @@ button {
 
 .iconcolor {
     filter: invert(100%);
-    filter: invert(79%) sepia(16%) saturate(1167%) hue-rotate(354deg) brightness(103%) contrast(104%);
+    /* filter: invert(79%) sepia(16%) saturate(1167%) hue-rotate(354deg) brightness(103%) contrast(104%); */
     /* Yellow icons ^ */
 }
 
@@ -655,6 +654,7 @@ button {
     background-image: linear-gradient(45deg, #0e7491 25%, #0b5e75 25%, #0b5e75 50%, #0e7491 50%, #0e7491 75%, #0b5e75 75%, #0b5e75 100%);
     background-size: 11.31px 11.31px;
     border: 5px solid black;
+    filter: grayscale(1);
 }
 
 .top-right-spikes,
@@ -725,6 +725,7 @@ button {
     padding-left: 40px;
     margin-top: 20px;
     z-index: 2;
+    filter: grayscale(1);
 }
 
 #scroll-text {
