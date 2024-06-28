@@ -232,12 +232,12 @@ button {
     } 
 
     #back-button {
-      top:9vh;
+      top:80px;
       left:3vw;
     }
 
     #hooks-toggle {
-      bottom:11vh;
+      bottom:150px;
       right:3vw;
     }
   
@@ -275,12 +275,12 @@ button {
     } 
 
     #back-button {
-      top:8vh;
+      top:80px;
       left:3vw;
     }
 
     #hooks-toggle {
-      bottom:10vh;
+      bottom:150px;
       right:3vw;
     }
   
