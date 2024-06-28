@@ -25,7 +25,6 @@
     font-family: var(--font-back-issues);
     font-style: normal;
     font-weight: 300;
-    filter: grayscale(1);
 }
 
 .navbar {
@@ -47,9 +46,10 @@ html {
     width: 100%;
     font-family: var(--font-back-issues);
     background-color: var(--background-color);
-    overflow-x: hidden;
     max-width: 100%;
     filter: grayscale(1);
+
+    padding-right: 0 !important;
 }
 
 body {
@@ -230,9 +230,9 @@ button {
 }
 
 .getStarted {
-    width: 100vw;
+    width: auto;
     height: auto;
-    margin: 10vh auto;
+    margin: -2vw auto 10vw;
 
     position: relative;
 
@@ -243,7 +243,7 @@ button {
     border: 10px solid transparent;
     background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
     filter: brightness(.5);
-    width: 60%;
+    width: 100%;
     height: auto;
     margin: 0 auto;
     padding: 5vw 10vw 6vw;
@@ -301,14 +301,14 @@ button {
     background-image: url(../../public/images/GIFs/book-split/Frame8.gif);
     background-size: contain;
     background-repeat: no-repeat;
-    width: 35%;
+    width: 45%;
     height: 25vw;
 
     animation: none;
 
     position: absolute;
-    left: 7%;
-    top: -5%;
+    left: -17%;
+    top: 5%;
 }
 
 .getStarted:hover .book-animation {
@@ -1046,6 +1046,11 @@ No media query for `xs` since this is the default in Bootstrap */
     .createimg p {
         padding: 5vh 10vw 4vh 9vw;
     }
+
+    .getStarted
+    {
+        margin: -5vw auto 10vw;
+    }
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -1238,10 +1243,16 @@ No media query for `xs` since this is the default in Bootstrap */
         margin: -8% auto;
     }
 
-    .book-animation {
-        background-image: url(../../public/images/GIFs/book-split/Frame1.gif);
+    .getStarted
+    {
+        margin: 10vw auto 10vw;
+    }
 
-        left: 7%;
+    .book-animation
+    {
+        background-image: url(../../public/images/GIFs/book-split/Frame1.gif); 
+
+        left: -30%;
         top: -10%;
     }
 
