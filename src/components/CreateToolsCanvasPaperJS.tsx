@@ -316,6 +316,17 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     // --- TEXT TOOL ---
+    // Boolean used to determine if the text tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
+    const [textOptionsEnabled, setTextOptionsEnabled] = useState<boolean>(false);
+    let textPath : paper.PointText;
+
+    // The Text Tool:
+    const [textTool, setTextTool] = useState<paper.Tool>(new paper.Tool());
+
+    textTool.onMouseDown = function(event: paper.ToolEvent) {
+        textPath = new paper.PointText(event.point);
+        textPath.content = "Hello World";
+    }
 
 
     // --- STICKER TOOL ---
@@ -456,6 +467,14 @@ const CreateToolsCanvasPaperJS = () => {
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
             setshapeOptionsEnabled(true);
+            setStickerOptionsEnabled(false);
+        }
+        else if (Number(buttonSelected?.value) == toolStates.TEXT) {
+            textTool.activate();
+            setPenOptionsEnabled(false);
+            setEraserOptionsEnabled(false);
+            setFillOptionsEnabled(false);
+            setshapeOptionsEnabled(false);
             setStickerOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.STICKER) {
