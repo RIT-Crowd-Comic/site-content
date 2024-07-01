@@ -8,10 +8,11 @@ interface Props
     changeShapeBorderColor: Function;       // Method for setting the color of the shape's border
     changeShapeFillColor: Function;         // Method for setting the color of the shape's fill
     changeShape: Function;                  // Method for setting the shape
+    changeDashedBorder: Function;           // Method for toggling the shape's dashed border
 }
 
 // *** Shape Options is used in order to changed the different values associated with the pen tool in CreateToolsCanvas ***
-const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeShapeBorderColor, changeShapeFillColor, changeShape} : Props) =>
+const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeShapeBorderColor, changeShapeFillColor, changeShape, changeDashedBorder} : Props) =>
 {
     // Reference to the size slider HTML Element
     const sliderReference = useRef<HTMLInputElement>(null);
@@ -49,6 +50,12 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
         changeShape(buttonSelected?.value);
     }
 
+    function updateDashedBorder()
+    {
+        let checkBox = document.querySelector("#dashedBorderToggle") as HTMLInputElement;
+        changeDashedBorder(checkBox.checked);
+    }
+
     // If the component is set to be enabled, return HTML, otherwise, return nothing
     if(enabled)
     {
@@ -74,6 +81,10 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
                 <div id="shapeBorderSlider">
                     <label id="sliderLabel" htmlFor="shapeBorderRange">Border Size: {shapeBorderSize}</label>
                     <input type="range" min="1" max="20" defaultValue={shapeBorderSize} step="1" id="shapeBorderRange" ref={sliderReference} onChange={updateSize}></input>
+                </div>
+                <div id="dashedBorder">
+                    <input type="checkbox" id="dashedBorderToggle" onChange={updateDashedBorder}></input>
+                    <label htmlFor="dashedBorderToggle">Dashed Border</label>
                 </div>
                 <div id="borderPaletteButtons">
                     <label id="colorLabel">Border Colors:</label>

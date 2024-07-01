@@ -23,6 +23,7 @@ const StickerOptions = ({enabled, changeSticker} : Props) =>
                 <div id="actorImgs">
                     <label id="actorLabel">Actors:</label><br/>
                     <img src="/stickers/monkey.png" alt="Monkey Sticker" onClick={() => changeSticker("/stickers/monkey.png")}></img><br/>
+                    <img src="/stickers/sten.png" alt="Sten Sticker" onClick={() => changeSticker("/stickers/sten.png")}></img><br/>
                 </div>
             </div>
         )
