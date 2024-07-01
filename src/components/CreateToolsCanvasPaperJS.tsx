@@ -345,14 +345,16 @@ const CreateToolsCanvasPaperJS = () => {
     const [endSelectPoint, setEndSelectPoint] = useState(new paper.Point(0, 0));
 
     // Bounds of selected area of canvas
-    let selectedAreaBounds: paper.Path;
+    let selectedAreaBounds: paper.Rectangle;
+    let shownSelectedAreaBounds: paper.Path;
 
-    // Selected area of canvas (+elements inside it)
+    // Selected area of rasterized canvas
     let selectedArea: paper.Raster;
 
     // Boolean to check if user dragged mouse
     const [selectMouseDragged, setSelectMouseDragged] = useState(false);
 
+    // Boolean to check if user has already selected an area
     const [areaSelected, setAreaSelected] = useState(false);
 
     // The Select Tool:
@@ -365,10 +367,12 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     const drawSelectedArea = () => {
-        selectedAreaBounds = new paper.Path.Rectangle(startSelectPoint, endSelectPoint);
-        selectedAreaBounds.strokeColor = new paper.Color("black");
-        selectedAreaBounds.strokeWidth = 4;
-        selectedAreaBounds.dashArray = [10, 10];
+        selectedAreaBounds = new paper.Rectangle(startSelectPoint, endSelectPoint);
+
+        shownSelectedAreaBounds = new paper.Path.Rectangle(selectedAreaBounds);
+        shownSelectedAreaBounds.strokeColor = new paper.Color("black");
+        shownSelectedAreaBounds.strokeWidth = 4;
+        shownSelectedAreaBounds.dashArray = [10, 10];
     }
 
     //selects area of canvas (rasterized) chosen
@@ -382,7 +386,7 @@ const CreateToolsCanvasPaperJS = () => {
     //changes the element according to the selectAction
     selectTool.onMouseDrag = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
-            if(areaSelected){
+            if (areaSelected) {
                 canvasProject.activeLayer.lastChild.remove();
             }
 
@@ -400,24 +404,26 @@ const CreateToolsCanvasPaperJS = () => {
                 canvasProject.activeLayer.lastChild.remove();
 
                 drawSelectedArea();
-                // //needs to get everything in selected area
-                // let selectedArea = raster.getSubRaster(selectedAreaBounds);
 
-                // let selectedAreaAsDataUrl = selectedArea.toDataURL();
-                // let subImage = new Image(width, height);
-                // subImage.src = selectedAreaAsDataUrl;
+                //needs to get everything in selected area
+                //test rasterize to see if selection works properly
+                let raster = canvasProject.activeLayer.rasterize();
+                let selectedArea = raster.getSubRaster(selectedAreaBounds);
 
-                // subImage.onload = function (event) {
-                //     var subRaster = new paper.Raster(subImage);
+                //not copying so more for testing purposes to see if area selected is corrected
+                let selectedAreaAsDataUrl = selectedArea.toDataURL();
+                let subImage = new Image(canvasReference.current?.width, canvasReference.current?.height);
+                subImage.src = selectedAreaAsDataUrl;
+
+                subImage.onload = function (event) {
+                    let subRaster = new paper.Raster(subImage);
+                }
+
+                //selected area needs to be reachable for transform tool
             }
         }
         resetSelectStates();
     }
-
-    // testing purposes
-    // useEffect(() => {
-    //     console.log()
-    // }, []);
 
     // --- TRANSFORM TOOL ---
     // String describing action user is doing (moving, resizing, rotating, etc.)
@@ -524,6 +530,7 @@ const CreateToolsCanvasPaperJS = () => {
             setshapeOptionsEnabled(false);
             setStickerOptionsEnabled(true);
         }
+        //will need a way to deselect selection (ERROR WHEN CLEARING AS WELL AS SELECT SHOWING IN OTHER OPTIONS)
         else if (Number(buttonSelected?.value) == toolStates.SELECT) {
             selectTool.activate();
             setPenOptionsEnabled(false);
@@ -559,6 +566,9 @@ const CreateToolsCanvasPaperJS = () => {
             canvasProject.activeLayer.removeChildren();
             //needs to be edited later so only elements on the layer are removed from the array OR specific array for elements on each layer
             //setElements([]);
+
+            //temp set until deselect option made
+            setAreaSelected(false);
         }
     }
 
