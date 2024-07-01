@@ -57,7 +57,7 @@ const TeamPage = () => {
           </div>
           <div className="card person-panel border border-black border-3 m-3">
               <Image width={200} height={200} className="img-fluid portrait card-img w-100 h-100" alt="" src="/images/people/travis_stodter_white.png"/>
-              <Link href="https:www.linkedin.com">
+              <Link href="https://www.linkedin.com/in/travis-stodter/">
               <div className="card-img-overlay">
                 <div className="card-header p-2 rounded-0">
                   Travis Stodter
