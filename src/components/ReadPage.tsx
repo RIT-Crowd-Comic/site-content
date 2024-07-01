@@ -11,11 +11,11 @@ const secondPanelImage = "/comic-panels/second_panel.png";
 const thirdPanelImage = "/comic-panels/third_panel.png";
 
 //import icons and background
-const backIcon = "/images/back-button-pressed.png"
-const toggleLayoutHorizIcon = "/images/panel-view-button-horizontal-pressed.png"
-const toggleLayoutVertIcon = "/images/panel-view-button-vertical-pressed.png"
-const toggleHooksOn = "/images/view-branch-button-on-pressed.png"
-const toggleHooksOff = "/images/view-branch-button-off-pressed.png"
+const backIcon = "/images/back-button-pressed.png";
+const toggleLayoutHorizIcon = "/images/panel-view-button-horizontal-pressed.png";
+const toggleLayoutVertIcon = "/images/panel-view-button-vertical-pressed.png";
+const toggleHooksOn = "/images/view-branch-button-on-pressed.png";
+const toggleHooksOff = "/images/view-branch-button-off-pressed.png";
 
 //set the base trunks to display by default on read
 const ReadPage = () => {
