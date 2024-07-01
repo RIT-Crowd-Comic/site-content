@@ -344,13 +344,15 @@ const CreateToolsCanvasPaperJS = () => {
     const [startSelectPoint, setStartSelectPoint] = useState(new paper.Point(0, 0));
     const [endSelectPoint, setEndSelectPoint] = useState(new paper.Point(0, 0));
 
-    // Area of Canvas being changed
-    let selectedArea: paper.Path;
+    // Bounds of selected area of canvas
+    let selectedAreaBounds: paper.Path;
+
+    // Selected area of canvas (+elements inside it)
+    let selectedArea: paper.Raster;
 
     // Boolean to check if user dragged mouse
     const [selectMouseDragged, setSelectMouseDragged] = useState(false);
 
-    // Boolean to check if user has already selected area
     const [areaSelected, setAreaSelected] = useState(false);
 
     // The Select Tool:
@@ -363,10 +365,10 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     const drawSelectedArea = () => {
-        let selectedArea = new paper.Path.Rectangle(startSelectPoint, endSelectPoint);
-        selectedArea.strokeColor = new paper.Color("black");
-        selectedArea.strokeWidth = 4;
-        selectedArea.dashArray = [10, 10];
+        selectedAreaBounds = new paper.Path.Rectangle(startSelectPoint, endSelectPoint);
+        selectedAreaBounds.strokeColor = new paper.Color("black");
+        selectedAreaBounds.strokeWidth = 4;
+        selectedAreaBounds.dashArray = [10, 10];
     }
 
     //selects area of canvas (rasterized) chosen
@@ -374,33 +376,48 @@ const CreateToolsCanvasPaperJS = () => {
         if (canvasProject.activeLayer.locked == false) {
             setStartSelectPoint(event.point);
             setEndSelectPoint(event.point);
-
-            drawSelectedArea();
         }
     }
 
     //changes the element according to the selectAction
     selectTool.onMouseDrag = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
-            canvasProject.activeLayer.lastChild.remove();
+            if(areaSelected){
+                canvasProject.activeLayer.lastChild.remove();
+            }
 
             setEndSelectPoint(event.point);
             setSelectMouseDragged(true);
 
             drawSelectedArea();
+            setAreaSelected(true);
         }
     }
     selectTool.onMouseUp = function () {
         if (canvasProject.activeLayer.locked == false) {
             //creates & draws current rect to canvas if mouse was dragged
-            if (mouseDragged) {
+            if (selectMouseDragged) {
                 canvasProject.activeLayer.lastChild.remove();
 
                 drawSelectedArea();
+                // //needs to get everything in selected area
+                // let selectedArea = raster.getSubRaster(selectedAreaBounds);
+
+                // let selectedAreaAsDataUrl = selectedArea.toDataURL();
+                // let subImage = new Image(width, height);
+                // subImage.src = selectedAreaAsDataUrl;
+
+                // subImage.onload = function (event) {
+                //     var subRaster = new paper.Raster(subImage);
             }
         }
         resetSelectStates();
     }
+
+    // testing purposes
+    // useEffect(() => {
+    //     console.log()
+    // }, []);
 
     // --- TRANSFORM TOOL ---
     // String describing action user is doing (moving, resizing, rotating, etc.)
@@ -427,7 +444,7 @@ const CreateToolsCanvasPaperJS = () => {
         // }
     }
 
-    transformTool.onMouseDrag = function(){
+    transformTool.onMouseDrag = function () {
         // //element changes position to where the mouse is if action is moving
         // if (selectAction == "moving") {
         //     elements[changedElementIndex].position = event.point;
@@ -458,7 +475,7 @@ const CreateToolsCanvasPaperJS = () => {
         // }
     }
 
-    transformTool.onMouseUp = function() {
+    transformTool.onMouseUp = function () {
 
     }
 
