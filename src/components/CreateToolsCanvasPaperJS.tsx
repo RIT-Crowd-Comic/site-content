@@ -21,6 +21,7 @@ const CreateToolsCanvasPaperJS = () => {
     let canvasProject = paper.project;
 
     // References to the PaperJS Canvas Layers
+    let backgroundLayerReference = useRef<paper.Layer>();
     let layer1Reference = useRef<paper.Layer>();
     let layer2Reference = useRef<paper.Layer>();
 
@@ -40,7 +41,8 @@ const CreateToolsCanvasPaperJS = () => {
         canvasProject = paper.project;
 
         // Set the layer references as well as the default active layer
-        layer1Reference.current = canvasProject.activeLayer;
+        backgroundLayerReference.current = canvasProject.activeLayer
+        layer1Reference.current = new paper.Layer();
         layer2Reference.current = new paper.Layer();
         layer1Reference.current.activate();
 
@@ -89,17 +91,21 @@ const CreateToolsCanvasPaperJS = () => {
 
     // Begins the process of drawing the user's input to the canvas HTMLElement
     penTool.onMouseDown = function () {
-        penPath = new paper.Path();
-        penPath.strokeColor = new paper.Color(penColor);
-        penPath.strokeWidth = penSize;
-        penPath.strokeCap = 'round';
-        penPath.strokeJoin = 'round';
-        penPath.blendMode = 'normal';
+        if(canvasProject.activeLayer.locked == false){
+            penPath = new paper.Path();
+            penPath.strokeColor = new paper.Color(penColor);
+            penPath.strokeWidth = penSize;
+            penPath.strokeCap = 'round';
+            penPath.strokeJoin = 'round';
+            penPath.blendMode = 'normal';
+        }
     }
 
     // Continues drawing the user's input to the canvas HTMLElement
     penTool.onMouseDrag = function (event: paper.ToolEvent) {
-        penPath?.add(event.point);
+        if(canvasProject.activeLayer.locked == false){
+            penPath?.add(event.point);
+        }
     }
 
     // --- ERASER TOOL ---
@@ -120,46 +126,52 @@ const CreateToolsCanvasPaperJS = () => {
     // Begins the process of drawing the user's input to the canvas HTMLElement
     eraserTool.onMouseDown = function()
     {
-        let newPath = new paper.Path();
+        if(canvasProject.activeLayer.locked == false){
+            let newPath = new paper.Path();
 
-        // Although we are erasing the tool technically still needs a color for what would be drawn if we were using a different blendMode
-        newPath.strokeColor = new paper.Color("black");
-        newPath.strokeWidth = eraserSize * view.pixelRatio;
-        newPath.strokeCap = 'round';
-        newPath.strokeJoin = 'round';
+            // Although we are erasing the tool technically still needs a color for what would be drawn if we were using a different blendMode
+            newPath.strokeColor = new paper.Color("black");
+            newPath.strokeWidth = eraserSize * view.pixelRatio;
+            newPath.strokeCap = 'round';
+            newPath.strokeJoin = 'round';
 
-        eraserPath = newPath;
+            eraserPath = newPath;
 
-        /*  Change how user input is drawn based on the tool they've selected
-            Based on two different drawing types source-over vs destination-out
-            Source-over: Draws on top of prexisting canvas
-            Destination-out: Existing content is kept where it does not overlap with the new shape*/ 
-            tmpGroup = new paper.Group({
-                children: canvasProject.activeLayer.removeChildren(),
-                blendMode: 'source-out',
-                insert: false
-              });
-          
-              // combine the path and group in another group with a blend of 'source-over'
-              mask = new paper.Group({
-                children: [eraserPath, tmpGroup],
-                blendMode: 'source-over'
-              });
-            //console.log("ping");
+            /*  Change how user input is drawn based on the tool they've selected
+                Based on two different drawing types source-over vs destination-out
+                Source-over: Draws on top of prexisting canvas
+                Destination-out: Existing content is kept where it does not overlap with the new shape*/ 
+                tmpGroup = new paper.Group({
+                    children: canvasProject.activeLayer.removeChildren(),
+                    blendMode: 'source-out',
+                    insert: false
+                });
+            
+                // combine the path and group in another group with a blend of 'source-over'
+                mask = new paper.Group({
+                    children: [eraserPath, tmpGroup],
+                    blendMode: 'source-over'
+                });
+                //console.log("ping");
+        }
     }
 
     // Continues drawing the user's input to the canvas HTMLElement
     eraserTool.onMouseDrag = function(event: paper.ToolEvent) 
     {   
-        eraserPath?.add(event.point);
-        //console.log("pang");
+        if(canvasProject.activeLayer.locked == false){
+            eraserPath?.add(event.point);
+            //console.log("pang");
+        }
     }
 
     eraserTool.onMouseUp = function()
     {
-        canvasProject.activeLayer.rasterize({resolution: 300});
-        tmpGroup?.remove();
-        mask?.remove();
+        if(canvasProject.activeLayer.locked == false){
+            canvasProject.activeLayer.rasterize({resolution: 300});
+            tmpGroup?.remove();
+            mask?.remove();
+        }
     }
 
     // --- FILL TOOL ---
@@ -178,12 +190,14 @@ const CreateToolsCanvasPaperJS = () => {
             throw new Error("Canvas is null");
         }
 
-        // Point is the coordinate the top left of the rectangle being drawn cooresponds to
-        let point = new paper.Point(0, 0);
-        let size = new paper.Size(canvasReference.current?.width, canvasReference.current.height);
-        let fillPath = new paper.Path.Rectangle(point, size);
-        fillPath.fillColor = new paper.Color(fillColor);
-        fillPath.blendMode = 'normal';
+        if(canvasProject.activeLayer.locked == false){
+            // Point is the coordinate the top left of the rectangle being drawn cooresponds to
+            let point = new paper.Point(0, 0);
+            let size = new paper.Size(canvasReference.current?.width, canvasReference.current.height);
+            let fillPath = new paper.Path.Rectangle(point, size);
+            fillPath.fillColor = new paper.Color(fillColor);
+            fillPath.blendMode = 'normal';
+        }
     }
 
     // --- SHAPE TOOL ---
@@ -196,6 +210,9 @@ const CreateToolsCanvasPaperJS = () => {
 
     // Integer used to specify how thick the border surrounding the shape is
     const [shapeBorderWidth, setShapeBorderWidth] = useState<number>(5);
+
+    // Boolean used to determine if the shape should have a dashed border
+    const [dashedBorder, setDashedBorder] = useState<boolean>(false);
 
     // Points describing the rectangle's dimensions (start and end)
     const [startPoint, setStartPoint] = useState(new paper.Point(0, 0));
@@ -229,66 +246,73 @@ const CreateToolsCanvasPaperJS = () => {
     const [shapeTool, setShapeTool] = useState<paper.Tool>(new paper.Tool());
     shapeTool.minDistance = 2;
 
+    function drawShape(shapePath: paper.Path)
+    {
+        if(shapeSelected == shapeStates.RECTANGLE)
+        {
+            shapePath = new paper.Path.Rectangle(startPoint, endPoint);
+                
+        }
+        else if(shapeSelected == shapeStates.LINE)
+        {
+            shapePath = new paper.Path.Line(startPoint, endPoint);
+        }
+        else if(shapeSelected == shapeStates.ELLIPSE)
+        {
+            shapePath = new paper.Path.Ellipse(new paper.Rectangle(startPoint, endPoint));
+        }
+
+        shapePath.fillColor = new paper.Color(shapeFillColor);
+        shapePath.strokeColor = new paper.Color(shapeBorderColor);
+        shapePath.strokeWidth = shapeBorderWidth;
+
+        if(dashedBorder)
+        {
+            shapePath.dashArray = [10, 10];
+        }
+    }
+
     //currently works so that rectangle is drawn after user releases button
     //sets where the mouse is first clicked as the first point of the rectangle
     shapeTool.onMouseDown = function (event: paper.ToolEvent) {
-        setStartPoint(event.point);
+        if(canvasProject.activeLayer.locked == false){    
+            setStartPoint(event.point);
+            setEndPoint(event.point);   
+
+            let currentShape = new paper.Path;
+            drawShape(currentShape);
+        }
     }
 
     //sets where the mouse is dragged as the last point of the rectangle
     shapeTool.onMouseDrag = function (event: paper.ToolEvent) {
-        setEndPoint(event.point);
-        setMouseDragged(true);
-
-        let tempShape = new paper.Path;
-
-        if(shapeSelected == shapeStates.RECTANGLE)
-        {
-            tempShape = new paper.Path.Rectangle(startPoint, endPoint);
+        if(canvasProject.activeLayer.locked == false){
+            canvasProject.activeLayer.lastChild.remove();
             
-        }
-        else if(shapeSelected == shapeStates.LINE)
-        {
-            tempShape = new paper.Path.Line(startPoint, endPoint);
-        }
-        else if(shapeSelected == shapeStates.ELLIPSE)
-        {
-            tempShape = new paper.Path.Ellipse(new paper.Rectangle(startPoint, endPoint));
-        }
+            setEndPoint(event.point);
+            setMouseDragged(true);
 
-        tempShape.fillColor = new paper.Color(shapeFillColor);
-        tempShape.strokeColor = new paper.Color(shapeBorderColor);
-        tempShape.strokeWidth = shapeBorderWidth;
+            let currentShape = new paper.Path;
+            drawShape(currentShape);
 
-        tempShape.removeOnDrag();
+            //tempShape.removeOnDrag();
+        }
     }
 
     //once rect is created: adds it to elements array and then clears the states
     shapeTool.onMouseUp = function () {
-        //creates & draws current rect to canvas if mouse was dragged
-        if (mouseDragged) {
-            if(shapeSelected == shapeStates.RECTANGLE)
-            {
-                currentShape = new paper.Path.Rectangle(startPoint, endPoint);
-                    
-            }
-            else if(shapeSelected == shapeStates.LINE)
-            {
-                currentShape = new paper.Path.Line(startPoint, endPoint);
-            }
-            else if(shapeSelected == shapeStates.ELLIPSE)
-            {
-                currentShape = new paper.Path.Ellipse(new paper.Rectangle(startPoint, endPoint));
-                console.log("up");
-            }
+        if(canvasProject.activeLayer.locked == false){
+            //creates & draws current rect to canvas if mouse was dragged
+            if (mouseDragged) {
+                canvasProject.activeLayer.lastChild.remove();
 
-            currentShape.fillColor = new paper.Color(shapeFillColor);
-            currentShape.strokeColor = new paper.Color(shapeBorderColor);
-            currentShape.strokeWidth = shapeBorderWidth;
+                let currentShape = new paper.Path;
+                drawShape(currentShape);
 
-            //setElements(prevState => [...prevState, currentRect as paper.Path.Rectangle]);
+                //setElements(prevState => [...prevState, currentRect as paper.Path.Rectangle]);
+            }
+            clearStates();
         }
-        clearStates();
     }
 
     // --- TEXT TOOL ---
@@ -308,19 +332,23 @@ const CreateToolsCanvasPaperJS = () => {
     const [stickerTool, setStickerTool] = useState<paper.Tool>(new paper.Tool());
 
     stickerTool.onMouseDrag = function(event: paper.ToolEvent) {
-        setStickerMouseDragged(true);
-        let tempSticker = new paper.Raster(stickerLink);
-        tempSticker.position = event.point;
-        tempSticker.removeOnDrag();
+        if(canvasProject.activeLayer.locked == false){
+            setStickerMouseDragged(true);
+            let tempSticker = new paper.Raster(stickerLink);
+            tempSticker.position = event.point;
+            tempSticker.removeOnDrag();
+        }
     }
 
     stickerTool.onMouseUp = function (event: paper.ToolEvent) {
-        if(stickerMouseDragged == true)
-        {
-            let sticker = new paper.Raster(stickerLink);
-            sticker.position = event.point;
+        if(canvasProject.activeLayer.locked == false){
+            if(stickerMouseDragged == true)
+            {
+                let sticker = new paper.Raster(stickerLink);
+                sticker.position = event.point;
+            }
+            setStickerMouseDragged(false);
         }
-        setStickerMouseDragged(false);
     }
 
     // --- SELECT TOOL ---
@@ -450,34 +478,80 @@ const CreateToolsCanvasPaperJS = () => {
         let layerSelected = document.querySelector("input[name='layers']:checked") as HTMLInputElement;
 
         switch (Number(layerSelected.value)) {
+            case 0:
+                backgroundLayerReference.current?.activate();
+                break;
             case 1:
                 layer1Reference.current?.activate();
-                //console.log(canvasProject.activeLayer);
                 break;
             case 2:
                 layer2Reference.current?.activate();
-                //console.log(canvasProject.activeLayer);
                 break;
             default:
                 layer1Reference.current?.activate();
-                //console.log(canvasProject.activeLayer);
                 break;
         }
     }
 
     // Erases everything from the current canvas layer
     const clearLayer = () => {
-        canvasProject.activeLayer.removeChildren();
-        //needs to be edited later so only elements on the layer are removed from the array OR specific array for elements on each layer
-        //setElements([]);
+        if(canvasProject.activeLayer.locked == false){
+            canvasProject.activeLayer.removeChildren();
+            //needs to be edited later so only elements on the layer are removed from the array OR specific array for elements on each layer
+            //setElements([]);
+        }
     }
 
     const toggleLayerVisibility = (event: ChangeEvent<HTMLInputElement>) => {
-        if (layer1Reference.current && event.target.value === '1') {
+        if (backgroundLayerReference.current && event.target.value === '0') {
+            backgroundLayerReference.current.visible = !backgroundLayerReference.current.visible;
+        }
+        else if (layer1Reference.current && event.target.value === '1') {
             layer1Reference.current.visible = !layer1Reference.current.visible;
         }
         else if (layer2Reference.current && event.target.value === '2') {
             layer2Reference.current.visible = !layer2Reference.current.visible;
+        }
+    }
+
+    const toggleLayerLock = (event: ChangeEvent<HTMLInputElement>) =>{
+        if(backgroundLayerReference.current && event.target.value === '0'){
+            backgroundLayerReference.current.locked = !backgroundLayerReference.current?.locked;
+        }
+        else if(layer1Reference.current && event.target.value === '1'){
+            layer1Reference.current.locked = !layer1Reference.current.locked;
+        }
+        else if(layer2Reference.current && event.target.value === '2'){
+            layer2Reference.current.locked = !layer2Reference.current.locked;
+        }
+    }
+
+    const changeBackground = (event: ChangeEvent<HTMLInputElement>) => {
+    
+        const file = (event.target as HTMLInputElement).files?.[0];
+
+        // Make sure that the file exists
+        // *TODO*: Come back and add some extra security here to make sure that the file is indeed an image
+        // as well as seeing if I can restrict the image size to be 1200x800
+        if(file && canvasProject.activeLayer.locked == false)
+        {
+            // Need to figure out which layer is currently active so that we can reactivate it after drawing to the background
+            let index = canvasProject.activeLayer.index;
+
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.addEventListener('load', () =>{
+                const url = fileReader.result;
+
+                // Activate the background layer and draw to it
+                backgroundLayerReference.current?.activate();
+                let background = new paper.Raster(URL.createObjectURL(file));
+                background.position = view.center;
+
+                // Reactivate the previously active layer
+                canvasProject.layers[index].activate();
+            });
         }
     }
 
@@ -540,6 +614,22 @@ const CreateToolsCanvasPaperJS = () => {
                 <button className="btn" id="redoButton">Redo (NOT FUNCTIONAL)</button><br></br>
                 <button className="btn" id="undoButton">Undo (NOT FUNCTIONAL)</button><br></br>
                 <button className="btn" id="clearButton" onClick={clearLayer}>Clear</button><br></br>
+
+                <div id="backgroundUploadForm">
+                    <form>
+                        <label htmlFor="imageDropbox" className="form-label">Upload a Background (Recommended Size: 1200x800p)</label>
+                        <input 
+                            className="form-control" 
+                            id="imageDropbox" 
+                            type="file" 
+                            accept="image/*" 
+                            name="image"
+                            // When the form takes an image inputted by the user, set the image link to the inputted image
+                            // If the file does not exist, set the image link to the default image
+                            onChange={changeBackground}
+                        />
+                    </form>
+                </div>
             </fieldset>
 
             <canvas id="canvas" height="800px" width="1200px" ref={canvasReference} />
@@ -549,21 +639,55 @@ const CreateToolsCanvasPaperJS = () => {
                 <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize} />
                 <FillOptions enabled={fillOptionsEnabled} changeFillColor={setFillColor} />
                 <ShapeOptions enabled={shapeOptionsEnabled} shapeBorderSize={shapeBorderWidth} changeShapeBorderSize={setShapeBorderWidth} 
-                                changeShapeBorderColor={setShapeBorderColor} changeShapeFillColor={setShapeFillColor} changeShape={setShapeSelected} />
+                changeShapeBorderColor={setShapeBorderColor} changeShapeFillColor={setShapeFillColor} changeShape={setShapeSelected} 
+                changeDashedBorder={setDashedBorder}/>
                 <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
             </div>
 
             <div id="layerOptions">
                 <div id="layer2">
-                    <input type="radio" name="layers" id="layer2" value='2' onChange={changeLayer} />
-                    <label htmlFor="layer2">Layer 2</label>
-                    <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} defaultChecked></input>
+                    <div id="layer2Select">
+                        <input type="radio" name="layers" id="layer2" value='2' onChange={changeLayer} />
+                        <label htmlFor="layer2">Layer 2</label><br/>
+                    </div>
+                    <div id="layer2Visibility">
+                        <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} defaultChecked></input>
+                        <label htmlFor="layer2Toggle">Visible</label>
+                    </div>
+                    <div id="layer2Lock">
+                        <input type="checkbox" id="layer2LockToggle" value="2" onChange={toggleLayerLock}></input>
+                        <label htmlFor="layer2LockToggle">Lock</label>
+                    </div>
                 </div>
 
                 <div id="layer1">
-                    <input type="radio" name="layers" id="layer1" value='1' defaultChecked onChange={changeLayer} />
-                    <label htmlFor="layer1">Layer 1</label>
-                    <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} defaultChecked></input>
+                    <div id="layer1Select">
+                        <input type="radio" name="layers" id="layer1" value='1' defaultChecked onChange={changeLayer} />
+                        <label htmlFor="layer1">Layer 1</label><br/>
+                    </div>
+                    <div id="layer2Visibility">
+                        <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} defaultChecked></input>
+                        <label htmlFor="layer1Toggle">Visible</label>
+                    </div>
+                    <div id="layer1Lock">
+                        <input type="checkbox" id="layer1LockToggle" value="1" onChange={toggleLayerLock}></input>
+                        <label htmlFor="layer1LockToggle">Lock</label>
+                    </div>
+                </div>
+
+                <div id="backgroundLayer">
+                    <div id="backgroundLayerSelect">
+                        <input type="radio" name="layers" id="background" value='0' onChange={changeLayer} />
+                        <label htmlFor="layer1">Background</label><br/>
+                    </div>
+                    <div id="backgroundLayerVisibility">
+                        <input type="checkbox" id="backgroundToggle" value="0" onChange={toggleLayerVisibility} defaultChecked></input>
+                        <label htmlFor="backgroundToggle">Visible</label>
+                    </div>
+                    <div id="backgroundLayerLock">
+                        <input type="checkbox" id="backgroundLayerLockToggle" value="0" onChange={toggleLayerLock}></input>
+                        <label htmlFor="backgroundLayerLockToggle">Lock</label>
+                    </div>
                 </div>
             </div>
         </div>
