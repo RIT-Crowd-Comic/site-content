@@ -187,7 +187,9 @@ const BranchPlacer = () => {
                     {/* starting text to be updated when either add or remove branch hook button is pressed */}
                 </div>
             </div>
-            <button onClick={pushToLocalStorage} id="publish-btn">Publish</button>
+            <button onClick={pushToLocalStorage} id="publish-btn">
+                <img src=""></img>
+            </button>
         </div>
         </div>
     </>);
