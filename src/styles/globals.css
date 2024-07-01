@@ -48,6 +48,7 @@ html {
     max-width: 100%;
     /* filter: grayscale(1); */
     padding-right: 0 !important;
+    overflow-x: clip;
 }
 
 body {
