@@ -340,9 +340,6 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     // --- SELECT TOOL ---
-    // String describing action user is doing (moving, resizing, rotating, etc.)
-    const [selectAction, setSelectAction] = useState("none");
-
     // Points describing the selected area's dimensions (start and end)
     const [startSelectPoint, setStartSelectPoint] = useState(new paper.Point(0, 0));
     const [endSelectPoint, setEndSelectPoint] = useState(new paper.Point(0, 0));
@@ -359,21 +356,19 @@ const CreateToolsCanvasPaperJS = () => {
     // The Select Tool:
     const [selectTool, setSelectTool] = useState<paper.Tool>(new paper.Tool());
 
-    const resetSelectStates = () =>{
-        setStartSelectPoint(new paper.Point(0,0));
-        setEndSelectPoint(new paper.Point(0,0));
+    const resetSelectStates = () => {
+        setStartSelectPoint(new paper.Point(0, 0));
+        setEndSelectPoint(new paper.Point(0, 0));
         setSelectMouseDragged(false);
-        //setSelectAction("none");
-        //setChangedElementIndex(-1);
     }
 
     const drawSelectedArea = () => {
         let selectedArea = new paper.Path.Rectangle(startSelectPoint, endSelectPoint);
         selectedArea.strokeColor = new paper.Color("black");
         selectedArea.strokeWidth = 4;
-        selectedArea.dashArray = [10,10];
+        selectedArea.dashArray = [10, 10];
     }
-    
+
     //selects area of canvas (rasterized) chosen
     selectTool.onMouseDown = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
@@ -382,7 +377,40 @@ const CreateToolsCanvasPaperJS = () => {
 
             drawSelectedArea();
         }
+    }
 
+    //changes the element according to the selectAction
+    selectTool.onMouseDrag = function (event: paper.ToolEvent) {
+        if (canvasProject.activeLayer.locked == false) {
+            canvasProject.activeLayer.lastChild.remove();
+
+            setEndSelectPoint(event.point);
+            setSelectMouseDragged(true);
+
+            drawSelectedArea();
+        }
+    }
+    selectTool.onMouseUp = function () {
+        if (canvasProject.activeLayer.locked == false) {
+            //creates & draws current rect to canvas if mouse was dragged
+            if (mouseDragged) {
+                canvasProject.activeLayer.lastChild.remove();
+
+                drawSelectedArea();
+            }
+        }
+        resetSelectStates();
+    }
+
+    // --- TRANSFORM TOOL ---
+    // String describing action user is doing (moving, resizing, rotating, etc.)
+    const [transformAction, setTransformAction] = useState("none");
+
+    // The Transform Tool:
+    const [transformTool, setTransformTool] = useState<paper.Tool>(new paper.Tool());
+
+    transformTool.onMouseDown = function () {
+        // reference code
         // for (let i = 0; i < elements.length; i++) {
         //     //runs if clicked on the corners of an element (segments to check if clicked on rect, tolerance for precision)
         //     if (elements[i].hitTest(event.point, { segments: true, tolerance: 7 })) {
@@ -399,17 +427,7 @@ const CreateToolsCanvasPaperJS = () => {
         // }
     }
 
-    //changes the element according to the selectAction
-    selectTool.onMouseDrag = function (event: paper.ToolEvent) {
-        if (canvasProject.activeLayer.locked == false) {
-            canvasProject.activeLayer.lastChild.remove();
-
-            setEndSelectPoint(event.point);
-            setSelectMouseDragged(true);
-
-            drawSelectedArea();
-        }
-
+    transformTool.onMouseDrag = function(){
         // //element changes position to where the mouse is if action is moving
         // if (selectAction == "moving") {
         //     elements[changedElementIndex].position = event.point;
@@ -439,16 +457,9 @@ const CreateToolsCanvasPaperJS = () => {
         //     return;
         // }
     }
-    selectTool.onMouseUp = function () {
-        if (canvasProject.activeLayer.locked == false) {
-            //creates & draws current rect to canvas if mouse was dragged
-            if (mouseDragged) {
-                canvasProject.activeLayer.lastChild.remove();
 
-                drawSelectedArea();
-            }
-        }
-        resetSelectStates();
+    transformTool.onMouseUp = function() {
+
     }
 
     // *** FUNCTIONS ***
