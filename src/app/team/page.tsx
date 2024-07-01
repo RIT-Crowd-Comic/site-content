@@ -8,6 +8,7 @@ import arrow from "../../../public/images/Arrow.gif"
 const TeamPage = () => {
   return (
     <main id='teamPage'>
+      {/* <Image className="img-test" src="/../../../public/images/people/photos/Victoria_Lau.jpg" alt="" width="300" height="300"/> */}
       {/* Content */}
       <div className="content text-center">
         <h1 className="teamTitle pt-5 pb-3">Meet the Creators!</h1> 
