@@ -43,7 +43,7 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
                     <input type="range" min="1" max="20" defaultValue={penSize} step="1" id="penRange" ref={sliderReference} onChange={updateSize}></input>
                 </div>
                 <div id="paletteButtons">
-                    <label id="colorLabel">Colors:</label>
+                    <p id="colorText">Colors:</p>
                     <button onClick={() => changePenColor(color1)}></button>
                     <button onClick={() => changePenColor(color2)}></button>
                     <button onClick={() => changePenColor(color3)}></button>

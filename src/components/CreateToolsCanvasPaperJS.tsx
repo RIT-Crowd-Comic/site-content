@@ -5,6 +5,7 @@ import PenOptions from './PenOptions';
 import EraserOptions from './EraserOptions';
 import FillOptions from './FillOptions';
 import ShapeOptions from './ShapeOptions';
+import TextOptions from './TextOptions';
 import StickerOptions from './StickerOptions';
 import test from 'node:test';
 
@@ -202,7 +203,7 @@ const CreateToolsCanvasPaperJS = () => {
 
     // --- SHAPE TOOL ---
     // Boolean used to determine if the shape tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
-    const [shapeOptionsEnabled, setshapeOptionsEnabled] = useState<boolean>(false);
+    const [shapeOptionsEnabled, setShapeOptionsEnabled] = useState<boolean>(false);
 
     // String used to specify the color of the shapes border and fill
     const [shapeBorderColor, setShapeBorderColor] = useState<string>("black");
@@ -318,14 +319,73 @@ const CreateToolsCanvasPaperJS = () => {
     // --- TEXT TOOL ---
     // Boolean used to determine if the text tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
     const [textOptionsEnabled, setTextOptionsEnabled] = useState<boolean>(false);
-    let textPath : paper.PointText;
+    
+    // String that determines what text is printed to the layer
+    const [textContent, setTextContent] = useState<string>("Hello World!");
+
+    // String that determines the font family of the text being printed to the layer
+    // !!! Supports default fonts as well as any imported fonts
+    const [textFont, setTextFont] = useState<string>("Arial");
+
+    // Integer that determines the size of the text 
+    const [textSize, setTextSize] = useState<number>(30);
+
+    // String that determines the font weight of the text being printed to the layer
+    // !!! Can only be "normal", "bold", or "italic"
+    const [textFontWeight, setTextFontWeight] = useState<string>("normal");
+
+    // String that determines the justification/allignment of the text being printed to the layer
+    // !!! Can only be "left", "center", or "right"
+    const [textAllign, setTextAllign] = useState<string>("left");
+
+    // String that determines the color of the text being printed to the layer
+    const [textColor, setTextColor] = useState<string>("black");
 
     // The Text Tool:
     const [textTool, setTextTool] = useState<paper.Tool>(new paper.Tool());
+    let textPath : paper.PointText;
+
+    // Boolean that determines what state writing is in.  On first click, the user can continue typing into the textArea.  On second click it draws the content to the layer
+    const [isWriting, setIsWriting] = useState<boolean>(false);
+
+    // Point to draw the text starting at
+
 
     textTool.onMouseDown = function(event: paper.ToolEvent) {
-        textPath = new paper.PointText(event.point);
-        textPath.content = "Hello World";
+        if(!isWriting)
+        {
+            // Start the process of writing
+            setIsWriting(true);
+
+            // Create a textArea element for the user to write in 
+            //let textTyper = document.createElement('textarea');
+            //textTyper.style.position = "absolute";
+            //textTyper.style.left = String(event.point.x);
+            //textTyper.style.top = String(event.point.y);
+
+            // Add the textArea to the DOM
+            //  document.body.appendChild(textTyper);
+        }
+        else
+        {
+            // Set the textContent to what the user has written in the textArea
+
+
+            // Hide the text area
+
+
+            // Draw the user's writing to the layer
+            textPath = new paper.PointText(event.point);
+            textPath.content = textContent;
+            textPath.fontFamily = textFont;
+            textPath.fontSize = textSize;
+            textPath.fontWeight = textFontWeight;
+            textPath.justification = textAllign;
+            textPath.fillColor = new paper.Color(textColor);
+
+            // Reset as the user is no longer writing and erase the textArea to set it up for the next write
+            setIsWriting(false);
+        }
     }
 
 
@@ -442,7 +502,8 @@ const CreateToolsCanvasPaperJS = () => {
             setPenOptionsEnabled(true);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
-            setshapeOptionsEnabled(false);
+            setShapeOptionsEnabled(false);
+            setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.ERASER) {
@@ -450,7 +511,8 @@ const CreateToolsCanvasPaperJS = () => {
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(true);
             setFillOptionsEnabled(false);
-            setshapeOptionsEnabled(false);
+            setShapeOptionsEnabled(false);
+            setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.FILL) {
@@ -458,7 +520,8 @@ const CreateToolsCanvasPaperJS = () => {
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(true);
-            setshapeOptionsEnabled(false);
+            setShapeOptionsEnabled(false);
+            setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.SHAPE) {
@@ -466,7 +529,8 @@ const CreateToolsCanvasPaperJS = () => {
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
-            setshapeOptionsEnabled(true);
+            setShapeOptionsEnabled(true);
+            setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.TEXT) {
@@ -474,7 +538,8 @@ const CreateToolsCanvasPaperJS = () => {
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
-            setshapeOptionsEnabled(false);
+            setShapeOptionsEnabled(false);
+            setTextOptionsEnabled(true);
             setStickerOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.STICKER) {
@@ -482,7 +547,8 @@ const CreateToolsCanvasPaperJS = () => {
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
-            setshapeOptionsEnabled(false);
+            setShapeOptionsEnabled(false);
+            setTextOptionsEnabled(false);
             setStickerOptionsEnabled(true);
         }
         // else if (Number(buttonSelected?.value) == toolStates.SELECT) {
@@ -611,7 +677,7 @@ const CreateToolsCanvasPaperJS = () => {
 
                     <div id="textTool">
                         <input type="radio" name="tools" id="text" value={toolStates.TEXT} onChange={findSelected} />
-                        <label htmlFor="text">Text (NOT FUNCTIONAL)</label>
+                        <label htmlFor="text">Text (HALF FUNCTIONAL)</label>
                     </div>
 
                     <div id="stickerTool">
@@ -660,6 +726,8 @@ const CreateToolsCanvasPaperJS = () => {
                 <ShapeOptions enabled={shapeOptionsEnabled} shapeBorderSize={shapeBorderWidth} changeShapeBorderSize={setShapeBorderWidth} 
                 changeShapeBorderColor={setShapeBorderColor} changeShapeFillColor={setShapeFillColor} changeShape={setShapeSelected} 
                 changeDashedBorder={setDashedBorder}/>
+                <TextOptions enabled={textOptionsEnabled} changeTextContent={setTextContent} changeTextFont={setTextFont} changeTextSize={setTextSize} 
+                changeFontWeight={setTextFontWeight} changeTextAlignment={setTextAllign} changeTextColor={setTextColor} />
                 <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
             </div>
 
@@ -697,7 +765,7 @@ const CreateToolsCanvasPaperJS = () => {
                 <div id="backgroundLayer">
                     <div id="backgroundLayerSelect">
                         <input type="radio" name="layers" id="background" value='0' onChange={changeLayer} />
-                        <label htmlFor="layer1">Background</label><br/>
+                        <label htmlFor="background">Background</label><br/>
                     </div>
                     <div id="backgroundLayerVisibility">
                         <input type="checkbox" id="backgroundToggle" value="0" onChange={toggleLayerVisibility} defaultChecked></input>
