@@ -6,6 +6,7 @@ import EraserOptions from './EraserOptions';
 import FillOptions from './FillOptions';
 import ShapeOptions from './ShapeOptions';
 import StickerOptions from './StickerOptions';
+import {PaperOffset} from 'paperjs-offset';
 import test from 'node:test';
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
@@ -161,8 +162,8 @@ const CreateToolsCanvasPaperJS = () => {
         else
         {
             //otherwise, create offset shape to use as a mask
-            var temp = PaperOffset.offsetStroke(temp, -eRadius);
-            var deleteShape = PaperOffset.offsetStroke(temp, eRadius, {cap : 'round'});
+            temp = PaperOffset.offsetStroke(temp, -eRadius);
+            deleteShape = PaperOffset.offsetStroke(temp, eRadius, {cap : 'round'});
             deleteShape.insert = false;
         }
 
