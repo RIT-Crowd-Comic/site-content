@@ -68,20 +68,19 @@ const BranchPlacer = () => {
         // Set the layer references as well as the default active layer
         comicLayer.current = canvasProject.activeLayer;
         const background = new paper.Raster(imageLinks[currentPanelID]);
-        background.position = view.center;
-        // this SHOULD work, but it doesn't because canvas.width is giving the wrong number
-        // if you don't believe me, console.log(canvas.width), 
-        // inspect element, and compare the actual canvas width
-        background.scale(canvas.width / background.width);
-
-        // for some reason, scaling by exactly 0.8 works
-        background.scale(0.8);
-
-        // background.rasterize({});
-
-        branchLayer.current = new paper.Layer();
-        hookDrawTool.current.minDistance = 5;
-        branchLayer.current.activate();
+        background.onLoad = () => {
+            background.position = view.center;
+            background.scale(canvas.clientWidth / background.width);
+    
+            // for some reason, scaling by exactly 0.8 works
+            // background.scale(0.8);
+    
+            // background.rasterize({});
+    
+            branchLayer.current = new paper.Layer();
+            hookDrawTool.current.minDistance = 5;
+            branchLayer.current.activate();
+        }
 
 
     }, []);
