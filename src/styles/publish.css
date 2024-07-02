@@ -189,7 +189,7 @@ button:hover{
   .footer-bar{
     position:relative;
     z-index:1;
-    max-height:none;
+    display: none;
   }
   #publishContainer{
     flex-direction:column;

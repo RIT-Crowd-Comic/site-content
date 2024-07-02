@@ -6,7 +6,7 @@ export interface PanelSet{
 }
 export interface Branch{
     panel: number,
-    x: number,
-    y: number,
-    child_branch_uuid: string
+    points: number[][],
+    path?: paper.Path;
+    child_panel_set_uuid: string
 }
