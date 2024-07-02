@@ -22,6 +22,7 @@ const CreateToolsCanvasPaperJS = () => {
 
     // References to the PaperJS Canvas Layers
     let backgroundLayerReference = useRef<paper.Layer>();
+    let ShadingLayerRef = useRef<paper.Layer>();
     let layer1Reference = useRef<paper.Layer>();
     let layer2Reference = useRef<paper.Layer>();
 
@@ -42,6 +43,7 @@ const CreateToolsCanvasPaperJS = () => {
 
         // Set the layer references as well as the default active layer
         backgroundLayerReference.current = canvasProject.activeLayer
+        ShadingLayerRef.current = new paper.Layer();
         layer1Reference.current = new paper.Layer();
         layer2Reference.current = new paper.Layer();
         layer1Reference.current.activate();
@@ -72,7 +74,8 @@ const CreateToolsCanvasPaperJS = () => {
         TEXT: 4,
         STICKER: 5,
         SELECT: 6,
-        TRANSFORM: 7
+        TRANSFORM: 7,
+        SHADER:8
     });
 
     // --- PEN TOOL ---
@@ -108,6 +111,74 @@ const CreateToolsCanvasPaperJS = () => {
         }
     }
 
+
+     // *** SHADING TOOL ***
+    const [shadingTool, setShadeTool] = useState<paper.Tool>(new paper.Tool());
+    //reference to the image used for shading
+    let backgroundRaster = useRef<paper.Raster>(null).current;
+    let clipPath = useRef<paper.Path>(null).current;
+
+    //mouseDown: starts a preview path
+    shadingTool.onMouseDown = function()
+    {
+        //switches to dedicated shading layer
+        ShadingLayerRef.current?.activate;
+       
+        
+        clipPath = new paper.Path();
+        clipPath.strokeColor = new paper.Color('pink');
+        clipPath.strokeWidth = penSize;
+        clipPath.strokeCap = 'round';
+        //clipPath.strokeJoin = 'round';
+        //clipPath.clipMask = true;
+
+       
+          
+    }
+
+    //continues drawing preview path
+    shadingTool.onMouseDrag = function(event: MouseEvent)
+    {
+       clipPath.add(event.point);
+    }
+    
+    // mouseUp: renders path on shading layer
+    shadingTool.onMouseUp = function(event: MouseEvent)
+    {
+        var temp = new paper.CompoundPath(clipPath);
+        var eRadius = (penSize * view.pixelRatio) / 4;
+        var deleteShape;
+
+        //load background image
+        backgroundRaster = new paper.Raster('/images/shading.png');
+        backgroundRaster.position = view.center;
+
+        //if there is no clip path create a tiny dot so it doesn't just shade the entire canvas
+        if (clipPath?.length == undefined || clipPath?.length <= 1 )
+        {
+            deleteShape = new paper.Path.Circle(event.point, eRadius * 2);
+        }
+        else
+        {
+            //otherwise, create offset shape to use as a mask
+            var temp = PaperOffset.offsetStroke(temp, -eRadius);
+            var deleteShape = PaperOffset.offsetStroke(temp, eRadius, {cap : 'round'});
+            deleteShape.insert = false;
+        }
+
+        //create shading render mask to only show the part of the raster background that we want to denote shading
+        mask = new paper.Group({
+            children: [deleteShape, backgroundRaster],
+            clipped: true,
+            blendMode: 'source-over'
+          });
+
+        //remove preview clip path
+        clipPath?.remove;
+        //deleteShape.clipMask = true;
+        //switch back to old layer
+        changeLayer();
+    }
     // --- ERASER TOOL ---
     // Boolean used to determine if the eraser tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
     const [eraserOptionsEnabled, setEraserOptionsEnabled] = useState<boolean>(false);
@@ -466,6 +537,13 @@ const CreateToolsCanvasPaperJS = () => {
             setshapeOptionsEnabled(false);
             setStickerOptionsEnabled(true);
         }
+        else if(Number(buttonSelected?.value) == toolStates.SHADER)
+        {
+            shadingTool.activate();
+            setPenOptionsEnabled(true);
+            setEraserOptionsEnabled(false);
+            setFillOptionsEnabled(false);
+        }
         // else if (Number(buttonSelected?.value) == toolStates.SELECT) {
         //     selectTool.activate();
         //     setPenOptionsEnabled(false);
@@ -574,7 +652,12 @@ const CreateToolsCanvasPaperJS = () => {
                         <input type="radio" name="tools" id="pen" value={toolStates.PEN} defaultChecked onChange={findSelected} />
                         <label htmlFor="pen">Pen</label>
                     </div>
-
+                    
+                    <div id="shaderTool">
+                        <input type="radio" name="tools" id="shader" value={toolStates.SHADER} onChange={findSelected}/>
+                        <label htmlFor="shader">Shading</label>
+                    </div>
+                    
                     <div id="eraserTool">
                         <input type="radio" name="tools" id="eraser" value={toolStates.ERASER} onChange={findSelected} />
                         <label htmlFor="eraser">Eraser</label>
