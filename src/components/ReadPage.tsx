@@ -6,9 +6,12 @@ import { useState } from "react";
 import ComicPanels from "@/components/ComicPanels";
 
 //imported base trunk panels as static images
-const firstPanelImage = "/comic-panels/first_panel.png";
-const secondPanelImage = "/comic-panels/second_panel.png";
-const thirdPanelImage = "/comic-panels/third_panel.png";
+/* -----TODO-----
+These images must query on initial load the panels of the trunk. This will probably entail a getPanelSet call to call the trunk panel set as a whole and then insert the panel images in their respective order.
+*/
+const firstPanelImage = "/comic-panels/first_panel.png"; //<--- Panel 1
+const secondPanelImage = "/comic-panels/second_panel.png"; //<--- Panel 2
+const thirdPanelImage = "/comic-panels/third_panel.png"; //<--- Panel 3
 
 //import icons and background
 const backIcon = "/images/back-button-pressed.png"
