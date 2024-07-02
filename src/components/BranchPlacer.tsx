@@ -34,18 +34,27 @@ const BranchPlacer = () => {
 
     // load images from create page
     const [imageLinks, setImageLinks] = useState([
-        "/images/previewPlaceholder.png",
-        "/images/previewPlaceholder.png",
-        "/images/previewPlaceholder.png"
+        "/comic-panels/first_panel.png",
+        "/comic-panels/second_panel.png",
+        "/comic-panels/third_panel.png"
     ]);
 
     useEffect(() => {
+
+        // retrieve comic images from create page using local storage
+        const storedImageLinks = [
+            localStorage.getItem("image-1") || imageLinks[0],
+            localStorage.getItem("image-2") || imageLinks[1],
+            localStorage.getItem("image-3") || imageLinks[2]
+        ];
+
+        setImageLinks(storedImageLinks);
+
+
         // set up paperjs canvas
         const canvas = canvasReference.current;
         // If canvas is null, return out
         if (!canvas) return;
-        canvas.width = 1200;
-        canvas.height = 800;
 
         const context = canvas.getContext("2d");
         if (!context) return;
@@ -58,45 +67,55 @@ const BranchPlacer = () => {
 
         // Set the layer references as well as the default active layer
         comicLayer.current = canvasProject.activeLayer;
+        const background = new paper.Raster(imageLinks[currentPanelID]);
+        background.position = view.center;
+        // this SHOULD work, but it doesn't because canvas.width is giving the wrong number
+        // if you don't believe me, console.log(canvas.width), 
+        // inspect element, and compare the actual canvas width
+        background.scale(canvas.width / background.width);
+
+        // for some reason, scaling by exactly 0.8 works
+        background.scale(0.8);
+
+        // background.rasterize({});
+
         branchLayer.current = new paper.Layer();
+        hookDrawTool.current.minDistance = 5;
         branchLayer.current.activate();
 
-        // retrieve comic images from create page using local storage
-        const storedImageLinks = [
-            localStorage.getItem("image-1") || imageLinks[0],
-            localStorage.getItem("image-2") || imageLinks[1],
-            localStorage.getItem("image-3") || imageLinks[2]
-        ];
 
-        setImageLinks(storedImageLinks);
     }, []);
-
 
     // set up hook tool
     const drawCurrentHook = (shapePath: paper.Path) => {
         if (currentHookPoints.length === 0) return;
-        shapePath.pathData = createSVGPath([...currentHookPoints, [endPoint.x, endPoint.y]]);
+        shapePath.pathData = createSVGPath([...currentHookPoints, [endPoint.x, endPoint.y], currentHookPoints[0]]);
         shapePath.strokeColor = new paper.Color('black');
-        shapePath.fillColor = new paper.Color('blue');
+        shapePath.strokeCap = 'round';
+        shapePath.strokeJoin = 'round';
         shapePath.strokeWidth = 5;
     }
 
-
-    hookDrawTool.current.minDistance = 2;
-    hookDrawTool.current.onMouseDown = (event: paper.ToolEvent) => {
-        setCurrentHookPoints([...currentHookPoints, [event.point.x, event.point.y]]);
+    const addVertex = (toolEvent: paper.ToolEvent) => {
+        setCurrentHookPoints([...currentHookPoints, [toolEvent.point.x, toolEvent.point.y]]);
 
         if (currentHookPoints.length > 0) {
             let currentShape = panelSet.branches[currentBranchID].path;
-            if (currentShape) drawCurrentHook(currentShape);
+            if (currentShape) {
+                setEndPoint(toolEvent.point);
+                drawCurrentHook(currentShape);
+            }
         }
     }
+
+
+    hookDrawTool.current.onMouseDown = addVertex;
+    hookDrawTool.current.onMouseDrag = addVertex;
     hookDrawTool.current.onMouseMove = (event: paper.ToolEvent) => {
         if (panelSet.branches[currentBranchID].points.length > 0) {
             const currentPath = panelSet.branches[currentBranchID].path;
             if (currentPath?.contains(event.point)) {
                 currentPath.fillColor = new paper.Color('red');
-                console.log(currentPath);
             }
             else if (currentPath) currentPath.fillColor = null;
         }
