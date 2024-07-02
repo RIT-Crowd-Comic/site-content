@@ -44,7 +44,7 @@ body,
 html {
     width: 100%;
     font-family: var(--font-back-issues);
-    background-color: var(--grayscale-text-color);
+    background-color: var(--grayscale-background-color);
     max-width: 100%;
     /* filter: grayscale(1); */
     padding-right: 0 !important;
@@ -53,8 +53,8 @@ html {
 
 body {
     background-image: radial-gradient(circle at center,
-            var(--grayscale-background-color) 0.15rem,
-            transparent 0), radial-gradient(circle at center, var(--grayscale-background-color) 0.15rem, transparent 0);
+            var(--grayscale-primary-color) 0.15rem,
+            transparent 0), radial-gradient(circle at center, var(--grayscale-primary-color) 0.15rem, transparent 0);
     background-size: 1.3rem 1.3rem;
     background-position: 0 0, 0.65rem 0.65rem;
 }
@@ -1141,7 +1141,7 @@ No media query for `xs` since this is the default in Bootstrap */
     }
 
     .missionimg p {
-        background-color: var(--secondary-color);
+        background-color: var(--grayscale-text-bg-color);
 
         border: solid 5px black;
 
@@ -1187,7 +1187,7 @@ No media query for `xs` since this is the default in Bootstrap */
     }
 
     .readimg p {
-        background-color: var(--secondary-color);
+        background-color: var(--grayscale-text-bg-color);
 
         border: solid 5px black;
 
@@ -1224,7 +1224,7 @@ No media query for `xs` since this is the default in Bootstrap */
     }
 
     .createimg p {
-        background-color: var(--secondary-color);
+        background-color: var(--grayscale-text-bg-color);
 
         border: solid 5px black;
 
@@ -1254,8 +1254,8 @@ No media query for `xs` since this is the default in Bootstrap */
     {
         background-image: url(../../public/images/GIFs/book-split/Frame1.gif); 
 
-        left: -30%;
-        top: -10%;
+        left: -18%;
+        top: 0%;
     }
 
     .getStarted button {
