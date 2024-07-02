@@ -360,22 +360,25 @@ const CreateToolsCanvasPaperJS = () => {
     // The Select Tool:
     const [selectTool, setSelectTool] = useState<paper.Tool>(new paper.Tool());
 
+    //resets all select state variables
     const resetSelectStates = () => {
         setStartSelectPoint(new paper.Point(0, 0));
         setEndSelectPoint(new paper.Point(0, 0));
         setSelectMouseDragged(false);
     }
 
+    //sets and draws the selected area bounds
     const drawSelectedArea = () => {
         selectedAreaBounds = new paper.Rectangle(startSelectPoint, endSelectPoint);
 
-        shownSelectedAreaBounds = new paper.Path.Rectangle(selectedAreaBounds);
+        let shownSelectedAreaBounds = new paper.Path.Rectangle(selectedAreaBounds);
         shownSelectedAreaBounds.strokeColor = new paper.Color("black");
         shownSelectedAreaBounds.strokeWidth = 4;
         shownSelectedAreaBounds.dashArray = [10, 10];
+        shownSelectedAreaBounds.removeOnUp();
     }
 
-    //selects area of canvas (rasterized) chosen
+    //starts selection of area of canvas (rasterized) chosen
     selectTool.onMouseDown = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
             setStartSelectPoint(event.point);
@@ -383,7 +386,7 @@ const CreateToolsCanvasPaperJS = () => {
         }
     }
 
-    //changes the element according to the selectAction
+    //updates selected area of canvas according to where the user drags their mouse
     selectTool.onMouseDrag = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
             if (areaSelected) {
@@ -397,29 +400,39 @@ const CreateToolsCanvasPaperJS = () => {
             setAreaSelected(true);
         }
     }
+
+    //finishes selecting area and gets the area of the canvas selected
     selectTool.onMouseUp = function () {
         if (canvasProject.activeLayer.locked == false) {
-            //creates & draws current rect to canvas if mouse was dragged
             if (selectMouseDragged) {
-                canvasProject.activeLayer.lastChild.remove();
+                //ERROR: 
+                //SELECTED AREA IS INCORRECT (NOT ALIGNED WITH BOUNDS: seems to be too left and up?)
+                
+                //only gets selected area if layer is not empty
+                if (!canvasProject.activeLayer.isEmpty()) {
+                    //test rasterize to see if selection works properly
+                    let raster = canvasProject.activeLayer.rasterize();
+                    
+                    drawSelectedArea();
 
-                drawSelectedArea();
+                    //gets the selected area of the rasterized canvas as a new raster item placed in the same place
+                    let selectedArea = raster.getSubRaster(selectedAreaBounds);
+                    
+                    //for testing purposes: shows subraster as a new raster displayed to 
+                    //the center of the screen
+                    selectedArea.bringToFront();
+                    var subData = selectedArea.toDataURL();
+                    selectedArea.remove();
+                    var subRaster = new paper.Raster(subData);
+                    subRaster.position = paper.view.center;
 
-                //needs to get everything in selected area
-                //test rasterize to see if selection works properly
-                let raster = canvasProject.activeLayer.rasterize();
-                let selectedArea = raster.getSubRaster(selectedAreaBounds);
-
-                //not copying so more for testing purposes to see if area selected is corrected
-                let selectedAreaAsDataUrl = selectedArea.toDataURL();
-                let subImage = new Image(canvasReference.current?.width, canvasReference.current?.height);
-                subImage.src = selectedAreaAsDataUrl;
-
-                subImage.onload = function (event) {
-                    let subRaster = new paper.Raster(subImage);
+                    //TODO: 
+                    //Transform tool will need a reference to the selected area. 
+                    //(note: selectedArea is not linked to original raster, so it may be necessary to rerender when transforming?)
                 }
-
-                //selected area needs to be reachable for transform tool
+                else {
+                    setAreaSelected(false);
+                }
             }
         }
         resetSelectStates();
