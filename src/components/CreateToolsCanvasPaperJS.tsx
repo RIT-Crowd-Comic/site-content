@@ -405,19 +405,18 @@ const CreateToolsCanvasPaperJS = () => {
     selectTool.onMouseUp = function () {
         if (canvasProject.activeLayer.locked == false) {
             if (selectMouseDragged) {
-                //ERROR: 
-                //SELECTED AREA IS INCORRECT (NOT ALIGNED WITH BOUNDS: seems to be too left and up?)
-                
+                //ERROR: SELECTED AREA IS INCORRECT (NOT ALIGNED WITH BOUNDS)
+
                 //only gets selected area if layer is not empty
                 if (!canvasProject.activeLayer.isEmpty()) {
                     //test rasterize to see if selection works properly
                     let raster = canvasProject.activeLayer.rasterize();
-                    
+
                     drawSelectedArea();
 
                     //gets the selected area of the rasterized canvas as a new raster item placed in the same place
                     let selectedArea = raster.getSubRaster(selectedAreaBounds);
-                    
+
                     //for testing purposes: shows subraster as a new raster displayed to 
                     //the center of the screen
                     selectedArea.bringToFront();
@@ -425,10 +424,6 @@ const CreateToolsCanvasPaperJS = () => {
                     selectedArea.remove();
                     var subRaster = new paper.Raster(subData);
                     subRaster.position = paper.view.center;
-
-                    //TODO: 
-                    //Transform tool will need a reference to the selected area. 
-                    //(note: selectedArea is not linked to original raster, so it may be necessary to rerender when transforming?)
                 }
                 else {
                     setAreaSelected(false);
@@ -436,7 +431,11 @@ const CreateToolsCanvasPaperJS = () => {
             }
         }
         resetSelectStates();
+
     }
+    //TODO: 
+    //Transform tool will need a reference to the selected area. 
+    //(note: selectedArea is not linked to original raster, so it may be necessary to rerender when transforming?)
 
     // --- TRANSFORM TOOL ---
     // String describing action user is doing (moving, resizing, rotating, etc.)
@@ -546,6 +545,7 @@ const CreateToolsCanvasPaperJS = () => {
         //will need a way to deselect selection (ERROR WHEN CLEARING AS WELL AS SELECT SHOWING IN OTHER OPTIONS)
         else if (Number(buttonSelected?.value) == toolStates.SELECT) {
             selectTool.activate();
+            setAreaSelected(false);
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
