@@ -42,13 +42,17 @@ If using a local font instead of a Google font, please reference [Next.js's docu
 
 ## CSS Guidelines
 
-1. Import .css files as module.css files in their corresponding components or pages (.tsx)
-2. Add styles to each element through string interpolation ex. {`${styles.body}`}
-3. Add additional styling, such as Bootstrap CSS through string literals ex. {`card`}
+1. Import `.css` files as `module.css` files in their corresponding components or pages ``(.tsx)``
+2. Add styles to each element through string interpolation ex. ``{`${styles.body}`}``
+3. Add additional styling, such as Bootstrap CSS, through string literals ex. ``{`card-subtitle mb-2 text-body-secondary`}``
+4. Make any universal changes in `globals.css` if you want something to apply to **ALL** pages
 
-#  Additional Info #
-CSS Modules do not accept hyphenated class or id names, so opt for camel case instead
-CSS Modules only accept pure selectors, meaning each selector has to be a class or id, denoted by . and #, respectfully
+###  Additional Info 
+CSS Modules *do not accept* hyphenated class or id names, so opt for camel case instead  
+
+CSS Modules *only accept* pure selectors, meaning each selector has to be a class or id, denoted by `.` and `#`, respectfully
+
+For more on CSS Modules, check out this article: https://nextjs.org/docs/app/building-your-application/styling/css-modules
 
 ## Learn More
 
