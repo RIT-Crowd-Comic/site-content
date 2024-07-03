@@ -194,12 +194,7 @@ const changePassword = async(email :string, password :string, newPassword : stri
     })
 }
 
-// app.post('/saveImage', upload.single('image'), image.saveImage);
-// app.get('/getImage/:id', image.getImage);
-// app.patch('/addSetToHook', hook.addSetToHook);
 
-// app.post('/changeDisplayName', user.changeDisplayName);
-// app.post('/updatePanel', panel.updatePanel);
 
 const changeDisplayName = async(email: string, password: string, display: string, newDisplayName: string) => {
     return postAPICall(`/changeDisplayName`, {
@@ -210,4 +205,17 @@ const changeDisplayName = async(email: string, password: string, display: string
     })
 }
 
-export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName }
+// app.post('/updatePanel', panel.updatePanel);
+const updatePanel = async (id: number, image: string) => {
+    return postAPICall(`/updatePanel`, {
+        id: id,
+        image: image
+    });
+}
+
+
+// app.post('/saveImage', upload.single('image'), image.saveImage);
+// app.get('/getImage/:id', image.getImage);
+// app.patch('/addSetToHook', hook.addSetToHook);
+
+export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel }

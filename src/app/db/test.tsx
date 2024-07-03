@@ -105,6 +105,12 @@ function Test() {
         <p>New Display Name</p>
         <textarea onChange={(e) => setNewDisplayName(e.target.value)}></textarea><br />
         <button onClick={async() => {setResults(parseResults(await apiCalls.changeDisplayName(email, password, displayName, newDisplayName)))}}>Change Display Name</button>
+        <hr />
+        <p>Panel ID</p>
+        <textarea onChange={(e => setPanelID(e.target.value))}></textarea>
+        <p>image</p>
+        <textarea onChange={(e => setImageName(e.target.value))}></textarea> <br />
+        <button onClick={async() => {setResults(parseResults(await apiCalls.updatePanel(Number(panelID), imageName)))}}>Update Panel</button>
     </div>
   );
 }
