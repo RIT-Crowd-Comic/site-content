@@ -1,5 +1,6 @@
 import { useState } from "react";
 import * as apiCalls from "../../api/apiCalls"
+import { parse } from "path";
 
 function Test() {
   const [results, setResults] = useState("");
@@ -48,6 +49,10 @@ function Test() {
         <p>Hook ID</p>
         <textarea onChange={(e) => setHookID(e.target.value)}></textarea> <br />
         <button onClick={async() => {setResults(parseResults(await apiCalls.getHookByID(Number(hookID))))}}>Get Hook By ID</button>
+        <hr />
+        <p>Panel ID</p>
+        <textarea onChange={(e) => setPanelID(e.target.value)}></textarea><br />
+        <button onClick={async()=> {setResults(parseResults(await apiCalls.getPanelByID(Number(panelID))))}}>Get Panel By ID</button>
         <hr />
         <p>Hook ID</p>
         <textarea onChange={(e) => setHookID(e.target.value)}></textarea> <br />
