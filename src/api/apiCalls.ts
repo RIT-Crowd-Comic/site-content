@@ -110,6 +110,10 @@ const getUser = async (id: string) => {
     return await getAPICall(`/user/${id}/`)
 }
 
+const getTrunks = async() => {
+    return await getAPICall(`/trunks`);
+}
+
 /**
  * Get all panel sets from a user
  * @param id the id of the user
@@ -174,4 +178,4 @@ const isHookLinked = async(id: number) => {
     return hook.next_panel_set_id != null;
 }
 
-export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser }
+export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks }

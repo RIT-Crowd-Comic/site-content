@@ -57,6 +57,8 @@ function Test() {
         <p>Hook ID</p>
         <textarea onChange={(e) => setHookID(e.target.value)}></textarea> <br />
         <button onClick={async() => {setResults(parseResults(await apiCalls.getHookByID(Number(hookID))))}}>Get Hook By ID</button>
+        <hr />
+        <button onClick={async() => {setResults(parseResults(await apiCalls.getTrunks()))}}>Trunks</button>
         <p>Hook ID</p>
         <textarea onChange={(e) => setHookID(e.target.value)}></textarea> <br />
         <button onClick={async() => {setResults(parseResults(await apiCalls.isHookLinked(Number(hookID))))}}>Is Hook Linked</button>
