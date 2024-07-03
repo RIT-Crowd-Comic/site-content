@@ -179,4 +179,11 @@ const isHookLinked = async(id: number) => {
     return hook.next_panel_set_id != null;
 }
 
-export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex }
+const authenticate = async(email: string, password: string) => {
+    return postAPICall(`/authenticate`, {
+        email: email,
+        password: password
+    })
+}
+
+export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate }

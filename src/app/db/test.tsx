@@ -28,6 +28,12 @@ function Test() {
         <textarea onChange={(e) => setPassword(e.target.value)}></textarea><br />
         <button onClick={async() => {setResults(parseResults(await apiCalls.createUser(email, displayName, password)))}}>Create User</button>
         <hr />
+        <p>email</p>
+        <textarea onChange={(e) => setEmail(e.target.value)}></textarea>
+        <p>password</p>
+        <textarea onChange={(e) => setPassword(e.target.value)}></textarea><br />
+        <button onClick={async() => {setResults(parseResults(await apiCalls.authenticate(email, password)))}}>Authenticate</button>
+        <hr />
         <p>User ID</p>
         <textarea onChange={(e) => setUserID(e.target.value)}></textarea> <br />
         <button onClick={async() => {setResults(parseResults(await apiCalls.createPanelSet(userID)))}}>Create Panel Set</button>
