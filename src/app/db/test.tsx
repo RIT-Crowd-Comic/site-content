@@ -44,11 +44,11 @@ function Test() {
         <hr />
         <p>User ID</p>
         <textarea onChange={(e) => setUserID(e.target.value)}></textarea><br />
-        <button onClick={async() => {setResults(parseResults(await apiCalls.getPanelSets(userID)))}}>Get All Panel Sets From User</button> <hr />
+        <button onClick={async() => {setResults(parseResults(await apiCalls.getUser(userID)))}}>Get User By ID</button>
         <hr />
-        <p>Hook ID</p>
-        <textarea onChange={(e) => setHookID(e.target.value)}></textarea> <br />
-        <button onClick={async() => {setResults(parseResults(await apiCalls.getHookByID(Number(hookID))))}}>Get Hook By ID</button>
+        <p>Panel Set ID</p>
+        <textarea onChange={(e) => setPanelSetID(e.target.value)}></textarea><br />
+        <button onClick={async() => {setResults(parseResults(await apiCalls.getPanelSetByID(Number(panelSetID))))}}>Get Panel Set By ID</button>
         <hr />
         <p>Panel ID</p>
         <textarea onChange={(e) => setPanelID(e.target.value)}></textarea><br />
@@ -56,8 +56,18 @@ function Test() {
         <hr />
         <p>Hook ID</p>
         <textarea onChange={(e) => setHookID(e.target.value)}></textarea> <br />
+        <button onClick={async() => {setResults(parseResults(await apiCalls.getHookByID(Number(hookID))))}}>Get Hook By ID</button>
+        <p>Hook ID</p>
+        <textarea onChange={(e) => setHookID(e.target.value)}></textarea> <br />
         <button onClick={async() => {setResults(parseResults(await apiCalls.isHookLinked(Number(hookID))))}}>Is Hook Linked</button>
-
+        <hr />
+        <p>User ID</p>
+        <textarea onChange={(e) => setUserID(e.target.value)}></textarea><br />
+        <button onClick={async() => {setResults(parseResults(await apiCalls.getPanelSets(userID)))}}>Get All Panel Sets From User</button>
+        <hr />
+        <p>Panel ID</p>
+        <textarea onChange={(e) => setPanelID(e.target.value)}></textarea> <br />
+        <button onClick={async() => {setResults(parseResults(await apiCalls.getHooksFromPanel(Number(panelID))))}}>Get Hooks From Panel</button>
     </div>
   );
 }
