@@ -151,6 +151,14 @@ const createPanel = async (image: string, panelSetID: number) => {
     })
 }
 
+const createHook = async (position: object[], currentPanelID: number, nextPanelSetID: number) => {
+    return await postAPICall(`/createHook`, {
+        position: position,
+        current_panel_id: currentPanelID,
+        next_panel_set_id: nextPanelSetID,
+    })
+}
+
 /**
  * 
  * @param id the id of the hook
@@ -164,4 +172,4 @@ const isHookLinked = async(id: number) => {
     return hook.next_panel_set_id != null;
 }
 
-export { getHookByID, createUser, createPanelSet, createPanel, getPanelSets }
+export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets }

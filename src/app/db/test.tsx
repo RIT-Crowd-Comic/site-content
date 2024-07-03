@@ -9,6 +9,7 @@ function Test() {
   const [userID, setUserID] = useState("");
   const [imageName, setImageName] = useState("")
   const [panelSetID, setPanelSetID] = useState("")
+  const [panelID, setPanelID] = useState("")
   const [hookID, setHookID] = useState("")
 
    return (
@@ -34,11 +35,19 @@ function Test() {
         <textarea onChange={(e) => setPanelSetID(e.target.value)}></textarea><br />
         <button onClick={async() => {setResults(parseResults(await apiCalls.createPanel(imageName, Number(panelSetID))))}}>Create Panel</button> 
         <hr />
+        <p>Panel ID</p>
+        <textarea onChange={(e) => setPanelID(e.target.value)}></textarea>
+        <p>Next Panel Set ID</p>
+        <textarea onChange={(e) => setPanelSetID(e.target.value)}></textarea><br />
+        <button onClick={async() => {setResults(parseResults(await apiCalls.createHook([{x: "1", y: "1"}], Number(panelID), Number(panelSetID))))}}>Create Hook</button> 
+        <hr />
         <p>User ID</p>
         <textarea onChange={(e) => setUserID(e.target.value)}></textarea><br />
         <button onClick={async() => {setResults(parseResults(await apiCalls.getPanelSets(userID)))}}>Get All Panel Sets From User</button> <hr />
         <hr />
-        <textarea name="" id=""></textarea>
+        <p>Hook ID</p>
+        <textarea onChange={(e) => setHookID(e.target.value)}></textarea> <br />
+        <button onClick={async() => {setResults(parseResults(await apiCalls.getHookByID(Number(hookID))))}}>Get Hook By ID</button>
     </div>
   );
 }
