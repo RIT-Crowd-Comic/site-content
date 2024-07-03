@@ -178,7 +178,7 @@
   transform:scale(1.5) translate(-.25,-.75);
 }
 
-button:hover{
+.button:hover{
   background-color: darkgray;
 }
 
