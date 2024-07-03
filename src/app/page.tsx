@@ -126,12 +126,7 @@ export default function Home() {
         <button><Link href="/team" >Our Team</Link></button>
       </div>
       <div className="back-to-top">
-        <Link href="#" className="scroll-btn">
-          <strong id="scroll-text">Back to Top</strong>  
-          <button type="button" className="mb-6 mr-6 z-10 btn btn-lg my-8 " id="scrollToTopBtn">
-            <Image src={arrow} alt="Scroll to top button" fill={true} />
-          </button>
-        </Link>
+      <Link className="arrowLink" href="#"><button type="button" className="arrowAnimation mb-6 mr-6 z-10 btn btn-lg my-8 " id="scrollToTopBtn"></button></Link>
       </div>
     </main >
   );
