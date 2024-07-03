@@ -778,8 +778,7 @@ button {
 
 .portrait {
     filter: grayscale(1);
-    border: #000000;
-    border-width: 1px;
+    border: #000000 1px solid;
 }
 
 a {
@@ -789,8 +788,7 @@ a {
 
 .card-footer {
     font-size: 1rem;
-    border-color: black;
-    border-width: 2px;
+    border: black 2px solid;
     background: #aaaaaa;
     position: absolute;
     bottom: 0;
@@ -799,8 +797,7 @@ a {
 
 .card-header {
     font-size: 1rem;
-    border-color: black;
-    border-width: 2px;
+    border: black 2px solid;
     background: #aaaaaa;
     position: absolute;
     top: 0;
@@ -829,7 +826,7 @@ a {
 
 .person-panel:hover .overlay-img{
     opacity: 1;
-    transition: .6s ease-out;
+    transition: .3s ease-out;
 }
 
 @media (max-width: 576px) {
