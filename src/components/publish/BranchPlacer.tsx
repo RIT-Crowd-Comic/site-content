@@ -77,6 +77,7 @@ const BranchPlacer = () => {
 
         setImageLinks(storedImageLinks);
         nextPanel(0);
+        selectHook(null);
     }, []);
 
     // handle when changing panels
@@ -167,7 +168,11 @@ const BranchPlacer = () => {
 
     const selectHook = (index: number | null) => {
         setSelectedHookIndex(index);
-        toggleClassForAllElements('#remove-branch-hook', 'selected-hook', () => index != null);
+        const removeBtn = document.querySelector('#remove-branch-hook') as HTMLButtonElement;
+        if (removeBtn) {
+            removeBtn.classList.toggle('selected-hook', index != null)
+            removeBtn.disabled = index == null;
+        }
     }
 
     const addVertex = (toolEvent: paper.ToolEvent) => {
@@ -267,7 +272,6 @@ const BranchPlacer = () => {
 
             // close the polygon
             const hookPoints = [...currentHookPoints, [currentHookPoints[0][0], currentHookPoints[0][1]]];
-            console.log(hookPoints);
             // push current branch to the panel set's list of hooks
             const hooks = [...panelSet.hooks];
             const path = hooks[currentHookIndex].path;

@@ -127,7 +127,7 @@ canvas.editing-branch {
 .button-container p{
   font-size:0.75rem;
 }
-.button-container button:hover{
+.button-container button:not([disabled]):hover{
   background-color:var(--light-blue);
   color:white;
 }
