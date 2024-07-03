@@ -137,10 +137,31 @@ const createUser = async (email: string, displayName: string, password: string) 
  * Creates a new panel
  * @param author_id the id of the user who created the panel set
  */
-const createPanelSet = async (author_id: string) => {
+const createPanelSet = async (authorID: string) => {
     return await postAPICall(`/createPanelSet`, {
-        author_id: author_id
+        author_id: authorID
     })
 }
 
-export { getHookByID, createUser, createPanelSet }
+
+const createPanel = async (image: string, panelSetID: number) => {
+    return await postAPICall(`/createPanel`, {
+        image: image,
+        panel_set_id: panelSetID
+    })
+}
+
+/**
+ * 
+ * @param id the id of the hook
+ * @returns if the hook's next_panel_set_id is null (or undefined if the hook can't be found)
+ */
+const isHookLinked = async(id: number) => {
+    const hook = await getHookByID(id);
+    if(hook === undefined) {
+        return undefined;
+    }
+    return hook.next_panel_set_id != null;
+}
+
+export { getHookByID, createUser, createPanelSet, createPanel, getPanelSets }
