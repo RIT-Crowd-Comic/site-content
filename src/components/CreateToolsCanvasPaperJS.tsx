@@ -1,11 +1,12 @@
 import { MutableRefObject, SyntheticEvent, use, useEffect, useRef, useState } from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
-import paper, { project, tool, tools } from 'paper/dist/paper-core';
+import paper, { project, tool, tools } from 'paper';
 import PenOptions from './PenOptions';
 import EraserOptions from './EraserOptions';
 import FillOptions from './FillOptions';
 import ShapeOptions from './ShapeOptions';
 import StickerOptions from './StickerOptions';
+import ShaderOptions from './ShaderOptions';
 import {PaperOffset} from 'paperjs-offset';
 import test from 'node:test';
 
@@ -114,6 +115,9 @@ const CreateToolsCanvasPaperJS = () => {
 
 
      // *** SHADING TOOL ***
+     const [shadeOptionsEnabled, setShadeOptionsEnabled] = useState<boolean>(false);
+     const [shadeSize, setShadeSize] = useState<number>(10);
+
     const [shadingTool, setShadeTool] = useState<paper.Tool>(new paper.Tool());
     //reference to the image used for shading
     let backgroundRaster = useRef<paper.Raster>(null).current;
@@ -128,7 +132,7 @@ const CreateToolsCanvasPaperJS = () => {
         
         clipPath = new paper.Path();
         clipPath.strokeColor = new paper.Color('pink');
-        clipPath.strokeWidth = penSize;
+        clipPath.strokeWidth = shadeSize;
         clipPath.strokeCap = 'round';
         //clipPath.strokeJoin = 'round';
         //clipPath.clipMask = true;
@@ -138,16 +142,16 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     //continues drawing preview path
-    shadingTool.onMouseDrag = function(event: MouseEvent)
+    shadingTool.onMouseDrag = function(event: paper.ToolEvent)
     {
-       clipPath.add(event.point);
+       clipPath?.add(event.point);
     }
     
     // mouseUp: renders path on shading layer
-    shadingTool.onMouseUp = function(event: MouseEvent)
+    shadingTool.onMouseUp = function(event: paper.ToolEvent)
     {
         var temp = new paper.CompoundPath(clipPath);
-        var eRadius = (penSize * view.pixelRatio) / 4;
+        var eRadius = (shadeSize * view.pixelRatio) / 4;
         var deleteShape;
 
         //load background image
@@ -164,7 +168,7 @@ const CreateToolsCanvasPaperJS = () => {
             //otherwise, create offset shape to use as a mask
             temp = PaperOffset.offsetStroke(temp, -eRadius);
             deleteShape = PaperOffset.offsetStroke(temp, eRadius, {cap : 'round'});
-            deleteShape.insert = false;
+            //deleteShape.insert = false;
         }
 
         //create shading render mask to only show the part of the raster background that we want to denote shading
@@ -178,6 +182,9 @@ const CreateToolsCanvasPaperJS = () => {
         clipPath?.remove;
         //deleteShape.clipMask = true;
         //switch back to old layer
+        
+        //canvasProject.activeLayer.rasterize({resolution:300});
+        //mask.remove();
         changeLayer();
     }
     // --- ERASER TOOL ---
@@ -505,6 +512,7 @@ const CreateToolsCanvasPaperJS = () => {
             setFillOptionsEnabled(false);
             setshapeOptionsEnabled(false);
             setStickerOptionsEnabled(false);
+            setShadeOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.ERASER) {
             eraserTool.activate();
@@ -513,6 +521,7 @@ const CreateToolsCanvasPaperJS = () => {
             setFillOptionsEnabled(false);
             setshapeOptionsEnabled(false);
             setStickerOptionsEnabled(false);
+            setShadeOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.FILL) {
             fillTool.activate();
@@ -521,6 +530,7 @@ const CreateToolsCanvasPaperJS = () => {
             setFillOptionsEnabled(true);
             setshapeOptionsEnabled(false);
             setStickerOptionsEnabled(false);
+            setShadeOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.SHAPE) {
             shapeTool.activate();
@@ -529,6 +539,7 @@ const CreateToolsCanvasPaperJS = () => {
             setFillOptionsEnabled(false);
             setshapeOptionsEnabled(true);
             setStickerOptionsEnabled(false);
+            setShadeOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.STICKER) {
             stickerTool.activate();
@@ -537,13 +548,17 @@ const CreateToolsCanvasPaperJS = () => {
             setFillOptionsEnabled(false);
             setshapeOptionsEnabled(false);
             setStickerOptionsEnabled(true);
+            setShadeOptionsEnabled(false);
         }
         else if(Number(buttonSelected?.value) == toolStates.SHADER)
         {
             shadingTool.activate();
-            setPenOptionsEnabled(true);
+            setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
+            setshapeOptionsEnabled(false);
+            setStickerOptionsEnabled(false);
+            setShadeOptionsEnabled(true);
         }
         // else if (Number(buttonSelected?.value) == toolStates.SELECT) {
         //     selectTool.activate();
@@ -726,6 +741,7 @@ const CreateToolsCanvasPaperJS = () => {
                 changeShapeBorderColor={setShapeBorderColor} changeShapeFillColor={setShapeFillColor} changeShape={setShapeSelected} 
                 changeDashedBorder={setDashedBorder}/>
                 <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
+                <ShaderOptions enabled={shadeOptionsEnabled} shaderSize={shadeSize} changeShaderSize={setShadeSize}/>
             </div>
 
             <div id="layerOptions">
