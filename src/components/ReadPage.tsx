@@ -1,6 +1,6 @@
 //This is the reading page where the user can read panels and click on branch hooks to pull up new panels
 'use client';
-import "@/styles/read.css";
+import styles from "@/styles/read.module.css";
 import IconToggleButton from "@/components/ToggleButton";
 import { useState } from "react";
 import ComicPanels from "@/components/ComicPanels";
@@ -27,7 +27,7 @@ const ReadPage = () => {
     
     return (<>
         
-        <ComicPanels setting={layout} hook_state={hooks} image_1={firstPanelImage} image_2={secondPanelImage} image_3={thirdPanelImage} />
+        <ComicPanels setting={layout} hook_state={hooks} image_1={firstPanelImage} image_2={secondPanelImage} image_3={thirdPanelImage}/>
         <div className="control-bar">
                 <button id="back-button"><img src={backIcon} className="button-icon"></img></button>
                 <IconToggleButton setting={hooks} setSetting={setHooks} state_1='base-hooks' state_2="pop-hooks" buttonId="hooks-toggle" source_1={toggleHooksOff} source_2={toggleHooksOn}/>

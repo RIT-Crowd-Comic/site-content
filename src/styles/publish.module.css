@@ -4,11 +4,13 @@
   --dark-red: #902421;
   --light-blue: #009BC6;
   --dark-blue: #070e23;}
-body,html{
+
+.body{
   background-color:rgb(37, 37, 37);
   background-image:none;
   height:100%;
 }
+
 .background-image{
   content:"";
   position: absolute;
@@ -29,6 +31,7 @@ body,html{
   align-items: center;
   height:80%;
 }
+
 #publish-slideshow{
   margin-top:20px;
   height:auto;
@@ -36,6 +39,7 @@ body,html{
   flex-direction:column;
   justify-content:center;
 }
+
 #panel-overview{
   width:100%;
   height:100%;
@@ -43,6 +47,7 @@ body,html{
   flex-flow:row nowrap;
   justify-content:space-between;
 }
+
 .carousel-inner {
   display: flex;
   justify-content: center;
@@ -76,6 +81,7 @@ body,html{
  justify-content: center;
   max-width:100%;
 }
+
 .carousel-place-indicators button{
   content:"";
   margin:10px;
@@ -85,6 +91,7 @@ body,html{
   background-color:rgb(183, 183, 183);
   border:none;
 }
+
 .carousel-place-indicators button.active{
   width:20px;
   height:20px;
@@ -97,11 +104,13 @@ body,html{
   background-color: transparent;
   border:none;
 }
+
 .carousel-controls:hover{
   background-color: transparent;
   border:none;
   
 }
+
 .carousel-controls>span:hover{
   /* color:var(--yellow); */
   transform:scale(1.5) translate(-.25,-.75);
@@ -117,13 +126,16 @@ body,html{
   text-align: center;
   color:white;
 }
+
 .button-container p{
   font-size:0.75rem;
 }
+
 .button-container button:hover{
   background-color:var(--light-blue);
   color:white;
 }
+
 .button-container>div{
   background-color:rgba(23, 23, 23, 0.85);
   border-radius:15px;
@@ -144,9 +156,11 @@ body,html{
   margin-bottom: 10px;
   gap: 10px;
 }
+
 .branch-hook-text p{
   margin:0;
 }
+
 .branch-control-btn{
   font-size:1.5rem;
   padding:10px 15px;
@@ -164,6 +178,7 @@ body,html{
   color:black;
   border-radius:20px;
 }
+
 #publish-btn:hover{
   background-color:var(--light-red);
   color:var(--yellow);
@@ -172,16 +187,6 @@ body,html{
 
 button:hover{
   background-color: darkgray;
-}
-.footer-bar{
-  position:fixed;
-  bottom:-1;
-  left:0;
-  /* width:100vw; */
-  /* max-height:90px; */
-  /* display:flex;
-  justify-content:space-between;
-  z-index:2; */
 }
 
 @media only screen and (max-width: 700px){
@@ -223,3 +228,21 @@ button:hover{
     font-size:3rem;
   }
 }
+
+/* [xs] Extra small devices, less than 576px) */
+/* No media query for `xs` since this is the default in Bootstrap */
+
+/* [sm] Small devices, 576px and up */
+@media (min-width: 576px) {}
+
+/* [md] Medium devices, 768px and up */
+@media (min-width: 768px) {}
+
+/* [lg] Large desktops, 992px and up */
+@media (min-width: 992px) {}
+
+/* [xl] Extra large devices 1200px and up */
+@media (min-width: 1200px) {}
+
+/* [xxl] Extra extra large devices, 1400px and up */
+@media (min-width: 1400px) {}

@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Hero from "../components/Hero"
 import Link from "next/link"
-import ScrollToTop from "../components/ScrollToTop"
+import styles from "@/styles/home.module.css"
 
 // Mobile Assets
 import topMission from "../../public/images/background-boxes/bw/Mission_Top_BW.svg";
@@ -26,54 +26,54 @@ import thirdPanelImage from "../../public/comic-panels/third_panel.png";
 
 export default function Home() {
    return (
-    <main>
+    <main className={styles.body}>
       <Hero />
       {/* <ScrollToTop /> */}
-      <section className="main-section">
+      <section className="h-100">
       <div className="missionsec">
         <div className="mission row">
           <div className="col"></div>
           <div className="col-auto">
-            <h2>Mission</h2>
+            <h2 className={styles.missionHeading}>Mission</h2>
           </div>
         </div>
-          <div className="missionimg row card">
+          <div className={`${styles.missionImage} ${styles.card} row card`}>
             <div className="card-img-overlay">
-              <Image className="bottomMission card-img-top" src={bottomMission} alt="" />
-              <Image className="topMission card-img-top" src={topMission} alt="" />
+              <Image className={`${styles.bottomMission} card-img-top z-0`} src={bottomMission} alt="" />
+              <Image className={`${styles.topMission} card-img-top z-0`} src={topMission} alt="" />
 
-              <Image className="leftMission card-img-top" src={desktopLeftMission} alt="" />
-              <Image className="rightMission card-img-top" src={desktopRightMission} alt="" />
+              <Image className={`${styles.leftMission} card-img-top z-0`} src={desktopLeftMission} alt="" />
+              <Image className={`${styles.rightMission} card-img-top z-0`} src={desktopRightMission} alt="" />
             </div>
             <div className="card-body">
-              <p>
+              <p className={`${styles.missionParagraph}`}>
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis eum exercitationem maxime ab eveniet? Ducimus, sunt. Tempore porro, sapiente commodi ipsa veritatis sequi? Inventore quasi placeat fugit, perferendis velit hic, dolorem deleniti saepe at, assumenda similique quis esse atque nobis!
               </p>
             </div>
           </div>
-          <div className="preview">
-            <Image className="panel-one preview-panels" src={firstPanelImage} alt="" />
-            <Image className="panel-two preview-panels" src={secondPanelImage} alt="" />
-            <Image className="panel-three preview-panels" src={thirdPanelImage} alt="" />
+          <div className={`${styles.preview}`}>
+            <Image className={`${styles.previewPanels} ${styles.panelOne}`} src={firstPanelImage} alt="" />
+            <Image className={`${styles.previewPanels} ${styles.panelTwo}`} src={secondPanelImage} alt="" />
+            <Image className={`${styles.previewPanels} ${styles.panelThree}`} src={thirdPanelImage} alt="" />
           </div>
           <div className="read-and-create">
             <div className="read">
               <div className="row">
                 <div className="col-auto">
-                  <h2>Read</h2>
+                  <h2 className={`${styles.readHeading}`}>Read</h2>
                 </div>
                 <div className="col"></div>
               </div>
             </div>
-            <div className="readimg row card">
+            <div className={`${styles.readImage} ${styles.card} row card`}>
               <div className="card-img-overlay">
-                <Image className="bottomRead card-img-top" src={bottomRead} alt="" />
-                <Image className="topRead card-img-top" src={topRead} alt="" />
+                <Image className={`${styles.bottomRead} card-img-top`} src={bottomRead} alt="" />
+                <Image className={`${styles.topRead} card-img-top`} src={topRead} alt="" />
 
-                <Image className="desktopRead card-img-top" src={desktopRead} alt="" />
+                <Image className={`${styles.desktopRead} card-img-top`} src={desktopRead} alt="" />
               </div>
               <div className="card-body">
-                <p>
+                <p className={`${styles.readParagraph}`}>
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem explicabo pariatur facere.
                   Soluta culpa dolorum eius explicabo eum officia magnam!
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem explicabo pariatur facere.
@@ -81,22 +81,22 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="create">
+            <div className="create position-relative">
               <div className="row">
                 <div className="col">
                 </div>
                 <div className="col-auto">
-                  <h2>Create</h2>
+                  <h2 className={`${styles.createHeading}`}>Create</h2>
                 </div>
               </div>
-              <div className="createimg row card">
+              <div className={`${styles.createImage} ${styles.card} row card`}>
                 <div className="card-img-overlay">
-                  <Image className="bottomCreate card-img-top" src={bottomCreate} alt="" />
-                  <Image className="topCreate card-img-top" src={topCreate} alt="" />
-                  <Image className="desktopCreate card-img-top" src={desktopCreate} alt="" />
+                  <Image className={`${styles.bottomCreate} card-img-top`} src={bottomCreate} alt="" />
+                  <Image className={`${styles.topCreate} card-img-top`} src={topCreate} alt="" />
+                  <Image className={`${styles.desktopCreate} card-img-top`} src={desktopCreate} alt="" />
                 </div>
                 <div className="card-body">
-                  <p>
+                  <p className={`${styles.createParagraph}`}>
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae aliquam animi cumque
                     reiciendis?
                     Aliquam reiciendis molestiae cumque pariatur hic qui!
@@ -111,9 +111,9 @@ export default function Home() {
                 <div className="col">
                 </div>
                 <div className="col-auto">
-                  <div className="getStarted">
-                    <div className="book-animation"></div>
-                    <button><Link href="/comic">Get Started</Link></button>                
+                  <div className={`${styles.getStarted}`}>
+                    <div className={`${styles.bookAnimation}`}></div>
+                    <button className={`${styles.getStartedButton}`}><Link href="/comic">Get Started</Link></button>                
                   </div>
                 </div>
                 <div className="col"></div>
@@ -122,17 +122,17 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <div className="our-team">
-        <button><Link href="/team" >Our Team</Link></button>
+      <div className={`${styles.ourTeam}`}>
+        <button className="button"><Link href="/team" >Our Team</Link></button>
       </div>
-      <div className="back-to-top">
-        <Link href="#" className="scroll-btn">
-          <strong id="scroll-text">Back to Top</strong>  
-          <button type="button" className="mb-6 mr-6 z-10 btn btn-lg my-8 " id="scrollToTopBtn">
+      {/* <div className={`${styles.backToTop}`}>
+        <Link href="#" className={`${styles.scrollButtonContainer}`}>
+          <strong className={`${styles.scrollButtonText}`}>Back to Top</strong>  
+          <button type="button" className={`${styles.scrollButtonText} ${styles.button} mb-6 mr-6 z-10 btn btn-lg my-8`}>
             <Image src={arrow} alt="Scroll to top button" fill={true} />
           </button>
         </Link>
-      </div>
+      </div> */}
     </main >
   );
 }

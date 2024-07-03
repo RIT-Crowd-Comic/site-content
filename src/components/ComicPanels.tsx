@@ -1,6 +1,8 @@
 "use client";
 import {useEffect, useState } from 'react';
 
+import styles from "@/styles/read.module.css";
+
 interface Props {
     setting:string,
     hook_state:string,
@@ -24,7 +26,7 @@ const ComicPanels = ({setting, hook_state,image_1, image_2, image_3}: Props) => 
     const button_class= hook_state + " branch-hook"
 
     return (
-        <div id="comic-panels" className={setting}>
+        <div id="comic-panels" className={`setting ${styles.body}`}>
             <div className="first-panel">
                 <img id="first-img" src={image_1} alt="" className={setting} />
                 <button id="first-branch-hook" className={button_class}>1</button> {/*<---- hard coded place holder branch hook */}

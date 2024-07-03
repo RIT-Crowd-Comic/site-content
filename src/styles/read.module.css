@@ -1,5 +1,5 @@
-
-html, body{
+.body
+{
   background-image: url("/images/background-app-transparent.png");
   background-position: center;
   background-size:auto;
@@ -23,7 +23,7 @@ html, body{
   font-size: 20px;
 }
 
-.icondiv  img{
+.icondiv img{
   filter:grayscale(0);
   filter: invert(1);
 }
@@ -41,13 +41,13 @@ html, body{
   margin: 10px 10px;
 }
 
-button {
+.button-style {
   padding: 10px;
     font-size: 16px;
     background-color: darkgrey;
   }
 
-  button:hover{
+  .button-style:hover{
     background-color: #009BC6;
     border: none; 
   }
@@ -288,3 +288,21 @@ button {
       visibility: hidden;
     } 
   }
+
+/* [xs] Extra small devices, less than 576px) */
+/* No media query for `xs` since this is the default in Bootstrap */
+
+/* [sm] Small devices, 576px and up */
+@media (min-width: 576px) {}
+
+/* [md] Medium devices, 768px and up */
+@media (min-width: 768px) {}
+
+/* [lg] Large desktops, 992px and up */
+@media (min-width: 992px) {}
+
+/* [xl] Extra large devices 1200px and up */
+@media (min-width: 1200px) {}
+
+/* [xxl] Extra extra large devices, 1400px and up */
+@media (min-width: 1400px) {}
