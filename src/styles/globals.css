@@ -139,7 +139,6 @@ a {
     font-size: medium;
     text-align: center;
     margin: 0;
-    /* vertical-align:bottom; */
 }
 
 /* [xs] Extra small devices, less than 576px) */
@@ -180,8 +179,8 @@ a {
     }
 
     .footer-nav-list {
-        margin: 0;
-    }
+      margin: 0;
+  }
 }
 
 /* [md] Medium devices, 768px and up */

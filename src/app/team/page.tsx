@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Filter from '@/components/Filter'
 import Card from '@/components/Card'
-import ScrollToTop from "@/components/ScrollToTop"
+// import ScrollToTop from "@/components/ScrollToTop"
 import arrow from "../../../public/images/Arrow.gif"
 import styles from "@/styles/team.module.css"
 
@@ -34,6 +34,7 @@ const TeamPage = () => {
               <Image width={300} height={300} className={`${styles.portrait} img-fluid card-img w-100 h-100`} alt="" src="/images/people/Jake_Adams.png"/>
               <Link href="https:www.linkedin.com">
               <div className="card-img-overlay">
+                <Image width={300} height={300} className="overlay-img img-fluid portrait card-img w-100 h-100" alt="Travis Stodter" src="/images/people/travis_stodter_white.png"/>
                 <div className={`${styles.nameText} card-header p-2 rounded-0`}>
                   Jake Adams
                 </div>
@@ -47,6 +48,7 @@ const TeamPage = () => {
               <Image width={300} height={300} className={`${styles.portrait} img-fluid card-img w-100 h-100`} alt="" src="/images/people/Sten_Placeholder.jpg"/>
               <Link href="https:www.linkedin.com">
               <div className="card-img-overlay">
+                <Image width={300} height={300} className="overlay-img img-fluid portrait card-img w-100 h-100" alt="Travis Stodter" src="/images/people/travis_stodter_white.png"/>
                 <div className={`${styles.nameText} card-header p-2 rounded-0`}>
                   Sten Mckinzie
                 </div>
@@ -60,6 +62,7 @@ const TeamPage = () => {
               <Image width={300} height={300} className={`${styles.portrait} img-fluid card-img w-100 h-100`} alt="" src="/images/people/travis_stodter_white.png"/>
               <Link href="https://www.linkedin.com/in/travis-stodter/">
               <div className="card-img-overlay">
+                <Image width={300} height={300} className="overlay-img img-fluid portrait card-img w-100 h-100" alt="Travis Stodter" src="/images/people/travis_stodter_white.png"/>
                 <div className={`${styles.nameText} card-header p-2 rounded-0`}>
                   Travis Stodter
                 </div>
