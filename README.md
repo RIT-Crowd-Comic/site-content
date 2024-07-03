@@ -40,6 +40,16 @@ const cevicheOne = Ceviche_One({
 
 If using a local font instead of a Google font, please reference [Next.js's documentation for font optimization](https://nextjs.org/docs/app/building-your-application/optimizing/fonts#using-multiple-fonts).
 
+## CSS Guidelines
+
+1. Import .css files as module.css files in their corresponding components or pages (.tsx)
+2. Add styles to each element through string interpolation ex. {`${styles.body}`}
+3. Add additional styling, such as Bootstrap CSS through string literals ex. {`card`}
+
+#  Additional Info #
+CSS Modules do not accept hyphenated class or id names, so opt for camel case instead
+CSS Modules only accept pure selectors, meaning each selector has to be a class or id, denoted by . and #, respectfully
+
 ## Learn More
 
 To learn more about Next.js and/or Bootstrap, take a look at the following resources:

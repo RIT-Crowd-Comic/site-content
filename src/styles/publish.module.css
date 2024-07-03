@@ -1,10 +1,3 @@
-:root{ 
-  --light-red: #D91911; /* or #902421 */
-  --yellow: #FFD172;
-  --dark-red: #902421;
-  --light-blue: #009BC6;
-  --dark-blue: #070e23;}
-
 .body{
   background-color:rgb(37, 37, 37);
   background-image:none;

@@ -2,12 +2,12 @@
 
 :root {
     /* color variables */
-    --primary-color: #D91911;
+    --light-red: #D91911;
     /* or #902421 */
-    --secondary-color: #FFD172;
-    --tertiary-color: #902421;
-    --accent-color: #009BC6;
-    --background-color: #070e23;
+    --yellow: #FFD172;
+    --dark-red: #902421;
+    --light-blue: #009BC6;
+    --dark-blue: #070e23;
 
     --grayscale-primary-color: #929292;
     --grayscale-background-color: #494949;

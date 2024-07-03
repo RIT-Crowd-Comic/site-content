@@ -15,7 +15,7 @@ export default function Page() {
               <Image width={300} height={300} src={person.photo} className={`${styles.portrait} img-fluid card-img w-100 h-100`} alt="" />
               <Link href={`${person.linkedin}`}>
               <div className="card-img-overlay">
-                <Image width={200} height={200} src={person.photo} className="overlay-img img-fluid portrait card-img w-100 h-100" alt="Creator Panel Drawings" />
+                <Image width={300} height={300} src={person.photo} className={`${styles.portrait} overlay-img img-fluid card-img w-100 h-100`} alt="Creator Panel Drawings" />
                 <div className={`${styles.nameText} card-header p-2 rounded-0`} id={person.name}>
                   {person.name}
                 </div>
