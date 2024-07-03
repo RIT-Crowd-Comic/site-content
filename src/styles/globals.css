@@ -832,18 +832,6 @@ a {
     transition: .6s ease-out;
 }
 
-#Jake:hover{
-    /* background-image: url(/images/people/Sten_Placeholder.jpg); */
-}
-
-#Sten:hover{
-
-} 
-
-#Travis:hover{
-
-}
-
 @media (max-width: 576px) {
     .footer-bar {
         position: relative;
