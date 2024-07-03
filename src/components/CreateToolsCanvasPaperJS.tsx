@@ -7,6 +7,7 @@ import FillOptions from './FillOptions';
 import ShapeOptions from './ShapeOptions';
 import StickerOptions from './StickerOptions';
 import test from 'node:test';
+import { start } from 'repl';
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
 const CreateToolsCanvasPaperJS = () => {
@@ -345,7 +346,6 @@ const CreateToolsCanvasPaperJS = () => {
     const [endSelectPoint, setEndSelectPoint] = useState(new paper.Point(0, 0));
 
     // Bounds of selected area of canvas
-    let selectedAreaBounds: paper.Rectangle;
     let shownSelectedAreaBounds: paper.Path;
 
     // Selected area of rasterized canvas
@@ -369,9 +369,7 @@ const CreateToolsCanvasPaperJS = () => {
 
     //sets and draws the selected area bounds
     const drawSelectedArea = () => {
-        selectedAreaBounds = new paper.Rectangle(startSelectPoint, endSelectPoint);
-
-        let shownSelectedAreaBounds = new paper.Path.Rectangle(selectedAreaBounds);
+        let shownSelectedAreaBounds = new paper.Path.Rectangle(startSelectPoint,endSelectPoint);
         shownSelectedAreaBounds.strokeColor = new paper.Color("black");
         shownSelectedAreaBounds.strokeWidth = 4;
         shownSelectedAreaBounds.dashArray = [10, 10];
@@ -405,25 +403,31 @@ const CreateToolsCanvasPaperJS = () => {
     selectTool.onMouseUp = function () {
         if (canvasProject.activeLayer.locked == false) {
             if (selectMouseDragged) {
-                //ERROR: SELECTED AREA IS INCORRECT (NOT ALIGNED WITH BOUNDS)
-
                 //only gets selected area if layer is not empty
                 if (!canvasProject.activeLayer.isEmpty()) {
-                    //test rasterize to see if selection works properly
+                    //temp layer rasterize for selection (get reference to rasterized layer instead once that is done)
                     let raster = canvasProject.activeLayer.rasterize();
+                    let rasterLT = raster.bounds.topLeft;
 
                     drawSelectedArea();
 
-                    //gets the selected area of the rasterized canvas as a new raster item placed in the same place
-                    let selectedArea = raster.getSubRaster(selectedAreaBounds);
+                    //adjust points to correctly get selected area
+                    let pixelStartPoint = startSelectPoint.subtract(rasterLT)
+                    let pixelEndPoint = endSelectPoint.subtract(rasterLT)
+                    pixelStartPoint = pixelStartPoint.add(startSelectPoint);
+                    pixelEndPoint = pixelEndPoint.add(endSelectPoint);
+                    pixelStartPoint = pixelStartPoint.subtract(rasterLT);
+                    pixelEndPoint = pixelEndPoint.subtract(rasterLT);
 
-                    //for testing purposes: shows subraster as a new raster displayed to 
-                    //the center of the screen
-                    selectedArea.bringToFront();
-                    var subData = selectedArea.toDataURL();
-                    selectedArea.remove();
-                    var subRaster = new paper.Raster(subData);
-                    subRaster.position = paper.view.center;
+                    //gets the selected area of the rasterized canvas as a new raster item placed in the same place
+                    let selectedArea = raster.getSubRaster(new paper.Rectangle(pixelStartPoint, pixelEndPoint));
+
+                    //for testing purposes: shows selected area as a new raster displayed to the center of the screen
+                     //selectedArea.bringToFront();
+                     //var subData = selectedArea.toDataURL();
+                     //selectedArea.remove();
+                     //var subRaster = new paper.Raster(subData);
+                     //subRaster.position = paper.view.center;
                 }
                 else {
                     setAreaSelected(false);
@@ -431,11 +435,12 @@ const CreateToolsCanvasPaperJS = () => {
             }
         }
         resetSelectStates();
-
     }
+
     //TODO: 
     //Transform tool will need a reference to the selected area. 
-    //(note: selectedArea is not linked to original raster, so it may be necessary to rerender when transforming?)
+    //(note: selectedArea is not linked to original raster (subraster makes a new raster), 
+    //so it may be necessary to rerender when transforming or delete original area of rasterized canvas?)
 
     // --- TRANSFORM TOOL ---
     // String describing action user is doing (moving, resizing, rotating, etc.)
