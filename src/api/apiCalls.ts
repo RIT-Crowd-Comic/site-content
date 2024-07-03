@@ -186,4 +186,12 @@ const authenticate = async(email: string, password: string) => {
     })
 }
 
-export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate }
+const changePassword = async(email :string, password :string, newPassword : string) => {
+    return postAPICall(`/changePassword`, {
+        email: email,
+        password: password,
+        newPassword: newPassword
+    })
+}
+
+export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword }

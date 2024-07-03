@@ -13,6 +13,8 @@ function Test() {
   const [panelID, setPanelID] = useState("")
   const [hookID, setHookID] = useState("")
   const [index, setIndex] = useState("")
+  const [newPassword, setNewPassword] = useState("")
+
 
 
    return (
@@ -84,6 +86,14 @@ function Test() {
         <p>Panel ID</p>
         <textarea onChange={(e) => setPanelID(e.target.value)}></textarea> <br />
         <button onClick={async() => {setResults(parseResults(await apiCalls.getHooksFromPanel(Number(panelID))))}}>Get Hooks From Panel</button>
+        <hr />
+        <p>Email</p>
+        <textarea onChange={(e) => setEmail(e.target.value)}></textarea>
+        <p>Password</p>
+        <textarea onChange={(e) => setPassword(e.target.value)}></textarea>
+        <p>New Password</p>
+        <textarea onChange={(e) => setNewPassword(e.target.value)}></textarea> <br />
+        <button onClick={async() => {setResults(parseResults(await apiCalls.changePassword(email, password, newPassword)))}}>Change Password</button>
     </div>
   );
 }
