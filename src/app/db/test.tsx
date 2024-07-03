@@ -48,11 +48,18 @@ function Test() {
         <p>Hook ID</p>
         <textarea onChange={(e) => setHookID(e.target.value)}></textarea> <br />
         <button onClick={async() => {setResults(parseResults(await apiCalls.getHookByID(Number(hookID))))}}>Get Hook By ID</button>
+        <hr />
+        <p>Hook ID</p>
+        <textarea onChange={(e) => setHookID(e.target.value)}></textarea> <br />
+        <button onClick={async() => {setResults(parseResults(await apiCalls.isHookLinked(Number(hookID))))}}>Is Hook Linked</button>
+
     </div>
   );
 }
 
-function parseResults(results: object | string) {
+function parseResults(results: any) {
+  if(results === undefined)
+    return "undefined";
   return JSON.stringify(results);
 }
 

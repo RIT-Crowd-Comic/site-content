@@ -166,10 +166,12 @@ const createHook = async (position: object[], currentPanelID: number, nextPanelS
  */
 const isHookLinked = async(id: number) => {
     const hook = await getHookByID(id);
-    if(hook === undefined) {
+    console.log(hook)
+    //could not find hook with id 100
+    if(typeof hook !== "object") {
         return undefined;
     }
     return hook.next_panel_set_id != null;
 }
 
-export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets }
+export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked }
