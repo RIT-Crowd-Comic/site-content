@@ -162,6 +162,9 @@ canvas.editing-branch {
   background-color:#929292;
   color:black;
 }
+.branch-control-btn.selected-hook {
+  background-color: var(--light-blue);
+}
 
 #publish-btn {
   margin-top: 20px;

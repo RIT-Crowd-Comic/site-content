@@ -7,7 +7,13 @@ import { PanelSet } from "./interfaces";
 import paper from 'paper/dist/paper-core';
 import { createSVGPath } from '../../utils';
 
-const toggleClassForAllChildren = (selector: string, className: string, predicate: (elm: Element, i: number) => boolean) => {
+/**
+ * Toggles a specified class for all children based on the predicate return (true: enable, false: disable)
+ * @param selector 
+ * @param className 
+ * @param predicate true: enable class, false: disable class
+ */
+const toggleClassForAllElements = (selector: string, className: string, predicate: (elm: Element, i: number) => boolean) => {
     const allPanels = document.querySelectorAll(selector);
     allPanels.forEach((panelContainer, i) => {
         panelContainer.classList.remove(className);
@@ -75,7 +81,7 @@ const BranchPlacer = () => {
 
     // handle when changing panels
     useEffect(() => {
-        toggleClassForAllChildren('.comic-panel-container', 'active', (_, i) => i === panelIndex);
+        toggleClassForAllElements('.comic-panel-container', 'active', (_, i) => i === panelIndex);
 
         canvasReference.current = document.querySelector('.comic-panel-container.active>canvas.comic-panel');
 
@@ -118,7 +124,7 @@ const BranchPlacer = () => {
     }, [panelIndex]);
 
     useEffect(() => {
-        toggleClassForAllChildren('canvas.comic-panel', 'editing-branch', (_, i) => i === panelIndex);
+        toggleClassForAllElements('canvas.comic-panel', 'editing-branch', (_, i) => i === panelIndex);
 
     }, [adding, panelIndex]);
 
@@ -159,6 +165,11 @@ const BranchPlacer = () => {
         });
     }
 
+    const selectHook = (index: number | null) => {
+        setSelectedHookIndex(index);
+        toggleClassForAllElements('#remove-branch-hook', 'selected-hook', () => index != null);
+    }
+
     const addVertex = (toolEvent: paper.ToolEvent) => {
         const hookPoints = [...currentHookPoints, [toolEvent.point.x, toolEvent.point.y]];
         setCurrentHookPoints(hookPoints);
@@ -174,19 +185,18 @@ const BranchPlacer = () => {
     const mouseDownHandler = (toolEvent: paper.ToolEvent) => {
 
         // reset selection when clicking anywhere
-        setSelectedHookIndex(null);
+        selectHook(null);
         drawHoveredPath(toolEvent.point);
 
         if (adding && panelSet.hooks[currentHookIndex]) {
             addVertex(toolEvent);
         }
         else {
-
             // clicking on a hook will select it
             panelSet.hooks.forEach((hook, i) => {
                 if (hook.panel_id !== panelIndex) return;
                 if (hook.path?.contains(toolEvent.point)) {
-                    setSelectedHookIndex(i);
+                    selectHook(i);
                     highlightSelectedHook(i);
                 }
             })
@@ -219,7 +229,7 @@ const BranchPlacer = () => {
             event.stopPropagation();
             return;
         }
-        setSelectedHookIndex(null);
+        selectHook(null);
         drawHoveredPath({ x: event.x, y: event.y });
     };
     hookDrawTool.current.onMouseDown = mouseDownHandler;
@@ -257,7 +267,7 @@ const BranchPlacer = () => {
 
             // close the polygon
             const hookPoints = [...currentHookPoints, [currentHookPoints[0][0], currentHookPoints[0][1]]];
-
+            console.log(hookPoints);
             // push current branch to the panel set's list of hooks
             const hooks = [...panelSet.hooks];
             const path = hooks[currentHookIndex].path;
@@ -273,7 +283,7 @@ const BranchPlacer = () => {
         // clear current temporary hook data
         if (transparentPath.current) transparentPath.current.pathData = '';
         setCurrentHookPoints([]);
-        setSelectedHookIndex(null);
+        selectHook(null);
         setAdding(false);
     }
 
@@ -284,7 +294,7 @@ const BranchPlacer = () => {
         if (selectedHookIndex == null) return;
         panelSet.hooks[selectedHookIndex].path?.remove();
         setPanelSet({ ...panelSet, hooks: panelSet.hooks.filter((_, i) => i !== selectedHookIndex) });
-        setSelectedHookIndex(null);
+        selectHook(null);
     }
 
     //packages ps and then pushes it to local storage
@@ -333,7 +343,7 @@ const BranchPlacer = () => {
                 <div className="branch-hooks">
                     <div id="branch-hook-controls">
                         {
-                            adding ? <button id="add-branch-hook" className="branch-control-btn" onClick={confirmBranchHook}>Accept Hook</button> :
+                            adding ? <button id="add-branch-hook" className="branch-control-btn selected-hook" onClick={confirmBranchHook}>Accept Hook</button> :
                                 <button id="add-branch-hook" className="branch-control-btn" onClick={addBranchHook}>Add Hook</button>
                         }
                         {/* <button id="add-branch-hook" className="branch-control-btn" onClick={addBranchHook}>Add Hook</button> */}
