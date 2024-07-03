@@ -494,7 +494,6 @@ button {
 
 .professors {
     text-align: center;
-    /* border: 5px solid; */
     justify-content: center;
 }
 
@@ -503,7 +502,6 @@ button {
     overflow: hidden;
 }
 
-/* Faculty textboxes */
 .professors .text {
     background-color: var(--grayscale-text-bg-color);
     color: var(--grayscale-text-color);
@@ -554,11 +552,6 @@ button {
 
 /* FOOTER */
 
-/* .footer {
-    background-color: var(--grayscale-text-bg-color);
-    width: 100%;
-    justify-content: space-between;
-} */
 .footer-bar {
     width: 100vw;
     display: flex;
@@ -640,12 +633,7 @@ button {
     font-size: medium;
     text-align: center;
     margin: 0;
-    /* vertical-align:bottom; */
 }
-
-/* .copyright-div{
-    width:100%;
-} */
 
 /* HERO */
 
@@ -770,6 +758,15 @@ button {
     transform: translateX(0);
 } */
 
+/* Team Page */
+
+.teamTitle {
+    font-family: var(--font-back-issues);
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--grayscale-text-bg-color);
+}
+
 .person-panel {
     max-width: 300px;
     max-height: 300px;
@@ -824,11 +821,27 @@ a {
     transition: .5s ease-out;
 }
 
-.teamTitle {
-    font-family: var(--font-back-issues);
-    font-size: 3rem;
-    font-weight: bold;
-    color: var(--grayscale-text-bg-color);
+.overlay-img{
+    position: absolute;
+    opacity: 0;
+    left: 0;
+}
+
+.person-panel:hover .overlay-img{
+    opacity: 1;
+    transition: .6s ease-out;
+}
+
+#Jake:hover{
+    /* background-image: url(/images/people/Sten_Placeholder.jpg); */
+}
+
+#Sten:hover{
+
+} 
+
+#Travis:hover{
+
 }
 
 @media (max-width: 576px) {
