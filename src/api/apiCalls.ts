@@ -194,4 +194,20 @@ const changePassword = async(email :string, password :string, newPassword : stri
     })
 }
 
-export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword }
+// app.post('/saveImage', upload.single('image'), image.saveImage);
+// app.get('/getImage/:id', image.getImage);
+// app.patch('/addSetToHook', hook.addSetToHook);
+
+// app.post('/changeDisplayName', user.changeDisplayName);
+// app.post('/updatePanel', panel.updatePanel);
+
+const changeDisplayName = async(email: string, password: string, display: string, newDisplayName: string) => {
+    return postAPICall(`/changeDisplayName`, {
+        email: email,
+        password: password,
+        display: display,
+        newDisplayName: newDisplayName
+    })
+}
+
+export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName }

@@ -7,6 +7,7 @@ function Test() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const [newDisplayName, setNewDisplayName] = useState("");
   const [userID, setUserID] = useState("");
   const [imageName, setImageName] = useState("")
   const [panelSetID, setPanelSetID] = useState("")
@@ -94,6 +95,16 @@ function Test() {
         <p>New Password</p>
         <textarea onChange={(e) => setNewPassword(e.target.value)}></textarea> <br />
         <button onClick={async() => {setResults(parseResults(await apiCalls.changePassword(email, password, newPassword)))}}>Change Password</button>
+        <hr />
+        <p>Email</p>
+        <textarea onChange={(e) => setEmail(e.target.value)}></textarea>
+        <p>Password</p>
+        <textarea onChange={(e) => setPassword(e.target.value)}></textarea>
+        <p>Display</p>
+        <textarea onChange={(e) => setDisplayName(e.target.value)}></textarea>
+        <p>New Display Name</p>
+        <textarea onChange={(e) => setNewDisplayName(e.target.value)}></textarea><br />
+        <button onClick={async() => {setResults(parseResults(await apiCalls.changeDisplayName(email, password, displayName, newDisplayName)))}}>Change Display Name</button>
     </div>
   );
 }
