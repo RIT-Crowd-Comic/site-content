@@ -12,6 +12,8 @@ function Test() {
   const [panelSetID, setPanelSetID] = useState("")
   const [panelID, setPanelID] = useState("")
   const [hookID, setHookID] = useState("")
+  const [index, setIndex] = useState("")
+
 
    return (
     <div>
@@ -51,8 +53,14 @@ function Test() {
         <button onClick={async() => {setResults(parseResults(await apiCalls.getPanelSetByID(Number(panelSetID))))}}>Get Panel Set By ID</button>
         <hr />
         <p>Panel ID</p>
-        <textarea onChange={(e) => setPanelID(e.target.value)}></textarea><br />
+        <textarea onChange={(e) => setPanelID(e.target.value)}></textarea>
+        <p>Index</p>
+        <textarea onChange={(e) => setIndex(e.target.value)}></textarea><br />
         <button onClick={async()=> {setResults(parseResults(await apiCalls.getPanelByID(Number(panelID))))}}>Get Panel By ID</button>
+        <hr />
+        <p>Panel ID</p>
+        <textarea onChange={(e) => setPanelID(e.target.value)}></textarea><br />
+        <button onClick={async() => {setResults(parseResults(await apiCalls.getPanelByIndex(Number(panelID), Number(index))))}}>Get Panel By Index</button>
         <hr />
         <p>Hook ID</p>
         <textarea onChange={(e) => setHookID(e.target.value)}></textarea> <br />

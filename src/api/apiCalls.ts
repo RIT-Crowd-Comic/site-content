@@ -64,6 +64,7 @@ const getPanelByID = async (id: number) => {
     return await getAPICall(`/panel/${id}`)
 }
 
+
 /**
  * Get all of the hooks within a panel
  * @param panelID the id of the panel
@@ -92,7 +93,7 @@ const getPanels = async (panelSetID: number) => {
 }
 
 /**
- * Get a panel based on the idex
+ * Get a panel based on the index
  * @param panelSetID the id of the panel set
  * @param index the index of the panel
  */
@@ -178,4 +179,4 @@ const isHookLinked = async(id: number) => {
     return hook.next_panel_set_id != null;
 }
 
-export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks }
+export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex }
