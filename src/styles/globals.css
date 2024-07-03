@@ -258,7 +258,6 @@ button {
     filter: brightness(.3);
 }
 
-
 /* BOOK ANIMATION */
 
 @keyframes open {
@@ -304,7 +303,6 @@ button {
     height: 25vw;
     filter: grayscale(1);
     animation: none;
-
     position: absolute;
     left: -17%;
     top: 5%;
@@ -326,9 +324,7 @@ button {
 .preview {
     display: grid;
     grid-template-rows: repeat(3, auto);
-
     width: 80vw;
-
     margin: 30px auto 50px;
 }
 
@@ -421,6 +417,8 @@ button {
     margin-top: 4px;
 }
 
+/* Filter */
+
 .filter {
     font-size: 18px;
     font-weight: 700;
@@ -449,6 +447,7 @@ button {
     color: var(--grayscale-primary-color);
 }
 
+/* Filter Search Bar */
 .form-control,
 .form-select {
     background-color: var(--grayscale-primary-color);
@@ -463,25 +462,27 @@ button {
     background-color: var(--grayscale-text-bg-color);
 }
 
-.creatorGroup {
-    border: 2px solid var(--grayscale-primary-color);
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.facultyGroup {
-    border: 2px solid var(--grayscale-primary-color);
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.facultyGroup {
-    border: 2px solid var(--grayscale-primary-color);
-}
-
+/* Team Panels */
 .chapterTitle {
     font-family: var(--font-back-issues);
     font-weight: bold;
     font-size: 2rem;
     color: var(--grayscale-text-bg-color);
+}
+
+.creatorGroup {
+    border: 2px solid var(--grayscale-primary-color);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Faculty Panels */
+.facultyGroup {
+    border: 2px solid var(--grayscale-primary-color);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.facultyGroup {
+    border: 2px solid var(--grayscale-primary-color);
 }
 
 .facultyTitle {
@@ -493,7 +494,6 @@ button {
 
 .professors {
     text-align: center;
-    /* border: 5px solid; */
     justify-content: center;
 }
 
@@ -548,16 +548,10 @@ button {
     max-width: 250px;
     max-height: 250px;
     filter: grayscale(1);
-    /* border: #D91911 solid 2px; */
 }
 
 /* FOOTER */
 
-/* .footer {
-    background-color: var(--grayscale-text-bg-color);
-    width: 100%;
-    justify-content: space-between;
-} */
 .footer-bar {
     width: 100vw;
     display: flex;
@@ -639,12 +633,7 @@ button {
     font-size: medium;
     text-align: center;
     margin: 0;
-    /* vertical-align:bottom; */
 }
-
-/* .copyright-div{
-    width:100%;
-} */
 
 /* HERO */
 
@@ -769,12 +758,22 @@ button {
     transform: translateX(0);
 } */
 
+/* Team Page */
+
+.teamTitle {
+    font-family: var(--font-back-issues);
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--grayscale-text-bg-color);
+}
+
 .person-panel {
     max-width: 300px;
     max-height: 300px;
     border-radius: 0;
     position: relative;
     background-color: white;
+    overflow: hidden;
 }
 
 .portrait {
@@ -808,11 +807,29 @@ a {
     width: 100%;
 }
 
-.teamTitle {
-    font-family: var(--font-back-issues);
-    font-size: 3rem;
-    font-weight: bold;
-    color: var(--grayscale-text-bg-color);
+.person-panel:hover{
+    transition: .5s ease-out;
+}
+
+.person-panel:hover .card-header{
+    transform: translateX(-10%);
+    transition: .5s ease-out;
+}
+
+.person-panel:hover .card-footer{
+    transform: translateX(10%);
+    transition: .5s ease-out;
+}
+
+.overlay-img{
+    position: absolute;
+    opacity: 0;
+    left: 0;
+}
+
+.person-panel:hover .overlay-img{
+    opacity: 1;
+    transition: .6s ease-out;
 }
 
 @media (max-width: 576px) {
@@ -890,8 +907,6 @@ No media query for `xs` since this is the default in Bootstrap */
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-
-
     .copyright-div {
         height: auto;
     }
@@ -1126,8 +1141,6 @@ No media query for `xs` since this is the default in Bootstrap */
         font-size: 4vw;
     }
 
-
-
     /* MISSION */
     .mission h2 {
         background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
@@ -1142,9 +1155,7 @@ No media query for `xs` since this is the default in Bootstrap */
 
     .missionimg p {
         background-color: var(--grayscale-text-bg-color);
-
         border: solid 5px black;
-
         padding: 1rem;
         width: 70%;
         margin: 0vw auto 15%;
@@ -1157,7 +1168,6 @@ No media query for `xs` since this is the default in Bootstrap */
 
     .leftMission {
         display: inline;
-
         position: absolute;
         height: auto;
         margin: -18% auto;
@@ -1165,7 +1175,6 @@ No media query for `xs` since this is the default in Bootstrap */
 
     .rightMission {
         display: inline;
-
         position: absolute;
         height: auto;
         margin: -3% auto;
@@ -1174,23 +1183,19 @@ No media query for `xs` since this is the default in Bootstrap */
     /* READ */
     .read h2 {
         background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
-
         padding: 6vw;
         margin: 0 auto -10%;
     }
 
     .readimg {
         font-size: 1.5vw;
-
         width: 90vw;
         margin: 0 auto;
     }
 
     .readimg p {
         background-color: var(--grayscale-text-bg-color);
-
         border: solid 5px black;
-
         padding: 1rem;
         width: 70%;
         margin: 5% auto 5vw;
@@ -1211,23 +1216,19 @@ No media query for `xs` since this is the default in Bootstrap */
     /* CREATE */
     .create h2 {
         background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
-
         padding: 6vw;
         margin: 0 auto -10%;
     }
 
     .createimg {
         font-size: 1.5vw;
-
         width: 90vw;
         margin: 0 auto;
     }
 
     .createimg p {
         background-color: var(--grayscale-text-bg-color);
-
         border: solid 5px black;
-
         padding: 1rem;
         width: 70%;
         margin: 5% auto 0;
@@ -1253,7 +1254,6 @@ No media query for `xs` since this is the default in Bootstrap */
     .book-animation
     {
         background-image: url(../../public/images/GIFs/book-split/Frame1.gif); 
-
         left: -18%;
         top: 0%;
     }
