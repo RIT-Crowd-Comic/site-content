@@ -1,24 +1,146 @@
 const baseUrl = 'http://localhost:4000';
 
-const getAPICall = async (url: string, body = {
-}) => {
+const getAPICall = async (url: string) => {
     return await fetch(`${baseUrl}${url}`,{
-        mode: 'no-cors',
         headers: { "Content-Type": "application/json" },
         method: 'GET'
     }).then(response => {
-        console.log('a')
         return response.json();
 
     }).then(json => {
-        return json.message
+        if(json.message) {
+            return json.message
+        }
+        return json;
+
     }).catch((error) => {
-        console.log(error)
+        return error;
       });;
 };
 
+const postAPICall = async (url: string, body: object) => {
+    return await fetch(`${baseUrl}${url}`,{
+        body: JSON.stringify(body),
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+    }).then(response => {
+        return response.json();
+
+    }).then(json => {
+        if(json.message) {
+            return json.message
+        }
+        return json;
+
+    }).catch((error) => {
+        return error;
+      });;
+}
+
+/**
+ * Get hook based on its id
+ * @param id the id of the hook
+ * @returns either the hook itself or an error message
+ */
 const getHookByID =  async (id: number) => {
     return await getAPICall(`/hook/${id}`);
 };
 
-export { getHookByID }
+/**
+ * Gets an image based on the id
+ * @param id the id of the image
+ * @returns 
+ */
+const getImageByID = async (id: number) => {
+    return await getAPICall(`/getImage/${id}`)
+}
+
+/**
+ * Get a panel
+ * @param id the id of the panel
+ * @returns 
+ */
+const getPanelByID = async (id: number) => {
+    return await getAPICall(`/panel/${id}`)
+}
+
+/**
+ * Get all of the hooks within a panel
+ * @param panelID the id of the panel
+ * @returns 
+ */
+const getHooksFromPanel = async(panelID: number) => {
+    return await getAPICall(`/panel/${panelID}/hooks/`)
+}
+
+/**
+ * Get a panel set
+ * @param id the id of the panel
+ * @returns 
+ */
+const getPanelSetByID = async (id: number) => {
+    return await getAPICall(`/panel_set/${id}`);
+}
+
+/**
+ * Get all the panels from a panel set
+ * @param panelSetID the id of the panel set
+ * @returns 
+ */
+const getPanels = async (panelSetID: number) => {
+    return await getAPICall(`/panel_set/${panelSetID}/panels/`)
+}
+
+/**
+ * Get a panel based on the idex
+ * @param panelSetID the id of the panel set
+ * @param index the index of the panel
+ */
+const getPanelByIndex = async (panelSetID: number, index: number) => {
+    return await getAPICall(`/panel_set/${panelSetID}/${index}/panel`)
+
+}
+
+/**
+ * Get a user
+ * @param id the id of the user
+ * @returns 
+ */
+const getUser = async (id: string) => {
+    return await getAPICall(`/user/${id}/`)
+}
+
+/**
+ * Get all panel sets from a user
+ * @param id the id of the user
+ */
+const getPanelSets = async (id: string) => {
+    return await getAPICall(`/user/${id}/panel_sets/`)
+}
+
+/**
+ * Creates a new user
+ * @param email email of the user
+ * @param displayName display name of the user
+ * @param password password of the user
+ * @returns 
+ */
+const createUser = async (email: string, displayName: string, password: string) => {
+    return await postAPICall(`/createUser`, {
+        password: password,
+        email: email,
+        display_name: displayName
+    })
+}
+
+/**
+ * Creates a new panel
+ * @param author_id the id of the user who created the panel set
+ */
+const createPanelSet = async (author_id: string) => {
+    return await postAPICall(`/createPanelSet`, {
+        author_id: author_id
+    })
+}
+
+export { getHookByID, createUser, createPanelSet }
