@@ -30,10 +30,10 @@ const TeamPage = () => {
         </div>
         <div className="facultyGroup d-flex flex-wrap justify-content-center p-3 pb-4 m-4">
           <div className="card person-panel border border-black border-3 m-3">
-              <Image width={200} height={200} className="img-fluid portrait card-img w-100 h-100" alt="Jake Adams" src="/images/people/Jake_Adams.png"/>
+              <Image width={200} height={200} className="img-fluid portrait card-img w-100 h-100 rounded-0" alt="Jake Adams" src="/images/people/drawings/Jake_Adams.png"/>
               <Link href="https:www.linkedin.com">
               <div className="card-img-overlay">
-               <Image width={200} height={200} className="overlay-img img-fluid portrait card-img w-100 h-100" alt="Travis Stodter" src="/images/people/travis_stodter_white.png"/>
+               <Image width={200} height={200} className="overlay-img img-fluid portrait card-img w-100 h-100 rounded-0" alt="Travis Stodter" src="/images/people/photos/Travis_Stodter.png"/>
                 <div className="card-header p-2 rounded-0">
                   Jake Adams
                 </div>
@@ -44,10 +44,10 @@ const TeamPage = () => {
             </Link>
           </div>
           <div className="card person-panel border border-black border-3 m-3">
-              <Image width={200} height={200} className="img-fluid portrait card-img w-100 h-100" alt="Sten Mckinzie" src="/images/people/Sten_Placeholder.jpg"/>
+              <Image width={200} height={200} className="img-fluid portrait card-img w-100 h-100 rounded-0" alt="Sten Mckinzie" src="/images/people/drawings/Sten_Placeholder.jpg"/>
               <Link href="https:www.linkedin.com">
-              <div className="card-img-overlay">
-                <Image width={200} height={200} className="overlay-img img-fluid portrait card-img w-100 h-100" alt="Travis Stodter" src="/images/people/travis_stodter_white.png"/>
+              <div className="card-img-overlay rounded-0">
+                <Image width={200} height={200} className="overlay-img img-fluid portrait card-img w-100 h-100 rounded-0" alt="Travis Stodter" src="/images/people/photos/Travis_Stodter.png"/>
                 <div className="card-header p-2 rounded-0">
                   Sten Mckinzie
                 </div>
@@ -58,10 +58,10 @@ const TeamPage = () => {
             </Link>
           </div>
           <div className="card person-panel border border-black border-3 m-3">
-              <Image width={200} height={200} className="img-fluid portrait card-img w-100 h-100" alt="Travis Stodter" src="/images/people/travis_stodter_white.png"/>
+              <Image width={200} height={200} className="img-fluid portrait card-img w-100 h-100 rounded-0" alt="Travis Stodter" src="/images/people/drawings/travis_stodter_white.png"/>
               <Link href="https://www.linkedin.com/in/travis-stodter/">
               <div className="card-img-overlay">
-                <Image width={200} height={200} className="overlay-img img-fluid portrait card-img w-100 h-100" alt="Travis Stodter" src="/images/people/travis_stodter_white.png"/>
+                <Image width={200} height={200} className="overlay-img img-fluid portrait card-img w-100 h-100 rounded-0" alt="Travis Stodter" src="/images/people/photos/Travis_Stodter.png"/>
                 <div className="card-header p-2 rounded-0">
                   Travis Stodter
                 </div>
