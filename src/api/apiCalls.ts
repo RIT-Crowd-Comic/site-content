@@ -111,6 +111,10 @@ const getUser = async (id: string) => {
     return await getAPICall(`/user/${id}/`)
 }
 
+/**
+ * Get all of the trunk panel sets
+ * @returns 
+ */
 const getTrunks = async() => {
     return await getAPICall(`/trunks`);
 }
@@ -149,6 +153,12 @@ const createPanelSet = async (authorID: string) => {
 }
 
 
+/**
+ * Creates a panel
+ * @param image the image the panel will hold
+ * @param panelSetID the panel set the panel will be a part of
+ * @returns 
+ */
 const createPanel = async (image: string, panelSetID: number) => {
     return await postAPICall(`/createPanel`, {
         image: image,
@@ -156,6 +166,13 @@ const createPanel = async (image: string, panelSetID: number) => {
     })
 }
 
+/**
+ * Create a hook
+ * @param position where the hook will be
+ * @param currentPanelID which panel the hook will be a part of
+ * @param nextPanelSetID the next panel set the hook leads to
+ * @returns 
+ */
 const createHook = async (position: object[], currentPanelID: number, nextPanelSetID: number) => {
     return await postAPICall(`/createHook`, {
         position: position,
@@ -165,7 +182,7 @@ const createHook = async (position: object[], currentPanelID: number, nextPanelS
 }
 
 /**
- * 
+ * Tells if a hook leads anywhere
  * @param id the id of the hook
  * @returns if the hook's next_panel_set_id is null (or undefined if the hook can't be found)
  */
@@ -179,6 +196,12 @@ const isHookLinked = async(id: number) => {
     return hook.next_panel_set_id != null;
 }
 
+/**
+ * Check if the user's credentials are correct
+ * @param email 
+ * @param password 
+ * @returns 
+ */
 const authenticate = async(email: string, password: string) => {
     return postAPICall(`/authenticate`, {
         email: email,
@@ -205,7 +228,12 @@ const changeDisplayName = async(email: string, password: string, display: string
     })
 }
 
-// app.post('/updatePanel', panel.updatePanel);
+/**
+ * Changes the image of a panel
+ * @param id the id of the panel
+ * @param image the new image of the panel
+ * @returns 
+ */
 const updatePanel = async (id: number, image: string) => {
     return postAPICall(`/updatePanel`, {
         id: id,
@@ -213,9 +241,9 @@ const updatePanel = async (id: number, image: string) => {
     });
 }
 
-
-// app.post('/saveImage', upload.single('image'), image.saveImage);
-// app.get('/getImage/:id', image.getImage);
-// app.patch('/addSetToHook', hook.addSetToHook);
+//todo implement the following
+// '/saveImage'
+//'/getImage/:id
+// '/addSetToHook'
 
 export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel }
