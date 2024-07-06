@@ -22,16 +22,18 @@ const toggleHooksOff = "/images/view-branch-button-off-pressed.png"
 
 //set the base trunks to display by default on read
 const ReadPage = () => {
-    const [layout,setLayout] = useState('row-panels');
-    const [hooks,setHooks] = useState("base-hooks");
+    // const [layout,setLayout] = useState("rowPanels");
+    const [layout,setLayout] = useState(`${styles.rowPanels}`);
+    const [hooks,setHooks] = useState("baseHooks");
     
     return (<>
         
         <ComicPanels setting={layout} hook_state={hooks} image_1={firstPanelImage} image_2={secondPanelImage} image_3={thirdPanelImage}/>
-        <div className="control-bar">
-                <button id="back-button"><img src={backIcon} className="button-icon"></img></button>
-                <IconToggleButton setting={hooks} setSetting={setHooks} state_1='base-hooks' state_2="pop-hooks" buttonId="hooks-toggle" source_1={toggleHooksOff} source_2={toggleHooksOn}/>
-                <IconToggleButton setting={layout} setSetting={setLayout} state_1='row-panels' state_2="column-panels" buttonId="layout-toggle" source_1={toggleLayoutHorizIcon} source_2={toggleLayoutVertIcon}/>
+        <div className={`${styles.controlBar}`}>
+                <button id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}></img></button>
+                <IconToggleButton setting={hooks} setSetting={setHooks} state_1="baseHooks" state_2="popHooks" buttonId="hooksToggle" source_1={toggleHooksOff} source_2={toggleHooksOn}/>
+                <IconToggleButton setting={layout} setSetting={setLayout} state_1={`${styles.rowPanels}`} state_2={`${styles.columnPanels}`} buttonId="layoutToggle" source_1={toggleLayoutHorizIcon} source_2={toggleLayoutVertIcon}/>
+                {/* <IconToggleButton setting={layout} setSetting={setLayout} state_1="rowPanels" state_2="columnPanels" buttonId="layoutToggle" source_1={toggleLayoutHorizIcon} source_2={toggleLayoutVertIcon}/> */}
         </div>
     </>);
 }

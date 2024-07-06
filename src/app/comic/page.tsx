@@ -1,5 +1,5 @@
 //This is the reading page where the user can read panels and click on branch hooks to pull up new panels
-import styles from "../../styles/read.module.css";
+import "../../styles/comicGlobal.css";
 import ReadPage from "@/components/ReadPage";
 
 //imported base trunk panels as static images

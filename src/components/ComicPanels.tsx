@@ -23,25 +23,33 @@ interface Props {
     NOTE - The current buttons in the html are hard coded and should be removed once the placeButtons() method is created. The positions for the buttons are also currently set in "read.css"
 */
 const ComicPanels = ({setting, hook_state,image_1, image_2, image_3}: Props) => {
-    const button_class= hook_state + " branch-hook"
-
+    const button_class= `${styles[hook_state]} ${styles.branchHook}`
+    // console.log(`body height attribute?: ${styles.body}`)
+    let bodyHeight=""
+    if(setting.includes("row")){
+        bodyHeight="rowBodyH"
+    }else{
+        bodyHeight="colBodyH"
+    }
     return (
-        <div id="comic-panels" className={`setting ${styles.body}`}>
-            <div className="first-panel">
-                <img id="first-img" src={image_1} alt="" className={setting} />
-                <button id="first-branch-hook" className={button_class}>1</button> {/*<---- hard coded place holder branch hook */}
-            </div>
-            <div className="second-panel">
-                <img id="second-img" src={image_2} alt="" className={setting} />
-            </div>
-            <div className="third-panel">
-                <img id="third-img" src={image_3} alt="" className={setting} />
-                <div className="third-panel-container">
-                    <button id="second-branch-hook" className={button_class}>2</button> {/*<---- hard coded place holder branch hook */}
-                    <button id="third-branch-hook" className={button_class}><a href="/comic/create">3</a></button> {/*<---- hard coded place holder branch hook */}
+        <main className={`${styles.body} ${styles[bodyHeight]}`}>
+            <div id={`${styles.comicPanels}`} className={`${setting}`}>
+                <div className={`${styles.firstPanel}`}>
+                    <img id="first-img" src={image_1} alt="" className={setting} />
+                    <button id={`${styles.firstBranchHook}`} className={button_class}>1</button> {/*<---- hard coded place holder branch hook */}
+                </div>
+                <div className={`${styles.secondPanel}`}>
+                    <img id="second-img" src={image_2} alt="" className={setting} />
+                </div>
+                <div className={`${styles.thirdPanel}`}>
+                    <img id="third-img" src={image_3} alt="" className={setting} />
+                    <div className="third-panel-container">
+                        <button id={`${styles.secondBranchHook}`}  className={button_class}>2</button> {/*<---- hard coded place holder branch hook */}
+                        <button id={`${styles.thirdBranchHook}`}  className={button_class}><a href="/comic/create">3</a></button> {/*<---- hard coded place holder branch hook */}
+                    </div>
                 </div>
             </div>
-        </div>
+        </main>
     );
 }
 
