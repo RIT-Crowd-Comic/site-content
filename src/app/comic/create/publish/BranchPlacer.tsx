@@ -1,6 +1,10 @@
 "use client";
 import styles from '@/styles/publish.module.css'
 
+// Assets
+import leftArrow from '../../../../../../public/images/buttons/carousel-left-button.PNG';
+import rightArrow from '../../../../../../public/images/buttons/carousel-right-button.PNG';
+
 import {useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {PanelSet, Branch} from "./PanelSet";
@@ -145,7 +149,7 @@ const BranchPlacer = () => {
             <div id={`${styles.panelOverview}`} className="carousel slide">
                 {/* class= carousel-control-prev */}
                 <button className={`${styles.carouselControls}`} type="button" data-bs-target="#panel-overview" data-bs-slide="prev">
-                    <span className="carousel-control-prev-icon " aria-hidden="true"></span>
+                    <img className={`${styles.carouselPrevIcon}`} alt="previous arrow" src={leftArrow}  aria-hidden="true"></img>
                     <span className="visually-hidden">Previous</span>
                 </button>
                 {/* <divclassName="carousel-inner"> */}
@@ -171,7 +175,7 @@ const BranchPlacer = () => {
             
                 {/*class= carousel-control-next  */}
                 <button className={`${styles.carouselControls}`} type="button" data-bs-target="#panel-overview" data-bs-slide="next">
-                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                    <img className={`${styles.carouselNextIcon}`} alt="next arrow" src={rightArrow} aria-hidden="true"></img>
                     <span className="visually-hidden">Next</span>
                 </button>
                 
@@ -193,7 +197,7 @@ const BranchPlacer = () => {
                     {/* starting text to be updated when either add or remove branch hook button is pressed */}
                 </div>
             </div>
-            <button onClick={pushToLocalStorage} id={`${styles.publishBtn}`}>Publish</button>
+            <button onClick={pushToLocalStorage} id={`${styles.publishBtn}`}></button>
         </div>
         </div>
         </main>

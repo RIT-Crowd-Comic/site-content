@@ -106,7 +106,14 @@
   background-color:var(--yellow);
   transform:translate(0,-2.5px);
 }
-
+.carouselPrevIcon{
+  object-fit:contain;
+  /* background-image:url("../../public/images/buttons/carousel-left-button.PNG"); */
+}
+.carouselNextIcon{
+  object-fit:contain;
+  /* background-image:url("../../public/images/buttons/carousel-right-button.PNG"); */
+}
 .carouselControls{
   width:50px;
   background-color: transparent;
@@ -191,7 +198,7 @@
   height:15vw;
   min-height:135px;
   object-fit:contain;
-  background-image: url(../../public/images/icons/publish-button.PNG);
+  background-image: url(../../public/images/buttons/static-publish-button.PNG);
   background-size:contain;
   background-position: center;
   background-repeat:no-repeat;
@@ -203,7 +210,7 @@
   transform:scale(1.5) translate(-.25,-.75); */
   border:none;
   background-color:rgba(255, 255, 255, 0);
-  background-image: url(../../public/images/icons/publish-button-color.PNG);
+  background-image: url(../../public/images/GIFs/publish-button-rotating.gif);
 }
 
 .button:hover{
