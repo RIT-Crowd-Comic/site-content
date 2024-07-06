@@ -6,6 +6,9 @@ import Card from '@/components/Card'
 import arrow from "../../../public/images/Arrow.gif"
 import styles from "@/styles/team.module.css"
 
+//footer
+import Footer from "../../components/footer"
+
 const TeamPage = () => {
   return (
     <main className={styles.body}>
@@ -84,6 +87,7 @@ const TeamPage = () => {
         </Link>
       </div> */}
       {/* /Content */}
+      <Footer/>
     </main>
 
   )

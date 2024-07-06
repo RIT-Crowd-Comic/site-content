@@ -59,6 +59,7 @@ a {
 
 .footer-bar {
     width: 100vw;
+    position: relative;
     display: flex;
     justify-content: space-between;
     flex-flow: row wrap;

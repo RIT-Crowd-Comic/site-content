@@ -24,6 +24,8 @@ import firstPanelImage from "../../public/comic-panels/first_panel.png";
 import secondPanelImage from "../../public/comic-panels/second_panel.png";
 import thirdPanelImage from "../../public/comic-panels/third_panel.png";
 
+import Footer from "../components/footer"
+
 export default function Home() {
    return (
     <main className={styles.body}>
@@ -133,7 +135,9 @@ export default function Home() {
           </button>
         </Link>
       </div> */}
+      <Footer/>
     </main >
+    
   );
 }
 
