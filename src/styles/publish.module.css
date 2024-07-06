@@ -70,6 +70,7 @@
  border: 5px solid black;
  outline: 15px solid white;
  margin:20px;
+ order:1;
 }
 .carouselItem {
   /* left: -200px; */
@@ -89,6 +90,8 @@
  display:flex;
  justify-content: center;
   max-width:100%;
+  order:3;
+  flex-basis:100%;
 }
 
 .carouselPlaceIndicators button{
@@ -119,6 +122,8 @@
   width:50px;
   background-color: transparent;
   border:none;
+  order:1;
+  object-fit:contain
 }
 
 .carouselControls:hover{
@@ -172,6 +177,7 @@
   display: flex;
   margin-bottom: 10px;
   gap: 10px;
+  flex-direction: row;
 }
 
 .branchHookText p{
@@ -233,11 +239,26 @@
     height:auto;
   }
   #publishSlideshow{
-    width:100%;
+    width:100vw;
+    align-items: center;
+  }
+  #panelOverview{
+    flex-wrap: wrap;
+    justify-content: space-around;
+
   }
   .buttonContainer{
-    width:100%;
-    /* height:40vh; */
+    width:95vw;
+    margin:0 10px;
+  }
+  .carouselView{
+    outline:10px solid white;
+    margin:15px;
+    flex-basis: 88vw;
+  }
+  .carouselPlaceIndicators{
+    order:3;
+    flex-basis: fit-content;
   }
   .carouselPlaceIndicators button{
     margin:10px;
@@ -255,9 +276,28 @@
   .caroselView{
     height:auto;
   }
-  #publishBtn{
-    font-size:3rem;
+  .carouselControls img{
+ max-height:30px;
+    width:30px;
+    height:30px;
   }
+   #prevSlideBtn{
+    order:2;
+   }
+   #nextSlideBtn{
+    order:4;
+   }
+  #publishBtn{
+    width:100%;
+    background-image: url(../../public/images/buttons/static-publish-button-color.PNG);
+  }
+  .branchControlBtn{
+    font-size: 1.2em;
+  }
+  /* #branchHookControls{
+    flex-direction:column;
+    gap:none;
+  } */
 }
 
 /* [xs] Extra small devices, less than 576px) */

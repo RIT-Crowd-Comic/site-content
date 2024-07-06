@@ -146,7 +146,7 @@ const BranchPlacer = () => {
         <div id={`${styles.publishSlideshow}`}>
             <div id={`${styles.panelOverview}`} className="carousel slide">
                 {/* class= carousel-control-prev */}
-                <button className={`${styles.carouselControls}`} type="button" data-bs-target="#panel-overview" data-bs-slide="prev">
+                <button className={`${styles.carouselControls}`} id={`${styles.prevSlideBtn}`} type="button" data-bs-target="#panel-overview" data-bs-slide="prev">
                     <img className={`${styles.carouselPrevIcon}`} alt="previous arrow" src="../../../../../../public/images/buttons/carousel-left-button.png"  aria-hidden="true"></img>
                     <span className="visually-hidden">Previous</span>
                 </button>
@@ -172,16 +172,17 @@ const BranchPlacer = () => {
                 </div>
             
                 {/*class= carousel-control-next  */}
-                <button className={`${styles.carouselControls}`} type="button" data-bs-target="#panel-overview" data-bs-slide="next">
+                <button className={`${styles.carouselControls}`} id={`${styles.nextSlideBtn}`} type="button" data-bs-target="#panel-overview" data-bs-slide="next">
                     <img className={`${styles.carouselNextIcon}`} alt="next arrow" src="../../../../../../public/images/buttons/carousel-right-button.png" aria-hidden="true"></img>
                     <span className="visually-hidden">Next</span>
                 </button>
                 
-            </div>
-            <div className={`${styles.carouselPlaceIndicators}`}>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Panel 1"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Panel 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Panel 3"></button>
+            
+                <div className={`${styles.carouselPlaceIndicators}`}>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Panel 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Panel 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Panel 3"></button>
+                </div>
             </div>
         </div>
         <div className={`${styles.buttonContainer}`}>
