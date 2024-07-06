@@ -38,9 +38,9 @@
 #publishSlideshow{
   margin-top:20px;
   height:auto;
-  width:100%;
+  /* width:100%; */
   max-height:97vh;
-  flex-grow:3; 
+  flex-grow:4; 
   flex-shrink:0.5;
   display:flex;
   flex-direction:column;
@@ -67,14 +67,15 @@
  height:100%;
  max-width:97vh;
  /* padding:20px; */
- 
+ border: 5px solid black;
+ outline: 15px solid white;
+ margin:20px;
 }
 .carouselItem {
   /* left: -200px; */
   width:100%;
   max-width: 100%;
   height:100%;
-  
   /* max-height: 50vh; */
 }
 
@@ -167,7 +168,7 @@
   /* font-size: 24px; */
 }
 
-#branch-hook-controls{
+#branchHookControls{
   display: flex;
   margin-bottom: 10px;
   gap: 10px;
@@ -184,6 +185,7 @@
   border-radius:15px;
   background-color:#929292;
   color:black;
+  margin:5px;
 }
 
 
@@ -250,7 +252,7 @@
     background-color:var(--yellow);
     transform:translate(0,-2.5px);
   }
-  .carosel-view{
+  .caroselView{
     height:auto;
   }
   #publishBtn{

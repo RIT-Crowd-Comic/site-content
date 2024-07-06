@@ -2,8 +2,6 @@
 import styles from '@/styles/publish.module.css'
 
 // Assets
-import leftArrow from '../../../../../../public/images/buttons/carousel-left-button.PNG';
-import rightArrow from '../../../../../../public/images/buttons/carousel-right-button.PNG';
 
 import {useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,9 +14,9 @@ const BranchPlacer = () => {
     const [parId, setparId] = useState(" "); //parent id state
     const [curId, setCurId] = useState(parId ? parId : uuidv4());
     const [imageLinks, setImageLinks] = useState([ //state used to hold images and track any changes to them
-        "/images/previewPlaceholder.png", 
-        "/images/previewPlaceholder.png", 
-        "/images/previewPlaceholder.png"
+        "/comic-panels/first_panel.png", 
+        "/comic-panels/second_panel.png", 
+        "/comic-panels/third_panel.png"
     ]);
 
     useEffect(() => {
@@ -149,7 +147,7 @@ const BranchPlacer = () => {
             <div id={`${styles.panelOverview}`} className="carousel slide">
                 {/* class= carousel-control-prev */}
                 <button className={`${styles.carouselControls}`} type="button" data-bs-target="#panel-overview" data-bs-slide="prev">
-                    <img className={`${styles.carouselPrevIcon}`} alt="previous arrow" src={leftArrow}  aria-hidden="true"></img>
+                    <img className={`${styles.carouselPrevIcon}`} alt="previous arrow" src="../../../../../../public/images/buttons/carousel-left-button.png"  aria-hidden="true"></img>
                     <span className="visually-hidden">Previous</span>
                 </button>
                 {/* <divclassName="carousel-inner"> */}
@@ -175,7 +173,7 @@ const BranchPlacer = () => {
             
                 {/*class= carousel-control-next  */}
                 <button className={`${styles.carouselControls}`} type="button" data-bs-target="#panel-overview" data-bs-slide="next">
-                    <img className={`${styles.carouselNextIcon}`} alt="next arrow" src={rightArrow} aria-hidden="true"></img>
+                    <img className={`${styles.carouselNextIcon}`} alt="next arrow" src="../../../../../../public/images/buttons/carousel-right-button.png" aria-hidden="true"></img>
                     <span className="visually-hidden">Next</span>
                 </button>
                 
@@ -188,7 +186,7 @@ const BranchPlacer = () => {
         </div>
         <div className={`${styles.buttonContainer}`}>
             <div className={`${styles.branchHooks}`}>
-                <div id="branch-hook-controls">
+                <div id={`${styles.branchHookControls}`}>
                     <button id="add-branch-hook" className={`${styles.branchControlBtn}`} onClick={startAdd}>Add Hook</button>
                     <button id="remove-branch-hook" className={`${styles.branchControlBtn}`} onClick={removeBranchHook}>Remove Hook</button>
                 </div>
