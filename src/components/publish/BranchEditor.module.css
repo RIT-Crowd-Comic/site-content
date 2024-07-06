@@ -1,0 +1,42 @@
+.preview {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    background-color: white;
+    z-index: 1;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.hookSvg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    padding: 0;
+    margin: 0;
+    /* pointer-events: none; */
+}
+
+.hookPath:hover {
+    cursor: pointer;
+}
+
+.hookSvg.editing {
+    pointer-events: none;
+}
+.preview.editing:hover {
+    cursor: crosshair;
+}
+
+.branchEditor {
+    position: relative;
+}
+
+@media only screen and (min-width: 700px) {
+    .preview {
+        width: 100%;
+        aspect-ratio: 3 / 2;
+    }
+}

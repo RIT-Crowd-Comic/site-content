@@ -1,11 +1,11 @@
 //This is the publishing page for placing branch hooks
 'use client'
-import BranchPlacer from "../../../../components/publish/BranchPlacer";
+import BranchPage from "../../../../components/publish/BranchPage";
 
 
 const Publish = () => {
     return (
-        <BranchPlacer />
+        <BranchPage />
     );
 }
 

@@ -5,21 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { PanelSet } from "./interfaces";
 import paper from 'paper/dist/paper-core';
-import { createSVGPath } from '../../utils';
-
-/**
- * Toggles a specified class for all children based on the predicate return (true: enable, false: disable)
- * @param selector 
- * @param className 
- * @param predicate true: enable class, false: disable class
- */
-const toggleClassForAllElements = (selector: string, className: string, predicate: (elm: Element, i: number) => boolean) => {
-    const allPanels = document.querySelectorAll(selector);
-    allPanels.forEach((panelContainer, i) => {
-        panelContainer.classList.remove(className);
-        if (predicate(panelContainer, i)) panelContainer.classList.add(className);
-    });
-}
+import { createSVGPath, toggleClassForAllElements } from '../../utils';
 
 const BranchPlacer = () => {
     const canvasReference = useRef<HTMLCanvasElement | null>(null);
@@ -29,12 +15,12 @@ const BranchPlacer = () => {
     let comicLayer = useRef<paper.Layer>();
     let branchLayer = useRef<paper.Layer>();
 
-    const [adding, setAdding] = useState(false);
+    const [addingHook, setAddingHook] = useState(false);
     const [parId, setparId] = useState(" ");
-    const [curId] = useState(parId ? parId : uuidv4());
+    const [curId] = useState(uuidv4());
     const [panelIndex, setPanelIndex] = useState(0);
     const [selectedHookIndex, setSelectedHookIndex] = useState<number | null>();
-    const [currentHookIndex, setCurrentHookIndex] = useState(0);
+    // const [currentHookIndex, setCurrentHookIndex] = useState(0);
     const [currentHookPoints, setCurrentHookPoints] = useState(new Array<Array<number>>);
     const [panelSet, setPanelSet] = useState<PanelSet>({
         current_panel_set_uuid: curId,
@@ -62,7 +48,7 @@ const BranchPlacer = () => {
         increment = Math.min(Math.max(Math.floor(increment), -1), 1);
         setPanelIndex((3 + panelIndex + increment) % 3);
 
-        if (adding) confirmBranchHook();
+        if (addingHook) confirmBranchHook();
     };
 
     // one time setup
@@ -127,10 +113,10 @@ const BranchPlacer = () => {
     useEffect(() => {
         toggleClassForAllElements('canvas.comic-panel', 'editing-branch', (_, i) => i === panelIndex);
 
-    }, [adding, panelIndex]);
+    }, [addingHook, panelIndex]);
 
     // set up hook tool
-    const drawPath = (path: paper.Path, points: number[][], mousePoint?: paper.Point) => {
+    const drawPath = (path: paper.Path, points: number[][], mousePoint?: paper.PointLike) => {
         if (points.length === 0) return;
 
         // draw dotted outline finishing the shape
@@ -168,19 +154,32 @@ const BranchPlacer = () => {
 
     const selectHook = (index: number | null) => {
         setSelectedHookIndex(index);
+
+        // if (!addingHook) {
         const removeBtn = document.querySelector('#remove-branch-hook') as HTMLButtonElement;
         if (removeBtn) {
             removeBtn.classList.toggle('selected-hook', index != null)
             removeBtn.disabled = index == null;
         }
+        // }
+    }
+
+    const clearCurrentHook = () => {
+        // clear current temporary hook data
+        if (transparentPath.current) transparentPath.current.pathData = '';
+        setCurrentHookPoints([]);
+        selectHook(null);
+        setAddingHook(false);
     }
 
     const addVertex = (toolEvent: paper.ToolEvent) => {
+        if (selectedHookIndex == null) return;
+
         const hookPoints = [...currentHookPoints, [toolEvent.point.x, toolEvent.point.y]];
         setCurrentHookPoints(hookPoints);
 
         if (currentHookPoints.length > 0) {
-            let currentShape = panelSet.hooks[currentHookIndex].path;
+            let currentShape = panelSet.hooks[selectedHookIndex].path;
             if (currentShape) {
                 drawPath(currentShape, hookPoints, toolEvent.point);
             }
@@ -190,10 +189,12 @@ const BranchPlacer = () => {
     const mouseDownHandler = (toolEvent: paper.ToolEvent) => {
 
         // reset selection when clicking anywhere
-        selectHook(null);
-        drawHoveredPath(toolEvent.point);
+        if (!addingHook) {
+            selectHook(null);
+            drawHoveredPath(toolEvent.point);
+        }
 
-        if (adding && panelSet.hooks[currentHookIndex]) {
+        if (addingHook && selectedHookIndex != null && panelSet.hooks[selectedHookIndex]) {
             addVertex(toolEvent);
         }
         else {
@@ -210,26 +211,28 @@ const BranchPlacer = () => {
 
     const mouseDragHandler = (toolEvent: paper.ToolEvent) => {
 
-        if (!panelSet.hooks[currentHookIndex]) return;
-        if (adding && panelSet.hooks[currentHookIndex]) {
+        if (selectedHookIndex == null || !panelSet.hooks[selectedHookIndex]) return;
+        if (addingHook && panelSet.hooks[selectedHookIndex]) {
             addVertex(toolEvent);
         }
     }
 
     const mouseMoveHandler = (toolEvent: paper.ToolEvent) => {
-        if (adding && panelSet.hooks[currentHookIndex]) {
-            const currentHook = panelSet.hooks[currentHookIndex];
+        // for drawing to the current mouse position
+        if (addingHook && selectedHookIndex != null && panelSet.hooks[selectedHookIndex]) {
+            const currentHook = panelSet.hooks[selectedHookIndex];
             if (currentHook.path) {
                 drawPath(currentHook.path, currentHookPoints, toolEvent.point);
             }
         }
-        else {
+        else if (!addingHook) {
             drawHoveredPath(toolEvent.point);
             highlightSelectedHook();
         }
     }
 
-    if (window) window.onmousedown = (event) => {
+    // clicking anywhere on the window will deselect hook
+    if (typeof window !== 'undefined') window.onmousedown = (event) => {
         if (event.target === canvasReference.current || event.target! instanceof HTMLButtonElement) {
             event.stopPropagation();
             return;
@@ -237,6 +240,7 @@ const BranchPlacer = () => {
         selectHook(null);
         drawHoveredPath({ x: event.x, y: event.y });
     };
+
     hookDrawTool.current.onMouseDown = mouseDownHandler;
     hookDrawTool.current.onMouseDrag = mouseDragHandler;
     hookDrawTool.current.onMouseMove = mouseMoveHandler;
@@ -256,39 +260,39 @@ const BranchPlacer = () => {
         });
         setPanelSet({ ...panelSet, hooks: hooks })
 
-        setCurrentHookIndex(hooks.length - 1);
+        selectHook(hooks.length - 1);
+        drawHoveredPath({ x: -1, y: -1 });
 
-        setAdding(true);
+        setAddingHook(true);
     }
 
     const confirmBranchHook = () => {
+
         // if hook wasn't drawn, cancel it
         // minimum triangle drawn
-        if (currentHookPoints.length < 3) {
-            panelSet.hooks[currentHookIndex].path?.remove();
-            setPanelSet({ ...panelSet, hooks: panelSet.hooks.filter((_, i) => i !== currentHookIndex) });
-        }
-        else {
-
-            // close the polygon
-            const hookPoints = [...currentHookPoints, [currentHookPoints[0][0], currentHookPoints[0][1]]];
-            // push current branch to the panel set's list of hooks
-            const hooks = [...panelSet.hooks];
-            const path = hooks[currentHookIndex].path;
-            if (path) {
-                path.pathData = createSVGPath(hookPoints);
-                hooks[currentHookIndex].path = path;
+        if (selectedHookIndex != null) {
+            if (currentHookPoints.length < 3) {
+                panelSet.hooks[selectedHookIndex].path?.remove();
+                setPanelSet({ ...panelSet, hooks: panelSet.hooks.filter((_, i) => i !== selectedHookIndex) });
             }
-            hooks[currentHookIndex].points = hookPoints;
+            else {
 
-            setPanelSet({ ...panelSet, hooks: hooks });
+                // close the polygon
+                const hookPoints = [...currentHookPoints, [currentHookPoints[0][0], currentHookPoints[0][1]]];
+                // push current branch to the panel set's list of hooks
+                const hooks = [...panelSet.hooks];
+                const path = hooks[selectedHookIndex].path;
+                if (path) {
+                    path.pathData = createSVGPath(hookPoints);
+                    // hooks[selectedHookIndex].path = path;
+                }
+                hooks[selectedHookIndex].points = hookPoints;
+
+                setPanelSet({ ...panelSet, hooks: hooks });
+            }
         }
 
-        // clear current temporary hook data
-        if (transparentPath.current) transparentPath.current.pathData = '';
-        setCurrentHookPoints([]);
-        selectHook(null);
-        setAdding(false);
+        clearCurrentHook();
     }
 
     /*
@@ -297,8 +301,10 @@ const BranchPlacer = () => {
     const removeBranchHook = () => {
         if (selectedHookIndex == null) return;
         panelSet.hooks[selectedHookIndex].path?.remove();
+        if (transparentPath.current) transparentPath.current.pathData = '';
         setPanelSet({ ...panelSet, hooks: panelSet.hooks.filter((_, i) => i !== selectedHookIndex) });
-        selectHook(null);
+
+        clearCurrentHook();
     }
 
     //packages ps and then pushes it to local storage
@@ -347,7 +353,7 @@ const BranchPlacer = () => {
                 <div className="branch-hooks">
                     <div id="branch-hook-controls">
                         {
-                            adding ? <button id="add-branch-hook" className="branch-control-btn selected-hook" onClick={confirmBranchHook}>Accept Hook</button> :
+                            addingHook ? <button id="add-branch-hook" className="branch-control-btn selected-hook" onClick={confirmBranchHook}>Accept Hook</button> :
                                 <button id="add-branch-hook" className="branch-control-btn" onClick={addBranchHook}>Add Hook</button>
                         }
                         {/* <button id="add-branch-hook" className="branch-control-btn" onClick={addBranchHook}>Add Hook</button> */}
