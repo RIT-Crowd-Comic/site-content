@@ -1,5 +1,5 @@
 "use client";
-import '@/styles/publish.module.css';
+import styles from '@/styles/publish.module.css'
 
 import {useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -138,27 +138,28 @@ const BranchPlacer = () => {
     }
 
     return (<>
-    <div className="background-image"></div>
-    <div id="publishContainer">
-        <div id="publish-slideshow">
-            <div id="panel-overview" className="carousel slide">
+    <main className={`${styles.body}`}>
+    {/* <div className={`${styles.backgroundImage}`}></div> */}
+    <div id={`${styles.publishContainer}`}>
+        <div id={`${styles.publishSlideshow}`}>
+            <div id={`${styles.panelOverview}`} className="carousel slide">
                 {/* class= carousel-control-prev */}
-                <button className="carousel-controls" type="button" data-bs-target="#panel-overview" data-bs-slide="prev">
+                <button className={`${styles.carouselControls}`} type="button" data-bs-target="#panel-overview" data-bs-slide="prev">
                     <span className="carousel-control-prev-icon " aria-hidden="true"></span>
                     <span className="visually-hidden">Previous</span>
                 </button>
                 {/* <divclassName="carousel-inner"> */}
-                <div className="carousel-view">
+                <div className={`${styles.carouselView}`}>
                     {/* temp vals for testing purposes, will be filled in with correct uploaded panels and vals through js */}
                     {/* uses placeholder class for images to be replaced with user uploaded images */}
-                    <div className="carousel-item active">
+                    <div className={`${styles.carouselItem} carousel-item active`}>
                         {/* d-block placeholder- */}
                         <img id="first-panel" onClick={() => { addBranchHook(1) }} src={imageLinks[0]} className="" alt="..." />
                     </div>
-                    <div className="carousel-item">
+                    <div className={`${styles.carouselItem} carousel-item`}>
                         <img id="second-panel" onClick={() => { addBranchHook(2) }} src={imageLinks[1]} className="" alt="..."  />
                     </div>
-                    <div className="carousel-item" id="branch-hook-img" >
+                    <div className={`${styles.carouselItem} carousel-item`} id="branch-hook-img" >
                         <img id="third-panel" onClick={() => { addBranchHook(3) }} src={imageLinks[2]} className="" alt="..."  useMap="#panel-map" />
                         {/* map of img containing clickable areas/sections defined by user*/}
                         <map name="panel-map">
@@ -169,32 +170,33 @@ const BranchPlacer = () => {
                 </div>
             
                 {/*class= carousel-control-next  */}
-                <button className="carousel-controls" type="button" data-bs-target="#panel-overview" data-bs-slide="next">
+                <button className={`${styles.carouselControls}`} type="button" data-bs-target="#panel-overview" data-bs-slide="next">
                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Next</span>
                 </button>
                 
             </div>
-            <div className="carousel-place-indicators">
+            <div className={`${styles.carouselPlaceIndicators}`}>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Panel 1"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Panel 2"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Panel 3"></button>
             </div>
         </div>
-        <div className="button-container">
-            <div className="branch-hooks">
+        <div className={`${styles.buttonContainer}`}>
+            <div className={`${styles.branchHooks}`}>
                 <div id="branch-hook-controls">
-                    <button id="add-branch-hook" className="branch-control-btn" onClick={startAdd}>Add Hook</button>
-                    <button id="remove-branch-hook" className="branch-control-btn" onClick={removeBranchHook}>Remove Hook</button>
+                    <button id="add-branch-hook" className={`${styles.branchControlBtn}`} onClick={startAdd}>Add Hook</button>
+                    <button id="remove-branch-hook" className={`${styles.branchControlBtn}`} onClick={removeBranchHook}>Remove Hook</button>
                 </div>
-                <div className="branch-hook-text">
+                <div className={`${styles.branchHookText}`}>
                     <p>{branCount} OF 3 REQUIRED BRANCHES PLACED</p>
                     {/* starting text to be updated when either add or remove branch hook button is pressed */}
                 </div>
             </div>
-            <button onClick={pushToLocalStorage} id="publish-btn">Publish</button>
+            <button onClick={pushToLocalStorage} id={`${styles.publishBtn}`}>Publish</button>
         </div>
         </div>
+        </main>
     </>);
 }
 
