@@ -15,7 +15,7 @@ const getAPICall = async (url: string) => {
 
     }).catch((error) => {
         return error;
-      });;
+      });
 };
 
 const postAPICall = async (url: string, body: object) => {
@@ -34,7 +34,7 @@ const postAPICall = async (url: string, body: object) => {
 
     }).catch((error) => {
         return error;
-      });;
+      });
 }
 
 /**
