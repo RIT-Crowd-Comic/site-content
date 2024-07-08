@@ -74,13 +74,8 @@ const TeamPage = () => {
           </div>
           </div>
         {/* /Professors */}
-      <div>
-        <Link href="#" className="scroll-btn align-bottom">
-          <strong id="scroll-text" className='align-text-bottom'>Back to Top</strong>  
-          <button type="button" className="mb-6 mr-6 z-10 btn btn-lg my-8 " id="scrollToTopBtn">
-            <Image src={arrow} alt="Scroll to top button" fill={true} />
-          </button>
-        </Link>
+        <div className="back-to-top">
+      <Link className="arrowLink" href="#"><button type="button" className="arrowAnimation mb-6 mr-6 z-10 btn btn-lg my-8 " id="scrollToTopBtn"></button></Link>
       </div>
       {/* /Content */}
     </main>
