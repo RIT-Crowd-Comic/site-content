@@ -88,14 +88,14 @@ button {
     background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
     padding: 6vw 8vw 6vw 6vw;
     z-index: 1;
-    margin: 5vh 2vw auto auto;
+    margin: 5vw 2vw auto auto;
 }
 
 .missionimg {
     position: relative;
     width: 90%;
     height: auto;
-    margin: -5vh auto auto auto;
+    margin: -5vw auto auto auto;
     font-size: 3.3vw;
     /* 
     TESTING BOX
@@ -105,16 +105,18 @@ button {
 
 .topMission {
     position: absolute;
-    top: -5%;
+    top: -10%;
+    right: 0%;
     height: auto;
-    width: 90vw;
+    width: 95vw;
 }
 
 .bottomMission {
     position: absolute;
-    bottom: -5%;
+    bottom: -17%;
+    right: 0%;
     height: auto;
-    width: 90vw;
+    width: 95vw;
 }
 
 .leftMission,
@@ -131,7 +133,7 @@ button {
     position: relative;
     z-index: 1;
     margin: 0 auto;
-    padding: 4vh 10vw;
+    padding: 5vw 2vw 5vw 4vw;
 }
 
 /* READ SECTION FORMATTING */
@@ -140,7 +142,7 @@ button {
     border: 20px solid transparent;
     background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
     padding: 7vw;
-    margin: -5vh auto;
+    margin: -5vw auto;
     z-index: 1;
 }
 
@@ -149,20 +151,23 @@ button {
     width: 90%;
     height: auto;
     font-size: 3.3vw;
-    margin: -5vh auto auto 10vw;
+    margin: -12vw auto auto 10vw;
 }
 
 .topRead {
     position: absolute;
+    top: 0%;
+    right: 6%;
     height: auto;
-    width: 83vw;
+    width: 88vw;
 }
 
 .bottomRead {
     position: absolute;
-    bottom: 0%;
+    bottom: -5%;
+    right: 6%;
     height: auto;
-    width: 83vw;
+    width: 88vw;
 }
 
 .readimg .card-img-top {
@@ -172,7 +177,7 @@ button {
 .readimg p {
     position: relative;
     z-index: 1;
-    padding: 5vh 10vw 5vh 5vw;
+    padding: 7vw 9vw 7vw 3vw;
 }
 
 .desktopRead {
@@ -188,7 +193,7 @@ button {
     position: relative;
     border: 20px solid transparent;
     background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
-    padding: 7vw 9vw 7vw 6vw;
+    padding: 5vw 9vw 5vw 6vw;
     margin: 0 auto;
     z-index: 1;
 }
@@ -197,21 +202,24 @@ button {
     position: relative;
     width: 90%;
     height: auto;
-    margin: -9vh auto -10vw 6vw;
+    margin: -12vw auto -10vw 6vw;
     font-size: 3.3vw;
 }
 
 .topCreate {
     position: absolute;
+    top: -5%;
+    right: 4%;
     height: auto;
-    width: 85vw;
+    width: 90vw;
 }
 
 .bottomCreate {
     position: absolute;
     bottom: 0%;
+    right: 4%;
     height: auto;
-    width: 85vw;
+    width: 90vw;
 }
 
 .createimg .card-img-top {
@@ -221,7 +229,7 @@ button {
 .createimg p {
     position: relative;
     z-index: 1;
-    padding: 5vh 10vw 4vh 9vw;
+    padding: 5vw 7vw 6vw 7vw;
 }
 
 .desktopCreate {
@@ -231,7 +239,7 @@ button {
 .getStarted {
     width: auto;
     height: auto;
-    margin: -2vw auto 10vw;
+    margin: -3vw auto;
 
     position: relative;
 
@@ -245,7 +253,7 @@ button {
     width: 100%;
     height: auto;
     margin: 0 auto;
-    padding: 5vw 10vw 6vw;
+    padding: 4vw 10vw 5vw;
     font-size: 4.5vw;
     z-index: 2;
 }
@@ -325,7 +333,7 @@ button {
     display: grid;
     grid-template-rows: repeat(3, auto);
     width: 80vw;
-    margin: 30px auto 50px;
+    margin: 15vw auto;
 }
 
 .preview-panels {
@@ -357,7 +365,7 @@ button {
     height: 20vw;
     padding: 0;
     background-size: 100% 100%;
-    margin: 6vh 0 3vh;
+    margin: 9vw 0 3vw;
     text-align: center;
     filter: grayscale(1);
 }
@@ -1090,7 +1098,7 @@ No media query for `xs` since this is the default in Bootstrap */
 
     .getStarted
     {
-        margin: -5vw auto 10vw;
+        margin: -4vw auto 10vw;
     }
 }
 
@@ -1241,7 +1249,7 @@ No media query for `xs` since this is the default in Bootstrap */
     .create h2 {
         background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
         padding: 6vw;
-        margin: 0 auto -10%;
+        margin: 18vw auto -10%;
     }
 
     .createimg {
@@ -1272,7 +1280,7 @@ No media query for `xs` since this is the default in Bootstrap */
 
     .getStarted
     {
-        margin: 10vw auto 10vw;
+        margin: 3vw auto 10vw;
     }
 
     .book-animation
