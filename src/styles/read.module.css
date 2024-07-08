@@ -1,14 +1,37 @@
-
-html, body{
+/* .body
+{
   background-image: url("/images/background-app-transparent.png");
   background-position: center;
   background-size:auto;
   background-color: rgb(48, 48, 48);
-  height: 100vh;
   filter: none;
+  position: absolute;
+  top:0;
+} */
+
+.body{
+  background-color: rgb(48, 48, 48);
+  background-image:url("../../public/images/background-app-transparent.png") !important;
+  /* background-position: center; */
+  background-repeat:repeat;
+  background-size:auto;
+  width:100%;
+  
+  filter:none;
+  position: absolute;
+  top:0;
+  padding-top:50px;
 }
+.rowBodyH{
+  height:100%;
+}
+.colBodyH{
+  height:fit-content;
+}
+
+/* .body:has(.rowPanels){} */
  
-.footer-bar{
+/* .footer-bar{
   position:fixed; 
   bottom:0;
   left:0;
@@ -17,42 +40,53 @@ html, body{
   justify-content:space-between;
   z-index:2;
   font-size: 2em;
-} 
+}  */
 
 .footer-head a {
   font-size: 20px;
 }
 
-.icondiv  img{
+.icondiv img{
   filter:grayscale(0);
   filter: invert(1);
 }
  
- #read-element {
-    margin: 9% 0px;
-  } 
+#read-element {
+  margin: 9% 0px;
+} 
 
-.first-panel,
-.second-panel,
-.third-panel {
+#comicPanels{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  justify-content: center;
+  padding-bottom: 50px;
+  padding-top: 50px;
+  height: 100%;
+}
+
+.firstPanel,
+.secondPanel,
+.thirdPanel {
   position: relative;
   border: 5px solid rgb(0, 0, 0);
   outline: 20px solid white;
   margin: 10px 10px;
 }
 
-button {
+.button-style {
   padding: 10px;
     font-size: 16px;
     background-color: darkgrey;
   }
 
-  button:hover{
+  .button-style:hover{
     background-color: #009BC6;
     border: none; 
   }
 
-  .branch-hook {
+  .branchHook {
     transition: all 0.2s linear 0s;
     border-radius: 30%;
     
@@ -85,7 +119,7 @@ button {
     }
   }
 
-.branch-hook{
+.branchHook{
     position: absolute;
     top: 0;
     left: 50%;
@@ -96,7 +130,7 @@ button {
   }
 
 
-.branch-hook.pop-hooks {
+.branchHook.popHooks {
   animation: pulse 1s infinite;
   position: absolute;
 }
@@ -110,69 +144,64 @@ button {
   }
 }
 
-#first-branch-hook{
+#firstBranchHook{
     top: 5%;
     left: 17%;
 }
 
-#second-branch-hook{
+#secondBranchHook{
     top: 60%;
     left: 15%;
 }
 
-#third-branch-hook{
+#thirdBranchHook{
     top: 45%;
     left: 75%;
 }
 
-  .button-icon{
+  .buttonIcon{
     width: 40px;
     height: auto;
     filter: invert(1);
   }
 
-  #hooks-toggle .button-icon:hover{
+  #hooksToggle .buttonIcon:hover{
     filter: invert(41%) sepia(97%) saturate(525%) hue-rotate(149deg) brightness(97%) contrast(105%)
   }
 
-  #back-button .button-icon:hover{
+  #backButton .buttonIcon:hover{
     filter: invert(74%) sepia(51%) saturate(390%) hue-rotate(356deg) brightness(104%) contrast(101%);
   }
   
 
   @media (min-width: 1400px) {
-    .row-panels#comic-panels{
+    .rowPanels#comicPanels{
       display: flex;
       flex-direction: row;
       align-items: center;
-      position: relative;
-      top:20vh;
+      position: absolute;
+      top:0;
       margin:auto;
       justify-content: center; 
+      width:100%;
     }
   
-    .column-panels#comic-panels{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      justify-content: center;
-      margin-bottom: 150px;
-      margin-top: 50px;
-    }
   
-    img.row-panels{
+  
+    img.rowPanels{
       width: 27vw;
       height:auto;
       
     }
     
-    img.column-panels {
-      width:900px;
+    img.columnPanels {
+      /* width:900px; */
       height: 600px;
+      max-height:80vh;
+      object-fit:contain;
     }
 
-    .control-bar {
+    .controlBar {
       position: fixed;
       background-color: rgb(0, 0, 0);
       width:80px;
@@ -187,11 +216,11 @@ button {
       transform: translate(-50%,-50%);
     }
 
-    #layout-toggle .button-icon:hover{
+    #layoutToggle .buttonIcon:hover{
       filter: invert(7%) sepia(99%) saturate(7263%) hue-rotate(357deg) brightness(106%) contrast(124%);
     } 
 
-    #back-button, #hooks-toggle, #layout-toggle {
+    #backButton, #hooksToggle, #layoutToggle {
       display: block;
       margin: 0px auto;
       position: relative;
@@ -204,26 +233,20 @@ button {
   }
   
   @media (max-width: 1400px) {
-    #comic-panels{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      justify-content: center;
-      margin-bottom: 150px;
-      margin-top: 50px;
-    }
+ .rowBodyH{
+  height:fit-content;
+ }
   
-    #comic-panels img {
+    #comicPanels img {
       width:900px;
       height: 600px;
     }
 
-    .control-bar {
+    .controlBar {
       visibility: hidden;
     }
 
-    #back-button, #hooks-toggle {
+    #backButton, #hooksToggle {
       visibility: visible;
       position: fixed;
       background-color: black;
@@ -231,42 +254,37 @@ button {
       border: none;
     } 
 
-    #back-button {
-      top:9vh;
-      left:3vw;
+    #backButton {
+      top:12vh;
+      left:2vw;
+      width:60px;
+      height:60px;
     }
 
-    #hooks-toggle {
-      bottom:11vh;
+    #hooksToggle {
+      bottom:3vh;
       right:3vw;
+      padding:5px;
     }
   
-    #layout-toggle .button-icon{
+    #layoutToggle .buttonIcon{
       visibility: hidden;
     } 
   }
 
   @media (max-width: 1000px){
-    #comic-panels{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      justify-content: center;
-      margin-bottom: 150px;
-      margin-top: 50px;
-    }
+
   
-    #comic-panels img {
+    #comicPanels img {
       width:80vw;
       height: auto;
     }
 
-    .control-bar {
+    .controlBar {
       visibility: hidden;
     }
 
-    #back-button, #hooks-toggle {
+    #backButton, #hooksToggle {
       visibility: visible;
       position: fixed;
       background-color: black;
@@ -274,17 +292,38 @@ button {
       border: none;
     } 
 
-    #back-button {
-      top:8vh;
-      left:3vw;
+    #backButton {
+      top:12vh;
+      left:2vw;
+      width:60px;
+      height:60px;
     }
 
-    #hooks-toggle {
-      bottom:10vh;
+    #hooksToggle {
+      bottom:3vh;
       right:3vw;
+      padding:5px;
     }
   
-    #layout-toggle .button-icon{
+    #layoutToggle .buttonIcon{
       visibility: hidden;
     } 
   }
+
+/* [xs] Extra small devices, less than 576px) */
+/* No media query for `xs` since this is the default in Bootstrap */
+
+/* [sm] Small devices, 576px and up */
+@media (min-width: 576px) {}
+
+/* [md] Medium devices, 768px and up */
+@media (min-width: 768px) {}
+
+/* [lg] Large desktops, 992px and up */
+@media (min-width: 992px) {}
+
+/* [xl] Extra large devices 1200px and up */
+@media (min-width: 1200px) {}
+
+/* [xxl] Extra extra large devices, 1400px and up */
+@media (min-width: 1400px) {}

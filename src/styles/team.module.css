@@ -1,0 +1,197 @@
+.body {
+    width: 100%;
+    font-family: var(--font-back-issues);
+    background-color: var(--grayscale-text-color);
+    max-width: 100%;
+    /* filter: grayscale(1); */
+    padding-right: 0 !important;
+    overflow-x: clip;
+    background-image: radial-gradient(circle at center,
+            var(--grayscale-background-color) 0.15rem,
+            transparent 0), radial-gradient(circle at center, var(--grayscale-background-color) 0.15rem, transparent 0);
+    background-size: 1.3rem 1.3rem;
+    background-position: 0 0, 0.65rem 0.65rem;
+}
+
+/* TEAM PANELS */
+
+.roleText {
+    font-size: 1rem;
+    border-color: black;
+    border-width: 2px;
+    background: #aaaaaa;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.nameText {
+    font-size: 1rem;
+    border-color: black;
+    border-width: 2px;
+    background: #aaaaaa;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.teamTitle {
+    font-family: var(--font-back-issues);
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--grayscale-text-bg-color);
+}
+
+.personPanel {
+    max-width: 300px;
+    max-height: 300px;
+    border-radius: 0;
+    position: relative;
+    background-color: white;
+}
+
+.portrait {
+    filter: grayscale(1);
+    border: #000000;
+    border-width: 1px;
+}
+
+/* FILTER */
+
+.filter {
+    font-size: 18px;
+    font-weight: 700;
+    justify-content: center;
+    color: var(--grayscale-text-color);
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    border-color: var(--grayscale-text-color);
+}
+
+.filter .accordionButton:hover {
+    color: var(--grayscale-text-bg-color);
+    background-color: var(--grayscale-text-color);
+}
+
+.accordionBody {
+    background-color: var(--grayscale-background-color);
+}
+
+.clearAll {
+    color: var(--grayscale-text-bg-color);
+}
+
+.clearAll:hover {
+    color: var(--grayscale-primary-color);
+}
+
+.formControl,
+.formSelect {
+    background-color: var(--grayscale-primary-color);
+    color: var(--grayscale-text-color);
+}
+
+.formControl {
+    border-radius: 6px 0 0 6px;
+}
+
+.formSelect option {
+    background-color: var(--grayscale-text-bg-color);
+}
+
+/* LAYOUT */
+
+.creatorGroup {
+    border: 2px solid var(--grayscale-primary-color);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.facultyGroup {
+    border: 2px solid var(--grayscale-primary-color);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.chapterTitle {
+    font-family: var(--font-back-issues);
+    font-weight: bold;
+    font-size: 2rem;
+    color: var(--grayscale-text-bg-color);
+}
+
+.facultyTitle {
+    font-family: var(--font-back-issues);
+    font-weight: bold;
+    font-size: 2rem;
+    color: var(--grayscale-text-bg-color);
+}
+
+/* BACK TO TOP */
+
+.backToTop {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.scrollButtonContainer {
+    position: relative;
+    left: 20vw;
+    padding-left: 40px;
+    margin-top: 20px;
+    z-index: 2;
+    filter: grayscale(1);
+}
+
+.scollButtonText {
+    color: var(--grayscale-text-bg-color);
+    justify-content: end;
+    font-size: 1rem;
+    margin-top: 20px;
+    text-decoration: none;
+}
+
+.scollButtonButton {
+    transform: rotate(-90deg);
+    width: 70px;
+    height: 40px;
+    cursor: pointer;
+    border: none;
+}
+
+.scollButtonContainer strong:hover {
+    text-decoration: underline;
+}
+
+.scollButtonButton:hover {
+    transform: rotate(-90deg) scale(1.2);
+}
+
+/* [xs] Extra small devices, less than 576px) */
+/* No media query for `xs` since this is the default in Bootstrap */
+
+/* [sm] Small devices, 576px and up */
+@media (min-width: 576px) {}
+
+/* [md] Medium devices, 768px and up */
+@media (min-width: 768px) {
+
+    /* FILTER */
+
+    .form-control {
+        width: 200px;
+    }
+
+    #search-button {
+        width: 40px;
+        height: 30px;
+    }
+}
+
+/* [lg] Large desktops, 992px and up */
+@media (min-width: 992px) {}
+
+/* [xl] Extra large devices 1200px and up */
+@media (min-width: 1200px) {}
+
+/* [xxl] Extra extra large devices, 1400px and up */
+@media (min-width: 1400px) {}

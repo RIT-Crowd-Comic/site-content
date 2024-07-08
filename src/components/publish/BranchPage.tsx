@@ -109,6 +109,11 @@ const BranchPage = () => {
         setAddingHook(false);
     }
 
+    /*
+    NOTE - pushToLocalStorage will be replaced with a method to push all of the data to the database to be stored as a panel set. As it stands right 
+    now there is no user set up which may cause issue with the data upload. Will need to provide some kind of guest or default user for database uploads 
+    so that the database can work as intended.
+    */
     //packages ps and then pushes it to local storage
     const pushToLocalStorage = () => {
         console.log("Publishing to local storage at: " + panelSet.current_panel_set_uuid);

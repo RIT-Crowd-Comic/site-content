@@ -1,8 +1,6 @@
 //This is the reading page where the user can read panels and click on branch hooks to pull up new panels
-import "../../styles/read.css";
+
 import ReadPage from "@/components/ReadPage";
-
-
 
 //imported base trunk panels as static images
 const firstPanelImage = "/comic-panels/first_panel.png";

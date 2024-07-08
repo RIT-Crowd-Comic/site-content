@@ -2,14 +2,16 @@ import Image from "next/image";
 import Link from 'next/link'
 // <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-import linkedin from "../../public/images/LinkedIn.svg";
-import facebook from "../../public/images/Facebook.svg";
-import github from "../../public/images/Github.svg"
+import linkedin from "../../public/images/icons/LinkedIn.svg";
+import facebook from "../../public/images/icons/Facebook.svg";
+import github from "../../public/images/icons/Github.svg"
+import styles from "@/styles/publish.module.css"
 
 const Footer = () => {
     const current_year = new Date().getFullYear();
     return (
-        <div className="container-fluid pt-3 bg-dark footer-bar">
+        <div className={`container-fluid pt-3 bg-dark footer-bar `}>
+            {/* ${styles.footerBar} */}
             {/* <div className="footer-base"> */}
             {/* Links */}
             {/* <div className="row"> */}
