@@ -249,6 +249,7 @@ const CreateToolsCanvasPaperJS = () => {
 
     function drawShape(shapePath: paper.Path)
     {
+        // Discern which shape the user has chosen and create a path that matches
         if(shapeSelected == shapeStates.RECTANGLE)
         {
             shapePath = new paper.Path.Rectangle(startPoint, endPoint);
@@ -263,6 +264,7 @@ const CreateToolsCanvasPaperJS = () => {
             shapePath = new paper.Path.Ellipse(new paper.Rectangle(startPoint, endPoint));
         }
 
+        // Set the path's style to the user chosen style
         shapePath.fillColor = new paper.Color(shapeFillColor);
         shapePath.strokeColor = new paper.Color(shapeBorderColor);
         shapePath.strokeWidth = shapeBorderWidth;
@@ -284,7 +286,7 @@ const CreateToolsCanvasPaperJS = () => {
             drawShape(currentShape);
         }
     }
-
+    
     //sets where the mouse is dragged as the last point of the rectangle
     shapeTool.onMouseDrag = function (event: paper.ToolEvent) {
         if(canvasProject.activeLayer.locked == false){
@@ -344,6 +346,7 @@ const CreateToolsCanvasPaperJS = () => {
     // The Text Tool:
     const [textTool, setTextTool] = useState<paper.Tool>(new paper.Tool());
     let textPath : paper.PointText;
+    //let textToolTyperReference = useRef<HTMLTextAreaElement | null>(null);
 
     // Boolean that determines what state writing is in.  On first click, the user can continue typing into the textArea.  On second click it draws the content to the layer
     const [isWriting, setIsWriting] = useState<boolean>(false);
@@ -356,6 +359,13 @@ const CreateToolsCanvasPaperJS = () => {
         {
             // Start the process of writing
             setIsWriting(true);
+
+            /*if (!textToolTyperReference.current) 
+            {
+                throw new Error("textToolTyperReference is null");
+            }
+
+            textToolTyperReference.current.hidden = false;*/
 
             // Create a textArea element for the user to write in 
             //let textTyper = document.createElement('textarea');
@@ -372,7 +382,12 @@ const CreateToolsCanvasPaperJS = () => {
 
 
             // Hide the text area
-
+            /*if (!textToolTyperReference.current) 
+            {
+                throw new Error("textToolTyperReference is null");
+            }
+    
+            textToolTyperReference.current.hidden = true;*/
 
             // Draw the user's writing to the layer
             textPath = new paper.PointText(event.point);
