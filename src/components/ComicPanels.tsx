@@ -23,6 +23,14 @@ interface Props {
 const ComicPanels = ({setting, hook_state,image_1, image_2, image_3}: Props) => {
     const button_class= hook_state + " branch-hook"
 
+    const [panel_1_img, setImg_1] = useState(image_1)
+    const [panel_2_img, setImg_2] = useState(image_2)
+    const [panel_3_img, setImg_3] = useState(image_3)
+
+    const UpdatePanels = () => {
+        
+    }
+
     return (
         <div id="comic-panels" className={setting}>
             <div className="first-panel">
