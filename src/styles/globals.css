@@ -1292,6 +1292,14 @@ No media query for `xs` since this is the default in Bootstrap */
     .our-team button {
         font-size: 4vw;
     }
+
+    /* BACK TO TOP BUTTON */
+    #scrollToTopBtn {
+        width: 100px;
+        height: 70px;
+        padding-top: 15px;
+        margin-top: 0px;
+    }
 }
 
 /* X-Large devices (large desktops, 1200px and up) */
