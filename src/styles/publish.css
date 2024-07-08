@@ -12,6 +12,7 @@ html {
     background-color: rgb(37, 37, 37);
     background-image: none;
     height: 100%;
+    overflow: hidden;
 }
 
 button:hover {
