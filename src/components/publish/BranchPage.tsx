@@ -1,5 +1,5 @@
 import '../../styles/publish.css'
-import styles from './BranchPlacer.module.css'
+import styles from './BranchPage.module.css'
 
 import { useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,7 +8,7 @@ import paper from 'paper/dist/paper-core';
 import { createSVGPath, toggleClassForAllElements } from '../../utils';
 import BranchEditor from './BranchEditor'
 
-const BranchPlacer = () => {
+const BranchPage = () => {
     const [parId, setparId] = useState(" ");
     const [curId] = useState(uuidv4());
     const [addingHook, setAddingHook] = useState(false);
@@ -71,7 +71,7 @@ const BranchPlacer = () => {
 
         const removeBtn = document.querySelector('#remove-branch-hook') as HTMLButtonElement;
         if (removeBtn) {
-            removeBtn.classList.toggle('selected-hook', selectedHook != undefined)
+            removeBtn.classList.toggle('selectedHook', selectedHook != undefined)
             removeBtn.disabled = selectHook == undefined;
         }
     }
@@ -121,10 +121,10 @@ const BranchPlacer = () => {
 
     return (<>
         <div className="background-image"></div>
-        <div id="publishContainer">
-            <div id="publish-slideshow">
-                <div className='carousel-inner'>
-                    <div className="comic-panel-container active">
+        <div id={styles.publishContainer}>
+            <div id={styles.publishSlideshow}>
+                <div className={`${styles.carouselInner} carousel-inner`}>
+                    <div className={`${styles.comicPanelContainer} ${styles.active}`}>
                         <BranchEditor 
                         imgSrc={imageLinks[activePanel]}
                         panelIndex={activePanel}
@@ -138,35 +138,35 @@ const BranchPlacer = () => {
                         onHookClick={(_, hookIndex) => selectHook(hookIndex)}
                         ></BranchEditor>
                     </div>
-                    <a className="carousel-control-prev" href="#publish-slideshow" role="button" data-slide="prev" onClick={() => nextPanel(-1)}>
+                    <a className={`${styles.carouselControlPrev}`} href="#publish-slideshow" role="button" data-slide="prev" onClick={() => nextPanel(-1)}>
                         <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                         {/* <span className="sr-only">Previous</span> */}
                     </a>
-                    <a className="carousel-control-next" href="#publish-slideshow" role="button" data-slide="next" onClick={() => nextPanel(1)}>
+                    <a className={`${styles.carouselControlNext}`} href="#publish-slideshow" role="button" data-slide="next" onClick={() => nextPanel(1)}>
                         <span className="carousel-control-next-icon" aria-hidden="true"></span>
                         {/* <span className="sr-only">Next</span> */}
                     </a>
                 </div>
             </div>
-            <div className="button-container">
-                <div className="branch-hooks">
-                    <div id="branch-hook-controls">
+            <div className={`${styles.buttonContainer}`}>
+                <div className={`${styles.branchHooks}`}>
+                    <div id={`${styles.branchHookControls}`}>
                         {
-                            addingHook ? <button id="add-branch-hook" className="branch-control-btn selected-hook" onClick={() => confirmBranchHook(activePanel)}>Accept Hook</button> :
-                                <button id="add-branch-hook" className="branch-control-btn" onClick={addBranchHook}>Add Hook</button>
+                            addingHook ? <button id="add-branch-hook" className={`${styles.branchControlBtn} ${styles.selectedHook}`} onClick={() => confirmBranchHook(activePanel)}>Accept Hook</button> :
+                                <button id="add-branch-hook" className={`${styles.branchControlBtn}`} onClick={addBranchHook}>Add Hook</button>
                         }
                         {/* <button id="add-branch-hook" className="branch-control-btn" onClick={addBranchHook}>Add Hook</button> */}
-                        <button id="remove-branch-hook" className="branch-control-btn" onClick={removeBranchHook}>Remove Hook</button>
+                        <button id="remove-branch-hook" className={`${styles.branchControlBtn}`} onClick={removeBranchHook}>Remove Hook</button>
                     </div>
-                    <div className="branch-hook-text">
+                    <div className={`${styles.branchHookText}`}>
                         <p>{panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)} OF 3 REQUIRED BRANCHES PLACED</p>
                         {/* starting text to be updated when either add or remove branch hook button is pressed */}
                     </div>
                 </div>
-                <button onClick={pushToLocalStorage} id="publish-btn">Publish</button>
+                <button onClick={pushToLocalStorage} id={`${styles.publishBtn}`}>Publish</button>
             </div>
         </div>
     </>);
 }
 
-export default BranchPlacer;
+export default BranchPage;
