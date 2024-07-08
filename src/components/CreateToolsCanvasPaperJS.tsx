@@ -656,7 +656,7 @@ const CreateToolsCanvasPaperJS = () => {
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
-            setshapeOptionsEnabled(false);
+            setShapeOptionsEnabled(false);
             setStickerOptionsEnabled(false);
         }
     }
