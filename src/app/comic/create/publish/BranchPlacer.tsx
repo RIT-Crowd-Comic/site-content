@@ -7,11 +7,11 @@ import {PanelSet, Branch} from "./PanelSet";
 
 
 const BranchPlacer = () => {
-    const [branCount, setBranch] = useState(0);
-    const [adding, setAdding] = useState(false);
-    const [parId, setparId] = useState(" ");
+    const [branCount, setBranch] = useState(0); //tracks number of placed branches by user
+    const [adding, setAdding] = useState(false); //user is in adding mode and can add to the panel
+    const [parId, setparId] = useState(" "); //parent id state
     const [curId, setCurId] = useState(parId ? parId : uuidv4());
-    const [imageLinks, setImageLinks] = useState([
+    const [imageLinks, setImageLinks] = useState([ //state used to hold images and track any changes to them
         "/images/previewPlaceholder.png", 
         "/images/previewPlaceholder.png", 
         "/images/previewPlaceholder.png"
@@ -19,7 +19,7 @@ const BranchPlacer = () => {
 
     useEffect(() => {
         const storedImageLinks = [
-            localStorage.getItem("image-1") || imageLinks[0],
+            localStorage.getItem("image-1") || imageLinks[0], //loads the images in local storage that were put there 
             localStorage.getItem("image-2") || imageLinks[1],
             localStorage.getItem("image-3") || imageLinks[2]
         ];
@@ -116,6 +116,11 @@ const BranchPlacer = () => {
         console.log("branch hook added. Total branch hooks: " + (branCount - 1));
     }
 
+    /*
+    NOTE - pushToLocalStorage will be replaced with a method to push all of the data to the database to be stored as a panel set. As it stands right 
+    now there is no user set up which may cause issue with the data upload. Will need to provide some kind of guest or default user for database uploads 
+    so that the database can work as intended.
+    */
     //packages ps and then pushes it to local storage
     const pushToLocalStorage = () => {
         setPs((prevPs) => {

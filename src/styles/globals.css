@@ -19,17 +19,15 @@
          */
 }
 
-
 .navbar,
 .footer {
     font-family: var(--font-back-issues);
     font-style: normal;
     font-weight: 300;
-    filter: grayscale(1);
 }
 
 .navbar {
-    background-color: var(--primary-color);
+    background-color: var(--grayscale-background-color);
 }
 
 .nav-link,
@@ -46,16 +44,17 @@ body,
 html {
     width: 100%;
     font-family: var(--font-back-issues);
-    background-color: var(--background-color);
-    overflow-x: hidden;
+    background-color: #2d2d2d;
     max-width: 100%;
-    filter: grayscale(1);
+    /* filter: grayscale(1); */
+    padding-right: 0 !important;
+    overflow-x: clip;
 }
 
 body {
     background-image: radial-gradient(circle at center,
-            #095e75 0.15rem,
-            transparent 0), radial-gradient(circle at center, #02627c 0.15rem, transparent 0);
+    #414141 0.15rem,
+            transparent 0), radial-gradient(circle at center, #414141 0.15rem, transparent 0);
     background-size: 1.3rem 1.3rem;
     background-position: 0 0, 0.65rem 0.65rem;
 }
@@ -86,17 +85,17 @@ button {
 /* MISSION SECTION FORMATTING */
 .mission h2 {
     position: relative;
-    background: url(../../public/images/background-boxes/bw/Create_Small_BW.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
     padding: 6vw 8vw 6vw 6vw;
     z-index: 1;
-    margin: 5vh 2vw auto auto;
+    margin: 5vw 2vw auto auto;
 }
 
 .missionimg {
     position: relative;
     width: 90%;
     height: auto;
-    margin: -5vh auto auto auto;
+    margin: -5vw auto auto auto;
     font-size: 3.3vw;
     /* 
     TESTING BOX
@@ -106,16 +105,18 @@ button {
 
 .topMission {
     position: absolute;
-    top: -5%;
+    top: -10%;
+    right: 0%;
     height: auto;
-    width: 90vw;
+    width: 95vw;
 }
 
 .bottomMission {
     position: absolute;
-    bottom: -5%;
+    bottom: -17%;
+    right: 0%;
     height: auto;
-    width: 90vw;
+    width: 95vw;
 }
 
 .leftMission,
@@ -132,16 +133,16 @@ button {
     position: relative;
     z-index: 1;
     margin: 0 auto;
-    padding: 4vh 10vw;
+    padding: 5vw 2vw 5vw 4vw;
 }
 
 /* READ SECTION FORMATTING */
 .read h2 {
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/background-boxes/bw/Read_Small_BW.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
     padding: 7vw;
-    margin: -5vh auto;
+    margin: -5vw auto;
     z-index: 1;
 }
 
@@ -150,20 +151,23 @@ button {
     width: 90%;
     height: auto;
     font-size: 3.3vw;
-    margin: -5vh auto auto 10vw;
+    margin: -12vw auto auto 10vw;
 }
 
 .topRead {
     position: absolute;
+    top: 0%;
+    right: 6%;
     height: auto;
-    width: 83vw;
+    width: 88vw;
 }
 
 .bottomRead {
     position: absolute;
-    bottom: 0%;
+    bottom: -5%;
+    right: 6%;
     height: auto;
-    width: 83vw;
+    width: 88vw;
 }
 
 .readimg .card-img-top {
@@ -173,7 +177,7 @@ button {
 .readimg p {
     position: relative;
     z-index: 1;
-    padding: 5vh 10vw 5vh 5vw;
+    padding: 7vw 9vw 7vw 3vw;
 }
 
 .desktopRead {
@@ -188,8 +192,8 @@ button {
 .create h2 {
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/background-boxes/bw/Create_Small_BW.svg) no-repeat center/contain;
-    padding: 7vw 9vw 7vw 6vw;
+    background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
+    padding: 5vw 9vw 5vw 6vw;
     margin: 0 auto;
     z-index: 1;
 }
@@ -198,21 +202,24 @@ button {
     position: relative;
     width: 90%;
     height: auto;
-    margin: -9vh auto -10vw 6vw;
+    margin: -12vw auto -10vw 6vw;
     font-size: 3.3vw;
 }
 
 .topCreate {
     position: absolute;
+    top: -5%;
+    right: 4%;
     height: auto;
-    width: 85vw;
+    width: 90vw;
 }
 
 .bottomCreate {
     position: absolute;
     bottom: 0%;
+    right: 4%;
     height: auto;
-    width: 85vw;
+    width: 90vw;
 }
 
 .createimg .card-img-top {
@@ -222,7 +229,7 @@ button {
 .createimg p {
     position: relative;
     z-index: 1;
-    padding: 5vh 10vw 4vh 9vw;
+    padding: 5vw 7vw 6vw 7vw;
 }
 
 .desktopCreate {
@@ -230,9 +237,9 @@ button {
 }
 
 .getStarted {
-    width: 100vw;
+    width: auto;
     height: auto;
-    margin: 10vh auto;
+    margin: -3vw auto;
 
     position: relative;
 
@@ -243,16 +250,15 @@ button {
     border: 10px solid transparent;
     background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
     filter: brightness(.5);
-    width: 60%;
+    width: 100%;
     height: auto;
     margin: 0 auto;
-    padding: 5vw 10vw 6vw;
+    padding: 4vw 10vw 5vw;
     font-size: 4.5vw;
     z-index: 2;
 }
 
-.getStarted p
-{
+.getStarted p {
     padding: 0 7vw;
 }
 
@@ -260,45 +266,62 @@ button {
     filter: brightness(.3);
 }
 
-
 /* BOOK ANIMATION */
 
-@keyframes open
-{
-    0% {background-image: url(../../public/images/GIFs/book-split/Frame1.gif); }
-    5% {background-image: url(../../public/images/GIFs/book-split/Frame2.gif); }
-    20% {background-image: url(../../public/images/GIFs/book-split/Frame3.gif); }
-    45% {background-image: url(../../public/images/GIFs/book-split/Frame4.gif); }
-    60% {background-image: url(../../public/images/GIFs/book-split/Frame5.gif); }
-    75% {background-image: url(../../public/images/GIFs/book-split/Frame6.gif); }
-    90% {background-image: url(../../public/images/GIFs/book-split/Frame7.gif); }
-    100% {background-image: url(../../public/images/GIFs/book-split/Frame8.gif); }
+@keyframes open {
+    0% {
+        background-image: url(../../public/images/GIFs/book-split/Frame1.gif);
+    }
+
+    5% {
+        background-image: url(../../public/images/GIFs/book-split/Frame2.gif);
+    }
+
+    20% {
+        background-image: url(../../public/images/GIFs/book-split/Frame3.gif);
+    }
+
+    45% {
+        background-image: url(../../public/images/GIFs/book-split/Frame4.gif);
+    }
+
+    60% {
+        background-image: url(../../public/images/GIFs/book-split/Frame5.gif);
+    }
+
+    75% {
+        background-image: url(../../public/images/GIFs/book-split/Frame6.gif);
+    }
+
+    90% {
+        background-image: url(../../public/images/GIFs/book-split/Frame7.gif);
+    }
+
+    100% {
+        background-image: url(../../public/images/GIFs/book-split/Frame8.gif);
+    }
 }
 
-.book-animation
-{
+.book-animation {
     z-index: 99;
-    background-image: url(../../public/images/GIFs/book-split/Frame8.gif); 
+    background-image: url(../../public/images/GIFs/book-split/Frame8.gif);
     background-size: contain;
     background-repeat: no-repeat;
-    width: 35%;
+    width: 45%;
     height: 25vw;
-
+    filter: grayscale(1);
     animation: none;
-
     position: absolute;
-    left: 7%;
-    top: -5%;
+    left: -17%;
+    top: 5%;
 }
 
-.getStarted:hover .book-animation
-{
+.getStarted:hover .book-animation {
     animation: open .5s;
     animation-fill-mode: forwards;
 }
 
-.getStarted:hover button 
-{
+.getStarted:hover button {
     filter: brightness(1);
     transform: scale(1.1);
     transition: ease-in-out .5s;
@@ -309,10 +332,8 @@ button {
 .preview {
     display: grid;
     grid-template-rows: repeat(3, auto);
-
     width: 80vw;
-
-    margin: 30px auto 50px;
+    margin: 15vw auto;
 }
 
 .preview-panels {
@@ -344,8 +365,9 @@ button {
     height: 20vw;
     padding: 0;
     background-size: 100% 100%;
-    margin: 6vh 0 3vh;
+    margin: 9vw 0 3vw;
     text-align: center;
+    filter: grayscale(1);
 }
 
 .our-team button {
@@ -403,6 +425,8 @@ button {
     margin-top: 4px;
 }
 
+/* Filter */
+
 .filter {
     font-size: 18px;
     font-weight: 700;
@@ -431,6 +455,7 @@ button {
     color: var(--grayscale-primary-color);
 }
 
+/* Filter Search Bar */
 .form-control,
 .form-select {
     background-color: var(--grayscale-primary-color);
@@ -445,25 +470,27 @@ button {
     background-color: var(--grayscale-text-bg-color);
 }
 
-.creatorGroup {
-    border: 2px solid var(--grayscale-primary-color);
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.facultyGroup {
-    border: 2px solid var(--grayscale-primary-color);
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.facultyGroup {
-    border: 2px solid var(--grayscale-primary-color);
-}
-
+/* Team Panels */
 .chapterTitle {
     font-family: var(--font-back-issues);
     font-weight: bold;
     font-size: 2rem;
     color: var(--grayscale-text-bg-color);
+}
+
+.creatorGroup {
+    border: 2px solid var(--grayscale-primary-color);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Faculty Panels */
+.facultyGroup {
+    border: 2px solid var(--grayscale-primary-color);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.facultyGroup {
+    border: 2px solid var(--grayscale-primary-color);
 }
 
 .facultyTitle {
@@ -475,7 +502,6 @@ button {
 
 .professors {
     text-align: center;
-    /* border: 5px solid; */
     justify-content: center;
 }
 
@@ -530,29 +556,23 @@ button {
     max-width: 250px;
     max-height: 250px;
     filter: grayscale(1);
-    /* border: #D91911 solid 2px; */
 }
 
 /* FOOTER */
 
-/* .footer {
-    background-color: var(--grayscale-text-bg-color);
-    width: 100%;
+.footer-bar {
+    width: 100vw;
+    display: flex;
     justify-content: space-between;
-} */
-.footer-bar{
-    width:100vw;
-    max-height:90px;
-    display:flex;
-    justify-content:space-between;
-    flex-flow:row wrap;
-    z-index:5;
+    flex-flow: row wrap;
+    z-index: 5;
 }
+
 .footer-nav {
     justify-content: flex-start;
     font-family: var(--font-back-issues);
-    font-size: 5vw;
-    padding: 1vh 0vw 0vh 5vw;
+    font-size: 18px;
+    padding: 1vh 0vw 0vh 5px;
 }
 
 .footer-head {
@@ -561,7 +581,7 @@ button {
 
 .footer-nav-list {
     justify-content: space-between;
-    font-size: 4vw;
+    font-size: 16px;
     padding: 1vh 0vw 0vh 0vw;
 }
 
@@ -570,9 +590,11 @@ button {
     display: inline-block;
     padding-right: 3vw;
 }
-.social-div{
-    flex-basis:50%;
+
+.social-div {
+    flex-basis: 50%;
 }
+
 .social {
     justify-content: space-between;
     text-align: right;
@@ -610,7 +632,7 @@ button {
 
 .iconcolor {
     filter: invert(100%);
-    filter: invert(79%) sepia(16%) saturate(1167%) hue-rotate(354deg) brightness(103%) contrast(104%);
+    /* filter: invert(79%) sepia(16%) saturate(1167%) hue-rotate(354deg) brightness(103%) contrast(104%); */
     /* Yellow icons ^ */
 }
 
@@ -618,8 +640,7 @@ button {
     color: var(--grayscale-primary-color);
     font-size: medium;
     text-align: center;
-    margin:0;
-    /* vertical-align:bottom; */
+    margin: 0;
 }
 
 /* HERO */
@@ -631,6 +652,7 @@ button {
     background-image: linear-gradient(45deg, #0e7491 25%, #0b5e75 25%, #0b5e75 50%, #0e7491 50%, #0e7491 75%, #0b5e75 75%, #0b5e75 100%);
     background-size: 11.31px 11.31px;
     border: 5px solid black;
+    filter: grayscale(1);
 }
 
 .top-right-spikes,
@@ -675,73 +697,127 @@ button {
     transform: translate(-50%, -50%);
 }
 
-/* Scroll to top button component */
-/* #scrollToTopBtn{
-    transform: rotate(-90deg);
-    width: 70px;
-    height: 40px;
-    cursor: pointer;
-    border: none;
-    position: fixed;
-    bottom: 400px;
-    right: 0px;
-} */
-
 /* Scroll  to top button with Link*/
 .back-to-top {
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     margin-bottom: 10px;
+    width: 100%;
+    height: auto;
+
+    bottom: 0;
+
+    position: sticky;
+
+    z-index: 999;
+
+    width: 80px;
+    height: auto;
+
+    margin: 0 10px 0 auto;
+    padding-bottom: 20px;
+} 
+
+/* ARROW ANIMATION */
+
+@keyframes bounce {
+    0% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
+
+    15% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame2.png);
+    }
+
+    65% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame3.png);
+    }
+
+    70% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    }
+
+    90% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    }
+
+    100% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
 }
 
-.scroll-btn {
-    position: relative;
-    /* bottom: 0px; */
-    /* right: 0px; */
-    left: 20vw;
-    padding-left: 40px;
-    margin-top: 20px;
-    z-index: 2;
-}
+@keyframes delay {
+    0% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
 
-#scroll-text {
-    color: var(--grayscale-text-bg-color);
-    justify-content: end;
-    font-size: 1rem;
-    margin-top: 20px;
-    text-decoration: none;
+    84.9% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
+
+    85% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame2.png);
+    }
+
+    90% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame3.png);
+    }
+
+    94% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    }
+
+    97% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    }
+
+    100% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
 }
 
 #scrollToTopBtn {
-    transform: rotate(-90deg);
-    width: 70px;
-    height: 40px;
-    cursor: pointer;
-    border: none;
+    width: 80px;
+    height: 50px;
+    padding-top: 15px;
+    margin-top: 0px;
 }
 
-#scroll-text:hover {
-    text-decoration: underline;
+#scrollToTopBtn {
+    background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    transform: rotate(-90deg);
+
+    animation: delay 3s linear infinite;
+
+    position: relative;
+
+    filter: grayscale(1);
+
+    border:none;
 }
 
 #scrollToTopBtn:hover {
-    transform: rotate(-90deg) scale(1.2);
+    animation: bounce .7s infinite;
+    animation-fill-mode: forwards;
+
+    border:none;
 }
 
-/* #scroll-text::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: var(--grayscale-text-bg-color);
-    transition: 1s ease-out;
-    transform: translateX(-100%); 
+#scrollToTopBtn:hover
+{
+    border:none;
 }
 
-#scroll-text:hover::before{
-    transform: translateX(0);
-} */
+/* Team Page */
+
+.teamTitle {
+    font-family: var(--font-back-issues);
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--grayscale-text-bg-color);
+}
 
 .person-panel {
     max-width: 300px;
@@ -749,12 +825,12 @@ button {
     border-radius: 0;
     position: relative;
     background-color: white;
+    overflow: hidden;
 }
 
 .portrait {
     filter: grayscale(1);
-    border: #000000;
-    border-width: 1px;
+    border: #000000 1px solid;
 }
 
 a {
@@ -764,8 +840,7 @@ a {
 
 .card-footer {
     font-size: 1rem;
-    border-color: black;
-    border-width: 2px;
+    border: black 2px solid;
     background: #aaaaaa;
     position: absolute;
     bottom: 0;
@@ -774,92 +849,104 @@ a {
 
 .card-header {
     font-size: 1rem;
-    border-color: black;
-    border-width: 2px;
+    border: black 2px solid;
     background: #aaaaaa;
     position: absolute;
     top: 0;
     width: 100%;
 }
 
-.teamTitle {
-    font-family: var(--font-back-issues);
-    font-size: 3rem;
-    font-weight: bold;
-    color: var(--grayscale-text-bg-color);
+.person-panel:hover{
+    transition: .5s ease-out;
 }
+
+.person-panel:hover .card-header{
+    transform: translateX(-10%);
+    transition: .5s ease-out;
+}
+
+.person-panel:hover .card-footer{
+    transform: translateX(10%);
+    transition: .5s ease-out;
+}
+
+.overlay-img{
+    position: absolute;
+    opacity: 0;
+    left: 0;
+}
+
+.person-panel:hover .overlay-img{
+    opacity: 1;
+    transition: .3s ease-out;
+}
+
 @media (max-width: 576px) {
-    .footer-bar{
-        position:relative;
-        flex-direction:column;
-        max-height:none;
+    .footer-bar {
+        position: relative;
+        flex-direction: column;
+        max-height: none;
     }
-    .footer-nav-list{
-        margin:0;
+
+    .footer-nav-list {
+        margin: 0;
     }
-    .copyright-div{
-        transform:translateY(0);
+
+    .copyright-div {
+        transform: translateY(0);
     }
-   
-    .social{
-        text-align:left;
-        margin-bottom:0;
+
+    .social {
+        text-align: left;
+        margin-bottom: 0;
         padding: 0;
     }
 }
+
 /* X-Small devices (portrait phones, less than 576px)
 No media query for `xs` since this is the default in Bootstrap */
 
 /* Small devices (landscape phones, 576px and up) */
 
 @media (min-width: 576px) {
-    .footer-bar{
-        flex-flow:row wrap;
-        z-index:5;
+    .footer-bar {
+        flex-flow: row wrap;
+        z-index: 5;
     }
-    .copyright-div{
-        transform:translateY(-75%);
-        flex-basis:100%;
-        text-align:center;
-        margin-bottom:10px;
+
+    .copyright-div {
+        transform: translateY(-75%);
+        flex-basis: 100%;
+        text-align: center;
+        margin-bottom: 10px;
     }
-    .social-div{
-        flex-basis:50%;
+
+    .social-div {
+        flex-basis: 50%;
     }
-    .social{
-        text-align:right;
-        margin-bottom:0;
+
+    .social {
+        text-align: right;
+        margin-bottom: 0;
         padding: 0;
     }
-    .footer-nav{
-        flex-basis:50%;
-    }
-    .scroll-btn {
-        left: 30vw;
-        padding: 3vw 0vw 3vw 8vw;
-        margin-top: 0px;
+
+    .footer-nav {
+        flex-basis: 50%;
     }
 
     #scroll-text {
         font-size: 1.2rem;
         padding-top: 15px;
     }
-
-    #scrollToTopBtn {
-        width: 80px;
-        height: 50px;
-        padding-top: 15px;
-        margin-top: 0px;
-    }
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-    
-    
-    .copyright-div{
-        height:auto;
+    .copyright-div {
+        height: auto;
     }
+
     .professors {
         /* width: 70%; */
         /* margin: 10px 100px; */
@@ -896,10 +983,6 @@ No media query for `xs` since this is the default in Bootstrap */
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-    }
-
-    .scroll-btn {
-        left: 35vw;
     }
 
     .preview {
@@ -1012,6 +1095,11 @@ No media query for `xs` since this is the default in Bootstrap */
     .createimg p {
         padding: 5vh 10vw 4vh 9vw;
     }
+
+    .getStarted
+    {
+        margin: -4vw auto 10vw;
+    }
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -1077,36 +1165,32 @@ No media query for `xs` since this is the default in Bootstrap */
         margin: 0 auto;
     }
 
-    /* MISSION */
-    .mission h2 {
-        background: url(../../public/images/background-boxes/bw/Desktop_Mission_Small_BW.svg) no-repeat center/contain;
-
-        padding: 3rem;
-        margin: 0;
+    body p {
+        font-size: 1.5vw;
     }
 
-    .whatcanido h2 {
-        background: url(../../public/images/background-boxes/bw/Desktop_What_Can_I_Do_BW.svg) no-repeat center/contain;
+    h2 {
+        font-size: 4vw;
+    }
 
-        padding: 2rem;
-        margin: 0;
+    /* MISSION */
+    .mission h2 {
+        background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
+        padding: 6vw;
+        margin: 10% auto;
     }
 
     .missionimg {
-        font-size: 1.5vw;
-
         width: 90vw;
-        margin: 0 -5vw;
+        margin: 0 auto;
     }
 
     .missionimg p {
-        background-color: var(--secondary-color);
-
+        background-color: var(--grayscale-text-bg-color);
         border: solid 5px black;
-
         padding: 1rem;
         width: 70%;
-        margin: 15% auto 0;
+        margin: 0vw auto 15%;
     }
 
     .topMission,
@@ -1114,37 +1198,39 @@ No media query for `xs` since this is the default in Bootstrap */
         display: none;
     }
 
-    .leftMission,
-    .rightMission {
+    .leftMission {
         display: inline;
-
         position: absolute;
         height: auto;
+        margin: -18% auto;
+    }
+
+    .rightMission {
+        display: inline;
+        position: absolute;
+        height: auto;
+        margin: -3% auto;
     }
 
     /* READ */
     .read h2 {
-        background: url(../../public/images/background-boxes/bw/Desktop_Read_Small_BW.svg) no-repeat center/contain;
-
-        padding: 4rem;
-        margin: 0;
+        background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
+        padding: 6vw;
+        margin: 0 auto -10%;
     }
 
     .readimg {
         font-size: 1.5vw;
-
         width: 90vw;
-        margin: 0 -5vw;
+        margin: 0 auto;
     }
 
     .readimg p {
-        background-color: var(--secondary-color);
-
+        background-color: var(--grayscale-text-bg-color);
         border: solid 5px black;
-
         padding: 1rem;
         width: 70%;
-        margin: 15% auto 0;
+        margin: 5% auto 5vw;
     }
 
     .topRead,
@@ -1156,31 +1242,28 @@ No media query for `xs` since this is the default in Bootstrap */
         display: inline;
         position: absolute;
         height: auto;
+        margin: -10% auto;
     }
 
     /* CREATE */
     .create h2 {
-        background: url(../../public/images/background-boxes/bw/Desktop_Create_Small_BW.svg) no-repeat center/contain;
-
-        padding: 4rem;
-        margin: 0;
+        background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
+        padding: 6vw;
+        margin: 18vw auto -10%;
     }
 
     .createimg {
         font-size: 1.5vw;
-
         width: 90vw;
-        margin: 0 -5vw;
+        margin: 0 auto;
     }
 
     .createimg p {
-        background-color: var(--secondary-color);
-
+        background-color: var(--grayscale-text-bg-color);
         border: solid 5px black;
-
         padding: 1rem;
         width: 70%;
-        margin: 15% auto 0;
+        margin: 5% auto 0;
     }
 
     .topCreate,
@@ -1192,14 +1275,27 @@ No media query for `xs` since this is the default in Bootstrap */
         display: inline;
         position: absolute;
         height: auto;
+        margin: -8% auto;
+    }
+
+    .getStarted
+    {
+        margin: 3vw auto 10vw;
     }
 
     .book-animation
     {
         background-image: url(../../public/images/GIFs/book-split/Frame1.gif); 
+        left: -18%;
+        top: 0%;
+    }
 
-        left: 7%;
-        top: -10%;
+    .getStarted button {
+        font-size: 4vw;
+    }
+
+    .our-team button {
+        font-size: 4vw;
     }
 }
 

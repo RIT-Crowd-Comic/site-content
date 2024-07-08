@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const NavBar = () => {
   return (
-    <nav className="navbar sticky-top navbar-expand-lg border-bottom">
+    <nav className="navbar sticky-top navbar-expand-lg">
       <div className="container-fluid">
         <Link className="navbar-brand" href="#">
           <Image src="../images/logos/Crowd_Comic_Favicon_BW.svg" alt="Crowd Comic Favicon" width={78} height={46} />
@@ -29,6 +29,9 @@ const NavBar = () => {
               </li>
               <li className="nav-item ps-3">
                 <button className="nav-btn btn btn-outline-dark">Login</button>
+              </li>
+              <li>
+              <Link className="nav-link" id="dbLink" href="../db">DB</Link>
               </li>
             </ul>
           </div>
