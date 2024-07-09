@@ -433,8 +433,8 @@
 }
 
 #scrollToTopButton {
-    width: 80px;
-    height: 50px;
+    width: 100px;
+    height: 70px;
     padding-top: 15px;
     margin-top: 0px;
     background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
