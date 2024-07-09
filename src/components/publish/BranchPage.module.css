@@ -1,3 +1,19 @@
+.body{
+    background-color: rgb(48, 48, 48);
+    background-image:url(../../../public/images/backgrounds/background-app-splash.png);
+    
+    /* background-image:url(../../public/images/background-app-transparent.png); */
+    /* background-position: center; */
+    background-repeat:repeat;
+    background-size:auto;
+    height:100%;
+    width:100%;
+    filter:none;
+    position: absolute;
+    top:0;
+    overflow: hidden;
+}
+
 #publishContainer {
     display: flex;
     flex-direction: column;
@@ -23,9 +39,17 @@
 
 .comicPanelContainer.active {
     width: 80%;
-    height: 100%;
     text-align: center;
     display: initial;
+}
+
+.carouselView{
+    max-width:97vh;
+    border: 5px solid black;
+    outline: 15px solid white;
+    margin:20px;
+    order:1;
+    flex-basis: 75%;
 }
 
 .carouselControlPrev {
@@ -51,8 +75,19 @@
     text-align: center;
     background: none;
     border: 0;
-    opacity: 0.5;
-    transition: opacity 0.15s ease;
+    /* opacity: 0.5;
+    transition: opacity 0.15s ease; */
+    object-fit:contain;
+}
+.carouselControlPrev img{
+    object-fit:contain;
+    width:100%;
+    content: url(../../../public/images/buttons/carousel-left-button.png);
+}
+.carouselControlNext img{
+    object-fit:contain;
+    width:100%;
+    content: url(../../../public/images/buttons/carousel-right-button.png);
 }
 
 @media only screen and (orientation: landscape) and (max-width: 700px) {

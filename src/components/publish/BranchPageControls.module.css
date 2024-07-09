@@ -56,18 +56,28 @@
 }
 
 #publishBtn {
-    margin-top: 20px;
     font-size: 3rem;
-    padding: 0px 25px;
-    background-color: #c7c7c7;
+    padding: 0px;
+    background-color: transparent;
     color: black;
     border-radius: 20px;
+    border:none;
+    width:28vw;
+    height:15vw;
+    
 }
+#publishBtn img{
+    width:100%;
+    height: auto;
+    object-fit:contain;
+    content: url(../../../public/images/buttons/static-publish-button.PNG);
+  }
 
-#publishBtn:hover {
-    background-color: var(--light-red);
-    color: var(--yellow);
-    transform: scale(1.5) translate(-.25, -.75);
+#publishBtn:hover img{
+    /* background-color: var(--light-red);
+    color: var(--yellow); */
+    /* transform: scale(1.5) translate(-.25, -.75); */
+    content: url(../../../public/images/GIFs/publish-button-rotating.gif);
 }
 
 button.branchControlBtn:hover {

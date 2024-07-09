@@ -126,59 +126,61 @@ const BranchPage = () => {
 
 
     return (<>
-        <div className="background-image"></div>
-        <div id={styles.publishContainer}>
-            <div id={styles.publishSlideshow}>
-                <div className={`${styles.carouselInner} carousel-inner`}>
-                    <div className={`${styles.comicPanelContainer} ${styles.active}`}>
-                        <BranchEditor
-                            imgSrc={imageLinks[activePanel]}
-                            panelIndex={activePanel}
-                            hooks={activePanelHooks()}
-                            setHooks={setActivePanelHooks}
-                            addingHook={addingHook}
-                            confirmHook={confirmHook}
-                            selectedHook={selectedHook}
-                            setSelectedHook={setSelectedHook}
-                            setConfirmHook={setConfirmHook}
-                            onHookClick={(_, hookIndex) => selectHook(hookIndex)}
-                        ></BranchEditor>
+        <main className={`${styles.body}`}>
+            <div id={styles.publishContainer}>
+                <div id={styles.publishSlideshow}>
+                    <div className={`${styles.carouselInner} carousel-inner`}>
+                        <div className={`${styles.comicPanelContainer} ${styles.carouselView} ${styles.active}`}>
+                            <BranchEditor
+                                imgSrc={imageLinks[activePanel]}
+                                panelIndex={activePanel}
+                                hooks={activePanelHooks()}
+                                setHooks={setActivePanelHooks}
+                                addingHook={addingHook}
+                                confirmHook={confirmHook}
+                                selectedHook={selectedHook}
+                                setSelectedHook={setSelectedHook}
+                                setConfirmHook={setConfirmHook}
+                                onHookClick={(_, hookIndex) => selectHook(hookIndex)}
+                            ></BranchEditor>
+                        </div>
+                        <a className={`${styles.carouselControlPrev}`} href="#publish-slideshow" role="button" data-slide="prev" onClick={() => nextPanel(-1)}>
+                            <img  alt="previous button"/>
+                            {/* <span className="carousel-control-prev-icon" aria-hidden="true"></span> */}
+                            {/* <span className="sr-only">Previous</span> */}
+                        </a>
+                        <a className={`${styles.carouselControlNext}`} href="#publish-slideshow" role="button" data-slide="next" onClick={() => nextPanel(1)}>
+                            <img  alt="next button"/>
+                            {/* <span className="sr-only">Next</span> */}
+                        </a>
                     </div>
-                    <a className={`${styles.carouselControlPrev}`} href="#publish-slideshow" role="button" data-slide="prev" onClick={() => nextPanel(-1)}>
-                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                        {/* <span className="sr-only">Previous</span> */}
-                    </a>
-                    <a className={`${styles.carouselControlNext}`} href="#publish-slideshow" role="button" data-slide="next" onClick={() => nextPanel(1)}>
-                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                        {/* <span className="sr-only">Next</span> */}
-                    </a>
                 </div>
+                <BranchPageControls
+                    addingHook={addingHook}
+                    addBranchHook={addBranchHook}
+                    confirmBranchHook={() => confirmBranchHook(activePanel)}
+                    removeBranchHook={removeBranchHook}
+                    branchCount={panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)}
+                ></BranchPageControls>
+                {/* <div className={`${styles.buttonContainer}`}>
+                    <div className={`${styles.branchHooks}`}>
+                        <div id={`${styles.branchHookControls}`}>
+                            {
+                                addingHook ? <button id="add-branch-hook" className={`${styles.branchControlBtn} ${styles.selectedHook}`} onClick={() => confirmBranchHook(activePanel)}>Accept Hook</button> :
+                                    <button id="add-branch-hook" className={`${styles.branchControlBtn}`} onClick={addBranchHook}>Add Hook</button>
+                            }
+                            {/* <button id="add-branch-hook" className="branch-control-btn" onClick={addBranchHook}>Add Hook</button> }
+                            <button id="remove-branch-hook" className={`${styles.branchControlBtn}`} onClick={removeBranchHook}>Remove Hook</button>
+                        </div>
+                        <div className={`${styles.branchHookText}`}>
+                            <p>{panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)} OF 3 REQUIRED BRANCHES PLACED</p>
+                            {/* starting text to be updated when either add or remove branch hook button is pressed }
+                        </div>
+                    </div>
+                    <button onClick={pushToLocalStorage} id={`${styles.publishBtn}`}>Publish</button>
+                </div> */}
             </div>
-            <BranchPageControls
-                addingHook={addingHook}
-                addBranchHook={addBranchHook}
-                confirmBranchHook={() => confirmBranchHook(activePanel)}
-                removeBranchHook={removeBranchHook}
-                branchCount={panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)}
-            ></BranchPageControls>
-            {/* <div className={`${styles.buttonContainer}`}>
-                <div className={`${styles.branchHooks}`}>
-                    <div id={`${styles.branchHookControls}`}>
-                        {
-                            addingHook ? <button id="add-branch-hook" className={`${styles.branchControlBtn} ${styles.selectedHook}`} onClick={() => confirmBranchHook(activePanel)}>Accept Hook</button> :
-                                <button id="add-branch-hook" className={`${styles.branchControlBtn}`} onClick={addBranchHook}>Add Hook</button>
-                        }
-                        {/* <button id="add-branch-hook" className="branch-control-btn" onClick={addBranchHook}>Add Hook</button> }
-                        <button id="remove-branch-hook" className={`${styles.branchControlBtn}`} onClick={removeBranchHook}>Remove Hook</button>
-                    </div>
-                    <div className={`${styles.branchHookText}`}>
-                        <p>{panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)} OF 3 REQUIRED BRANCHES PLACED</p>
-                        {/* starting text to be updated when either add or remove branch hook button is pressed }
-                    </div>
-                </div>
-                <button onClick={pushToLocalStorage} id={`${styles.publishBtn}`}>Publish</button>
-            </div> */}
-        </div>
+        </main>
     </>);
 }
 
