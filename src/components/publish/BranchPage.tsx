@@ -1,12 +1,10 @@
 import '../../styles/publish.css'
 import styles from './BranchPage.module.css'
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { BranchHook, emptyPanelSet, PanelSet } from "./interfaces";
-import paper from 'paper/dist/paper-core';
-import { createSVGPath, toggleClassForAllElements } from '../../utils';
-import BranchEditor from './BranchEditor'
+import Panel from './Panel'
 import BranchPageControls from './BranchPageControls';
 
 const BranchPage = () => {
@@ -131,9 +129,8 @@ const BranchPage = () => {
             <div id={styles.publishSlideshow}>
                 <div className={`${styles.carouselInner} carousel-inner`}>
                     <div className={`${styles.comicPanelContainer} ${styles.active}`}>
-                        <BranchEditor
+                        <Panel
                             imgSrc={imageLinks[activePanel]}
-                            panelIndex={activePanel}
                             hooks={activePanelHooks()}
                             setHooks={setActivePanelHooks}
                             addingHook={addingHook}
@@ -142,7 +139,7 @@ const BranchPage = () => {
                             setSelectedHook={setSelectedHook}
                             setConfirmHook={setConfirmHook}
                             onHookClick={(_, hookIndex) => selectHook(hookIndex)}
-                        ></BranchEditor>
+                        ></Panel>
                     </div>
                     <a className={`${styles.carouselControlPrev}`} href="#publish-slideshow" role="button" data-slide="prev" onClick={() => nextPanel(-1)}>
                         <span className="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -159,6 +156,7 @@ const BranchPage = () => {
                 addBranchHook={addBranchHook}
                 confirmBranchHook={() => confirmBranchHook(activePanel)}
                 removeBranchHook={removeBranchHook}
+                publish={() => console.log(JSON.stringify(panelSet.panels))}
                 branchCount={panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)}
             ></BranchPageControls>
             {/* <div className={`${styles.buttonContainer}`}>

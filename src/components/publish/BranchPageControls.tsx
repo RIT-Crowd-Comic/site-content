@@ -6,12 +6,14 @@ const BranchPageControls = ({
     addBranchHook,
     confirmBranchHook,
     removeBranchHook,
+    publish,
     branchCount
 }: {
     addingHook: boolean,
     addBranchHook: MouseEventHandler<HTMLButtonElement>,
     confirmBranchHook: () => void,
     removeBranchHook: MouseEventHandler<HTMLButtonElement>,
+    publish: () => void,
     branchCount: number
 }) => {
     {/* Return both mobile-landscape and desktop view. Either will be hidden in css */ }
@@ -53,7 +55,7 @@ const BranchPageControls = ({
                     {/* starting text to be updated when either add or remove branch hook button is pressed */}
                 </div>
             </div>
-            <button onClick={() => { }} id={`${styles.publishBtn}`}>Publish</button>
+            <button onClick={publish} id={`${styles.publishBtn}`}>Publish</button>
         </div>
     </>)
 }
