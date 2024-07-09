@@ -425,7 +425,6 @@ button {
     justify-content: center;
     color: var(--grayscale-text-color);
     display: grid;
-    justify-content: center;
     text-align: center;
     border-color: var(--grayscale-text-color);
 }
@@ -437,6 +436,7 @@ button {
 
 .accordion-body {
     background-color: var(--grayscale-background-color);
+    border-radius: 5px;
 }
 
 .clearAll {
@@ -940,8 +940,6 @@ No media query for `xs` since this is the default in Bootstrap */
     }
 
     .professors {
-        /* width: 70%; */
-        /* margin: 10px 100px; */
         margin: 20px;
     }
 
@@ -1023,13 +1021,18 @@ No media query for `xs` since this is the default in Bootstrap */
         font-size: 5vw;
     }
 
-    .form-control {
-        width: 200px;
+    /* Filter */
+    .filterOpt{
+        display: flex;
+        position: relative;
     }
-
-    #search-button {
-        width: 40px;
-        height: 30px;
+    .input-group{
+        flex: 59%;
+    }
+    .role{
+        flex: 24%;} 
+    .year{
+        flex: 18%;
     }
 
     .mission h2 {
@@ -1096,10 +1099,6 @@ No media query for `xs` since this is the default in Bootstrap */
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-    /* .main-section {
-        padding: 30px 100px;
-    } */
-
     .hero {
         width: 100vw;
         height: 500px;
@@ -1131,6 +1130,15 @@ No media query for `xs` since this is the default in Bootstrap */
         width: 90px;
         height: 60px;
     }
+
+    /* Filter */
+    .input-group{
+        flex: 50%;
+    }
+
+    .role, .year{
+        flex:25%;
+    } 
 
     .professors .text {
         font-size: 1.2rem;

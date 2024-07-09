@@ -23,28 +23,30 @@ const Filter = () => {
                 Filter
               </button>
             </h3>
-            <div id="collapseForm" className="accordion-collapse collapse" aria-labelledby="Filter Content">
-              <div className="accordion-body"> 
+            <div id="collapseForm" className="container accordion-collapse collapse" aria-labelledby="Filter Content">
+              <div className="accordion-body row"> 
                   <button type="button" className="clearAll btn btn-link btn-sm m-2 px-3 py-1 d-inline-flex-end">Clear All</button>
                   <div className='filterOpt d-grid gap-3 d-md-flex justify-content-center'>
                       {/* Search box */}
-                      <div className="input-group flex-wrap" aria-label="Searchbox">
-                          <div className="form-outline" data-mdb-input-init>
-                            <input id="search-input" type="search" className="form-control mt-1 px-5 py-2" placeholder='Search by name...' onChange={(e) => setSearchInput(e.target.value)}/>
-                          </div>
-                          <button id="search-button" type="button" className="btn btn-outline-dark btn-secondary px-3 mt-1" onClick={handleSearchClick}>
-                            <Image className="searchbar p-2" src={search} alt="" fill={true}/>
+                      <div className="input-group" aria-label="Searchbox">
+                        <div className="form-outline" data-mdb-input-init>
+                          <input id="search-input" type="search" className="form-control mt-1 px-5 py-2" placeholder='Searching For...' onChange={(e) => setSearchInput(e.target.value)}/>
+                        </div>
+                        {/* <div className="input-group-append"> */}
+                          <button id="search-button" type="submit" className="btn btn-outline-dark btn-secondary p-3 mt-1" onClick={handleSearchClick}>
+                            <Image className="searchbar p-2" src={search} alt="Search Bar" fill={true}/>
                           </button>
+                        {/* </div> */}
                       </div>
                       {/* Role */}
-                      <select className="form-select role m-1" aria-label="Role Filter">
+                      <select className="form-select role" aria-label="Role Filter">
                           <option value="Role" disabled>Role</option>
                           <option value="1">Designer</option>
                           <option value="2">Developer</option>
                           <option value="3">Producer</option>
                       </select> 
                       {/* Year */}
-                      <select className="form-select year m-1" aria-label="Year Filter">
+                      <select className="form-select year " aria-label="Year Filter">
                           <option value="Year" disabled>Year</option>
                           <option value="1">2024</option>
                       </select> 
