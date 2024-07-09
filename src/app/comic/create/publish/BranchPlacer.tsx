@@ -6,6 +6,7 @@ import styles from '@/styles/publish.module.css'
 import {useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {PanelSet, Branch} from "./PanelSet";
+// import Image from 'next/image';
 
 
 const BranchPlacer = () => {
@@ -147,7 +148,7 @@ const BranchPlacer = () => {
             <div id={`${styles.panelOverview}`} className="carousel slide">
                 {/* class= carousel-control-prev */}
                 <button className={`${styles.carouselControls}`} id={`${styles.prevSlideBtn}`} type="button" data-bs-target="#panel-overview" data-bs-slide="prev">
-                    <img className={`${styles.carouselPrevIcon}`} alt="previous arrow" src="../../../../../../public/images/buttons/carousel-left-button.png"  aria-hidden="true"></img>
+                    <img className={`${styles.carouselPrevIcon}`} width="50" height="50" alt="previous arrow" src="/../../../../../../public/images/buttons/carousel-left-button.PNG"  aria-hidden="true"/>
                     <span className="visually-hidden">Previous</span>
                 </button>
                 {/* <divclassName="carousel-inner"> */}

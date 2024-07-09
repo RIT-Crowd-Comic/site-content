@@ -432,7 +432,7 @@
     }
 }
 
-.scrollToTopButton {
+#scrollToTopButton {
     width: 80px;
     height: 50px;
     padding-top: 15px;
@@ -446,15 +446,15 @@
     filter: grayscale(1);
     border: none;
 
-    position: relative;
+    /* position: relative;
     left: 20vw;
     padding-left: 40px;
     margin-top: 20px;
     z-index: 2;
-    filter: grayscale(1);
+    filter: grayscale(1); */
 }
 
-.scrollToTopButton:hover {
+#scrollToTopButton:hover {
     animation: bounce .7s infinite;
     animation-fill-mode: forwards;
     border: none;

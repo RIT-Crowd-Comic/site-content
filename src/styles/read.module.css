@@ -9,9 +9,9 @@
   top:0;
 } */
 
-.body{
+.body {
   background-color: rgb(48, 48, 48);
-  background-image:url("../../public/images/background-app-transparent.png") !important;
+  background-image:url("../../public/images/backgrounds/background-app-transparent.png");
   /* background-position: center; */
   background-repeat:repeat;
   background-size:auto;
@@ -22,10 +22,12 @@
   top:0;
   padding-top:50px;
 }
-.rowBodyH{
+
+.rowBodyH {
   height:100%;
 }
-.colBodyH{
+
+.colBodyH {
   height:fit-content;
 }
 
@@ -42,11 +44,7 @@
   font-size: 2em;
 }  */
 
-.footer-head a {
-  font-size: 20px;
-}
-
-.icondiv img{
+.icondiv img {
   filter:grayscale(0);
   filter: invert(1);
 }
@@ -55,7 +53,7 @@
   margin: 9% 0px;
 } 
 
-#comicPanels{
+#comicPanels {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -119,7 +117,7 @@
     }
   }
 
-.branchHook{
+.branchHook {
     position: absolute;
     top: 0;
     left: 50%;
@@ -144,32 +142,32 @@
   }
 }
 
-#firstBranchHook{
+#firstBranchHook{ 
     top: 5%;
     left: 17%;
 }
 
-#secondBranchHook{
+#secondBranchHook {
     top: 60%;
     left: 15%;
 }
 
-#thirdBranchHook{
+#thirdBranchHook {
     top: 45%;
     left: 75%;
 }
 
-  .buttonIcon{
+  .buttonIcon {
     width: 40px;
     height: auto;
     filter: invert(1);
   }
 
-  #hooksToggle .buttonIcon:hover{
+  #hooksToggle .buttonIcon:hover {
     filter: invert(41%) sepia(97%) saturate(525%) hue-rotate(149deg) brightness(97%) contrast(105%)
   }
 
-  #backButton .buttonIcon:hover{
+  #backButton .buttonIcon:hover {
     filter: invert(74%) sepia(51%) saturate(390%) hue-rotate(356deg) brightness(104%) contrast(101%);
   }
   

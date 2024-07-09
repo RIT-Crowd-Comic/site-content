@@ -9,6 +9,7 @@ import TextOptions from './TextOptions';
 import StickerOptions from './StickerOptions';
 import test from 'node:test';
 import { start } from 'repl';
+import styles from "@/styles/create.module.css";
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
 const CreateToolsCanvasPaperJS = () => {
@@ -755,10 +756,10 @@ const CreateToolsCanvasPaperJS = () => {
 
     // Return the canvas HTMLElement and its associated functionality
     return (
-        <div id="createPage">
+        <div id={`${styles.createPage}`}>
             <fieldset>
                 <legend>Tools</legend>
-                <div id="toolRadioSelects">
+                <div id={`${styles.toolRadioSelects}`}>
                     <div id="penTool">
                         <input type="radio" name="tools" id="pen" value={toolStates.PEN} defaultChecked onChange={findSelected} />
                         <label htmlFor="pen">Pen</label>
@@ -821,9 +822,9 @@ const CreateToolsCanvasPaperJS = () => {
                 </div>
             </fieldset>
 
-            <canvas id="canvas" height="800px" width="1200px" ref={canvasReference} />
+            <canvas id={`${styles.canvas}`} height="800px" width="1200px" ref={canvasReference} className={`${styles.canvas}`}/>
 
-            <div id="toolOptions">
+            <div id={`${styles.toolOptions}`}>
                 <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor} />
                 <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize} />
                 <FillOptions enabled={fillOptionsEnabled} changeFillColor={setFillColor} />
