@@ -26,6 +26,7 @@ const TeamPage = () => {
             </div>
           </div>
         </div>
+        </div>
         {/* /Creator Group */}
 
         {/* Professors */}
@@ -34,10 +35,10 @@ const TeamPage = () => {
         </div>
         <div className={`${styles.facultyGroup} d-flex flex-wrap justify-content-center p-3 pb-4 m-4`}>
           <div className={`${styles.personPanel} card border border-black border-3 m-2`}>
-              <Image width={300} height={300} className={`${styles.portrait} img-fluid card-img w-100 h-100`} alt="" src="/images/people/Jake_Adams.png"/>
+              <Image width={300} height={300} className={`${styles.portrait} img-fluid card-img w-100 h-100 rounded-0`} alt="" src="/images/people/drawings/Jake_Adams.png"/>
               <Link href="https:www.linkedin.com">
-              <div className="card-img-overlay">
-                <Image width={300} height={300} className={`${styles.portrait} overlay-img img-fluid card-img w-100 h-100`} alt="Travis Stodter" src="/images/people/travis_stodter_white.png"/>
+              <div className="card-img-overlay rounded-0">
+                <Image width={300} height={300} className={`${styles.portrait} overlay-img img-fluid card-img w-100 h-100 rounded-0`} alt="Travis Stodter" src="/images/people/travis_stodter_white.png"/>
                 <div className={`${styles.nameText} card-header p-2 rounded-0`}>
                   Jake Adams
                 </div>
@@ -47,11 +48,12 @@ const TeamPage = () => {
               </div>
             </Link>
           </div>
+          <div className="card person-panel border border-black border-3 m-3">
           <div className={`${styles.personPanel} card border border-black border-3 m-2`}>
-              <Image width={300} height={300} className={`${styles.portrait} img-fluid card-img w-100 h-100`} alt="" src="/images/people/Sten_Placeholder.jpg"/>
+              <Image width={300} height={300} className={`${styles.portrait} img-fluid card-img w-100 h-100 rounded-0`} alt="" src="/images/people/Sten_Placeholder.jpg"/>
               <Link href="https:www.linkedin.com">
-              <div className="card-img-overlay">
-                <Image width={300} height={300} className={`${styles.portrait} overlay-img img-fluid card-img w-100 h-100`} alt="Travis Stodter" src="/images/people/travis_stodter_white.png"/>
+              <div className="card-img-overlay rounded-0">
+                <Image width={300} height={300} className={`${styles.portrait} overlay-img img-fluid card-img w-100 h-100 rounded-0`} alt="Travis Stodter" src="/images/people/travis_stodter_white.png"/>
                 <div className={`${styles.nameText} card-header p-2 rounded-0`}>
                   Sten Mckinzie
                 </div>
@@ -61,11 +63,12 @@ const TeamPage = () => {
               </div>
             </Link>
           </div>
+          <div className="card person-panel border border-black border-3 m-3">
           <div className={`${styles.personPanel} card border border-black border-3 m-2`}>
-              <Image width={300} height={300} className={`${styles.portrait} img-fluid card-img w-100 h-100`} alt="" src="/images/people/travis_stodter_white.png"/>
+              <Image width={300} height={300} className={`${styles.portrait} img-fluid card-img w-100 h-100 rounded-0`} alt="" src="/images/people/travis_stodter_white.png"/>
               <Link href="https://www.linkedin.com/in/travis-stodter/">
-              <div className="card-img-overlay">
-                <Image width={300} height={300} className={`${styles.portrait} overlay-img img-fluid card-img w-100 h-100`} alt="Travis Stodter" src="/images/people/travis_stodter_white.png"/>
+                <div className="card-img-overlay rounded-0">
+                <Image width={300} height={300} className={`${styles.portrait} overlay-img img-fluid card-img w-100 h-100 rounded-0`} alt="Travis Stodter" src="/images/people/travis_stodter_white.png"/>
                 <div className={`${styles.nameText} card-header p-2 rounded-0`}>
                   Travis Stodter
                 </div>
@@ -77,15 +80,11 @@ const TeamPage = () => {
           </div>
           </div>
           </div>
+          </div>
         {/* /Professors */}
-        {/* <div className={`${styles.backToTop}`}>
-        <Link href="#" className={`${styles.scrollButtonContainer}`}>
-          <strong className={`${styles.scrollButtonText}`}>Back to Top</strong>  
-          <button type="button" className={`${styles.scrollButtonText} ${styles.button} mb-6 mr-6 z-10 btn btn-lg my-8`}>
-            <Image src={arrow} alt="Scroll to top button" fill={true} />
-          </button>
-        </Link>
-      </div> */}
+        <div className="back-to-top">
+      <Link className="arrowLink" href="#"><button type="button" className="arrowAnimation mb-6 mr-6 z-10 btn btn-lg my-8 " id="scrollToTopBtn"></button></Link>
+      </div>
       {/* /Content */}
       <Footer/>
     </main>

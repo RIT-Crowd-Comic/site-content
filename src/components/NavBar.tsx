@@ -30,6 +30,9 @@ const NavBar = () => {
               <li className="nav-item ps-3">
                 <button className="nav-btn btn btn-outline-dark">Login</button>
               </li>
+              <li>
+              <Link className="nav-link" id="dbLink" href="../db">DB</Link>
+              </li>
             </ul>
           </div>
         </div>

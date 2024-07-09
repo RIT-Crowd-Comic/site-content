@@ -127,15 +127,9 @@ export default function Home() {
       <div className={`${styles.ourTeam}`}>
         <button className="button"><Link href="/team" >Our Team</Link></button>
       </div>
-      {/* <div className={`${styles.backToTop}`}>
-        <Link href="#" className={`${styles.scrollButtonContainer}`}>
-          <strong className={`${styles.scrollButtonText}`}>Back to Top</strong>  
-          <button type="button" className={`${styles.scrollButtonText} ${styles.button} mb-6 mr-6 z-10 btn btn-lg my-8`}>
-            <Image src={arrow} alt="Scroll to top button" fill={true} />
-          </button>
-        </Link>
-      </div> */}
-      <Footer/>
+      <div className="back-to-top">
+      <Link className="arrowLink" href="#"><button type="button" className="arrowAnimation mb-6 mr-6 z-10 btn btn-lg my-8 " id="scrollToTopBtn"></button></Link>
+      </div>
     </main >
     
   );
