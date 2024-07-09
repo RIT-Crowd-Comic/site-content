@@ -34,6 +34,11 @@ a {
 
 /* NAVBAR */
 
+::selection {
+    background: #cdcdcd;
+    color: black;
+}
+
 .navbar,
 .footer {
     font-family: var(--font-back-issues);
@@ -64,6 +69,8 @@ a {
     justify-content: space-between;
     flex-flow: row wrap;
     z-index: 5;
+
+    filter: grayscale(1);
 }
 
 .footer-nav {
