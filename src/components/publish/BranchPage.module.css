@@ -18,18 +18,23 @@
     display: flex;
     flex-direction: column;
     margin-top: 10px;
-    height: auto;
+    height: 100%;
+    /* align-items:center; */
 }
 
 #publishSlideshow {
+    display:flex;
+    padding-top:35px;
     width: 100%;
     height: 100%;
+    align-items:center;
 }
 
 .carouselInner {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 30px;
 }
 
 .comicPanelContainer {
@@ -69,7 +74,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 10%;
+    width: 5%;
     padding: 0;
     color: #fff;
     text-align: center;
@@ -97,7 +102,7 @@
     }
 
     #publishContainer {
-        flex-direction: row;
+        flex-direction: row-reverse;
     }
 }
 
@@ -121,7 +126,7 @@
         flex-direction: row;
         justify-content: space-around;
         align-items: center;
-        height: 80%;
+        /* height: 80%; */
     }
 
     #publishSlideshow {
