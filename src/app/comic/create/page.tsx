@@ -19,7 +19,7 @@ const exportToPNG = () => {
 const Create = () => {
     return (
         <>
-            <CreateToolsCanvasPaperJS />
+            <CreateToolsCanvas />
             <button id='export-btn' onClick={exportToPNG}>Export To PNG</button>
             <Link href="/comic/create/publish">Continue</Link>
         </>

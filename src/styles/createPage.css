@@ -18,6 +18,10 @@ canvas
     background-color: white;
     cursor: pointer;
 }
+#canvasLayers canvas
+{
+    position: absolute;
+}
 #createPage
 {
     display: flex;

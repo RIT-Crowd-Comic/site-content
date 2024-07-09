@@ -294,23 +294,89 @@ const CreateToolsCanvas = () =>
                 <button className="btn" id="clearButton" onClick={clearCanvas}>Clear</button><br></br>
             </fieldset>
 
-            <canvas id="canvas"
-                height="800px"
-                width="1200px"
-                ref={canvasReference}
+            <div id="canvasLayers">
+                <canvas id="layer1"
+                    height="800px"
+                    width="1200px"
 
-                // Mouse Event Handlers
-                onMouseDown={startDraw}
-                onMouseMove={draw}
-                onMouseUp={stopDraw}
-                onMouseOut={stopDraw}
-                onClick={fill}
+                    // Mouse Event Handlers
+                    onMouseDown={startDraw}
+                    onMouseMove={draw}
+                    onMouseUp={stopDraw}
+                    onMouseOut={stopDraw}
+                    onClick={fill}
 
-                // Mobile Events
-                //onTouchStart={startDraw}
-                //onTouchMove={draw}
-                //onTouchEnd={stop}
-            />
+                    // Mobile Events
+                    //onTouchStart={startDraw}
+                    //onTouchMove={draw}
+                    //onTouchEnd={stop}
+                />
+                <canvas id="layer2"
+                    height="800px"
+                    width="1200px"
+
+                    // Mouse Event Handlers
+                    onMouseDown={startDraw}
+                    onMouseMove={draw}
+                    onMouseUp={stopDraw}
+                    onMouseOut={stopDraw}
+                    onClick={fill}
+
+                    // Mobile Events
+                    //onTouchStart={startDraw}
+                    //onTouchMove={draw}
+                    //onTouchEnd={stop}
+                />
+                <canvas id="layer3"
+                    height="800px"
+                    width="1200px"
+
+                    // Mouse Event Handlers
+                    onMouseDown={startDraw}
+                    onMouseMove={draw}
+                    onMouseUp={stopDraw}
+                    onMouseOut={stopDraw}
+                    onClick={fill}
+
+                    // Mobile Events
+                    //onTouchStart={startDraw}
+                    //onTouchMove={draw}
+                    //onTouchEnd={stop}
+                />
+                <canvas id="layer4"
+                    height="800px"
+                    width="1200px"
+
+                    // Mouse Event Handlers
+                    onMouseDown={startDraw}
+                    onMouseMove={draw}
+                    onMouseUp={stopDraw}
+                    onMouseOut={stopDraw}
+                    onClick={fill}
+
+                    // Mobile Events
+                    //onTouchStart={startDraw}
+                    //onTouchMove={draw}
+                    //onTouchEnd={stop}
+                />
+                <canvas id="layer5"
+                    height="800px"
+                    width="1200px"
+                    ref={canvasReference}
+
+                    // Mouse Event Handlers
+                    onMouseDown={startDraw}
+                    onMouseMove={draw}
+                    onMouseUp={stopDraw}
+                    onMouseOut={stopDraw}
+                    onClick={fill}
+
+                    // Mobile Events
+                    //onTouchStart={startDraw}
+                    //onTouchMove={draw}
+                    //onTouchEnd={stop}
+                />
+            </div>
 
             <div id="toolOptions">
                 <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor}/>
