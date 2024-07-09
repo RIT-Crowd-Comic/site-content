@@ -19,7 +19,7 @@ const NavBar = () => {
           <div className="offcanvas-body">
             <ul className="navbar-nav justify-content-end flex-grow-1">
               <li className="nav-item ps-4">
-                <Link className="nav-link" id="homeLink" aria-current="page" href="./">Home</Link>
+                <Link className="nav-link" id="homeLink" aria-current="page" href="/">Home</Link>
               </li>
               <li className="nav-item ps-4">
                 <Link className="nav-link" id="teamLink" href="../team">Team</Link>
@@ -30,8 +30,8 @@ const NavBar = () => {
               <li className="nav-item ps-3">
               <Link href="/login"><button className="nav-btn btn btn-outline-dark">Login</button></Link>
               </li>
-              <li>
-              <Link className="nav-link" id="dbLink" href="../db">DB</Link>
+              <li className="nav-item ps-3">
+              <Link className="nav-link" id="dbLink" href="../db">Database</Link>
               </li>
             </ul>
           </div>
