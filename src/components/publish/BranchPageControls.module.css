@@ -36,6 +36,7 @@
     display: flex;
     margin-bottom: 10px;
     gap: 10px;
+    
 }
 
 .branchHookText p {
@@ -43,7 +44,7 @@
 }
 
 .branchControlBtn {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     padding: 10px 15px;
     border: none;
     border-radius: 15px;
@@ -64,10 +65,10 @@
     border:none;
     width:28vw;
     height:15vw;
-    
 }
+
 #publishBtn img{
-    width:100%;
+    max-width:28vw;
     height: auto;
     object-fit:contain;
     content: url(../../../public/images/buttons/static-publish-button.PNG);
