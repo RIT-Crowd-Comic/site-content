@@ -39,7 +39,7 @@ export default function Home() {
             <h2 className={styles.missionHeading}>Mission</h2>
           </div>
         </div>
-          <div className={`${styles.missionImage} ${styles.card} row card`}>
+          <div className={`${styles.missionImage} row card`}>
             <div className="card-img-overlay">
               <Image className={`${styles.bottomMission} card-img-top z-0`} src={bottomMission} alt="" />
               <Image className={`${styles.topMission} card-img-top z-0`} src={topMission} alt="" />
@@ -67,11 +67,10 @@ export default function Home() {
                 <div className="col"></div>
               </div>
             </div>
-            <div className={`${styles.readImage} ${styles.card} row card`}>
+            <div className={`${styles.readImage} row card`}>
               <div className="card-img-overlay">
                 <Image className={`${styles.bottomRead} card-img-top`} src={bottomRead} alt="" />
                 <Image className={`${styles.topRead} card-img-top`} src={topRead} alt="" />
-
                 <Image className={`${styles.desktopRead} card-img-top`} src={desktopRead} alt="" />
               </div>
               <div className="card-body">
@@ -83,7 +82,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="create position-relative">
+            <div className={`${styles.create}`}>
               <div className="row">
                 <div className="col">
                 </div>
@@ -91,7 +90,7 @@ export default function Home() {
                   <h2 className={`${styles.createHeading}`}>Create</h2>
                 </div>
               </div>
-              <div className={`${styles.createImage} ${styles.card} row card`}>
+              <div className={`${styles.createImage} row card`}>
                 <div className="card-img-overlay">
                   <Image className={`${styles.bottomCreate} card-img-top`} src={bottomCreate} alt="" />
                   <Image className={`${styles.topCreate} card-img-top`} src={topCreate} alt="" />

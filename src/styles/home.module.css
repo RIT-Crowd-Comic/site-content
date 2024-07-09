@@ -1,15 +1,20 @@
 .body {
     width: 100%;
     font-family: var(--font-back-issues);
-    background-color: var(--grayscale-text-color);
+    background-color: #2d2d2d;
     max-width: 100%;
     padding-right: 0 !important;
     overflow-x: clip;
     background-image: radial-gradient(circle at center,
-            var(--grayscale-background-color) 0.15rem,
-            transparent 0), radial-gradient(circle at center, var(--grayscale-background-color) 0.15rem, transparent 0);
+    #414141 0.15rem,
+            transparent 0), radial-gradient(circle at center, #414141 0.15rem, transparent 0);
     background-size: 1.3rem 1.3rem;
     background-position: 0 0, 0.65rem 0.65rem;
+}
+
+.body h2 {
+    font-size: 6vw;
+    font-weight: bold;
 }
 
 /* HERO */
@@ -70,7 +75,7 @@
 
 .missionHeading {
     position: relative;
-    background: url(../../public/images/background-boxes/bw/Create_Small_BW.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
     padding: 6vw 8vw 6vw 6vw;
     z-index: 1;
     margin: 5vh 2vw auto auto;
@@ -87,6 +92,7 @@
 .topMission {
     position: absolute;
     top: -10%;
+    right: 0%;
     height: auto;
     width: 95vw;
 }
@@ -116,7 +122,7 @@
 .readHeading {
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/background-boxes/bw/Read_Small_BW.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
     padding: 7vw;
     margin: -5vw auto;
     z-index: 1;
@@ -164,7 +170,7 @@
 .createHeading {
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/background-boxes/bw/Create_Small_BW.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
     padding: 5vw 9vw 5vw 6vw;
     margin: 0 auto;
     z-index: 1;
@@ -174,7 +180,7 @@
     position: relative;
     width: 90%;
     height: auto;
-    margin: -12vh auto -10vw 6vw;
+    margin: -12vw auto -10vw 6vw;
     font-size: 3.3vw;
 }
 
@@ -468,24 +474,6 @@
 @media (min-width: 576px) {
 
     /* BACK TO TOP */
-
-    .scrollButtonContainer {
-        left: 30vw;
-        padding: 3vw 0vw 3vw 8vw;
-        margin-top: 0px;
-    }
-
-    .scollButtonContainer strong {
-        font-size: 1.2rem;
-        padding-top: 15px;
-    }
-
-    .scollButtonButton {
-        width: 80px;
-        height: 50px;
-        padding-top: 15px;
-        margin-top: 0px;
-    }
 }
 
 /* [md] Medium devices, 768px and up */
@@ -697,8 +685,8 @@
         margin: 0 auto;
     }
 
-    .missionImage p {
-        background-color: var(--secondary-color);
+    .missionParagraph {
+        background-color: #ffffff;
 
         border: solid 5px black;
 
@@ -732,23 +720,19 @@
 
     .readHeading {
         background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
-
         padding: 6vw;
         margin: 0 auto -10%;
     }
 
     .readImage {
         font-size: 1.5vw;
-
-        width: 90vw;
+        width: 80vw;
         margin: 0 auto;
     }
 
     .readParagraph {
-        background-color: var(--secondary-color);
-
+        background-color: white;
         border: solid 5px black;
-
         padding: 1rem;
         width: 70%;
         margin: 5% auto 5vw;
@@ -775,17 +759,14 @@
     }
 
     .createImage {
-        font-size: 1.5vw;
-
-        width: 90vw;
-        margin: 0 auto;
+        padding: 1rem;
+        width: 80vw;
+        margin: 5% auto 0;
     }
 
     .createParagraph {
-        background-color: var(--secondary-color);
-
+        background-color: white;
         border: solid 5px black;
-
         padding: 1rem;
         width: 70%;
         margin: 5% auto 0;
@@ -830,9 +811,11 @@
 
     /* BACK TO TOP */
 
-    .scrollButtonContainer {
-        width: 90px;
-        height: 60px;
+    #scrollToTopButton {
+        width: 100px;
+        height: 70px;
+        padding-top: 15px;
+        margin-top: 0px;
     }
 }
 
