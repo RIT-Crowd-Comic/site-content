@@ -48,7 +48,6 @@ a {
 
 .navbar {
     background-color: var(--grayscale-background-color);
-    border-radius: 5px;
 }
 
 .nav-link,

@@ -1,7 +1,6 @@
 'use client';
 
-// import '../styles/globals.css'
-import search from '../../public/images/Search.svg'
+import search from '../../public/images/icons/Search.svg'
 import Image from 'next/image'
 import { useState } from 'react';
 import styles from "@/styles/team.module.css";
@@ -19,8 +18,8 @@ const Filter = () => {
   return (
     <div className={`${styles.filter} accordion mx-3`}>
       <div className="accordion-item">
-        <h3 className="accordion-header">
-          <button className={`${styles.accordionButton} accordion-button collapsed btn my-0 px-5 py-2 border border-2 rounded gap-2`} type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
+        <h3 className= "accordion-header">
+          <button className={`${styles.accordionButton} accordion-button collapsed btn my-0 px-5 py-2 border border-1 rounded-top gap-2`} type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
             Filter
           </button>
         </h3>

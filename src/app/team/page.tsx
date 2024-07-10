@@ -3,7 +3,6 @@ import Link from 'next/link'
 import Filter from '@/components/Filter'
 import Card from '@/components/Card'
 // import ScrollToTop from "@/components/ScrollToTop"
-import arrow from "../../../public/images/Arrow.gif"
 import styles from "@/styles/team.module.css"
 
 //footer
@@ -77,7 +76,6 @@ const TeamPage = () => {
       </div>
       <Footer/>
     </main>
-
   )
 }
 

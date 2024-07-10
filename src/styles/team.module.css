@@ -23,14 +23,19 @@
     border-color: var(--grayscale-text-color);
 }
 
-.filter .accordionButton:hover {
+.accordionButton{
+    border-radius: 5px 5px 0 0;
+}
+
+.accordionButton:hover {
     color: var(--grayscale-text-bg-color);
     background-color: var(--grayscale-text-color);
+    border: 2px solid var(--grayscale-text-bg-color);
 }
 
 .accordionBody {
     background-color: var(--grayscale-background-color);
-    border-radius: 5px;
+    border-radius: 0 0 5px 5px;
     font-size: 14px;
 }
 
@@ -64,8 +69,14 @@
     width: 100%;
 }
 
-/* .formOutline{
-    flex-wrap: nowrap;
+.searchbar{
+    border: 1px solid var(--grayscale-text-color);
+    border-radius: 0 5px 5px 0;
+}
+
+/* .searchbar:hover{
+    background-color: var(--grayscale-primary-color);
+    border-radius: 0 5px 5px 0;
 } */
 
 /* TEAM PANELS */
