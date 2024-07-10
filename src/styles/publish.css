@@ -6,15 +6,3 @@
     --light-blue: #009BC6;
     --dark-blue: #070e23;
 }
-
-body,
-html {
-    background-color: rgb(37, 37, 37);
-    background-image: none;
-    height: 100%;
-    overflow: hidden;
-}
-
-button:hover {
-    background-color: darkgray;
-}
