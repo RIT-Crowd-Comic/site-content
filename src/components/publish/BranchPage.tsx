@@ -131,7 +131,7 @@ const BranchPage = () => {
                         <div className={`${styles.comicPanelContainer} ${styles.carouselView} ${styles.active}`}>
                             <Panel
                                 imgSrc={imageLinks[activePanel]}
-                                    hooks={activePanelHooks()}
+                                hooks={activePanelHooks()}
                                 setHooks={setActivePanelHooks}
                                 addingHook={addingHook}
                                 confirmHook={confirmHook}

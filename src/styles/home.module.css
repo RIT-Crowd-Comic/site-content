@@ -1,15 +1,20 @@
 .body {
     width: 100%;
     font-family: var(--font-back-issues);
-    background-color: var(--grayscale-text-color);
+    background-color: #2d2d2d;
     max-width: 100%;
     padding-right: 0 !important;
     overflow-x: clip;
     background-image: radial-gradient(circle at center,
-            var(--grayscale-background-color) 0.15rem,
-            transparent 0), radial-gradient(circle at center, var(--grayscale-background-color) 0.15rem, transparent 0);
+    #414141 0.15rem,
+            transparent 0), radial-gradient(circle at center, #414141 0.15rem, transparent 0);
     background-size: 1.3rem 1.3rem;
     background-position: 0 0, 0.65rem 0.65rem;
+}
+
+.body h2 {
+    font-size: 6vw;
+    font-weight: bold;
 }
 
 /* HERO */
@@ -70,7 +75,7 @@
 
 .missionHeading {
     position: relative;
-    background: url(../../public/images/background-boxes/bw/Create_Small_BW.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
     padding: 6vw 8vw 6vw 6vw;
     z-index: 1;
     margin: 5vh 2vw auto auto;
@@ -80,22 +85,24 @@
     position: relative;
     width: 90%;
     height: auto;
-    margin: -5vh auto auto auto;
+    margin: -5vw auto auto auto;
     font-size: 3.3vw;
 }
 
 .topMission {
     position: absolute;
-    top: -5%;
+    top: -10%;
+    right: 0%;
     height: auto;
-    width: 90vw;
+    width: 95vw;
 }
 
 .bottomMission {
     position: absolute;
-    bottom: -5%;
+    bottom: -17%;
+    right: 0%;
     height: auto;
-    width: 90vw;
+    width: 95vw;
 }
 
 .leftMission,
@@ -107,7 +114,7 @@
     position: relative;
     z-index: 1;
     margin: 0 auto;
-    padding: 4vh 10vw;
+    padding: 5vw 2vw 5vw 4vw;
 }
 
 /* READ */
@@ -115,9 +122,9 @@
 .readHeading {
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/background-boxes/bw/Read_Small_BW.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
     padding: 7vw;
-    margin: -5vh auto;
+    margin: -5vw auto;
     z-index: 1;
 }
 
@@ -126,26 +133,29 @@
     width: 90%;
     height: auto;
     font-size: 3.3vw;
-    margin: -5vh auto auto 10vw;
+    margin: -12vw auto auto 10vw;
 }
 
 .topRead {
     position: absolute;
     height: auto;
-    width: 83vw;
+    top: 0%;
+    right: 6%;
+    width: 88vw;
 }
 
 .bottomRead {
     position: absolute;
-    bottom: 0%;
+    bottom: -5%;
+    right: 6%;
     height: auto;
-    width: 83vw;
+    width: 88vw;
 }
 
 .readParagraph {
     position: relative;
     z-index: 1;
-    padding: 5vh 10vw 5vh 5vw;
+    padding: 7vw 9vw 7vw 3vw;
 }
 
 .desktopRead {
@@ -160,8 +170,8 @@
 .createHeading {
     position: relative;
     border: 20px solid transparent;
-    background: url(../../public/images/background-boxes/bw/Create_Small_BW.svg) no-repeat center/contain;
-    padding: 7vw 9vw 7vw 6vw;
+    background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
+    padding: 5vw 9vw 5vw 6vw;
     margin: 0 auto;
     z-index: 1;
 }
@@ -170,27 +180,30 @@
     position: relative;
     width: 90%;
     height: auto;
-    margin: -9vh auto -10vw 6vw;
+    margin: -12vw auto -10vw 6vw;
     font-size: 3.3vw;
 }
 
 .topCreate {
     position: absolute;
     height: auto;
-    width: 85vw;
+    top: -5%;
+    right: 4%;
+    width: 90vw;
 }
 
 .bottomCreate {
     position: absolute;
     bottom: 0%;
+    right: 4%;
     height: auto;
-    width: 85vw;
+    width: 90vw;
 }
 
 .createParagraph {
     position: relative;
     z-index: 1;
-    padding: 5vh 10vw 4vh 9vw;
+    padding: 5vw 7vw 6vw 7vw;
 }
 
 .desktopCreate {
@@ -202,10 +215,8 @@
 .getStarted {
     width: auto;
     height: auto;
-    margin: -2vw auto 10vw;
-
+    margin: -3vw auto;
     position: relative;
-
     text-align: center;
 }
 
@@ -216,7 +227,7 @@
     width: 100%;
     height: auto;
     margin: 0 auto;
-    padding: 5vw 10vw 6vw;
+    padding: 4vw 10vw 5vw;
     font-size: 4.5vw;
     z-index: 2;
 }
@@ -292,7 +303,7 @@
     display: grid;
     grid-template-rows: repeat(3, auto);
     width: 80vw;
-    margin: 30px auto 50px;
+    margin: 15vw auto;
 }
 
 .previewPanels {
@@ -324,7 +335,7 @@
     height: 20vw;
     padding: 0;
     background-size: 100% 100%;
-    /* margin: 6vh 0 3vh; */
+    margin: 9vw 0 3vw;
     text-align: center;
     filter: grayscale(1);
 }
@@ -358,41 +369,101 @@
 /* BACK TO TOP */
 
 .backToTop {
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     margin-bottom: 10px;
+    width: 100%;
+    height: auto;
+    bottom: 0;
+    position: sticky;
+    z-index: 99;
+    width: 80px;
+    height: auto;
+    margin: 0 10px 0 auto;
+    padding-bottom: 20px;
 }
 
-.scrollButtonContainer {
+@keyframes bounce {
+    0% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
+
+    15% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame2.png);
+    }
+
+    65% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame3.png);
+    }
+
+    70% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    }
+
+    90% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    }
+
+    100% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
+}
+
+@keyframes delay {
+    0% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
+
+    84.9% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
+
+    85% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame2.png);
+    }
+
+    90% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame3.png);
+    }
+
+    94% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    }
+
+    97% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    }
+
+    100% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
+}
+
+#scrollToTopButton {
+    width: 100px;
+    height: 70px;
+    padding-top: 15px;
+    margin-top: 0px;
+    background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform: rotate(-90deg);
+    animation: delay 3s linear infinite;
     position: relative;
+    filter: grayscale(1);
+    border: none;
+
+    /* position: relative;
     left: 20vw;
     padding-left: 40px;
     margin-top: 20px;
     z-index: 2;
-    filter: grayscale(1);
+    filter: grayscale(1); */
 }
 
-.scollButtonText {
-    color: var(--grayscale-text-bg-color);
-    justify-content: end;
-    font-size: 1rem;
-    margin-top: 20px;
-    text-decoration: none;
-}
-
-.scollButtonButton {
-    transform: rotate(-90deg);
-    width: 70px;
-    height: 40px;
-    cursor: pointer;
+#scrollToTopButton:hover {
+    animation: bounce .7s infinite;
+    animation-fill-mode: forwards;
     border: none;
-}
-
-.scollButtonContainer strong:hover {
-    text-decoration: underline;
-}
-
-.scollButtonButton:hover {
-    transform: rotate(-90deg) scale(1.2);
 }
 
 
@@ -403,24 +474,6 @@
 @media (min-width: 576px) {
 
     /* BACK TO TOP */
-
-    .scrollButtonContainer {
-        left: 30vw;
-        padding: 3vw 0vw 3vw 8vw;
-        margin-top: 0px;
-    }
-
-    .scollButtonContainer strong {
-        font-size: 1.2rem;
-        padding-top: 15px;
-    }
-
-    .scollButtonButton {
-        width: 80px;
-        height: 50px;
-        padding-top: 15px;
-        margin-top: 0px;
-    }
 }
 
 /* [md] Medium devices, 768px and up */
@@ -552,7 +605,7 @@
     /* GET STARTED */
     .getStarted
     {
-        margin: -5vw auto 10vw;
+        margin: -4vw auto 10vw;
     }
 
     /* OUR TEAM */
@@ -622,7 +675,7 @@
     /* MISSION */
 
     .missionHeading {
-        background: url(../../public/images/background-boxes/bw/Desktop_Mission_Small_BW.svg) no-repeat center/contain;
+        background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
         padding: 6vw;
         margin: 10% auto;
     }
@@ -632,8 +685,8 @@
         margin: 0 auto;
     }
 
-    .missionImage p {
-        background-color: var(--secondary-color);
+    .missionParagraph {
+        background-color: #ffffff;
 
         border: solid 5px black;
 
@@ -666,24 +719,20 @@
     /* READ */
 
     .readHeading {
-        background: url(../../public/images/background-boxes/bw/Desktop_Read_Small_BW.svg) no-repeat center/contain;
-
+        background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
         padding: 6vw;
         margin: 0 auto -10%;
     }
 
     .readImage {
         font-size: 1.5vw;
-
-        width: 90vw;
+        width: 80vw;
         margin: 0 auto;
     }
 
     .readParagraph {
-        background-color: var(--secondary-color);
-
+        background-color: white;
         border: solid 5px black;
-
         padding: 1rem;
         width: 70%;
         margin: 5% auto 5vw;
@@ -704,24 +753,20 @@
     /* CREATE */
 
     .createHeading {
-        background: url(../../public/images/background-boxes/bw/Desktop_Create_Small_BW.svg) no-repeat center/contain;
-
+        background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
         padding: 6vw;
-        margin: 0 auto -10%;
+        margin: 18vw auto -10%;
     }
 
     .createImage {
-        font-size: 1.5vw;
-
-        width: 90vw;
-        margin: 0 auto;
+        padding: 1rem;
+        width: 80vw;
+        margin: 5% auto 0;
     }
 
     .createParagraph {
-        background-color: var(--secondary-color);
-
+        background-color: white;
         border: solid 5px black;
-
         padding: 1rem;
         width: 70%;
         margin: 5% auto 0;
@@ -743,7 +788,7 @@
 
     .getStarted
     {
-        margin: 10vw auto 10vw;
+        margin: 3vw auto 10vw;
     }
 
     .bookAnimation
@@ -766,9 +811,11 @@
 
     /* BACK TO TOP */
 
-    .scrollButtonContainer {
-        width: 90px;
-        height: 60px;
+    #scrollToTopButton {
+        width: 100px;
+        height: 70px;
+        padding-top: 15px;
+        margin-top: 0px;
     }
 }
 

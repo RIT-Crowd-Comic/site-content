@@ -36,10 +36,10 @@ const ComicPanels = ({ setting, hook_state, panels, image_1, image_2, image_3 }:
                     <button id={`${styles.firstBranchHook}`} className={button_class}>1</button> {/*<---- hard coded place holder branch hook *}
                 </div>
                 <div className={`${styles.secondPanel}`}>
-                    <img id="second-img" src={image_2} alt="" className={setting} />
+                    <Image id="second-img" width="500" height="500" src={image_2} alt="" className={setting} />
                 </div>
                 <div className={`${styles.thirdPanel}`}>
-                    <img id="third-img" src={image_3} alt="" className={setting} />
+                    <Image id="third-img" width="500" height="500" src={image_3} alt="" className={setting} />
                     <div className="third-panel-container">
                         <button id={`${styles.secondBranchHook}`}  className={button_class}>2</button> {/*<---- hard coded place holder branch hook *}
                         <button id={`${styles.thirdBranchHook}`}  className={button_class}><a href="/comic/create">3</a></button> {/*<---- hard coded place holder branch hook *}

@@ -4,8 +4,21 @@
 }*/
 .body
 {
+    width: 100%;
+    font-family: var(--font-back-issues);
     color: white;
+    background-color: var(--grayscale-text-color);
+    max-width: 100%;
+    /* filter: grayscale(1); */
+    padding-right: 0 !important;
+    overflow-x: clip;
+    background-image: radial-gradient(circle at center,
+            var(--grayscale-background-color) 0.15rem,
+            transparent 0), radial-gradient(circle at center, var(--grayscale-background-color) 0.15rem, transparent 0);
+    background-size: 1.3rem 1.3rem;
+    background-position: 0 0, 0.65rem 0.65rem;
 }
+
 #imagePreviews
 {
     display: flex;
@@ -34,6 +47,10 @@
 #toolOptions
 {
     order: 2;
+}
+.a 
+{
+    color: white;
 }
 
 /* [xs] Extra small devices, less than 576px) */

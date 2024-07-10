@@ -1,14 +1,13 @@
 .body {
     width: 100%;
     font-family: var(--font-back-issues);
-    background-color: var(--grayscale-text-color);
+    background-color: #2d2d2d;
     max-width: 100%;
-    /* filter: grayscale(1); */
     padding-right: 0 !important;
     overflow-x: clip;
     background-image: radial-gradient(circle at center,
-            var(--grayscale-background-color) 0.15rem,
-            transparent 0), radial-gradient(circle at center, var(--grayscale-background-color) 0.15rem, transparent 0);
+    #414141 0.15rem,
+            transparent 0), radial-gradient(circle at center, #414141 0.15rem, transparent 0);
     background-size: 1.3rem 1.3rem;
     background-position: 0 0, 0.65rem 0.65rem;
 }
@@ -17,8 +16,7 @@
 
 .roleText {
     font-size: 1rem;
-    border-color: black;
-    border-width: 2px;
+    border: black 2px solid;
     background: #aaaaaa;
     position: absolute;
     bottom: 0;
@@ -27,8 +25,7 @@
 
 .nameText {
     font-size: 1rem;
-    border-color: black;
-    border-width: 2px;
+    border: black 2px solid;
     background: #aaaaaa;
     position: absolute;
     top: 0;
@@ -48,12 +45,39 @@
     border-radius: 0;
     position: relative;
     background-color: white;
+    overflow: hidden;
+}
+
+.personPanel:hover {
+    opacity: 1;
+    transition: 3s ease-out;
+}
+
+.personPanel:hover .nameText {
+    transform: translateX(-10%);
+    transition: .5s ease-out;
+}
+
+.personPanel:hover .roleText {
+    transform: translateX(10%);
+    transition: .5s ease-out;
 }
 
 .portrait {
     filter: grayscale(1);
-    border: #000000;
-    border-width: 1px;
+    border: #000000 1px solid;
+}
+
+.overlayImg
+{
+    position: absolute;
+    opacity: 0;
+    left: 0;
+}
+
+.personPanel:hover .overlayImg{
+    opacity: 1;
+    transition: .3s ease-out;
 }
 
 /* FILTER */
@@ -129,42 +153,103 @@
 /* BACK TO TOP */
 
 .backToTop {
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     margin-bottom: 10px;
+    width: 100%;
+    height: auto;
+    bottom: 0;
+    position: sticky;
+    z-index: 99;
+    width: 80px;
+    height: auto;
+    margin: 0 10px 0 auto;
+    padding-bottom: 20px;
 }
 
-.scrollButtonContainer {
+@keyframes bounce {
+    0% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
+
+    15% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame2.png);
+    }
+
+    65% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame3.png);
+    }
+
+    70% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    }
+
+    90% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    }
+
+    100% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
+}
+
+@keyframes delay {
+    0% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
+
+    84.9% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
+
+    85% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame2.png);
+    }
+
+    90% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame3.png);
+    }
+
+    94% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    }
+
+    97% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    }
+
+    100% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
+}
+
+#scrollToTopButton {
+    width: 80px;
+    height: 50px;
+    padding-top: 15px;
+    margin-top: 0px;
+    background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform: rotate(-90deg);
+    animation: delay 3s linear infinite;
     position: relative;
+    filter: grayscale(1);
+    border: none;
+
+    /* position: relative;
     left: 20vw;
     padding-left: 40px;
     margin-top: 20px;
     z-index: 2;
-    filter: grayscale(1);
+    filter: grayscale(1); */
 }
 
-.scollButtonText {
-    color: var(--grayscale-text-bg-color);
-    justify-content: end;
-    font-size: 1rem;
-    margin-top: 20px;
-    text-decoration: none;
-}
-
-.scollButtonButton {
-    transform: rotate(-90deg);
-    width: 70px;
-    height: 40px;
-    cursor: pointer;
+#scrollToTopButton:hover {
+    animation: bounce .7s infinite;
+    animation-fill-mode: forwards;
     border: none;
 }
 
-.scollButtonContainer strong:hover {
-    text-decoration: underline;
-}
-
-.scollButtonButton:hover {
-    transform: rotate(-90deg) scale(1.2);
-}
 
 /* [xs] Extra small devices, less than 576px) */
 /* No media query for `xs` since this is the default in Bootstrap */

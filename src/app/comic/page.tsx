@@ -7,11 +7,15 @@ const firstPanelImage = "/comic-panels/first_panel.png";
 const secondPanelImage = "/comic-panels/second_panel.png";
 const thirdPanelImage = "/comic-panels/third_panel.png";
 
+// navbar
+import Navbar from "../../components/NavBar"
+
 //set the base trunks to display by default on read
 const Read = () => {
 
 
     return (<>
+        <Navbar />
         <ReadPage />
         {/* <div className="control-bar">
                 <button id="back-button">Back</button>

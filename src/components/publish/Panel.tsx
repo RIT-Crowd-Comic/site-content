@@ -2,6 +2,7 @@ import styles from './Panel.module.css'
 import { SyntheticEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { BranchHook } from './interfaces';
 import { createSVGPath } from '@/utils';
+import Image from 'next/image';
 
 // perhaps load this from a global color palette file
 const FILL_COLOR = '#009BC6AA';
@@ -120,9 +121,9 @@ const Panel = ({
 
         // don't add a vertex if it's too close to the previous one 
         const lastVert = vertices[vertices.length - 1];
-        if (lastVert && 
-            Math.pow(normalizedRoundedX - lastVert[0], 2) + 
-            Math.pow(normalizedRoundedY - lastVert[1], 2) < 
+        if (lastVert &&
+            Math.pow(normalizedRoundedX - lastVert[0], 2) +
+            Math.pow(normalizedRoundedY - lastVert[1], 2) <
             Math.pow(MIN_DRAWING_DIST, 2)) return;
 
 
@@ -161,14 +162,26 @@ const Panel = ({
 
     return (
         <div className={styles.branchEditor}>
-            <img
+            {/* <img
                 src={imgSrc}
                 className={`${styles.preview} ${addingHook ? styles.editing : ''}`}
                 draggable='false'
                 onMouseDown={mouseDownHandler}
                 onMouseMove={mouseMoveHandler}
                 ref={imgRef}
+            /> */}
+            <Image
+                src={imgSrc}
+                className={`${styles.preview} ${addingHook ? styles.editing : ''}`}
+                draggable='false'
+                onMouseDown={mouseDownHandler}
+                onMouseMove={mouseMoveHandler}
+                ref={imgRef}
+                alt="comic panel"
+                width="500" 
+                height="500"
             />
+
             <svg className={`${styles.hookSvg} ${editingStyle}`} style={displayOnLoad}>
                 <g transform={`scale(${1 / (scale?.x ?? 1)} ${1 / (scale?.y ?? 1)})`}>
                     {/* EXISTING HOOKS */}

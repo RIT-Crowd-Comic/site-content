@@ -34,6 +34,11 @@ a {
 
 /* NAVBAR */
 
+::selection {
+    background: #cdcdcd;
+    color: black;
+}
+
 .navbar,
 .footer {
     font-family: var(--font-back-issues);
@@ -64,6 +69,8 @@ a {
     justify-content: space-between;
     flex-flow: row wrap;
     z-index: 5;
+
+    filter: grayscale(1);
 }
 
 .footer-nav {
@@ -142,6 +149,23 @@ a {
     margin: 0;
 }
 
+/* FORMS */
+.form-control
+{
+    margin: 0;
+    max-width: 300px;
+
+    border-radius: 6px;
+    border: solid 3px #000000;
+}
+
+.form-control:focus
+{
+    outline: none;
+    border-color: #ffffff;
+    box-shadow: 0 0 3px #ffffff;
+}
+
 /* [xs] Extra small devices, less than 576px) */
 /* No media query for `xs` since this is the default in Bootstrap */
 
@@ -182,6 +206,11 @@ a {
     .footer-nav-list {
       margin: 0;
   }
+
+    #scroll-text {
+        font-size: 1.2rem;
+        padding-top: 15px;
+    }
 }
 
 /* [md] Medium devices, 768px and up */

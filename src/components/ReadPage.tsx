@@ -11,7 +11,7 @@ These images must query on initial load the panels of the trunk. This will proba
 */
 const firstPanelImage = "/comic-panels/first_panel.png"; //<--- Panel 1
 const secondPanelImage = "/comic-panels/second_panel.png"; //<--- Panel 2
-const thirdPanelImage = "/comic-panels/third_panel.png"; //<--- Panel 3
+const thirdPanelImage = "/comic-panels/third_panel.png"; //<--- Panel 3 
 
 //import icons and background
 const backIcon = "/images/back-button-pressed.png"
