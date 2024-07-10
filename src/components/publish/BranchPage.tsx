@@ -1,4 +1,3 @@
-import '../../styles/publish.css'
 import styles from './BranchPage.module.css'
 
 import { useEffect, useState } from 'react';
