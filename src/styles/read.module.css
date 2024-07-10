@@ -196,7 +196,7 @@
     
     img.columnPanels {
       /* width:900px; */
-      height: 600px;
+      height: auto;
       max-height:80vh;
       object-fit:contain;
     }
