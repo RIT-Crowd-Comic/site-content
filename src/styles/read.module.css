@@ -247,7 +247,7 @@
 #layoutToggle .buttonIcon {
   visibility: hidden;
 }
-
+  }
 @media only screen and (min-width: 700px) {
   #comicPanels {
     padding: 0 100px;
