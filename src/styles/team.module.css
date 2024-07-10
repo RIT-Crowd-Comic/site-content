@@ -257,22 +257,9 @@
 /* [xs] Extra small devices, less than 576px) */
 /* No media query for `xs` since this is the default in Bootstrap */
 
-@media (max-width: 360px) {
-    .formControl, .formSelect {
-        /* width: 150px; */
-        max-width: 90%;
-    }
-
-    .inputGroup{
-        max-width: 90%;
-    }
-}
-
-@media ( max-width: 420px) {
-    .formControl {
-        /* width: 300px; */
-        /* max-width: 70%; */
-        /* max-width: 90%; */
+@media (max-width: 420px) {
+    .formControl, .formSelect{
+        width: 100%;
     }
 }
 
@@ -309,7 +296,6 @@
     }
 }
 
-
 /* [lg] Large desktops, 992px and up */
 @media (min-width: 992px) {
 
@@ -326,7 +312,6 @@
         flex:25%;
     } 
 }
-
 
 /* [xl] Extra large devices 1200px and up */
 @media (min-width: 1200px) {}

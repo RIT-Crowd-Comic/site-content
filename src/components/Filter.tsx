@@ -36,8 +36,8 @@ const Filter = () => {
                       <Image className="searchbar p-2" src={search} alt="Search Bar" fill={true}/>
                     </button> */}
                   </div>
-                  <button type="submit" className="btn btn-outline-dark btn-secondary p-3 mt-1" onClick={handleSearchClick}>
-                    <Image className="searchbar p-2" src={search} alt="Search Bar" fill={true}/>
+                  <button type="submit" className="btn btn-outline-dark rounded-left btn-secondary p-3 mt-1" onClick={handleSearchClick}>
+                    <Image className={`${styles.searchbar} p-2`} src={search} alt="Search Bar" fill={true}/>
                   </button>
                 </div>
                 {/* Role */}
