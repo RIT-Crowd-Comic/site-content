@@ -11,9 +11,9 @@ import Navbar from "../../components/NavBar"
 import Footer from "../../components/footer"
 
 const TeamPage = () => {
-  <Navbar />
   return (
     <main className={styles.body}>
+      <Navbar />
       <div className="content text-center">
         <h1 className={`${styles.teamTitle} pt-5 pb-3`}>Meet the Creators!</h1> 
         <Filter />
