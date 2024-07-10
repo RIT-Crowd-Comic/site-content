@@ -32,7 +32,7 @@ const TeamPage = () => {
               <Image width={200} height={200} className={`${styles.portrait} img-fluid card-img w-100 h-100 rounded-0`} alt="Jake Adams Drawing" src="/images/people/drawings/Jake_Adams.png"/>
               <Link href="https://www.linkedin.com/in/jakeadamsstudios/">
               <div className="card-img-overlay rounded-0">
-                <Image width={200} height={200} className={`${styles.portrait} ${styles.overlayImg} overlay-img img-fluid card-img w-100 h-100 rounded-0`} alt="Jake Adams Photo" src="/images/people/photos/Jake_Adams.jpg"/>
+                <Image width={200} height={200} className={`${styles.portrait} ${styles.overlayImg} overlay-img img-fluid card-img w-100 h-100 rounded-0`} alt="Jake Adams" src="/images/people/photos/Jake_Adams.jpg"/>
                 <div className={`${styles.nameText} card-header p-2 rounded-0`}>
                   Jake Adams
                 </div>
@@ -46,7 +46,7 @@ const TeamPage = () => {
               <Image width={300} height={300} className={`${styles.portrait} img-fluid card-img w-100 h-100 rounded-0`} alt="" src="/images/people/Sten_Placeholder.jpg"/>
               <Link href="https://www.linkedin.com/in/sten-mckinzie-b33b6414b/">
               <div className="card-img-overlay rounded-0">
-                <Image width={300} height={300} className={`${styles.portrait} ${styles.overlayImg} overlay-img img-fluid card-img w-100 h-100 rounded-0`} alt="Travis Stodter" src="/images/people/photos/Sten_McKinzie.jpg"/>
+                <Image width={300} height={300} className={`${styles.portrait} ${styles.overlayImg} overlay-img img-fluid card-img w-100 h-100 rounded-0`} alt="Sten McKinzie" src="/images/people/photos/Sten_McKinzie.jpg"/>
                 <div className={`${styles.nameText} card-header p-2 rounded-0`}>
                   Sten Mckinzie
                 </div>
