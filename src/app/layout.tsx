@@ -70,7 +70,6 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${cevicheOne.variable} ${comicNeue.variable} ${backIssues.variable}`}>
       <body >
         <BootstrapClient />
-        <Navbar />
         {children}
       </body>
     </html>

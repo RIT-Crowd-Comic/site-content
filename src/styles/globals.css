@@ -149,6 +149,23 @@ a {
     margin: 0;
 }
 
+/* FORMS */
+.form-control
+{
+    margin: 0;
+    max-width: 300px;
+
+    border-radius: 6px;
+    border: solid 3px #000000;
+}
+
+.form-control:focus
+{
+    outline: none;
+    border-color: #ffffff;
+    box-shadow: 0 0 3px #ffffff;
+}
+
 /* [xs] Extra small devices, less than 576px) */
 /* No media query for `xs` since this is the default in Bootstrap */
 
