@@ -43,7 +43,7 @@
 }
 
 .comicPanelContainer.active {
-    width: 80%;
+    max-width: fit-content;
     text-align: center;
     display: initial;
 }

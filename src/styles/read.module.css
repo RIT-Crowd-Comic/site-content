@@ -183,37 +183,9 @@
   filter: invert(41%) sepia(97%) saturate(525%) hue-rotate(149deg) brightness(97%) contrast(105%)
 }
 
-  #backButton .buttonIcon:hover{
-    filter: invert(74%) sepia(51%) saturate(390%) hue-rotate(356deg) brightness(104%) contrast(101%);
-  }
-  
-
-  @media (min-width: 1400px) {
-    .rowPanels#comicPanels{
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      position: absolute;
-      top:0;
-      margin:auto;
-      justify-content: center; 
-      width:100%;
-    }
-  
-  
-  
-    img.rowPanels{
-      width: 27vw;
-      height:auto;
-      
-    }
-    
-    img.columnPanels {
-      /* width:900px; */
-      height: auto;
-      max-height:80vh;
-      object-fit:contain;
-    }
+#backButton .buttonIcon:hover {
+  filter: invert(74%) sepia(51%) saturate(390%) hue-rotate(356deg) brightness(104%) contrast(101%);
+}
 
 .controlBar {
   position: absolute;
@@ -251,7 +223,7 @@
 #layoutToggle .buttonIcon {
   visibility: hidden;
 }
-  }
+
 @media only screen and (min-width: 700px) {
   #comicPanels {
     padding: 0 100px;

@@ -12,10 +12,10 @@ export default function Page() {
       {Cards.cards.map(person => {
         return (
           <div className={`${styles.personPanel} card border border-black border-3 m-2 ${person.year}`} key={person.name}>
-              <Image width={300} height={300} src={person.photo} className={`${styles.portrait} img-fluid card-img w-100 h-100`} alt="" />
+              <Image width={300} height={300} src={person.img} className={`${styles.portrait} img-fluid card-img w-100 h-100 rounded-0`} alt="Creator Photos" />
               <Link href={`${person.linkedin}`}>
               <div className="card-img-overlay">
-                <Image width={300} height={300} src={person.photo} className={`${styles.portrait} overlay-img img-fluid card-img w-100 h-100`} alt="Creator Panel Drawings" />
+                <Image width={300} height={300} src={person.photo} className={`${styles.portrait} ${styles.overlayImg} overlay-img img-fluid card-img w-100 h-100 rounded-0`} alt="Creator Drawings" />
                 <div className={`${styles.nameText} card-header p-2 rounded-0`} id={person.name}>
                   {person.name}
                 </div>
