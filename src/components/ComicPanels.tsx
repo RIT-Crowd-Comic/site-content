@@ -1,14 +1,15 @@
 "use client";
-import {useEffect, useState } from 'react';
 
 import styles from "@/styles/read.module.css";
+import Panel from "./publish/Panel";
 
 interface Props {
-    setting:string,
-    hook_state:string,
-    image_1:string,
-    image_2:string,
-    image_3:string
+    setting: string,
+    hook_state: string,
+    panels: any[],
+    image_1: string,
+    image_2: string,
+    image_3: string
 }
 
 //This is the actual comic panel element which already has the image elements provided. With some changes we could potentially just query the panel set here 
@@ -22,21 +23,17 @@ interface Props {
 
     NOTE - The current buttons in the html are hard coded and should be removed once the placeButtons() method is created. The positions for the buttons are also currently set in "read.css"
 */
-const ComicPanels = ({setting, hook_state,image_1, image_2, image_3}: Props) => {
-    const button_class= `${styles[hook_state]} ${styles.branchHook}`
-    // console.log(`body height attribute?: ${styles.body}`)
-    let bodyHeight=""
-    if(setting.includes("row")){
-        bodyHeight="rowBodyH"
-    }else{
-        bodyHeight="colBodyH"
-    }
+const ComicPanels = ({ setting, hook_state, panels, image_1, image_2, image_3 }: Props) => {
+    const button_class = `${styles[hook_state]} ${styles.branchHook}`
+
     return (
-        <main className={`${styles.body} ${styles[bodyHeight]}`}>
-            <div id={`${styles.comicPanels}`} className={`${setting}`}>
-                <div className={`${styles.firstPanel}`}>
+        <div id={`${styles.comicPanels}`} className={`${setting}`}>
+            <div className={`${styles.firstPanel}`}><Panel imgSrc={image_1} hooks={panels[0].hooks} /></div>
+            <div className={`${styles.secondPanel}`}><Panel imgSrc={image_2} hooks={panels[1].hooks} /></div>
+            <div className={`${styles.thirdPanel}`}><Panel imgSrc={image_3} hooks={panels[2].hooks} /></div>
+            {/* <div className={`${styles.firstPanel}`}>
                     <img id="first-img" src={image_1} alt="" className={setting} />
-                    <button id={`${styles.firstBranchHook}`} className={button_class}>1</button> {/*<---- hard coded place holder branch hook */}
+                    <button id={`${styles.firstBranchHook}`} className={button_class}>1</button> {/*<---- hard coded place holder branch hook *}
                 </div>
                 <div className={`${styles.secondPanel}`}>
                     <img id="second-img" src={image_2} alt="" className={setting} />
@@ -44,12 +41,11 @@ const ComicPanels = ({setting, hook_state,image_1, image_2, image_3}: Props) => 
                 <div className={`${styles.thirdPanel}`}>
                     <img id="third-img" src={image_3} alt="" className={setting} />
                     <div className="third-panel-container">
-                        <button id={`${styles.secondBranchHook}`}  className={button_class}>2</button> {/*<---- hard coded place holder branch hook */}
-                        <button id={`${styles.thirdBranchHook}`}  className={button_class}><a href="/comic/create">3</a></button> {/*<---- hard coded place holder branch hook */}
+                        <button id={`${styles.secondBranchHook}`}  className={button_class}>2</button> {/*<---- hard coded place holder branch hook *}
+                        <button id={`${styles.thirdBranchHook}`}  className={button_class}><a href="/comic/create">3</a></button> {/*<---- hard coded place holder branch hook *}
                     </div>
-                </div>
-            </div>
-        </main>
+                </div> */}
+        </div>
     );
 }
 

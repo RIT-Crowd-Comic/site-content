@@ -9,28 +9,29 @@
   top:0;
 } */
 
-.body{
+.body {
   background-color: rgb(48, 48, 48);
-  background-image:url("../../public/images/backgrounds/background-app-transparent.png") !important;
+  background-image: url("../../public/images/backgrounds/background-app-transparent.png") !important;
   /* background-position: center; */
-  background-repeat:repeat;
-  background-size:auto;
-  width:100%;
-  
-  filter:none;
+  background-repeat: repeat;
+  background-size: auto;
+  width: 100%;
+
+  filter: none;
   position: absolute;
-  top:0;
-  padding-top:50px;
+  top: 0;
+  padding:100px 0 30px;
+
+  min-height: 100%;
+  height: fit-content;
 }
-.rowBodyH{
-  height:100%;
-}
-.colBodyH{
-  height:fit-content;
+
+.colBodyH {
+  height: fit-content;
 }
 
 /* .body:has(.rowPanels){} */
- 
+
 /* .footer-bar{
   position:fixed; 
   bottom:0;
@@ -46,24 +47,35 @@
   font-size: 20px;
 }
 
-.icondiv img{
-  filter:grayscale(0);
+.icondiv img {
+  filter: grayscale(0);
   filter: invert(1);
 }
- 
+
 #read-element {
   margin: 9% 0px;
-} 
+}
 
-#comicPanels{
+#comicPanels {
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   justify-content: center;
-  padding-bottom: 50px;
-  padding-top: 50px;
+  padding: 0 50px;
   height: 100%;
+}
+
+#comicPanels>div {
+  width: 100%;
+  max-width: fit-content;
+}
+
+#comicPanels img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
 }
 
 .firstPanel,
@@ -77,57 +89,58 @@
 
 .button-style {
   padding: 10px;
-    font-size: 16px;
-    background-color: darkgrey;
-  }
+  font-size: 16px;
+  background-color: darkgrey;
+}
 
-  .button-style:hover{
-    background-color: #009BC6;
-    border: none; 
-  }
+.button-style:hover {
+  background-color: #009BC6;
+  border: none;
+}
 
-  .branchHook {
-    transition: all 0.2s linear 0s;
-    border-radius: 30%;
-    
-    &:before {
-      content: "\21E8";
-      color: #FFD270;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: absolute;
-      top: 0;
-      left: 0px;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      font-size: 30px;
-      transform: scale(0,2);
-      transition: all 0.2s linear 0s;
-    }
-    
-    &:hover {
-      text-indent: -99999px;
-      animation: pulse 1s infinite;
-      background-color: #009BC6;
-      &:before {
-        transform: scale(1,1);
-        text-indent: 0;
-        
-      }
-    }
-  }
+.branchHook {
+  transition: all 0.2s linear 0s;
+  border-radius: 30%;
 
-.branchHook{
+  &:before {
+    content: "\21E8";
+    color: #FFD270;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     top: 0;
-    left: 50%;
-    transform:translateX(-50%);
-    padding: 5px 10px;
-    width:35px;
-    color: black;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 30px;
+    transform: scale(0, 2);
+    transition: all 0.2s linear 0s;
   }
+
+  &:hover {
+    text-indent: -99999px;
+    animation: pulse 1s infinite;
+    background-color: #009BC6;
+
+    &:before {
+      transform: scale(1, 1);
+      text-indent: 0;
+
+    }
+  }
+}
+
+.branchHook {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 10px;
+  width: 35px;
+  color: black;
+}
 
 
 .branchHook.popHooks {
@@ -139,35 +152,36 @@
   0% {
     outline: 1px solid #009BC6;
   }
+
   100% {
     outline: 8px solid #009bc65d;
   }
 }
 
-#firstBranchHook{
-    top: 5%;
-    left: 17%;
+#firstBranchHook {
+  top: 5%;
+  left: 17%;
 }
 
-#secondBranchHook{
-    top: 60%;
-    left: 15%;
+#secondBranchHook {
+  top: 60%;
+  left: 15%;
 }
 
-#thirdBranchHook{
-    top: 45%;
-    left: 75%;
+#thirdBranchHook {
+  top: 45%;
+  left: 75%;
 }
 
-  .buttonIcon{
-    width: 40px;
-    height: auto;
-    filter: invert(1);
-  }
+.buttonIcon {
+  width: 40px;
+  height: auto;
+  filter: invert(1);
+}
 
-  #hooksToggle .buttonIcon:hover{
-    filter: invert(41%) sepia(97%) saturate(525%) hue-rotate(149deg) brightness(97%) contrast(105%)
-  }
+#hooksToggle .buttonIcon:hover {
+  filter: invert(41%) sepia(97%) saturate(525%) hue-rotate(149deg) brightness(97%) contrast(105%)
+}
 
   #backButton .buttonIcon:hover{
     filter: invert(74%) sepia(51%) saturate(390%) hue-rotate(356deg) brightness(104%) contrast(101%);
@@ -201,114 +215,163 @@
       object-fit:contain;
     }
 
-    .controlBar {
-      position: fixed;
-      background-color: rgb(0, 0, 0);
-      width:80px;
-      height:230px;
-      padding: 25px 0 0 0;
-      border-radius: 50px;
-      border: 4px solid black; 
-      margin:auto 1%;
-      top:50%;
-      left:2%;
-      -ms-transform: translateX(-50%) translateY(-50%);
-      transform: translate(-50%,-50%);
-    }
+.controlBar {
+  position: relative;
+  z-index: 100;
+  visibility: hidden;
+  height: 0;
+}
 
-    #layoutToggle .buttonIcon:hover{
-      filter: invert(7%) sepia(99%) saturate(7263%) hue-rotate(357deg) brightness(106%) contrast(124%);
-    } 
+#backButton,
+#hooksToggle {
+  visibility: visible;
+  position: fixed;
+  background-color: black;
+  border-radius: 50%;
+  border: none;
+}
 
-    #backButton, #hooksToggle, #layoutToggle {
-      display: block;
-      margin: 0px auto;
-      position: relative;
-      padding: 10px;
-      font-size: 18px;
-      width: 60px;
-      border: none;
-      background-color: #ffffff00;
-    } 
+#backButton {
+  top: 12vh;
+  left: 2vw;
+  width: 60px;
+  height: 60px;
+}
+
+#hooksToggle {
+  bottom: 3vh;
+  right: 3vw;
+  padding: 5px;
+}
+
+#layoutToggle .buttonIcon {
+  visibility: hidden;
+}
+
+@media only screen and (min-width: 700px) {
+  #comicPanels {
+    padding: 0 100px;
   }
-  
-  @media (max-width: 1400px) {
- .rowBodyH{
-  height:fit-content;
- }
-  
-    #comicPanels img {
-      width:900px;
-      height: 600px;
-    }
+}
 
-    .controlBar {
-      visibility: hidden;
-    }
-
-    #backButton, #hooksToggle {
-      visibility: visible;
-      position: fixed;
-      background-color: black;
-      border-radius: 50%;
-      border: none;
-    } 
-
-    #backButton {
-      top:12vh;
-      left:2vw;
-      width:60px;
-      height:60px;
-    }
-
-    #hooksToggle {
-      bottom:3vh;
-      right:3vw;
-      padding:5px;
-    }
-  
-    #layoutToggle .buttonIcon{
-      visibility: hidden;
-    } 
+@media (min-width: 1200px) {
+  .rowBodyH {
+    height: fit-content;
   }
 
-  @media (max-width: 1000px){
-
-  
-    #comicPanels img {
-      width:80vw;
-      height: auto;
-    }
-
-    .controlBar {
-      visibility: hidden;
-    }
-
-    #backButton, #hooksToggle {
-      visibility: visible;
-      position: fixed;
-      background-color: black;
-      border-radius: 50%;
-      border: none;
-    } 
-
-    #backButton {
-      top:12vh;
-      left:2vw;
-      width:60px;
-      height:60px;
-    }
-
-    #hooksToggle {
-      bottom:3vh;
-      right:3vw;
-      padding:5px;
-    }
-  
-    #layoutToggle .buttonIcon{
-      visibility: hidden;
-    } 
+  .colBodyH #comicPanels {
+    padding: 0 50px;
   }
+
+  #comicPanels img {
+    max-width: 900px;
+    max-height: 600px;
+  }
+
+  #backButton,
+  #hooksToggle {
+    visibility: visible;
+    position: fixed;
+    background-color: black;
+    border-radius: 50%;
+    border: none;
+  }
+
+  #backButton {
+    top: 12vh;
+    left: 2vw;
+    width: 60px;
+    height: 60px;
+  }
+
+  #hooksToggle {
+    bottom: 3vh;
+    right: 3vw;
+    padding: 5px;
+  }
+
+  #layoutToggle .buttonIcon {
+    visibility: hidden;
+  }
+}
+
+@media (min-width: 1400px) {
+  .rowPanels#comicPanels {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    margin: auto;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .rowBodyH #comicPanels img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  img.rowPanels {
+    width: 27vw;
+    height: auto;
+
+  }
+
+  img.columnPanels {
+    /* width:900px; */
+    height: 600px;
+    max-height: 80vh;
+    object-fit: contain;
+  }
+
+  .controlBar {
+    position: fixed;
+    background-color: rgb(0, 0, 0);
+    width: 80px;
+    height: 230px;
+    padding: 25px 0 0 0;
+    border-radius: 50px;
+    border: 4px solid black;
+    margin: auto 1%;
+    top: 50%;
+    left: 2%;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translate(-50%, -50%);
+
+    visibility: visible;
+  }
+
+  #layoutToggle .buttonIcon:hover {
+    filter: invert(7%) sepia(99%) saturate(7263%) hue-rotate(357deg) brightness(106%) contrast(124%);
+  }
+
+  #backButton {
+    position: sticky;
+    top: 20px;
+    margin-top: 40px;
+  }
+
+  #backButton,
+  #hooksToggle,
+  #layoutToggle {
+    display: block;
+    margin: 0px auto;
+    position: relative;
+    left: 0;
+    top: 0;
+    padding: 10px;
+    font-size: 18px;
+    width: 60px;
+    border: none;
+    background-color: #ffffff00;
+  }
+
+  #layoutToggle .buttonIcon {
+    visibility: visible;
+  }
+
+}
 
 /* [xs] Extra small devices, less than 576px) */
 /* No media query for `xs` since this is the default in Bootstrap */

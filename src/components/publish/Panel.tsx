@@ -1,4 +1,4 @@
-import styles from './BranchEditor.module.css'
+import styles from './Panel.module.css'
 import { SyntheticEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { BranchHook } from './interfaces';
 import { createSVGPath } from '@/utils';
@@ -6,6 +6,7 @@ import { createSVGPath } from '@/utils';
 // perhaps load this from a global color palette file
 const FILL_COLOR = '#009BC6AA';
 const HIGHLIGHT_COLOR = '#FFD172AA';
+const MIN_DRAWING_DIST = 3;
 
 // reference https://www.pluralsight.com/resources/blog/guides/re-render-react-component-on-window-resize
 // const debounce = (fn: Function, ms: number) => {
@@ -24,9 +25,8 @@ const HIGHLIGHT_COLOR = '#FFD172AA';
  * Otherwise, display the panel and allow editing
  * @returns 
  */
-const BranchEditor = ({
+const Panel = ({
     imgSrc,
-    panelIndex,
     hooks,
     setHooks,
     addingHook = false,
@@ -37,14 +37,13 @@ const BranchEditor = ({
     onHookClick
 }: {
     imgSrc: string,
-    panelIndex: number,
     hooks: BranchHook[],
     setHooks?: (hooks: BranchHook[], panelIndex: number) => void
     addingHook?: boolean,
     confirmHook?: number,
     setConfirmHook?: (panelIndex: number | undefined) => void,
     selectedHook?: { panelIndex: number, hookIndex: number },
-    setSelectedHook: ({ }: { panelIndex: number, hookIndex: number } | undefined) => void,
+    setSelectedHook?: ({ }: { panelIndex: number, hookIndex: number } | undefined) => void,
     onHookClick?: (hook: BranchHook, hookIndex: number) => void
     // active?: boolean
 }) => {
@@ -75,7 +74,7 @@ const BranchEditor = ({
                 event.stopPropagation();
                 return;
             }
-            setSelectedHook(undefined);
+            if (setSelectedHook) setSelectedHook(undefined);
         };
         // window.current?.addEventListener('resize', setScaleOnReload);
         // return () => window.current?.removeEventListener('resize', setScaleOnReload);
@@ -88,7 +87,6 @@ const BranchEditor = ({
 
     // add a new hook
     useEffect(() => {
-        console.log(confirmHook);
         if (confirmHook != undefined && setHooks && setConfirmHook) {
 
             // prevent adding un-clickable hooks
@@ -117,10 +115,20 @@ const BranchEditor = ({
 
         const x = typeof vertex === 'object' ? vertex.x : vertex ?? 0;
         const y = typeof vertex === 'object' ? vertex.y : vertexY ?? 0;
+        const normalizedRoundedX = Math.round(x * scale.x * 10) / 10;
+        const normalizedRoundedY = Math.round(y * scale.y * 10) / 10;
+
+        // don't add a vertex if it's too close to the previous one 
+        const lastVert = vertices[vertices.length - 1];
+        if (lastVert && 
+            Math.pow(normalizedRoundedX - lastVert[0], 2) + 
+            Math.pow(normalizedRoundedY - lastVert[1], 2) < 
+            Math.pow(MIN_DRAWING_DIST, 2)) return;
+
 
         // normalize coordinates from {x: [0, elementWidth], y: [0, elementHeight] } 
         // to {x: [0, 1200], y: [0, 800] } 
-        const newVertices = [...vertices, [x * scale.x, y * scale.y]];
+        const newVertices = [...vertices, [normalizedRoundedX, normalizedRoundedY]];
         setVertices(newVertices);
     }
 
@@ -148,6 +156,9 @@ const BranchEditor = ({
     //     left: ${imgRect}px
     // `;
 
+    const editingStyle = addingHook ? styles.editing : '';
+    const displayOnLoad = { display: scale == undefined ? 'none' : 'initial' };
+
     return (
         <div className={styles.branchEditor}>
             <img
@@ -158,7 +169,7 @@ const BranchEditor = ({
                 onMouseMove={mouseMoveHandler}
                 ref={imgRef}
             />
-            <svg className={`${styles.hookSvg} ${addingHook ? styles.editing : ''}`}>
+            <svg className={`${styles.hookSvg} ${editingStyle}`} style={displayOnLoad}>
                 <g transform={`scale(${1 / (scale?.x ?? 1)} ${1 / (scale?.y ?? 1)})`}>
                     {/* EXISTING HOOKS */}
                     {hooks.map((hook, i) =>
@@ -185,4 +196,4 @@ const BranchEditor = ({
     )
 }
 
-export default BranchEditor;
+export default Panel;
