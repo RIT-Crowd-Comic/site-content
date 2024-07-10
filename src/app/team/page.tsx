@@ -6,10 +6,12 @@ import Card from '@/components/Card'
 import arrow from "../../../public/images/Arrow.gif"
 import styles from "@/styles/team.module.css"
 
-//footer
+//footer and header
+import Navbar from "../../components/NavBar"
 import Footer from "../../components/footer"
 
 const TeamPage = () => {
+  <Navbar />
   return (
     <main className={styles.body}>
       <div className="content text-center">
