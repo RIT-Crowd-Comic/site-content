@@ -5,23 +5,70 @@
     max-width: 100%;
     padding-right: 0 !important;
     overflow-x: clip;
-    background-image: radial-gradient(circle at center,
-    #414141 0.15rem,
-            transparent 0), radial-gradient(circle at center, #414141 0.15rem, transparent 0);
+    background-image: radial-gradient(circle at center,#414141 0.15rem, transparent 0), 
+        radial-gradient(circle at center, #414141 0.15rem, transparent 0);
     background-size: 1.3rem 1.3rem;
     background-position: 0 0, 0.65rem 0.65rem;
 }
 
-/* TEAM PANELS */
+/* FILTER */
 
-.roleText {
-    font-size: 1rem;
-    border: black 2px solid;
-    background: #aaaaaa;
-    position: absolute;
-    bottom: 0;
+.filter {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--grayscale-text-color);
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    border-color: var(--grayscale-text-color);
+}
+
+.filter .accordionButton:hover {
+    color: var(--grayscale-text-bg-color);
+    background-color: var(--grayscale-text-color);
+}
+
+.accordionBody {
+    background-color: var(--grayscale-background-color);
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.clearAll {
+    color: var(--grayscale-text-bg-color);
+}
+
+.clearAll:hover {
+    color: var(--grayscale-primary-color);
+}
+
+.formControl,
+.formSelect {
+    background-color: var(--grayscale-primary-color);
+    color: var(--grayscale-text-color);
+}
+
+.formControl {
+    border-radius: 8px 0 0 8px;
+}
+
+.formSelect option {
+    background-color: var(--grayscale-text-bg-color);
+}
+
+.inputGroup{
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
     width: 100%;
 }
+
+/* .formOutline{
+    flex-wrap: nowrap;
+} */
+
+/* TEAM PANELS */
 
 .nameText {
     font-size: 1rem;
@@ -29,6 +76,15 @@
     background: #aaaaaa;
     position: absolute;
     top: 0;
+    width: 100%;
+}
+
+.roleText {
+    font-size: 1rem;
+    border: black 2px solid;
+    background: #aaaaaa;
+    position: absolute;
+    bottom: 0;
     width: 100%;
 }
 
@@ -80,62 +136,7 @@
     transition: .3s ease-out;
 }
 
-/* FILTER */
-
-.filter {
-    font-size: 18px;
-    font-weight: 700;
-    justify-content: center;
-    color: var(--grayscale-text-color);
-    display: grid;
-    justify-content: center;
-    text-align: center;
-    border-color: var(--grayscale-text-color);
-}
-
-.filter .accordionButton:hover {
-    color: var(--grayscale-text-bg-color);
-    background-color: var(--grayscale-text-color);
-}
-
-.accordionBody {
-    background-color: var(--grayscale-background-color);
-}
-
-.clearAll {
-    color: var(--grayscale-text-bg-color);
-}
-
-.clearAll:hover {
-    color: var(--grayscale-primary-color);
-}
-
-.formControl,
-.formSelect {
-    background-color: var(--grayscale-primary-color);
-    color: var(--grayscale-text-color);
-}
-
-.formControl {
-    border-radius: 6px 0 0 6px;
-}
-
-.formSelect option {
-    background-color: var(--grayscale-text-bg-color);
-}
-
 /* LAYOUT */
-
-.creatorGroup {
-    border: 2px solid var(--grayscale-primary-color);
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.facultyGroup {
-    border: 2px solid var(--grayscale-primary-color);
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
 .chapterTitle {
     font-family: var(--font-back-issues);
     font-weight: bold;
@@ -143,11 +144,21 @@
     color: var(--grayscale-text-bg-color);
 }
 
+.creatorGroup {
+    border: 2px solid var(--grayscale-primary-color);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
 .facultyTitle {
     font-family: var(--font-back-issues);
     font-weight: bold;
     font-size: 2rem;
     color: var(--grayscale-text-bg-color);
+}
+
+.facultyGroup {
+    border: 2px solid var(--grayscale-primary-color);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* BACK TO TOP */
@@ -235,13 +246,6 @@
     position: relative;
     filter: grayscale(1);
     border: none;
-
-    /* position: relative;
-    left: 20vw;
-    padding-left: 40px;
-    margin-top: 20px;
-    z-index: 2;
-    filter: grayscale(1); */
 }
 
 #scrollToTopButton:hover {
@@ -250,30 +254,79 @@
     border: none;
 }
 
-
 /* [xs] Extra small devices, less than 576px) */
 /* No media query for `xs` since this is the default in Bootstrap */
+
+@media (max-width: 360px) {
+    .formControl, .formSelect {
+        /* width: 150px; */
+        max-width: 90%;
+    }
+
+    .inputGroup{
+        max-width: 90%;
+    }
+}
+
+@media ( max-width: 420px) {
+    .formControl {
+        /* width: 300px; */
+        /* max-width: 70%; */
+        /* max-width: 90%; */
+    }
+}
 
 /* [sm] Small devices, 576px and up */
 @media (min-width: 576px) {}
 
-/* [md] Medium devices, 768px and up */
 @media (min-width: 768px) {
 
-    /* FILTER */
-
-    .form-control {
-        width: 200px;
+    /* Filter */
+    .filterOpt{
+        display: flex;
+        position: relative;
+        flex:100%;
     }
 
-    #search-button {
-        width: 40px;
-        height: 30px;
+    .formSelect option{
+        font-size: .8rem;
+    }
+
+    .formControl {
+        max-width: 290px;
+    }
+
+    .inputGroup{
+        flex: 55%;
+    }
+
+    .role{
+        flex: 25%;
+    } 
+
+    .year{
+        flex: 20%;
     }
 }
 
+
 /* [lg] Large desktops, 992px and up */
-@media (min-width: 992px) {}
+@media (min-width: 992px) {
+
+    /* Filter */
+    .formControl {
+        max-width: 330px;
+    }
+
+    .inputGroup{
+        flex: 50%;
+    }
+
+    .role, .year{
+        flex:25%;
+    } 
+}
+
 
 /* [xl] Extra large devices 1200px and up */
 @media (min-width: 1200px) {}
