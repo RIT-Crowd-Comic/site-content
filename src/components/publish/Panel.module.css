@@ -31,6 +31,15 @@ img.preview {
 
 .hookPath:hover {
     cursor: pointer;
+    filter: hue-rotate(-20deg);
+}
+
+.hookPath.hidden {
+    opacity: 0;
+}
+.hookPath.hidden:hover {
+    opacity: 1;
+    filter: none;
 }
 
 .hookSvg.editing {

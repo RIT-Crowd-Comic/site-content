@@ -24,13 +24,14 @@ interface Props {
     NOTE - The current buttons in the html are hard coded and should be removed once the placeButtons() method is created. The positions for the buttons are also currently set in "read.css"
 */
 const ComicPanels = ({ setting, hook_state, panels, image_1, image_2, image_3 }: Props) => {
-    const button_class = `${styles[hook_state]} ${styles.branchHook}`
+    // const button_class = `${styles[hook_state]} ${styles.branchHook}`
+    const hidden = hook_state === 'hidden' ? true : false;
 
     return (
         <div id={`${styles.comicPanels}`} className={`${setting}`}>
-            <div className={`${styles.firstPanel}`}><Panel imgSrc={image_1} hooks={panels[0].hooks} /></div>
-            <div className={`${styles.secondPanel}`}><Panel imgSrc={image_2} hooks={panels[1].hooks} /></div>
-            <div className={`${styles.thirdPanel}`}><Panel imgSrc={image_3} hooks={panels[2].hooks} /></div>
+            <div className={`${styles.firstPanel}`}><Panel imgSrc={image_1} hooks={panels[0].hooks} hidden={hidden} /></div>
+            <div className={`${styles.secondPanel}`}><Panel imgSrc={image_2} hooks={panels[1].hooks} hidden={hidden} /></div>
+            <div className={`${styles.thirdPanel}`}><Panel imgSrc={image_3} hooks={panels[2].hooks} hidden={hidden} /></div>
             {/* <div className={`${styles.firstPanel}`}>
                     <img id="first-img" src={image_1} alt="" className={setting} />
                     <button id={`${styles.firstBranchHook}`} className={button_class}>1</button> {/*<---- hard coded place holder branch hook *}

@@ -35,7 +35,8 @@ const Panel = ({
     setConfirmHook,
     selectedHook,
     setSelectedHook,
-    onHookClick
+    onHookClick,
+    hidden: hideUntilHover,
 }: {
     imgSrc: string,
     hooks: BranchHook[],
@@ -45,7 +46,8 @@ const Panel = ({
     setConfirmHook?: (panelIndex: number | undefined) => void,
     selectedHook?: { panelIndex: number, hookIndex: number },
     setSelectedHook?: ({ }: { panelIndex: number, hookIndex: number } | undefined) => void,
-    onHookClick?: (hook: BranchHook, hookIndex: number) => void
+    onHookClick?: (hook: BranchHook, hookIndex: number) => void,
+    hidden?: boolean
     // active?: boolean
 }) => {
 
@@ -190,7 +192,7 @@ const Panel = ({
                             d={createSVGPath(hook.points)}
                             fill={(selectedHook?.hookIndex ?? -1) === i ? HIGHLIGHT_COLOR : FILL_COLOR}
                             onClick={() => { if (onHookClick) onHookClick(hook, i) }}
-                            className={styles.hookPath}
+                            className={`${styles.hookPath} ${hideUntilHover ? styles.hidden : ''}`}
                             key={i} />)}
                     {/* EDITOR HOOK */}
                     <path
