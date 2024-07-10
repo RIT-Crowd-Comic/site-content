@@ -275,10 +275,6 @@
         flex:100%;
     }
 
-    .formSelect option{
-        font-size: .8rem;
-    }
-
     .formControl {
         max-width: 290px;
     }
