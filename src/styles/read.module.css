@@ -216,10 +216,12 @@
     }
 
 .controlBar {
-  position: relative;
+  position: absolute;
   z-index: 100;
   visibility: hidden;
-  height: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
 
 #backButton,
@@ -232,8 +234,10 @@
 }
 
 #backButton {
-  top: 12vh;
-  left: 2vw;
+  position: sticky;
+  top: 20px;
+  margin-top: 100px;
+  left: 20px;
   width: 60px;
   height: 60px;
 }
@@ -268,6 +272,11 @@
     max-height: 600px;
   }
 
+  .controlBar {
+    position: relative;
+
+  }
+/* 
   #backButton,
   #hooksToggle {
     visibility: visible;
@@ -275,20 +284,20 @@
     background-color: black;
     border-radius: 50%;
     border: none;
-  }
-
+  } */
+/* 
   #backButton {
     top: 12vh;
     left: 2vw;
     width: 60px;
     height: 60px;
-  }
+  } */
 
-  #hooksToggle {
+  /* #hooksToggle {
     bottom: 3vh;
     right: 3vw;
     padding: 5px;
-  }
+  } */
 
   #layoutToggle .buttonIcon {
     visibility: hidden;
@@ -344,12 +353,6 @@
 
   #layoutToggle .buttonIcon:hover {
     filter: invert(7%) sepia(99%) saturate(7263%) hue-rotate(357deg) brightness(106%) contrast(124%);
-  }
-
-  #backButton {
-    position: sticky;
-    top: 20px;
-    margin-top: 40px;
   }
 
   #backButton,
