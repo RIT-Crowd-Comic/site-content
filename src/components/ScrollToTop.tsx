@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 
-import arrow from "../../public/images/Arrow.gif"
+import arrow from "../../public/images/GIFs/Arrow.gif"
 
 
 // const isBrowser = () => typeof window !== 'undefined'; //The approach recommended by Next.js
