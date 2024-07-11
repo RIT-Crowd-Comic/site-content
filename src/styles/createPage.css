@@ -15,8 +15,10 @@ body
 canvas
 {
     border-style: solid;
-    background-color: white;
     cursor: pointer;
+    position: absolute !important;
+    top: 100px;
+    left: 100px;
 }
 #createPage
 {
