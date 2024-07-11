@@ -1,19 +1,21 @@
 //This is the reading page where the user can read panels and click on branch hooks to pull up new panels
-import "../../styles/read.css";
+
 import ReadPage from "@/components/ReadPage";
-
-
 
 //imported base trunk panels as static images
 const firstPanelImage = "/comic-panels/first_panel.png";
 const secondPanelImage = "/comic-panels/second_panel.png";
 const thirdPanelImage = "/comic-panels/third_panel.png";
 
+// navbar
+import Navbar from "../../components/NavBar"
+
 //set the base trunks to display by default on read
 const Read = () => {
 
 
     return (<>
+        <Navbar />
         <ReadPage />
         {/* <div className="control-bar">
                 <button id="back-button">Back</button>

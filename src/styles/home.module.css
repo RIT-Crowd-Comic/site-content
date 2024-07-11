@@ -1,0 +1,874 @@
+.body {
+    width: 100%;
+    font-family: var(--font-back-issues);
+    background-color: #2d2d2d;
+    max-width: 100%;
+    padding-right: 0 !important;
+    overflow-x: clip;
+    background-image: radial-gradient(circle at center,
+    #414141 0.15rem,
+            transparent 0), radial-gradient(circle at center, #414141 0.15rem, transparent 0);
+    background-size: 1.3rem 1.3rem;
+    background-position: 0 0, 0.65rem 0.65rem;
+}
+
+.body h2 {
+    font-size: 4.5vw;
+    font-weight: bold;
+    height: auto;
+}
+
+/* HERO */
+
+.hero {
+    width: 100vw;
+    height: 300px;
+    background-color: #009BC6;
+    background-image: linear-gradient(45deg, #0e7491 25%, #0b5e75 25%, #0b5e75 50%, #0e7491 50%, #0e7491 75%, #0b5e75 75%, #0b5e75 100%);
+    background-size: 11.31px 11.31px;
+    border: 5px solid black;
+    filter: grayscale(1);
+}
+
+.topRightSpikes,
+.bottomRightSpikes {
+    max-height: 40%;
+    max-width: 30%;
+    position: absolute;
+    right: 0;
+}
+
+.topRightSpikes {
+    top: 0;
+}
+
+.bottomRightSpikes {
+    bottom: 0;
+}
+
+.topLeftSpikes,
+.bottomLeftSpikes {
+    max-height: 40%;
+    max-width: 30%;
+    position: absolute;
+    left: 0;
+}
+
+.topLeftSpikes {
+    top: 0;
+}
+
+.bottomLeftSpikes {
+    bottom: 0;
+}
+
+.splashLogo {
+    width: 70%;
+    height: auto;
+    max-width: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* MISSION */
+
+.missionHeading {
+    position: relative;
+    background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
+    padding: 6vw 8vw 6vw 6vw;
+    z-index: 1;
+    margin: 5vh 2vw auto auto;
+}
+
+.missionImage {
+    position: relative;
+    width: 90%;
+    height: auto;
+    margin: -5vw auto auto auto;
+    font-size: 3.3vw;
+}
+
+.topMission {
+    position: absolute;
+    top: -10%;
+    right: 0%;
+    height: auto;
+    width: 95vw;
+}
+
+.bottomMission {
+    position: absolute;
+    bottom: -17%;
+    right: 0%;
+    height: auto;
+    width: 95vw;
+}
+
+.leftMission,
+.rightMission {
+    display: none;
+}
+
+.missionParagraph {
+    position: relative;
+    z-index: 1;
+    margin: 0 auto;
+    padding: 5vw 2vw 5vw 4vw;
+}
+
+/* READ */
+
+.readHeading {
+    position: relative;
+    background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
+    padding: 7vw;
+    margin: -5vw auto;
+    z-index: 1;
+}
+
+.readImage {
+    position: relative;
+    width: 90%;
+    height: auto;
+    font-size: 3.3vw;
+    margin: -12vw auto auto 10vw;
+}
+
+.topRead {
+    position: absolute;
+    height: auto;
+    top: 0%;
+    right: 6%;
+    width: 88vw;
+}
+
+.bottomRead {
+    position: absolute;
+    bottom: -5%;
+    right: 6%;
+    height: auto;
+    width: 88vw;
+}
+
+.readParagraph {
+    position: relative;
+    z-index: 1;
+    padding: 7vw 9vw 7vw 3vw;
+}
+
+.desktopRead {
+    display: none;
+}
+
+/* CREATE */
+.create {
+    position: relative;
+}
+
+.createHeading {
+    position: relative;
+    background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
+    padding: 5vw 9vw 5vw 6vw;
+    margin: 0 auto;
+    z-index: 1;
+}
+
+.createImage {
+    position: relative;
+    width: 90%;
+    height: auto;
+    margin: -12vw auto -10vw 6vw;
+    font-size: 3.3vw;
+}
+
+.topCreate {
+    position: absolute;
+    height: auto;
+    top: -5%;
+    right: 4%;
+    width: 90vw;
+}
+
+.bottomCreate {
+    position: absolute;
+    bottom: 0%;
+    right: 4%;
+    height: auto;
+    width: 90vw;
+}
+
+.createParagraph {
+    position: relative;
+    z-index: 1;
+    padding: 5vw 7vw 6vw 7vw;
+}
+
+.desktopCreate {
+    display: none;
+}
+
+/* GET STARTED */
+
+.getStarted {
+    width: auto;
+    height: auto;
+    margin: -3vw auto;
+    position: relative;
+    text-align: center;
+}
+
+.getStartedButton {
+    border: 10px solid transparent;
+    background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
+    filter: brightness(.5);
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    padding: 4vw 10vw 5vw;
+    font-size: 4.5vw;
+    z-index: 2;
+}
+
+.getStarted button:active {
+    filter: brightness(.3);
+}
+
+@keyframes open {
+    0% {
+        background-image: url(../../public/images/GIFs/book-split/Frame1.gif);
+    }
+
+    5% {
+        background-image: url(../../public/images/GIFs/book-split/Frame2.gif);
+    }
+
+    20% {
+        background-image: url(../../public/images/GIFs/book-split/Frame3.gif);
+    }
+
+    45% {
+        background-image: url(../../public/images/GIFs/book-split/Frame4.gif);
+    }
+
+    60% {
+        background-image: url(../../public/images/GIFs/book-split/Frame5.gif);
+    }
+
+    75% {
+        background-image: url(../../public/images/GIFs/book-split/Frame6.gif);
+    }
+
+    90% {
+        background-image: url(../../public/images/GIFs/book-split/Frame7.gif);
+    }
+
+    100% {
+        background-image: url(../../public/images/GIFs/book-split/Frame8.gif);
+    }
+
+}
+
+.bookAnimation {
+    z-index: 99;
+    background-image: url(../../public/images/GIFs/book-split/Frame8.gif);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 45%;
+    height: 25vw;
+    filter: grayscale(1);
+    animation: none;
+
+    position: absolute;
+    left: -17%;
+    top: 5%;
+}
+
+.getStarted:hover .bookAnimation {
+    animation: open .5s;
+    animation-fill-mode: forwards;
+}
+
+.getStarted:hover button {
+    filter: brightness(1);
+    transform: scale(1.1);
+    transition: ease-in-out .5s;
+}
+
+/* PREVIEW */
+
+.preview {
+    display: grid;
+    grid-template-rows: repeat(3, auto);
+    width: 80vw;
+    margin: 15vw auto;
+}
+
+.previewPanels {
+    width: 65%;
+    height: auto;
+    margin: 0 auto;
+    border: 5px solid black;
+}
+
+.panelOne {
+    margin: 0;
+}
+
+.panelTwo {
+    margin: -5% auto 0;
+}
+
+.panelThree {
+    margin: -5% 0 0 auto;
+}
+
+/* OUR TEAM */
+
+.ourTeam {
+    background: url(../../public/images/background-boxes/Team_Banner_Mobile.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 20vw;
+    padding: 0;
+    background-size: 100% 100%;
+    margin: 50px auto;
+    text-align: center;
+    filter: grayscale(1);
+}
+
+.ourTeam button {
+    background-color: var(--grayscale-primary-color);
+    border: 3px solid var(--grayscale-text-color);
+    width: 40%;
+    height: 50%;
+    position: relative;
+    padding: 0;
+    top: 30%;
+    font-size: 4vw;
+    line-height: 0;
+    overflow: hidden;
+}
+
+.ourTeam button:hover {
+    background-color: var(--grayscale-text-bg-color);
+    border: 5px solid var(--grayscale-text-color);
+    box-shadow: 10px 10px var(--grayscale-background-color);
+    transform: translate(-5px, -5px);
+    transition: ease-in-out .3s;
+}
+
+.ourTeam button:active {
+    background-color: var(--secondary-color);
+    margin-top: 4px;
+}
+
+/* BACK TO TOP */
+
+.backToTop {
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+    width: 100%;
+    height: auto;
+    bottom: 0;
+    position: sticky;
+    z-index: 99;
+    width: 80px;
+    height: auto;
+    margin: 0 10px 0 auto;
+    padding-bottom: 20px;
+}
+
+@keyframes bounce {
+    0% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
+
+    15% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame2.png);
+    }
+
+    65% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame3.png);
+    }
+
+    70% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    }
+
+    90% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    }
+
+    100% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
+}
+
+@keyframes delay {
+    0% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
+
+    84.9% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
+
+    85% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame2.png);
+    }
+
+    90% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame3.png);
+    }
+
+    94% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    }
+
+    97% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    }
+
+    100% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    }
+}
+
+#scrollToTopButton {
+    width: 100px;
+    height: 70px;
+    padding-top: 15px;
+    margin-top: 0px;
+    background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform: rotate(-90deg);
+    animation: delay 3s linear infinite;
+    position: relative;
+    filter: grayscale(1);
+    border: none;
+
+    /* position: relative;
+    left: 20vw;
+    padding-left: 40px;
+    margin-top: 20px;
+    z-index: 2;
+    filter: grayscale(1); */
+}
+
+#scrollToTopButton:hover {
+    animation: bounce .7s infinite;
+    animation-fill-mode: forwards;
+    border: none;
+}
+
+
+/* [xs] Extra small devices, less than 576px) */
+/* No media query for `xs` since this is the default in Bootstrap */
+
+/* [sm] Small devices, 576px and up */
+@media (min-width: 576px) {
+
+    /* BACK TO TOP */
+}
+
+/* [md] Medium devices, 768px and up */
+@media (min-width: 768px) {
+
+    /* HERO */
+    .hero {
+        width: 100vw;
+        height: 500px;
+        position: relative;
+    }
+
+    .topRightSpikes,
+    .bottomRightSpikes {
+        max-height: 40%;
+        max-width: 30%;
+        position: absolute;
+        right: 0;
+    }
+
+    .topLeftSpikes,
+    .bottomLeftSpikes {
+        max-height: 40%;
+        max-width: 30%;
+        position: absolute;
+        left: 0;
+    }
+
+    .splashLogo {
+        width: 50%;
+        height: auto;
+        max-width: 400px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    /* MISSION */
+
+    
+    .missionHeading {
+        margin: 5vh 1vw auto auto;
+    }
+
+    .missionImage {
+        margin: -5vh auto 15vh auto;
+    }
+
+    .topMission {
+        top: -10%;
+    }
+
+    .bottomMission {
+        bottom: -15%;
+    }
+
+    .missionParagraph {
+        padding: 4vh 8vw 4vh 10vw;
+    }
+
+    /* PREVIEW */
+
+    .preview {
+        display: grid;
+        grid-template-rows: repeat(3, auto);
+        width: 80vw;
+        max-width: 1200px;
+        margin: 30px auto 50px;
+    }
+
+    .previewPanels {
+        width: 37%;
+        height: auto;
+        margin: 0 auto;
+        border: 5px solid black;
+    }
+
+    .panelOne {
+        margin: 0;
+    }
+
+    .panelTwo {
+        margin: -10% auto 0;
+    }
+
+    .panelThree {
+        margin: -10% 0 0 auto;
+    }
+
+    /* READ */
+
+    .readImage {
+        margin: -5vh auto auto 10vw;
+    }
+
+    .topRead {
+        top: -5%;
+    }
+
+    .bottomRead {
+        bottom: -15%;
+    }
+
+    .readParagraph {
+        padding: 5vh 14vw 5vh 5vw;
+    }
+
+    /* CREATE */
+
+    .createHeading {
+        margin: 7vh auto;
+    }
+
+    .createImage {
+        margin: -15vh auto 3vh 6vw;
+    }
+
+    .topCreate {
+        top: -10%;
+    }
+
+    .bottomCreate {
+        bottom: -15%;
+    }
+
+    .createParagraph {
+        padding: 5vh 10vw 4vh 9vw;
+    }
+
+    /* GET STARTED */
+    .getStarted
+    {
+        margin: -4vw auto 10vw;
+    }
+
+    /* OUR TEAM */
+
+    .ourTeam {
+        background: url(../../public/images/background-boxes/Team_Banner.svg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 100vw;
+        height: 30vw;
+        padding: 0;
+        background-size: 100% 100%;
+        text-align: center;
+        /* margin: 2vh auto 1vh; */
+    }
+
+    .ourTeam button {
+        border: 5px solid black;
+        width: 35%;
+        height: 40%;
+        top: 32%;
+        font-size: 5vw;
+    }
+
+    /* BACK TO TOP */
+    .scrollButtonContainer {
+        left: 35vw;
+    }
+}
+
+/* [lg] Large desktops, 992px and up */
+@media (min-width: 992px) {
+
+    .body h2 {
+        font-size: 2.5rem;
+    }
+
+    .body p {
+        font-size: 1.2rem;
+    }
+
+    /* HERO */
+
+    .hero {
+        width: 100vw;
+        height: 500px;
+        position: relative;
+    }
+
+    .topRightSpikes,
+    .bottomRightSpikes {
+        max-height: 40%;
+        max-width: 30%;
+        position: absolute;
+        right: 0;
+    }
+
+    .topLeftSpikes,
+    .bottomLeftSpikes {
+        max-height: 40%;
+        max-width: 30%;
+        position: absolute;
+        left: 0;
+    }
+
+    .splashLogo {
+        width: 300%;
+        max-width: 500px;
+    }
+
+    /* MISSION */
+    .missionSec{
+        width: 90vw;
+        margin: 0 auto;
+        max-width: 1350px;
+    }
+
+    .missionHeading {
+        background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
+        padding: 3rem 2rem;
+        margin: 50px auto;
+    }
+
+    .missionImage{
+
+        margin: 0 auto;
+    }
+
+    .missionParagraph {
+        background-color: #ffffff;
+
+        border: solid 5px black;
+        padding: 1rem;
+        width: 85%;
+        max-width: 920px;
+        margin: -20px auto 70px;
+    }
+
+    .topMission,
+    .bottomMission {
+        display: none;
+    }
+
+    .leftMission {
+        display: inline;
+
+        position: absolute;
+        height: auto;
+        margin: -18% auto;
+    }
+
+    .rightMission {
+        display: inline;
+
+        position: absolute;
+        height: auto;
+        margin: -3% auto;
+    }
+
+    /* READ */
+    .readSec{
+        width: 80vw;
+        max-width: 1200px;
+        margin: 50px auto;
+    }
+
+    .readHeading {
+        background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
+        padding: 3.5rem;
+        margin: 30px auto 0;
+    }
+
+    .readImage {
+        font-size: 1.5vw;
+
+
+        margin: 0 auto;
+    }
+
+    .readParagraph {
+        background-color: white;
+        border: solid 5px black;
+        padding: 1rem;
+        width: 95%;
+        max-width: 920px;
+        margin: 20px auto 30px;
+    }
+
+    .topRead,
+    .bottomRead {
+        display: none;
+    }
+
+    .desktopRead {
+        display: inline;
+        position: absolute;
+        height: auto;
+        margin: -10% auto;
+    }
+
+    /* CREATE */
+    .createSec{
+        width: 80vw;
+        max-width: 1200px;
+        margin: 200px auto 0;
+    }
+
+    .createHeading {
+        background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
+        padding: 3rem;
+        margin: 10px auto -30px;
+    }
+
+    .createImage {
+        font-size: 1.5vw;
+        margin: 0 auto;
+    }
+
+    .createParagraph {
+        background-color: white;
+        border: solid 5px black;
+        padding: 1rem;
+        max-width: 920px;
+        width: 95%;
+        margin: 30px auto 0;
+    }
+
+    .topCreate,
+    .bottomCreate {
+        display: none;
+    }
+
+    .desktopCreate {
+        display: inline;
+        position: absolute;
+        height: auto;
+        margin: -8% auto;
+    }
+
+    /* GET STARTED */
+
+    .getStarted
+    {
+        margin: 10px auto 50px;
+    }
+
+    .bookAnimation
+    {
+        background-image: url(../../public/images/GIFs/book-split/Frame1.gif); 
+        width: 250px;
+        height: 250px;
+        top: 0px;
+        left: -130px;
+    }
+
+    .getStarted button {
+        font-size: 2.5rem;
+        width: 450px;
+        height: 200px;
+        padding: 1rem 1rem 2rem 1rem;
+    }
+
+    /* OUR TEAM */
+    .ourTeam {
+        width: 100vw;
+        max-width: 1200px;
+        height: 30vw;
+        max-height: 350px;
+        padding: 0;
+        background-size: 100% 100%;
+        text-align: center;
+        /* margin: 2vh auto 1vh; */
+    }
+
+    .ourTeam button {
+        font-size: 2.5rem;
+    }
+
+    .preview {
+        margin: 120px auto 0;
+    }
+
+    /* BACK TO TOP */
+
+    #scrollToTopButton {
+        width: 100px;
+        height: 70px;
+        padding-top: 15px;
+        margin-top: 0px;
+    }
+}
+
+/* [xl] Extra large devices 1200px and up */
+@media (min-width: 1200px) {
+
+    /* BACK TO TOP */
+
+    .scrollButtonContainer {
+        width: 100px;
+        height: 70px;
+    }
+}
+
+/* [xxl] Extra extra large devices, 1400px and up */
+@media (min-width: 1400px) {}
