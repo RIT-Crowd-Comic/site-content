@@ -36,20 +36,17 @@ const Footer = () => {
                                 </div>
                             </Link>
                         </li>
-
-                        <li>
+                        {/* <li>
                             <Link href="">
                                 <div className="icondiv">
                                     <Image className="iconcolor" src={facebook} alt="Facebook" fill={true} />
                                 </div>
                             </Link>
-                        </li>
-
-
+                        </li> */}
                         <li>
-                            <Link href="">
+                            <Link href="https://github.com/RIT-Crowd-Comic">
                                 <div className="icondiv">
-                                    <Image className="iconcolor" src={github} alt="Github" fill={true} />
+                                    <Image className="iconcolor" src={github} alt="GitHub" fill={true} />
                                 </div>
                             </Link>
                         </li>
@@ -61,12 +58,9 @@ const Footer = () => {
                 <p className='copyright'>Copyright © {current_year}</p>
             </div>
             {/* Socials */}
-            <div className="row">
-
-            </div>
+            <div className="row"></div>
             {/* /Socials */}
             {/* </div> */}
-
         </div>
     )
 }
