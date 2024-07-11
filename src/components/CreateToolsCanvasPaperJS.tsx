@@ -430,15 +430,21 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     // --- SELECT TOOL ---
-    // Points describing the selected area's dimensions (start and end)
-    const [startSelectPoint, setStartSelectPoint] = useState(new paper.Point(0, 0));
-    const [endSelectPoint, setEndSelectPoint] = useState(new paper.Point(0, 0));
+    // String describing action user is doing (moving, resizing, rotating, etc.)
+    const [selectAction, setSelectAction] = useState("none");
+
+    //
+    const [startSelectPoint, setStartSelectPoint] = useState(new paper.Point(0,0))
+    const [endSelectPoint, setEndSelectPoint] = useState(new paper.Point(0,0))
 
     // Bounds of selected area of canvas
     let shownSelectedAreaBounds: paper.Path;
 
     // Selected area of rasterized canvas
     let selectedArea: paper.Raster;
+
+    //Selection info to be passed on to transform tool (shown bounds + selected area)
+    const [selectionInfo, setSelectionInfo] = useState([] as paper.Rectangle[]);
 
     // Boolean to check if user dragged mouse
     const [selectMouseDragged, setSelectMouseDragged] = useState(false);
@@ -458,9 +464,9 @@ const CreateToolsCanvasPaperJS = () => {
 
     //sets and draws the selected area bounds
     const drawSelectedArea = () => {
-        let shownSelectedAreaBounds = new paper.Path.Rectangle(startSelectPoint,endSelectPoint);
+        let shownSelectedAreaBounds = new paper.Path.Rectangle(startSelectPoint, endSelectPoint);
         shownSelectedAreaBounds.strokeColor = new paper.Color("black");
-        shownSelectedAreaBounds.strokeWidth = 4;
+        shownSelectedAreaBounds.strokeWidth = 2;
         shownSelectedAreaBounds.dashArray = [10, 10];
         shownSelectedAreaBounds.removeOnUp();
     }
@@ -499,96 +505,113 @@ const CreateToolsCanvasPaperJS = () => {
                     let rasterLT = raster.bounds.topLeft;
 
                     drawSelectedArea();
+                    setSelectionInfo(prevState => [...prevState, new paper.Rectangle(startSelectPoint,endSelectPoint)]);
 
                     //adjust points to correctly get selected area
-                    let pixelStartPoint = startSelectPoint.subtract(rasterLT)
-                    let pixelEndPoint = endSelectPoint.subtract(rasterLT)
-                    pixelStartPoint = pixelStartPoint.add(startSelectPoint);
-                    pixelEndPoint = pixelEndPoint.add(endSelectPoint);
+                    //gets wrong area
+                    let pixelStartPoint = startSelectPoint.add(startSelectPoint);
+                    let pixelEndPoint = endSelectPoint.add(endSelectPoint);
                     pixelStartPoint = pixelStartPoint.subtract(rasterLT);
                     pixelEndPoint = pixelEndPoint.subtract(rasterLT);
+                    
 
                     //gets the selected area of the rasterized canvas as a new raster item placed in the same place
-                    let selectedArea = raster.getSubRaster(new paper.Rectangle(pixelStartPoint, pixelEndPoint));
+                    let selectedArea = new paper.Rectangle(pixelStartPoint, pixelEndPoint);
+                    setSelectionInfo(prevState => [...prevState, selectedArea]);
 
                     //for testing purposes: shows selected area as a new raster displayed to the center of the screen
-                     //selectedArea.bringToFront();
-                     //var subData = selectedArea.toDataURL();
-                     //selectedArea.remove();
-                     //var subRaster = new paper.Raster(subData);
-                     //subRaster.position = paper.view.center;
+                    //selectedArea.bringToFront();
+                    //var subData = selectedArea.toDataURL();
+                    //selectedArea.remove();
+                    //var subRaster = new paper.Raster(subData);
+                    //subRaster.position = paper.view.center;
                 }
                 else {
                     setAreaSelected(false);
+                    setSelectionInfo([]);
                 }
             }
         }
         resetSelectStates();
     }
 
-    //TODO: 
-    //Transform tool will need a reference to the selected area. 
+    //TODO:
     //(note: selectedArea is not linked to original raster (subraster makes a new raster), 
     //so it may be necessary to rerender when transforming or delete original area of rasterized canvas?)
 
     // --- TRANSFORM TOOL ---
+    //tranform tool gets selected area information through selection info
+    
+    // Bounds of selected area of canvas
+    let transformAreaBounds: paper.Path;
+    let transformSelectedArea: paper.Raster;
+
     // String describing action user is doing (moving, resizing, rotating, etc.)
     const [transformAction, setTransformAction] = useState("none");
 
     // The Transform Tool:
     const [transformTool, setTransformTool] = useState<paper.Tool>(new paper.Tool());
 
-    transformTool.onMouseDown = function () {
-        // reference code
-        // for (let i = 0; i < elements.length; i++) {
-        //     //runs if clicked on the corners of an element (segments to check if clicked on rect, tolerance for precision)
-        //     if (elements[i].hitTest(event.point, { segments: true, tolerance: 7 })) {
-        //         setChangedElementIndex(i);
-        //         setSelectAction("resizing");
-        //         return;
-        //     }
-        //     //if clicked within element, sets the action to moving
-        //     else if (elements[i].contains(event.point)) {
-        //         setSelectAction("moving");
-        //         setChangedElementIndex(i);
-        //         return;
-        //     }
-        // }
+    transformTool.onMouseDown = function (event: paper.ToolEvent) {
+        if (areaSelected) {
+            //transform setup
+            //setup needs to happen when first activated (not in mousedown)
+            let raster = canvasProject.activeLayer.rasterize();
+            transformAreaBounds = new paper.Path.Rectangle(selectionInfo[0]);
+            transformAreaBounds.selected = true;
+            transformSelectedArea = raster.getSubRaster(selectionInfo[1]);
+            transformSelectedArea.selected = true;
+
+            //runs if corners of bounds are hit (segments to check if clicked on rect, tolerance for precision)
+            if (transformAreaBounds.hitTest(event.point, { segments: true, tolerance: 7 })) {
+                setTransformAction("resizing");
+                return;
+            }
+            else if (transformAreaBounds.contains(event.point)) {
+                setTransformAction("moving");
+                return;
+            }
+        }
     }
 
-    transformTool.onMouseDrag = function () {
-        // //element changes position to where the mouse is if action is moving
-        // if (selectAction == "moving") {
-        //     elements[changedElementIndex].position = event.point;
-        //     return;
-        // }
-        // else if (selectAction == 'resizing') {
-        //     //ERROR: GETS SAME POINT EVERY TIME
-        //     //gets opposing segment and point
-        //     let segmentIndex;
-        //     for (segmentIndex = 0; segmentIndex < elements[changedElementIndex].segments.length; segmentIndex++) {
-        //         let p = elements[changedElementIndex].segments[segmentIndex].point;
-        //         if (p.isClose(event.point, 3)) {
-        //             break;
-        //         }
-        //     }
-        //     let oppositeSegmentIndex = (segmentIndex + 2) % 4;
-        //     //let oppositePoint = elements[changedElementIndex].segments[oppositeSegmentIndex].point;
+    transformTool.onMouseDrag = function (event: paper.ToolEvent) {
+        if (areaSelected) {
+            //changes position of bounds & selected area if moving
+            if (transformAction == "moving") {
+                transformAreaBounds.position = event.point;
+                transformSelectedArea.position = event.point;
+                return;
+            }
+            else if (transformAction == "resizing") {
+                //should instead check against corners to see which is clicked and then set oppposite corner as 
+                //opposite point
+                //gets opposing segment and point
+                let segmentIndex;
+                for (segmentIndex = 0; segmentIndex < transformAreaBounds.segments.length; segmentIndex++) {
+                    let p = transformAreaBounds.segments[segmentIndex].point;
+                    if (p.isClose(event.point, 3)) {
+                        break;
+                    }
+                }
+                let oppositeSegmentIndex = (segmentIndex + 2) % 4;
+                //let oppositePoint = elements[changedElementIndex].segments[oppositeSegmentIndex].point;
+                let oppositePoint = new paper.Point(event.point.x - transformAreaBounds.bounds.width,
+                    event.point.y - transformAreaBounds.bounds.height);
 
-        //     let oppositePoint = new paper.Point(event.point.x-elements[changedElementIndex].bounds.width,
-        //         event.point.y - elements[changedElementIndex].bounds.height
-        //     );
+                //scales based on scale factor (new size/old size) and around the start point
+                shownSelectedAreaBounds.scale(
+                    (event.point.x - oppositePoint.x) / transformAreaBounds.bounds.width,
+                    (event.point.y - oppositePoint.y) / transformAreaBounds.bounds.height, oppositePoint);
 
-        //     //scales based on scale factor (new size/old size) and around the opposite point
-        //     elements[changedElementIndex].scale(
-        //         (event.point.x - oppositePoint.x) / elements[changedElementIndex].bounds.width,
-        //         (event.point.y - oppositePoint.y) / elements[changedElementIndex].bounds.height, oppositePoint);
-        //     return;
-        // }
+                //selectedArea.scale();
+                return;
+            }
+        }
     }
-
-    transformTool.onMouseUp = function () {
-
+    selectTool.onMouseUp = function () {
+        //resets select states
+        //setSelectAction("none");
+        //setChangedElementIndex(-1);
     }
 
     // *** FUNCTIONS ***
@@ -602,7 +625,6 @@ const CreateToolsCanvasPaperJS = () => {
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
             setShapeOptionsEnabled(false);
-            setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.ERASER) {
@@ -611,7 +633,6 @@ const CreateToolsCanvasPaperJS = () => {
             setEraserOptionsEnabled(true);
             setFillOptionsEnabled(false);
             setShapeOptionsEnabled(false);
-            setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.FILL) {
@@ -620,7 +641,6 @@ const CreateToolsCanvasPaperJS = () => {
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(true);
             setShapeOptionsEnabled(false);
-            setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.SHAPE) {
@@ -629,16 +649,6 @@ const CreateToolsCanvasPaperJS = () => {
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
             setShapeOptionsEnabled(true);
-            setTextOptionsEnabled(false);
-            setStickerOptionsEnabled(false);
-        }
-        else if (Number(buttonSelected?.value) == toolStates.TEXT) {
-            textTool.activate();
-            setPenOptionsEnabled(false);
-            setEraserOptionsEnabled(false);
-            setFillOptionsEnabled(false);
-            setShapeOptionsEnabled(false);
-            setTextOptionsEnabled(true);
             setStickerOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.STICKER) {
@@ -647,13 +657,20 @@ const CreateToolsCanvasPaperJS = () => {
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
             setShapeOptionsEnabled(false);
-            setTextOptionsEnabled(false);
             setStickerOptionsEnabled(true);
         }
-        //will need a way to deselect selection (ERROR WHEN CLEARING AS WELL AS SELECT SHOWING IN OTHER OPTIONS)
         else if (Number(buttonSelected?.value) == toolStates.SELECT) {
             selectTool.activate();
             setAreaSelected(false);
+            setSelectionInfo([]);
+            setPenOptionsEnabled(false);
+            setEraserOptionsEnabled(false);
+            setFillOptionsEnabled(false);
+            setShapeOptionsEnabled(false);
+            setStickerOptionsEnabled(false);
+        }
+        else if (Number(buttonSelected?.value) == toolStates.TRANSFORM) {
+            transformTool.activate();
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
@@ -661,7 +678,6 @@ const CreateToolsCanvasPaperJS = () => {
             setStickerOptionsEnabled(false);
         }
     }
-
     const changeLayer = () => {
         let layerSelected = document.querySelector("input[name='layers']:checked") as HTMLInputElement;
 
@@ -792,12 +808,12 @@ const CreateToolsCanvasPaperJS = () => {
 
                     <div id="selectTool">
                         <input type="radio" name="tools" id="select" value={toolStates.SELECT} onChange={findSelected} />
-                        <label htmlFor="select">Select (NOT FUNCTIONAL)</label>
+                        <label htmlFor="select">Select</label>
                     </div>
 
                     <div id="transformTool">
                         <input type="radio" name="tools" id="transform" value={toolStates.TRANSFORM} onChange={findSelected} />
-                        <label htmlFor="transform">Transform (NOT FUNCTIONAL)</label>
+                        <label htmlFor="transform">Transform (SEMI FUNCTIONAL)</label>
                     </div>
                 </div>
 
