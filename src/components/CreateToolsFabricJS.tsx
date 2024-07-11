@@ -87,23 +87,20 @@ const CreateToolsFabricJS = () => {
       
         return <canvas ref={canvasRef} />;*/
 
-    const canvasRef = useRef(null);
+    const backgroundCanvasRef = useRef(null);
+    const layer1CanvasRef = useRef(null);
     const [backgroundLayer, setBackgroundLayer] = useState<fabric.Canvas | null>(null);
     const [layer1, setLayer1] = useState<fabric.Canvas | null>(null);
 
     useEffect(() => {
-        if(canvasRef.current)
+        if(backgroundCanvasRef.current && layer1CanvasRef.current)
         {
-            const tempCanvas = new fabric.Canvas(canvasRef.current);
-            tempCanvas.backgroundColor = "white";
-            tempCanvas.requestRenderAll();
+            const backCanvas = new fabric.Canvas(backgroundCanvasRef.current);
+            backCanvas.backgroundColor = "white";
+            backCanvas.requestRenderAll();
 
-            setBackgroundLayer(tempCanvas);
-
-            //tempCanvas.backgroundColor = "rgba(0, 0, 0, 0)";
-
-            //const layer1Canvas = new fabric.Canvas(canvasRef.current);
-            //layer1Canvas.requestRenderAll();
+            const layer1Canvas = new fabric.Canvas(layer1CanvasRef.current);
+            layer1Canvas.requestRenderAll();
 
             /*const rect = new fabric.Rect({
                 left: 100,
@@ -114,11 +111,12 @@ const CreateToolsFabricJS = () => {
             });
 
             canvas.add(rect);*/
-            //setLayer1(layer1Canvas);
+            setBackgroundLayer(backCanvas);
+            setLayer1(layer1Canvas);
             
             return () => {
-                tempCanvas.dispose();
-                //layer1Canvas.dispose();
+                backCanvas.dispose();
+                layer1Canvas.dispose();
             }
         }
     }, [])
@@ -152,14 +150,16 @@ const CreateToolsFabricJS = () => {
             if(layer1)
             {   
                 layer1.add(rect);
+                //canvasBackTest.sendObjectBackwards(rect);
             }
         }
 
     return(
         <div>
-            <canvas width="1200" height="800" ref={canvasRef}/>
             <button onClick={addRect1}>Add Rectangle 1</button>
             <button onClick={addRect2}>Add Rectangle 2</button>
+            <canvas width="1200" height="800" ref={backgroundCanvasRef}/>
+            <canvas width="1200" height="800" ref={layer1CanvasRef}/>
         </div>
     )
 
