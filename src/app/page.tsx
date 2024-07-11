@@ -27,18 +27,18 @@ import thirdPanelImage from "../../public/comic-panels/third_panel.png";
 import Footer from "../components/footer"
 
 export default function Home() {
-   return (
+  return (
     <main className={styles.body}>
       <Hero />
       {/* <ScrollToTop /> */}
       <section className="h-100">
-      <div className="missionsec">
-        <div className="mission row">
-          <div className="col"></div>
-          <div className="col-auto">
-            <h2 className={styles.missionHeading}>Mission</h2>
+        <div className={styles.missionSec}>
+          <div className="mission row">
+            <div className="col"></div>
+            <div className="col-auto">
+              <h2 className={styles.missionHeading}>Mission</h2>
+            </div>
           </div>
-        </div>
           <div className={`${styles.missionImage} row card`}>
             <div className="card-img-overlay">
               <Image className={`${styles.bottomMission} card-img-top z-0`} src={bottomMission} alt="" />
@@ -53,20 +53,21 @@ export default function Home() {
               </p>
             </div>
           </div>
+        </div>
+        <div>
           <div className={`${styles.preview}`}>
             <Image className={`${styles.previewPanels} ${styles.panelOne}`} src={firstPanelImage} alt="" />
             <Image className={`${styles.previewPanels} ${styles.panelTwo}`} src={secondPanelImage} alt="" />
             <Image className={`${styles.previewPanels} ${styles.panelThree}`} src={thirdPanelImage} alt="" />
           </div>
           <div className="read-and-create">
-            <div className="read">
+            <div className={`${styles.readSec}`}>
               <div className="row">
                 <div className="col-auto">
                   <h2 className={`${styles.readHeading}`}>Read</h2>
                 </div>
                 <div className="col"></div>
               </div>
-            </div>
             <div className={`${styles.readImage} row card`}>
               <div className="card-img-overlay">
                 <Image className={`${styles.bottomRead} card-img-top`} src={bottomRead} alt="" />
@@ -82,7 +83,8 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className={`${styles.create}`}>
+            </div>
+            <div className={`${styles.createSec}`}>
               <div className="row">
                 <div className="col">
                 </div>
@@ -114,12 +116,12 @@ export default function Home() {
                 <div className="col-auto">
                   <div className={`${styles.getStarted}`}>
                     <div className={`${styles.bookAnimation}`}></div>
-                    <button className={`${styles.getStartedButton}`}><Link href="/comic">Get Started</Link></button>                
+                    <button className={`${styles.getStartedButton}`}><Link href="/comic">Get Started</Link></button>
                   </div>
                 </div>
                 <div className="col"></div>
-                </div>
               </div>
+            </div>
           </div>
         </div>
       </section>
@@ -127,11 +129,11 @@ export default function Home() {
         <button className="button"><Link href="/team" >Our Team</Link></button>
       </div>
       <div className={`${styles.backToTop}`}>
-      <Link className="arrowLink" href="#"><button type="button" className="arrowAnimation mb-6 mr-6 z-10 btn btn-lg my-8 " id={`${styles.scrollToTopButton}`}></button></Link>
+        <Link className="arrowLink" href="#"><button type="button" className="arrowAnimation mb-6 mr-6 z-10 btn btn-lg my-8 " id={`${styles.scrollToTopButton}`}></button></Link>
       </div>
-      <Footer/>
+      <Footer />
     </main >
-    
+
   );
 }
 
