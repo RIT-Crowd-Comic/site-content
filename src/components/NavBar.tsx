@@ -9,7 +9,7 @@ const NavBar = () => {
           <Image src="../images/logos/Crowd_Comic_Favicon_BW.svg" alt="Crowd Comic Favicon" width={78} height={46} />
         </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-          <Image src="../images/BurgerMenu.svg" alt="Crowd Comic Favicon" width={78} height={46} />
+          <Image src="/images/BurgerMenu.svg" alt="Crowd Comic Favicon" width={78} height={46} />
         </button>
         <div className="offcanvas offcanvas-end w-50" tabIndex={-1} id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
           <div className="offcanvas-header">
@@ -22,7 +22,7 @@ const NavBar = () => {
                 <Link className="nav-link" id="homeLink" aria-current="page" href="/">Home</Link>
               </li>
               <li className="nav-item ps-4">
-                <Link className="nav-link" id="teamLink" href="../team">Team</Link>
+                <Link className="nav-link" id="teamLink" href="/team">Team</Link>
               </li>
               <li className="nav-item ps-4">
                 <Link className="nav-link" id="comicLink" href="/comic">Comic</Link>

@@ -1,12 +1,24 @@
 /* LOGIN */
 
-body
+.body
 {
     height: 100vh;
     margin: 0;
+
+    width: 100%;
+    font-family: var(--font-back-issues);
+    background-color: #2d2d2d;
+    max-width: 100%;
+    padding-right: 0 !important;
+    overflow: none;
+    background-image: radial-gradient(circle at center,
+    #414141 0.15rem,
+            transparent 0), radial-gradient(circle at center, #414141 0.15rem, transparent 0);
+    background-size: 1.3rem 1.3rem;
+    background-position: 0 0, 0.65rem 0.65rem;
 }
 
-h1
+.h1
 {
     font-style: normal;
 
@@ -17,7 +29,7 @@ h1
     margin-top: 10px;
 }
 
-.footer-bar, .navbar
+.navbar
 {
     display: none;
 }
@@ -30,6 +42,8 @@ h1
     top: 0;
 
     height: 100%;
+
+    overflow: none;
 }
 
 #loginForm
@@ -48,22 +62,6 @@ h1
 {
     width: auto;
     margin: 0 0;
-}
-
-.form-control
-{
-    margin: 0;
-    max-width: 300px;
-
-    border-radius: 6px;
-    border: solid 3px #000000;
-}
-
-.form-control:focus
-{
-    outline: none;
-    border-color: #ffffff;
-    box-shadow: 0 0 3px #ffffff;
 }
 
 #loginButton, #registerButton
@@ -115,19 +113,14 @@ h1
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
 
-    .formInputs, h1
+    .formInputs, .h1
     {
         margin: 0 10px;
 
         text-align: left;
     }
-    
-    .form-control
-    {
-        margin: 0;
-    }
 
-    h1
+    .h1
     {
         color: black;
         margin-bottom: 40px;
