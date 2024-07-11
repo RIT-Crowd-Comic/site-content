@@ -246,11 +246,9 @@ const CreateToolsCanvasPaperJS = () => {
     const [shapeTool, setShapeTool] = useState<paper.Tool>(new paper.Tool());
     shapeTool.minDistance = 2;
 
-    function drawShape(shapePath: paper.Path)
-    {
+    function drawShape(shapePath: paper.Path) {
         // Discern which shape the user has chosen and create a path that matches
-        if(shapeSelected == shapeStates.RECTANGLE)
-        {
+        if (shapeSelected == shapeStates.RECTANGLE) {
             shapePath = new paper.Path.Rectangle(startPoint, endPoint);
 
         }
@@ -314,7 +312,7 @@ const CreateToolsCanvasPaperJS = () => {
     // --- TEXT TOOL ---
     // Boolean used to determine if the text tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
     const [textOptionsEnabled, setTextOptionsEnabled] = useState<boolean>(false);
-    
+
     // String that determines what text is printed to the layer
     const [textContent, setTextContent] = useState<string>("Hello World!");
 
@@ -338,7 +336,7 @@ const CreateToolsCanvasPaperJS = () => {
 
     // The Text Tool:
     const [textTool, setTextTool] = useState<paper.Tool>(new paper.Tool());
-    let textPath : paper.PointText;
+    let textPath: paper.PointText;
     //let textToolTyperReference = useRef<HTMLTextAreaElement | null>(null);
 
     // Boolean that determines what state writing is in.  On first click, the user can continue typing into the textArea.  On second click it draws the content to the layer
@@ -347,9 +345,8 @@ const CreateToolsCanvasPaperJS = () => {
     // Point to draw the text starting at
 
 
-    textTool.onMouseDown = function(event: paper.ToolEvent) {
-        if(!isWriting)
-        {
+    textTool.onMouseDown = function (event: paper.ToolEvent) {
+        if (!isWriting) {
             // Start the process of writing
             setIsWriting(true);
 
@@ -369,8 +366,7 @@ const CreateToolsCanvasPaperJS = () => {
             // Add the textArea to the DOM
             //  document.body.appendChild(textTyper);
         }
-        else
-        {
+        else {
             // Set the textContent to what the user has written in the textArea
 
 
@@ -434,8 +430,8 @@ const CreateToolsCanvasPaperJS = () => {
     const [selectAction, setSelectAction] = useState("none");
 
     //
-    const [startSelectPoint, setStartSelectPoint] = useState(new paper.Point(0,0))
-    const [endSelectPoint, setEndSelectPoint] = useState(new paper.Point(0,0))
+    const [startSelectPoint, setStartSelectPoint] = useState(new paper.Point(0, 0))
+    const [endSelectPoint, setEndSelectPoint] = useState(new paper.Point(0, 0))
 
     // Bounds of selected area of canvas
     let shownSelectedAreaBounds: paper.Path;
@@ -445,12 +441,16 @@ const CreateToolsCanvasPaperJS = () => {
 
     //Selection info to be passed on to transform tool (shown bounds + selected area)
     const [selectionInfo, setSelectionInfo] = useState([] as paper.Rectangle[]);
-
+    const [rasterInfo, setRasterInfo] = useState([] as paper.Raster[]);
+    
     // Boolean to check if user dragged mouse
     const [selectMouseDragged, setSelectMouseDragged] = useState(false);
 
     // Boolean to check if user has already selected an area
     const [areaSelected, setAreaSelected] = useState(false);
+
+    const [width, setWidth] = useState(0);
+    const [height, setHeight] = useState(0);
 
     // The Select Tool:
     const [selectTool, setSelectTool] = useState<paper.Tool>(new paper.Tool());
@@ -465,6 +465,8 @@ const CreateToolsCanvasPaperJS = () => {
     //sets and draws the selected area bounds
     const drawSelectedArea = () => {
         let shownSelectedAreaBounds = new paper.Path.Rectangle(startSelectPoint, endSelectPoint);
+        setWidth(shownSelectedAreaBounds.bounds.width);
+        setHeight(shownSelectedAreaBounds.bounds.height);
         shownSelectedAreaBounds.strokeColor = new paper.Color("black");
         shownSelectedAreaBounds.strokeWidth = 2;
         shownSelectedAreaBounds.dashArray = [10, 10];
@@ -500,31 +502,27 @@ const CreateToolsCanvasPaperJS = () => {
             if (selectMouseDragged) {
                 //only gets selected area if layer is not empty
                 if (!canvasProject.activeLayer.isEmpty()) {
-                    //temp layer rasterize for selection (get reference to rasterized layer instead once that is done)
-                    let raster = canvasProject.activeLayer.rasterize();
-                    let rasterLT = raster.bounds.topLeft;
+                    let rasterLT = rasterInfo[0].bounds.topLeft;
+                    console.log(rasterLT);
 
                     drawSelectedArea();
-                    setSelectionInfo(prevState => [...prevState, new paper.Rectangle(startSelectPoint,endSelectPoint)]);
+                    setSelectionInfo(prevState => [...prevState, new paper.Rectangle(startSelectPoint, endSelectPoint)]);
 
                     //adjust points to correctly get selected area
                     //gets wrong area
-                    let pixelStartPoint = startSelectPoint.add(startSelectPoint);
-                    let pixelEndPoint = endSelectPoint.add(endSelectPoint);
-                    pixelStartPoint = pixelStartPoint.subtract(rasterLT);
-                    pixelEndPoint = pixelEndPoint.subtract(rasterLT);
-                    
+                    console.log("REGULAR START: " + startSelectPoint);
+                    console.log("REGULAR END: " + endSelectPoint);
+
+                    //makes selection same size as bounds box
+                    let pixelStartPoint = startSelectPoint.subtract(rasterLT).multiply(2);
+                    let pixelEndPoint = endSelectPoint.subtract(rasterLT).multiply(2);
+
+                    console.log("Pixel START: " + pixelStartPoint);
+                    console.log("PIXEL END: " + pixelEndPoint);
 
                     //gets the selected area of the rasterized canvas as a new raster item placed in the same place
                     let selectedArea = new paper.Rectangle(pixelStartPoint, pixelEndPoint);
                     setSelectionInfo(prevState => [...prevState, selectedArea]);
-
-                    //for testing purposes: shows selected area as a new raster displayed to the center of the screen
-                    //selectedArea.bringToFront();
-                    //var subData = selectedArea.toDataURL();
-                    //selectedArea.remove();
-                    //var subRaster = new paper.Raster(subData);
-                    //subRaster.position = paper.view.center;
                 }
                 else {
                     setAreaSelected(false);
@@ -540,8 +538,8 @@ const CreateToolsCanvasPaperJS = () => {
     //so it may be necessary to rerender when transforming or delete original area of rasterized canvas?)
 
     // --- TRANSFORM TOOL ---
-    //tranform tool gets selected area information through selection info
-    
+    //tranform tool gets selected area information through selection info and raster info 
+
     // Bounds of selected area of canvas
     let transformAreaBounds: paper.Path;
     let transformSelectedArea: paper.Raster;
@@ -556,10 +554,9 @@ const CreateToolsCanvasPaperJS = () => {
         if (areaSelected) {
             //transform setup
             //setup needs to happen when first activated (not in mousedown)
-            let raster = canvasProject.activeLayer.rasterize();
             transformAreaBounds = new paper.Path.Rectangle(selectionInfo[0]);
             transformAreaBounds.selected = true;
-            transformSelectedArea = raster.getSubRaster(selectionInfo[1]);
+            transformSelectedArea = rasterInfo[0].getSubRaster(selectionInfo[1]);
             transformSelectedArea.selected = true;
 
             //runs if corners of bounds are hit (segments to check if clicked on rect, tolerance for precision)
@@ -567,6 +564,7 @@ const CreateToolsCanvasPaperJS = () => {
                 setTransformAction("resizing");
                 return;
             }
+            //runs if mouse hits area inside selection
             else if (transformAreaBounds.contains(event.point)) {
                 setTransformAction("moving");
                 return;
@@ -582,33 +580,33 @@ const CreateToolsCanvasPaperJS = () => {
                 transformSelectedArea.position = event.point;
                 return;
             }
-            else if (transformAction == "resizing") {
-                //should instead check against corners to see which is clicked and then set oppposite corner as 
-                //opposite point
-                //gets opposing segment and point
-                let segmentIndex;
-                for (segmentIndex = 0; segmentIndex < transformAreaBounds.segments.length; segmentIndex++) {
-                    let p = transformAreaBounds.segments[segmentIndex].point;
-                    if (p.isClose(event.point, 3)) {
-                        break;
-                    }
-                }
-                let oppositeSegmentIndex = (segmentIndex + 2) % 4;
-                //let oppositePoint = elements[changedElementIndex].segments[oppositeSegmentIndex].point;
-                let oppositePoint = new paper.Point(event.point.x - transformAreaBounds.bounds.width,
-                    event.point.y - transformAreaBounds.bounds.height);
+            // else if (transformAction == "resizing") {
+            //     //should instead check against corners to see which is clicked and then set oppposite corner as 
+            //     //opposite point
+            //     //gets opposing segment and point
+            //     let segmentIndex;
+            //     for (segmentIndex = 0; segmentIndex < transformAreaBounds.segments.length; segmentIndex++) {
+            //         let p = transformAreaBounds.segments[segmentIndex].point;
+            //         if (p.isClose(event.point, 3)) {
+            //             break;
+            //         }
+            //     }
+            //     let oppositeSegmentIndex = (segmentIndex + 2) % 4;
+            //     //let oppositePoint = elements[changedElementIndex].segments[oppositeSegmentIndex].point;
+            //     let oppositePoint = new paper.Point(event.point.x - transformAreaBounds.bounds.width,
+            //         event.point.y - transformAreaBounds.bounds.height);
 
-                //scales based on scale factor (new size/old size) and around the start point
-                shownSelectedAreaBounds.scale(
-                    (event.point.x - oppositePoint.x) / transformAreaBounds.bounds.width,
-                    (event.point.y - oppositePoint.y) / transformAreaBounds.bounds.height, oppositePoint);
+            //     //scales based on scale factor (new size/old size) and around the start point
+            //     shownSelectedAreaBounds.scale(
+            //         (event.point.x - oppositePoint.x) / transformAreaBounds.bounds.width,
+            //         (event.point.y - oppositePoint.y) / transformAreaBounds.bounds.height, oppositePoint);
 
-                //selectedArea.scale();
-                return;
-            }
+            //     //selectedArea.scale();
+            //     return;
+            // }
         }
     }
-    selectTool.onMouseUp = function () {
+    transformTool.onMouseUp = function () {
         //resets select states
         //setSelectAction("none");
         //setChangedElementIndex(-1);
@@ -659,7 +657,11 @@ const CreateToolsCanvasPaperJS = () => {
             setShapeOptionsEnabled(false);
             setStickerOptionsEnabled(true);
         }
+        //rasterize active canvas layer when clicked and set const as it 
         else if (Number(buttonSelected?.value) == toolStates.SELECT) {
+            //temp layer rasterize for selection (get reference to rasterized layer instead once that is done)
+            let raster = canvasProject.activeLayer.rasterize();
+            setRasterInfo(prevState => [...prevState,raster]);
             selectTool.activate();
             setAreaSelected(false);
             setSelectionInfo([]);
@@ -838,16 +840,16 @@ const CreateToolsCanvasPaperJS = () => {
                 </div>
             </fieldset>
 
-            <canvas id={`${styles.canvas}`} height="800px" width="1200px" ref={canvasReference} className={`${styles.canvas}`}/>
+            <canvas id={`${styles.canvas}`} height="800px" width="1200px" ref={canvasReference} className={`${styles.canvas}`} />
 
             <div id={`${styles.toolOptions}`}>
                 <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor} />
                 <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize} />
                 <FillOptions enabled={fillOptionsEnabled} changeFillColor={setFillColor} />
-                <ShapeOptions enabled={shapeOptionsEnabled} shapeBorderSize={shapeBorderWidth} changeShapeBorderSize={setShapeBorderWidth} 
-                    changeShapeBorderColor={setShapeBorderColor} changeShapeFillColor={setShapeFillColor} changeShape={setShapeSelected} 
-                    changeDashedBorder={setDashedBorder}/>
-                <TextOptions enabled={textOptionsEnabled} changeTextContent={setTextContent} changeTextFont={setTextFont} changeTextSize={setTextSize} 
+                <ShapeOptions enabled={shapeOptionsEnabled} shapeBorderSize={shapeBorderWidth} changeShapeBorderSize={setShapeBorderWidth}
+                    changeShapeBorderColor={setShapeBorderColor} changeShapeFillColor={setShapeFillColor} changeShape={setShapeSelected}
+                    changeDashedBorder={setDashedBorder} />
+                <TextOptions enabled={textOptionsEnabled} changeTextContent={setTextContent} changeTextFont={setTextFont} changeTextSize={setTextSize}
                     changeFontWeight={setTextFontWeight} changeTextAlignment={setTextAllign} changeTextColor={setTextColor} />
                 <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
             </div>
@@ -886,7 +888,7 @@ const CreateToolsCanvasPaperJS = () => {
                 <div id="backgroundLayer">
                     <div id="backgroundLayerSelect">
                         <input type="radio" name="layers" id="background" value='0' onChange={changeLayer} />
-                        <label htmlFor="background">Background</label><br/>
+                        <label htmlFor="background">Background</label><br />
                     </div>
                     <div id="backgroundLayerVisibility">
                         <input type="checkbox" id="backgroundToggle" value="0" onChange={toggleLayerVisibility} defaultChecked></input>
