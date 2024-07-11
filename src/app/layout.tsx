@@ -58,7 +58,7 @@ const comicNeue = Comic_Neue({
 export const metadata: Metadata = {
   title: "Crowd Comic",
   description: "Collaborate Comic Creation",
-  icons: "../images/logos/Crowd_Comic_Favicon_BW.sv"
+  icons: "../images/icons/Favicon_BW.ico"
 };
 
 export default function RootLayout({
