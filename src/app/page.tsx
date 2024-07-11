@@ -17,7 +17,7 @@ import desktopRightMission from "../../public/images/background-boxes/bw/Desktop
 import desktopRead from "../../public/images/background-boxes/bw/Desktop_Read_BW.svg"
 import desktopCreate from "../../public/images/background-boxes/bw/Desktop_Create_BW.svg"
 
-import arrow from "../../public/images/Arrow.gif"
+// import arrow from "../../public/images/GIFs/Arrow.gif"
 
 // For the "preview comic" section
 import firstPanelImage from "../../public/comic-panels/first_panel.png";
