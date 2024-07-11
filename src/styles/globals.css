@@ -112,15 +112,14 @@ a {
     padding: 6px;
 }
 
-.footer-nav-list a,
+.footer-nav-list li,
 .footer-nav a {
     text-decoration: none;
-    /* color: var(--secondary-color); */
     color: var(--grayscale-text-bg-color);
-
+    padding: 5px;
 }
 
-.footer-nav-list a:hover,
+.footer-nav-list li:hover,
 .footer-nav a:hover {
     color: var(--grayscale-primary-color);
 }
