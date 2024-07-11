@@ -13,6 +13,14 @@
 
 /* FILTER */
 
+.filterOpt{
+    display: flex;
+    position: relative;
+    flex:100%;
+    width: 90%;
+    margin: 0 auto;
+}
+
 .filter {
     font-size: 18px;
     font-weight: 700;
@@ -21,22 +29,33 @@
     justify-content: center;
     text-align: center;
     border-color: var(--grayscale-text-color);
+
+    margin: 1.5rem;
 }
 
 .accordionButton{
     border-radius: 5px 5px 0 0;
+    background-color: #636363;
+
+    width: 100%;
+
+    outline: none;
+    box-shadow: none;
 }
 
 .accordionButton:hover {
-    color: var(--grayscale-text-bg-color);
-    background-color: var(--grayscale-text-color);
-    border: 2px solid var(--grayscale-text-bg-color);
+    outline: none;
+    box-shadow: none;
 }
 
 .accordionBody {
     background-color: var(--grayscale-background-color);
     border-radius: 0 0 5px 5px;
     font-size: 14px;
+
+    width: 80vw;
+    max-width: none;
+    padding: 0 0 10px;
 }
 
 .clearAll {
@@ -47,14 +66,12 @@
     color: var(--grayscale-primary-color);
 }
 
-.formControl,
 .formSelect {
     background-color: var(--grayscale-primary-color);
     color: var(--grayscale-text-color);
-}
 
-.formControl {
-    border-radius: 8px 0 0 8px;
+    height: 100%;
+    margin: 0;
 }
 
 .formSelect option {
@@ -66,18 +83,7 @@
     display: flex;
     flex-wrap: nowrap;
     align-items: stretch;
-    width: 100%;
 }
-
-.searchbar{
-    border: 1px solid var(--grayscale-text-color);
-    border-radius: 0 5px 5px 0;
-}
-
-/* .searchbar:hover{
-    background-color: var(--grayscale-primary-color);
-    border-radius: 0 5px 5px 0;
-} */
 
 /* TEAM PANELS */
 
@@ -132,7 +138,7 @@
 
 .portrait {
     filter: grayscale(1);
-    border: #000000 1px solid;
+    border: #000000 2px solid;
 }
 
 .overlayImg
@@ -147,6 +153,82 @@
     transition: .3s ease-out;
 }
 
+/* FILTER */
+
+.accordionButton:hover {
+    color: var(--grayscale-text-bg-color);
+    background-color:  #636363;
+} 
+
+.accordionBody {
+    background-color: var(--grayscale-background-color);
+}
+
+.clearAll {
+    color: var(--grayscale-text-bg-color);
+}
+
+.clearAll:hover {
+    color: var(--grayscale-primary-color);
+}
+
+.formSelect {
+    background-color: white;
+    color: var(--grayscale-text-color);
+
+    height: auto;
+
+    max-width: 100%;
+}
+
+/* SEARCH BUTTON */
+
+.formControl
+{
+    padding: 0 0 0 5px;
+    width: 100%;
+    max-width: none;
+
+    border-radius: 6px 0 0 6px;
+}
+
+.searchButton
+{
+    width: 40px;
+    height: 100%;
+
+    background-color: white;
+
+    border: solid 3px #000000;
+}
+
+.searchBox 
+{
+    height: 100%;
+    border-radius: 0;
+    width: 100%;
+}
+
+.searchButton:focus, .searchButton:active,.searchButton:hover
+{
+    outline: none;
+    border-color: #ffffff;
+    box-shadow: 0 0 3px #ffffff;
+    background-color: #ffffff;
+}
+
+/* DROPDOWN OPTIONS */
+
+.optionStyle
+{
+    background-color: var(--grayscale-text-bg-color);
+}
+
+.optionStyle:checked, .optionStyle:hover, .optionStyle:focus
+{
+    background-color: gray;
+}
+
 /* LAYOUT */
 .chapterTitle {
     font-family: var(--font-back-issues);
@@ -156,7 +238,8 @@
 }
 
 .creatorGroup {
-    border: 2px solid var(--grayscale-primary-color);
+    border: 3px solid var(--grayscale-primary-color);
+    border-radius: 6px;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -269,55 +352,57 @@
 /* No media query for `xs` since this is the default in Bootstrap */
 
 @media (max-width: 420px) {
-    .formControl, .formSelect{
-        width: 100%;
-    }
+
 }
 
 /* [sm] Small devices, 576px and up */
-@media (min-width: 576px) {}
+@media (min-width: 576px) {
+
+}
 
 @media (min-width: 768px) {
+    .formSelect {
+        background-color: white;
+        color: var(--grayscale-text-color);
+    
+        height: auto;
+    
+        max-width: 25%;
+    }
+}
+
+/* [lg] Large desktops, 992px and up */
+@media (min-width: 992px) 
+{
+    #scrollToTopButton {
+        width: 100px;
+        height: 70px;
+        padding-top: 15px;
+        margin-top: 0px;
+    }
 
     /* Filter */
     .filterOpt{
         display: flex;
         position: relative;
         flex:100%;
+        width: 80%;
+        margin: 0 auto;
     }
 
-    .formControl {
-        max-width: 290px;
+    #search-button {
+        width: 40px;
+        height: 30px;
     }
 
-    .inputGroup{
-        flex: 55%;
+    .formSelect {
+        background-color: white;
+        color: var(--grayscale-text-color);
+    
+        height: auto;
+    
+        max-width: 30%;
     }
-
-    .role{
-        flex: 25%;
-    } 
-
-    .year{
-        flex: 20%;
-    }
-}
-
-/* [lg] Large desktops, 992px and up */
-@media (min-width: 992px) {
-
-    /* Filter */
-    .formControl {
-        max-width: 330px;
-    }
-
-    .inputGroup{
-        flex: 50%;
-    }
-
-    .role, .year{
-        flex:25%;
-    } 
 }
 
 /* [xl] Extra large devices 1200px and up */

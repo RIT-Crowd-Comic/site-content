@@ -150,7 +150,7 @@ a {
 }
 
 /* FORMS */
-.form-control
+.form-control, .form-select
 {
     margin: 0;
     max-width: 300px;
@@ -159,11 +159,50 @@ a {
     border: solid 3px #000000;
 }
 
-.form-control:focus
+.accordion-item
+{
+    border-radius: 6px;
+    border: solid 3px #000000;
+
+    background-color: black;
+}
+
+.form-control:focus, .team-form:focus, .form-select:focus
 {
     outline: none;
     border-color: #ffffff;
     box-shadow: 0 0 3px #ffffff;
+    background-color: white;
+}
+
+.accordion-body
+{
+    width: 100%;
+    margin: 0;
+}
+
+.input-group
+{
+    flex-wrap: nowrap !important;
+}
+
+.form-select:focus
+{
+    background-color: white;
+    color: black;
+}
+
+.accordion-button
+{
+    color: white;
+    filter: grayscale(1);
+    border-bottom: 3px solid black !important;
+}
+
+.accordion-button:hover, .accordion-button:focus
+{
+    outline: none;
+    box-shadow: none;
 }
 
 /* [xs] Extra small devices, less than 576px) */
