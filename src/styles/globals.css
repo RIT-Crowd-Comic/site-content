@@ -21,6 +21,10 @@
          */
 }
 
+body {
+    overflow: auto !important;
+}
+
 .card {
     --bs-card-bg: transparent;
     border: none;
