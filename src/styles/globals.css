@@ -69,7 +69,6 @@ a {
     justify-content: space-between;
     flex-flow: row wrap;
     z-index: 5;
-
     filter: grayscale(1);
 }
 
@@ -97,13 +96,12 @@ a {
 }
 
 .social-div {
-    flex-basis: 50%;
+    justify-content: flex-start;
 }
 
 .social {
     justify-content: space-between;
     text-align: right;
-    margin-bottom: 15px;
     padding: 10px;
 }
 
@@ -128,6 +126,7 @@ a {
     position: relative;
     width: 25px;
     height: 25px;
+    text-align: start;
 }
 
 .icondiv:hover {
@@ -140,12 +139,13 @@ a {
     /* Yellow icons ^ */
 }
 
-.copyright {
+.copyright-div {
     font-family: var(--font-back-issues);
     color: var(--grayscale-primary-color);
     font-size: medium;
-    text-align: center;
-    margin: 0;
+    flex-basis: 100%;
+    text-align: left;
+    margin-left: 10px;
 }
 
 /* FORMS */
@@ -153,7 +153,6 @@ a {
 {
     margin: 0;
     max-width: 300px;
-
     border-radius: 6px;
     border: solid 3px #000000;
 }
@@ -221,10 +220,9 @@ a {
     }
 
     .copyright-div {
-        transform: translateY(-75%);
         flex-basis: 100%;
         text-align: center;
-        margin-bottom: 10px;
+        margin: 0;
     }
 
     .social-div {
@@ -233,8 +231,6 @@ a {
 
     .social {
         text-align: right;
-        margin-bottom: 0;
-        padding: 0;
     }
 
     .footer-nav {
@@ -243,7 +239,7 @@ a {
 
     .footer-nav-list {
       margin: 0;
-  }
+    }
 
     #scroll-text {
         font-size: 1.2rem;
