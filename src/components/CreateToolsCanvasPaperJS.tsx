@@ -148,7 +148,10 @@ const CreateToolsCanvasPaperJS = () => {
     // mouseUp: renders path on shading layer
     shadingTool.onMouseUp = function(event: paper.ToolEvent)
     {
-        var temp = new paper.CompoundPath(clipPath);
+        var temp;
+        if (clipPath) { 
+            temp = new paper.CompoundPath(clipPath); 
+        }
         var eRadius = (shadeSize * view.pixelRatio) / 4;
         var deleteShape;
 
