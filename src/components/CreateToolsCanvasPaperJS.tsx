@@ -535,7 +535,6 @@ const CreateToolsCanvasPaperJS = () => {
             setRasterInfo(existingItems => {
                 //return existingItems.slice(0, existingItems.length - 1)
                 return existingItems.filter((item, i) => i !== existingItems.length - 1);
-                setIsTransforming(false);
             })
         }
     }
@@ -576,11 +575,15 @@ Destination-out: Existing content is kept where it does not overlap with the new
                 setTransformInfo([tempTransformAreaBounds]);
                 let tempTransformSelectedArea = rasterInfo[0].getSubRaster(selectionInfo[1]);
                 setRasterInfo(prevState => [...prevState, tempTransformSelectedArea]);
+                //remove raster from active layer
 
                 clearAreaSelected(tempTransformAreaBounds);
 
+                //readd raster to active layer
+
                 //for first time transforming only
                 if (tempTransformAreaBounds.contains(event.point)) {
+                    console.log("runs")
                     setTransformAction("moving");
                     return;
                 }
