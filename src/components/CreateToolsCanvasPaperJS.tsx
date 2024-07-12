@@ -571,19 +571,19 @@ Destination-out: Existing content is kept where it does not overlap with the new
         if (areaSelected && canvasProject.activeLayer.locked == false) {
             //sets up needed variables for raster moving on first time transforming
             if (!isTranforming && areaSelected) {
+                //add original vars separate from temp???
                 let tempTransformAreaBounds = new paper.Path.Rectangle(selectionInfo[0]);
                 setTransformInfo([tempTransformAreaBounds]);
-                let tempTransformSelectedArea = rasterInfo[0].getSubRaster(selectionInfo[1]);
-                setRasterInfo(prevState => [...prevState, tempTransformSelectedArea]);
-                //remove raster from active layer
 
+                //remove raster from active layer
+                //tempTransformSelectedArea.remove();
                 clearAreaSelected(tempTransformAreaBounds);
 
-                //readd raster to active layer
+                let tempTransformSelectedArea = rasterInfo[0].getSubRaster(selectionInfo[1]);
+                setRasterInfo(prevState => [...prevState, tempTransformSelectedArea]);
 
                 //for first time transforming only
                 if (tempTransformAreaBounds.contains(event.point)) {
-                    console.log("runs")
                     setTransformAction("moving");
                     return;
                 }
@@ -608,6 +608,8 @@ Destination-out: Existing content is kept where it does not overlap with the new
             if (transformAction == "moving") {
                 setIsTransforming(true);
                 transformInfo[0].position = event.point;
+                
+                //not null but not showing
                 rasterInfo[1].position = event.point;
                 rasterInfo[1].selected = true;
                 return;
@@ -644,11 +646,6 @@ Destination-out: Existing content is kept where it does not overlap with the new
             setTransformAction("none");
         }
     }
-
-    useEffect(() => {
-    console.log("TRANSFORM BOUNDS: " + transformInfo[0]);
-    console.log("RASTER INFO: " + rasterInfo[1]);
-    }, [transformInfo, rasterInfo]);
 
     // *** FUNCTIONS ***
     // Find which radioButton is currently selected and update the state of the tool selected
