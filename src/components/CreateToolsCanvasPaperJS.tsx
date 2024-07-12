@@ -275,7 +275,7 @@ const CreateToolsCanvasPaperJS = () => {
 
     // --- SHAPE TOOL ---
     // Boolean used to determine if the shape tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
-    const [shapeOptionsEnabled, setshapeOptionsEnabled] = useState<boolean>(false);
+    const [shapeOptionsEnabled, setShapeOptionsEnabled] = useState<boolean>(false);
 
     // String used to specify the color of the shapes border and fill
     const [shapeBorderColor, setShapeBorderColor] = useState<string>("black");
@@ -504,7 +504,7 @@ const CreateToolsCanvasPaperJS = () => {
             setPenOptionsEnabled(true);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
-            setshapeOptionsEnabled(false);
+            setShapeOptionsEnabled(false);
             setStickerOptionsEnabled(false);
             setShadeOptionsEnabled(false);
         }
@@ -513,7 +513,7 @@ const CreateToolsCanvasPaperJS = () => {
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(true);
             setFillOptionsEnabled(false);
-            setshapeOptionsEnabled(false);
+            setShapeOptionsEnabled(false);
             setStickerOptionsEnabled(false);
             setShadeOptionsEnabled(false);
         }
@@ -522,7 +522,7 @@ const CreateToolsCanvasPaperJS = () => {
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(true);
-            setshapeOptionsEnabled(false);
+            setShapeOptionsEnabled(false);
             setStickerOptionsEnabled(false);
             setShadeOptionsEnabled(false);
         }
@@ -531,7 +531,7 @@ const CreateToolsCanvasPaperJS = () => {
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
-            setshapeOptionsEnabled(true);
+            setShapeOptionsEnabled(true);
             setStickerOptionsEnabled(false);
             setShadeOptionsEnabled(false);
         }
@@ -540,7 +540,7 @@ const CreateToolsCanvasPaperJS = () => {
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
-            setshapeOptionsEnabled(false);
+            setShapeOptionsEnabled(false);
             setStickerOptionsEnabled(true);
             setShadeOptionsEnabled(false);
         }
@@ -550,7 +550,7 @@ const CreateToolsCanvasPaperJS = () => {
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
-            setshapeOptionsEnabled(false);
+            setShapeOptionsEnabled(false);
             setStickerOptionsEnabled(false);
             setShadeOptionsEnabled(true);
         }
