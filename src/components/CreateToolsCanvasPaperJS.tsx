@@ -564,8 +564,6 @@ const CreateToolsCanvasPaperJS = () => {
             // }
             //runs if mouse hits area inside selection
             if (transformInfo[0].contains(event.point)) {
-                //needs to solve selection moving even  when transformed area is not clicked
-                //(solving this also requires solving issue with transforminfo not updating)
                 setTransformAction("moving");
                 return;
             }
@@ -585,7 +583,7 @@ const CreateToolsCanvasPaperJS = () => {
             //changes position of selected area if moving
             if (transformAction == "moving") {
                 setIsTransforming(true);
-                //transformAreaBounds.position = event.point;
+                transformInfo[0].position = event.point;
                 rasterInfo[1].position = event.point;
                 rasterInfo[1].selected = true;
                 return;
@@ -617,6 +615,8 @@ const CreateToolsCanvasPaperJS = () => {
         }
     }
     transformTool.onMouseUp = function () {
+        //resets transform action
+        setTransformAction("none");
     }
 
     // *** FUNCTIONS ***
