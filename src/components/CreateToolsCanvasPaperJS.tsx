@@ -115,6 +115,7 @@ const CreateToolsCanvasPaperJS = () => {
 
 
      // *** SHADING TOOL ***
+     // This tool creates a comic-styled shading effect on a separate layer to everything else to avoid overlaps. 
      const [shadeOptionsEnabled, setShadeOptionsEnabled] = useState<boolean>(false);
      const [shadeSize, setShadeSize] = useState<number>(10);
 
@@ -134,9 +135,6 @@ const CreateToolsCanvasPaperJS = () => {
         clipPath.strokeColor = new paper.Color('pink');
         clipPath.strokeWidth = shadeSize;
         clipPath.strokeCap = 'round';
-        //clipPath.strokeJoin = 'round';
-        //clipPath.clipMask = true;
-
        
           
     }
@@ -180,11 +178,7 @@ const CreateToolsCanvasPaperJS = () => {
 
         //remove preview clip path
         clipPath?.remove;
-        //deleteShape.clipMask = true;
         //switch back to old layer
-        
-        //canvasProject.activeLayer.rasterize({resolution:300});
-        //mask.remove();
         changeLayer();
     }
     // --- ERASER TOOL ---
