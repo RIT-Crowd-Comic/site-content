@@ -515,10 +515,6 @@ const CreateToolsCanvasPaperJS = () => {
     // --- TRANSFORM TOOL ---
     // Neeeded informations is gotten through selection info and raster info arrays
 
-    // Bounds of selected area of canvas
-    let transformAreaBounds: paper.Path;
-    let transformSelectedArea: paper.Raster;
-
     // Checks if user has been transforming (is only false on first use of transform tool)
     const [isTranforming, setIsTransforming] = useState(false);
 
@@ -531,25 +527,24 @@ const CreateToolsCanvasPaperJS = () => {
     // The Transform Tool:
     const [transformTool, setTransformTool] = useState<paper.Tool>(new paper.Tool());
 
-    //checks if previously was transforming and resets states
+    // Checks if previously was transforming and resets states
     function clearSelection(){
         if (isTranforming) {
             rasterInfo[1].selected = false;
-            rasterInfo[1].remove();
         }
     }
 
     transformTool.onMouseDown = function (event: paper.ToolEvent) {
         if (areaSelected && canvasProject.activeLayer.locked == false) {
-            //sets up needed variables for raster moving
+            //sets up needed variables for raster moving on first time transforming
             if (!isTranforming) {
-                transformAreaBounds = new paper.Path.Rectangle(selectionInfo[0]);
-                setTransformInfo([transformAreaBounds]);
-                transformSelectedArea = rasterInfo[0].getSubRaster(selectionInfo[1]);
-                setRasterInfo(prevState => [...prevState, transformSelectedArea]);
+                let tempTransformAreaBounds = new paper.Path.Rectangle(selectionInfo[0]);
+                setTransformInfo([tempTransformAreaBounds]);
+                let tempTransformSelectedArea = rasterInfo[0].getSubRaster(selectionInfo[1]);
+                setRasterInfo(prevState => [...prevState, tempTransformSelectedArea]);
 
                 //for first time transforming only
-                if (transformAreaBounds.contains(event.point)) {
+                if (tempTransformAreaBounds.contains(event.point)) {
                     setTransformAction("moving");
                     return;
                 }
@@ -562,6 +557,8 @@ const CreateToolsCanvasPaperJS = () => {
             // }
             //runs if mouse hits area inside selection
             if (transformInfo[0].contains(event.point)) {
+                //needs to solve selection moving even  when transformed area is not clicked
+                //(solving this also requires solving issue with transforminfo not updating)
                 setTransformAction("moving");
                 return;
             }
