@@ -3,7 +3,7 @@ import CreateToolsCanvas from '../../../components/CreateToolsCanvas';
 import CreateToolsCanvasPaperJS from '../../../components/CreateToolsCanvasPaperJS';
 import Link from 'next/link';
 import styles from "@/styles/create.module.css";
-import Footer from "@/components/footer";
+import Footer from "@/components/Footer";
 
 const exportToPNG = () => {
     //converts html canvas to png
