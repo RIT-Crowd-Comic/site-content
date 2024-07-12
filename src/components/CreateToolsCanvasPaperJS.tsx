@@ -528,17 +528,45 @@ const CreateToolsCanvasPaperJS = () => {
     const [transformTool, setTransformTool] = useState<paper.Tool>(new paper.Tool());
 
     // Checks if previously was transforming and resets states
-    function clearSelection(){
+    function clearSelection() {
         if (isTranforming && rasterInfo.length == 2) {
             console.log("runs")
             rasterInfo[1].selected = false;
             setRasterInfo(existingItems => {
                 //return existingItems.slice(0, existingItems.length - 1)
                 return existingItems.filter((item, i) => i !== existingItems.length - 1);
-            setIsTransforming(false);
-        })
+                setIsTransforming(false);
+            })
+        }
     }
-}
+
+    function clearAreaSelected(selection: paper.Path.Rectangle) {
+        let eraserSelection = selection;
+        eraserSelection.fillColor = new paper.Color("black");
+
+        //canvasProject.activeLayer.lastChild.remove();
+        //shownSelectedAreaBounds.remove();
+
+        /*  Change how user input is drawn based on the tool they've selected
+Based on two different drawing types source-over vs destination-out
+Source-over: Draws on top of prexisting canvas
+Destination-out: Existing content is kept where it does not overlap with the new shape*/
+        let tmpSelectionGroup = new paper.Group({
+            children: canvasProject.activeLayer.removeChildren(),
+            blendMode: 'source-out',
+            insert: false
+        });
+        // combine the path and group in another group with a blend of 'source-over'
+        let selectionMask = new paper.Group({
+            children: [eraserSelection, tmpSelectionGroup],
+            blendMode: 'source-over'
+        });
+
+        //
+        canvasProject.activeLayer.rasterize({ resolution: 300 });
+        tmpSelectionGroup?.remove();
+        selectionMask?.remove();
+    }
 
     transformTool.onMouseDown = function (event: paper.ToolEvent) {
         if (areaSelected && canvasProject.activeLayer.locked == false) {
@@ -547,8 +575,9 @@ const CreateToolsCanvasPaperJS = () => {
                 let tempTransformAreaBounds = new paper.Path.Rectangle(selectionInfo[0]);
                 setTransformInfo([tempTransformAreaBounds]);
                 let tempTransformSelectedArea = rasterInfo[0].getSubRaster(selectionInfo[1]);
-                
                 setRasterInfo(prevState => [...prevState, tempTransformSelectedArea]);
+
+                clearAreaSelected(tempTransformAreaBounds);
 
                 //for first time transforming only
                 if (tempTransformAreaBounds.contains(event.point)) {
@@ -572,14 +601,6 @@ const CreateToolsCanvasPaperJS = () => {
 
     transformTool.onMouseDrag = function (event: paper.ToolEvent) {
         if (areaSelected && canvasProject.activeLayer.locked == false) {
-            //create rectangle mask of that area
-            //using map would overlap all of that so it doesn't show up
-            //then rasterize it tto lower 
-            //same as copy and rasterizing
-            //just need to add one more step to the process
-            //when you move it, take bit underneath selected portion and make it into a blank portion
-
-
             //changes position of selected area if moving
             if (transformAction == "moving") {
                 setIsTransforming(true);
@@ -615,9 +636,16 @@ const CreateToolsCanvasPaperJS = () => {
         }
     }
     transformTool.onMouseUp = function () {
-        //resets transform action
-        setTransformAction("none");
+        //resets transform action state
+        if (canvasProject.activeLayer.locked == false) {
+            setTransformAction("none");
+        }
     }
+
+    useEffect(() => {
+    console.log("TRANSFORM BOUNDS: " + transformInfo[0]);
+    console.log("RASTER INFO: " + rasterInfo[1]);
+    }, [transformInfo, rasterInfo]);
 
     // *** FUNCTIONS ***
     // Find which radioButton is currently selected and update the state of the tool selected
