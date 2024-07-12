@@ -230,9 +230,6 @@ const CreateToolsCanvasPaperJS = () => {
     // The current potential shape being created
     let currentShape: paper.Path;
 
-    // Array containing all created shapes
-    //const [elements, setElements] = useState([] as paper.Path[]);
-
     //Boolean to check if user dragged mouse
     const [mouseDragged, setMouseDragged] = useState(false);
 
@@ -303,8 +300,6 @@ const CreateToolsCanvasPaperJS = () => {
 
                 let currentShape = new paper.Path;
                 drawShape(currentShape);
-
-                //setElements(prevState => [...prevState, currentRect as paper.Path.Rectangle]);
             }
             clearStates();
         }
@@ -517,10 +512,6 @@ const CreateToolsCanvasPaperJS = () => {
         resetSelectStates();
     }
 
-    //TODO:
-    //(note: selectedArea is not linked to original raster (subraster makes a new raster), 
-    //so it may be necessary to rerender when transforming or delete original area of rasterized canvas?)
-
     // --- TRANSFORM TOOL ---
     // Neeeded informations is gotten through selection info and raster info arrays
 
@@ -528,8 +519,10 @@ const CreateToolsCanvasPaperJS = () => {
     let transformAreaBounds: paper.Path;
     let transformSelectedArea: paper.Raster;
 
-    //checks if user has been transforming (is only false on first use of transform tool)
+    // Checks if user has been transforming (is only false on first use of transform tool)
     const [isTranforming, setIsTransforming] = useState(false);
+
+    // Array of Information needed for transform
     const [transformInfo, setTransformInfo] = useState([] as paper.Path.Rectangle[])
 
     // String describing action user is doing (moving, resizing, rotating, etc.)
@@ -537,17 +530,25 @@ const CreateToolsCanvasPaperJS = () => {
 
     // The Transform Tool:
     const [transformTool, setTransformTool] = useState<paper.Tool>(new paper.Tool());
-    
+
+    //checks if previously was transforming and resets states
+    function clearSelection(){
+        if (isTranforming) {
+            rasterInfo[1].selected = false;
+            rasterInfo[1].remove();
+        }
+    }
+
     transformTool.onMouseDown = function (event: paper.ToolEvent) {
         if (areaSelected && canvasProject.activeLayer.locked == false) {
             //sets up needed variables for raster moving
             if (!isTranforming) {
-                console.log("runs");
                 transformAreaBounds = new paper.Path.Rectangle(selectionInfo[0]);
                 setTransformInfo([transformAreaBounds]);
                 transformSelectedArea = rasterInfo[0].getSubRaster(selectionInfo[1]);
                 setRasterInfo(prevState => [...prevState, transformSelectedArea]);
 
+                //for first time transforming only
                 if (transformAreaBounds.contains(event.point)) {
                     setTransformAction("moving");
                     return;
@@ -569,10 +570,15 @@ const CreateToolsCanvasPaperJS = () => {
 
     transformTool.onMouseDrag = function (event: paper.ToolEvent) {
         if (areaSelected && canvasProject.activeLayer.locked == false) {
-            //set subraster as original raster and then delete old raster OR
-            //edit original raster
+            //create rectangle mask of that area
+            //using map would overlap all of that so it doesn't show up
+            //then rasterize it tto lower 
+            //same as copy and rasterizing
+            //just need to add one more step to the process
+            //when you move it, take bit underneath selected portion and make it into a blank portion
 
-            //changes position of bounds & selected area if moving
+
+            //changes position of selected area if moving
             if (transformAction == "moving") {
                 setIsTransforming(true);
                 //transformAreaBounds.position = event.point;
@@ -580,7 +586,6 @@ const CreateToolsCanvasPaperJS = () => {
                 rasterInfo[1].selected = true;
                 return;
             }
-
             // else if (transformAction == "resizing") {
             //     //should instead check against corners to see which is clicked and then set oppposite corner as 
             //     //opposite point
@@ -608,7 +613,6 @@ const CreateToolsCanvasPaperJS = () => {
         }
     }
     transformTool.onMouseUp = function () {
-        //setTransformAction("none");
     }
 
     // *** FUNCTIONS ***
@@ -623,6 +627,7 @@ const CreateToolsCanvasPaperJS = () => {
             setFillOptionsEnabled(false);
             setShapeOptionsEnabled(false);
             setStickerOptionsEnabled(false);
+            clearSelection();
         }
         else if (Number(buttonSelected?.value) == toolStates.ERASER) {
             eraserTool.activate();
@@ -631,6 +636,7 @@ const CreateToolsCanvasPaperJS = () => {
             setFillOptionsEnabled(false);
             setShapeOptionsEnabled(false);
             setStickerOptionsEnabled(false);
+            clearSelection();
         }
         else if (Number(buttonSelected?.value) == toolStates.FILL) {
             fillTool.activate();
@@ -639,6 +645,7 @@ const CreateToolsCanvasPaperJS = () => {
             setFillOptionsEnabled(true);
             setShapeOptionsEnabled(false);
             setStickerOptionsEnabled(false);
+            clearSelection();
         }
         else if (Number(buttonSelected?.value) == toolStates.SHAPE) {
             shapeTool.activate();
@@ -647,6 +654,7 @@ const CreateToolsCanvasPaperJS = () => {
             setFillOptionsEnabled(false);
             setShapeOptionsEnabled(true);
             setStickerOptionsEnabled(false);
+            clearSelection();
         }
         else if (Number(buttonSelected?.value) == toolStates.STICKER) {
             stickerTool.activate();
@@ -655,15 +663,13 @@ const CreateToolsCanvasPaperJS = () => {
             setFillOptionsEnabled(false);
             setShapeOptionsEnabled(false);
             setStickerOptionsEnabled(true);
+            clearSelection();
         }
         //rasterize active canvas layer when clicked and set const as it 
         else if (Number(buttonSelected?.value) == toolStates.SELECT) {
-            //temp layer rasterize for selection (get reference to rasterized layer instead once that is done)
+            //rasterizes layer when select tool is first selected
             let raster = canvasProject.activeLayer.rasterize();
-            if(isTranforming){
-                rasterInfo[1].selected = false;
-                rasterInfo[1].remove();
-            }
+            clearSelection();
             setRasterInfo([raster]);
             selectTool.activate();
             setAreaSelected(false);
@@ -678,6 +684,7 @@ const CreateToolsCanvasPaperJS = () => {
             transformTool.activate();
             setIsTransforming(false);
             setTransformInfo([]);
+            clearSelection();
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
