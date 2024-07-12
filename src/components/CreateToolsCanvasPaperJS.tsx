@@ -28,6 +28,11 @@ const CreateToolsCanvasPaperJS = () => {
     let layer1Reference = useRef<paper.Layer>();
     let layer2Reference = useRef<paper.Layer>();
 
+    // An array that holds the history of user changes as raster images
+    const [editHistory, setEditHistory] = useState([{}]);
+    // An array that holds the history of changes that the user has undone as raster images
+    const [redoHistory, setRedoHistory] = useState([{}]);
+
     // Call useEffect() in order obtain the value of the canvas after the first render
     // Pass in an empty array so that useEffect is only called once, after the initial render
     useEffect(() => {
@@ -42,6 +47,10 @@ const CreateToolsCanvasPaperJS = () => {
         paper.setup(canvas);
         view = paper.view;
         canvasProject = paper.project;
+
+        // Set up the editHistory arrays to be blank
+        setEditHistory([]);
+        setRedoHistory([]);
 
         // Set the layer references as well as the default active layer
         backgroundLayerReference.current = canvasProject.activeLayer
@@ -95,12 +104,14 @@ const CreateToolsCanvasPaperJS = () => {
     // Begins the process of drawing the user's input to the canvas HTMLElement
     penTool.onMouseDown = function () {
         if (canvasProject.activeLayer.locked == false) {
+            updateHistory(canvasProject.activeLayer);
             penPath = new paper.Path();
             penPath.strokeColor = new paper.Color(penColor);
             penPath.strokeWidth = penSize;
             penPath.strokeCap = 'round';
             penPath.strokeJoin = 'round';
             penPath.blendMode = 'normal';
+
         }
     }
 
@@ -110,6 +121,7 @@ const CreateToolsCanvasPaperJS = () => {
             penPath?.add(event.point);
         }
     }
+
 
     // --- ERASER TOOL ---
     // Boolean used to determine if the eraser tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
@@ -717,6 +729,8 @@ const CreateToolsCanvasPaperJS = () => {
         }
     }
 
+    // When the form takes an image inputted by the user, set the image link to the inputted image
+    // If the file does not exist, set the image link to the default image
     const changeBackground = (event: ChangeEvent<HTMLInputElement>) => {
 
         const file = (event.target as HTMLInputElement).files?.[0];
@@ -745,14 +759,35 @@ const CreateToolsCanvasPaperJS = () => {
         }
     }
 
-    // Undoes the last stroke to the canvas
-    /*function undo() {
-        
-    }*/
+    // Updates the history of changes saved so that the user can undo that change
+    // This is achieved through creating a raster image of the current layer and pushing that to an array along with the associated layer
+    function updateHistory(currentLayer: paper.Layer) {
+        // Create a raster of the layer being edited
+        let tempImage = currentLayer.rasterize();
 
-    /*function redo() {
+        // Convert that raster into a dataURL so that it can be saved
+        let imageString = tempImage.toDataURL();
+
+        // Remove the raster from the layer
+        tempImage.remove();
+
+        // Add the image and the layer to the edit history
+        let newEdit = {currentLayer, imageString};
+        setEditHistory([...editHistory, newEdit]);
+        console.log(editHistory);
+
+        // Clear the redo history
+        setRedoHistory([]);
+    }
+
+    // Undoes the last stroke to the canvas
+    function undo(){
         
-    }*/
+    } 
+
+    function redo() {
+        
+    }
 
     // Return the canvas HTMLElement and its associated functionality
     return (
@@ -801,8 +836,8 @@ const CreateToolsCanvasPaperJS = () => {
                     </div>
                 </div>
 
-                <button className="btn" id="redoButton">Redo (NOT FUNCTIONAL)</button><br></br>
-                <button className="btn" id="undoButton">Undo (NOT FUNCTIONAL)</button><br></br>
+                <button className="btn" id="redoButton" onClick={redo}>Redo (NOT FUNCTIONAL)</button><br></br>
+                <button className="btn" id="undoButton" onClick={undo}>Undo (NOT FUNCTIONAL)</button><br></br>
                 <button className="btn" id="clearButton" onClick={clearLayer}>Clear</button><br></br>
 
                 <div id="backgroundUploadForm">
@@ -814,8 +849,6 @@ const CreateToolsCanvasPaperJS = () => {
                             type="file"
                             accept="image/*"
                             name="image"
-                            // When the form takes an image inputted by the user, set the image link to the inputted image
-                            // If the file does not exist, set the image link to the default image
                             onChange={changeBackground}
                         />
                     </form>
