@@ -27,12 +27,17 @@ img.preview {
     padding: 0;
     margin: 0;
     animation: pulse_2 1s linear alternate-reverse infinite;
+    
     /* pointer-events: none; */
 }
-
+.hookPath{
+    filter: opacity(50%);
+}
 .hookPath:hover {
     cursor: pointer;
-    filter: hue-rotate(-20deg);
+    /* filter: hue-rotate(-20deg); */
+    filter: brightness(200%);
+    /* filter: opacity(10%); */
 }
 
 .hookPath.hidden {
