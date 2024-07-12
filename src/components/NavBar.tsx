@@ -5,11 +5,11 @@ const NavBar = () => {
   return (
     <nav className="navbar sticky-top navbar-expand-lg">
       <div className="container-fluid">
-        <Link className="navbar-brand" href="#">
-          <Image src="/images/logos/Crowd_Comic_Favicon_BW.svg" alt="Crowd Comic Favicon" width={78} height={46} />
+        <Link className="navbar-brand" href="/">
+          <Image src="../images/logos/Crowd_Comic_Favicon_BW.svg" alt="Crowd Comic Logo" width={78} height={46} />
         </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-          <Image src="/images/BurgerMenu.svg" alt="Crowd Comic Favicon" width={78} height={46} />
+          <Image src="/images/BurgerMenu.svg" alt="Burger Menu" width={78} height={46} />
         </button>
         <div className="offcanvas offcanvas-end w-50" tabIndex={-1} id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
           <div className="offcanvas-header">
