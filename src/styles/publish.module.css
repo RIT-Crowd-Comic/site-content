@@ -213,6 +213,7 @@
     flex-direction:column;
     margin-bottom:30px;
     height:auto;
+    align-items:center;
   }
   #publishSlideshow{
     max-width:100vw;
