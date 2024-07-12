@@ -85,6 +85,11 @@
     align-items: stretch;
 }
 
+.noResults
+{
+    color: var(--grayscale-text-bg-color);
+}
+
 /* TEAM PANELS */
 
 .nameText {
@@ -230,7 +235,7 @@
 }
 
 /* LAYOUT */
-.chapterTitle {
+.chapterTitle, .facultyTitle {
     font-family: var(--font-back-issues);
     font-weight: bold;
     font-size: 2rem;
@@ -243,15 +248,9 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.facultyTitle {
-    font-family: var(--font-back-issues);
-    font-weight: bold;
-    font-size: 2rem;
-    color: var(--grayscale-text-bg-color);
-}
-
 .facultyGroup {
     border: 2px solid var(--grayscale-primary-color);
+    border-radius: 6px;
     background-color: rgba(0, 0, 0, 0.5);
 }
 

@@ -32,6 +32,11 @@ a {
     text-decoration: none;
 }
 
+body
+{
+    overflow: auto !important;
+}
+
 /* NAVBAR */
 
 ::selection {
