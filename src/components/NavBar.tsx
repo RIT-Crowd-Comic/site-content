@@ -18,20 +18,20 @@ const NavBar = () => {
           </div>
           <div className="offcanvas-body">
             <ul className="navbar-nav justify-content-end flex-grow-1">
-              <li className="nav-item ps-4">
+              <li className="nav-item">
                 <Link className="nav-link" id="homeLink" aria-current="page" href="/">Home</Link>
               </li>
-              <li className="nav-item ps-4">
+              <li className="nav-item">
                 <Link className="nav-link" id="teamLink" href="/team">Team</Link>
               </li>
-              <li className="nav-item ps-4">
+              <li className="nav-item">
                 <Link className="nav-link" id="comicLink" href="/comic">Comic</Link>
               </li>
-              <li className="nav-item ps-3">
-              <Link href="/login"><button className="nav-btn btn btn-outline-dark">Login</button></Link>
-              </li>
-              <li className="nav-item ps-3">
+              <li className="nav-item">
               <Link className="nav-link" id="dbLink" href="../db">Database</Link>
+              </li>
+              <li className="nav-item">
+              <Link href="/login"><button className="nav-btn btn btn-outline-dark">Login</button></Link>
               </li>
             </ul>
           </div>
