@@ -45,7 +45,7 @@ const Panel = ({
     confirmHook?: number,
     setConfirmHook?: (panelIndex: number | undefined) => void,
     selectedHook?: { panelIndex: number, hookIndex: number },
-    setSelectedHook?: ({ }: { panelIndex: number, hookIndex: number } | undefined) => void,
+    setSelectedHook?: (hookInfo: { panelIndex: number, hookIndex: number } | undefined) => void,
     onHookClick?: (hook: BranchHook, hookIndex: number) => void,
     hidden?: boolean
     // active?: boolean
