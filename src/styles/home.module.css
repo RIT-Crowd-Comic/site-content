@@ -221,7 +221,7 @@
 
 .getStartedButton {
     border: 10px solid transparent;
-    background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/bw/Get_Started_BW.svg) no-repeat center/contain;
     filter: brightness(.5);
     width: 100%;
     height: auto;
@@ -282,7 +282,7 @@
 
     position: absolute;
     left: -17%;
-    top: 5%;
+    top: 0;
 }
 
 .getStarted:hover .bookAnimation {

@@ -36,6 +36,11 @@ a {
     text-decoration: none;
 }
 
+body
+{
+    overflow: auto !important;
+}
+
 /* NAVBAR */
 
 ::selection {
@@ -52,12 +57,61 @@ a {
 
 .navbar {
     background-color: var(--grayscale-background-color);
+    border-bottom: solid 3px black;
 }
 
 .nav-link,
 .nav-btn {
     color: var(--grayscale-primary-color);
     font-size: 1.5rem;
+}
+
+.nav-btn
+{
+    border: none;
+    padding: 8px 0;
+}
+
+.nav-btn:hover
+{
+    background-color: transparent;
+    border-bottom: none;
+}
+
+.nav-btn:active
+{   
+    background-color: transparent;
+    border: none;
+}
+
+.navbar-toggler
+{
+    border: solid 3px #000000;
+    border-bottom: solid 4px #000000;
+    color: black;
+    background-color: #898989;
+
+    box-shadow: none !important;
+}
+
+.navbar-toggler:hover
+{
+    background-color: #3e3e3e;
+    border: solid 3px #000000;
+    border-bottom: solid 4px #000000;
+}
+
+.navbar-toggler:active
+{   
+    background-color: #3e3e3e;
+    margin-top: 1px;
+    border: solid 3px #000000;
+}
+
+.navbar-nav
+{
+    text-align: left;
+    margin-left: 1.5rem;
 }
 
 .offcanvas-header {
@@ -255,7 +309,34 @@ a {
 @media (min-width: 768px) {}
 
 /* [lg] Large desktops, 992px and up */
-@media (min-width: 992px) {}
+@media (min-width: 992px) {
+    .nav-btn
+    {
+        border: solid 3px #000000;
+        border-bottom: solid 4px #000000;
+        color: black;
+        background-color: #898989;
+
+        padding: 8px;
+    }
+
+    .nav-btn:hover
+    {
+        border: solid 3px #000000;
+        border-bottom: solid 4px #000000;
+    }
+
+    .nav-btn:active
+    {   
+        margin-top: 1px;
+        border: solid 3px #000000;
+    }
+
+    .nav-item
+    {
+        margin: auto 1.5rem auto 0;
+    }
+}
 
 /* [xl] Extra large devices 1200px and up */
 @media (min-width: 1200px) {}
