@@ -11,11 +11,6 @@ const thirdPanelImage = "/comic-panels/third_panel.png";
 // navbar
 import Navbar from "../../components/NavBar"
 
-import dynamic from 'next/dynamic'
- 
-const CanvasObject = dynamic(() => import('../../components/CreateToolsCanvasPaperJS'), {
-  ssr: false,
-})
 //set the base trunks to display by default on read
 const Read = () => {
 

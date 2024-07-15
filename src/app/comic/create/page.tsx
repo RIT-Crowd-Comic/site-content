@@ -5,6 +5,13 @@ import Link from 'next/link';
 import styles from "@/styles/create.module.css";
 import Footer from "@/components/footer";
 
+
+import dynamic from 'next/dynamic'
+ 
+const CanvasObject = dynamic(() => import('../../../components/CreateToolsCanvasPaperJS'), {
+  ssr: false,
+})
+
 const exportToPNG = () => {
     //converts html canvas to png
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
