@@ -539,14 +539,11 @@ const CreateToolsCanvasPaperJS = () => {
         Based on two different drawing types source-over vs destination-out
         Source-over: Draws on top of prexisting canvas
         Destination-out: Existing content is kept where it does not overlap with the new shape*/
-
-        //remove children causes issues
         let tmpSelectionGroup = new paper.Group({
             children: canvasProject.activeLayer.removeChildren(),
             blendMode: 'source-out',
             insert: false
         });
-
         // combine the path and group in another group with a blend of 'source-over'
         let selectionMask = new paper.Group({
             children: [eraserSelection, tmpSelectionGroup],
@@ -566,17 +563,18 @@ const CreateToolsCanvasPaperJS = () => {
                 //gets rid of shown bounds
                 canvasProject.activeLayer.lastChild.remove();
 
+                //sets up info needed for transforming
                 let tempTransformAreaBounds = new paper.Path.Rectangle(selectionInfo[0]);
                 setTransformInfo([tempTransformAreaBounds]);
                 let tempTransformSelectedArea = rasterInfo[0].getSubRaster(selectionInfo[1]);
                 
-
                 clearAreaSelected(tempTransformAreaBounds);
 
+                //readds selected area to layer
                 setRasterInfo(prevState => [...prevState, tempTransformSelectedArea]);
-                console.log(rasterInfo[1]);
-
-                //for first time transforming only
+                canvasProject.activeLayer.addChild(tempTransformSelectedArea);
+                
+                //contains check for first time transforming only
                 if (tempTransformAreaBounds.contains(event.point)) {
                     setTransformAction("moving");
                     return;
@@ -598,21 +596,12 @@ const CreateToolsCanvasPaperJS = () => {
 
     transformTool.onMouseDrag = function (event: paper.ToolEvent) {
         if (areaSelected && canvasProject.activeLayer.locked == false) {
-            if (!isTranforming) {
-                //clear area selected here????
-            }
             //changes position of selected area if moving
             if (transformAction == "moving") {
                 setIsTransforming(true);
-                //addd mouse draggged??? (error where double clicking causes black selection glitch)
-                //properly changes position, but is not visible
                 transformInfo[0].position = event.point;
                 rasterInfo[1].position = event.point;
                 rasterInfo[1].selected = true;
-                console.log(rasterInfo[1]);
-                //console.log(transformInfo[0].position);
-                //console.log(rasterInfo[1].position);
-                //console.log(rasterInfo[1].selected);
                 return;
             }
             // else if (transformAction == "resizing") {
@@ -703,12 +692,13 @@ const CreateToolsCanvasPaperJS = () => {
             clearSelection();
             setAreaSelected(false);
         }
-        //rasterize active canvas layer when clicked and set const as it 
+        //rasterize active canvas layer when clicked and set const as it on
         else if (Number(buttonSelected?.value) == toolStates.SELECT) {
-            //rasterizes layer when select tool is first selected
-            let raster = canvasProject.activeLayer.rasterize();
-            clearSelection();
-            setRasterInfo([raster]);
+            if(!canvasProject.activeLayer.isEmpty()){
+                let raster = canvasProject.activeLayer.rasterize();
+                clearSelection();
+                setRasterInfo([raster]);
+            }
             selectTool.activate();
             setAreaSelected(false);
             setSelectionInfo([]);
@@ -720,9 +710,9 @@ const CreateToolsCanvasPaperJS = () => {
         }
         else if (Number(buttonSelected?.value) == toolStates.TRANSFORM) {
             transformTool.activate();
+            clearSelection();
             setIsTransforming(false);
             setTransformInfo([]);
-            clearSelection();
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
@@ -754,9 +744,8 @@ const CreateToolsCanvasPaperJS = () => {
         if (canvasProject.activeLayer.locked == false) {
             canvasProject.activeLayer.removeChildren();
 
-            //temp set until deselect option made
+            //deselects if previously was selecting or transforming before clearing
             setAreaSelected(false);
-            setIsTransforming(false);
             clearSelection();
         }
     }
