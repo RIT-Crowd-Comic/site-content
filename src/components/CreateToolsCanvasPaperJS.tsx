@@ -422,18 +422,9 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     // --- SELECT TOOL ---
-    // String describing action user is doing (moving, resizing, rotating, etc.)
-    const [selectAction, setSelectAction] = useState("none");
-
     // Points describing the selected area's dimensions (start and end)
     const [startSelectPoint, setStartSelectPoint] = useState(new paper.Point(0, 0))
     const [endSelectPoint, setEndSelectPoint] = useState(new paper.Point(0, 0))
-
-    // Bounds of selected area of canvas
-    let shownSelectedAreaBounds: paper.Path;
-
-    // Selected area of rasterized canvas
-    let selectedArea: paper.Raster;
 
     //Selection info to be passed on to transform tool (shown bounds + selected area)
     const [selectionInfo, setSelectionInfo] = useState([] as paper.Rectangle[]);
@@ -519,6 +510,7 @@ const CreateToolsCanvasPaperJS = () => {
     const [isTranforming, setIsTransforming] = useState(false);
 
     // Array of Information needed for transform
+    //could get rid of and just use selection info?
     const [transformInfo, setTransformInfo] = useState([] as paper.Path.Rectangle[])
 
     // String describing action user is doing (moving, resizing, rotating, etc.)
@@ -530,8 +522,8 @@ const CreateToolsCanvasPaperJS = () => {
     // Checks if previously was transforming and resets states
     function clearSelection() {
         if (isTranforming && rasterInfo.length == 2) {
-            console.log("runs")
             rasterInfo[1].selected = false;
+            //if another area is not selected, then get rid of previous raster/selected area from array
             setRasterInfo(existingItems => {
                 //return existingItems.slice(0, existingItems.length - 1)
                 return existingItems.filter((item, i) => i !== existingItems.length - 1);
@@ -570,14 +562,14 @@ Destination-out: Existing content is kept where it does not overlap with the new
     transformTool.onMouseDown = function (event: paper.ToolEvent) {
         if (areaSelected && canvasProject.activeLayer.locked == false) {
             //sets up needed variables for raster moving on first time transforming
-            if (!isTranforming && areaSelected) {
+            if (!isTranforming) {
                 //add original vars separate from temp???
                 let tempTransformAreaBounds = new paper.Path.Rectangle(selectionInfo[0]);
                 setTransformInfo([tempTransformAreaBounds]);
 
                 //remove raster from active layer
                 //tempTransformSelectedArea.remove();
-                clearAreaSelected(tempTransformAreaBounds);
+                //clearAreaSelected(tempTransformAreaBounds);
 
                 let tempTransformSelectedArea = rasterInfo[0].getSubRaster(selectionInfo[1]);
                 setRasterInfo(prevState => [...prevState, tempTransformSelectedArea]);
@@ -705,6 +697,7 @@ Destination-out: Existing content is kept where it does not overlap with the new
         //rasterize active canvas layer when clicked and set const as it 
         else if (Number(buttonSelected?.value) == toolStates.SELECT) {
             //rasterizes layer when select tool is first selected
+            //should check if new area has been selected before running
             let raster = canvasProject.activeLayer.rasterize();
             clearSelection();
             setRasterInfo([raster]);
@@ -720,6 +713,7 @@ Destination-out: Existing content is kept where it does not overlap with the new
         else if (Number(buttonSelected?.value) == toolStates.TRANSFORM) {
             transformTool.activate();
             setIsTransforming(false);
+            //should check if new area has been selected before running
             setTransformInfo([]);
             clearSelection();
             setPenOptionsEnabled(false);
@@ -756,6 +750,7 @@ Destination-out: Existing content is kept where it does not overlap with the new
             //temp set until deselect option made
             setAreaSelected(false);
             setIsTransforming(false);
+            clearSelection();
         }
     }
 
