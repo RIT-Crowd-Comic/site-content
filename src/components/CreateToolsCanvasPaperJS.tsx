@@ -1,3 +1,4 @@
+'use client'
 import { MutableRefObject, SyntheticEvent, use, useEffect, useRef, useState } from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
 import paper, { project, tool, tools } from 'paper';
