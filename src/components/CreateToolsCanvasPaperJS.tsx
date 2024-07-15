@@ -9,8 +9,6 @@ import TextOptions from './TextOptions';
 import StickerOptions from './StickerOptions';
 import ShaderOptions from './ShaderOptions';
 import {PaperOffset} from 'paperjs-offset';
-import test from 'node:test';
-import { start } from 'repl';
 import styles from "@/styles/create.module.css";
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
