@@ -510,7 +510,6 @@ const CreateToolsCanvasPaperJS = () => {
     const [isTranforming, setIsTransforming] = useState(false);
 
     // Array of Information needed for transform
-    //could get rid of and just use selection info?
     const [transformInfo, setTransformInfo] = useState([] as paper.Path.Rectangle[])
 
     // String describing action user is doing (moving, resizing, rotating, etc.)
@@ -531,6 +530,7 @@ const CreateToolsCanvasPaperJS = () => {
         }
     }
 
+    //erases selected area
     function clearAreaSelected(selection: paper.Path.Rectangle) {
         let eraserSelection = selection;
         eraserSelection.fillColor = new paper.Color("black");
