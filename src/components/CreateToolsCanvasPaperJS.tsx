@@ -523,11 +523,11 @@ const CreateToolsCanvasPaperJS = () => {
     function clearSelection() {
         if (isTranforming && rasterInfo.length == 2) {
             rasterInfo[1].selected = false;
-            //if another area is not selected, then get rid of previous raster/selected area from array
+
             setRasterInfo(existingItems => {
-                //return existingItems.slice(0, existingItems.length - 1)
                 return existingItems.filter((item, i) => i !== existingItems.length - 1);
             })
+            setIsTransforming(false);
         }
     }
 
@@ -535,26 +535,26 @@ const CreateToolsCanvasPaperJS = () => {
         let eraserSelection = selection;
         eraserSelection.fillColor = new paper.Color("black");
 
-        //canvasProject.activeLayer.lastChild.remove();
-        //shownSelectedAreaBounds.remove();
-
         /*  Change how user input is drawn based on the tool they've selected
-Based on two different drawing types source-over vs destination-out
-Source-over: Draws on top of prexisting canvas
-Destination-out: Existing content is kept where it does not overlap with the new shape*/
+        Based on two different drawing types source-over vs destination-out
+        Source-over: Draws on top of prexisting canvas
+        Destination-out: Existing content is kept where it does not overlap with the new shape*/
+
+        //remove children causes issues
         let tmpSelectionGroup = new paper.Group({
             children: canvasProject.activeLayer.removeChildren(),
             blendMode: 'source-out',
             insert: false
         });
+
         // combine the path and group in another group with a blend of 'source-over'
         let selectionMask = new paper.Group({
             children: [eraserSelection, tmpSelectionGroup],
             blendMode: 'source-over'
         });
 
-        //
-        canvasProject.activeLayer.rasterize({ resolution: 300 });
+        //rasterizes canvas and removes cleared area
+        canvasProject.activeLayer.rasterize({ raster: rasterInfo[0] });
         tmpSelectionGroup?.remove();
         selectionMask?.remove();
     }
@@ -563,16 +563,18 @@ Destination-out: Existing content is kept where it does not overlap with the new
         if (areaSelected && canvasProject.activeLayer.locked == false) {
             //sets up needed variables for raster moving on first time transforming
             if (!isTranforming) {
-                //add original vars separate from temp???
+                //gets rid of shown bounds
+                canvasProject.activeLayer.lastChild.remove();
+
                 let tempTransformAreaBounds = new paper.Path.Rectangle(selectionInfo[0]);
                 setTransformInfo([tempTransformAreaBounds]);
-
-                //remove raster from active layer
-                //tempTransformSelectedArea.remove();
-                //clearAreaSelected(tempTransformAreaBounds);
-
                 let tempTransformSelectedArea = rasterInfo[0].getSubRaster(selectionInfo[1]);
+                
+
+                clearAreaSelected(tempTransformAreaBounds);
+
                 setRasterInfo(prevState => [...prevState, tempTransformSelectedArea]);
+                console.log(rasterInfo[1]);
 
                 //for first time transforming only
                 if (tempTransformAreaBounds.contains(event.point)) {
@@ -596,14 +598,21 @@ Destination-out: Existing content is kept where it does not overlap with the new
 
     transformTool.onMouseDrag = function (event: paper.ToolEvent) {
         if (areaSelected && canvasProject.activeLayer.locked == false) {
+            if (!isTranforming) {
+                //clear area selected here????
+            }
             //changes position of selected area if moving
             if (transformAction == "moving") {
                 setIsTransforming(true);
+                //addd mouse draggged??? (error where double clicking causes black selection glitch)
+                //properly changes position, but is not visible
                 transformInfo[0].position = event.point;
-                
-                //not null but not showing
                 rasterInfo[1].position = event.point;
                 rasterInfo[1].selected = true;
+                console.log(rasterInfo[1]);
+                //console.log(transformInfo[0].position);
+                //console.log(rasterInfo[1].position);
+                //console.log(rasterInfo[1].selected);
                 return;
             }
             // else if (transformAction == "resizing") {
@@ -697,7 +706,6 @@ Destination-out: Existing content is kept where it does not overlap with the new
         //rasterize active canvas layer when clicked and set const as it 
         else if (Number(buttonSelected?.value) == toolStates.SELECT) {
             //rasterizes layer when select tool is first selected
-            //should check if new area has been selected before running
             let raster = canvasProject.activeLayer.rasterize();
             clearSelection();
             setRasterInfo([raster]);
@@ -713,7 +721,6 @@ Destination-out: Existing content is kept where it does not overlap with the new
         else if (Number(buttonSelected?.value) == toolStates.TRANSFORM) {
             transformTool.activate();
             setIsTransforming(false);
-            //should check if new area has been selected before running
             setTransformInfo([]);
             clearSelection();
             setPenOptionsEnabled(false);
