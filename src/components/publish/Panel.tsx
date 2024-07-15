@@ -135,14 +135,7 @@ const Panel = ({
         setVertices(newVertices);
     }
 
-    const mouseDownHandler = (event?: SyntheticEvent<HTMLImageElement, MouseEvent>) => {
-        if (addingHook) {
-            addVertex(event?.nativeEvent.offsetX, event?.nativeEvent.offsetY)
-        }
-        else {
-            // selectHook({panelIndex, hookIndex});
-        }
-    }
+    // const mouseDownHandler = (event?: SyntheticEvent<HTMLImageElement, MouseEvent>) => { }
 
     const mouseDragHandler = (event?: SyntheticEvent<HTMLImageElement, MouseEvent>) => {
         if (addingHook) {
@@ -152,6 +145,25 @@ const Panel = ({
 
     const mouseMoveHandler = (event?: SyntheticEvent<HTMLImageElement, MouseEvent>) => {
         if (event?.nativeEvent.buttons === 1) return void mouseDragHandler(event);
+        // console.log(event?.nativeEvent.offsetX);
+
+    }
+
+    // const touchStartHandler = (event?: SyntheticEvent<HTMLImageElement, TouchEvent>) => { }
+    const touchMoveHandler = (event?: SyntheticEvent<HTMLImageElement, TouchEvent>) => {
+        /** NOT WORKING YET, for some reason 'offsetX' doesn't exist on touch event */
+        // switch (event?.nativeEvent.touches.length) {
+        //     case 1:
+        //         if (addingHook) {
+        //             console.log(event.nativeEvent.touches)
+        //             console.log(event.currentTarget.x)
+        //             addVertex(event.nativeEvent.touches[0].clientX, event.nativeEvent.touches[0].clientY);
+        //         }
+        //         // event.preventDefault();
+        //         break;
+        //     // case 2: potentially do something else 
+        //     default: break; // unsupported number of touches
+        // }
     }
 
     // const imgRect = imgRef.current?.getBoundingClientRect().left ?? 0;
@@ -176,11 +188,13 @@ const Panel = ({
                 src={imgSrc}
                 className={`${styles.preview} ${addingHook ? styles.editing : ''}`}
                 draggable='false'
-                onMouseDown={mouseDownHandler}
+                onMouseDown={mouseMoveHandler}
                 onMouseMove={mouseMoveHandler}
+                onTouchStart={touchMoveHandler}
+                onTouchMove={touchMoveHandler}
                 ref={imgRef}
                 alt="comic panel"
-                width="500" 
+                width="500"
                 height="500"
             />
 
