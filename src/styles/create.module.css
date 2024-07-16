@@ -64,6 +64,152 @@
     color: white;
 }
 
+#fieldSet
+{
+    margin-left: 10px;
+}
+
+#layerOptions
+{
+    margin: 10px 10px 0 0;
+}
+
+#functionButtons
+{
+    margin-left: -10px;
+}
+
+.layerSelect
+{
+    position: relative;
+    width: 100%;
+}
+
+.layer
+{
+    padding: 5px;
+    border: solid 3px white;
+    background-color: black;
+
+    display:flex;
+    flex-direction: row;
+
+    width: 100%;
+}
+
+.layerSelectRadio
+{
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background-color: red;
+
+    position: absolute;
+    opacity: 0;
+}
+
+/* ICONS */
+
+#toolRadioSelects [type=radio], #layerOptions [type=checkbox]
+{
+    position: absolute;
+    opacity: 0;
+    width:20px;
+    height:20px;
+}
+
+#penLabel
+{
+    background: url("../../public/images/icons/draw-icons/pen.svg") no-repeat center/contain;
+    width: 20px;
+    height: 20px;
+}
+
+#eraserLabel
+{
+    background: url("../../public/images/icons/draw-icons/eraser.svg") no-repeat center/contain;
+    width: 20px;
+    height: 20px;
+}
+
+#fillLabel
+{
+    background: url("../../public/images/icons/draw-icons/bucket.svg") no-repeat center/contain;
+    width: 20px;
+    height: 20px;
+}
+
+#shapeLabel
+{
+    background: url("../../public/images/icons/draw-icons/shapes.svg") no-repeat center/contain;
+    width: 20px;
+    height: 20px;
+}
+
+#textLabel
+{
+    background: url("../../public/images/icons/draw-icons/text.svg") no-repeat center/contain;
+    width: 20px;
+    height: 20px;
+}
+
+#stickerLabel
+{
+    background: url("../../public/images/icons/draw-icons/sticker.svg") no-repeat center/contain;
+    width: 20px;
+    height: 20px;
+}
+
+#selectLabel
+{
+    background: url("../../public/images/icons/draw-icons/select.svg") no-repeat center/contain;
+    width: 20px;
+    height: 20px;
+}
+
+#transformLabel
+{
+    background: url("../../public/images/icons/draw-icons/transform.svg") no-repeat center/contain;
+    width: 20px;
+    height: 20px;
+}
+
+.visibleLabel
+{
+    background: url("../../public/images/icons/draw-icons/eyeopen.svg") no-repeat center/contain;
+    width: 20px;
+    height: 20px;
+}
+
+.lockLabel
+{
+    background: url("../../public/images/icons/draw-icons/lock.svg") no-repeat center/contain;
+    width: 20px;
+    height: 20px;
+}
+
+.toolStyling:has([type=radio]:checked), .visibleStyling:has([type=checkbox]:checked)
+{
+    filter:brightness(.5)
+}
+
+.layer:has([type=radio]:checked)
+{
+    background-color: #414141;
+    border-color:#cccccc;
+}
+
+.visibleStyling:has([type=checkbox]:checked) .visibleLabel
+{
+    background: url("../../public/images/icons/draw-icons/eyeclose.svg") no-repeat center/contain;
+}
+
+.lockStyling:has([type=checkbox]:checked) .lockLabel
+{
+    background: url("../../public/images/icons/draw-icons/unlock.svg") no-repeat center/contain;
+}
+
 /* [xs] Extra small devices, less than 576px) */
 /* No media query for `xs` since this is the default in Bootstrap */
 

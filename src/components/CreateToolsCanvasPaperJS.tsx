@@ -10,6 +10,7 @@ import StickerOptions from './create-tools/StickerOptions';
 import styles from "@/styles/create.module.css";
 import { Istok_Web } from 'next/font/google';
 
+
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
 const CreateToolsCanvasPaperJS = () => {
     // *** VARIABLES ***
@@ -826,53 +827,65 @@ const CreateToolsCanvasPaperJS = () => {
     // Return the canvas HTMLElement and its associated functionality
     return (
         <div id={`${styles.createPage}`}>
-            <fieldset>
+            <fieldset id={styles.fieldSet}>
                 <legend>Tools</legend>
-                <div id={`${styles.toolRadioSelects}`}>
-                    <div id="penTool">
-                        <input type="radio" name="tools" id="pen" value={toolStates.PEN} defaultChecked onChange={findSelected} />
-                        <label htmlFor="pen">Pen</label>
+                <div id={styles.toolRadioSelects}>
+                    <div id={styles.penTool} className={styles.toolStyling}>
+                        <label htmlFor="pen" id={styles.penLabel}>
+                            <input type="radio" name="tools" id="pen" value={toolStates.PEN} defaultChecked onChange={findSelected} />
+                        </label>
                     </div>
 
-                    <div id="eraserTool">
-                        <input type="radio" name="tools" id="eraser" value={toolStates.ERASER} onChange={findSelected} />
-                        <label htmlFor="eraser">Eraser</label>
+                    <div id={styles.eraserTool} className={styles.toolStyling}>
+                        <label htmlFor="eraser" id={styles.eraserLabel}>
+                            <input type="radio" name="tools" id="eraser" value={toolStates.ERASER} onChange={findSelected} />
+                        </label>
                     </div>
 
-                    <div id="fillTool">
-                        <input type="radio" name="tools" id="fill" value={toolStates.FILL} onChange={findSelected} />
-                        <label htmlFor="fill">Fill</label>
+                    <div id={styles.fillTool} className={styles.toolStyling}>
+                        <label htmlFor="eraser" id={styles.fillLabel}>
+                            <input type="radio" name="tools" id="fill" value={toolStates.FILL} onChange={findSelected} />
+                        </label>
                     </div>
 
-                    <div id="shapeTool">
-                        <input type="radio" name="tools" id="shape" value={toolStates.SHAPE} onChange={findSelected} />
-                        <label htmlFor="shape">Shape</label>
+                    <div id={styles.shapeTool} className={styles.toolStyling}>
+                        <label htmlFor="eraser" id={styles.shapeLabel}>
+                            <input type="radio" name="tools" id="shape" value={toolStates.SHAPE} onChange={findSelected} />
+                        </label>
                     </div>
 
-                    <div id="textTool">
-                        <input type="radio" name="tools" id="text" value={toolStates.TEXT} onChange={findSelected} />
-                        <label htmlFor="text">Text (HALF FUNCTIONAL)</label>
+                    <div id={styles.textTool} className={styles.toolStyling}>
+                        <label htmlFor="text" id={styles.textLabel}>
+                            <input type="radio" name="tools" id="text" value={toolStates.TEXT} onChange={findSelected} />
+                            {/* (HALF FUNCTIONAL) */}
+                        </label>
                     </div>
 
-                    <div id="stickerTool">
-                        <input type="radio" name="tools" id="sticker" value={toolStates.STICKER} onChange={findSelected} />
-                        <label htmlFor="sticker">Sticker</label>
+                    <div id={styles.stickerTool} className={styles.toolStyling}>
+                        <label htmlFor="text" id={styles.stickerLabel}>
+                            <input type="radio" name="tools" id="sticker" value={toolStates.STICKER} onChange={findSelected} />
+                        </label>
                     </div>
 
-                    <div id="selectTool">
-                        <input type="radio" name="tools" id="select" value={toolStates.SELECT} onChange={findSelected} />
-                        <label htmlFor="select">Select</label>
+                    <div id={styles.selectTool} className={styles.toolStyling}>
+                        <label htmlFor="text" id={styles.selectLabel}>
+                            <input type="radio" name="tools" id="select" value={toolStates.SELECT} onChange={findSelected} />
+                        </label>
                     </div>
 
-                    <div id="transformTool">
-                        <input type="radio" name="tools" id="transform" value={toolStates.TRANSFORM} onChange={findSelected} />
-                        <label htmlFor="transform">Transform (SEMI FUNCTIONAL)</label>
+                    <div id={styles.transformTool} className={styles.toolStyling}>
+                        <label htmlFor="text" id={styles.transformLabel}>
+                            <input type="radio" name="tools" id="transform" value={toolStates.TRANSFORM} onChange={findSelected} />
+                            {/* (SEMI FUNCTIONAL) */}
+                        </label>
                     </div>
                 </div>
 
-                <button className="btn" id="redoButton">Redo (NOT FUNCTIONAL)</button><br></br>
-                <button className="btn" id="undoButton">Undo (NOT FUNCTIONAL)</button><br></br>
-                <button className="btn" id="clearButton" onClick={clearLayer}>Clear</button><br></br>
+                <div id={styles.functionButtons}>
+                    <button className="btn" id="redoButton">Redo (NOT FUNCTIONAL)</button><br></br>
+                    <button className="btn" id="undoButton">Undo (NOT FUNCTIONAL)</button><br></br>
+                    <button className="btn" id="clearButton" onClick={clearLayer}>Clear</button><br></br>
+                </div>
 
                 <div id="backgroundUploadForm">
                     <form>
@@ -905,51 +918,56 @@ const CreateToolsCanvasPaperJS = () => {
                 <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
             </div>
 
-            <div id="layerOptions">
-                <div id="layer2">
-                    <div id="layer2Select">
-                        <input type="radio" name="layers" id="layer2" value='2' onChange={changeLayer} />
+            <div id={styles.layerOptions}>
+                <div id="layer2" className={styles.layer}>
+                    <div id="layer2Visibility" className={styles.visibleStyling}>
+                        <label htmlFor="layer2Toggle" className={styles.visibleLabel}>
+                            <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} defaultChecked></input>
+                        </label>
+                    </div>
+                    <div id="layer2Lock" className={styles.lockStyling}>
+                        <label htmlFor="layer2LockToggle" className={styles.lockLabel}>
+                            <input type="checkbox" id="layer2LockToggle" value="2" onChange={toggleLayerLock}></input>
+                        </label>
+                    </div>
+                    <div id="layer2Select" className={styles.layerSelect}>
+                        <input type="radio" name="layers" id="layer2" className={styles.layerSelectRadio} value='2' onChange={changeLayer} />
                         <label htmlFor="layer2">Layer 2</label><br />
                     </div>
-                    <div id="layer2Visibility">
-                        <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} defaultChecked></input>
-                        <label htmlFor="layer2Toggle">Visible</label>
-                    </div>
-                    <div id="layer2Lock">
-                        <input type="checkbox" id="layer2LockToggle" value="2" onChange={toggleLayerLock}></input>
-                        <label htmlFor="layer2LockToggle">Lock</label>
-                    </div>
                 </div>
 
-                <div id="layer1">
-                    <div id="layer1Select">
-                        <input type="radio" name="layers" id="layer1" value='1' defaultChecked onChange={changeLayer} />
-                        <label htmlFor="layer1">Layer 1</label><br />
+                <div id="layer1" className={styles.layer}>
+                    <div id="layer2Visibility" className={styles.visibleStyling}>
+                        <label htmlFor="layer1Toggle" className={styles.visibleLabel}>
+                            <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} defaultChecked></input>
+                        </label>
                     </div>
-                    <div id="layer2Visibility">
-                        <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} defaultChecked></input>
-                        <label htmlFor="layer1Toggle">Visible</label>
+                    <div id="layer1Lock" className={styles.lockStyling}>
+                        <label htmlFor="layer1LockToggle" className={styles.lockLabel}>
+                            <input type="checkbox" id="layer1LockToggle" value="2" onChange={toggleLayerLock}></input>
+                        </label>
                     </div>
-                    <div id="layer1Lock">
-                        <input type="checkbox" id="layer1LockToggle" value="1" onChange={toggleLayerLock}></input>
-                        <label htmlFor="layer1LockToggle">Lock</label>
+                    <div id="layer1Select" className={styles.layerSelect}>
+                        <input type="radio" name="layers" id="layer1"className={styles.layerSelectRadio} value='1' defaultChecked onChange={changeLayer} />
+                        <label htmlFor="layer1">Layer 1</label><br/>
                     </div>
                 </div>
-
-                <div id="backgroundLayer">
-                    <div id="backgroundLayerSelect">
-                        <input type="radio" name="layers" id="background" value='0' onChange={changeLayer} />
+                <div id="backgroundLayer" className={styles.layer}>
+                    <div id="backgroundLayerVisibility" className={styles.visibleStyling}>
+                        <label htmlFor="backgroundToggle" className={styles.visibleLabel}>
+                            <input type="checkbox" id="backgroundToggle" value="0" onChange={toggleLayerVisibility} defaultChecked></input>
+                        </label>
+                    </div>
+                    <div id="backgroundLayerLock" className={styles.lockStyling}>
+                        <label htmlFor="backgroundLayerLockToggle" className={styles.lockLabel}>
+                            <input type="checkbox" id="backgroundLayerLockToggle" value="0" onChange={toggleLayerLock}></input>
+                        </label>
+                    </div>
+                    <div id="backgroundLayerSelect" className={styles.layerSelect}>
+                        <input type="radio" name="layers" id="background" className={styles.layerSelectRadio} value='0' onChange={changeLayer} />
                         <label htmlFor="background">Background</label><br />
                     </div>
-                    <div id="backgroundLayerVisibility">
-                        <input type="checkbox" id="backgroundToggle" value="0" onChange={toggleLayerVisibility} defaultChecked></input>
-                        <label htmlFor="backgroundToggle">Visible</label>
-                    </div>
-                    <div id="backgroundLayerLock">
-                        <input type="checkbox" id="backgroundLayerLockToggle" value="0" onChange={toggleLayerLock}></input>
-                        <label htmlFor="backgroundLayerLockToggle">Lock</label>
-                    </div>
-                </div>
+                </div>  
             </div>
         </div>
     )
