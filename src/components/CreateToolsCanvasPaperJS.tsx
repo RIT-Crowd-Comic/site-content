@@ -711,7 +711,7 @@ const CreateToolsCanvasPaperJS = () => {
                 clearSelection();
                 setRasterInfo([raster]);
             }
-            selectTool.activate();
+            selectTool.current.activate();
             setAreaSelected(false);
             setSelectionInfo([]);
             setPenOptionsEnabled(false);
