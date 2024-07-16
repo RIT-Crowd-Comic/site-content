@@ -257,6 +257,11 @@ body
     box-shadow: none;
 }
 
+.btn
+{
+    color: white;
+}
+
 /* [xs] Extra small devices, less than 576px) */
 /* No media query for `xs` since this is the default in Bootstrap */
 
