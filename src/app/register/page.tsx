@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import logo from "../../../public/images/logos/Crowd_Comic_Logo_BW.svg";
 
-const Login = () => {
+const Register = () => {
     return (
         <main className={styles.body}>
         <section id={styles.loginPage}>
@@ -15,6 +15,11 @@ const Login = () => {
             {/* FORM */}
             <form id={styles.loginForm}>
                 <h1 className={styles.h1}>LOGIN</h1>
+            {/* USERNAME */}
+            <div className={`mb-3 ${styles.formInputs}`}>
+                <label htmlFor ="inputUsername" className={styles.loginLabel}>Display Name</label>
+                <input type="username" className={`form-control`} id={styles.inputUsername} />
+            </div>
             {/* EMAIL */}
             <div className={`mb-3 ${styles.formInputs}`}>
                 <label htmlFor ="inputEmail" className={styles.loginLabel}>Email Address</label>
@@ -29,7 +34,7 @@ const Login = () => {
             </div>
 
             {/* REGISTER */}
-            <Link href="/register/"><button type="submit" id={styles.registerButton} className={`btn btn-primary`}>Create Account</button></Link>
+            <Link href="/comic"><button type="submit" id={styles.registerButton} className={`btn btn-primary`}>Sign Up</button></Link>
 
             {/* LOGIN */}
             <button type="submit" id={styles.loginButton} className={`btn btn-primary`}>Login</button>
@@ -38,4 +43,5 @@ const Login = () => {
         </main>
         );
     }
-export default Login
+    
+export default Register
