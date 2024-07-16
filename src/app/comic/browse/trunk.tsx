@@ -1,11 +1,10 @@
 interface Props {
     name: string;
 }
-const Trunk = ({name} : any) => {
-
+const Trunk = ({name} : Props) => {
     return (
         <>
-            <a href="">{name ?  name : "No name"}</a>
+            <a href={`/comic?id=${name}`}>{name ?  name : "No name"}</a>
         </>
     );
 }

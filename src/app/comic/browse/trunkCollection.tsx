@@ -2,13 +2,15 @@
 import { useEffect, useState } from "react";
 import Trunk from "./trunk";
 import * as apiCalls from "../../../api/apiCalls"
+import { isArray } from "util";
 
 interface PanelSet {
-    id : number
+    id : number,
 }
 const TrunkCollection = () =>  {
-    const [data, setData] = useState(null) as any;
+    const [data, setData] = useState<PanelSet[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string>("");
     useEffect(() => {
        async function fetchData() {
           setIsLoading(true);
@@ -16,23 +18,25 @@ const TrunkCollection = () =>  {
           setIsLoading(false);
           if(response instanceof Error)
           {
-            setData(response.message);
+            setError(response.message);
           }
           else
           {
             setData(response);
           }
-          console.log(response);
        }
        fetchData();
     }, []);
     if (isLoading) {
        return <div>Loading...</div>;
     }
-    if (data) {
-       return <ul>{data.map((ps : PanelSet) => (<Trunk name={ps.id.toString()} > </Trunk>))}</ul>;
+    if(error !== "") {
+        return <div>{error}</div>;
     }
-    return <div>{data}</div>;
+    if (data.length > 0) {
+       return <ul>{data.map((ps : PanelSet) => (<Trunk name={ps.id.toString()} ></Trunk>))}</ul>;
+    }
+    return <div>No trunks found</div>;
  }
 
 export default TrunkCollection;

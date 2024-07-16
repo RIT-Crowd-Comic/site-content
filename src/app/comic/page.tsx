@@ -1,5 +1,4 @@
 //This is the reading page where the user can read panels and click on branch hooks to pull up new panels
-
 import ReadPage from "@/components/ReadPage";
 
 //imported base trunk panels as static images
@@ -9,14 +8,20 @@ const thirdPanelImage = "/comic-panels/third_panel.png";
 
 // navbar
 import Navbar from "../../components/NavBar"
-
+import React from "react";
+import { useParams } from "react-router-dom";
 //set the base trunks to display by default on read
-const Read = () => {
-
-
+const Read = ({
+    params,
+    searchParams,
+  }: {
+    params: { id: number }
+    searchParams: { [key: string]: number | undefined }
+  }) => {
+    const { id } = searchParams;
     return (<>
         <Navbar />
-        <ReadPage />
+        <ReadPage id={Number(id)}/>
         {/* <div className="control-bar">
                 <button id="back-button">Back</button>
                 <button id="hook-toggle">Hook</button>

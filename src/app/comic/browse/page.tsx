@@ -1,9 +1,11 @@
 import { useState } from "react";
 import TrunkCollection from "./trunkCollection";
+import NavBar from "@/components/NavBar";
 const Browse = () => {
     return (
         <div>
-        <TrunkCollection></TrunkCollection>
+            <NavBar/> 
+            <TrunkCollection/>
         </div>
     );
 }
