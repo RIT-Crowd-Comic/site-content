@@ -136,6 +136,7 @@
 #fillLabel
 {
     background: url("../../public/images/icons/draw-icons/bucket.svg") no-repeat center/contain;
+    transform: scaleX(-1);
     width: 20px;
     height: 20px;
 }
@@ -180,6 +181,8 @@
     background: url("../../public/images/icons/draw-icons/eyeopen.svg") no-repeat center/contain;
     width: 20px;
     height: 20px;
+
+    margin-right: 5px;
 }
 
 .lockLabel
@@ -187,6 +190,8 @@
     background: url("../../public/images/icons/draw-icons/lock.svg") no-repeat center/contain;
     width: 20px;
     height: 20px;
+
+    margin-right: 5px;
 }
 
 .toolStyling:has([type=radio]:checked), .visibleStyling:has([type=checkbox]:checked)

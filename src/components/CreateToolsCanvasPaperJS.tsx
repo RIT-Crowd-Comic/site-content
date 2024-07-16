@@ -843,13 +843,13 @@ const CreateToolsCanvasPaperJS = () => {
                     </div>
 
                     <div id={styles.fillTool} className={styles.toolStyling}>
-                        <label htmlFor="eraser" id={styles.fillLabel}>
+                        <label htmlFor="fill" id={styles.fillLabel}>
                             <input type="radio" name="tools" id="fill" value={toolStates.FILL} onChange={findSelected} />
                         </label>
                     </div>
 
                     <div id={styles.shapeTool} className={styles.toolStyling}>
-                        <label htmlFor="eraser" id={styles.shapeLabel}>
+                        <label htmlFor="shape" id={styles.shapeLabel}>
                             <input type="radio" name="tools" id="shape" value={toolStates.SHAPE} onChange={findSelected} />
                         </label>
                     </div>
@@ -862,19 +862,19 @@ const CreateToolsCanvasPaperJS = () => {
                     </div>
 
                     <div id={styles.stickerTool} className={styles.toolStyling}>
-                        <label htmlFor="text" id={styles.stickerLabel}>
+                        <label htmlFor="sticker" id={styles.stickerLabel}>
                             <input type="radio" name="tools" id="sticker" value={toolStates.STICKER} onChange={findSelected} />
                         </label>
                     </div>
 
                     <div id={styles.selectTool} className={styles.toolStyling}>
-                        <label htmlFor="text" id={styles.selectLabel}>
+                        <label htmlFor="select" id={styles.selectLabel}>
                             <input type="radio" name="tools" id="select" value={toolStates.SELECT} onChange={findSelected} />
                         </label>
                     </div>
 
                     <div id={styles.transformTool} className={styles.toolStyling}>
-                        <label htmlFor="text" id={styles.transformLabel}>
+                        <label htmlFor="transform" id={styles.transformLabel}>
                             <input type="radio" name="tools" id="transform" value={toolStates.TRANSFORM} onChange={findSelected} />
                             {/* (SEMI FUNCTIONAL) */}
                         </label>
