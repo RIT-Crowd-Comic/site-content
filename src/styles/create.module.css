@@ -10,7 +10,7 @@
     background-color: #2d2d2d;
     max-width: 100%;
     padding-right: 0 !important;
-    overflow: hidden;
+    /* overflow: hidden; */
     background-image: radial-gradient(circle at center,
             #414141 0.15rem,
             transparent 0), radial-gradient(circle at center, #414141 0.15rem, transparent 0);
