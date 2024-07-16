@@ -21,7 +21,7 @@
 .h1
 {
     font-style: normal;
-
+    color: white;
     text-decoration: 3px underline dotted;
     text-underline-offset: 5px;
 
@@ -122,7 +122,7 @@
 
     .h1
     {
-        color: black;
+        color: rgb(255, 255, 255);
         margin-bottom: 40px;
         padding-top: 20px;
     }
