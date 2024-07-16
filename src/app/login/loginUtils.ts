@@ -50,15 +50,9 @@ const saveSession = async (user_id: string) => {
  * @param request 
  * @returns 
  */
-const updateSession = async (request: NextRequest) => {
-    const session = request.cookies.get('session')?.value;
-    if(!session) return;
-
-    const parsed = await decrypt(session);
-    parsed.expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-    const response = NextResponse.next();
-    response.cookies.set('session', await encrypt(parsed), {expires: parsed.expires, httpOnly: true});
-    return response;
+const updateSession = async (session_id: string) => {
+    const newExpiration = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    cookies().set('session', await encrypt(session_id), {expires: newExpiration, httpOnly: true});
 };
 
 /**
@@ -68,8 +62,11 @@ const updateSession = async (request: NextRequest) => {
 const authenticateSession = async () => {
     const session = cookies().get('session');
     if(!session) redirect('/login'); //TODO save where redirecting from
-    const dbSession = await getSession(await decrypt(session.value));
+    const session_id = await decrypt(session.value);
+    const dbSession = await getSession(session_id);
     if(!dbSession) redirect('/login');
+    //Refresh the session expiry
+    await updateSession(session_id);
     return await getUser(dbSession.user_id);
 };
 
