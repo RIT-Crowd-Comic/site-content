@@ -1,24 +1,20 @@
 "use client";
-import {useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import * as apiCalls from '../api/apiCalls'
 import styles from "@/styles/read.module.css";
+import Link from "next/link"
 interface Panel {
     id: number,
     index: number,
     imageStr: string
 }
-interface PanelSet {
-    id: number,
-    author_id: string,
-    panels: Panel[],
-    hook: number | null;
-}
 interface Props {
-    setting:string,
-    hook_state:string,
+    setting: string,
+    hook_state: string,
     images: string[],
-    actualHooks: any[]
+    actualHooks: any[],
+    currentId: number
 }
 
 //This is the actual comic panel element which already has the image elements provided. With some changes we could potentially just query the panel set here 
@@ -32,22 +28,29 @@ interface Props {
 
     NOTE - The current buttons in the html are hard coded and should be removed once the placeButtons() method is created. The positions for the buttons are also currently set in "read.css"
 */
-const ComicPanels = ({setting, hook_state, images, actualHooks}: Props) => {
-    const button_class= `${styles[hook_state]} ${styles.branchHook}`
+const ComicPanels = ({ setting, hook_state, images, actualHooks, currentId }: Props) => {
+    const button_class = `${styles[hook_state]} ${styles.branchHook}`
     // console.log(`body height attribute?: ${styles.body}`)
-    let bodyHeight=""
-    if(setting.includes("row")){
-        bodyHeight="rowBodyH"
-    }else{
-        bodyHeight="colBodyH"
+    let bodyHeight = ""
+    if (setting.includes("row")) {
+        bodyHeight = "rowBodyH"
+    } else {
+        bodyHeight = "colBodyH"
     }
     console.log(actualHooks[0])
+    function link(id: any) {
+        // 
+        const url = `/comic?id=${id === null ? currentId : id}`;
+        console.log(url)
+        return url;
+    }
     return (
         <main className={`${styles.body} ${styles[bodyHeight]}`}>
             <div id={`${styles.comicPanels}`} className={`${setting}`}>
+
                 <div className={`${styles.firstPanel}`}>
-                    <Image id="first-img" width="500" height="500" src={images[0]} alt="" className={setting}/>
-                    <button style={{visibility: actualHooks[0] !== undefined && actualHooks[0].next_panel_set_id !== null ? 'visible' : 'hidden' }} onClick={() => console.log('click')} id={`${styles.firstBranchHook}`} className={button_class}>1</button>
+                    <Image id="first-img" width="500" height="500" src={images[0]} alt="" className={setting} />
+                        <button onClick={() => link(actualHooks[0] === undefined ? currentId : actualHooks[0].next_panel_set_id)} id={`${styles.firstBranchHook}`} className={button_class}>1</button>
                 </div>
                 <div className={`${styles.secondPanel}`}>
                     <Image id="second-img" width="500" height="500" src={images[1]} alt="" className={setting} />
@@ -55,9 +58,9 @@ const ComicPanels = ({setting, hook_state, images, actualHooks}: Props) => {
                 <div className={`${styles.thirdPanel}`}>
                     <Image id="third-img" width="500" height="500" src={images[2]} alt="" className={setting} />
                     <div className="third-panel-container">
-                        <button style={{visibility: actualHooks[1] !== undefined && actualHooks[1].next_panel_set_id !== null ? 'visible' : 'hidden' }}  id={`${styles.secondBranchHook}`}  className={button_class}>2</button>
-                        <button style={{visibility: actualHooks[2] !== undefined && actualHooks[2].next_panel_set_id !== null ? 'visible' : 'hidden' }}  id={`${styles.thirdBranchHook}`}  className={button_class}><a href="/comic/create">3</a></button>
-                    </div>
+                        <button onClick={() => link(actualHooks[1] === undefined ? currentId : actualHooks[1].next_panel_set_id)} id={`${styles.secondBranchHook}`} className={button_class}>2</button>
+                        <button onClick={() => link(actualHooks[2] === undefined ? currentId : actualHooks[2].next_panel_set_id)} id={`${styles.thirdBranchHook}`} className={button_class}><a href="/comic/create">3</a></button>
+                    </div> 
                 </div>
             </div>
         </main>

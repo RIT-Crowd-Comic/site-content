@@ -72,7 +72,7 @@ const ReadPage = ({id}: Props) => {
             let goodHooks = [];
             for(let i = 0; i < hookResponses.length; i++) {
                 const h = hookResponses[i];
-                if(!( typeof h === 'string')) {
+                if(typeof h !== 'string') {
                     goodHooks.push(h);
                 }
             }
