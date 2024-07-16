@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { BranchHook, emptyPanelSet, PanelSet } from "./interfaces";
 import Panel from './Panel'
 import BranchPageControls from './BranchPageControls';
+import {publishHandler} from '../../api/apiCalls'
 
 const BranchPage = () => {
     const [parId, setparId] = useState(" ");
@@ -14,7 +15,7 @@ const BranchPage = () => {
     const [selectedHook, setSelectedHook] = useState<{ panelIndex: number, hookIndex: number }>();
     const [panelSet, setPanelSet] = useState<PanelSet>({
         current_panel_set_uuid: curId,
-        parent_branch_uuid: parId,
+        parent_branch_id: parId,
         panels: emptyPanelSet()
     });
     const [activePanel, setActivePanel] = useState(0);
@@ -119,6 +120,12 @@ const BranchPage = () => {
 
         window.location.href = "/comic"
     }
+    const pushToDatabase = async() => {
+        const response = await publishHandler(panelSet)
+        console.log("Publishing to local storage at: " + response);
+        window.location.href = "/comic"
+    }
+
 
 
 

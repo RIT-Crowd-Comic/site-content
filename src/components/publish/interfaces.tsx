@@ -8,7 +8,7 @@ export interface Panel {
 
 export interface PanelSet{
     current_panel_set_uuid: string,
-    parent_branch_uuid:string,
+    parent_branch_id: string,
     panels: Panel[]
 }
 
