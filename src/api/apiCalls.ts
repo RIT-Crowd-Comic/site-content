@@ -37,6 +37,22 @@ const postAPICall = async (url: string, body: object) => {
       });
 }
 
+const postAPICallFormData = async (url: string, formData: FormData) => {
+    return await fetch(url, {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response =>{return response.json()})
+    .then(json => {
+      if(json.message)
+        {return json.message};
+      return json;
+    })
+    .catch(error => {
+         return error;
+    });
+}
+
 /**
  * Get hook based on its id
  * @param id the id of the hook
@@ -337,9 +353,35 @@ const updatePanel = async (id: number, image: string) => {
     });
 }
 
+
+type hook = {
+    position: [
+        x: number,
+        y: number
+    ],
+    panel_index: number
+}
+const publish = async (image1 : File, image2 : File, image3 : File, authorId : string, hooks : Array<hook>, hookId : number | undefined) => {
+    //build the data json with the input
+    const data = {
+        author_id: authorId,
+        hook_id: hookId,
+        hooks: hooks
+    };
+    console.log(data);
+
+
+    const formData = new FormData();
+    formData.append('image1', image1);
+    formData.append('image2', image2);
+    formData.append('image3', image3);
+    formData.append('data', JSON.stringify(data, null, 2));
+    return postAPICallFormData(`/publish`, formData );
+}
+
 //todo implement the following
 // '/saveImage'
 //'/getImage/:id
 // '/addSetToHook'
 
-export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel }
+export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, publish }
