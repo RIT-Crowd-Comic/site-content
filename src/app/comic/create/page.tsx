@@ -1,5 +1,4 @@
 'use client';
-import CreateToolsCanvas from '../../../components/CreateToolsCanvas';
 import CreateToolsCanvasPaperJS from '../../../components/CreateToolsCanvasPaperJS';
 import Link from 'next/link';
 import styles from "@/styles/create.module.css";

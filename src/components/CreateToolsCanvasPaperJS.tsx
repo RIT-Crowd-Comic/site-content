@@ -1,14 +1,12 @@
-import { MutableRefObject, SyntheticEvent, use, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
-import paper, { project, tool, tools } from 'paper/dist/paper-core';
-import PenOptions from './PenOptions';
-import EraserOptions from './EraserOptions';
-import FillOptions from './FillOptions';
-import ShapeOptions from './ShapeOptions';
-import TextOptions from './TextOptions';
-import StickerOptions from './StickerOptions';
-import test from 'node:test';
-import { start } from 'repl';
+import paper from 'paper/dist/paper-core';
+import PenOptions from './create-tools/PenOptions';
+import EraserOptions from './create-tools/EraserOptions';
+import FillOptions from './create-tools/FillOptions';
+import ShapeOptions from './create-tools/ShapeOptions';
+import TextOptions from './create-tools/TextOptions';
+import StickerOptions from './create-tools/StickerOptions';
 import styles from "@/styles/create.module.css";
 import { Istok_Web } from 'next/font/google';
 
@@ -90,11 +88,11 @@ const CreateToolsCanvasPaperJS = () => {
     const [penColor, setPenColor] = useState<string>("black");
 
     // The Pen Tool:
-    const [penTool, setPenTool] = useState<paper.Tool>(new paper.Tool());
+    const penTool = useRef<paper.Tool>(new paper.Tool());
     let penPath: paper.Path | undefined;
 
     // Begins the process of drawing the user's input to the canvas HTMLElement
-    penTool.onMouseDown = function () {
+    penTool.current.onMouseDown = function () {
         if (canvasProject.activeLayer.locked == false) {
             penPath = new paper.Path();
             penPath.strokeColor = new paper.Color(penColor);
@@ -106,7 +104,7 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     // Continues drawing the user's input to the canvas HTMLElement
-    penTool.onMouseDrag = function (event: paper.ToolEvent) {
+    penTool.current.onMouseDrag = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
             penPath?.add(event.point);
         }
@@ -120,15 +118,15 @@ const CreateToolsCanvasPaperJS = () => {
     const [eraserSize, setEraserSize] = useState<number>(10);
 
     // The Eraser Tool:
-    const [eraserTool, setEraserTool] = useState<paper.Tool>(new paper.Tool());
-    eraserTool.minDistance = 5;
+    const eraserTool = useRef<paper.Tool>(new paper.Tool());
+    eraserTool.current.minDistance = 5;
 
     let eraserPath = useRef<paper.Path>(null).current;
     let tmpGroup = useRef<paper.Group>(null).current;
     let mask = useRef<paper.Group>(null).current;
 
     // Begins the process of drawing the user's input to the canvas HTMLElement
-    eraserTool.onMouseDown = function () {
+    eraserTool.current.onMouseDown = function () {
         if (canvasProject.activeLayer.locked == false) {
             let newPath = new paper.Path();
 
@@ -160,14 +158,14 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     // Continues drawing the user's input to the canvas HTMLElement
-    eraserTool.onMouseDrag = function (event: paper.ToolEvent) {
+    eraserTool.current.onMouseDrag = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
             eraserPath?.add(event.point);
             //console.log("pang");
         }
     }
 
-    eraserTool.onMouseUp = function () {
+    eraserTool.current.onMouseUp = function () {
         if (canvasProject.activeLayer.locked == false) {
             canvasProject.activeLayer.rasterize({ resolution: 300 });
             tmpGroup?.remove();
@@ -183,10 +181,10 @@ const CreateToolsCanvasPaperJS = () => {
     const [fillColor, setFillColor] = useState<string>("black");
 
     // The Fill Tool:
-    const [fillTool, setFillTool] = useState<paper.Tool>(new paper.Tool());
+    const fillTool = useRef<paper.Tool>(new paper.Tool());
 
     // Fills the canvas with the current selected color
-    fillTool.onMouseDown = function () {
+    fillTool.current.onMouseDown = function () {
         if (!canvasReference.current) {
             throw new Error("Canvas is null");
         }
@@ -241,8 +239,8 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     // The Shape Tool:
-    const [shapeTool, setShapeTool] = useState<paper.Tool>(new paper.Tool());
-    shapeTool.minDistance = 2;
+    const shapeTool = useRef<paper.Tool>(new paper.Tool());
+    shapeTool.current.minDistance = 2;
 
     function drawShape(shapePath: paper.Path) {
         // Discern which shape the user has chosen and create a path that matches
@@ -268,7 +266,7 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     //sets where the mouse is first clicked as the first point of the shape
-    shapeTool.onMouseDown = function (event: paper.ToolEvent) {
+    shapeTool.current.onMouseDown = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
             setStartPoint(event.point);
             setEndPoint(event.point);
@@ -279,7 +277,7 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     //sets where the mouse is dragged as the last point of the shape
-    shapeTool.onMouseDrag = function (event: paper.ToolEvent) {
+    shapeTool.current.onMouseDrag = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
             canvasProject.activeLayer.lastChild.remove();
 
@@ -292,7 +290,7 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     //once shape is created: adds it to elements array and then clears the states
-    shapeTool.onMouseUp = function () {
+    shapeTool.current.onMouseUp = function () {
         if (canvasProject.activeLayer.locked == false) {
             //creates & draws current rect to canvas if mouse was dragged
             if (mouseDragged) {
@@ -331,8 +329,9 @@ const CreateToolsCanvasPaperJS = () => {
     const [textColor, setTextColor] = useState<string>("black");
 
     // The Text Tool:
-    const [textTool, setTextTool] = useState<paper.Tool>(new paper.Tool());
-    let textPath: paper.PointText;
+    const textTool = useRef<paper.Tool>(new paper.Tool());
+    let textPath : paper.PointText;
+
     //let textToolTyperReference = useRef<HTMLTextAreaElement | null>(null);
 
     // Boolean that determines what state writing is in.  On first click, the user can continue typing into the textArea.  On second click it draws the content to the layer
@@ -340,9 +339,10 @@ const CreateToolsCanvasPaperJS = () => {
 
     // Point to draw the text starting at
 
-
-    textTool.onMouseDown = function (event: paper.ToolEvent) {
-        if (!isWriting) {
+  
+    textTool.current.onMouseDown = function(event: paper.ToolEvent) {
+        if(!isWriting)
+        {
             // Start the process of writing
             setIsWriting(true);
 
@@ -400,9 +400,9 @@ const CreateToolsCanvasPaperJS = () => {
     const [stickerMouseDragged, setStickerMouseDragged] = useState(false);
 
     // The Sticker Tool:
-    const [stickerTool, setStickerTool] = useState<paper.Tool>(new paper.Tool());
+    const stickerTool = useRef<paper.Tool>(new paper.Tool());
 
-    stickerTool.onMouseDrag = function (event: paper.ToolEvent) {
+    stickerTool.current.onMouseDrag = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
             setStickerMouseDragged(true);
             let tempSticker = new paper.Raster(stickerLink);
@@ -411,7 +411,7 @@ const CreateToolsCanvasPaperJS = () => {
         }
     }
 
-    stickerTool.onMouseUp = function (event: paper.ToolEvent) {
+    stickerTool.current.onMouseUp = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
             if (stickerMouseDragged == true) {
                 let sticker = new paper.Raster(stickerLink);
@@ -437,7 +437,7 @@ const CreateToolsCanvasPaperJS = () => {
     const [areaSelected, setAreaSelected] = useState(false);
 
     // The Select Tool:
-    const [selectTool, setSelectTool] = useState<paper.Tool>(new paper.Tool());
+    const selectTool = useRef<paper.Tool>(new paper.Tool());
 
     //resets all select state variables
     const resetSelectStates = () => {
@@ -456,7 +456,7 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     //starts selection of area of canvas (rasterized) chosen
-    selectTool.onMouseDown = function (event: paper.ToolEvent) {
+    selectTool.current.onMouseDown = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
             setStartSelectPoint(event.point);
             setEndSelectPoint(event.point);
@@ -464,7 +464,7 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     //updates selected area of canvas according to where the user drags their mouse
-    selectTool.onMouseDrag = function (event: paper.ToolEvent) {
+    selectTool.current.onMouseDrag = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
             if (areaSelected) {
                 canvasProject.activeLayer.lastChild.remove();
@@ -477,7 +477,7 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     //finishes selecting area and gets the area of the canvas selected
-    selectTool.onMouseUp = function () {
+    selectTool.current.onMouseUp = function () {
         if (canvasProject.activeLayer.locked == false) {
             if (selectMouseDragged) {
                 //only gets selected area if layer is not empty
@@ -643,7 +643,7 @@ const CreateToolsCanvasPaperJS = () => {
         let buttonSelected = document.querySelector("input[name='tools']:checked") as HTMLInputElement;
 
         if (Number(buttonSelected?.value) == toolStates.PEN) {
-            penTool.activate();
+            penTool.current.activate();
             setPenOptionsEnabled(true);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
@@ -653,7 +653,7 @@ const CreateToolsCanvasPaperJS = () => {
             setAreaSelected(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.ERASER) {
-            eraserTool.activate();
+            eraserTool.current.activate();
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(true);
             setFillOptionsEnabled(false);
@@ -663,7 +663,7 @@ const CreateToolsCanvasPaperJS = () => {
             setAreaSelected(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.FILL) {
-            fillTool.activate();
+            fillTool.current.activate();
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(true);
@@ -673,17 +673,29 @@ const CreateToolsCanvasPaperJS = () => {
             setAreaSelected(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.SHAPE) {
-            shapeTool.activate();
+            shapeTool.current.activate();
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
             setShapeOptionsEnabled(true);
+            setTextOptionsEnabled(false);
+            setStickerOptionsEnabled(false);
+            clearSelection();
+            setAreaSelected(false);
+        }
+        else if (Number(buttonSelected?.value) == toolStates.TEXT) {
+            textTool.current.activate();
+            setPenOptionsEnabled(false);
+            setEraserOptionsEnabled(false);
+            setFillOptionsEnabled(false);
+            setShapeOptionsEnabled(false);
+            setTextOptionsEnabled(true);
             setStickerOptionsEnabled(false);
             clearSelection();
             setAreaSelected(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.STICKER) {
-            stickerTool.activate();
+            stickerTool.current.activate();
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
@@ -699,7 +711,7 @@ const CreateToolsCanvasPaperJS = () => {
                 clearSelection();
                 setRasterInfo([raster]);
             }
-            selectTool.activate();
+            selectTool.current.activate();
             setAreaSelected(false);
             setSelectionInfo([]);
             setPenOptionsEnabled(false);
