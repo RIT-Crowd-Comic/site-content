@@ -265,6 +265,8 @@ const CreateToolsCanvasPaperJS = () => {
         else if (shapeSelected == shapeStates.HEXAGON) {
             const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
             shapePath = new paper.Path.RegularPolygon(centerPoint,6,centerPoint.x-startPoint.x);
+            // Rotated so that the bottom edge is parallel with the bottom of the screen
+            shapePath.rotate(30);
         }
         else if (shapeSelected == shapeStates.STAR) {
             const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
