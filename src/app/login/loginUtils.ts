@@ -85,17 +85,25 @@ const login = async (email: string, password: string) => {
     return await saveSession(user.id);
 };
 
-// Depending on how registering is handled, session saving may no be necessary
-// /**
-//  * Create a user a sign them in
-//  * @param email 
-//  * @param displayName 
-//  * @param password 
-//  * @returns 
-//  */
-// const register = async (email: string, displayName: string, password: string) => {
-//     const user = await createUser(email, displayName, password);
-//     //If user is an error, return that error
-//     if(!user || user instanceof Error) return user;
-//     return await saveSession(user.id);
-// }
+/**
+ * Create a user and redirect to login
+ * @param email user email (needs to be unique)
+ * @param displayName user display name
+ * @param password user password
+ * @returns 
+ */
+const register = async (email: string, displayName: string, password: string) => {
+    const user = await createUser(email, displayName, password);
+    //If user is an error, return that error and don't redirect
+    if(!user || user instanceof Error) return user;
+    redirect('/login');
+};
+
+/**
+ * Delete the session cookie to cause a logout
+ */
+const logout = async () => {
+    cookies().set('session', '', {expires: new Date(0)});
+}
+
+export {authenticateSession, login, register, logout};
