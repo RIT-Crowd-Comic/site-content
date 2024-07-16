@@ -7,8 +7,7 @@ export interface Panel {
 }
 
 export interface PanelSet{
-    current_panel_set_uuid: string,
-    parent_branch_id: string,
+    parent_branch_id: number | undefined,
     panels: Panel[]
 }
 
@@ -19,7 +18,7 @@ export const emptyPanelSet = () => [
 ];
 
 export interface BranchHook{
-    current_panel_id: number,
+    current_panel_index: number,
     points: number[][],
     next_panel_set_id?: string
 }

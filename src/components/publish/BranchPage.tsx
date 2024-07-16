@@ -1,20 +1,17 @@
 import styles from './BranchPage.module.css'
 
 import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { BranchHook, emptyPanelSet, PanelSet } from "./interfaces";
 import Panel from './Panel'
 import BranchPageControls from './BranchPageControls';
 import {publishHandler} from '../../api/apiCalls'
 
 const BranchPage = () => {
-    const [parId, setparId] = useState(" ");
-    const [curId] = useState(uuidv4());
+    const [parId, setparId] = useState<number | undefined>();
     const [addingHook, setAddingHook] = useState(false);
     const [confirmHook, setConfirmHook] = useState<number>();
     const [selectedHook, setSelectedHook] = useState<{ panelIndex: number, hookIndex: number }>();
     const [panelSet, setPanelSet] = useState<PanelSet>({
-        current_panel_set_uuid: curId,
         parent_branch_id: parId,
         panels: emptyPanelSet()
     });
@@ -23,6 +20,9 @@ const BranchPage = () => {
     const setActivePanelHooks = (hooks: BranchHook[], panelIndex: number) => {
         const panels = panelSet.panels;
         panels[panelIndex].hooks = hooks;
+        hooks.map(hook => {
+            hook.current_panel_index = panelIndex;
+        })
         setPanelSet({
             ...panelSet,
             panels
@@ -47,6 +47,11 @@ const BranchPage = () => {
         ];
 
         setImageLinks(storedImageLinks);
+
+        panelSet.panels[0].imgSrc = imageLinks[0];
+        panelSet.panels[1].imgSrc = imageLinks[1];
+        panelSet.panels[2].imgSrc = imageLinks[2];
+
         nextPanel(0);
         // selectHook(null);
     }, []);
@@ -114,16 +119,8 @@ const BranchPage = () => {
     so that the database can work as intended.
     */
     //packages ps and then pushes it to local storage
-    const pushToLocalStorage = () => {
-        console.log("Publishing to local storage at: " + panelSet.current_panel_set_uuid);
-        localStorage.setItem(panelSet.current_panel_set_uuid, JSON.stringify(panelSet));
-
-        window.location.href = "/comic"
-    }
     const pushToDatabase = async() => {
-        const response = await publishHandler(panelSet)
-        console.log("Publishing to local storage at: " + response);
-        window.location.href = "/comic"
+        return await publishHandler(panelSet)
     }
 
 
@@ -163,7 +160,10 @@ const BranchPage = () => {
                     addBranchHook={addBranchHook}
                     confirmBranchHook={() => confirmBranchHook(activePanel)}
                     removeBranchHook={removeBranchHook}
-                    publish={() => console.log(JSON.stringify(panelSet.panels))}
+                    publish={async() =>{
+                        const response = await pushToDatabase();
+                        console.log(response);
+                    }}
                 branchCount={panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)}
                 ></BranchPageControls>
                 {/* <div className={`${styles.buttonContainer}`}>

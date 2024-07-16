@@ -39,7 +39,7 @@ const postAPICall = async (url: string, body: object) => {
 }
 
 const postAPICallFormData = async (url: string, formData: FormData) => {
-    return await fetch(url, {
+    return await fetch(`${baseUrl}${url}`, {
       method: 'POST',
       body: formData,
     })
@@ -356,15 +356,12 @@ const updatePanel = async (id: number, image: string) => {
 
 
 type hook = {
-    position: [
-        x: number,
-        y: number
-    ],
+    position: { x: number; y: number; }[]
     panel_index: number
 }
 
 const fetchImage = async(imageUrl : string) =>{
-    return fetch(imageUrl)
+    return fetch("/comic-panels/first_panel.png")
         .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -389,21 +386,35 @@ const publishHandler = async(panelSet : PanelSet) =>{
         if(image2 instanceof Error) return new Error(`There was an error getting the 1st image: ${image2.message}`);
         const image3 = await fetchImage(panelSet.panels[0].imgSrc) as File | Error;
         if(image3 instanceof Error) return new Error(`There was an error getting the 1st image: ${image3.message}`);
-        
+
         //get the authorId - hardcode for now
-        const authorId = 'sdfsdgerfsdsdfgr'
+        const authorId = 'e76994a2-12d6-4c09-8599-d78f44383556'
 
         //get the hook data
+        const hooks  = [] as Array<hook>;
 
+        panelSet.panels.map( panel =>{
+            panel.hooks.map(hook =>{
+                const positions = hook.points.map(point =>{
+                   return{
+                        x: point[0],
+                        y: point[1]
+                    }
+                })
+                hooks.push(
+                    {
+                        position: positions,
+                        panel_index: hook.current_panel_index
+                    }
+                )
+            })
+        })
 
         //get the hookId
-        const parentHookID = panelSet.parent_branch_uuid;
-
-
+        const parentHookID = panelSet.parent_branch_id;
 
         //get the hook id
-        await publish(image1, image2, image3, )
-
+        return await publish(image1, image2, image3,authorId, hooks, parentHookID);
 }
 const publish = async (image1 : File, image2 : File, image3 : File, authorId : string, hooks : Array<hook>, hookId : number | undefined) => {
     const data = {
@@ -424,4 +435,4 @@ const publish = async (image1 : File, image2 : File, image3 : File, authorId : s
 //'/getImage/:id
 // '/addSetToHook'
 
-export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, publish }
+export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, publishHandler }
