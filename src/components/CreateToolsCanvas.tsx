@@ -256,12 +256,12 @@ const CreateToolsCanvas = () =>
     // Return the canvas HTMLElement and its associated functionality
     return(
         <div id={`${styles.createPage}`}>
-            <fieldset>
+            <fieldset id={`${styles.fieldSet}`}>
                 <legend>Tools</legend>
                 <div id={`${styles.toolRadioSelects}`}>
                     <div id="penTool">
                         <input type="radio" name="tools" id="pen" value={toolStates.PEN} defaultChecked onChange={findSelected}/>
-                        <label htmlFor="pen">Pen</label>
+                        <label htmlFor="pen"></label>
                     </div>
 
                     <div id="eraserTool">
