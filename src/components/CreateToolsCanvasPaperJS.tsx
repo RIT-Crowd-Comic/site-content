@@ -259,7 +259,8 @@ const CreateToolsCanvasPaperJS = () => {
         }
         else if (shapeSelected == shapeStates.TRIANGLE) {
             const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
-            shapePath = new paper.Path.RegularPolygon(centerPoint,3,centerPoint.x-startPoint.x);
+            const radius = Math.abs(centerPoint.x-startPoint.x);
+            shapePath = new paper.Path.RegularPolygon(centerPoint,3,radius);
         }
         else if (shapeSelected == shapeStates.HEXAGON) {
             const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
@@ -267,20 +268,8 @@ const CreateToolsCanvasPaperJS = () => {
         }
         else if (shapeSelected == shapeStates.STAR) {
             const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
-            const radius = centerPoint.x-startPoint.x;
-            const starPath = new paper.Path()
-            starPath.add(new paper.Point(centerPoint.x + (1*radius), centerPoint.y))
-            starPath.add(new paper.Point(centerPoint.x + (0.404*radius), centerPoint.y + (0.294*radius)))
-            starPath.add(new paper.Point(centerPoint.x + (0.309*radius), centerPoint.y + (0.951*radius)))
-            starPath.add(new paper.Point(centerPoint.x + (-0.154*radius), centerPoint.y + (0.475*radius)))
-            starPath.add(new paper.Point(centerPoint.x + (-0.809*radius), centerPoint.y + (0.588*radius)))
-            starPath.add(new paper.Point(centerPoint.x + (-0.5*radius), centerPoint.y + (0*radius)))
-            starPath.add(new paper.Point(centerPoint.x + (-0.809*radius), centerPoint.y + (-0.588*radius)))
-            starPath.add(new paper.Point(centerPoint.x + (-0.154*radius), centerPoint.y + (-0.475*radius)))
-            starPath.add(new paper.Point(centerPoint.x + (0.309*radius), centerPoint.y + (-0.951*radius)))
-            starPath.add(new paper.Point(centerPoint.x + (0.404*radius), centerPoint.y + (-0.294*radius)))
-            starPath.add(new paper.Point(centerPoint.x + (1*radius), centerPoint.y))
-            shapePath = starPath;
+            const radius = Math.abs(centerPoint.x-startPoint.x);
+            shapePath = new paper.Path.Star(centerPoint,5,radius, (radius)/2);
         }
 
         // Set the path's style to the user chosen style
