@@ -140,7 +140,6 @@ const CreateToolsCanvasPaperJS = () => {
 
             //console.log(canvasProject.current);
             //console.log(panelList);
-            console.log(canvasProject.current.activeLayer);
         }
     }
 
@@ -692,6 +691,7 @@ const CreateToolsCanvasPaperJS = () => {
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
             setShapeOptionsEnabled(false);
+            setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
             clearSelection();
             setAreaSelected(false);
@@ -702,6 +702,7 @@ const CreateToolsCanvasPaperJS = () => {
             setEraserOptionsEnabled(true);
             setFillOptionsEnabled(false);
             setShapeOptionsEnabled(false);
+            setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
             clearSelection();
             setAreaSelected(false);
@@ -712,6 +713,7 @@ const CreateToolsCanvasPaperJS = () => {
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(true);
             setShapeOptionsEnabled(false);
+            setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
             clearSelection();
             setAreaSelected(false);
@@ -744,6 +746,7 @@ const CreateToolsCanvasPaperJS = () => {
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
             setShapeOptionsEnabled(false);
+            setTextOptionsEnabled(false);
             setStickerOptionsEnabled(true);
             clearSelection();
             setAreaSelected(false);
@@ -762,6 +765,7 @@ const CreateToolsCanvasPaperJS = () => {
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
             setShapeOptionsEnabled(false);
+            setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.TRANSFORM) {
@@ -773,6 +777,7 @@ const CreateToolsCanvasPaperJS = () => {
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
             setShapeOptionsEnabled(false);
+            setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
         }
     }
@@ -925,13 +930,20 @@ const CreateToolsCanvasPaperJS = () => {
             layer2: layer2Reference.current?.exportJSON()
         }
 
+        // Save the layerData object to localStorage in JSON string form
         localStorage.setItem("panel-1-layerData", JSON.stringify(layerData));
     }
 
     // Creates an image out of the project's layers and saves it to localStorage for the publish page
     const toPublish = () =>
     {
+        // Saves the user's progress for them
+        save();
 
+        console.log(canvasProject.current?.exportSVG());
+
+        // Save the SVG Image to localStorage
+        //localStorage.setItem("image-1", JSON.stringify(canvasProject.current?.exportSVG()));
     }
 
     // Return the canvas HTMLElement and its associated functionality
@@ -995,8 +1007,8 @@ const CreateToolsCanvasPaperJS = () => {
                     <button className="btn" id="redoButton">Redo (NOT FUNCTIONAL)</button><br></br>
                     <button className="btn" id="undoButton">Undo (NOT FUNCTIONAL)</button><br></br>
                     <button className="btn" id="clearButton" onClick={clearLayer}>Clear Layer</button><br></br>
-                    <button className="btn" id="saveButton" onClick={save}>Save (NOT FUNCTIONAL)</button><br></br>
-                    <button className="btn" id="publishButton" >Publish (NOT FUNCTIONAL)</button><br></br>
+                    <button className="btn" id="saveButton" onClick={save}>Save</button><br></br>
+                    <button className="btn" id="publishButton" onClick={toPublish}>Publish (NOT FUNCTIONAL)</button><br></br>
                 </div>
 
                 <div id="backgroundUploadForm">
