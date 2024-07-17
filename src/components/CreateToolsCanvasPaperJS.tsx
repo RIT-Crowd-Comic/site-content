@@ -221,7 +221,10 @@ const CreateToolsCanvasPaperJS = () => {
     const shapeStates = Object.freeze({
         RECTANGLE: 0,
         LINE: 1,
-        ELLIPSE: 2
+        ELLIPSE: 2,
+        TRIANGLE: 3,
+        HEXAGON: 4,
+        STAR: 5
     });
 
     const [shapeSelected, setShapeSelected] = useState<number>(0);
@@ -254,6 +257,22 @@ const CreateToolsCanvasPaperJS = () => {
         }
         else if (shapeSelected == shapeStates.ELLIPSE) {
             shapePath = new paper.Path.Ellipse(new paper.Rectangle(startPoint, endPoint));
+        }
+        else if (shapeSelected == shapeStates.TRIANGLE) {
+            const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
+            const radius = Math.abs(centerPoint.x-startPoint.x);
+            shapePath = new paper.Path.RegularPolygon(centerPoint,3,radius);
+        }
+        else if (shapeSelected == shapeStates.HEXAGON) {
+            const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
+            shapePath = new paper.Path.RegularPolygon(centerPoint,6,centerPoint.x-startPoint.x);
+            // Rotated so that the bottom edge is parallel with the bottom of the screen
+            shapePath.rotate(30);
+        }
+        else if (shapeSelected == shapeStates.STAR) {
+            const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
+            const radius = Math.abs(centerPoint.x-startPoint.x);
+            shapePath = new paper.Path.Star(centerPoint,5,radius, (radius)/2);
         }
 
         // Set the path's style to the user chosen style
