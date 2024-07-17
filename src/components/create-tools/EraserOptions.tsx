@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import styles from "@/styles/create.module.css";
 
 interface Props 
 {
@@ -29,7 +28,7 @@ const EraserOptions = ({enabled, eraserSize, changeEraserSize} : Props) =>
     if(enabled)
     {
         return(
-            <div id="eraserTools" className={styles.toolStyles}>
+            <div id="eraserTools">
                 <h3>Eraser Tools</h3>
                 <div id="eraserSlider">
                     <label id="sliderLabel" htmlFor="eraserRange">Eraser Size: {eraserSize}</label>
