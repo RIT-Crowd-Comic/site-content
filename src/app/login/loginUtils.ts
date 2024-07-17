@@ -65,11 +65,12 @@ const authenticateSession = async () => {
     const session = cookies().get('session');
     if(!session) redirect('/sign-in'); //TODO save where redirecting from
     const session_id = await decrypt(session.value);
-    const dbSession = await getSession(session_id);
+    const dbSession = await getSession(session_id.sessionId);
     if(!dbSession) redirect('/sign-in');
     //Refresh the session expiry
     await updateSession(session_id);
-    return await getUser(dbSession.user_id);
+    const user = await getUser(dbSession.user_id);
+    return user;
 };
 
 /**
@@ -80,7 +81,7 @@ const authenticateSession = async () => {
  */
 const login = async (email: string, password: string) => {
     const user = await authenticate(email, password);
-    if(!user) return 'Incorrect username or password';
+    if(!user.id) return 'Incorrect username or password';
     await saveSession(user.id);
     redirect('/comic');
 };

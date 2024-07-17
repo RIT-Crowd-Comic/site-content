@@ -23,7 +23,7 @@ const registerAction = async (formData: FormData) => {
 };
 
 const testAuth = async (formData: FormData) => {
-    const user = loginUtils.authenticateSession();
+    const user = await loginUtils.authenticateSession();
     console.log(user);
 }
 

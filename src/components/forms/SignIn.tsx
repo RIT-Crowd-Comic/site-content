@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import logo from "../../../public/images/logos/Crowd_Comic_Logo_BW.svg";
 
-import {loginAction} from '@/app/login/actions';
+import {loginAction, testAuth} from '@/app/login/actions';
 
 //const forms = document.querySelectorAll('.needs-validation')
 
@@ -58,9 +58,8 @@ export function SignInForm()
             {/* REGISTER */}
             <Link href="sign-up"><button type="button" id={styles.registerButton} className={`btn btn-primary`}>Sign Up</button></Link>
 
-            
-            
             </form>
+            {/* FORM TO TEST authenticateSession <form action={testAuth}><button type="submit">Authenticate</button></form> */}
         </section>
         </main>
         );
