@@ -106,8 +106,7 @@
     width: 95vw;
 }
 
-.leftMission,
-.rightMission {
+.desktopMission {
     display: none;
 }
 
@@ -706,30 +705,24 @@
         display: none;
     }
 
-    .leftMission {
+    .desktopMission {
         display: inline;
         position: absolute;
-        height: 300px;
-        margin: -15% auto;
-    }
-
-    .rightMission {
-        display: inline;
-        position: absolute;
-        height: 250px;
-        margin: -4% auto;
+        width: 950px;
+        height: 350px;
+        margin: -15% -30px;
     }
 
     /* READ */
     .readSec {
         width: 992px;
-        margin: 20px auto;
+        margin: -20px auto 0;
     }
 
     .readHeading {
         background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
         padding: 2.5rem;
-        margin: 30px 30px 10px;
+        margin: 30px 30px -30px;
     }
 
     .readImage {
@@ -740,8 +733,8 @@
         background-color: white;
         border: solid 5px black;
         padding: 1rem;
-        width: 98%;
-        margin: -35px auto;
+        width: 90%;
+        margin: 6px auto;
     }
 
     .topRead,
@@ -752,20 +745,21 @@
     .desktopRead {
         display: inline;
         position: absolute;
+        width: 845px;
         height: 300px;
-        margin: -10% auto;
+        margin: -2% 3%;
     }
 
     /* CREATE */
     .createSec {
         width: 992px;
-        margin: 80px auto;
+        margin: 40px auto;
     }
 
     .createHeading {
         background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
         padding: 2rem;
-        margin: 0 30px 10px;
+        margin: 0 30px 5px;
     }
 
     .createImage {
@@ -775,9 +769,11 @@
     .createParagraph {
         background-color: white;
         border: solid 5px black;
+        
         padding: 1rem;
-        width: 98%;
-        margin: -30px 9px 30px;
+        width: 90%;
+        margin: -10px 0 20px 42px;
+        
     }
 
     .topCreate,
@@ -788,14 +784,20 @@
     .desktopCreate {
         display: inline;
         position: absolute;
-        height: 320px;
-        margin: -8% -10px;
+        width: 845px;
+        /* Original dimensions
+        height: 350px;
+        margin: -8% 17px;
+        */
+        height: 280px;
+        margin: -5% 25px;
+        transform: scaleX(-1);
     }
 
     /* GET STARTED */
 
     .getStarted {
-        margin: -70px auto 0px;
+        margin: -70px 0px -50px 20px;
     }
 
     .bookAnimation {
@@ -820,7 +822,7 @@
         padding: 0;
         background-size: 100% 100%;
         text-align: center;
-        margin: 0 auto;
+        margin: -60px auto -50px;
     }
 
     .ourTeam button {
@@ -831,8 +833,20 @@
     }
 
     .preview {
-        margin: 20px auto 0;
-        width: 892px;
+        margin: 0 auto;
+        width: 822px;
+    }
+
+    .panelOne {
+        margin: 0;
+    }
+
+    .panelTwo {
+        margin: -17% auto 0;
+    }
+
+    .panelThree {
+        margin: -17% 0 0 auto;
     }
 
     /* BACK TO TOP */
@@ -849,7 +863,11 @@
 @media (min-width: 1200px) {
 
     .body h2 {
-        font-size: 2.5rem;
+        font-size: 2.7rem;
+    }
+
+    .body p {
+        font-size: 1.4rem;
     }
 
     /* MISSION */
@@ -858,47 +876,113 @@
     }
 
     .missionParagraph {
-        margin: -30px auto 70px;
+        width: 86%;
+        height: auto;
+        padding: 1.2rem;
+        margin: -65px 83px 50px;
     }
 
-    .leftMission {
+    .desktopMission {
         display: inline;
         position: absolute;
-        height: 350px;
+        width: 1100px;
+        height: 405px;
         margin: -13% auto;
     }
 
-    .rightMission {
-        display: inline;
-        position: absolute;
-        height: 300px;
-        margin: -3% auto;
-    }
-
-
     /* READ */
     .readSec {
-        width: 1100px;
-        margin: 50px auto;
+        width: 1200px;
+        margin: 130px auto 0px;
+    }
+
+    .readHeading {
+        padding: 2.5rem;
+        margin: -110px 30px ;
     }
 
     .readParagraph {
-        margin: -45px auto 0;
+        padding: 1.2rem;
+        width: 85%;
+        height: auto;
+        margin: 0px 85px 10px;
+    }
+
+    .desktopRead {
+        width: 980px;
+        height: 350px;
+        margin: -3% 5%;
     }
 
     /* CREATE */
     .createSec {
-        width: 1100px;
-        margin: 30px auto;
+        width: 1200px;
+        margin: 40px auto 60px;
     }
 
+    .createHeading {
+        padding: 2.5rem;
+        margin: 0px 30px 20px;
+    }
+
+    .createParagraph {
+        padding: 1.2rem;
+        width: 85%;
+        height: auto;
+        margin: -30px 80px 10px;
+    }
+
+    .desktopCreate {
+        display: inline;
+        position: absolute;
+        width: 980px;
+        height: 350px;
+        margin: -7% 5%;
+    }
+
+    /* GET STARTED */
+
+    .getStarted {
+        margin: -70px 0px -50px 20px;
+    }
+
+    .bookAnimation {
+        width: 220px;
+        height: 220px;
+        top: 40px;
+        left: -110px;
+    }
+
+    .getStarted button {
+        font-size: 2.2rem;
+        width: 400px;
+        height: 250px;
+        padding: 1rem 1rem 2rem 1rem;
+    }
+
+    /* OUR TEAM */
+    .ourTeam {
+        width: 1200px;
+        height: 363px;
+        padding: 0;
+        background-size: 100% 100%;
+        text-align: center;
+        margin: -100px auto -50px;
+    }
+
+    .ourTeam button {
+        width: 300px;
+        height: 120px;
+        font-size: 2.2rem;
+
+    }
+
+    /* PREVIEW */
     .preview {
-        width: 1000px;
-        margin: 100px auto 0;
+        width: 950px;
     }
 
     /* BACK TO TOP */
-
     .scrollButtonContainer {
         width: 100px;
         height: 70px;
@@ -906,4 +990,6 @@
 }
 
 /* [xxl] Extra extra large devices, 1400px and up */
-@media (min-width: 1400px) {}
+@media (min-width: 1400px) {
+    
+}
