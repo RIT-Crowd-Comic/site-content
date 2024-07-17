@@ -5,6 +5,7 @@ import { BranchHook, emptyPanelSet, PanelSet } from "./interfaces";
 import Panel from './Panel'
 import BranchPageControls from './BranchPageControls';
 import {publishHandler} from '../../api/apiCalls'
+import { useRouter } from 'next/navigation'
 
 const BranchPage = () => {
     const [parId, setparId] = useState<number | undefined>();
@@ -29,6 +30,7 @@ const BranchPage = () => {
         });
     };
     const [errorMessage, setErrorMessage] = useState('');
+    const router = useRouter();
 
     // load images from create page
     const [imageLinks, setImageLinks] = useState([
@@ -120,10 +122,6 @@ const BranchPage = () => {
     so that the database can work as intended.
     */
     //packages ps and then pushes it to local storage
-    const pushToDatabase = async() => {
-        return await publishHandler(panelSet)
-    }
-
     return (<>
         <main className={`${styles.body}`}>
             <div id={styles.publishContainer}>
@@ -160,11 +158,28 @@ const BranchPage = () => {
                     removeBranchHook={removeBranchHook}
                     publish={async() =>{
 
-                        const response = await pushToDatabase();
+                        const response = await publishHandler(panelSet);
                         console.log(response);
 
-                        if(response instanceof Error) setErrorMessage("There was an error: " + response.message);
-                        if(response.error) setErrorMessage("There was an error: " + response.error);
+                        
+                        if(response.panel_set){
+                            const queryString = new URLSearchParams({panel_set_id: response.panel_set}).toString();
+                            router.push(`/comic/?${queryString}`);
+                        }    
+                        else {
+                            const errorMessage = response.message || response.error || "An unknown error occurred";
+                            setErrorMessage(`There was an error: ${errorMessage}`);
+                        }
+            
+                        /*
+                        get the data on the page this was sent to
+                            import { useRouter } from 'next/router';
+
+                            const page = () => {
+                                const router = useRouter();
+                                const { id, name } = router.query;
+                            }
+                        */
                     }}
                 branchCount={panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)}
                 ></BranchPageControls>
