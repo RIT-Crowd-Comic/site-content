@@ -26,8 +26,6 @@ const Create = () => {
     return (
         <main className={`${styles.body}`}>
             <CreateToolsCanvasPaperJS />
-            <button id='export-btn' onClick={exportToPNG}>Export To PNG</button>
-            <Link href="/comic/create/publish">Continue</Link>
         </main>
     );
 }
