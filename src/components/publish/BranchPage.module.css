@@ -46,10 +46,11 @@
     /* max-width: fit-content; */
     text-align: center;
     display: initial;
+    /* width: fit-content; */
 }
 
 .carouselView{
-    max-width:97vh;
+    /* max-width:97vh; */
     border: 5px solid black;
     outline: 15px solid white;
     margin:20px;
