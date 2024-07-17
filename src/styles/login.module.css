@@ -72,6 +72,12 @@
     margin: 0 5px;
 }
 
+#registerButton
+{
+    background-color: transparent;
+    border: none;
+}
+
 #loginButton:hover, #registerButton:hover
 {
     background-color:#242424;
