@@ -207,8 +207,56 @@
 
 .lockStyling:has([type=checkbox]:checked) .lockLabel
 {
-    background: url("../../public/images/icons/draw-icons/unlock.svg") no-repeat center/contain;
+    background: url("../../public/images/icons/draw-icons/lock.svg") no-repeat center/contain;
 }
+
+#functionButtons
+{
+    width: 20px;
+    height: auto;
+    display:flex;
+    flex-direction: column;
+    
+    justify-content: space-between;
+}
+
+#functionButtons label
+{
+    width: 100%;
+    height: 100%;
+
+    margin: 0 0 8px 0;
+}
+
+.backgroundUploadForm
+{
+    width: 20px;
+    height: 20px;
+
+    margin-bottom: 5px;
+}
+
+/* PUBLISH */
+.publishButton, .saveButton
+{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    background-color: white;
+    color: black;
+
+    padding: 5px;
+    border: 3px solid black;
+    border-bottom: 4px solid black;
+    margin: 0 5px 5px 0;
+}
+
+.saveButton
+{
+    right: 10%;
+}
+
 
 /* [xs] Extra small devices, less than 576px) */
 /* No media query for `xs` since this is the default in Bootstrap */

@@ -1146,9 +1146,6 @@ const CreateToolsCanvasPaperJS = () => {
 
                 <div id={styles.functionButtons}>
 
-                    <button className="btn" id="saveButton" onClick={save}>Save</button><br></br>
-                    <button className="btn" id="publishButton" onClick={toPublish}>Publish (NOT FUNCTIONAL)</button><br></br>
-
                     <label htmlFor="undoButton" id={styles.undoLabel}>
                         <button className="btn" id="undoButton"></button>
                     </label>
@@ -1245,7 +1242,7 @@ const CreateToolsCanvasPaperJS = () => {
                 </div>  
             </div>
 
-            <div id="panelSelect">
+            {/* <div id="panelSelect">
                 <div id="panel1">
                     <input type="radio" name="panels" id="panel1Select" value={0} defaultChecked />
                     <label htmlFor="panel1Select">Panel 1</label><br />
@@ -1260,9 +1257,9 @@ const CreateToolsCanvasPaperJS = () => {
                     <input type="radio" name="panels" id="panel3Select" value={2} />
                     <label htmlFor="panel3Select">Panel 3</label><br />
                 </div>
-            </div>
-
-            <Link href="/comic/create/publish" id={styles.publishButton}>PUBLISH</Link>
+            </div> */}
+            <button className={`btn ${styles.saveButton}`} id="saveButton" onClick={save}>SAVE</button><br></br>
+            <button className={`btn ${styles.publishButton}`} id="publishButton" onClick={toPublish}>PUBLISH</button><br></br>
         </div>
     )
 }
