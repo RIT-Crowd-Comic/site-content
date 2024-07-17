@@ -6,7 +6,9 @@ import Link from "next/link";
 
 import logo from "../../../public/images/logos/Crowd_Comic_Logo_BW.svg";
 
-const forms = document.querySelectorAll('.needs-validation')
+import {loginAction} from '@/app/login/actions';
+
+//const forms = document.querySelectorAll('.needs-validation')
 
 // Array.from(forms).forEach(form => {
 //     form.addEventListener('submit', event =>
@@ -26,13 +28,13 @@ export function SignInForm()
                 </div>
             </Link>
             {/* FORM */}
-            <form id={styles.loginForm} > {/*action={registerUser}*/}
+            <form id={styles.loginForm} action={loginAction} >
                 <h1 className={styles.h1}>Sign In</h1>
             {/* EMAIL */}
             <div className={`mb-3 ${styles.formInputs}`}>
                 <label htmlFor ="inputEmail" className={styles.loginLabel}>Email Address</label>
                 <input type="email" 
-                // name="email"
+                name="email"
                 placeholder="name@example.com"
                 className={`form-control`}
                 id={styles.inputEmail}
@@ -42,7 +44,7 @@ export function SignInForm()
             <div className={`mb-3 ${styles.formInputs}`}>
                 <label htmlFor ="inputPassword" className={styles.loginLabel}>Password</label>
                 <input type="password"
-                // name="password"
+                name="password"
                 placeholder="password"
                 className={`form-control`}
                 id={styles.inputPassword} />

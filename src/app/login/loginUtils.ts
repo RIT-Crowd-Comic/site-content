@@ -42,7 +42,7 @@ const decrypt = async (input: string) : Promise<any> => {
  */
 const saveSession = async (user_id: string) => {
     const session = await insertSession(user_id);
-    let sessionId = session.session_id;
+    let sessionId = session.id;
     sessionId = await encrypt({sessionId, expireDate});
     cookies().set('session', sessionId, {expires: expireDate, httpOnly: true});
 };
@@ -63,11 +63,10 @@ const updateSession = async (session_id: string) => {
  */
 const authenticateSession = async () => {
     const session = cookies().get('session');
-    console.log(session);
-    if(!session) redirect('/login'); //TODO save where redirecting from
+    if(!session) redirect('/sign-in'); //TODO save where redirecting from
     const session_id = await decrypt(session.value);
     const dbSession = await getSession(session_id);
-    if(!dbSession) redirect('/login');
+    if(!dbSession) redirect('/sign-in');
     //Refresh the session expiry
     await updateSession(session_id);
     return await getUser(dbSession.user_id);
@@ -83,7 +82,7 @@ const login = async (email: string, password: string) => {
     const user = await authenticate(email, password);
     if(!user) return 'Incorrect username or password';
     await saveSession(user.id);
-    //redirect('/');
+    redirect('/comic');
 };
 
 /**
@@ -97,7 +96,7 @@ const register = async (email: string, displayName: string, password: string) =>
     const user = await createUser(email, displayName, password);
     //If user is an error, return that error and don't redirect
     if(!user || user instanceof Error) return user;
-    //redirect('/login');
+    redirect('/sign-in');
 };
 
 /**

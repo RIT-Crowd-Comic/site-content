@@ -6,6 +6,8 @@ import Link from "next/link";
 
 import logo from "../../../public/images/logos/Crowd_Comic_Logo_BW.svg";
 
+import { registerAction } from "@/app/login/actions";
+
 export function SignUpForm() {
     return (
         <main className={styles.body}>
@@ -18,13 +20,13 @@ export function SignUpForm() {
             </Link>
             
             {/* FORM */}
-            <form id={styles.loginForm} className="needs-validation" noValidate>
+            <form id={styles.loginForm} className="needs-validation" action={registerAction} noValidate>
                 <h1 className={styles.h1}>Sign Up</h1>
             {/* USERNAME */}
             <div className={`mb-3 ${styles.formInputs}`}>
                 <label htmlFor ="inputUsername" className={styles.loginLabel}>Display Name</label>
                 <input type="displayname"
-                //name=displayname
+                name="displayName"
                 placeholder="name"
                 className={`form-control`}
                 id={styles.inputUsername} 
@@ -34,7 +36,7 @@ export function SignUpForm() {
             <div className={`mb-3 ${styles.formInputs}`}>
                 <label htmlFor ="inputEmail" className={styles.loginLabel}>Email Address</label>
                 <input type="email" 
-                // name="email"
+                name="email"
                 placeholder="name@example.com"
                 className={`form-control`}
                 id={styles.inputEmail}
@@ -45,7 +47,7 @@ export function SignUpForm() {
             <div className={`mb-3 ${styles.formInputs}`}>
                 <label htmlFor ="inputPassword" className={styles.loginLabel}>Password</label>
                 <input type="password"
-                // name="password"
+                name="password"
                 placeholder="password"
                 className={`form-control`}
                 id={styles.inputPassword}
@@ -56,10 +58,10 @@ export function SignUpForm() {
             </div>
 
             {/* REGISTER */}
-            <Link href="sign-in"><button type="submit" id={styles.loginButton} className={`btn btn-primary`}>Sign Up</button></Link>
+            <button type="submit" id={styles.loginButton} className={`btn btn-primary`}>Sign Up</button>
 
             {/* LOGIN */}
-            <button type="submit" id={styles.registerButton} className={`btn btn-primary`}>Sign In</button>
+            <Link href="sign-in"><button type="button" id={styles.registerButton} className={`btn btn-primary`}>Sign In</button></Link>
             </form>
         </section>
         </main>
