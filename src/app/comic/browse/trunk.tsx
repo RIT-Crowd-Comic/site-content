@@ -1,11 +1,11 @@
 interface Props {
     name: string;
 }
+import { useRouter } from 'next/navigation'
 const Trunk = ({name} : Props) => {
+    const router = useRouter()
     return (
-        <>
-            <a href={`/comic?id=${name}`}>{name ?  name : "No name"}</a>
-        </>
+        <button onClick={() => router.push(`/comic?id=${name}`)}>{name ?  name : "No name"}</button>
     );
 }
 
