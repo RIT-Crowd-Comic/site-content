@@ -8,8 +8,8 @@ import BootstrapClient from "../scripts/BootstrapClient";
 import localFont from 'next/font/local';
 
 //importing components
-import Navbar from "../components/NavBar"
-import Footer from "../components/footer"
+// import Navbar from "../components/NavBar"
+// import Footer from "../components/Footer"
 
 //creating font variables
 const backIssues = localFont({
@@ -58,7 +58,7 @@ const comicNeue = Comic_Neue({
 export const metadata: Metadata = {
   title: "Crowd Comic",
   description: "Collaborate Comic Creation",
-  icons: "../images/logos/Crowd_Comic_Favicon_BW.sv"
+  icons: "../images/icons/Favicon_BW.ico"
 };
 
 export default function RootLayout({

@@ -1,9 +1,7 @@
 'use client';
-import CreateToolsCanvas from '../../../components/CreateToolsCanvas';
 import CreateToolsCanvasPaperJS from '../../../components/CreateToolsCanvasPaperJS';
 import Link from 'next/link';
 import styles from "@/styles/create.module.css";
-import Footer from "@/components/footer";
 
 const exportToPNG = () => {
     //converts html canvas to png
@@ -23,7 +21,6 @@ const Create = () => {
             <CreateToolsCanvasPaperJS />
             <button id='export-btn' onClick={exportToPNG}>Export To PNG</button>
             <Link href="/comic/create/publish">Continue</Link>
-            <Footer/>
         </main>
     );
 }

@@ -32,6 +32,11 @@ a {
     text-decoration: none;
 }
 
+body
+{
+    overflow: auto !important;
+}
+
 /* NAVBAR */
 
 ::selection {
@@ -48,12 +53,61 @@ a {
 
 .navbar {
     background-color: var(--grayscale-background-color);
+    border-bottom: solid 3px black;
 }
 
 .nav-link,
 .nav-btn {
     color: var(--grayscale-primary-color);
     font-size: 1.5rem;
+}
+
+.nav-btn
+{
+    border: none;
+    padding: 8px 0;
+}
+
+.nav-btn:hover
+{
+    background-color: transparent;
+    border-bottom: none;
+}
+
+.nav-btn:active
+{   
+    background-color: transparent;
+    border: none;
+}
+
+.navbar-toggler
+{
+    border: solid 3px #000000;
+    border-bottom: solid 4px #000000;
+    color: black;
+    background-color: #898989;
+
+    box-shadow: none !important;
+}
+
+.navbar-toggler:hover
+{
+    background-color: #3e3e3e;
+    border: solid 3px #000000;
+    border-bottom: solid 4px #000000;
+}
+
+.navbar-toggler:active
+{   
+    background-color: #3e3e3e;
+    margin-top: 1px;
+    border: solid 3px #000000;
+}
+
+.navbar-nav
+{
+    text-align: left;
+    margin-left: 1.5rem;
 }
 
 .offcanvas-header {
@@ -69,7 +123,6 @@ a {
     justify-content: space-between;
     flex-flow: row wrap;
     z-index: 5;
-
     filter: grayscale(1);
 }
 
@@ -97,13 +150,12 @@ a {
 }
 
 .social-div {
-    flex-basis: 50%;
+    justify-content: flex-start;
 }
 
 .social {
     justify-content: space-between;
     text-align: right;
-    margin-bottom: 15px;
     padding: 10px;
 }
 
@@ -112,15 +164,14 @@ a {
     padding: 6px;
 }
 
-.footer-nav-list a,
+.footer-nav-list li,
 .footer-nav a {
     text-decoration: none;
-    /* color: var(--secondary-color); */
     color: var(--grayscale-text-bg-color);
-
+    padding: 5px;
 }
 
-.footer-nav-list a:hover,
+.footer-nav-list li:hover,
 .footer-nav a:hover {
     color: var(--grayscale-primary-color);
 }
@@ -129,6 +180,7 @@ a {
     position: relative;
     width: 25px;
     height: 25px;
+    text-align: start;
 }
 
 .icondiv:hover {
@@ -141,29 +193,73 @@ a {
     /* Yellow icons ^ */
 }
 
-.copyright {
+.copyright-div {
     font-family: var(--font-back-issues);
     color: var(--grayscale-primary-color);
     font-size: medium;
-    text-align: center;
-    margin: 0;
+    flex-basis: 100%;
+    text-align: left;
+    margin-left: 10px;
 }
 
 /* FORMS */
-.form-control
+.form-control, .form-select
 {
     margin: 0;
     max-width: 300px;
-
     border-radius: 6px;
     border: solid 3px #000000;
 }
 
-.form-control:focus
+.accordion-item
+{
+    border-radius: 6px;
+    border: solid 3px #000000;
+
+    background-color: black;
+}
+
+.form-control:focus, .team-form:focus, .form-select:focus
 {
     outline: none;
     border-color: #ffffff;
     box-shadow: 0 0 3px #ffffff;
+    background-color: white;
+}
+
+.accordion-body
+{
+    width: 100%;
+    margin: 0;
+}
+
+.input-group
+{
+    flex-wrap: nowrap !important;
+}
+
+.form-select:focus
+{
+    background-color: white;
+    color: black;
+}
+
+.accordion-button
+{
+    color: white;
+    filter: grayscale(1);
+    border-bottom: 3px solid black !important;
+}
+
+.accordion-button:hover, .accordion-button:focus
+{
+    outline: none;
+    box-shadow: none;
+}
+
+.btn
+{
+    color: white;
 }
 
 /* [xs] Extra small devices, less than 576px) */
@@ -183,10 +279,9 @@ a {
     }
 
     .copyright-div {
-        transform: translateY(-75%);
         flex-basis: 100%;
         text-align: center;
-        margin-bottom: 10px;
+        margin: 0;
     }
 
     .social-div {
@@ -195,8 +290,6 @@ a {
 
     .social {
         text-align: right;
-        margin-bottom: 0;
-        padding: 0;
     }
 
     .footer-nav {
@@ -205,7 +298,7 @@ a {
 
     .footer-nav-list {
       margin: 0;
-  }
+    }
 
     #scroll-text {
         font-size: 1.2rem;
@@ -217,7 +310,34 @@ a {
 @media (min-width: 768px) {}
 
 /* [lg] Large desktops, 992px and up */
-@media (min-width: 992px) {}
+@media (min-width: 992px) {
+    .nav-btn
+    {
+        border: solid 3px #000000;
+        border-bottom: solid 4px #000000;
+        color: black;
+        background-color: #898989;
+
+        padding: 8px;
+    }
+
+    .nav-btn:hover
+    {
+        border: solid 3px #000000;
+        border-bottom: solid 4px #000000;
+    }
+
+    .nav-btn:active
+    {   
+        margin-top: 1px;
+        border: solid 3px #000000;
+    }
+
+    .nav-item
+    {
+        margin: auto 1.5rem auto 0;
+    }
+}
 
 /* [xl] Extra large devices 1200px and up */
 @media (min-width: 1200px) {}

@@ -27,7 +27,6 @@ const IconToggleButton = ({source_1,source_2,setting,setSetting,state_1,state_2,
                 setSetting(state_1)
                 setSource(source_1)
             }
-        // console.log("changing to " + setting)
     }
 
 

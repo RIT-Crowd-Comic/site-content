@@ -5,7 +5,7 @@ import Link from 'next/link'
 import linkedin from "../../public/images/icons/LinkedIn.svg";
 import facebook from "../../public/images/icons/Facebook.svg";
 import github from "../../public/images/icons/Github.svg"
-import styles from "@/styles/publish.module.css"
+// import styles from "@/styles/publish.module.css"
 
 const Footer = () => {
     const current_year = new Date().getFullYear();
@@ -32,24 +32,21 @@ const Footer = () => {
                         <li>
                             <Link href="">
                                 <div className="icondiv">
-                                    <Image className="iconcolor" src={linkedin} alt="" fill={true} />
+                                    <Image className="iconcolor" src={linkedin} alt="LinkedIn" fill={true} />
                                 </div>
                             </Link>
                         </li>
-
-                        <li>
+                        {/* <li>
                             <Link href="">
                                 <div className="icondiv">
-                                    <Image className="iconcolor" src={facebook} alt="" fill={true} />
+                                    <Image className="iconcolor" src={facebook} alt="Facebook" fill={true} />
                                 </div>
                             </Link>
-                        </li>
-
-
+                        </li> */}
                         <li>
-                            <Link href="">
+                            <Link href="https://github.com/RIT-Crowd-Comic">
                                 <div className="icondiv">
-                                    <Image className="iconcolor" src={github} alt="" fill={true} />
+                                    <Image className="iconcolor" src={github} alt="GitHub" fill={true} />
                                 </div>
                             </Link>
                         </li>
@@ -61,12 +58,9 @@ const Footer = () => {
                 <p className='copyright'>Copyright © {current_year}</p>
             </div>
             {/* Socials */}
-            <div className="row">
-
-            </div>
+            <div className="row"></div>
             {/* /Socials */}
             {/* </div> */}
-
         </div>
     )
 }

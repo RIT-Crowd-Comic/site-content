@@ -6,7 +6,7 @@
     padding-right: 0 !important;
     overflow-x: clip;
     background-image: radial-gradient(circle at center,
-    #414141 0.15rem,
+            #414141 0.15rem,
             transparent 0), radial-gradient(circle at center, #414141 0.15rem, transparent 0);
     background-size: 1.3rem 1.3rem;
     background-position: 0 0, 0.65rem 0.65rem;
@@ -221,7 +221,7 @@
 
 .getStartedButton {
     border: 10px solid transparent;
-    background: url(../../public/images/background-boxes/Button_Box.svg) no-repeat center/contain;
+    background: url(../../public/images/background-boxes/bw/Get_Started_BW.svg) no-repeat center/contain;
     filter: brightness(.5);
     width: 100%;
     height: auto;
@@ -282,7 +282,7 @@
 
     position: absolute;
     left: -17%;
-    top: 5%;
+    top: 0;
 }
 
 .getStarted:hover .bookAnimation {
@@ -513,7 +513,7 @@
 
     /* MISSION */
 
-    
+
     .missionHeading {
         margin: 5vh 1vw auto auto;
     }
@@ -604,8 +604,7 @@
     }
 
     /* GET STARTED */
-    .getStarted
-    {
+    .getStarted {
         margin: -4vw auto 10vw;
     }
 
@@ -641,7 +640,7 @@
 @media (min-width: 992px) {
 
     .body h2 {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
     .body p {
@@ -678,31 +677,27 @@
     }
 
     /* MISSION */
-    .missionSec{
-        width: 90vw;
+    .missionSec {
+        width: 992px;
         margin: 0 auto;
-        max-width: 1350px;
     }
 
     .missionHeading {
         background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
         padding: 3rem 2rem;
-        margin: 50px auto;
+        margin: 50px 50px;
     }
 
-    .missionImage{
-
+    .missionImage {
         margin: 0 auto;
     }
 
     .missionParagraph {
         background-color: #ffffff;
-
         border: solid 5px black;
         padding: 1rem;
         width: 85%;
-        max-width: 920px;
-        margin: -20px auto 70px;
+        margin: -50px auto 50px;
     }
 
     .topMission,
@@ -712,7 +707,6 @@
 
     .leftMission {
         display: inline;
-
         position: absolute;
         height: auto;
         margin: -18% auto;
@@ -720,29 +714,24 @@
 
     .rightMission {
         display: inline;
-
         position: absolute;
         height: auto;
         margin: -3% auto;
     }
 
     /* READ */
-    .readSec{
-        width: 80vw;
-        max-width: 1200px;
+    .readSec {
+        width: 992px;
         margin: 50px auto;
     }
 
     .readHeading {
         background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
-        padding: 3.5rem;
+        padding: 2.5rem;
         margin: 30px auto 0;
     }
 
     .readImage {
-        font-size: 1.5vw;
-
-
         margin: 0 auto;
     }
 
@@ -751,7 +740,6 @@
         border: solid 5px black;
         padding: 1rem;
         width: 95%;
-        max-width: 920px;
         margin: 20px auto 30px;
     }
 
@@ -768,20 +756,18 @@
     }
 
     /* CREATE */
-    .createSec{
-        width: 80vw;
-        max-width: 1200px;
-        margin: 200px auto 0;
+    .createSec {
+        width: 992px;
+        margin: 120px auto 0;
     }
 
     .createHeading {
         background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
-        padding: 3rem;
+        padding: 2rem;
         margin: 10px auto -30px;
     }
 
     .createImage {
-        font-size: 1.5vw;
         margin: 0 auto;
     }
 
@@ -789,9 +775,8 @@
         background-color: white;
         border: solid 5px black;
         padding: 1rem;
-        max-width: 920px;
         width: 95%;
-        margin: 30px auto 0;
+        margin: 20px auto 0;
     }
 
     .topCreate,
@@ -808,45 +793,45 @@
 
     /* GET STARTED */
 
-    .getStarted
-    {
-        margin: 10px auto 50px;
+    .getStarted {
+        margin: -30px auto 50px;
     }
 
-    .bookAnimation
-    {
-        background-image: url(../../public/images/GIFs/book-split/Frame1.gif); 
-        width: 250px;
-        height: 250px;
-        top: 0px;
-        left: -130px;
+    .bookAnimation {
+        background-image: url(../../public/images/GIFs/book-split/Frame1.gif);
+        width: 200px;
+        height: 200px;
+        top: 20px;
+        left: -110px;
     }
 
     .getStarted button {
-        font-size: 2.5rem;
-        width: 450px;
+        font-size: 2rem;
+        width: 350px;
         height: 200px;
         padding: 1rem 1rem 2rem 1rem;
     }
 
     /* OUR TEAM */
     .ourTeam {
-        width: 100vw;
-        max-width: 1200px;
-        height: 30vw;
-        max-height: 350px;
+        width: 992px;
+        height: 300px;
         padding: 0;
         background-size: 100% 100%;
         text-align: center;
-        /* margin: 2vh auto 1vh; */
+        margin: 50px auto;
     }
 
     .ourTeam button {
-        font-size: 2.5rem;
+        width: 300px;
+        height: 120px;
+        font-size: 2rem;
+
     }
 
     .preview {
-        margin: 120px auto 0;
+        margin: 100px auto 0;
+        width: 992px;
     }
 
     /* BACK TO TOP */
@@ -861,6 +846,39 @@
 
 /* [xl] Extra large devices 1200px and up */
 @media (min-width: 1200px) {
+
+    .body h2 {
+        font-size: 2.5rem;
+    }
+
+    /* MISSION */
+    .missionSec {
+        width: 1200px;
+    }
+
+    .missionParagraph {
+        margin: -30px auto 70px;
+    }
+
+
+    /* READ */
+    .readSec {
+        width: 1100px;
+    }
+
+    .readParagraph {
+        margin: 50px auto 30px;
+    }
+
+    /* CREATE */
+    .createSec {
+        width: 1100px;
+    }
+
+    .preview {
+        width: 1100px;
+        margin: 150px auto 0;
+    }
 
     /* BACK TO TOP */
 

@@ -1,16 +1,15 @@
-import { MutableRefObject, SyntheticEvent, use, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
-import paper, { project, tool, tools } from 'paper/dist/paper-core';
-import PenOptions from './PenOptions';
-import EraserOptions from './EraserOptions';
-import FillOptions from './FillOptions';
-import ShapeOptions from './ShapeOptions';
-import TextOptions from './TextOptions';
-import StickerOptions from './StickerOptions';
-import test from 'node:test';
-import { start } from 'repl';
+import paper from 'paper/dist/paper-core';
+import PenOptions from './create-tools/PenOptions';
+import EraserOptions from './create-tools/EraserOptions';
+import FillOptions from './create-tools/FillOptions';
+import ShapeOptions from './create-tools/ShapeOptions';
+import TextOptions from './create-tools/TextOptions';
+import StickerOptions from './create-tools/StickerOptions';
 import styles from "@/styles/create.module.css";
 import { Istok_Web } from 'next/font/google';
+
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
 const CreateToolsCanvasPaperJS = () => {
@@ -90,11 +89,11 @@ const CreateToolsCanvasPaperJS = () => {
     const [penColor, setPenColor] = useState<string>("black");
 
     // The Pen Tool:
-    const [penTool, setPenTool] = useState<paper.Tool>(new paper.Tool());
+    const penTool = useRef<paper.Tool>(new paper.Tool());
     let penPath: paper.Path | undefined;
 
     // Begins the process of drawing the user's input to the canvas HTMLElement
-    penTool.onMouseDown = function () {
+    penTool.current.onMouseDown = function () {
         if (canvasProject.activeLayer.locked == false) {
             penPath = new paper.Path();
             penPath.strokeColor = new paper.Color(penColor);
@@ -106,7 +105,7 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     // Continues drawing the user's input to the canvas HTMLElement
-    penTool.onMouseDrag = function (event: paper.ToolEvent) {
+    penTool.current.onMouseDrag = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
             penPath?.add(event.point);
         }
@@ -120,15 +119,15 @@ const CreateToolsCanvasPaperJS = () => {
     const [eraserSize, setEraserSize] = useState<number>(10);
 
     // The Eraser Tool:
-    const [eraserTool, setEraserTool] = useState<paper.Tool>(new paper.Tool());
-    eraserTool.minDistance = 5;
+    const eraserTool = useRef<paper.Tool>(new paper.Tool());
+    eraserTool.current.minDistance = 5;
 
     let eraserPath = useRef<paper.Path>(null).current;
     let tmpGroup = useRef<paper.Group>(null).current;
     let mask = useRef<paper.Group>(null).current;
 
     // Begins the process of drawing the user's input to the canvas HTMLElement
-    eraserTool.onMouseDown = function () {
+    eraserTool.current.onMouseDown = function () {
         if (canvasProject.activeLayer.locked == false) {
             let newPath = new paper.Path();
 
@@ -160,14 +159,14 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     // Continues drawing the user's input to the canvas HTMLElement
-    eraserTool.onMouseDrag = function (event: paper.ToolEvent) {
+    eraserTool.current.onMouseDrag = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
             eraserPath?.add(event.point);
             //console.log("pang");
         }
     }
 
-    eraserTool.onMouseUp = function () {
+    eraserTool.current.onMouseUp = function () {
         if (canvasProject.activeLayer.locked == false) {
             canvasProject.activeLayer.rasterize({ resolution: 300 });
             tmpGroup?.remove();
@@ -183,10 +182,10 @@ const CreateToolsCanvasPaperJS = () => {
     const [fillColor, setFillColor] = useState<string>("black");
 
     // The Fill Tool:
-    const [fillTool, setFillTool] = useState<paper.Tool>(new paper.Tool());
+    const fillTool = useRef<paper.Tool>(new paper.Tool());
 
     // Fills the canvas with the current selected color
-    fillTool.onMouseDown = function () {
+    fillTool.current.onMouseDown = function () {
         if (!canvasReference.current) {
             throw new Error("Canvas is null");
         }
@@ -222,7 +221,10 @@ const CreateToolsCanvasPaperJS = () => {
     const shapeStates = Object.freeze({
         RECTANGLE: 0,
         LINE: 1,
-        ELLIPSE: 2
+        ELLIPSE: 2,
+        TRIANGLE: 3,
+        HEXAGON: 4,
+        STAR: 5
     });
 
     const [shapeSelected, setShapeSelected] = useState<number>(0);
@@ -241,8 +243,8 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     // The Shape Tool:
-    const [shapeTool, setShapeTool] = useState<paper.Tool>(new paper.Tool());
-    shapeTool.minDistance = 2;
+    const shapeTool = useRef<paper.Tool>(new paper.Tool());
+    shapeTool.current.minDistance = 2;
 
     function drawShape(shapePath: paper.Path) {
         // Discern which shape the user has chosen and create a path that matches
@@ -256,6 +258,22 @@ const CreateToolsCanvasPaperJS = () => {
         else if (shapeSelected == shapeStates.ELLIPSE) {
             shapePath = new paper.Path.Ellipse(new paper.Rectangle(startPoint, endPoint));
         }
+        else if (shapeSelected == shapeStates.TRIANGLE) {
+            const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
+            const radius = Math.abs(centerPoint.x-startPoint.x);
+            shapePath = new paper.Path.RegularPolygon(centerPoint,3,radius);
+        }
+        else if (shapeSelected == shapeStates.HEXAGON) {
+            const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
+            shapePath = new paper.Path.RegularPolygon(centerPoint,6,centerPoint.x-startPoint.x);
+            // Rotated so that the bottom edge is parallel with the bottom of the screen
+            shapePath.rotate(30);
+        }
+        else if (shapeSelected == shapeStates.STAR) {
+            const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
+            const radius = Math.abs(centerPoint.x-startPoint.x);
+            shapePath = new paper.Path.Star(centerPoint,5,radius, (radius)/2);
+        }
 
         // Set the path's style to the user chosen style
         shapePath.fillColor = new paper.Color(shapeFillColor);
@@ -268,7 +286,7 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     //sets where the mouse is first clicked as the first point of the shape
-    shapeTool.onMouseDown = function (event: paper.ToolEvent) {
+    shapeTool.current.onMouseDown = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
             setStartPoint(event.point);
             setEndPoint(event.point);
@@ -279,7 +297,7 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     //sets where the mouse is dragged as the last point of the shape
-    shapeTool.onMouseDrag = function (event: paper.ToolEvent) {
+    shapeTool.current.onMouseDrag = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
             canvasProject.activeLayer.lastChild.remove();
 
@@ -292,7 +310,7 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     //once shape is created: adds it to elements array and then clears the states
-    shapeTool.onMouseUp = function () {
+    shapeTool.current.onMouseUp = function () {
         if (canvasProject.activeLayer.locked == false) {
             //creates & draws current rect to canvas if mouse was dragged
             if (mouseDragged) {
@@ -331,8 +349,9 @@ const CreateToolsCanvasPaperJS = () => {
     const [textColor, setTextColor] = useState<string>("black");
 
     // The Text Tool:
-    const [textTool, setTextTool] = useState<paper.Tool>(new paper.Tool());
-    let textPath: paper.PointText;
+    const textTool = useRef<paper.Tool>(new paper.Tool());
+    let textPath : paper.PointText;
+
     //let textToolTyperReference = useRef<HTMLTextAreaElement | null>(null);
 
     // Boolean that determines what state writing is in.  On first click, the user can continue typing into the textArea.  On second click it draws the content to the layer
@@ -340,9 +359,10 @@ const CreateToolsCanvasPaperJS = () => {
 
     // Point to draw the text starting at
 
-
-    textTool.onMouseDown = function (event: paper.ToolEvent) {
-        if (!isWriting) {
+  
+    textTool.current.onMouseDown = function(event: paper.ToolEvent) {
+        if(!isWriting)
+        {
             // Start the process of writing
             setIsWriting(true);
 
@@ -400,9 +420,9 @@ const CreateToolsCanvasPaperJS = () => {
     const [stickerMouseDragged, setStickerMouseDragged] = useState(false);
 
     // The Sticker Tool:
-    const [stickerTool, setStickerTool] = useState<paper.Tool>(new paper.Tool());
+    const stickerTool = useRef<paper.Tool>(new paper.Tool());
 
-    stickerTool.onMouseDrag = function (event: paper.ToolEvent) {
+    stickerTool.current.onMouseDrag = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
             setStickerMouseDragged(true);
             let tempSticker = new paper.Raster(stickerLink);
@@ -411,7 +431,7 @@ const CreateToolsCanvasPaperJS = () => {
         }
     }
 
-    stickerTool.onMouseUp = function (event: paper.ToolEvent) {
+    stickerTool.current.onMouseUp = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
             if (stickerMouseDragged == true) {
                 let sticker = new paper.Raster(stickerLink);
@@ -437,7 +457,7 @@ const CreateToolsCanvasPaperJS = () => {
     const [areaSelected, setAreaSelected] = useState(false);
 
     // The Select Tool:
-    const [selectTool, setSelectTool] = useState<paper.Tool>(new paper.Tool());
+    const selectTool = useRef<paper.Tool>(new paper.Tool());
 
     //resets all select state variables
     const resetSelectStates = () => {
@@ -456,7 +476,7 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     //starts selection of area of canvas (rasterized) chosen
-    selectTool.onMouseDown = function (event: paper.ToolEvent) {
+    selectTool.current.onMouseDown = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
             setStartSelectPoint(event.point);
             setEndSelectPoint(event.point);
@@ -464,7 +484,7 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     //updates selected area of canvas according to where the user drags their mouse
-    selectTool.onMouseDrag = function (event: paper.ToolEvent) {
+    selectTool.current.onMouseDrag = function (event: paper.ToolEvent) {
         if (canvasProject.activeLayer.locked == false) {
             if (areaSelected) {
                 canvasProject.activeLayer.lastChild.remove();
@@ -477,7 +497,7 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     //finishes selecting area and gets the area of the canvas selected
-    selectTool.onMouseUp = function () {
+    selectTool.current.onMouseUp = function () {
         if (canvasProject.activeLayer.locked == false) {
             if (selectMouseDragged) {
                 //only gets selected area if layer is not empty
@@ -644,7 +664,7 @@ const CreateToolsCanvasPaperJS = () => {
         let buttonSelected = document.querySelector("input[name='tools']:checked") as HTMLInputElement;
 
         if (Number(buttonSelected?.value) == toolStates.PEN) {
-            penTool.activate();
+            penTool.current.activate();
             setPenOptionsEnabled(true);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
@@ -654,7 +674,7 @@ const CreateToolsCanvasPaperJS = () => {
             setAreaSelected(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.ERASER) {
-            eraserTool.activate();
+            eraserTool.current.activate();
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(true);
             setFillOptionsEnabled(false);
@@ -664,7 +684,7 @@ const CreateToolsCanvasPaperJS = () => {
             setAreaSelected(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.FILL) {
-            fillTool.activate();
+            fillTool.current.activate();
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(true);
@@ -674,17 +694,29 @@ const CreateToolsCanvasPaperJS = () => {
             setAreaSelected(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.SHAPE) {
-            shapeTool.activate();
+            shapeTool.current.activate();
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
             setShapeOptionsEnabled(true);
+            setTextOptionsEnabled(false);
+            setStickerOptionsEnabled(false);
+            clearSelection();
+            setAreaSelected(false);
+        }
+        else if (Number(buttonSelected?.value) == toolStates.TEXT) {
+            textTool.current.activate();
+            setPenOptionsEnabled(false);
+            setEraserOptionsEnabled(false);
+            setFillOptionsEnabled(false);
+            setShapeOptionsEnabled(false);
+            setTextOptionsEnabled(true);
             setStickerOptionsEnabled(false);
             clearSelection();
             setAreaSelected(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.STICKER) {
-            stickerTool.activate();
+            stickerTool.current.activate();
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
@@ -700,7 +732,7 @@ const CreateToolsCanvasPaperJS = () => {
                 clearSelection();
                 setRasterInfo([raster]);
             }
-            selectTool.activate();
+            selectTool.current.activate();
             setAreaSelected(false);
             setSelectionInfo([]);
             setPenOptionsEnabled(false);
@@ -815,53 +847,65 @@ const CreateToolsCanvasPaperJS = () => {
     // Return the canvas HTMLElement and its associated functionality
     return (
         <div id={`${styles.createPage}`}>
-            <fieldset>
+            <fieldset id={styles.fieldSet}>
                 <legend>Tools</legend>
-                <div id={`${styles.toolRadioSelects}`}>
-                    <div id="penTool">
-                        <input type="radio" name="tools" id="pen" value={toolStates.PEN} defaultChecked onChange={findSelected} />
-                        <label htmlFor="pen">Pen</label>
+                <div id={styles.toolRadioSelects}>
+                    <div id={styles.penTool} className={styles.toolStyling}>
+                        <label htmlFor="pen" id={styles.penLabel}>
+                            <input type="radio" name="tools" id="pen" value={toolStates.PEN} defaultChecked onChange={findSelected} />
+                        </label>
                     </div>
 
-                    <div id="eraserTool">
-                        <input type="radio" name="tools" id="eraser" value={toolStates.ERASER} onChange={findSelected} />
-                        <label htmlFor="eraser">Eraser</label>
+                    <div id={styles.eraserTool} className={styles.toolStyling}>
+                        <label htmlFor="eraser" id={styles.eraserLabel}>
+                            <input type="radio" name="tools" id="eraser" value={toolStates.ERASER} onChange={findSelected} />
+                        </label>
                     </div>
 
-                    <div id="fillTool">
-                        <input type="radio" name="tools" id="fill" value={toolStates.FILL} onChange={findSelected} />
-                        <label htmlFor="fill">Fill</label>
+                    <div id={styles.fillTool} className={styles.toolStyling}>
+                        <label htmlFor="eraser" id={styles.fillLabel}>
+                            <input type="radio" name="tools" id="fill" value={toolStates.FILL} onChange={findSelected} />
+                        </label>
                     </div>
 
-                    <div id="shapeTool">
-                        <input type="radio" name="tools" id="shape" value={toolStates.SHAPE} onChange={findSelected} />
-                        <label htmlFor="shape">Shape</label>
+                    <div id={styles.shapeTool} className={styles.toolStyling}>
+                        <label htmlFor="eraser" id={styles.shapeLabel}>
+                            <input type="radio" name="tools" id="shape" value={toolStates.SHAPE} onChange={findSelected} />
+                        </label>
                     </div>
 
-                    <div id="textTool">
-                        <input type="radio" name="tools" id="text" value={toolStates.TEXT} onChange={findSelected} />
-                        <label htmlFor="text">Text (HALF FUNCTIONAL)</label>
+                    <div id={styles.textTool} className={styles.toolStyling}>
+                        <label htmlFor="text" id={styles.textLabel}>
+                            <input type="radio" name="tools" id="text" value={toolStates.TEXT} onChange={findSelected} />
+                            {/* (HALF FUNCTIONAL) */}
+                        </label>
                     </div>
 
-                    <div id="stickerTool">
-                        <input type="radio" name="tools" id="sticker" value={toolStates.STICKER} onChange={findSelected} />
-                        <label htmlFor="sticker">Sticker</label>
+                    <div id={styles.stickerTool} className={styles.toolStyling}>
+                        <label htmlFor="text" id={styles.stickerLabel}>
+                            <input type="radio" name="tools" id="sticker" value={toolStates.STICKER} onChange={findSelected} />
+                        </label>
                     </div>
 
-                    <div id="selectTool">
-                        <input type="radio" name="tools" id="select" value={toolStates.SELECT} onChange={findSelected} />
-                        <label htmlFor="select">Select</label>
+                    <div id={styles.selectTool} className={styles.toolStyling}>
+                        <label htmlFor="text" id={styles.selectLabel}>
+                            <input type="radio" name="tools" id="select" value={toolStates.SELECT} onChange={findSelected} />
+                        </label>
                     </div>
 
-                    <div id="transformTool">
-                        <input type="radio" name="tools" id="transform" value={toolStates.TRANSFORM} onChange={findSelected} />
-                        <label htmlFor="transform">Transform (SEMI FUNCTIONAL)</label>
+                    <div id={styles.transformTool} className={styles.toolStyling}>
+                        <label htmlFor="text" id={styles.transformLabel}>
+                            <input type="radio" name="tools" id="transform" value={toolStates.TRANSFORM} onChange={findSelected} />
+                            {/* (SEMI FUNCTIONAL) */}
+                        </label>
                     </div>
                 </div>
 
-                <button className="btn" id="redoButton">Redo (NOT FUNCTIONAL)</button><br></br>
-                <button className="btn" id="undoButton">Undo (NOT FUNCTIONAL)</button><br></br>
-                <button className="btn" id="clearButton" onClick={clearLayer}>Clear</button><br></br>
+                <div id={styles.functionButtons}>
+                    <button className="btn" id="redoButton">Redo (NOT FUNCTIONAL)</button><br></br>
+                    <button className="btn" id="undoButton">Undo (NOT FUNCTIONAL)</button><br></br>
+                    <button className="btn" id="clearButton" onClick={clearLayer}>Clear</button><br></br>
+                </div>
 
                 <div id="backgroundUploadForm">
                     <form>
@@ -894,51 +938,56 @@ const CreateToolsCanvasPaperJS = () => {
                 <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
             </div>
 
-            <div id="layerOptions">
-                <div id="layer2">
-                    <div id="layer2Select">
-                        <input type="radio" name="layers" id="layer2" value='2' onChange={changeLayer} />
+            <div id={styles.layerOptions}>
+                <div id="layer2" className={styles.layer}>
+                    <div id="layer2Visibility" className={styles.visibleStyling}>
+                        <label htmlFor="layer2Toggle" className={styles.visibleLabel}>
+                            <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} defaultChecked></input>
+                        </label>
+                    </div>
+                    <div id="layer2Lock" className={styles.lockStyling}>
+                        <label htmlFor="layer2LockToggle" className={styles.lockLabel}>
+                            <input type="checkbox" id="layer2LockToggle" value="2" onChange={toggleLayerLock}></input>
+                        </label>
+                    </div>
+                    <div id="layer2Select" className={styles.layerSelect}>
+                        <input type="radio" name="layers" id="layer2" className={styles.layerSelectRadio} value='2' onChange={changeLayer} />
                         <label htmlFor="layer2">Layer 2</label><br />
                     </div>
-                    <div id="layer2Visibility">
-                        <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} defaultChecked></input>
-                        <label htmlFor="layer2Toggle">Visible</label>
-                    </div>
-                    <div id="layer2Lock">
-                        <input type="checkbox" id="layer2LockToggle" value="2" onChange={toggleLayerLock}></input>
-                        <label htmlFor="layer2LockToggle">Lock</label>
-                    </div>
                 </div>
 
-                <div id="layer1">
-                    <div id="layer1Select">
-                        <input type="radio" name="layers" id="layer1" value='1' defaultChecked onChange={changeLayer} />
-                        <label htmlFor="layer1">Layer 1</label><br />
+                <div id="layer1" className={styles.layer}>
+                    <div id="layer2Visibility" className={styles.visibleStyling}>
+                        <label htmlFor="layer1Toggle" className={styles.visibleLabel}>
+                            <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} defaultChecked></input>
+                        </label>
                     </div>
-                    <div id="layer2Visibility">
-                        <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} defaultChecked></input>
-                        <label htmlFor="layer1Toggle">Visible</label>
+                    <div id="layer1Lock" className={styles.lockStyling}>
+                        <label htmlFor="layer1LockToggle" className={styles.lockLabel}>
+                            <input type="checkbox" id="layer1LockToggle" value="2" onChange={toggleLayerLock}></input>
+                        </label>
                     </div>
-                    <div id="layer1Lock">
-                        <input type="checkbox" id="layer1LockToggle" value="1" onChange={toggleLayerLock}></input>
-                        <label htmlFor="layer1LockToggle">Lock</label>
+                    <div id="layer1Select" className={styles.layerSelect}>
+                        <input type="radio" name="layers" id="layer1"className={styles.layerSelectRadio} value='1' defaultChecked onChange={changeLayer} />
+                        <label htmlFor="layer1">Layer 1</label><br/>
                     </div>
                 </div>
-
-                <div id="backgroundLayer">
-                    <div id="backgroundLayerSelect">
-                        <input type="radio" name="layers" id="background" value='0' onChange={changeLayer} />
+                <div id="backgroundLayer" className={styles.layer}>
+                    <div id="backgroundLayerVisibility" className={styles.visibleStyling}>
+                        <label htmlFor="backgroundToggle" className={styles.visibleLabel}>
+                            <input type="checkbox" id="backgroundToggle" value="0" onChange={toggleLayerVisibility} defaultChecked></input>
+                        </label>
+                    </div>
+                    <div id="backgroundLayerLock" className={styles.lockStyling}>
+                        <label htmlFor="backgroundLayerLockToggle" className={styles.lockLabel}>
+                            <input type="checkbox" id="backgroundLayerLockToggle" value="0" onChange={toggleLayerLock}></input>
+                        </label>
+                    </div>
+                    <div id="backgroundLayerSelect" className={styles.layerSelect}>
+                        <input type="radio" name="layers" id="background" className={styles.layerSelectRadio} value='0' onChange={changeLayer} />
                         <label htmlFor="background">Background</label><br />
                     </div>
-                    <div id="backgroundLayerVisibility">
-                        <input type="checkbox" id="backgroundToggle" value="0" onChange={toggleLayerVisibility} defaultChecked></input>
-                        <label htmlFor="backgroundToggle">Visible</label>
-                    </div>
-                    <div id="backgroundLayerLock">
-                        <input type="checkbox" id="backgroundLayerLockToggle" value="0" onChange={toggleLayerLock}></input>
-                        <label htmlFor="backgroundLayerLockToggle">Lock</label>
-                    </div>
-                </div>
+                </div>  
             </div>
         </div>
     )
