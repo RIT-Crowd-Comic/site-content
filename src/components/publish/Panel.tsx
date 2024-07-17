@@ -98,7 +98,7 @@ const Panel = ({
                     [
                         ...hooks,
                         {
-                            current_panel_id: 123412341234,
+                            current_panel_index: 0, //set to zero, will get reset before publish
                             points: vertices
                         }
                     ],
