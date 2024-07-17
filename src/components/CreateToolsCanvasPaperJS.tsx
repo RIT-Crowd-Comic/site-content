@@ -65,6 +65,7 @@ const CreateToolsCanvasPaperJS = () => {
         try
         {
             let jsonData = localStorage.getItem("panel-1-layerData");
+            //let jsonImageData = localStorage.getItem("image-1");
 
             if(jsonData)
             {
@@ -73,6 +74,12 @@ const CreateToolsCanvasPaperJS = () => {
                 layer1Reference.current.importJSON(layerData.layer1);
                 layer2Reference.current.importJSON(layerData.layer2);
             }
+
+            /*if(jsonImageData)
+            {
+                let imageData = JSON.parse(jsonImageData);
+                console.log(imageData);
+            }*/
         }
         catch
         {
@@ -193,7 +200,6 @@ const CreateToolsCanvasPaperJS = () => {
                 children: [eraserPath, tmpGroup],
                 blendMode: 'source-over'
             });
-            //console.log("ping");
         }
     }
 
@@ -201,7 +207,6 @@ const CreateToolsCanvasPaperJS = () => {
     eraserTool.current.onMouseDrag = function (event: paper.ToolEvent) {
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             eraserPath?.add(event.point);
-            //console.log("pang");
         }
     }
 
@@ -940,10 +945,14 @@ const CreateToolsCanvasPaperJS = () => {
         // Saves the user's progress for them
         save();
 
+        /*let imageData = {
+            panel1: canvasProject.current?.exportSVG()
+        }*/
+
         console.log(canvasProject.current?.exportSVG());
 
         // Save the SVG Image to localStorage
-        //localStorage.setItem("image-1", JSON.stringify(canvasProject.current?.exportSVG()));
+        //localStorage.setItem("image-1", JSON.stringify(imageData));
     }
 
     // Return the canvas HTMLElement and its associated functionality
