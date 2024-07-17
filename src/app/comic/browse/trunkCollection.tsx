@@ -20,6 +20,10 @@ const TrunkCollection = () =>  {
           {
             setError(response.message);
           }
+          else if(typeof response === 'string')
+          {
+            setError(response);
+          }
           else
           {
             setData(response);
@@ -34,6 +38,7 @@ const TrunkCollection = () =>  {
         return <div>{error}</div>;
     }
     if (data.length > 0) {
+      console.log(data)
        return <ul>{data.map((ps : PanelSet) => (<Trunk name={ps.id.toString()} ></Trunk>))}</ul>;
     }
     return <div>No trunks found</div>;

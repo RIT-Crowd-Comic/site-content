@@ -39,7 +39,7 @@ const ComicPanels = ({ setting, hook_state, images, actualHooks, currentId }: Pr
     }
     console.log(actualHooks[0])
     function link(id: any) {
-        // 
+        console.log(id);
         const url = `/comic?id=${id === null ? currentId : id}`;
         console.log(url)
         return url;
@@ -47,10 +47,11 @@ const ComicPanels = ({ setting, hook_state, images, actualHooks, currentId }: Pr
     return (
         <main className={`${styles.body} ${styles[bodyHeight]}`}>
             <div id={`${styles.comicPanels}`} className={`${setting}`}>
-
+                <h1 style={{ color: 'orange' }}>{`${currentId}P`}</h1>
                 <div className={`${styles.firstPanel}`}>
                     <Image id="first-img" width="500" height="500" src={images[0]} alt="" className={setting} />
-                        <button onClick={() => link(actualHooks[0] === undefined ? currentId : actualHooks[0].next_panel_set_id)} id={`${styles.firstBranchHook}`} className={button_class}>1</button>
+                        <a style={{ color: 'red' }} href={`${link(actualHooks[0] === undefined ? currentId : actualHooks[0].next_panel_set_id)}`}>1</a>
+                        {/* <button onClick={() => } id={`${styles.firstBranchHook}`} className={button_class}>1</button> */}
                 </div>
                 <div className={`${styles.secondPanel}`}>
                     <Image id="second-img" width="500" height="500" src={images[1]} alt="" className={setting} />
@@ -58,8 +59,8 @@ const ComicPanels = ({ setting, hook_state, images, actualHooks, currentId }: Pr
                 <div className={`${styles.thirdPanel}`}>
                     <Image id="third-img" width="500" height="500" src={images[2]} alt="" className={setting} />
                     <div className="third-panel-container">
-                        <button onClick={() => link(actualHooks[1] === undefined ? currentId : actualHooks[1].next_panel_set_id)} id={`${styles.secondBranchHook}`} className={button_class}>2</button>
-                        <button onClick={() => link(actualHooks[2] === undefined ? currentId : actualHooks[2].next_panel_set_id)} id={`${styles.thirdBranchHook}`} className={button_class}><a href="/comic/create">3</a></button>
+                        <a style={{ color: 'red' }} href={`${link(actualHooks[1] === undefined ? currentId : actualHooks[1].next_panel_set_id)}`}>2</a>
+                        <a style={{ color: 'red' }} href={`${link(actualHooks[2] === undefined ? currentId : actualHooks[2].next_panel_set_id)}`}>3</a>
                     </div> 
                 </div>
             </div>

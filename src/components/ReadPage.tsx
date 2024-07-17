@@ -67,19 +67,7 @@ const ReadPage = ({id}: Props) => {
             const hookResponse1 = await apiCalls.getHooksFromPanel(Number(panelSetResponse.panels[0].id));
             const hookResponse2 = await apiCalls.getHooksFromPanel(Number(panelSetResponse.panels[1].id));
             const hookResponse3 = await apiCalls.getHooksFromPanel(Number(panelSetResponse.panels[2].id));
-            //? I for some reason can't use the filter method on this method. If someone figures it out, replace the for loop
-            let hookResponses = hookResponse1.concat(hookResponse2).concat(hookResponse3);
-            let goodHooks = [];
-            for(let i = 0; i < hookResponses.length; i++) {
-                const h = hookResponses[i];
-                if(typeof h !== 'string') {
-                    goodHooks.push(h);
-                }
-            }
-
-            console.log(hookResponses);
-            console.log(goodHooks);
-
+            let hookResponses = hookResponse1.concat(hookResponse2).concat(hookResponse3).filter((p: any) => typeof p !== 'string');
             const panels = [] as Panel[];
             //? would prefer if this were array functions like (map and any) while setting the panel set
             for(let i = 0; i < panelSetResponse.panels.length; i++) {
@@ -93,7 +81,7 @@ const ReadPage = ({id}: Props) => {
                          panels: panels,
                          hook: panelSetResponse.hook
              });
-             setActualHooks(goodHooks)
+             setActualHooks(hookResponses)
            }
            setIsLoading(false);
         }
@@ -107,7 +95,7 @@ const ReadPage = ({id}: Props) => {
         return <div>{error}</div>;
     }
     return (<>
-        <ComicPanels setting={layout} hook_state={hooks} images={[firstPanelImage,secondPanelImage,thirdPanelImage] } actualHooks={actualHooks}/>
+        <ComicPanels setting={layout} hook_state={hooks} images={[firstPanelImage,secondPanelImage,thirdPanelImage] } actualHooks={actualHooks} currentId={id}/>
         <div className={`${styles.controlBar}`} >
                 <button style={{visibility: panelSet?.hook !== null ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}></img></button>
                 <IconToggleButton setting={hooks} setSetting={setHooks} state_1="baseHooks" state_2="popHooks" buttonId="hooksToggle" source_1={toggleHooksOff} source_2={toggleHooksOn}/>
