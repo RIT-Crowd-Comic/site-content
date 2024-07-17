@@ -337,9 +337,23 @@ const updatePanel = async (id: number, image: string) => {
     });
 }
 
+/**
+ * Get a list of hooks from a panel set
+ * @param id the id of the panel set
+ * @returns 
+ */
+const getHooksFromPanelSetById = async(id: number) => {
+    const api_response = await getAPICall(`/panel_sets/${id}/hooks`);
+    if(api_response.message)
+    {
+        return Error(api_response.message);
+    }
+    else return api_response;
+}
+
 //todo implement the following
 // '/saveImage'
 //'/getImage/:id
 // '/addSetToHook'
 
-export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel }
+export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, getHooksFromPanelSetById }

@@ -14,7 +14,8 @@ interface Props {
     hook_state: string,
     images: string[],
     actualHooks: any[],
-    currentId: number
+    currentId: number,
+    router: any
 }
 
 //This is the actual comic panel element which already has the image elements provided. With some changes we could potentially just query the panel set here 
@@ -28,21 +29,27 @@ interface Props {
 
     NOTE - The current buttons in the html are hard coded and should be removed once the placeButtons() method is created. The positions for the buttons are also currently set in "read.css"
 */
-const ComicPanels = ({ setting, hook_state, images, actualHooks, currentId }: Props) => {
+const ComicPanels = ({ setting, hook_state, images, actualHooks, currentId, router }: Props) => {
     const button_class = `${styles[hook_state]} ${styles.branchHook}`
-    // console.log(`body height attribute?: ${styles.body}`)
     let bodyHeight = ""
     if (setting.includes("row")) {
         bodyHeight = "rowBodyH"
     } else {
         bodyHeight = "colBodyH"
     }
-    console.log(actualHooks[0])
-    function link(id: any) {
-        console.log(id);
-        const url = `/comic?id=${id === null ? currentId : id}`;
-        console.log(url)
-        return url;
+    function link(actualHook: any) 
+    {
+        if(actualHook !== undefined && actualHook.next_panel_set_id !== null){
+            return `/comic?id=${actualHook.next_panel_set_id}`;
+        }
+        return `/comic/create`;
+    }
+    function displayLink(actualHook: any)
+    {
+        if(actualHook !== undefined && actualHook.next_panel_set_id !== null){
+            return actualHook.next_panel_set_id;
+        }
+        return '?';
     }
     return (
         <main className={`${styles.body} ${styles[bodyHeight]}`}>
@@ -50,8 +57,7 @@ const ComicPanels = ({ setting, hook_state, images, actualHooks, currentId }: Pr
                 <h1 style={{ color: 'orange' }}>{`${currentId}P`}</h1>
                 <div className={`${styles.firstPanel}`}>
                     <Image id="first-img" width="500" height="500" src={images[0]} alt="" className={setting} />
-                        <a style={{ color: 'red' }} href={`${link(actualHooks[0] === undefined ? currentId : actualHooks[0].next_panel_set_id)}`}>1</a>
-                        {/* <button onClick={() => } id={`${styles.firstBranchHook}`} className={button_class}>1</button> */}
+                        <a style={{ color: 'red' }} href={`${link(actualHooks[0])}`}>{displayLink(actualHooks[0])}</a>
                 </div>
                 <div className={`${styles.secondPanel}`}>
                     <Image id="second-img" width="500" height="500" src={images[1]} alt="" className={setting} />
@@ -59,8 +65,8 @@ const ComicPanels = ({ setting, hook_state, images, actualHooks, currentId }: Pr
                 <div className={`${styles.thirdPanel}`}>
                     <Image id="third-img" width="500" height="500" src={images[2]} alt="" className={setting} />
                     <div className="third-panel-container">
-                        <a style={{ color: 'red' }} href={`${link(actualHooks[1] === undefined ? currentId : actualHooks[1].next_panel_set_id)}`}>2</a>
-                        <a style={{ color: 'red' }} href={`${link(actualHooks[2] === undefined ? currentId : actualHooks[2].next_panel_set_id)}`}>3</a>
+                        <a style={{ color: 'red' }} href={`${link(actualHooks[1])}`}>{displayLink(actualHooks[1])}</a>
+                        <a style={{ color: 'red' }} href={`${link(actualHooks[2])}`}>{displayLink(actualHooks[2])}</a>
                     </div> 
                 </div>
             </div>

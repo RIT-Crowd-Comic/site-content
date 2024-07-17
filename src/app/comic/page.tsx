@@ -9,7 +9,6 @@ const thirdPanelImage = "/comic-panels/third_panel.png";
 // navbar
 import Navbar from "../../components/NavBar"
 import React from "react";
-import { useParams } from "react-router-dom";
 //set the base trunks to display by default on read
 const Read = ({
     params,

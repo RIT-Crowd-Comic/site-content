@@ -5,7 +5,8 @@ import IconToggleButton from "@/components/ToggleButton";
 import { useEffect, useState } from "react";
 import ComicPanels from "@/components/ComicPanels";
 import * as apiCalls from "../api/apiCalls"
-
+import { useRouter } from 'next/navigation'
+import { parseEnv } from "util";
 //imported base trunk panels as static images
 /* -----TODO-----
 These images must query on initial load the panels of the trunk. This will probably entail a getPanelSet call to call the trunk panel set as a whole and then insert the panel images in their respective order.
@@ -26,18 +27,23 @@ interface PanelSet {
     id: number,
     author_id: string,
     panels: Panel[],
-    hook: number | null;
+    hook: Hook;
 }
 interface Panel {
     id: number,
     index: number,
     imageStr: string,
-    hook: number
+    hook: Hook
+}
+interface Hook {
+    current_panel_id: number,
+    id: number,
+
 }
 interface Props {
     id: number
 }
-//todo need to go to 404 if panel set is not found
+//todo error handling if panel set is not found (or db is not running)
 //todo need to put in the image data
 //todo need to place hook in right position
 
@@ -45,62 +51,74 @@ interface Props {
 //todo - go to next panel set
 //todo - go to create page (for now, change the visibility of the button if the hook doesn't lead to anywhere)
 //todo when back button is clicked, go to previous panel set
-const ReadPage = ({id}: Props) => {
+const ReadPage = ({ id }: Props) => {
+    const router = useRouter()
     // const [layout,setLayout] = useState("rowPanels");
-    const [layout,setLayout] = useState(`${styles.rowPanels}`);
-    const [hooks,setHooks] = useState("baseHooks");
+    const [layout, setLayout] = useState(`${styles.rowPanels}`);
+    const [hooks, setHooks] = useState("baseHooks");
     const [isLoading, setIsLoading] = useState(false);
     const [panelSet, setPanelSet] = useState<PanelSet>();
+    const [parentPanelSet, setParentPanelSet] = useState<PanelSet>();
     const [error, setError] = useState<string>("");
-    const [actualHooks, setActualHooks] = useState([]) as any
-
+    const [actualHooks, setActualHooks] = useState([])
     useEffect(() => {
         async function fetchData() {
-           setIsLoading(true);
-           const panelSetResponse = await apiCalls.getPanelSetByID(id);
-           if(panelSetResponse instanceof Error) {
-                setError(panelSetResponse.message)
-           }
-
-           else {
-            //! these calls can probably be done a different way in the backend
-            const hookResponse1 = await apiCalls.getHooksFromPanel(Number(panelSetResponse.panels[0].id));
-            const hookResponse2 = await apiCalls.getHooksFromPanel(Number(panelSetResponse.panels[1].id));
-            const hookResponse3 = await apiCalls.getHooksFromPanel(Number(panelSetResponse.panels[2].id));
-            let hookResponses = hookResponse1.concat(hookResponse2).concat(hookResponse3).filter((p: any) => typeof p !== 'string');
-            const panels = [] as Panel[];
-            //? would prefer if this were array functions like (map and any) while setting the panel set
-            for(let i = 0; i < panelSetResponse.panels.length; i++) {
-                 const p = panelSetResponse.panels[i];
-                 //! This is not the best way to do this, but unsure of another way
-                 panels.push({ id: p.id as Number, index: p.index as Number, imageStr: p.image as string } as unknown as Panel)
+            setIsLoading(true);
+            const panelSetResponse = await apiCalls.getPanelSetByID(id);
+            // console.log(panelSetResponse);
+            if (!updateError(panelSetResponse)) {
+                const panels = panelSetResponse.panels.map((p: any) => p as Panel);
+                setPanelSet({
+                    id: panelSetResponse.id,
+                    author_id: panelSetResponse.author_id,
+                    panels: panels,
+                    hook: panelSetResponse.hook
+                });
+                const hookResponses = await apiCalls.getHooksFromPanelSetById(panelSetResponse.id);
+                console.log(hookResponses);
+                if (!updateError(hookResponses)) {
+                    setActualHooks(hookResponses);
+                    //this is a trunk
+                    console.log(panelSetResponse)
+                    if (panelSetResponse.hook === null) {
+                        setParentPanelSet(undefined);
+                    }
+                    else {
+                        const parentPanelResponse = await apiCalls.getPanelByID(Number(panelSet?.hook.current_panel_id));
+                        console.log(parentPanelResponse);
+                        if (!updateError(parentPanelResponse)) {
+                            const previousPanelSetResponse = await apiCalls.getPanelSetByID(Number(parentPanelResponse.panel_set_id));
+                            setParentPanelSet(previousPanelSetResponse)
+                        }
+                    }
+                }
             }
-            setPanelSet({
-                         id: panelSetResponse.id, 
-                         author_id: panelSetResponse.author_id, 
-                         panels: panels,
-                         hook: panelSetResponse.hook
-             });
-             setActualHooks(hookResponses)
-           }
-           setIsLoading(false);
+            setIsLoading(false);
         }
         fetchData();
-     }, []);
+    }, []);
 
-     if(isLoading) {
+    //? may want to change parameter name
+    function updateError(foo: any) {
+        const bool = foo instanceof Error;
+        if(bool) {
+            setError(foo.message);
+        }
+        return bool;
+    }
+    if (isLoading) {
         return <div>Loading...</div>;
     }
-    if(error !== "") {
+    if (error !== "") {
         return <div>{error}</div>;
     }
     return (<>
-        <ComicPanels setting={layout} hook_state={hooks} images={[firstPanelImage,secondPanelImage,thirdPanelImage] } actualHooks={actualHooks} currentId={id}/>
+        <ComicPanels setting={layout} hook_state={hooks} images={[firstPanelImage, secondPanelImage, thirdPanelImage]} actualHooks={actualHooks} currentId={id} router={router} />
         <div className={`${styles.controlBar}`} >
-                <button style={{visibility: panelSet?.hook !== null ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}></img></button>
-                <IconToggleButton setting={hooks} setSetting={setHooks} state_1="baseHooks" state_2="popHooks" buttonId="hooksToggle" source_1={toggleHooksOff} source_2={toggleHooksOn}/>
-                <IconToggleButton setting={layout} setSetting={setLayout} state_1={`${styles.rowPanels}`} state_2={`${styles.columnPanels}`} buttonId="layoutToggle" source_1={toggleLayoutHorizIcon} source_2={toggleLayoutVertIcon}/>
-                {/* <IconToggleButton setting={layout} setSetting={setLayout} state_1="rowPanels" state_2="columnPanels" buttonId="layoutToggle" source_1={toggleLayoutHorizIcon} source_2={toggleLayoutVertIcon}/> */}
+            <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet !== undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}></img></button>
+            <IconToggleButton setting={hooks} setSetting={setHooks} state_1="baseHooks" state_2="popHooks" buttonId="hooksToggle" source_1={toggleHooksOff} source_2={toggleHooksOn} />
+            <IconToggleButton setting={layout} setSetting={setLayout} state_1={`${styles.rowPanels}`} state_2={`${styles.columnPanels}`} buttonId="layoutToggle" source_1={toggleLayoutHorizIcon} source_2={toggleLayoutVertIcon} />
+            {/* <IconToggleButton setting={layout} setSetting={setLayout} state_1="rowPanels" state_2="columnPanels" buttonId="layoutToggle" source_1={toggleLayoutHorizIcon} source_2={toggleLayoutVertIcon}/> */}
         </div>
     </>);
 }
