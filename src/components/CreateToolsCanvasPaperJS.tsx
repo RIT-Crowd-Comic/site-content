@@ -9,6 +9,7 @@ import FillOptions from './create-tools/FillOptions';
 import ShapeOptions from './create-tools/ShapeOptions';
 import TextOptions from './create-tools/TextOptions';
 import StickerOptions from './create-tools/StickerOptions';
+import ShaderOptions from './create-tools/ShaderOptions';
 import styles from "@/styles/create.module.css";
 import { Istok_Web } from 'next/font/google';
 
