@@ -27,7 +27,8 @@ const BranchPage = () => {
             ...panelSet,
             panels
         });
-    }
+    };
+    const [errorMessage, setErrorMessage] = useState('');
 
     // load images from create page
     const [imageLinks, setImageLinks] = useState([
@@ -123,9 +124,6 @@ const BranchPage = () => {
         return await publishHandler(panelSet)
     }
 
-
-
-
     return (<>
         <main className={`${styles.body}`}>
             <div id={styles.publishContainer}>
@@ -161,11 +159,16 @@ const BranchPage = () => {
                     confirmBranchHook={() => confirmBranchHook(activePanel)}
                     removeBranchHook={removeBranchHook}
                     publish={async() =>{
+
                         const response = await pushToDatabase();
                         console.log(response);
+
+                        if(response instanceof Error) setErrorMessage("There was an error: " + response.message);
+                        if(response.error) setErrorMessage("There was an error: " + response.error);
                     }}
                 branchCount={panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)}
                 ></BranchPageControls>
+                     {errorMessage && <div id="errorPublish" style={{color: 'white'}}> {errorMessage} </div>}
                 {/* <div className={`${styles.buttonContainer}`}>
                     <div className={`${styles.branchHooks}`}>
                         <div id={`${styles.branchHookControls}`}>
