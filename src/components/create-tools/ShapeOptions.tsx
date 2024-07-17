@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import styles from "@/styles/create.module.css";
 
 interface Props
 {
@@ -63,7 +64,7 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
     if(enabled)
     {
         return(
-            <div id="shapeTools">
+            <div id="shapeTools" className={styles.toolStyles}>
                 <h3>Shape Tools</h3>
                 <div id="shapeSelect">
                     <div id="rectangleSelect">
