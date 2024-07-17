@@ -2,7 +2,7 @@
 import {PaperOffset} from 'paperjs-offset';
 import { useEffect, useRef, useState } from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
-import paper from 'paper/dist/paper-core';
+import paper from 'paper';
 import PenOptions from './create-tools/PenOptions';
 import EraserOptions from './create-tools/EraserOptions';
 import FillOptions from './create-tools/FillOptions';
