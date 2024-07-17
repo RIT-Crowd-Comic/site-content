@@ -1,3 +1,5 @@
+'use server';
+
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -61,6 +63,7 @@ const updateSession = async (session_id: string) => {
  */
 const authenticateSession = async () => {
     const session = cookies().get('session');
+    console.log(session);
     if(!session) redirect('/login'); //TODO save where redirecting from
     const session_id = await decrypt(session.value);
     const dbSession = await getSession(session_id);
@@ -78,8 +81,9 @@ const authenticateSession = async () => {
  */
 const login = async (email: string, password: string) => {
     const user = await authenticate(email, password);
-    if(!user) 'Incorrect username or password';
-    return await saveSession(user.id);
+    if(!user) return 'Incorrect username or password';
+    await saveSession(user.id);
+    //redirect('/');
 };
 
 /**
@@ -93,7 +97,7 @@ const register = async (email: string, displayName: string, password: string) =>
     const user = await createUser(email, displayName, password);
     //If user is an error, return that error and don't redirect
     if(!user || user instanceof Error) return user;
-    redirect('/login');
+    //redirect('/login');
 };
 
 /**
