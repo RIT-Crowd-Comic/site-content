@@ -487,8 +487,9 @@ const CreateToolsCanvasPaperJS = () => {
                     setSelectionInfo(prevState => [...prevState, new paper.Rectangle(startSelectPoint, endSelectPoint)]);
 
                     //translates canvas coordinates to pixel coordinates (for getting subraster in transform)
-                    let pixelStartPoint = startSelectPoint.subtract(rasterLT).multiply(2);
-                    let pixelEndPoint = endSelectPoint.subtract(rasterLT).multiply(2);
+                    //seems to move around, test on diff size screens (could also be raster issue?)
+                    let pixelStartPoint = startSelectPoint.subtract(rasterLT).multiply(2.4);
+                    let pixelEndPoint = endSelectPoint.subtract(rasterLT).multiply(2.4);
 
                     //gets the selected area of the rasterized canvas
                     let selectedArea = new paper.Rectangle(pixelStartPoint, pixelEndPoint);
