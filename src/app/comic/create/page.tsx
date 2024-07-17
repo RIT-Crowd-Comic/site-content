@@ -1,8 +1,14 @@
 'use client';
-import CreateToolsCanvasPaperJS from '../../../components/CreateToolsCanvasPaperJS';
 import Link from 'next/link';
 import styles from "@/styles/create.module.css";
+import dynamic from 'next/dynamic';
 
+const CreateToolsCanvasPaperJS = dynamic(
+    () => import('../../../components/CreateToolsCanvasPaperJS'),
+    {
+        ssr: false
+    }
+);
 
 const exportToPNG = () => {
     //converts html canvas to png

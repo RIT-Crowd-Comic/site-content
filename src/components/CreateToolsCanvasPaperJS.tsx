@@ -1102,4 +1102,4 @@ const CreateToolsCanvasPaperJS = () => {
     )
 }
 
-export default CreateToolsCanvasPaperJS
+export default CreateToolsCanvasPaperJS;
