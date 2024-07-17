@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import styles from "@/styles/create.module.css";
 
 interface Props
 {
@@ -29,7 +30,10 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
     const shapeStates = Object.freeze({
         RECTANGLE: 0,
         LINE: 1,
-        ELLIPSE: 2
+        ELLIPSE: 2,
+        TRIANGLE: 3,
+        HEXAGON: 4,
+        STAR: 5
     });
 
     // Whenever the slider is adjusted, change the value of penSize.  This will update the label text as well as the value in the parent CreateCanvasTools component
@@ -60,7 +64,7 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
     if(enabled)
     {
         return(
-            <div id="shapeTools">
+            <div id="shapeTools" className={styles.toolStyles}>
                 <h3>Shape Tools</h3>
                 <div id="shapeSelect">
                     <div id="rectangleSelect">
@@ -76,6 +80,18 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
                     <div id="ellipseSelect">
                         <input type="radio" name="shape" id="ellipse" value={shapeStates.ELLIPSE} onChange={updateShape}/>
                         <label htmlFor="ellipse">Ellipse</label>
+                    </div>
+                    <div id="triangleSelect">
+                        <input type="radio" name="shape" id="triangle" value={shapeStates.TRIANGLE} onChange={updateShape}/>
+                        <label htmlFor="triangle">Triangle</label>
+                    </div>
+                    <div id="hexagonSelect">
+                        <input type="radio" name="shape" id="hexagon" value={shapeStates.HEXAGON} onChange={updateShape}/>
+                        <label htmlFor="hexagon">Hexagon</label>
+                    </div>
+                    <div id="starSelect">
+                        <input type="radio" name="shape" id="star" value={shapeStates.STAR} onChange={updateShape}/>
+                        <label htmlFor="star">Star</label>
                     </div>
                 </div>
                 <div id="shapeBorderSlider">

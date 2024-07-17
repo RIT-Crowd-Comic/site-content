@@ -10,6 +10,8 @@ import StickerOptions from './create-tools/StickerOptions';
 import styles from "@/styles/create.module.css";
 import { Istok_Web } from 'next/font/google';
 
+import Link from 'next/link';
+
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
 const CreateToolsCanvasPaperJS = () => {
@@ -265,7 +267,10 @@ const CreateToolsCanvasPaperJS = () => {
     const shapeStates = Object.freeze({
         RECTANGLE: 0,
         LINE: 1,
-        ELLIPSE: 2
+        ELLIPSE: 2,
+        TRIANGLE: 3,
+        HEXAGON: 4,
+        STAR: 5
     });
 
     const [shapeSelected, setShapeSelected] = useState<number>(0);
@@ -298,6 +303,22 @@ const CreateToolsCanvasPaperJS = () => {
         }
         else if (shapeSelected == shapeStates.ELLIPSE) {
             shapePath = new paper.Path.Ellipse(new paper.Rectangle(startPoint, endPoint));
+        }
+        else if (shapeSelected == shapeStates.TRIANGLE) {
+            const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
+            const radius = Math.abs(centerPoint.x-startPoint.x);
+            shapePath = new paper.Path.RegularPolygon(centerPoint,3,radius);
+        }
+        else if (shapeSelected == shapeStates.HEXAGON) {
+            const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
+            shapePath = new paper.Path.RegularPolygon(centerPoint,6,centerPoint.x-startPoint.x);
+            // Rotated so that the bottom edge is parallel with the bottom of the screen
+            shapePath.rotate(30);
+        }
+        else if (shapeSelected == shapeStates.STAR) {
+            const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
+            const radius = Math.abs(centerPoint.x-startPoint.x);
+            shapePath = new paper.Path.Star(centerPoint,5,radius, (radius)/2);
         }
 
         // Set the path's style to the user chosen style
@@ -959,7 +980,6 @@ const CreateToolsCanvasPaperJS = () => {
     return (
         <div id={`${styles.createPage}`}>
             <fieldset id={styles.fieldSet}>
-                <legend>Tools</legend>
                 <div id={styles.toolRadioSelects}>
                     <div id={styles.penTool} className={styles.toolStyling}>
                         <label htmlFor="pen" id={styles.penLabel}>
@@ -1013,31 +1033,40 @@ const CreateToolsCanvasPaperJS = () => {
                 </div>
 
                 <div id={styles.functionButtons}>
-                    <button className="btn" id="redoButton">Redo (NOT FUNCTIONAL)</button><br></br>
-                    <button className="btn" id="undoButton">Undo (NOT FUNCTIONAL)</button><br></br>
-                    <button className="btn" id="clearButton" onClick={clearLayer}>Clear Layer</button><br></br>
                     <button className="btn" id="saveButton" onClick={save}>Save</button><br></br>
                     <button className="btn" id="publishButton" onClick={toPublish}>Publish (NOT FUNCTIONAL)</button><br></br>
+
+                    <label htmlFor="undoButton" id={styles.undoLabel}>
+                        <button className="btn" id="undoButton"></button>
+                    </label>
+                    <label htmlFor="redoButton" id={styles.redoLabel}>
+                        <button className="btn" id="redoButton"></button>
+                    </label>
+
+                    <label htmlFor="clearButton" id={styles.clearLabel}>
+                        <button className="btn" id="clearButton" onClick={clearLayer}></button>
+                    </label>
                 </div>
 
-                <div id="backgroundUploadForm">
-                    <form>
-                        <label htmlFor="imageDropbox" className="form-label">Upload a Background (Recommended Size: 1200x800p)</label>
-                        <input
-                            className="form-control"
-                            id="imageDropbox"
-                            type="file"
-                            accept="image/*"
-                            name="image"
-                            // When the form takes an image inputted by the user, set the image link to the inputted image
-                            // If the file does not exist, set the image link to the default image
-                            onChange={changeBackground}
-                        />
+                <div id="backgroundUploadForm" className={styles.backgroundUploadForm}>
+                    <form id={styles.backgroundUpload}>
+                        <label htmlFor="imageDropbox" className={`form-label ${styles.formLabel}`}>{/* Upload a Background (Recommended Size: 1200x800p) */}
+                            <input
+                                className="form-control"
+                                id="imageDropbox"
+                                type="file"
+                                accept="image/*"
+                                name="image"
+                                // When the form takes an image inputted by the user, set the image link to the inputted image
+                                // If the file does not exist, set the image link to the default image
+                                onChange={changeBackground}
+                            />
+                        </label>
                     </form>
                 </div>
             </fieldset>
 
-            <canvas id={`${styles.canvas}`} height="800px" width="1200px" ref={canvasReference} className={`${styles.canvas}`} />
+            <canvas id={`${styles.canvas}`} ref={canvasReference} className={`${styles.canvas}`} />
 
             <div id={`${styles.toolOptions}`}>
                 <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor} />
@@ -1049,58 +1078,58 @@ const CreateToolsCanvasPaperJS = () => {
                 <TextOptions enabled={textOptionsEnabled} changeTextContent={setTextContent} changeTextFont={setTextFont} changeTextSize={setTextSize}
                     changeFontWeight={setTextFontWeight} changeTextAlignment={setTextAlign} changeTextColor={setTextColor} />
                 <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
-            </div>
 
-            <div id={styles.layerOptions}>
-                <div id="layer2" className={styles.layer}>
-                    <div id="layer2Visibility" className={styles.visibleStyling}>
-                        <label htmlFor="layer2Toggle" className={styles.visibleLabel}>
-                            <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} defaultChecked></input>
-                        </label>
+                <div id={styles.layerOptions}>
+                    <div id="layer2" className={styles.layer}>
+                        <div id="layer2Visibility" className={styles.visibleStyling}>
+                            <label htmlFor="layer2Toggle" className={styles.visibleLabel}>
+                                <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} defaultChecked></input>
+                            </label>
+                        </div>
+                        <div id="layer2Lock" className={styles.lockStyling}>
+                            <label htmlFor="layer2LockToggle" className={styles.lockLabel}>
+                                <input type="checkbox" id="layer2LockToggle" value="2" onChange={toggleLayerLock}></input>
+                            </label>
+                        </div>
+                        <div id="layer2Select" className={styles.layerSelect}>
+                            <input type="radio" name="layers" id="layer2" className={styles.layerSelectRadio} value='2' onChange={changeLayer} />
+                            <label htmlFor="layer2">Layer 2</label><br />
+                        </div>
                     </div>
-                    <div id="layer2Lock" className={styles.lockStyling}>
-                        <label htmlFor="layer2LockToggle" className={styles.lockLabel}>
-                            <input type="checkbox" id="layer2LockToggle" value="2" onChange={toggleLayerLock}></input>
-                        </label>
-                    </div>
-                    <div id="layer2Select" className={styles.layerSelect}>
-                        <input type="radio" name="layers" id="layer2" className={styles.layerSelectRadio} value='2' onChange={changeLayer} />
-                        <label htmlFor="layer2">Layer 2</label><br />
-                    </div>
-                </div>
 
-                <div id="layer1" className={styles.layer}>
-                    <div id="layer2Visibility" className={styles.visibleStyling}>
-                        <label htmlFor="layer1Toggle" className={styles.visibleLabel}>
-                            <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} defaultChecked></input>
-                        </label>
+                    <div id="layer1" className={styles.layer}>
+                        <div id="layer2Visibility" className={styles.visibleStyling}>
+                            <label htmlFor="layer1Toggle" className={styles.visibleLabel}>
+                                <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} defaultChecked></input>
+                            </label>
+                        </div>
+                        <div id="layer1Lock" className={styles.lockStyling}>
+                            <label htmlFor="layer1LockToggle" className={styles.lockLabel}>
+                                <input type="checkbox" id="layer1LockToggle" value="2" onChange={toggleLayerLock}></input>
+                            </label>
+                        </div>
+                        <div id="layer1Select" className={styles.layerSelect}>
+                            <input type="radio" name="layers" id="layer1"className={styles.layerSelectRadio} value='1' defaultChecked onChange={changeLayer} />
+                            <label htmlFor="layer1">Layer 1</label><br/>
+                        </div>
                     </div>
-                    <div id="layer1Lock" className={styles.lockStyling}>
-                        <label htmlFor="layer1LockToggle" className={styles.lockLabel}>
-                            <input type="checkbox" id="layer1LockToggle" value="2" onChange={toggleLayerLock}></input>
-                        </label>
-                    </div>
-                    <div id="layer1Select" className={styles.layerSelect}>
-                        <input type="radio" name="layers" id="layer1"className={styles.layerSelectRadio} value='1' defaultChecked onChange={changeLayer} />
-                        <label htmlFor="layer1">Layer 1</label><br/>
-                    </div>
+                    <div id="backgroundLayer" className={styles.layer}>
+                        <div id="backgroundLayerVisibility" className={styles.visibleStyling}>
+                            <label htmlFor="backgroundToggle" className={styles.visibleLabel}>
+                                <input type="checkbox" id="backgroundToggle" value="0" onChange={toggleLayerVisibility} defaultChecked></input>
+                            </label>
+                        </div>
+                        <div id="backgroundLayerLock" className={styles.lockStyling}>
+                            <label htmlFor="backgroundLayerLockToggle" className={styles.lockLabel}>
+                                <input type="checkbox" id="backgroundLayerLockToggle" value="0" onChange={toggleLayerLock}></input>
+                            </label>
+                        </div>
+                        <div id="backgroundLayerSelect" className={styles.layerSelect}>
+                            <input type="radio" name="layers" id="background" className={styles.layerSelectRadio} value='0' onChange={changeLayer} />
+                            <label htmlFor="background">Background</label><br />
+                        </div>
+                    </div>  
                 </div>
-                <div id="backgroundLayer" className={styles.layer}>
-                    <div id="backgroundLayerVisibility" className={styles.visibleStyling}>
-                        <label htmlFor="backgroundToggle" className={styles.visibleLabel}>
-                            <input type="checkbox" id="backgroundToggle" value="0" onChange={toggleLayerVisibility} defaultChecked></input>
-                        </label>
-                    </div>
-                    <div id="backgroundLayerLock" className={styles.lockStyling}>
-                        <label htmlFor="backgroundLayerLockToggle" className={styles.lockLabel}>
-                            <input type="checkbox" id="backgroundLayerLockToggle" value="0" onChange={toggleLayerLock}></input>
-                        </label>
-                    </div>
-                    <div id="backgroundLayerSelect" className={styles.layerSelect}>
-                        <input type="radio" name="layers" id="background" className={styles.layerSelectRadio} value='0' onChange={changeLayer} />
-                        <label htmlFor="background">Background</label><br />
-                    </div>
-                </div>  
             </div>
 
             <div id="panelSelect">
@@ -1119,6 +1148,8 @@ const CreateToolsCanvasPaperJS = () => {
                     <label htmlFor="panel3Select">Panel 3</label><br />
                 </div>
             </div>
+
+            <Link href="/comic/create/publish" id={styles.publishButton}>PUBLISH</Link>
         </div>
     )
 }
