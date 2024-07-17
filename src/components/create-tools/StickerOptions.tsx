@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import styles from "@/styles/create.module.css";
 
 interface Props
 {
@@ -13,7 +14,7 @@ const StickerOptions = ({enabled, changeSticker} : Props) =>
     if(enabled)
     {
         return(
-            <div id="stickerTools">
+            <div id="stickerTools" className={styles.toolStyles}>
                 <h3>Sticker Tools</h3>
                 <div id="bubbleImgs">
                     <label id="bubbleLabel">Bubbles:</label><br/>

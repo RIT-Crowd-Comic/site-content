@@ -12,8 +12,7 @@ import topCreate from "../../public/images/background-boxes/bw/Create_Top_BW.svg
 import bottomCreate from "../../public/images/background-boxes/bw/Create_Bottom_BW.svg";
 
 // Desktop Assets
-import desktopLeftMission from "../../public/images/background-boxes/bw/Desktop_Mission_Left_BW.svg"
-import desktopRightMission from "../../public/images/background-boxes/bw/Desktop_Mission_Right_BW.svg"
+import desktopMission from "../../public/images/background-boxes/bw/Desktop_Mission_BW.svg"
 import desktopRead from "../../public/images/background-boxes/bw/Desktop_Read_BW.svg"
 import desktopCreate from "../../public/images/background-boxes/bw/Desktop_Create_BW.svg"
 
@@ -46,8 +45,7 @@ export default function Home() {
               <Image className={`${styles.bottomMission} card-img-top z-0`} src={bottomMission} alt="" />
               <Image className={`${styles.topMission} card-img-top z-0`} src={topMission} alt="" />
 
-              <Image className={`${styles.leftMission} card-img-top z-0`} src={desktopLeftMission} alt="" />
-              <Image className={`${styles.rightMission} card-img-top z-0`} src={desktopRightMission} alt="" />
+              <Image className={`${styles.desktopMission} card-img-top z-0`} src={desktopMission} alt="" />
             </div>
             <div className="card-body">
               <p className={`${styles.missionParagraph}`}>
@@ -65,10 +63,11 @@ export default function Home() {
           <div className="read-and-create">
             <div className={`${styles.readSec}`}>
               <div className="row">
+              <div className="col"></div>
                 <div className="col-auto">
                   <h2 className={`${styles.readHeading}`}>Read</h2>
                 </div>
-                <div className="col"></div>
+                
               </div>
             <div className={`${styles.readImage} row card`}>
               <div className="card-img-overlay">
@@ -88,17 +87,16 @@ export default function Home() {
             </div>
             <div className={`${styles.createSec}`}>
               <div className="row">
-                <div className="col">
-                </div>
                 <div className="col-auto">
                   <h2 className={`${styles.createHeading}`}>Create</h2>
                 </div>
+                <div className="col"></div>
               </div>
               <div className={`${styles.createImage} row card`}>
                 <div className="card-img-overlay">
                   <Image className={`${styles.bottomCreate} card-img-top`} src={bottomCreate} alt="" />
                   <Image className={`${styles.topCreate} card-img-top`} src={topCreate} alt="" />
-                  <Image className={`${styles.desktopCreate} card-img-top`} src={desktopCreate} alt="" />
+                  <Image className={`${styles.desktopCreate} card-img-top`} src={desktopRead} alt="" />
                 </div>
                 <div className="card-body">
                   <p className={`${styles.createParagraph}`}>
