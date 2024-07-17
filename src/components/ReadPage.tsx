@@ -62,10 +62,10 @@ const ReadPage = ({ id }: Props) => {
     const [error, setError] = useState<string>("");
     const [actualHooks, setActualHooks] = useState([])
     useEffect(() => {
+        console.log('panel set: ' + id)
         async function fetchData() {
             setIsLoading(true);
             const panelSetResponse = await apiCalls.getPanelSetByID(id);
-            // console.log(panelSetResponse);
             if (!updateError(panelSetResponse)) {
                 const panels = panelSetResponse.panels.map((p: any) => p as Panel);
                 setPanelSet({
@@ -75,17 +75,14 @@ const ReadPage = ({ id }: Props) => {
                     hook: panelSetResponse.hook
                 });
                 const hookResponses = await apiCalls.getHooksFromPanelSetById(panelSetResponse.id);
-                console.log(hookResponses);
                 if (!updateError(hookResponses)) {
                     setActualHooks(hookResponses);
                     //this is a trunk
-                    console.log(panelSetResponse)
                     if (panelSetResponse.hook === null) {
                         setParentPanelSet(undefined);
                     }
                     else {
                         const parentPanelResponse = await apiCalls.getPanelByID(Number(panelSet?.hook.current_panel_id));
-                        console.log(parentPanelResponse);
                         if (!updateError(parentPanelResponse)) {
                             const previousPanelSetResponse = await apiCalls.getPanelSetByID(Number(parentPanelResponse.panel_set_id));
                             setParentPanelSet(previousPanelSetResponse)

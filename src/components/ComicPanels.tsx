@@ -37,16 +37,14 @@ const ComicPanels = ({ setting, hook_state, images, actualHooks, currentId, rout
     } else {
         bodyHeight = "colBodyH"
     }
-    function link(actualHook: any) 
-    {
-        if(actualHook !== undefined && actualHook.next_panel_set_id !== null){
+    function link(actualHook: any) {
+        if (actualHook !== undefined && actualHook.next_panel_set_id !== null) {
             return `/comic?id=${actualHook.next_panel_set_id}`;
         }
         return `/comic/create`;
     }
-    function displayLink(actualHook: any)
-    {
-        if(actualHook !== undefined && actualHook.next_panel_set_id !== null){
+    function displayLink(actualHook: any) {
+        if (actualHook !== undefined && actualHook.next_panel_set_id !== null) {
             return actualHook.next_panel_set_id;
         }
         return '?';
@@ -57,7 +55,7 @@ const ComicPanels = ({ setting, hook_state, images, actualHooks, currentId, rout
                 <h1 style={{ color: 'orange' }}>{`${currentId}P`}</h1>
                 <div className={`${styles.firstPanel}`}>
                     <Image id="first-img" width="500" height="500" src={images[0]} alt="" className={setting} />
-                        <a style={{ color: 'red' }} href={`${link(actualHooks[0])}`}>{displayLink(actualHooks[0])}</a>
+                    <button onClick={() => router.push(link(actualHooks[0]))} id={`${styles.firstBranchHook}`} className={button_class}>{displayLink(actualHooks[0])}</button>
                 </div>
                 <div className={`${styles.secondPanel}`}>
                     <Image id="second-img" width="500" height="500" src={images[1]} alt="" className={setting} />
@@ -65,9 +63,9 @@ const ComicPanels = ({ setting, hook_state, images, actualHooks, currentId, rout
                 <div className={`${styles.thirdPanel}`}>
                     <Image id="third-img" width="500" height="500" src={images[2]} alt="" className={setting} />
                     <div className="third-panel-container">
-                        <a style={{ color: 'red' }} href={`${link(actualHooks[1])}`}>{displayLink(actualHooks[1])}</a>
-                        <a style={{ color: 'red' }} href={`${link(actualHooks[2])}`}>{displayLink(actualHooks[2])}</a>
-                    </div> 
+                        <button onClick={() => router.push(link(actualHooks[1]))} id={`${styles.secondBranchHook}`} className={button_class}>{displayLink(actualHooks[1])}</button>
+                        <button onClick={() => router.push(link(actualHooks[2]))} id={`${styles.thirdBranchHook}`} className={button_class}>{displayLink(actualHooks[2])}</button>
+                    </div>
                 </div>
             </div>
         </main>
