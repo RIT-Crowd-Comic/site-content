@@ -6,10 +6,15 @@ import styles from '@/styles/publish.module.css'
 import {useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {PanelSet, Branch} from "./PanelSet";
-// import Image from 'next/image';
+import {createUser, createPanelSet, createPanel, createHook} from "../../../../api/apiCalls";
 
 
 const BranchPlacer = () => {
+    //database fields
+    const [email, setEmail] = useState("guestaccount@rit.edu");
+    const [displayName, setDisplayName] = useState("user0123");
+    const [password,setUserPassword] = useState("password123")
+    //branch fields
     const [branCount, setBranch] = useState(0); //tracks number of placed branches by user
     const [adding, setAdding] = useState(false); //user is in adding mode and can add to the panel
     const [parId, setparId] = useState(" "); //parent id state
@@ -125,6 +130,11 @@ const BranchPlacer = () => {
     so that the database can work as intended.
     */
     //packages ps and then pushes it to local storage
+
+    const pushToDatebase = () => {
+        
+    }
+
     const pushToLocalStorage = () => {
         setPs((prevPs) => {
             return { //sets the image paths of the previously uploaded images into ps

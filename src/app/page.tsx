@@ -25,7 +25,7 @@ import secondPanelImage from "../../public/comic-panels/second_panel.png";
 import thirdPanelImage from "../../public/comic-panels/third_panel.png";
 
 import Navbar from "../components/NavBar"
-import Footer from "../components/footer"
+import Footer from "../components/Footer"
 
 export default function Home() {
   return (

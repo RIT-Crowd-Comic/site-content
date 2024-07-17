@@ -8,8 +8,8 @@ import BootstrapClient from "../scripts/BootstrapClient";
 import localFont from 'next/font/local';
 
 //importing components
-import Navbar from "../components/NavBar"
-import Footer from "../components/footer"
+// import Navbar from "../components/NavBar"
+// import Footer from "../components/Footer"
 
 //creating font variables
 const backIssues = localFont({
