@@ -381,7 +381,8 @@
 }
 
 #emptyButton{
-    background-color: rgb(173, 173, 173);
+    background: url("../../public/images/icons/draw-icons/x.svg") no-repeat center/contain;
+    background-color: white;
     text-align: center;
     padding: 0 0.2em;
     margin: 0;

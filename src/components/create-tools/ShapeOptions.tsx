@@ -109,7 +109,7 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
                     <button onClick={() => changeShapeBorderColor(color3)} id={styles.grayButton}></button>
                     <button onClick={() => changeShapeBorderColor(color4)} id={styles.darkGrayButton}></button>
                     <button onClick={() => changeShapeBorderColor(color5)} id={styles.blackButton}></button>
-                    <button onClick={() => changeShapeBorderColor(color6)} id={styles.emptyButton}>x</button>
+                    <button onClick={() => changeShapeBorderColor(color6)} id={styles.emptyButton}></button>
                 </div>
                 <div id={styles.fillPaletteButtons}>
                     <label id="colorLabel">Fill Colors:</label>
@@ -118,7 +118,7 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
                     <button onClick={() => changeShapeFillColor(color3)} id={styles.grayButton}></button>
                     <button onClick={() => changeShapeFillColor(color4)} id={styles.darkGrayButton}></button>
                     <button onClick={() => changeShapeFillColor(color5)} id={styles.blackButton}></button>
-                    <button onClick={() => changeShapeFillColor(color6)} id={styles.emptyButton}>x</button>
+                    <button onClick={() => changeShapeFillColor(color6)} id={styles.emptyButton}></button>
                 </div>
             </div>
         )
