@@ -1,13 +1,17 @@
+'use client'
+import {PaperOffset} from 'paperjs-offset';
 import { useEffect, useRef, useState } from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
-import paper from 'paper/dist/paper-core';
+import paper from 'paper';
 import PenOptions from './create-tools/PenOptions';
 import EraserOptions from './create-tools/EraserOptions';
 import FillOptions from './create-tools/FillOptions';
 import ShapeOptions from './create-tools/ShapeOptions';
 import TextOptions from './create-tools/TextOptions';
 import StickerOptions from './create-tools/StickerOptions';
+import ShaderOptions from './create-tools/ShaderOptions';
 import styles from "@/styles/create.module.css";
+import { useRouter } from 'next/navigation';
 import { Istok_Web } from 'next/font/google';
 
 import Link from 'next/link';
@@ -38,8 +42,12 @@ const CreateToolsCanvasPaperJS = () => {
 
     // References to the PaperJS Canvas Layers
     let backgroundLayerReference = useRef<paper.Layer>();
+    let ShadingLayerRef = useRef<paper.Layer>();
     let layer1Reference = useRef<paper.Layer>();
     let layer2Reference = useRef<paper.Layer>();
+
+    // Router for sending the user to other pages (used in toPublish())
+    const router = useRouter();
 
     // Call useEffect() in order obtain the value of the canvas after the first render
     // Pass in an empty array so that useEffect is only called once, after the initial render
@@ -59,6 +67,7 @@ const CreateToolsCanvasPaperJS = () => {
         // Set the layer references
         // Set the layer references as well as the default active layer
         backgroundLayerReference.current = canvasProject.current.activeLayer;
+        ShadingLayerRef.current = new paper.Layer();
         layer1Reference.current = new paper.Layer();
         layer2Reference.current = new paper.Layer();
         layer1Reference.current.activate();
@@ -120,7 +129,8 @@ const CreateToolsCanvasPaperJS = () => {
         TEXT: 4,
         STICKER: 5,
         SELECT: 6,
-        TRANSFORM: 7
+        TRANSFORM: 7,
+        SHADER: 8
     });
 
     // --- PEN TOOL ---
@@ -157,6 +167,84 @@ const CreateToolsCanvasPaperJS = () => {
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             penPath?.add(event.point);
         }
+    }
+
+
+     // *** SHADING TOOL ***
+     // This tool creates a comic-styled shading effect on a separate layer to everything else to avoid overlaps. 
+     const [shadeOptionsEnabled, setShadeOptionsEnabled] = useState<boolean>(false);
+     const [shadeSize, setShadeSize] = useState<number>(10);
+
+    const shadingTool = useRef<paper.Tool>(new paper.Tool());
+    //reference to the image used for shading
+    let backgroundRaster = useRef<paper.Raster>(null).current;
+    let clipPath = useRef<paper.Path>(null).current;
+
+    //mouseDown: starts a preview path
+    shadingTool.current.onMouseDown = function()
+    {
+        //switches to dedicated shading layer
+        ShadingLayerRef.current?.activate;
+       
+        
+        clipPath = new paper.Path();
+        clipPath.strokeColor = new paper.Color('pink');
+        clipPath.strokeWidth = shadeSize;
+        clipPath.strokeCap = 'round';
+       
+          
+    }
+
+    //continues drawing preview path
+    shadingTool.current.onMouseDrag = function(event: paper.ToolEvent)
+    {
+       clipPath?.add(event.point);
+    }
+    
+    // mouseUp: renders path on shading layer
+    shadingTool.current.onMouseUp = function(event: paper.ToolEvent)
+    {
+        var temp;
+        
+        var eRadius = (shadeSize * view.pixelRatio) / 4;
+        var deleteShape;
+
+        if (clipPath) { 
+            temp = new paper.CompoundPath(clipPath); 
+        }
+        else
+        {
+            temp = new paper.CompoundPath(new paper.Path.Circle(event.point, eRadius * 2));
+        }
+
+        //load background image
+        backgroundRaster = new paper.Raster('/images/shading.png');
+        backgroundRaster.position = view.center;
+
+        //if there is no clip path create a tiny dot so it doesn't just shade the entire canvas
+        if (clipPath?.length == undefined || clipPath?.length <= 1 )
+        {
+            deleteShape = new paper.Path.Circle(event.point, eRadius * 2);
+        }
+        else
+        {
+            //otherwise, create offset shape to use as a mask
+            temp = PaperOffset.offsetStroke(temp, -eRadius);
+            deleteShape = PaperOffset.offsetStroke(temp, eRadius, {cap : 'round'});
+            //deleteShape.insert = false;
+        }
+
+        //create shading render mask to only show the part of the raster background that we want to denote shading
+        mask = new paper.Group({
+            children: [deleteShape, backgroundRaster],
+            clipped: true,
+            blendMode: 'source-over'
+          });
+
+        //remove preview clip path
+        clipPath?.remove;
+        //switch back to old layer
+        changeLayer();
     }
 
     // --- ERASER TOOL ---
@@ -719,6 +807,7 @@ const CreateToolsCanvasPaperJS = () => {
             setShapeOptionsEnabled(false);
             setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
+            setShadeOptionsEnabled(false);
             clearSelection();
             setAreaSelected(false);
         }
@@ -730,6 +819,7 @@ const CreateToolsCanvasPaperJS = () => {
             setShapeOptionsEnabled(false);
             setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
+            setShadeOptionsEnabled(false);
             clearSelection();
             setAreaSelected(false);
         }
@@ -741,6 +831,7 @@ const CreateToolsCanvasPaperJS = () => {
             setShapeOptionsEnabled(false);
             setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
+            setShadeOptionsEnabled(false);
             clearSelection();
             setAreaSelected(false);
         }
@@ -752,6 +843,7 @@ const CreateToolsCanvasPaperJS = () => {
             setShapeOptionsEnabled(true);
             setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
+            setShadeOptionsEnabled(false);
             clearSelection();
             setAreaSelected(false);
         }
@@ -763,6 +855,7 @@ const CreateToolsCanvasPaperJS = () => {
             setShapeOptionsEnabled(false);
             setTextOptionsEnabled(true);
             setStickerOptionsEnabled(false);
+            setShadeOptionsEnabled(false);
             clearSelection();
             setAreaSelected(false);
         }
@@ -774,6 +867,19 @@ const CreateToolsCanvasPaperJS = () => {
             setShapeOptionsEnabled(false);
             setTextOptionsEnabled(false);
             setStickerOptionsEnabled(true);
+            setShadeOptionsEnabled(false);
+            clearSelection();
+            setAreaSelected(false);
+        }
+        else if (Number(buttonSelected?.value) == toolStates.SHADER) {
+            shadingTool.current.activate();
+            setPenOptionsEnabled(false);
+            setEraserOptionsEnabled(false);
+            setFillOptionsEnabled(false);
+            setShapeOptionsEnabled(false);
+            setTextOptionsEnabled(false);
+            setStickerOptionsEnabled(false);
+            setShadeOptionsEnabled(true);
             clearSelection();
             setAreaSelected(false);
         }
@@ -793,6 +899,7 @@ const CreateToolsCanvasPaperJS = () => {
             setShapeOptionsEnabled(false);
             setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
+            setShadeOptionsEnabled(false);
         }
         else if (Number(buttonSelected?.value) == toolStates.TRANSFORM) {
             transformTool.activate();
@@ -805,6 +912,7 @@ const CreateToolsCanvasPaperJS = () => {
             setShapeOptionsEnabled(false);
             setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
+            setShadeOptionsEnabled(false);
         }
     }
 
@@ -948,7 +1056,7 @@ const CreateToolsCanvasPaperJS = () => {
     }*/
 
     // Saves the project's layer image data to localStorage
-    const save = () =>
+    const save = (showAlert: Boolean) =>
     {
         let layerData = {
             background: backgroundLayerReference.current?.exportJSON(),
@@ -958,22 +1066,25 @@ const CreateToolsCanvasPaperJS = () => {
 
         // Save the layerData object to localStorage in JSON string form
         localStorage.setItem("panel-1-layerData", JSON.stringify(layerData));
+
+        // Alert the user that their progress has been saved
+        if(showAlert)
+        {
+            alert("Your progress has been saved!");
+        }
     }
 
     // Creates an image out of the project's layers and saves it to localStorage for the publish page
     const toPublish = () =>
     {
         // Saves the user's progress for them
-        save();
-
-        /*let imageData = {
-            panel1: canvasProject.current?.exportSVG()
-        }*/
-
-        console.log(canvasProject.current?.exportSVG());
+        save(false);
 
         // Save the SVG Image to localStorage
-        //localStorage.setItem("image-1", JSON.stringify(imageData));
+        localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({asString: true})));
+
+        // Send the user to the publish page
+        router.push(`/comic/create/publish`);
     }
 
     // Return the canvas HTMLElement and its associated functionality
@@ -991,6 +1102,10 @@ const CreateToolsCanvasPaperJS = () => {
                         <label htmlFor="eraser" id={styles.eraserLabel}>
                             <input type="radio" name="tools" id="eraser" value={toolStates.ERASER} onChange={findSelectedTool} />
                         </label>
+
+                    </div><div id="shaderTool">
+                        <input type="radio" name="tools" id="shader" value={toolStates.SHADER} onChange={findSelectedTool}/>
+                        <label htmlFor="shader">Shading</label>
                     </div>
 
                     <div id={styles.fillTool} className={styles.toolStyling}>
@@ -1043,6 +1158,8 @@ const CreateToolsCanvasPaperJS = () => {
                     <label htmlFor="clearButton" id={styles.clearLabel}>
                         <button className="btn" id="clearButton" onClick={clearLayer}></button>
                     </label>
+                    <button className="btn" id="saveButton" onClick={() => save(true)}>Save</button><br></br>
+                    <button className="btn" id="publishButton" onClick={toPublish}>Publish</button><br></br>
                 </div>
 
                 <div id="backgroundUploadForm" className={styles.backgroundUploadForm}>
@@ -1075,6 +1192,7 @@ const CreateToolsCanvasPaperJS = () => {
                 <TextOptions enabled={textOptionsEnabled} changeTextContent={setTextContent} changeTextFont={setTextFont} changeTextSize={setTextSize}
                     changeFontWeight={setTextFontWeight} changeTextAlignment={setTextAlign} changeTextColor={setTextColor} />
                 <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
+                <ShaderOptions enabled={shadeOptionsEnabled} shaderSize={shadeSize} changeShaderSize={setShadeSize}/>
 
                 <div id={styles.layerOptions}>
                     <div id="layer2" className={styles.layer}>
@@ -1110,6 +1228,7 @@ const CreateToolsCanvasPaperJS = () => {
                             <label htmlFor="layer1">Layer 1</label><br/>
                         </div>
                     </div>
+                    
                     <div id="backgroundLayer" className={styles.layer}>
                         <div id="backgroundLayerVisibility" className={styles.visibleStyling}>
                             <label htmlFor="backgroundToggle" className={styles.visibleLabel}>
@@ -1129,6 +1248,8 @@ const CreateToolsCanvasPaperJS = () => {
                 </div>
             </div>
 
+            <Link href="/comic/create/publish" id={styles.publishButton}>PUBLISH</Link>
+
             {/* <div id="panelSelect">
                 <div id="panel1">
                     <input type="radio" name="panels" id="panel1Select" value={0} defaultChecked />
@@ -1145,8 +1266,7 @@ const CreateToolsCanvasPaperJS = () => {
                     <label htmlFor="panel3Select">Panel 3</label><br />
                 </div>
             </div> */}
-            <button className={`btn ${styles.saveButton}`} id="saveButton" onClick={save}>SAVE</button><br></br>
-            <button className={`btn ${styles.publishButton}`} id="publishButton" onClick={toPublish}>PUBLISH</button><br></br>
+
         </div>
     )
 }
