@@ -5,7 +5,7 @@ import IconToggleButton from "@/components/ToggleButton";
 import { useEffect, useState } from "react";
 import ComicPanels from "@/components/ComicPanels";
 import * as apiCalls from "../api/apiCalls"
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { parseEnv } from "util";
 //imported base trunk panels as static images
 /* -----TODO-----
@@ -53,6 +53,8 @@ interface Props {
 //todo when back button is clicked, go to previous panel set
 const ReadPage = ({ id }: Props) => {
     const router = useRouter()
+    const searchParams = useSearchParams()
+
     // const [layout,setLayout] = useState("rowPanels");
     const [layout, setLayout] = useState(`${styles.rowPanels}`);
     const [hooks, setHooks] = useState("baseHooks");
@@ -61,9 +63,10 @@ const ReadPage = ({ id }: Props) => {
     const [parentPanelSet, setParentPanelSet] = useState<PanelSet>();
     const [error, setError] = useState<string>("");
     const [actualHooks, setActualHooks] = useState([])
+    const [images, setImages] = useState([])
     useEffect(() => {
-        console.log('panel set: ' + id)
         async function fetchData() {
+            console.log('panel set: ' + id)
             setIsLoading(true);
             const panelSetResponse = await apiCalls.getPanelSetByID(id);
             if (!updateError(panelSetResponse)) {
@@ -74,15 +77,16 @@ const ReadPage = ({ id }: Props) => {
                     panels: panels,
                     hook: panelSetResponse.hook
                 });
+                setImages(panels.map((p: any) => p.image));
                 const hookResponses = await apiCalls.getHooksFromPanelSetById(panelSetResponse.id);
                 if (!updateError(hookResponses)) {
                     setActualHooks(hookResponses);
-                    //this is a trunk
+                    //this is a trunk if true
                     if (panelSetResponse.hook === null) {
                         setParentPanelSet(undefined);
                     }
                     else {
-                        const parentPanelResponse = await apiCalls.getPanelByID(Number(panelSet?.hook.current_panel_id));
+                        const parentPanelResponse = await apiCalls.getPanelByID(Number(panelSetResponse?.hook.current_panel_id));
                         if (!updateError(parentPanelResponse)) {
                             const previousPanelSetResponse = await apiCalls.getPanelSetByID(Number(parentPanelResponse.panel_set_id));
                             setParentPanelSet(previousPanelSetResponse)
@@ -93,7 +97,7 @@ const ReadPage = ({ id }: Props) => {
             setIsLoading(false);
         }
         fetchData();
-    }, []);
+    }, [searchParams]);
 
     //? may want to change parameter name
     function updateError(foo: any) {
@@ -110,6 +114,7 @@ const ReadPage = ({ id }: Props) => {
         return <div>{error}</div>;
     }
     return (<>
+            <h1 style={{ color: 'orange' }}>{`${id}P`}</h1>
         <ComicPanels setting={layout} hook_state={hooks} images={[firstPanelImage, secondPanelImage, thirdPanelImage]} actualHooks={actualHooks} currentId={id} router={router} />
         <div className={`${styles.controlBar}`} >
             <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet !== undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}></img></button>

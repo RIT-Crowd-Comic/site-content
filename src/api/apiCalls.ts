@@ -8,9 +8,6 @@ const getAPICall = async (url: string) => {
         return response.json();
 
     }).then(json => {
-        if(json.message) {
-            return json.message
-        }
         return json;
 
     }).catch((error) => {
