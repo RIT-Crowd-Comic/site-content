@@ -43,6 +43,7 @@ const decrypt = async (input: string) : Promise<any> => {
 const saveSession = async (user_id: string) => {
     const session = await insertSession(user_id);
     let sessionId = session.id;
+    if(!sessionId) return 'Failed to sign in';
     sessionId = await encrypt({sessionId, expireDate});
     cookies().set('session', sessionId, {expires: expireDate, httpOnly: true});
 };
@@ -81,7 +82,8 @@ const authenticateSession = async () => {
  */
 const login = async (email: string, password: string) => {
     const user = await authenticate(email, password);
-    if(!user.id) return 'Incorrect username or password';
+    //If user is an error, return that error and don't redirect
+    if(!user || user.message) return user.message;
     await saveSession(user.id);
     redirect('/comic');
 };
@@ -96,7 +98,6 @@ const login = async (email: string, password: string) => {
 const register = async (email: string, displayName: string, password: string) => {
     const user = await createUser(email, displayName, password);
     //If user is an error, return that error and don't redirect
-    console.log(user);
     if(!user || user instanceof Error) return user;
     redirect('/sign-in');
 };

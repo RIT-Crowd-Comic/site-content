@@ -10,7 +10,7 @@ import { useState } from "react";
 import { registerAction } from "@/app/login/actions";
 
 export function SignUpForm() {
-    const [errorMessage, setErrorMessage] = useState('');
+    const [message, errorState] = useState('');
 
     return (
         <main className={styles.body}>
@@ -21,9 +21,11 @@ export function SignUpForm() {
                     <Image className={styles.loginLogo} src={logo} alt=""></Image> 
                 </div>
             </Link>
-            
             {/* FORM */}
-            <form id={styles.loginForm} className="needs-validation" noValidate action={registerAction}>
+            <form id={styles.loginForm} className="needs-validation" noValidate action={async (formData) => {
+                    const response = await registerAction(formData);
+                    if(response != 'Success') errorState(response);
+                }}>
                 <h1 className={styles.h1}>Sign Up</h1>
             {/* USERNAME */}
             <div className={`mb-3 ${styles.formInputs}`}>
@@ -65,8 +67,8 @@ export function SignUpForm() {
 
             {/* LOGIN */}
             <Link href="sign-in"><button type="button" id={styles.registerButton} className={`btn btn-primary`}>Sign In</button></Link>
+            {!!message && <p>{message}</p>}
             </form>
-            {errorMessage && <div id="errorPublish" style={{color: 'white'}}> {errorMessage} </div>}
         </section>
         </main>
         );

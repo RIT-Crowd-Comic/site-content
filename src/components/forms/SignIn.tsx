@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import logo from "../../../public/images/logos/Crowd_Comic_Logo_BW.svg";
 
+import { useState } from "react";
 import {loginAction, testAuth} from '@/app/login/actions';
 
 //const forms = document.querySelectorAll('.needs-validation')
@@ -18,6 +19,8 @@ import {loginAction, testAuth} from '@/app/login/actions';
 // })
 export function SignInForm()
 {
+    const [message, errorState] = useState('');
+
     return (
         <main className={styles.body}>
         <section id={styles.loginPage}>
@@ -28,7 +31,10 @@ export function SignInForm()
                 </div>
             </Link>
             {/* FORM */}
-            <form id={styles.loginForm} action={loginAction} >
+            <form id={styles.loginForm} action={async (formData) => {
+                    const response = await loginAction(formData);
+                    if(response!='Success') errorState(response);
+                }} >
                 <h1 className={styles.h1}>Sign In</h1>
             {/* EMAIL */}
             <div className={`mb-3 ${styles.formInputs}`}>
@@ -57,7 +63,7 @@ export function SignInForm()
 
             {/* REGISTER */}
             <Link href="sign-up"><button type="button" id={styles.registerButton} className={`btn btn-primary`}>Sign Up</button></Link>
-
+            {!!message && <p>{message}</p>}
             </form>
             {/* FORM TO TEST authenticateSession <form action={testAuth}><button type="submit">Authenticate</button></form> */}
         </section>
