@@ -342,6 +342,53 @@
     margin-bottom: 5px;
 }
 
+/* PEN TOOL */
+#penSlider input{
+    accent-color: rgb(126, 126, 126);
+}
+
+/* PALETTE BUTTONS GENERIC */
+#paletteButtons button, #fillPaletteButtons button, #borderPaletteButtons button{
+    display: flexbox;
+}
+
+#paletteButtons p {
+    margin-bottom: 3px;
+}
+
+#paletteButtons button, #fillPaletteButtons button, #borderPaletteButtons button{
+    height:1.2em; 
+    width:1.2em;
+    margin-left: 2px;
+    margin-top: 1px;
+}
+
+#blackButton{
+    background-color: black;
+}
+
+#darkGrayButton{
+    background-color: rgb(68, 68, 68);
+}
+
+#grayButton{
+    background-color: gray;
+}
+
+#lightGrayButton{
+    background-color: lightgray;
+}
+
+#whiteButton{
+    background-color: white;
+}
+
+#emptyButton{
+    background-color: rgb(173, 173, 173);
+    text-align: justify;
+    padding: none;
+}
+
 /* PUBLISH */
 .publishButton, .saveButton
 {

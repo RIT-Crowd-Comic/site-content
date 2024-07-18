@@ -102,23 +102,23 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
                     <input type="checkbox" id="dashedBorderToggle" onChange={updateDashedBorder}></input>
                     <label htmlFor="dashedBorderToggle">Dashed Border</label>
                 </div>
-                <div id="borderPaletteButtons">
+                <div id={styles.borderPaletteButtons}>
                     <label id="colorLabel">Border Colors:</label>
-                    <button onClick={() => changeShapeBorderColor(color1)}></button>
-                    <button onClick={() => changeShapeBorderColor(color2)}></button>
-                    <button onClick={() => changeShapeBorderColor(color3)}></button>
-                    <button onClick={() => changeShapeBorderColor(color4)}></button>
-                    <button onClick={() => changeShapeBorderColor(color5)}></button>
-                    <button onClick={() => changeShapeBorderColor(color6)}></button>
+                    <button onClick={() => changeShapeBorderColor(color1)} id={styles.whiteButton}></button>
+                    <button onClick={() => changeShapeBorderColor(color2)} id={styles.lightGrayButton}></button>
+                    <button onClick={() => changeShapeBorderColor(color3)} id={styles.grayButton}></button>
+                    <button onClick={() => changeShapeBorderColor(color4)} id={styles.darkGrayButton}></button>
+                    <button onClick={() => changeShapeBorderColor(color5)} id={styles.blackButton}></button>
+                    <button onClick={() => changeShapeBorderColor(color6)} id={styles.emptyButton}>x</button>
                 </div>
-                <div id="fillPaletteButtons">
+                <div id={styles.fillPaletteButtons}>
                     <label id="colorLabel">Fill Colors:</label>
-                    <button onClick={() => changeShapeFillColor(color1)}></button>
-                    <button onClick={() => changeShapeFillColor(color2)}></button>
-                    <button onClick={() => changeShapeFillColor(color3)}></button>
-                    <button onClick={() => changeShapeFillColor(color4)}></button>
-                    <button onClick={() => changeShapeFillColor(color5)}></button>
-                    <button onClick={() => changeShapeFillColor(color6)}></button>
+                    <button onClick={() => changeShapeFillColor(color1)} id={styles.whiteButton}></button>
+                    <button onClick={() => changeShapeFillColor(color2)} id={styles.lightGrayButton}></button>
+                    <button onClick={() => changeShapeFillColor(color3)} id={styles.grayButton}></button>
+                    <button onClick={() => changeShapeFillColor(color4)} id={styles.darkGrayButton}></button>
+                    <button onClick={() => changeShapeFillColor(color5)} id={styles.blackButton}></button>
+                    <button onClick={() => changeShapeFillColor(color6)} id={styles.emptyButton}>x</button>
                 </div>
             </div>
         )
