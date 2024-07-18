@@ -106,7 +106,8 @@
     width: 95vw;
 }
 
-.desktopMission {
+.leftMission,
+.rightMission {
     display: none;
 }
 
@@ -695,9 +696,8 @@
         background-color: #ffffff;
         border: solid 5px black;
         padding: 1rem;
-        width: 90%;
-        height: auto;
-        margin: -70px auto 50px;
+        width: 85%;
+        margin: -50px auto 50px;
     }
 
     .topMission,
@@ -705,24 +705,30 @@
         display: none;
     }
 
-    .desktopMission {
+    .leftMission {
         display: inline;
         position: absolute;
-        width: 950px;
-        height: 350px;
-        margin: -15% -30px;
+        height: auto;
+        margin: -18% auto;
+    }
+
+    .rightMission {
+        display: inline;
+        position: absolute;
+        height: auto;
+        margin: -3% auto;
     }
 
     /* READ */
     .readSec {
         width: 992px;
-        margin: -20px auto 0;
+        margin: 50px auto;
     }
 
     .readHeading {
         background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
         padding: 2.5rem;
-        margin: 30px 30px -30px;
+        margin: 30px auto 0;
     }
 
     .readImage {
@@ -733,8 +739,8 @@
         background-color: white;
         border: solid 5px black;
         padding: 1rem;
-        width: 90%;
-        margin: 6px auto;
+        width: 95%;
+        margin: 20px auto 30px;
     }
 
     .topRead,
@@ -745,21 +751,20 @@
     .desktopRead {
         display: inline;
         position: absolute;
-        width: 845px;
-        height: 300px;
-        margin: -2% 3%;
+        height: auto;
+        margin: -10% auto;
     }
 
     /* CREATE */
     .createSec {
         width: 992px;
-        margin: 40px auto;
+        margin: 120px auto 0;
     }
 
     .createHeading {
         background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
         padding: 2rem;
-        margin: 0 30px 5px;
+        margin: 10px auto -30px;
     }
 
     .createImage {
@@ -769,11 +774,9 @@
     .createParagraph {
         background-color: white;
         border: solid 5px black;
-        
         padding: 1rem;
-        width: 90%;
-        margin: -10px 0 20px 42px;
-        
+        width: 95%;
+        margin: 20px auto 0;
     }
 
     .topCreate,
@@ -784,20 +787,14 @@
     .desktopCreate {
         display: inline;
         position: absolute;
-        width: 845px;
-        /* Original dimensions
-        height: 350px;
-        margin: -8% 17px;
-        */
-        height: 280px;
-        margin: -5% 25px;
-        transform: scaleX(-1);
+        height: auto;
+        margin: -8% auto;
     }
 
     /* GET STARTED */
 
     .getStarted {
-        margin: -70px 0px -50px 20px;
+        margin: -30px auto 50px;
     }
 
     .bookAnimation {
@@ -822,7 +819,7 @@
         padding: 0;
         background-size: 100% 100%;
         text-align: center;
-        margin: -60px auto -50px;
+        margin: 50px auto;
     }
 
     .ourTeam button {
@@ -833,20 +830,8 @@
     }
 
     .preview {
-        margin: 0 auto;
-        width: 822px;
-    }
-
-    .panelOne {
-        margin: 0;
-    }
-
-    .panelTwo {
-        margin: -17% auto 0;
-    }
-
-    .panelThree {
-        margin: -17% 0 0 auto;
+        margin: 100px auto 0;
+        width: 992px;
     }
 
     /* BACK TO TOP */
@@ -863,11 +848,7 @@
 @media (min-width: 1200px) {
 
     .body h2 {
-        font-size: 2.7rem;
-    }
-
-    .body p {
-        font-size: 1.4rem;
+        font-size: 2.5rem;
     }
 
     /* MISSION */
@@ -876,113 +857,31 @@
     }
 
     .missionParagraph {
-        width: 86%;
-        height: auto;
-        padding: 1.2rem;
-        margin: -65px 83px 50px;
+        margin: -30px auto 70px;
     }
 
-    .desktopMission {
-        display: inline;
-        position: absolute;
-        width: 1100px;
-        height: 405px;
-        margin: -13% auto;
-    }
 
     /* READ */
     .readSec {
-        width: 1200px;
-        margin: 130px auto 0px;
-    }
-
-    .readHeading {
-        padding: 2.5rem;
-        margin: -110px 30px ;
+        width: 1100px;
     }
 
     .readParagraph {
-        padding: 1.2rem;
-        width: 85%;
-        height: auto;
-        margin: 0px 85px 10px;
-    }
-
-    .desktopRead {
-        width: 980px;
-        height: 350px;
-        margin: -3% 5%;
+        margin: 50px auto 30px;
     }
 
     /* CREATE */
     .createSec {
-        width: 1200px;
-        margin: 40px auto 60px;
+        width: 1100px;
     }
 
-    .createHeading {
-        padding: 2.5rem;
-        margin: 0px 30px 20px;
-    }
-
-    .createParagraph {
-        padding: 1.2rem;
-        width: 85%;
-        height: auto;
-        margin: -30px 80px 10px;
-    }
-
-    .desktopCreate {
-        display: inline;
-        position: absolute;
-        width: 980px;
-        height: 350px;
-        margin: -7% 5%;
-    }
-
-    /* GET STARTED */
-
-    .getStarted {
-        margin: -70px 0px -50px 20px;
-    }
-
-    .bookAnimation {
-        width: 220px;
-        height: 220px;
-        top: 40px;
-        left: -110px;
-    }
-
-    .getStarted button {
-        font-size: 2.2rem;
-        width: 400px;
-        height: 250px;
-        padding: 1rem 1rem 2rem 1rem;
-    }
-
-    /* OUR TEAM */
-    .ourTeam {
-        width: 1200px;
-        height: 363px;
-        padding: 0;
-        background-size: 100% 100%;
-        text-align: center;
-        margin: -100px auto -50px;
-    }
-
-    .ourTeam button {
-        width: 300px;
-        height: 120px;
-        font-size: 2.2rem;
-
-    }
-
-    /* PREVIEW */
     .preview {
-        width: 950px;
+        width: 1100px;
+        margin: 150px auto 0;
     }
 
     /* BACK TO TOP */
+
     .scrollButtonContainer {
         width: 100px;
         height: 70px;
@@ -990,6 +889,4 @@
 }
 
 /* [xxl] Extra extra large devices, 1400px and up */
-@media (min-width: 1400px) {
-    
-}
+@media (min-width: 1400px) {}

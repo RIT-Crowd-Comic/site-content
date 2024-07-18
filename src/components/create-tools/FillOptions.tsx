@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import styles from "@/styles/create.module.css";
 
 interface Props
 {
@@ -21,7 +20,7 @@ const FillOptions = ({enabled, changeFillColor} : Props) =>
     if(enabled)
     {
         return(
-            <div id="fillTools" className={styles.toolStyles}>
+            <div id="fillTools">
                 <h3>Fill Tools</h3>
                 <div id="paletteButtons">
                     <label id="colorLabel">Colors:</label>

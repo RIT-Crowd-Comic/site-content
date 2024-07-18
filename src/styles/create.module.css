@@ -19,8 +19,6 @@
 
     color:white;
     font-size: small;
-
-    position: absolute;
 }
 
 #redoButton, #undoButton, #clearButton
@@ -40,37 +38,18 @@
     border-style: solid;
     background-color: white;
     cursor: pointer;
-
-    width: 60vw !important;
-    height: auto !important;
-
-    aspect-ratio: 3 / 2;
-
-    align-self: center;
 }
-
 #createPage
 {
     display: flex;
     flex-direction: row;   
-
-    height: auto;
-    width: 90vw;
-
-    margin: 20px auto;
-    align-items: center;
-    justify-content: center;
+    
+    height: 100vh;
+    overflow: none;
 }
-
-#toolRadioSelects, #functionButtons, .backgroundUploadForm
-{
-    margin: 0 auto;
-}
-
 #toolRadioSelects
 {
     order: 0;
-    width: 20px;
 }
 #canvas
 {
@@ -79,27 +58,7 @@
 #toolOptions
 {
     order: 2;
-
-    align-self: center;
-    margin-left: 20px;
-
-    width: 15vw;
-    height: 70vh;
-    
-    background-color: #00000062;
-    border: 3px solid black;
-
-    padding: 10px;
 }
-
-.toolStyles
-{
-    overflow-y: scroll;
-    overflow-x: hidden;
-
-    height: 60%;
-}
-
 .a 
 {
     color: white;
@@ -107,13 +66,7 @@
 
 #fieldSet
 {
-    align-self: center;
-    margin-right: 20px;
-
-    width: 40px;
-
-    background-color: #00000062;
-    border: 3px solid black;
+    margin-left: 10px;
 }
 
 #layerOptions
@@ -121,13 +74,15 @@
     margin: 10px 10px 0 0;
 }
 
+#functionButtons
+{
+    margin-left: -10px;
+}
+
 .layerSelect
 {
     position: relative;
     width: 100%;
-
-    margin: auto 0;
-    height: 15px;
 }
 
 .layer
@@ -156,7 +111,7 @@
 
 /* ICONS */
 
-#toolRadioSelects [type=radio], #layerOptions [type=checkbox], #backgroundUpload input
+#toolRadioSelects [type=radio], #layerOptions [type=checkbox]
 {
     position: absolute;
     opacity: 0;
@@ -167,137 +122,76 @@
 #penLabel
 {
     background: url("../../public/images/icons/draw-icons/pen.svg") no-repeat center/contain;
-    transform: scaleY(-1);
+    width: 20px;
+    height: 20px;
 }
 
 #eraserLabel
 {
     background: url("../../public/images/icons/draw-icons/eraser.svg") no-repeat center/contain;
+    width: 20px;
+    height: 20px;
 }
 
 #fillLabel
 {
     background: url("../../public/images/icons/draw-icons/bucket.svg") no-repeat center/contain;
-    transform: scaleX(-1);
+    width: 20px;
+    height: 20px;
 }
 
 #shapeLabel
 {
     background: url("../../public/images/icons/draw-icons/shapes.svg") no-repeat center/contain;
+    width: 20px;
+    height: 20px;
 }
 
 #textLabel
 {
     background: url("../../public/images/icons/draw-icons/text.svg") no-repeat center/contain;
+    width: 20px;
+    height: 20px;
 }
 
 #stickerLabel
 {
     background: url("../../public/images/icons/draw-icons/sticker.svg") no-repeat center/contain;
+    width: 20px;
+    height: 20px;
 }
 
 #selectLabel
 {
     background: url("../../public/images/icons/draw-icons/select.svg") no-repeat center/contain;
+    width: 20px;
+    height: 20px;
 }
 
 #transformLabel
 {
     background: url("../../public/images/icons/draw-icons/transform.svg") no-repeat center/contain;
-}
-
-#undoLabel
-{
-    background: url("../../public/images/icons/draw-icons/undo.svg") no-repeat center/contain;
     width: 20px;
     height: 20px;
-}
-
-#redoLabel
-{
-    background: url("../../public/images/icons/draw-icons/undo.svg") no-repeat center/contain;
-    width: 20px;
-    height: 20px;
-    transform: scaleX(-1);
-}
-
-#clearLabel
-{
-    background: url("../../public/images/icons/draw-icons/clear.svg") no-repeat center/contain;
-    width: 20px;
-    height: 20px;
-}
-
-#undoLabel button, #redoLabel button, #clearLabel button
-{
-    outline: none !important;
-    border: none !important;
-    background-color: none !important; 
-}
-
-#undoLabel:has(button:hover), #redoLabel:has(button:hover), #clearLabel:has(button:hover), .formLabel:has(input:hover)
-{
-    filter: brightness(.5);
-}
-
-#undoLabel:has(button:active), #redoLabel:has(button:active), #clearLabel:has(button:active), .formLabel:has(input:active)
-{
-    filter: brightness(.3);
 }
 
 .visibleLabel
 {
-    background: url("../../public/images/icons/draw-icons/eyeclose.svg") no-repeat center/contain;
+    background: url("../../public/images/icons/draw-icons/eyeopen.svg") no-repeat center/contain;
     width: 20px;
     height: 20px;
 }
 
 .lockLabel
 {
-    background: url("../../public/images/icons/draw-icons/unlock.svg") no-repeat center/contain;
+    background: url("../../public/images/icons/draw-icons/lock.svg") no-repeat center/contain;
     width: 20px;
     height: 20px;
 }
 
-.formLabel
+.toolStyling:has([type=radio]:checked), .visibleStyling:has([type=checkbox]:checked)
 {
-    background: url("../../public/images/icons/draw-icons/upload.svg") no-repeat center/contain;
-    width: 20px;
-    height: 20px;
-}
-
-.lockStyling
-{
-    margin: 8px 5px !important;
-}
-
-.toolStyling, .visibleStyling, .lockStyling
-{
-    width: 20px;
-    height: 20px;
-
-    margin: 8px 0;
-}
-
-.toolStyling label
-{
-    width: 100%;
-    height: 100%;
-}
-
-.toolStyling:has([type=radio]:checked)
-{
-    filter: brightness(.5);
-}
-
-.visibleStyling, .lockStyling
-{
-    filter: brightness(.5);
-}
-
-.visibleStyling:has([type=checkbox]:checked), .lockStyling:has([type=checkbox]:checked)
-{
-    filter: brightness(1);
+    filter:brightness(.5)
 }
 
 .layer:has([type=radio]:checked)
@@ -308,7 +202,7 @@
 
 .visibleStyling:has([type=checkbox]:checked) .visibleLabel
 {
-    background: url("../../public/images/icons/draw-icons/eyeopen.svg") no-repeat center/contain;
+    background: url("../../public/images/icons/draw-icons/eyeclose.svg") no-repeat center/contain;
 }
 
 .lockStyling:has([type=checkbox]:checked) .lockLabel

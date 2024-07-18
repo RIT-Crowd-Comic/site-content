@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import styles from "@/styles/create.module.css";
 
 interface Props
 {
@@ -83,7 +82,7 @@ const TextOptions = ({enabled, changeTextContent, changeTextFont, changeTextSize
     if(enabled)
     {
         return(
-            <div id="textTools" className={styles.toolStyles}>
+            <div id="textTools">
                 <h3>Text Tools</h3>
                 <div id="textTyper">
                     <p id="contentText">Text: </p>

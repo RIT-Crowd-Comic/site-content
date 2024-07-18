@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import styles from "@/styles/create.module.css";
 
 interface Props
 {
@@ -37,7 +36,7 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
     if(enabled)
     {
         return(
-            <div id="penTools" className={styles.toolStyles}>
+            <div id="penTools">
                 <h3>Pen Tools</h3>
                 <div id="penSlider">
                     <label id="sliderLabel" htmlFor="penRange">Pen Size: {penSize}</label>
