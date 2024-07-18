@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import Trunk from "./trunk";
 import * as apiCalls from "../../../api/apiCalls"
-import { isArray } from "util";
 
 interface PanelSet {
     id : number,
@@ -38,7 +37,6 @@ const TrunkCollection = () =>  {
         return <div>{error}</div>;
     }
     if (data.length > 0) {
-      console.log(data)
        return <ul>{data.map((ps : PanelSet) => (<Trunk name={ps.id.toString()} ></Trunk>))}</ul>;
     }
     return <div>No trunks found</div>;
