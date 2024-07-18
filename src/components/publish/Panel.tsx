@@ -151,6 +151,12 @@ const Panel = ({
 
     // const touchStartHandler = (event?: SyntheticEvent<HTMLImageElement, TouchEvent>) => { }
     const touchMoveHandler = (event?: SyntheticEvent<HTMLImageElement, TouchEvent>) => {
+        var touch = event?.nativeEvent.touches[0];
+        var mouseEvent = new MouseEvent("mousemove", {
+          clientX: touch?.clientX,
+          clientY: touch?.clientY
+        });
+        event?.target.dispatchEvent(mouseEvent);
         /** NOT WORKING YET, for some reason 'offsetX' doesn't exist on touch event */
         // switch (event?.nativeEvent.touches.length) {
         //     case 1:
@@ -166,6 +172,8 @@ const Panel = ({
         // }
     }
 
+    
+
     // const imgRect = imgRef.current?.getBoundingClientRect().left ?? 0;
     // const svgStyle = `
     //     left: ${imgRect}px
@@ -174,6 +182,7 @@ const Panel = ({
     const editingStyle = addingHook ? styles.editing : '';
     const displayOnLoad = { display: scale == undefined ? 'none' : 'initial' };
 
+   
     return (
         <div className={styles.branchEditor}>
             {/* <img
