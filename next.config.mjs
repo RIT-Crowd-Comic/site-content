@@ -4,7 +4,7 @@ const nextConfig = {
         remotePatterns: [
           {
             protocol: 'http',
-            hostname: 'localhost',
+            hostname: 'localhost', //update to s3 database instead of local when ready
             port: '5000',
           },
         ],
