@@ -427,7 +427,9 @@ const publish = async (image1 : File, image2 : File, image3 : File, authorId : s
     formData.append('image2', image2);
     formData.append('image3', image3);
     formData.append('data', JSON.stringify(data, null, 2));
-    return postAPICallFormData(`/publish`, formData );
+    const response = await postAPICallFormData(`/publish`, formData );
+    if(typeof response === 'string') return {error: response}
+    return response;
 }
 
 //todo implement the following

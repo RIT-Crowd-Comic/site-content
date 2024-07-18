@@ -167,7 +167,7 @@ const BranchPage = () => {
                             router.push(`/comic/?${queryString}`);
                         }    
                         else {
-                            const errorMessage = response.message || response.error || "An unknown error occurred";
+                            const errorMessage = response.message ||  response.error || "An unknown error occurred";
                             setErrorMessage(`There was an error: ${errorMessage}`);
                         }
             
