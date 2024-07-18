@@ -310,6 +310,13 @@ const changePassword = async(email :string, password :string, newPassword : stri
     })
 }
 
+const getAllImageUrlsByPanelSetId = async (id: number) => {
+    const response = await getAPICall(`/panel_set/${id}/images`);
+    if(response.message) {
+        return new Error(response.message)
+    }
+    return response;
+}
 
 
 const changeDisplayName = async(email: string, password: string, display: string, newDisplayName: string) => {
@@ -353,4 +360,4 @@ const getHooksFromPanelSetById = async(id: number) => {
 //'/getImage/:id
 // '/addSetToHook'
 
-export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, getHooksFromPanelSetById }
+export { getAllImageUrlsByPanelSetId, getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, getHooksFromPanelSetById }

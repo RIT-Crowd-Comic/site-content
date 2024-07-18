@@ -77,22 +77,27 @@ const ReadPage = ({ id }: Props) => {
                     panels: panels,
                     hook: panelSetResponse.hook
                 });
-                setImages(panels.map((p: any) => p.image));
-                const hookResponses = await apiCalls.getHooksFromPanelSetById(panelSetResponse.id);
-                if (!updateError(hookResponses)) {
-                    setActualHooks(hookResponses);
-                    //this is a trunk if true
-                    if (panelSetResponse.hook === null) {
-                        setParentPanelSet(undefined);
-                    }
-                    else {
-                        const parentPanelResponse = await apiCalls.getPanelByID(Number(panelSetResponse?.hook.current_panel_id));
-                        if (!updateError(parentPanelResponse)) {
-                            const previousPanelSetResponse = await apiCalls.getPanelSetByID(Number(parentPanelResponse.panel_set_id));
-                            setParentPanelSet(previousPanelSetResponse)
+                const imageUrlsResponse = await apiCalls.getAllImageUrlsByPanelSetId(id);
+                if(!updateError(imageUrlsResponse)) {
+                    console.log(imageUrlsResponse);
+                    setImages((imageUrlsResponse).map((i: any) => i.url))
+                    const hookResponses = await apiCalls.getHooksFromPanelSetById(panelSetResponse.id);
+                    if (!updateError(hookResponses)) {
+                        setActualHooks(hookResponses);
+                        //this is a trunk if true
+                        if (panelSetResponse.hook === null) {
+                            setParentPanelSet(undefined);
+                        }
+                        else {
+                            const parentPanelResponse = await apiCalls.getPanelByID(Number(panelSetResponse?.hook.current_panel_id));
+                            if (!updateError(parentPanelResponse)) {
+                                const previousPanelSetResponse = await apiCalls.getPanelSetByID(Number(parentPanelResponse.panel_set_id));
+                                setParentPanelSet(previousPanelSetResponse)
+                            }
                         }
                     }
                 }
+                
             }
             setIsLoading(false);
         }
@@ -115,7 +120,7 @@ const ReadPage = ({ id }: Props) => {
     }
     return (<>
             <h1 style={{ color: 'orange' }}>{`${id}P`}</h1>
-        <ComicPanels setting={layout} hook_state={hooks} images={[firstPanelImage, secondPanelImage, thirdPanelImage]} actualHooks={actualHooks} currentId={id} router={router} />
+        <ComicPanels setting={layout} hook_state={hooks} images={images} actualHooks={actualHooks} currentId={id} router={router} />
         <div className={`${styles.controlBar}`} >
             <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet !== undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}></img></button>
             <IconToggleButton setting={hooks} setSetting={setHooks} state_1="baseHooks" state_2="popHooks" buttonId="hooksToggle" source_1={toggleHooksOff} source_2={toggleHooksOn} />
