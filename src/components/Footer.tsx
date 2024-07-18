@@ -5,7 +5,6 @@ import Link from 'next/link'
 import linkedin from "../../public/images/icons/LinkedIn.svg";
 import facebook from "../../public/images/icons/Facebook.svg";
 import github from "../../public/images/icons/Github.svg"
-// import styles from "@/styles/publish.module.css"
 
 const Footer = () => {
     const current_year = new Date().getFullYear();
