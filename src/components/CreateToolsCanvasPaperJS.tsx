@@ -270,7 +270,8 @@ const CreateToolsCanvasPaperJS = () => {
         ELLIPSE: 2,
         TRIANGLE: 3,
         HEXAGON: 4,
-        STAR: 5
+        OCTAGON: 5,
+        STAR: 6
     });
 
     const [shapeSelected, setShapeSelected] = useState<number>(0);
@@ -314,6 +315,13 @@ const CreateToolsCanvasPaperJS = () => {
             shapePath = new paper.Path.RegularPolygon(centerPoint,6,centerPoint.x-startPoint.x);
             // Rotated so that the bottom edge is parallel with the bottom of the screen
             shapePath.rotate(30);
+        }
+        else if (shapeSelected == shapeStates.OCTAGON) {
+            const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
+            const radius = Math.abs(centerPoint.x-startPoint.x);
+            shapePath = new paper.Path.RegularPolygon(centerPoint,8,radius);
+            // Rotated so that the bottom edge is parallel with the bottom of the screen
+            //shapePath.rotate(30);
         }
         else if (shapeSelected == shapeStates.STAR) {
             const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
