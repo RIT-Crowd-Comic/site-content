@@ -27,7 +27,7 @@ const IconRadioButton = ({ imgSrc_1, imgSrc_2, value, selectedValue, onChange, s
 export default IconRadioButton;
 
 
-//  insert code below into parent component so that buttons can talk and update one another
+//  insert code below into parent component so that buttons can talk to and update one another
 
 //   const [selectedOption, setSelectedOption] = useState('');
 
