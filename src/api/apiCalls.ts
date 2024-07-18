@@ -9,9 +9,6 @@ const getAPICall = async (url: string) => {
         return response.json();
 
     }).then(json => {
-        if(json.message) {
-            return json.message
-        }
         return json;
 
     }).catch((error) => {
@@ -28,9 +25,6 @@ const postAPICall = async (url: string, body: object) => {
         return response.json();
 
     }).then(json => {
-        if(json.message) {
-            return json.message
-        }
         return json;
 
     }).catch((error) => {
@@ -45,8 +39,6 @@ const postAPICallFormData = async (url: string, formData: FormData) => {
     })
     .then(response =>{return response.json()})
     .then(json => {
-      if(json.message)
-        {return json.message};
       return json;
     })
     .catch(error => {
@@ -428,7 +420,8 @@ const publish = async (image1 : File, image2 : File, image3 : File, authorId : s
     formData.append('image3', image3);
     formData.append('data', JSON.stringify(data, null, 2));
     const response = await postAPICallFormData(`/publish`, formData );
-    if(typeof response === 'string') return {error: response}
+    
+    if(response.message) return new Error(response.message);
     return response;
 }
 

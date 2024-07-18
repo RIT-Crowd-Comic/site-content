@@ -157,20 +157,18 @@ const BranchPage = () => {
                     confirmBranchHook={() => confirmBranchHook(activePanel)}
                     removeBranchHook={removeBranchHook}
                     publish={async() =>{
-
                         const response = await publishHandler(panelSet);
                         console.log(response);
 
-                        
-                        if(response.panel_set){
+                        if(response instanceof Error){
+                            const errorMessage = response.message || "An unknown error occurred";
+                            setErrorMessage(`There was an error: ${errorMessage}`);
+                        }
+                        else{
                             const queryString = new URLSearchParams({panel_set_id: response.panel_set}).toString();
                             router.push(`/comic/?${queryString}`);
                         }    
-                        else {
-                            const errorMessage = response.message ||  response.error || "An unknown error occurred";
-                            setErrorMessage(`There was an error: ${errorMessage}`);
-                        }
-            
+
                         /*
                         get the data on the page this was sent to
                             import { useRouter } from 'next/router';
