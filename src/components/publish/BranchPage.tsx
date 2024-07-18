@@ -56,8 +56,8 @@ const BranchPage = () => {
         // retrieve comic images from create page using local storage
         const storedImageLinks = [
             loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[0],
-            loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[1],
-            loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[2]
+            loadImageAndConvertToURL(localStorage.getItem('image-2')) || imageLinks[1],
+            loadImageAndConvertToURL(localStorage.getItem('image-3')) || imageLinks[2]
         ];
 
         setImageLinks(storedImageLinks);
