@@ -8,6 +8,7 @@ import ShapeOptions from './create-tools/ShapeOptions';
 import TextOptions from './create-tools/TextOptions';
 import StickerOptions from './create-tools/StickerOptions';
 import styles from "@/styles/create.module.css";
+import { useRouter } from 'next/navigation';
 import { Istok_Web } from 'next/font/google';
 
 import Link from 'next/link';
@@ -40,6 +41,9 @@ const CreateToolsCanvasPaperJS = () => {
     let backgroundLayerReference = useRef<paper.Layer>();
     let layer1Reference = useRef<paper.Layer>();
     let layer2Reference = useRef<paper.Layer>();
+
+    // Router for sending the user to other pages (used in toPublish())
+    const router = useRouter();
 
     // Call useEffect() in order obtain the value of the canvas after the first render
     // Pass in an empty array so that useEffect is only called once, after the initial render
@@ -948,7 +952,7 @@ const CreateToolsCanvasPaperJS = () => {
     }*/
 
     // Saves the project's layer image data to localStorage
-    const save = () =>
+    const save = (showAlert: Boolean) =>
     {
         let layerData = {
             background: backgroundLayerReference.current?.exportJSON(),
@@ -958,22 +962,25 @@ const CreateToolsCanvasPaperJS = () => {
 
         // Save the layerData object to localStorage in JSON string form
         localStorage.setItem("panel-1-layerData", JSON.stringify(layerData));
+
+        // Alert the user that their progress has been saved
+        if(showAlert)
+        {
+            alert("Your progress has been saved!");
+        }
     }
 
     // Creates an image out of the project's layers and saves it to localStorage for the publish page
     const toPublish = () =>
     {
         // Saves the user's progress for them
-        save();
-
-        /*let imageData = {
-            panel1: canvasProject.current?.exportSVG()
-        }*/
-
-        console.log(canvasProject.current?.exportSVG());
+        save(false);
 
         // Save the SVG Image to localStorage
-        //localStorage.setItem("image-1", JSON.stringify(imageData));
+        localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({asString: true})));
+
+        // Send the user to the publish page
+        router.push(`/comic/create/publish`);
     }
 
     // Return the canvas HTMLElement and its associated functionality
@@ -1033,9 +1040,6 @@ const CreateToolsCanvasPaperJS = () => {
                 </div>
 
                 <div id={styles.functionButtons}>
-                    <button className="btn" id="saveButton" onClick={save}>Save</button><br></br>
-                    <button className="btn" id="publishButton" onClick={toPublish}>Publish (NOT FUNCTIONAL)</button><br></br>
-
                     <label htmlFor="undoButton" id={styles.undoLabel}>
                         <button className="btn" id="undoButton"></button>
                     </label>
@@ -1046,6 +1050,8 @@ const CreateToolsCanvasPaperJS = () => {
                     <label htmlFor="clearButton" id={styles.clearLabel}>
                         <button className="btn" id="clearButton" onClick={clearLayer}></button>
                     </label>
+                    <button className="btn" id="saveButton" onClick={() => save(true)}>Save</button><br></br>
+                    <button className="btn" id="publishButton" onClick={toPublish}>Publish</button><br></br>
                 </div>
 
                 <div id="backgroundUploadForm" className={styles.backgroundUploadForm}>
@@ -1113,6 +1119,7 @@ const CreateToolsCanvasPaperJS = () => {
                             <label htmlFor="layer1">Layer 1</label><br/>
                         </div>
                     </div>
+                    
                     <div id="backgroundLayer" className={styles.layer}>
                         <div id="backgroundLayerVisibility" className={styles.visibleStyling}>
                             <label htmlFor="backgroundToggle" className={styles.visibleLabel}>
@@ -1129,23 +1136,6 @@ const CreateToolsCanvasPaperJS = () => {
                             <label htmlFor="background">Background</label><br />
                         </div>
                     </div>  
-                </div>
-            </div>
-
-            <div id="panelSelect">
-                <div id="panel1">
-                    <input type="radio" name="panels" id="panel1Select" value={0} defaultChecked />
-                    <label htmlFor="panel1Select">Panel 1</label><br />
-                </div>
-
-                <div id="panel2">
-                    <input type="radio" name="panels" id="panel2Select" value={1} />
-                    <label htmlFor="panel2Select">Panel 2</label><br />
-                </div>
-
-                <div id="panel3">
-                    <input type="radio" name="panels" id="panel3Select" value={2} />
-                    <label htmlFor="panel3Select">Panel 3</label><br />
                 </div>
             </div>
 
