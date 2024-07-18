@@ -23,73 +23,84 @@
     position: absolute;
 }
 
-#redoButton, #undoButton, #clearButton
+#createPage
 {
-    color:white !important;
-    background-color: wheat;
+    display: grid;
+
+    grid-template-columns: auto auto 20%;
+    grid-template-rows: 50% 40% 10%;
+    grid-template-areas: 
+    "toolBar canvas penTools"
+    "toolBar canvas layers"
+    "toolBar canvas previewPanels";
+
+    flex-direction: row;   
+
+    height: 80vh;
+
+    margin: 20px auto;
+    align-items: start;
+    justify-content: center;
 }
 
-#imagePreviews
+#canvas
 {
-    display: flex;
-    justify-content: center;
-    gap: 10rem;
-}
-.canvas
-{
+    order: 1;
+    border: 3px solid black;
+    grid-area: canvas;
+
     border-style: solid;
     background-color: white;
     cursor: pointer;
 
-    width: 60vw !important;
-    height: auto !important;
+    height: 100% !important;
+    width: auto !important;
 
     aspect-ratio: 3 / 2;
-
-    align-self: center;
 }
 
-#createPage
+/* LEFT SIDE/TOOL BAR */
+
+#fieldSet
 {
-    display: flex;
-    flex-direction: row;   
+    margin-right: 20px;
+    height: 200%;
+    width: 50px;
 
-    height: auto;
-    width: 90vw;
-
-    margin: 20px auto;
-    align-items: center;
-    justify-content: center;
+    background-color: #00000062;
+    border: 3px solid black;
 }
 
 #toolRadioSelects, #functionButtons, .backgroundUploadForm
 {
+    width: 25px;
     margin: 0 auto;
 }
 
 #toolRadioSelects
 {
     order: 0;
-    width: 20px;
+    grid-area: toolBar;
 }
-#canvas
-{
-    order: 1;
-}
-#toolOptions
-{
-    order: 2;
 
-    align-self: center;
-    margin-left: 20px;
 
-    width: 15vw;
-    height: 70vh;
-    
+#toolOptions, #layerOptions, .panelSelect
+{
     background-color: #00000062;
     border: 3px solid black;
 
-    padding: 10px;
+    height: 95%;
+    padding: 7px;
+
+    margin-left: 20px;
+}
+
+/* RIGHT SIDE BAR */
+/* - TOOL OPTIONS */
+
+#toolOptions
+{
+    grid-area: penTools;
 }
 
 .toolStyles
@@ -97,28 +108,14 @@
     overflow-y: scroll;
     overflow-x: hidden;
 
-    height: 60%;
+    height: 100%;
 }
 
-.a 
-{
-    color: white;
-}
-
-#fieldSet
-{
-    align-self: center;
-    margin-right: 20px;
-
-    width: 40px;
-
-    background-color: #00000062;
-    border: 3px solid black;
-}
+/* - LAYER OPTIONS */
 
 #layerOptions
 {
-    margin: 10px 10px 0 0;
+    grid-area: layers;
 }
 
 .layerSelect
@@ -132,7 +129,8 @@
 
 .layer
 {
-    padding: 5px;
+    padding: 2px;
+    margin: 2px 0;
     border: solid 3px white;
     background-color: black;
 
@@ -142,28 +140,48 @@
     width: 100%;
 }
 
+#layersList
+{
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    height: 90%;
+}
+
 .layerSelectRadio
 {
+    /* MAKES IT SO MOST OF LAYER BOX IS SELECTABLE */
     left: 0;
     width: 100%;
     height: 100%;
 
-    background-color: red;
-
     position: absolute;
     opacity: 0;
+}
+
+/* - PREVIEW PANEL OPTIONS */
+
+.panelSelect
+{
+    grid-area: previewPanels;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 /* ICONS */
 
-#toolRadioSelects [type=radio], #layerOptions [type=checkbox], #backgroundUpload input
+/* - HIDES THE BUTTONS */
+#toolRadioSelects [type=radio], #layerOptions [type=checkbox], #backgroundUpload input, .panelSelect [type=radio]
 {
     position: absolute;
     opacity: 0;
-    width:20px;
-    height:20px;
+    width: 25px;
+    height: 25px;
 }
 
+/* - DECLARES ALL ICONS */
 #penLabel
 {
     background: url("../../public/images/icons/draw-icons/pen.svg") no-repeat center/contain;
@@ -179,6 +197,11 @@
 {
     background: url("../../public/images/icons/draw-icons/bucket.svg") no-repeat center/contain;
     transform: scaleX(-1);
+}
+
+#shaderLabel
+{
+    background: url("../../public/images/icons/draw-icons/tone.svg") no-repeat center/contain;
 }
 
 #shapeLabel
@@ -209,25 +232,20 @@
 #undoLabel
 {
     background: url("../../public/images/icons/draw-icons/undo.svg") no-repeat center/contain;
-    width: 20px;
-    height: 20px;
 }
 
 #redoLabel
 {
     background: url("../../public/images/icons/draw-icons/undo.svg") no-repeat center/contain;
-    width: 20px;
-    height: 20px;
     transform: scaleX(-1);
 }
 
 #clearLabel
 {
     background: url("../../public/images/icons/draw-icons/clear.svg") no-repeat center/contain;
-    width: 20px;
-    height: 20px;
 }
 
+/* - BUTTON CSS */
 #undoLabel button, #redoLabel button, #clearLabel button
 {
     outline: none !important;
@@ -248,24 +266,32 @@
 .visibleLabel
 {
     background: url("../../public/images/icons/draw-icons/eyeclose.svg") no-repeat center/contain;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
 }
 
 .lockLabel
 {
     background: url("../../public/images/icons/draw-icons/unlock.svg") no-repeat center/contain;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
 }
 
 .formLabel
 {
     background: url("../../public/images/icons/draw-icons/upload.svg") no-repeat center/contain;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
 }
 
+.panelLabel
+{
+    background: url("../../public/images/icons/draw-icons/panels.svg") no-repeat center/contain;
+    width: 30px;
+    height: 100%;
+}
+
+/* - ONTO STYLING... */
 .lockStyling
 {
     margin: 8px 5px !important;
@@ -273,19 +299,19 @@
 
 .toolStyling, .visibleStyling, .lockStyling
 {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
 
     margin: 8px 0;
 }
 
 .toolStyling label
 {
-    width: 100%;
-    height: 100%;
+    width: 25px;
+    height: 25px;
 }
 
-.toolStyling:has([type=radio]:checked)
+.toolStyling:has([type=radio]:checked), .panelStyling:has([type=radio]:checked)
 {
     filter: brightness(.5);
 }
@@ -293,6 +319,7 @@
 .visibleStyling, .lockStyling
 {
     filter: brightness(.5);
+    margin-left: 5px;
 }
 
 .visibleStyling:has([type=checkbox]:checked), .lockStyling:has([type=checkbox]:checked)
@@ -318,7 +345,8 @@
 
 #functionButtons
 {
-    width: 20px;
+    width: 25px;
+    height: 25px;
     height: auto;
     display:flex;
     flex-direction: column;
@@ -328,27 +356,34 @@
 
 #functionButtons label
 {
-    width: 100%;
-    height: 100%;
+    width: 25px;
+    height: 25px;
 
     margin: 0 0 8px 0;
 }
 
 .backgroundUploadForm
 {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
 
     margin-bottom: 5px;
 }
 
-/* PUBLISH */
+/* SAVE & PUBLISH */
+#savePublish
+{
+    z-index: 99;
+
+    grid-area: canvas;
+
+    position: absolute;
+    left: 35%;
+    bottom: 0;
+}
+
 .publishButton, .saveButton
 {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-
     background-color: white;
     color: black;
 
