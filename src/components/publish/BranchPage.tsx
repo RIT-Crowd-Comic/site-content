@@ -32,6 +32,7 @@ const BranchPage = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const router = useRouter();
 
+
     // load images from create page
     const [imageLinks, setImageLinks] = useState([
         "/comic-panels/first_panel.png",
@@ -39,21 +40,31 @@ const BranchPage = () => {
         "/comic-panels/third_panel.png"
     ]);
 
+    const loadImageAndConvertToURL = (svgString : string | null) =>{
+        if (svgString) {
+            // Convert the SVG string to a data URL
+            // Encode the SVG string in Base64
+            const encoded = btoa(unescape(encodeURIComponent(svgString)));
+            // Create a data URL
+           return`data:image/svg+xml;base64,${encoded}`;
+        }
+        return undefined;
+    }
+
     // one time setup
     useEffect(() => {
-
         // retrieve comic images from create page using local storage
         const storedImageLinks = [
-            localStorage.getItem("image-1") || imageLinks[0],
-            localStorage.getItem("image-2") || imageLinks[1],
-            localStorage.getItem("image-3") || imageLinks[2]
+            loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[0],
+            loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[1],
+            loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[2]
         ];
 
         setImageLinks(storedImageLinks);
 
-        panelSet.panels[0].imgSrc = imageLinks[0];
-        panelSet.panels[1].imgSrc = imageLinks[1];
-        panelSet.panels[2].imgSrc = imageLinks[2];
+        panelSet.panels[0].imgSrc = storedImageLinks[0];
+        panelSet.panels[1].imgSrc = storedImageLinks[1];
+        panelSet.panels[2].imgSrc = storedImageLinks[2];
 
         nextPanel(0);
         // selectHook(null);

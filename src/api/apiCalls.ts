@@ -380,7 +380,7 @@ const publishHandler = async(panelSet : PanelSet) =>{
         if(image3 instanceof Error) return new Error(`There was an error getting the 1st image: ${image3.message}`);
 
         //get the authorId - hardcode for now
-        const authorId = '616eb2f9-6ca4-4e6e-a0c9-7dfb71370262'
+        const authorId = 'e61e9f1a-82fe-4651-8302-130894cec393'
 
         //get the hook data
         const hooks  = [] as Array<hook>;
