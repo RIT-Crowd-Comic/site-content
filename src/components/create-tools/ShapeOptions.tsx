@@ -33,7 +33,8 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
         ELLIPSE: 2,
         TRIANGLE: 3,
         HEXAGON: 4,
-        STAR: 5
+        OCTAGON:5,
+        STAR: 6
     });
 
     // Whenever the slider is adjusted, change the value of penSize.  This will update the label text as well as the value in the parent CreateCanvasTools component
@@ -88,6 +89,10 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
                     <div id="hexagonSelect">
                         <input type="radio" name="shape" id="hexagon" value={shapeStates.HEXAGON} onChange={updateShape}/>
                         <label htmlFor="hexagon">Hexagon</label>
+                    </div>
+                    <div id="octagonSelect">
+                        <input type="radio" name="shape" id="octagon" value={shapeStates.OCTAGON} onChange={updateShape}/>
+                        <label htmlFor="octagon">Octagon</label>
                     </div>
                     <div id="starSelect">
                         <input type="radio" name="shape" id="star" value={shapeStates.STAR} onChange={updateShape}/>
