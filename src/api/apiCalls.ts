@@ -361,7 +361,7 @@ type hook = {
 }
 
 const fetchImage = async(imageUrl : string) =>{
-    return fetch("/comic-panels/first_panel.png")
+    return fetch(imageUrl)
         .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -388,7 +388,7 @@ const publishHandler = async(panelSet : PanelSet) =>{
         if(image3 instanceof Error) return new Error(`There was an error getting the 1st image: ${image3.message}`);
 
         //get the authorId - hardcode for now
-        const authorId = 'eb909cf3-6c0d-4a10-991e-fb794a2ddf6a'
+        const authorId = '616eb2f9-6ca4-4e6e-a0c9-7dfb71370262'
 
         //get the hook data
         const hooks  = [] as Array<hook>;
