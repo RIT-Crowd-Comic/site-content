@@ -35,16 +35,21 @@ const CreateToolsCanvasPaperJS = () => {
     //const [panel1Project, setPanel1Project] = useState<paper.Layer[]>([]);
     //const [panel2Project, setPanel2Project] = useState<paper.Layer[]>([]);
     //const [panel3Project, setPanel3Project] = useState<paper.Layer[]>([]);
+    const [panel1LayerData, setPanel1LayerData] = useState({});
+    const [panel2LayerData, setPanel2LayerData] = useState({});
+    const [panel3LayerData, setPanel3LayerData] = useState({});
 
     // Used to track which panel is currently being edited so that its state can be saved before switching 
-    //const panelList = [panel1Project, panel2Project, panel3Project];
-    //const [currentPanelIndex, setCurrentPanelIndex] = useState<number>(0);
+    //const panelList = [panel1LayerData, panel2LayerData, panel3LayerData];
+    const [currentPanelIndex, setCurrentPanelIndex] = useState<number>(0);
 
     // References to the PaperJS Canvas Layers
     let backgroundLayerReference = useRef<paper.Layer>();
-    let ShadingLayerRef = useRef<paper.Layer>();
+    let shadingLayerRef = useRef<paper.Layer>();
     let layer1Reference = useRef<paper.Layer>();
     let layer2Reference = useRef<paper.Layer>();
+    let layer3Reference = useRef<paper.Layer>();
+    let layer4Reference = useRef<paper.Layer>();
 
     // Router for sending the user to other pages (used in toPublish())
     const router = useRouter();
@@ -67,9 +72,11 @@ const CreateToolsCanvasPaperJS = () => {
         // Set the layer references
         // Set the layer references as well as the default active layer
         backgroundLayerReference.current = canvasProject.current.activeLayer;
-        ShadingLayerRef.current = new paper.Layer();
+        shadingLayerRef.current = new paper.Layer();
         layer1Reference.current = new paper.Layer();
         layer2Reference.current = new paper.Layer();
+        layer3Reference.current = new paper.Layer();
+        layer4Reference.current = new paper.Layer();
         layer1Reference.current.activate();
 
         // If previous layer data exists, set the layers to that, otherwise make new layers
@@ -82,8 +89,11 @@ const CreateToolsCanvasPaperJS = () => {
             {
                 let layerData = JSON.parse(jsonData);
                 backgroundLayerReference.current.importJSON(layerData.background);
+                shadingLayerRef.current.importJSON(layerData.shade);
                 layer1Reference.current.importJSON(layerData.layer1);
                 layer2Reference.current.importJSON(layerData.layer2);
+                layer3Reference.current.importJSON(layerData.layer3);
+                layer4Reference.current.importJSON(layerData.layer4);
             }
 
             /*if(jsonImageData)
@@ -184,7 +194,7 @@ const CreateToolsCanvasPaperJS = () => {
     shadingTool.current.onMouseDown = function()
     {
         //switches to dedicated shading layer
-        ShadingLayerRef.current?.activate;
+        shadingLayerRef.current?.activate;
        
         
         clipPath = new paper.Path();
@@ -974,6 +984,12 @@ const CreateToolsCanvasPaperJS = () => {
             case 2:
                 layer2Reference.current?.activate();
                 break;
+            case 3:
+                layer3Reference.current?.activate();
+                break;
+            case 4:
+                layer4Reference.current?.activate();
+                break;
             default:
                 layer1Reference.current?.activate();
                 break;
@@ -1001,6 +1017,12 @@ const CreateToolsCanvasPaperJS = () => {
         else if (layer2Reference.current && event.target.value === '2') {
             layer2Reference.current.visible = !layer2Reference.current.visible;
         }
+        else if (layer3Reference.current && event.target.value === '3') {
+            layer3Reference.current.visible = !layer3Reference.current.visible;
+        }
+        else if (layer4Reference.current && event.target.value === '4') {
+            layer4Reference.current.visible = !layer4Reference.current.visible;
+        }
     }
 
     const toggleLayerLock = (event: ChangeEvent<HTMLInputElement>) => {
@@ -1012,6 +1034,12 @@ const CreateToolsCanvasPaperJS = () => {
         }
         else if (layer2Reference.current && event.target.value === '2') {
             layer2Reference.current.locked = !layer2Reference.current.locked;
+        }
+        else if (layer3Reference.current && event.target.value === '3') {
+            layer3Reference.current.locked = !layer3Reference.current.locked;
+        }
+        else if (layer4Reference.current && event.target.value === '4') {
+            layer4Reference.current.locked = !layer4Reference.current.locked;
         }
     }
 
@@ -1060,8 +1088,11 @@ const CreateToolsCanvasPaperJS = () => {
     {
         let layerData = {
             background: backgroundLayerReference.current?.exportJSON(),
+            shade: shadingLayerRef.current?.exportJSON(),
             layer1: layer1Reference.current?.exportJSON(),
-            layer2: layer2Reference.current?.exportJSON()
+            layer2: layer2Reference.current?.exportJSON(),
+            layer3: layer3Reference.current?.exportJSON(),
+            layer4: layer4Reference.current?.exportJSON()
         }
 
         // Save the layerData object to localStorage in JSON string form
@@ -1195,6 +1226,40 @@ const CreateToolsCanvasPaperJS = () => {
                 <ShaderOptions enabled={shadeOptionsEnabled} shaderSize={shadeSize} changeShaderSize={setShadeSize}/>
 
                 <div id={styles.layerOptions}>
+                    <div id="layer4" className={styles.layer}>
+                        <div id="layer4Visibility" className={styles.visibleStyling}>
+                            <label htmlFor="layer4Toggle" className={styles.visibleLabel}>
+                                <input type="checkbox" id="layer4Toggle" value="4" onChange={toggleLayerVisibility} defaultChecked></input>
+                            </label>
+                        </div>
+                        <div id="layer4Lock" className={styles.lockStyling}>
+                            <label htmlFor="layer4LockToggle" className={styles.lockLabel}>
+                                <input type="checkbox" id="layer4LockToggle" value="4" onChange={toggleLayerLock}></input>
+                            </label>
+                        </div>
+                        <div id="layer4Select" className={styles.layerSelect}>
+                            <input type="radio" name="layers" id="layer4" className={styles.layerSelectRadio} value='4' onChange={changeLayer} />
+                            <label htmlFor="layer4">Layer 4</label><br />
+                        </div>
+                    </div>
+
+                    <div id="layer3" className={styles.layer}>
+                        <div id="layer3Visibility" className={styles.visibleStyling}>
+                            <label htmlFor="layer3Toggle" className={styles.visibleLabel}>
+                                <input type="checkbox" id="layer3Toggle" value="3" onChange={toggleLayerVisibility} defaultChecked></input>
+                            </label>
+                        </div>
+                        <div id="layer3Lock" className={styles.lockStyling}>
+                            <label htmlFor="layer3LockToggle" className={styles.lockLabel}>
+                                <input type="checkbox" id="layer3LockToggle" value="3" onChange={toggleLayerLock}></input>
+                            </label>
+                        </div>
+                        <div id="layer3Select" className={styles.layerSelect}>
+                            <input type="radio" name="layers" id="layer3" className={styles.layerSelectRadio} value='3' onChange={changeLayer} />
+                            <label htmlFor="layer3">Layer 3</label><br />
+                        </div>
+                    </div>
+                    
                     <div id="layer2" className={styles.layer}>
                         <div id="layer2Visibility" className={styles.visibleStyling}>
                             <label htmlFor="layer2Toggle" className={styles.visibleLabel}>
