@@ -89,7 +89,7 @@ const login = async (email: string, password: string) => {
 };
 
 /**
- * Create a user and redirect to login
+ * Create a user and sign them in
  * @param email user email (needs to be unique)
  * @param displayName user display name
  * @param password user password
@@ -101,7 +101,7 @@ const register = async (email: string, displayName: string, password: string) =>
     if(!user || user instanceof Error) return user;
     //Successful sign-up wil sign-in the user
     await login(email, password);
-    //If login did not redirect, return an error
+    //If login did not redirect to comic,something went wrong so return an error
     return new Error('Login Failed');
 };
 
