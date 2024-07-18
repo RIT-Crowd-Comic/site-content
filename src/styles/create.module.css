@@ -343,20 +343,17 @@
 }
 
 /* PEN TOOL */
-#penSlider input{
+#penSlider, #shapeBorderSlider, #shapeSelect, #eraserSlider, #textWeight, #textAlignment, #shadeSlider {
     accent-color: rgb(126, 126, 126);
 }
 
 /* PALETTE BUTTONS GENERIC */
-#paletteButtons button, #fillPaletteButtons button, #borderPaletteButtons button{
-    display: flexbox;
-}
-
-#paletteButtons p {
+#paletteButtons p, #fillPaletteButtons p, #borderPaletteButtons p, #textColor p{
     margin-bottom: 3px;
 }
 
-#paletteButtons button, #fillPaletteButtons button, #borderPaletteButtons button{
+#paletteButtons button, #fillPaletteButtons button, #borderPaletteButtons button, #textColor button{
+    display: flexbox;
     height:1.2em; 
     width:1.2em;
     margin-left: 2px;
@@ -385,8 +382,13 @@
 
 #emptyButton{
     background-color: rgb(173, 173, 173);
-    text-align: justify;
-    padding: none;
+    text-align: center;
+    padding: 0 0.2em;
+    margin: 0;
+    font-size: 1em;
+    position: relative;
+    top:2px;
+    height: 1.2em;
 }
 
 /* PUBLISH */

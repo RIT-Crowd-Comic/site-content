@@ -66,7 +66,7 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
         return(
             <div id="shapeTools" className={styles.toolStyles}>
                 <h3>Shape Tools</h3>
-                <div id="shapeSelect">
+                <div id={styles.shapeSelect}>
                     <div id="rectangleSelect">
                         <input type="radio" name="shape" id="rectangle" value={shapeStates.RECTANGLE} defaultChecked onChange={updateShape}/>
                         <label htmlFor="rectangle">Rectangle</label>
@@ -94,7 +94,7 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
                         <label htmlFor="star">Star</label>
                     </div>
                 </div>
-                <div id="shapeBorderSlider">
+                <div id={styles.shapeBorderSlider}>
                     <label id="sliderLabel" htmlFor="shapeBorderRange">Border Size: {shapeBorderSize}</label>
                     <input type="range" min="1" max="20" defaultValue={shapeBorderSize} step="1" id="shapeBorderRange" ref={sliderReference} onChange={updateSize}></input>
                 </div>
