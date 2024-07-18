@@ -1140,6 +1140,24 @@ const CreateToolsCanvasPaperJS = () => {
             </div>
 
             <Link href="/comic/create/publish" id={styles.publishButton}>PUBLISH</Link>
+
+            {/* <div id="panelSelect">
+                <div id="panel1">
+                    <input type="radio" name="panels" id="panel1Select" value={0} defaultChecked />
+                    <label htmlFor="panel1Select">Panel 1</label><br />
+                </div>
+
+                <div id="panel2">
+                    <input type="radio" name="panels" id="panel2Select" value={1} />
+                    <label htmlFor="panel2Select">Panel 2</label><br />
+                </div>
+
+                <div id="panel3">
+                    <input type="radio" name="panels" id="panel3Select" value={2} />
+                    <label htmlFor="panel3Select">Panel 3</label><br />
+                </div>
+            </div> */}
+
         </div>
     )
 }

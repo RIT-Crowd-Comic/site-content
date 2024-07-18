@@ -343,18 +343,26 @@
 }
 
 /* PUBLISH */
-#publishButton
+.publishButton, .saveButton
 {
     position: absolute;
     bottom: 0;
     right: 0;
 
     background-color: white;
+    color: black;
+
     padding: 5px;
     border: 3px solid black;
     border-bottom: 4px solid black;
     margin: 0 5px 5px 0;
 }
+
+.saveButton
+{
+    right: 10%;
+}
+
 
 /* [xs] Extra small devices, less than 576px) */
 /* No media query for `xs` since this is the default in Bootstrap */
