@@ -1,19 +1,16 @@
-'use client'
-import {PaperOffset} from 'paperjs-offset';
 import { useEffect, useRef, useState } from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
-import paper from 'paper';
+import paper from 'paper/dist/paper-core';
 import PenOptions from './create-tools/PenOptions';
 import EraserOptions from './create-tools/EraserOptions';
 import FillOptions from './create-tools/FillOptions';
 import ShapeOptions from './create-tools/ShapeOptions';
 import TextOptions from './create-tools/TextOptions';
 import StickerOptions from './create-tools/StickerOptions';
-import ShaderOptions from './create-tools/ShaderOptions';
 import styles from "@/styles/create.module.css";
-import Link from 'next/link';
 import { Istok_Web } from 'next/font/google';
 
+import Link from 'next/link';
 
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
@@ -41,7 +38,6 @@ const CreateToolsCanvasPaperJS = () => {
 
     // References to the PaperJS Canvas Layers
     let backgroundLayerReference = useRef<paper.Layer>();
-    let ShadingLayerRef = useRef<paper.Layer>();
     let layer1Reference = useRef<paper.Layer>();
     let layer2Reference = useRef<paper.Layer>();
 
@@ -62,9 +58,7 @@ const CreateToolsCanvasPaperJS = () => {
 
         // Set the layer references
         // Set the layer references as well as the default active layer
-
-        backgroundLayerReference.current = canvasProject.current.activeLayer
-        ShadingLayerRef.current = new paper.Layer();
+        backgroundLayerReference.current = canvasProject.current.activeLayer;
         layer1Reference.current = new paper.Layer();
         layer2Reference.current = new paper.Layer();
         layer1Reference.current.activate();
@@ -126,8 +120,7 @@ const CreateToolsCanvasPaperJS = () => {
         TEXT: 4,
         STICKER: 5,
         SELECT: 6,
-        TRANSFORM: 7,
-        SHADER:8
+        TRANSFORM: 7
     });
 
     // --- PEN TOOL ---
@@ -166,83 +159,6 @@ const CreateToolsCanvasPaperJS = () => {
         }
     }
 
-
-     // *** SHADING TOOL ***
-     // This tool creates a comic-styled shading effect on a separate layer to everything else to avoid overlaps. 
-     const [shadeOptionsEnabled, setShadeOptionsEnabled] = useState<boolean>(false);
-     const [shadeSize, setShadeSize] = useState<number>(10);
-
-    const [shadingTool, setShadeTool] = useState<paper.Tool>(new paper.Tool());
-    //reference to the image used for shading
-    let backgroundRaster = useRef<paper.Raster>(null).current;
-    let clipPath = useRef<paper.Path>(null).current;
-
-    //mouseDown: starts a preview path
-    shadingTool.onMouseDown = function()
-    {
-        //switches to dedicated shading layer
-        ShadingLayerRef.current?.activate;
-       
-        
-        clipPath = new paper.Path();
-        clipPath.strokeColor = new paper.Color('pink');
-        clipPath.strokeWidth = shadeSize;
-        clipPath.strokeCap = 'round';
-       
-          
-    }
-
-    //continues drawing preview path
-    shadingTool.onMouseDrag = function(event: paper.ToolEvent)
-    {
-       clipPath?.add(event.point);
-    }
-    
-    // mouseUp: renders path on shading layer
-    shadingTool.onMouseUp = function(event: paper.ToolEvent)
-    {
-        var temp;
-        
-        var eRadius = (shadeSize * view.pixelRatio) / 4;
-        var deleteShape;
-
-        if (clipPath) { 
-            temp = new paper.CompoundPath(clipPath); 
-        }
-        else
-        {
-            temp = new paper.CompoundPath(new paper.Path.Circle(event.point, eRadius * 2));
-        }
-
-        //load background image
-        backgroundRaster = new paper.Raster('/images/shading.png');
-        backgroundRaster.position = view.center;
-
-        //if there is no clip path create a tiny dot so it doesn't just shade the entire canvas
-        if (clipPath?.length == undefined || clipPath?.length <= 1 )
-        {
-            deleteShape = new paper.Path.Circle(event.point, eRadius * 2);
-        }
-        else
-        {
-            //otherwise, create offset shape to use as a mask
-            temp = PaperOffset.offsetStroke(temp, -eRadius);
-            deleteShape = PaperOffset.offsetStroke(temp, eRadius, {cap : 'round'});
-            //deleteShape.insert = false;
-        }
-
-        //create shading render mask to only show the part of the raster background that we want to denote shading
-        mask = new paper.Group({
-            children: [deleteShape, backgroundRaster],
-            clipped: true,
-            blendMode: 'source-over'
-          });
-
-        //remove preview clip path
-        clipPath?.remove;
-        //switch back to old layer
-        changeLayer();
-    }
     // --- ERASER TOOL ---
     // Boolean used to determine if the eraser tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
     const [eraserOptionsEnabled, setEraserOptionsEnabled] = useState<boolean>(false);
@@ -803,7 +719,6 @@ const CreateToolsCanvasPaperJS = () => {
             setShapeOptionsEnabled(false);
             setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
-            setShadeOptionsEnabled(false);
             clearSelection();
             setAreaSelected(false);
         }
@@ -815,7 +730,6 @@ const CreateToolsCanvasPaperJS = () => {
             setShapeOptionsEnabled(false);
             setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
-            setShadeOptionsEnabled(false);
             clearSelection();
             setAreaSelected(false);
         }
@@ -827,7 +741,6 @@ const CreateToolsCanvasPaperJS = () => {
             setShapeOptionsEnabled(false);
             setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
-            setShadeOptionsEnabled(false);
             clearSelection();
             setAreaSelected(false);
         }
@@ -839,7 +752,6 @@ const CreateToolsCanvasPaperJS = () => {
             setShapeOptionsEnabled(true);
             setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
-            setShadeOptionsEnabled(false);
             clearSelection();
             setAreaSelected(false);
         }
@@ -851,7 +763,6 @@ const CreateToolsCanvasPaperJS = () => {
             setShapeOptionsEnabled(false);
             setTextOptionsEnabled(true);
             setStickerOptionsEnabled(false);
-            setShadeOptionsEnabled(false);
             clearSelection();
             setAreaSelected(false);
         }
@@ -863,19 +774,6 @@ const CreateToolsCanvasPaperJS = () => {
             setShapeOptionsEnabled(false);
             setTextOptionsEnabled(false);
             setStickerOptionsEnabled(true);
-            setShadeOptionsEnabled(false);
-            clearSelection();
-            setAreaSelected(false);
-        }
-        else if(Number(buttonSelected?.value) == toolStates.SHADER)
-        {
-            shadingTool.activate();
-            setPenOptionsEnabled(false);
-            setEraserOptionsEnabled(false);
-            setFillOptionsEnabled(false);
-            setShapeOptionsEnabled(false);
-            setStickerOptionsEnabled(false);
-            setShadeOptionsEnabled(true);
             clearSelection();
             setAreaSelected(false);
         }
@@ -907,7 +805,6 @@ const CreateToolsCanvasPaperJS = () => {
             setShapeOptionsEnabled(false);
             setTextOptionsEnabled(false);
             setStickerOptionsEnabled(false);
-            setShadeOptionsEnabled(false);
         }
     }
 
@@ -1083,18 +980,11 @@ const CreateToolsCanvasPaperJS = () => {
     return (
         <div id={`${styles.createPage}`}>
             <fieldset id={styles.fieldSet}>
-                <legend>Tools</legend>
                 <div id={styles.toolRadioSelects}>
                     <div id={styles.penTool} className={styles.toolStyling}>
                         <label htmlFor="pen" id={styles.penLabel}>
                             <input type="radio" name="tools" id="pen" value={toolStates.PEN} defaultChecked onChange={findSelectedTool} />
                         </label>
-                    </div>
-
-                    
-                    <div id="shaderTool">
-                        <input type="radio" name="tools" id="shader" value={toolStates.SHADER} onChange={findSelectedTool}/>
-                        <label htmlFor="shader">Shading</label>
                     </div>
 
                     <div id={styles.eraserTool} className={styles.toolStyling}>
@@ -1105,9 +995,7 @@ const CreateToolsCanvasPaperJS = () => {
 
                     <div id={styles.fillTool} className={styles.toolStyling}>
                         <label htmlFor="eraser" id={styles.fillLabel}>
-
                             <input type="radio" name="tools" id="fill" value={toolStates.FILL} onChange={findSelectedTool} />
-
                         </label>
                     </div>
 
@@ -1145,7 +1033,6 @@ const CreateToolsCanvasPaperJS = () => {
                 </div>
 
                 <div id={styles.functionButtons}>
-
                     <label htmlFor="undoButton" id={styles.undoLabel}>
                         <button className="btn" id="undoButton"></button>
                     </label>
@@ -1158,24 +1045,25 @@ const CreateToolsCanvasPaperJS = () => {
                     </label>
                 </div>
 
-                <div id="backgroundUploadForm">
-                    <form>
-                        <label htmlFor="imageDropbox" className="form-label">Upload a Background (Recommended Size: 1200x800p)</label>
-                        <input
-                            className="form-control"
-                            id="imageDropbox"
-                            type="file"
-                            accept="image/*"
-                            name="image"
-                            // When the form takes an image inputted by the user, set the image link to the inputted image
-                            // If the file does not exist, set the image link to the default image
-                            onChange={changeBackground}
-                        />
+                <div id="backgroundUploadForm" className={styles.backgroundUploadForm}>
+                    <form id={styles.backgroundUpload}>
+                        <label htmlFor="imageDropbox" className={`form-label ${styles.formLabel}`}>{/* Upload a Background (Recommended Size: 1200x800p) */}
+                            <input
+                                className="form-control"
+                                id="imageDropbox"
+                                type="file"
+                                accept="image/*"
+                                name="image"
+                                // When the form takes an image inputted by the user, set the image link to the inputted image
+                                // If the file does not exist, set the image link to the default image
+                                onChange={changeBackground}
+                            />
+                        </label>
                     </form>
                 </div>
             </fieldset>
 
-            <canvas id={`${styles.canvas}`} height="800px" width="1200px" ref={canvasReference} className={`${styles.canvas}`} />
+            <canvas id={`${styles.canvas}`} ref={canvasReference} className={`${styles.canvas}`} />
 
             <div id={`${styles.toolOptions}`}>
                 <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor} />
@@ -1187,59 +1075,58 @@ const CreateToolsCanvasPaperJS = () => {
                 <TextOptions enabled={textOptionsEnabled} changeTextContent={setTextContent} changeTextFont={setTextFont} changeTextSize={setTextSize}
                     changeFontWeight={setTextFontWeight} changeTextAlignment={setTextAlign} changeTextColor={setTextColor} />
                 <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
-                <ShaderOptions enabled={shadeOptionsEnabled} shaderSize={shadeSize} changeShaderSize={setShadeSize}/>
-            </div>
 
-            <div id={styles.layerOptions}>
-                <div id="layer2" className={styles.layer}>
-                    <div id="layer2Visibility" className={styles.visibleStyling}>
-                        <label htmlFor="layer2Toggle" className={styles.visibleLabel}>
-                            <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} defaultChecked></input>
-                        </label>
+                <div id={styles.layerOptions}>
+                    <div id="layer2" className={styles.layer}>
+                        <div id="layer2Visibility" className={styles.visibleStyling}>
+                            <label htmlFor="layer2Toggle" className={styles.visibleLabel}>
+                                <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} defaultChecked></input>
+                            </label>
+                        </div>
+                        <div id="layer2Lock" className={styles.lockStyling}>
+                            <label htmlFor="layer2LockToggle" className={styles.lockLabel}>
+                                <input type="checkbox" id="layer2LockToggle" value="2" onChange={toggleLayerLock}></input>
+                            </label>
+                        </div>
+                        <div id="layer2Select" className={styles.layerSelect}>
+                            <input type="radio" name="layers" id="layer2" className={styles.layerSelectRadio} value='2' onChange={changeLayer} />
+                            <label htmlFor="layer2">Layer 2</label><br />
+                        </div>
                     </div>
-                    <div id="layer2Lock" className={styles.lockStyling}>
-                        <label htmlFor="layer2LockToggle" className={styles.lockLabel}>
-                            <input type="checkbox" id="layer2LockToggle" value="2" onChange={toggleLayerLock}></input>
-                        </label>
-                    </div>
-                    <div id="layer2Select" className={styles.layerSelect}>
-                        <input type="radio" name="layers" id="layer2" className={styles.layerSelectRadio} value='2' onChange={changeLayer} />
-                        <label htmlFor="layer2">Layer 2</label><br />
-                    </div>
-                </div>
 
-                <div id="layer1" className={styles.layer}>
-                    <div id="layer2Visibility" className={styles.visibleStyling}>
-                        <label htmlFor="layer1Toggle" className={styles.visibleLabel}>
-                            <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} defaultChecked></input>
-                        </label>
+                    <div id="layer1" className={styles.layer}>
+                        <div id="layer2Visibility" className={styles.visibleStyling}>
+                            <label htmlFor="layer1Toggle" className={styles.visibleLabel}>
+                                <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} defaultChecked></input>
+                            </label>
+                        </div>
+                        <div id="layer1Lock" className={styles.lockStyling}>
+                            <label htmlFor="layer1LockToggle" className={styles.lockLabel}>
+                                <input type="checkbox" id="layer1LockToggle" value="2" onChange={toggleLayerLock}></input>
+                            </label>
+                        </div>
+                        <div id="layer1Select" className={styles.layerSelect}>
+                            <input type="radio" name="layers" id="layer1"className={styles.layerSelectRadio} value='1' defaultChecked onChange={changeLayer} />
+                            <label htmlFor="layer1">Layer 1</label><br/>
+                        </div>
                     </div>
-                    <div id="layer1Lock" className={styles.lockStyling}>
-                        <label htmlFor="layer1LockToggle" className={styles.lockLabel}>
-                            <input type="checkbox" id="layer1LockToggle" value="2" onChange={toggleLayerLock}></input>
-                        </label>
-                    </div>
-                    <div id="layer1Select" className={styles.layerSelect}>
-                        <input type="radio" name="layers" id="layer1"className={styles.layerSelectRadio} value='1' defaultChecked onChange={changeLayer} />
-                        <label htmlFor="layer1">Layer 1</label><br/>
-                    </div>
+                    <div id="backgroundLayer" className={styles.layer}>
+                        <div id="backgroundLayerVisibility" className={styles.visibleStyling}>
+                            <label htmlFor="backgroundToggle" className={styles.visibleLabel}>
+                                <input type="checkbox" id="backgroundToggle" value="0" onChange={toggleLayerVisibility} defaultChecked></input>
+                            </label>
+                        </div>
+                        <div id="backgroundLayerLock" className={styles.lockStyling}>
+                            <label htmlFor="backgroundLayerLockToggle" className={styles.lockLabel}>
+                                <input type="checkbox" id="backgroundLayerLockToggle" value="0" onChange={toggleLayerLock}></input>
+                            </label>
+                        </div>
+                        <div id="backgroundLayerSelect" className={styles.layerSelect}>
+                            <input type="radio" name="layers" id="background" className={styles.layerSelectRadio} value='0' onChange={changeLayer} />
+                            <label htmlFor="background">Background</label><br />
+                        </div>
+                    </div>  
                 </div>
-                <div id="backgroundLayer" className={styles.layer}>
-                    <div id="backgroundLayerVisibility" className={styles.visibleStyling}>
-                        <label htmlFor="backgroundToggle" className={styles.visibleLabel}>
-                            <input type="checkbox" id="backgroundToggle" value="0" onChange={toggleLayerVisibility} defaultChecked></input>
-                        </label>
-                    </div>
-                    <div id="backgroundLayerLock" className={styles.lockStyling}>
-                        <label htmlFor="backgroundLayerLockToggle" className={styles.lockLabel}>
-                            <input type="checkbox" id="backgroundLayerLockToggle" value="0" onChange={toggleLayerLock}></input>
-                        </label>
-                    </div>
-                    <div id="backgroundLayerSelect" className={styles.layerSelect}>
-                        <input type="radio" name="layers" id="background" className={styles.layerSelectRadio} value='0' onChange={changeLayer} />
-                        <label htmlFor="background">Background</label><br />
-                    </div>
-                </div>  
             </div>
 
             {/* <div id="panelSelect">

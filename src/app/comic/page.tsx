@@ -7,7 +7,6 @@ const firstPanelImage = "/comic-panels/first_panel.png";
 const secondPanelImage = "/comic-panels/second_panel.png";
 const thirdPanelImage = "/comic-panels/third_panel.png";
 
-
 // navbar
 import Navbar from "../../components/NavBar"
 
