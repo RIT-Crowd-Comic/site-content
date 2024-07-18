@@ -377,8 +377,9 @@
 
     grid-area: canvas;
 
-    position: absolute;
-    left: 35%;
+    align-self: center;
+    margin: 75% auto 0;
+
     bottom: 0;
 }
 
@@ -393,10 +394,22 @@
     margin: 0 5px 5px 0;
 }
 
-.saveButton
+.publishButton:hover, .saveButton:hover
 {
-    right: 10%; 
+    background-color:#242424;
+
+    border: 3px solid black;
+    border-bottom: 4px solid black;
 }
+
+.publishButton:active, .saveButton:active
+{
+    background-color: #9c9c9c;
+    position: relative;
+    border: solid 3px #000000;
+    top: 1px;
+}
+
 
 
 /* [xs] Extra small devices, less than 576px) */
