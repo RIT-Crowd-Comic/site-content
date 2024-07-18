@@ -6,9 +6,12 @@ import Link from "next/link";
 
 import logo from "../../../public/images/logos/Crowd_Comic_Logo_BW.svg";
 
+import { useState } from "react";
 import { registerAction } from "@/app/login/actions";
 
 export function SignUpForm() {
+    const [errorMessage, setErrorMessage] = useState('');
+
     return (
         <main className={styles.body}>
         <section id={styles.loginPage}>
@@ -20,7 +23,7 @@ export function SignUpForm() {
             </Link>
             
             {/* FORM */}
-            <form id={styles.loginForm} className="needs-validation" action={registerAction} noValidate>
+            <form id={styles.loginForm} className="needs-validation" noValidate action={registerAction}>
                 <h1 className={styles.h1}>Sign Up</h1>
             {/* USERNAME */}
             <div className={`mb-3 ${styles.formInputs}`}>
@@ -51,7 +54,7 @@ export function SignUpForm() {
                 placeholder="password"
                 className={`form-control`}
                 id={styles.inputPassword}
-                is-invalid
+                is-invalid="true"
                 required/>
                 
                 <i className={`bi bi-eye-slash`} id={styles.togglePassword}></i>
@@ -63,6 +66,7 @@ export function SignUpForm() {
             {/* LOGIN */}
             <Link href="sign-in"><button type="button" id={styles.registerButton} className={`btn btn-primary`}>Sign In</button></Link>
             </form>
+            {errorMessage && <div id="errorPublish" style={{color: 'white'}}> {errorMessage} </div>}
         </section>
         </main>
         );

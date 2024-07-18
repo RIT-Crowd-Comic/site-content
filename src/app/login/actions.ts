@@ -19,7 +19,8 @@ const registerAction = async (formData: FormData) => {
         password: formData.get('password')
     };
     if(!(rawFormData.displayName&&rawFormData.email&&rawFormData.password)) return //TODO: HANDLE MISSING PARAM
-    await loginUtils.register(rawFormData.email.toString(), rawFormData.displayName.toString(), rawFormData.password.toString());
+    const response = await loginUtils.register(rawFormData.email.toString(), rawFormData.displayName.toString(), rawFormData.password.toString());
+    if(!response || response instanceof Error) return response;
 };
 
 const testAuth = async (formData: FormData) => {

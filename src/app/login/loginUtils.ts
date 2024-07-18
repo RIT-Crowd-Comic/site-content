@@ -96,6 +96,7 @@ const login = async (email: string, password: string) => {
 const register = async (email: string, displayName: string, password: string) => {
     const user = await createUser(email, displayName, password);
     //If user is an error, return that error and don't redirect
+    console.log(user);
     if(!user || user instanceof Error) return user;
     redirect('/sign-in');
 };
