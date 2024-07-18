@@ -489,6 +489,7 @@ const CreateToolsCanvasPaperJS = () => {
         if (canvasProject.activeLayer.locked == false) {
             if (areaSelected) {
                 canvasProject.activeLayer.lastChild.remove();
+                setSelectionInfo([]);
             }
             setEndSelectPoint(event.point);
             setSelectMouseDragged(true);
@@ -509,34 +510,33 @@ const CreateToolsCanvasPaperJS = () => {
 
                     //console.log(rasterInfo[0].size)
                     //console.log(canvasProject.view.size);
+                    console.log("WIDTH")
+                    console.log("screen to canvas ratio: " + screen.width / canvasProject.view.size.width)
+                    console.log("screen to raster ratio: " + screen.width / rasterInfo[0].width);
+                    console.log("canvas to raster ratio: " + canvasProject.view.size.width / rasterInfo[0].size.width)
+                    console.log("HEIGHT")
+                    console.log("screen to canvas ratio" + screen.height / canvasProject.view.size.height)
+                    console.log("screen to raster ratio: " + screen.height / rasterInfo[0].height);
+                    console.log("canvas to raster ratio: " + canvasProject.view.size.height / rasterInfo[0].size.height);
 
-                    console.log(screen.width / canvasProject.view.size.width)
-                    console.log(screen.width / rasterInfo[0].width);
-                    console.log(canvasProject.view.size.width / rasterInfo[0].size.width)
-
-                    console.log(screen.height / canvasProject.view.size.height)
-                    console.log(screen.height / rasterInfo[0].height);
-                    console.log(canvasProject.view.size.height / rasterInfo[0].size.height);
-
+                    //think about it
                     let scaleFactor = new paper.Size(
-                        ((screen.height / canvasProject.view.size.height) + (screen.width / canvasProject.view.size.width))/
-                        ((canvasProject.view.size.width / rasterInfo[0].size.width)/(canvasProject.view.size.height / rasterInfo[0].size.height)),
-                        ((screen.height / canvasProject.view.size.height) + (screen.width / canvasProject.view.size.width))/
-                        ((canvasProject.view.size.width / rasterInfo[0].size.width)/(canvasProject.view.size.height / rasterInfo[0].size.height))
+                        ((screen.width / canvasProject.view.size.width) + (canvasProject.view.size.width / rasterInfo[0].size.width)),
+                        ((screen.height / canvasProject.view.size.height) + (canvasProject.view.size.height / rasterInfo[0].size.height))
                     )
+
+                    console.log(((screen.width / canvasProject.view.size.width) + (canvasProject.view.size.width / rasterInfo[0].size.width)));
+                    console.log(((screen.height / canvasProject.view.size.height) + (canvasProject.view.size.height / rasterInfo[0].size.height)));
 
                     //translates canvas coordinates to pixel coordinates (for getting subraster in transform)
                     //seems to move around, test on diff size screens (could also be raster issue?)
                     //set multiply to variable instead of hard coded (try out screen size and/or canvas size)
-                    //should be equal to multiply(2.4) except not hardcoded
-                    let pixelStartPoint = startSelectPoint.subtract(rasterLT).multiply(scaleFactor);
-                    let pixelEndPoint = endSelectPoint.subtract(rasterLT).multiply(scaleFactor);
+                    //should be equal to previous hardcode (2.4 for my laptop size, 2 for 1920 * 1080 screen)
+                    let pixelStartPoint = startSelectPoint.subtract(rasterLT).multiply(2.4);
+                    let pixelEndPoint = endSelectPoint.subtract(rasterLT).multiply(2.4);
 
                     //gets the selected area of the rasterized canvas
                     let selectedArea = new paper.Rectangle(pixelStartPoint, pixelEndPoint);
-                    let testBound = new paper.Rectangle(startSelectPoint, endSelectPoint);
-                    //console.log(selectedArea.topLeft);
-                    //console.log(testBound.topLeft);
                     setSelectionInfo(prevState => [...prevState, selectedArea]);
                 }
                 else {
