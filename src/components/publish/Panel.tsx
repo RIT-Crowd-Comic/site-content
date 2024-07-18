@@ -143,33 +143,30 @@ const Panel = ({
         }
     }
 
-    const mouseMoveHandler = (event?: SyntheticEvent<HTMLImageElement, MouseEvent>) => {
+    const mouseMoveHandler = (event?: SyntheticEvent<HTMLImageElement, MouseEvent >) => {
+      console.log("mouseMoveHandler")
         if (event?.nativeEvent.buttons === 1) return void mouseDragHandler(event);
         // console.log(event?.nativeEvent.offsetX);
 
     }
 
-    // const touchStartHandler = (event?: SyntheticEvent<HTMLImageElement, TouchEvent>) => { }
-    const touchMoveHandler = (event?: SyntheticEvent<HTMLImageElement, TouchEvent>) => {
-        var touch = event?.nativeEvent.touches[0];
-        var mouseEvent = new MouseEvent("mousemove", {
-          clientX: touch?.clientX,
-          clientY: touch?.clientY
-        });
-        event?.target.dispatchEvent(mouseEvent);
-        /** NOT WORKING YET, for some reason 'offsetX' doesn't exist on touch event */
-        // switch (event?.nativeEvent.touches.length) {
-        //     case 1:
-        //         if (addingHook) {
-        //             console.log(event.nativeEvent.touches)
-        //             console.log(event.currentTarget.x)
-        //             addVertex(event.nativeEvent.touches[0].clientX, event.nativeEvent.touches[0].clientY);
-        //         }
-        //         // event.preventDefault();
-        //         break;
-        //     // case 2: potentially do something else 
-        //     default: break; // unsupported number of touches
-        // }
+    // const touchToMouse =(event?:native.MouseEvent)=>{
+    //    void mouseDragHandler(event);
+    // }
+
+
+    const touchMoveHandler = (event: SyntheticEvent<HTMLImageElement, TouchEvent>) => {
+   
+        let touch = event.nativeEvent.touches[0];
+
+        let bcr = (touch.target  as HTMLElement).getBoundingClientRect();
+        let x = touch.clientX - bcr.x;
+        let y = touch.clientY - bcr.y;
+
+        if (addingHook) {
+            addVertex(x, y)
+        }
+
     }
 
     
