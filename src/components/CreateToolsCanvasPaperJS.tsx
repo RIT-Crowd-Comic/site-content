@@ -261,20 +261,20 @@ const CreateToolsCanvasPaperJS = () => {
             shapePath = new paper.Path.Ellipse(new paper.Rectangle(startPoint, endPoint));
         }
         else if (shapeSelected == shapeStates.TRIANGLE) {
-            const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
-            const radius = Math.abs(centerPoint.x-startPoint.x);
-            shapePath = new paper.Path.RegularPolygon(centerPoint,3,radius);
+            const centerPoint = new paper.Point((startPoint.x + endPoint.x) / 2, (startPoint.y + endPoint.y) / 2)
+            const radius = Math.abs(centerPoint.x - startPoint.x);
+            shapePath = new paper.Path.RegularPolygon(centerPoint, 3, radius);
         }
         else if (shapeSelected == shapeStates.HEXAGON) {
-            const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
-            shapePath = new paper.Path.RegularPolygon(centerPoint,6,centerPoint.x-startPoint.x);
+            const centerPoint = new paper.Point((startPoint.x + endPoint.x) / 2, (startPoint.y + endPoint.y) / 2)
+            shapePath = new paper.Path.RegularPolygon(centerPoint, 6, centerPoint.x - startPoint.x);
             // Rotated so that the bottom edge is parallel with the bottom of the screen
             shapePath.rotate(30);
         }
         else if (shapeSelected == shapeStates.STAR) {
-            const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
-            const radius = Math.abs(centerPoint.x-startPoint.x);
-            shapePath = new paper.Path.Star(centerPoint,5,radius, (radius)/2);
+            const centerPoint = new paper.Point((startPoint.x + endPoint.x) / 2, (startPoint.y + endPoint.y) / 2)
+            const radius = Math.abs(centerPoint.x - startPoint.x);
+            shapePath = new paper.Path.Star(centerPoint, 5, radius, (radius) / 2);
         }
 
         // Set the path's style to the user chosen style
@@ -352,7 +352,7 @@ const CreateToolsCanvasPaperJS = () => {
 
     // The Text Tool:
     const textTool = useRef<paper.Tool>(new paper.Tool());
-    let textPath : paper.PointText;
+    let textPath: paper.PointText;
 
     //let textToolTyperReference = useRef<HTMLTextAreaElement | null>(null);
 
@@ -361,10 +361,9 @@ const CreateToolsCanvasPaperJS = () => {
 
     // Point to draw the text starting at
 
-  
-    textTool.current.onMouseDown = function(event: paper.ToolEvent) {
-        if(!isWriting)
-        {
+
+    textTool.current.onMouseDown = function (event: paper.ToolEvent) {
+        if (!isWriting) {
             // Start the process of writing
             setIsWriting(true);
 
@@ -508,13 +507,36 @@ const CreateToolsCanvasPaperJS = () => {
                     drawSelectedArea();
                     setSelectionInfo(prevState => [...prevState, new paper.Rectangle(startSelectPoint, endSelectPoint)]);
 
+                    //console.log(rasterInfo[0].size)
+                    //console.log(canvasProject.view.size);
+
+                    console.log(screen.width / canvasProject.view.size.width)
+                    console.log(screen.width / rasterInfo[0].width);
+                    console.log(canvasProject.view.size.width / rasterInfo[0].size.width)
+
+                    console.log(screen.height / canvasProject.view.size.height)
+                    console.log(screen.height / rasterInfo[0].height);
+                    console.log(canvasProject.view.size.height / rasterInfo[0].size.height);
+
+                    let scaleFactor = new paper.Size(
+                        ((screen.height / canvasProject.view.size.height) + (screen.width / canvasProject.view.size.width))/
+                        ((canvasProject.view.size.width / rasterInfo[0].size.width)/(canvasProject.view.size.height / rasterInfo[0].size.height)),
+                        ((screen.height / canvasProject.view.size.height) + (screen.width / canvasProject.view.size.width))/
+                        ((canvasProject.view.size.width / rasterInfo[0].size.width)/(canvasProject.view.size.height / rasterInfo[0].size.height))
+                    )
+
                     //translates canvas coordinates to pixel coordinates (for getting subraster in transform)
                     //seems to move around, test on diff size screens (could also be raster issue?)
-                    let pixelStartPoint = startSelectPoint.subtract(rasterLT).multiply(2.4);
-                    let pixelEndPoint = endSelectPoint.subtract(rasterLT).multiply(2.4);
+                    //set multiply to variable instead of hard coded (try out screen size and/or canvas size)
+                    //should be equal to multiply(2.4) except not hardcoded
+                    let pixelStartPoint = startSelectPoint.subtract(rasterLT).multiply(scaleFactor);
+                    let pixelEndPoint = endSelectPoint.subtract(rasterLT).multiply(scaleFactor);
 
                     //gets the selected area of the rasterized canvas
                     let selectedArea = new paper.Rectangle(pixelStartPoint, pixelEndPoint);
+                    let testBound = new paper.Rectangle(startSelectPoint, endSelectPoint);
+                    //console.log(selectedArea.topLeft);
+                    //console.log(testBound.topLeft);
                     setSelectionInfo(prevState => [...prevState, selectedArea]);
                 }
                 else {
@@ -587,21 +609,23 @@ const CreateToolsCanvasPaperJS = () => {
                 canvasProject.activeLayer.lastChild.remove();
 
                 //sets up info needed for transforming
+                //rasterinfo may be causing issues??
                 let tempTransformAreaBounds = new paper.Path.Rectangle(selectionInfo[0]);
                 setTransformInfo([tempTransformAreaBounds]);
                 let tempTransformSelectedArea = rasterInfo[0].getSubRaster(selectionInfo[1]);
-                
+
                 clearAreaSelected(tempTransformAreaBounds);
 
                 //readds selected area to layer
                 setRasterInfo(prevState => [...prevState, tempTransformSelectedArea]);
                 canvasProject.activeLayer.addChild(tempTransformSelectedArea);
-                
+                canvasProject.activeLayer.addChild(tempTransformAreaBounds);
+
                 //contains check for first time transforming only
                 if (tempTransformAreaBounds.contains(event.point)) {
                     setTransformAction("moving");
-                    return;
                 }
+                return;
             }
 
             //runs if corners of bounds are hit (segments to check if clicked on rect, tolerance for precision)
@@ -729,7 +753,7 @@ const CreateToolsCanvasPaperJS = () => {
         }
         //rasterize active canvas layer when clicked and set const as it on
         else if (Number(buttonSelected?.value) == toolStates.SELECT) {
-            if(!canvasProject.activeLayer.isEmpty()){
+            if (!canvasProject.activeLayer.isEmpty()) {
                 let raster = canvasProject.activeLayer.rasterize();
                 clearSelection();
                 setRasterInfo([raster]);
@@ -976,8 +1000,8 @@ const CreateToolsCanvasPaperJS = () => {
                             </label>
                         </div>
                         <div id="layer1Select" className={styles.layerSelect}>
-                            <input type="radio" name="layers" id="layer1"className={styles.layerSelectRadio} value='1' defaultChecked onChange={changeLayer} />
-                            <label htmlFor="layer1">Layer 1</label><br/>
+                            <input type="radio" name="layers" id="layer1" className={styles.layerSelectRadio} value='1' defaultChecked onChange={changeLayer} />
+                            <label htmlFor="layer1">Layer 1</label><br />
                         </div>
                     </div>
                     <div id="backgroundLayer" className={styles.layer}>
@@ -995,7 +1019,7 @@ const CreateToolsCanvasPaperJS = () => {
                             <input type="radio" name="layers" id="background" className={styles.layerSelectRadio} value='0' onChange={changeLayer} />
                             <label htmlFor="background">Background</label><br />
                         </div>
-                    </div>  
+                    </div>
                 </div>
             </div>
             <Link href="/comic/create/publish" id={styles.publishButton}>PUBLISH</Link>
