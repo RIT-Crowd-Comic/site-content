@@ -379,7 +379,6 @@ const publishHandler = async(panelSet : PanelSet, currentUser : string) =>{
         const image3 = await fetchImage(panelSet.panels[0].imgSrc) as File | Error;
         if(image3 instanceof Error) return new Error(`There was an error getting the 1st image: ${image3.message}`);
 
-        console.log(currentUser);
         //get the hook data
         const hooks  = [] as Array<hook>;
 
