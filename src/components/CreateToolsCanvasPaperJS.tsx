@@ -1206,7 +1206,23 @@ const CreateToolsCanvasPaperJS = () => {
             </div>
 
             <div id={styles.layerOptions}>
-                <div id="settings" className={styles.layerSettings}>SETTINGS</div>
+                <div id="settings" className={styles.layerSettings}>
+                    <div id="mergeSetting" className={styles.layerStyling}>
+                        <label htmlFor="merge" id={styles.mergeLabel}>
+                            <input type="button" id="merge"/>
+                        </label>
+                    </div>
+                    <div id="layerDownSetting" className={styles.layerStyling}>
+                        <label htmlFor="layerdown" id={styles.layerDownLabel}>
+                            <button type="button" id="layerdown"/>
+                        </label>
+                    </div>
+                    <div id="layerUpSetting" className={styles.layerStyling}>
+                        <label htmlFor="layerup" id={styles.layerUpLabel}>
+                            <input type="button" id="layerup"/>
+                        </label>
+                    </div>
+                </div>
                 <div id={styles.layersList}>
                     <div id="layer2" className={styles.layer}>
                         <div id="layer2Visibility" className={styles.visibleStyling}>
