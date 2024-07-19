@@ -23,13 +23,13 @@ const FillOptions = ({enabled, changeFillColor} : Props) =>
         return(
             <div id="fillTools" className={styles.toolStyles}>
                 <h3>Fill Tools</h3>
-                <div id="paletteButtons">
+                <div id={styles.paletteButtons}>
                     <label id="colorLabel">Colors:</label>
-                    <button onClick={() => changeFillColor(color1)}></button>
-                    <button onClick={() => changeFillColor(color2)}></button>
-                    <button onClick={() => changeFillColor(color3)}></button>
-                    <button onClick={() => changeFillColor(color4)}></button>
-                    <button onClick={() => changeFillColor(color5)}></button>
+                    <button onClick={() => changeFillColor(color1)} id={styles.whiteButton}></button>
+                    <button onClick={() => changeFillColor(color2)} id={styles.lightGrayButton}></button>
+                    <button onClick={() => changeFillColor(color3)} id={styles.grayButton}></button>
+                    <button onClick={() => changeFillColor(color4)} id={styles.darkGrayButton}></button>
+                    <button onClick={() => changeFillColor(color5)} id={styles.blackButton}></button>
                 </div>
             </div>
         )
