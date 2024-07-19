@@ -300,6 +300,14 @@ const changePassword = async (email: string, password: string, newPassword: stri
     }
     return response;
 }
+const getAllImageUrlsByPanelSetId = async (id: number) => {
+    const response = await getAPICall(`/panel_set/${id}/images`);
+    if(response.message) {
+        return new Error(response.message)
+    }
+    return response;
+}
+
 
 const changeDisplayName = async (email: string, password: string, display: string, newDisplayName: string) => {
     const response = await postAPICall(`/changeDisplayName`, {
@@ -335,6 +343,20 @@ const updatePanel = async (id: number, image: string) => {
 }
 
 /**
+ * Get a list of hooks from a panel set
+ * @param id the id of the panel set
+ * @returns 
+ */
+const getHooksFromPanelSetById = async(id: number) => {
+    const api_response = await getAPICall(`/panel_sets/${id}/hooks`);
+    if(api_response.message)
+    {
+        return Error(api_response.message);
+    }
+    else return api_response;
+}
+
+/**
  * Creates a session for a user in the database
  * @param user_id ID of the user to create session for
  * @returns 
@@ -357,4 +379,4 @@ const getSession = async (session_id: string) => {
     else return api_response;
 };
 
-export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, insertSession, getSession }
+export { getAllImageUrlsByPanelSetId, getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, getHooksFromPanelSetById, insertSession, getSession }
