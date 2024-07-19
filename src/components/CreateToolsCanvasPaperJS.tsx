@@ -508,32 +508,32 @@ const CreateToolsCanvasPaperJS = () => {
                     drawSelectedArea();
                     setSelectionInfo(prevState => [...prevState, new paper.Rectangle(startSelectPoint, endSelectPoint)]);
 
-                    //console.log(rasterInfo[0].size)
-                    //console.log(canvasProject.view.size);
-                    console.log("WIDTH")
-                    console.log("screen to canvas ratio: " + screen.width / canvasProject.view.size.width)
-                    console.log("screen to raster ratio: " + screen.width / rasterInfo[0].width);
-                    console.log("canvas to raster ratio: " + canvasProject.view.size.width / rasterInfo[0].size.width)
-                    console.log("HEIGHT")
-                    console.log("screen to canvas ratio" + screen.height / canvasProject.view.size.height)
-                    console.log("screen to raster ratio: " + screen.height / rasterInfo[0].height);
-                    console.log("canvas to raster ratio: " + canvasProject.view.size.height / rasterInfo[0].size.height);
-
+                    console.log(1200/canvasProject.view.size.width);
+                    console.log(800/canvasProject.view.size.height);
+                    console.log(canvasProject.view.size);
+                    console.log("screen to canvas ratio width: " + screen.width / canvasProject.view.size.width)
+                    console.log("screen to canvas ratio height: " + screen.height / canvasProject.view.size.height);
+                    console.log("canvas to screen ratio width: " + canvasProject.view.size.width/screen.width);
+                    console.log("canvas to screen ratio height: " + canvasProject.view.size.height/screen.height)
+                    
+                    console.log((1200/canvasProject.view.size.width)+(800/canvasProject.view.size.height))
                     //think about it
                     let scaleFactor = new paper.Size(
                         ((screen.width / canvasProject.view.size.width) + (canvasProject.view.size.width / rasterInfo[0].size.width)),
                         ((screen.height / canvasProject.view.size.height) + (canvasProject.view.size.height / rasterInfo[0].size.height))
                     )
 
-                    console.log(((screen.width / canvasProject.view.size.width) + (canvasProject.view.size.width / rasterInfo[0].size.width)));
-                    console.log(((screen.height / canvasProject.view.size.height) + (canvasProject.view.size.height / rasterInfo[0].size.height)));
+                    // console.log(((screen.width / canvasProject.view.size.width) + (screen.height / canvasProject.view.size.height)
+                    // ) * (2 / 3));
+
+                    //console.log(((screen.height / canvasProject.view.size.height) + (screen.height / rasterInfo[0].height) + (canvasProject.view.size.height / rasterInfo[0].size.height)) * (2 / 3));
 
                     //translates canvas coordinates to pixel coordinates (for getting subraster in transform)
                     //seems to move around, test on diff size screens (could also be raster issue?)
                     //set multiply to variable instead of hard coded (try out screen size and/or canvas size)
                     //should be equal to previous hardcode (2.4 for my laptop size, 2 for 1920 * 1080 screen)
-                    let pixelStartPoint = startSelectPoint.subtract(rasterLT).multiply(2.4);
-                    let pixelEndPoint = endSelectPoint.subtract(rasterLT).multiply(2.4);
+                    let pixelStartPoint = startSelectPoint.subtract(rasterLT).multiply((1200/canvasProject.view.size.width)+(800/canvasProject.view.size.height));
+                    let pixelEndPoint = endSelectPoint.subtract(rasterLT).multiply((1200/canvasProject.view.size.width)+(800/canvasProject.view.size.height));
 
                     //gets the selected area of the rasterized canvas
                     let selectedArea = new paper.Rectangle(pixelStartPoint, pixelEndPoint);
