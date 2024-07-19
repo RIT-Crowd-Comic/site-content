@@ -1,11 +1,12 @@
-import styles from './BranchPage.module.css'
+import styles from './BranchPage.module.css';
 
 import { useEffect, useState } from 'react';
 import { BranchHook, emptyPanelSet, PanelSet } from "./interfaces";
-import Panel from './Panel'
+import Panel from './Panel';
 import BranchPageControls from './BranchPageControls';
-import {publishHandler} from '../../api/apiCalls'
-import { useRouter } from 'next/navigation'
+import {publishHandler} from '../../api/apiCalls';
+import { useRouter } from 'next/navigation';
+import { authenticateSession } from '@/app/login/loginUtils';
 
 const BranchPage = () => {
     const [parId, setparId] = useState<number | undefined>();
@@ -16,6 +17,7 @@ const BranchPage = () => {
         parent_branch_id: parId,
         panels: emptyPanelSet()
     });
+    const [currentUser, setUser] = useState('');
     const [activePanel, setActivePanel] = useState(0);
     const activePanelHooks = () => panelSet.panels[activePanel].hooks;
     const setActivePanelHooks = (hooks: BranchHook[], panelIndex: number) => {
@@ -53,14 +55,20 @@ const BranchPage = () => {
 
     // one time setup
     useEffect(() => {
+
+        const getUser = async() =>{
+            setUser((await authenticateSession()).id);
+        }
         // retrieve comic images from create page using local storage
         const storedImageLinks = [
             loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[0],
-            loadImageAndConvertToURL(localStorage.getItem('image-2')) || imageLinks[1],
-            loadImageAndConvertToURL(localStorage.getItem('image-3')) || imageLinks[2]
+            loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[1],
+            loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[2]
         ];
 
         setImageLinks(storedImageLinks);
+
+        if(!currentUser) getUser();
 
         panelSet.panels[0].imgSrc = storedImageLinks[0];
         panelSet.panels[1].imgSrc = storedImageLinks[1];
@@ -168,7 +176,7 @@ const BranchPage = () => {
                     confirmBranchHook={() => confirmBranchHook(activePanel)}
                     removeBranchHook={removeBranchHook}
                     publish={async() =>{
-                        const response = await publishHandler(panelSet);
+                        const response = await publishHandler(panelSet, currentUser);
                         console.log(response);
 
                         if(response instanceof Error){
