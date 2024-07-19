@@ -5,53 +5,534 @@
 .body
 {
     width: 100%;
+    height: 100vh;
     font-family: var(--font-back-issues);
-    color: white;
-    background-color: var(--grayscale-text-color);
+    background-color: #2d2d2d;
     max-width: 100%;
-    /* filter: grayscale(1); */
     padding-right: 0 !important;
-    overflow-x: clip;
+    /* overflow: hidden; */
     background-image: radial-gradient(circle at center,
-            var(--grayscale-background-color) 0.15rem,
-            transparent 0), radial-gradient(circle at center, var(--grayscale-background-color) 0.15rem, transparent 0);
+            #414141 0.15rem,
+            transparent 0), radial-gradient(circle at center, #414141 0.15rem, transparent 0);
     background-size: 1.3rem 1.3rem;
     background-position: 0 0, 0.65rem 0.65rem;
+
+    color:white;
+    font-size: small;
+
+    position: absolute;
 }
 
-#imagePreviews
-{
-    display: flex;
-    justify-content: center;
-    gap: 10rem;
-}
-.canvas
-{
-    border-style: solid;
-    background-color: white;
-    cursor: pointer;
-}
 #createPage
 {
-    display: flex;
-    flex-direction: row;    
+    display: grid;
+
+    grid-template-columns: auto auto 20%;
+    grid-template-rows: 50% 40% 10%;
+    grid-template-areas: 
+    "toolBar canvas penTools"
+    "toolBar canvas layers"
+    "toolBar canvas previewPanels";
+
+    flex-direction: row;   
+
+    height: 80vh;
+
+    margin: 20px auto;
+    align-items: start;
+    justify-content: center;
 }
-#toolRadioSelects
-{
-    order: 0;
-}
+
 #canvas
 {
     order: 1;
+    border: 3px solid black;
+    grid-area: canvas;
+
+    border-style: solid;
+    background-color: white;
+    cursor: pointer;
+
+    height: 100% !important;
+    width: auto !important;
+
+    aspect-ratio: 3 / 2;
 }
+
+/* LEFT SIDE/TOOL BAR */
+
+#fieldSet
+{
+    margin-right: 20px;
+    height: 200%;
+    width: 50px;
+
+    background-color: #00000062;
+    border: 3px solid black;
+}
+
+#toolRadioSelects, #functionButtons, .backgroundUploadForm
+{
+    width: 25px;
+    margin: 0 auto;
+}
+
+#toolRadioSelects
+{
+    order: 0;
+    grid-area: toolBar;
+}
+
+
+#toolOptions, #layerOptions, .panelSelect
+{
+    background-color: #00000062;
+    border: 3px solid black;
+
+    height: 95%;
+    padding: 7px;
+
+    margin-left: 20px;
+}
+
+/* RIGHT SIDE BAR */
+/* - TOOL OPTIONS */
+
 #toolOptions
 {
-    order: 2;
+    grid-area: penTools;
 }
-.a 
+
+.toolStyles
 {
-    color: white;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    height: 100%;
 }
+
+/* - LAYER OPTIONS */
+
+#layerOptions
+{
+    grid-area: layers;
+}
+
+.layerSelect
+{
+    position: relative;
+    width: 100%;
+
+    margin: auto 0;
+    height: 15px;
+}
+
+.layer
+{
+    padding: 2px;
+    margin: 2px 0;
+    border: solid 3px white;
+    background-color: black;
+
+    display:flex;
+    flex-direction: row;
+
+    width: 95%;
+
+    overflow: hidden;
+}
+
+#layersList
+{
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    height: 80%;
+}
+
+.layerSelectRadio
+{
+    /* MAKES IT SO MOST OF LAYER BOX IS SELECTABLE */
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    opacity: 0;
+}
+
+/* - LAYER SETTINGS OPTIONS */
+.layerSettings
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.layerStyling input
+{
+    padding: 0;
+}
+
+/* - PREVIEW PANEL OPTIONS */
+
+.panelSelect
+{
+    grid-area: previewPanels;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+/* - SCROLLBAR */
+.toolStyles::-webkit-scrollbar, #layersList::-webkit-scrollbar
+{
+    width: 11px;
+    background-color: #b7b7b7;
+
+    border-radius: 6px;
+}
+  
+.toolStyles::-webkit-scrollbar-thumb, #layersList::-webkit-scrollbar-thumb
+{
+    background-color: #535353;
+    border: 2px solid transparent;
+    border-radius: 9px;
+    background-clip: content-box;
+}
+
+.toolStyles::-webkit-scrollbar-thumb:hover, #layersList::-webkit-scrollbar-thumb:hover
+{
+    background-color: #6f6f6f;
+}
+
+.toolStyles::-webkit-scrollbar-thumb:active, #layersList::-webkit-scrollbar-thumb:active
+{
+    background-color: #282828;
+}
+
+.toolStyles::-webkit-scrollbar-button:hover, #layersList::-webkit-scrollbar-thumb:hover
+{
+    background-color: #6f6f6f;
+}
+
+/* ICONS */
+
+/* - HIDES THE BUTTONS */
+#toolRadioSelects [type=radio],#layerOptions [type=checkbox], .layerSettings [type=button], #backgroundUpload input, .panelSelect [type=radio]
+{
+    position: absolute;
+    opacity: 0;
+    width: 25px;
+    height: 25px;
+}
+
+/* - DECLARES ALL ICONS */
+#penLabel
+{
+    background: url("../../public/images/icons/draw-icons/pen.svg") no-repeat center/contain;
+    transform: scaleY(-1);
+}
+
+#eraserLabel
+{
+    background: url("../../public/images/icons/draw-icons/eraser.svg") no-repeat center/contain;
+}
+
+#fillLabel
+{
+    background: url("../../public/images/icons/draw-icons/bucket.svg") no-repeat center/contain;
+    transform: scaleX(-1);
+}
+
+#shaderLabel
+{
+    background: url("../../public/images/icons/draw-icons/tone.svg") no-repeat center/contain;
+}
+
+#shapeLabel
+{
+    background: url("../../public/images/icons/draw-icons/shapes.svg") no-repeat center/contain;
+}
+
+#textLabel
+{
+    background: url("../../public/images/icons/draw-icons/text.svg") no-repeat center/contain;
+}
+
+#stickerLabel
+{
+    background: url("../../public/images/icons/draw-icons/sticker.svg") no-repeat center/contain;
+}
+
+#selectLabel
+{
+    background: url("../../public/images/icons/draw-icons/select.svg") no-repeat center/contain;
+}
+
+#transformLabel
+{
+    background: url("../../public/images/icons/draw-icons/transform.svg") no-repeat center/contain;
+}
+
+#undoLabel
+{
+    background: url("../../public/images/icons/draw-icons/undo.svg") no-repeat center/contain;
+}
+
+#redoLabel
+{
+    background: url("../../public/images/icons/draw-icons/undo.svg") no-repeat center/contain;
+    transform: scaleX(-1);
+}
+
+#clearLabel
+{
+    background: url("../../public/images/icons/draw-icons/clear.svg") no-repeat center/contain;
+}
+
+/* - BUTTON CSS */
+#undoLabel button, #redoLabel button, #clearLabel button
+{
+    outline: none !important;
+    border: none !important;
+    background-color: none !important; 
+}
+
+#undoLabel:has(button:hover), #redoLabel:has(button:hover), #clearLabel:has(button:hover), .formLabel:has(input:hover)
+{
+    filter: brightness(.5);
+}
+
+#undoLabel:has(button:active), #redoLabel:has(button:active), #clearLabel:has(button:active), .formLabel:has(input:active)
+{
+    filter: brightness(.3);
+}
+
+#mergeLabel
+{
+    background: url("../../public/images/icons/draw-icons/layer_merge.svg") no-repeat center/contain;
+    transform: scaleY(-1);
+    width: 25px;
+    height: 25px;
+}
+
+#layerDownLabel
+{
+    background: url("../../public/images/icons/draw-icons/layer_down.svg") no-repeat center/contain;
+    width: 25px;
+    height: 25px;
+}
+
+#layerUpLabel
+{
+    background: url("../../public/images/icons/draw-icons/layer_up.svg") no-repeat center/contain;
+    width: 25px;
+    height: 25px;
+}
+
+.visibleLabel
+{
+    background: url("../../public/images/icons/draw-icons/eyeclose.svg") no-repeat center/contain;
+    width: 25px;
+    height: 25px;
+}
+
+.lockLabel
+{
+    background: url("../../public/images/icons/draw-icons/unlock.svg") no-repeat center/contain;
+    width: 25px;
+    height: 25px;
+}
+
+.formLabel
+{
+    background: url("../../public/images/icons/draw-icons/upload.svg") no-repeat center/contain;
+    width: 25px;
+    height: 25px;
+}
+
+.panelLabel
+{
+    background: url("../../public/images/icons/draw-icons/panels.svg") no-repeat center/contain;
+    width: 30px;
+    height: 100%;
+}
+
+/* - ONTO STYLING... */
+.lockStyling
+{
+    margin: 8px 5px !important;
+}
+
+.toolStyling, .visibleStyling, .lockStyling
+{
+    width: 25px;
+    height: 25px;
+
+    margin: 8px 0;
+}
+
+.toolStyling label
+{
+    width: 25px;
+    height: 25px;
+}
+
+.visibleStyling, .lockStyling
+{
+    margin-left: 5px;
+}
+
+.toolStyling:has([type=radio]:checked), .panelStyling:has([type=radio]:checked), .layerStyling:has([type=button]:active), .visibleStyling, .lockStyling
+{
+    filter: brightness(.5) !important;
+}
+
+.toolStyling:has([type=radio]:hover), .panelStyling:has([type=radio]:hover), .layerStyling:has([type=button]:hover)
+{
+    filter: brightness(.7);
+}
+
+.visibleStyling:has([type=checkbox]:checked), .lockStyling:has([type=checkbox]:checked)
+{
+    filter: brightness(1);
+}
+
+.layer:has([type=radio]:checked)
+{
+    background-color: #414141;
+    border-color:#cccccc;
+}
+
+.visibleStyling:has([type=checkbox]:checked) .visibleLabel
+{
+    background: url("../../public/images/icons/draw-icons/eyeopen.svg") no-repeat center/contain;
+}
+
+.lockStyling:has([type=checkbox]:checked) .lockLabel
+{
+    background: url("../../public/images/icons/draw-icons/lock.svg") no-repeat center/contain;
+}
+
+#functionButtons
+{
+    width: 25px;
+    height: 25px;
+    height: auto;
+    display:flex;
+    flex-direction: column;
+    
+    justify-content: space-between;
+}
+
+#functionButtons label
+{
+    width: 25px;
+    height: 25px;
+
+    margin: 0 0 8px 0;
+}
+
+.backgroundUploadForm
+{
+    width: 25px;
+    height: 25px;
+
+    margin-bottom: 5px;
+}
+
+/* PEN TOOL */
+#penSlider, #shapeBorderSlider, #shapeSelect, #eraserSlider, #textWeight, #textAlignment, #shadeSlider {
+    accent-color: rgb(126, 126, 126);
+}
+
+/* PALETTE BUTTONS GENERIC */
+#paletteButtons p, #fillPaletteButtons p, #borderPaletteButtons p, #textColor p{
+    margin-bottom: 3px;
+}
+
+#paletteButtons button, #fillPaletteButtons button, #borderPaletteButtons button, #textColor button{
+    display: flexbox;
+    height:1.2em; 
+    width:1.2em;
+    margin-left: 2px;
+    margin-top: 1px;
+}
+
+#blackButton{
+    background-color: black;
+}
+
+#darkGrayButton{
+    background-color: rgb(68, 68, 68);
+}
+
+#grayButton{
+    background-color: gray;
+}
+
+#lightGrayButton{
+    background-color: lightgray;
+}
+
+#whiteButton{
+    background-color: white;
+}
+
+#emptyButton{
+    background: url("../../public/images/icons/draw-icons/x.svg") no-repeat center/contain;
+    background-color: white;
+    text-align: center;
+    padding: 0 0.2em;
+    margin: 0;
+    font-size: 1em;
+    position: relative;
+    top:2px;
+    height: 1.2em;
+}
+
+/* SAVE & PUBLISH */
+#savePublish
+{
+    z-index: 99;
+
+    grid-area: canvas;
+
+    align-self: center;
+    margin: 75% auto 0;
+
+    bottom: 0;
+}
+
+.publishButton, .saveButton
+{
+    background-color: white;
+    color: black;
+
+    padding: 5px;
+    border: 3px solid black;
+    border-bottom: 4px solid black;
+    margin: 0 5px 5px 0;
+}
+
+.publishButton:hover, .saveButton:hover
+{
+    background-color:#242424;
+
+    border: 3px solid black;
+    border-bottom: 4px solid black;
+}
+
+.publishButton:active, .saveButton:active
+{
+    background-color: #9c9c9c;
+    position: relative;
+    border: solid 3px #000000;
+    top: 1px;
+}
+
+
 
 /* [xs] Extra small devices, less than 576px) */
 /* No media query for `xs` since this is the default in Bootstrap */

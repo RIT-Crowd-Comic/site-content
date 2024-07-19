@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import styles from "@/styles/create.module.css";
 
 interface Props
 {
@@ -36,19 +37,19 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
     if(enabled)
     {
         return(
-            <div id="penTools">
+            <div id="penTools" className={styles.toolStyles}>
                 <h3>Pen Tools</h3>
-                <div id="penSlider">
+                <div id={styles.penSlider}>
                     <label id="sliderLabel" htmlFor="penRange">Pen Size: {penSize}</label>
-                    <input type="range" min="1" max="20" defaultValue={penSize} step="1" id="penRange" ref={sliderReference} onChange={updateSize}></input>
+                    <input type="range" min="1" max="20" defaultValue={penSize} step="1" id={styles.penRange} ref={sliderReference} onChange={updateSize}></input>
                 </div>
-                <div id="paletteButtons">
+                <div id={styles.paletteButtons}>
                     <p id="colorText">Colors:</p>
-                    <button onClick={() => changePenColor(color1)}></button>
-                    <button onClick={() => changePenColor(color2)}></button>
-                    <button onClick={() => changePenColor(color3)}></button>
-                    <button onClick={() => changePenColor(color4)}></button>
-                    <button onClick={() => changePenColor(color5)}></button>
+                    <button onClick={() => changePenColor(color1)} id={styles.whiteButton}></button>
+                    <button onClick={() => changePenColor(color2)} id={styles.lightGrayButton}></button>
+                    <button onClick={() => changePenColor(color3)} id={styles.grayButton}></button>
+                    <button onClick={() => changePenColor(color4)} id={styles.darkGrayButton}></button>
+                    <button onClick={() => changePenColor(color5)} id={styles.blackButton}></button>
                 </div>
             </div>
         )

@@ -1,6 +1,6 @@
 import styles from './Panel.module.css'
 import { SyntheticEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { BranchHook } from './interfaces';
+import { Hook } from '../interfaces';
 import { createSVGPath } from '@/utils';
 import Image from 'next/image';
 
@@ -39,14 +39,14 @@ const Panel = ({
     hidden: hideUntilHover,
 }: {
     imgSrc: string,
-    hooks: BranchHook[],
-    setHooks?: (hooks: BranchHook[], panelIndex: number) => void
+    hooks: Hook[],
+    setHooks?: (hooks: Hook[], panelIndex: number) => void
     addingHook?: boolean,
     confirmHook?: number,
     setConfirmHook?: (panelIndex: number | undefined) => void,
     selectedHook?: { panelIndex: number, hookIndex: number },
     setSelectedHook?: (hookInfo: { panelIndex: number, hookIndex: number } | undefined) => void,
-    onHookClick?: (hook: BranchHook, hookIndex: number) => void,
+    onHookClick?: (hook: Hook, hookIndex: number) => void,
     hidden?: boolean
     // active?: boolean
 }) => {
@@ -98,6 +98,7 @@ const Panel = ({
                     [
                         ...hooks,
                         {
+                            id: 0,
                             current_panel_id: 123412341234,
                             points: vertices
                         }

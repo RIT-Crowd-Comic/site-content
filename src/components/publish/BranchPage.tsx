@@ -2,24 +2,23 @@ import styles from './BranchPage.module.css'
 
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { BranchHook, emptyPanelSet, PanelSet } from "./interfaces";
+import { Hook, emptyPanelSet, PanelSet } from "../interfaces";
 import Panel from './Panel'
 import BranchPageControls from './BranchPageControls';
 
 const BranchPage = () => {
-    const [parId, setparId] = useState(" ");
-    const [curId] = useState(uuidv4());
     const [addingHook, setAddingHook] = useState(false);
     const [confirmHook, setConfirmHook] = useState<number>();
     const [selectedHook, setSelectedHook] = useState<{ panelIndex: number, hookIndex: number }>();
     const [panelSet, setPanelSet] = useState<PanelSet>({
-        current_panel_set_uuid: curId,
-        parent_branch_uuid: parId,
-        panels: emptyPanelSet()
+        id: 0,
+        author_id: '',
+        panels: emptyPanelSet(),
+        previous_hook: undefined
     });
     const [activePanel, setActivePanel] = useState(0);
     const activePanelHooks = () => panelSet.panels[activePanel].hooks;
-    const setActivePanelHooks = (hooks: BranchHook[], panelIndex: number) => {
+    const setActivePanelHooks = (hooks: Hook[], panelIndex: number) => {
         const panels = panelSet.panels;
         panels[panelIndex].hooks = hooks;
         setPanelSet({
@@ -113,12 +112,7 @@ const BranchPage = () => {
     so that the database can work as intended.
     */
     //packages ps and then pushes it to local storage
-    const pushToLocalStorage = () => {
-        console.log("Publishing to local storage at: " + panelSet.current_panel_set_uuid);
-        localStorage.setItem(panelSet.current_panel_set_uuid, JSON.stringify(panelSet));
-
-        window.location.href = "/comic"
-    }
+    const pushToLocalStorage = () => { }
 
 
 
