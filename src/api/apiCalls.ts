@@ -1,7 +1,7 @@
 const baseUrl = 'http://localhost:4000';
 
 const getAPICall = async (url: string) => {
-    return await fetch(`${baseUrl}${url}`,{
+    return await fetch(`${baseUrl}${url}`, {
         headers: { "Content-Type": "application/json" },
         method: 'GET'
     }).then(response => {
@@ -12,11 +12,11 @@ const getAPICall = async (url: string) => {
 
     }).catch((error) => {
         return error;
-      });
+    });
 };
 
 const postAPICall = async (url: string, body: object) => {
-    return await fetch(`${baseUrl}${url}`,{
+    return await fetch(`${baseUrl}${url}`, {
         body: JSON.stringify(body),
         method: 'POST',
         headers: { "Content-Type": "application/json" },
@@ -24,14 +24,11 @@ const postAPICall = async (url: string, body: object) => {
         return response.json();
 
     }).then(json => {
-        if(json.message) {
-            return json.message
-        }
         return json;
 
     }).catch((error) => {
         return error;
-      });
+    });
 }
 
 /**
@@ -39,13 +36,12 @@ const postAPICall = async (url: string, body: object) => {
  * @param id the id of the hook
  * @returns either the hook itself or an error message
  */
-const getHookByID =  async (id: number) => {
+const getHookByID = async (id: number) => {
     const hook = await getAPICall(`/hook/${id}`);
-    if(hook.message) 
-    {
+    if (hook.message) {
         return Error(hook.message);
     }
-    else return hook;
+    return hook;
 };
 
 /**
@@ -55,11 +51,10 @@ const getHookByID =  async (id: number) => {
  */
 const getImageByID = async (id: number) => {
     const image = await getAPICall(`/getImage/${id}`);
-    if(image.message)
-    {
+    if (image.message) {
         return Error(image.message);
     }
-    else return image;
+    return image;
 }
 
 /**
@@ -72,11 +67,10 @@ const getImageByID = async (id: number) => {
  */
 const getPanelByID = async (id: number) => {
     const panel = await getAPICall(`/panel/${id}`);
-    if(panel.message)
-    {
+    if (panel.message) {
         return Error(panel.message);
     }
-    else return panel;
+    return panel;
 }
 
 
@@ -91,12 +85,12 @@ const getPanelByID = async (id: number) => {
  * next_panel_set_id: (id of the panel set that the hook leads to)
  * },] 
  */
-const getHooksFromPanel = async(panelID: number) => {
+const getHooksFromPanel = async (panelID: number) => {
     const panel_hooks = await getAPICall(`/panel/${panelID}/hooks/`);
-    if(panel_hooks.message){
+    if (panel_hooks.message) {
         return Error(panel_hooks.message);
     }
-    else return panel_hooks;
+    return panel_hooks;
 }
 
 /**
@@ -105,30 +99,27 @@ const getHooksFromPanel = async(panelID: number) => {
  * @returns the API response which is either a panel set under a specific id or an Error message. A correct response will have the following properties:
  *  id: (id # of panel set)
  *  author_id: (id of user)
- */ 
- 
+ */
+
 const getPanelSetByID = async (id: number) => {
     const panel_set = await getAPICall(`/panel_set/${id}`);
-    if(panel_set.message)
-    {
+    if (panel_set.message) {
         return Error(panel_set.message);
     }
-    else return panel_set;
+    return panel_set;
 }
 
 /**
  * Get all the panels from a panel set
  * @param panelSetID the id of the panel set
  * @returns the API response which is either the panel sets under a specific user id or an Error message. A correct response will have the following properties:
- *  TODO:Formating of response
  */
 const getPanels = async (panelSetID: number[]) => {
     const panels = await getAPICall(`/panel_sets/${panelSetID.join("-")}/panels/`);
-    if(panels.message)
-    {
+    if (panels.message) {
         return Error(panels.message);
     }
-    else return panels;
+    return panels;
 }
 
 /**
@@ -141,8 +132,7 @@ const getPanels = async (panelSetID: number[]) => {
  */
 const getPanelByIndex = async (panelSetID: number, index: number) => {
     const panel = await getAPICall(`/panel_set/${panelSetID}/${index}/panel`);
-    if(panel.message)
-    {
+    if (panel.message) {
         return Error(panel.message);
     }
     else return panel;
@@ -158,8 +148,7 @@ const getPanelByIndex = async (panelSetID: number, index: number) => {
  */
 const getUser = async (id: string) => {
     const user = await getAPICall(`/user/${id}/`);
-    if(user.message)
-    {
+    if (user.message) {
         return Error(user.message);
     }
     else return user;
@@ -173,9 +162,9 @@ const getUser = async (id: string) => {
  *  author_id: (id of user)
  * }]
  */
-const getTrunks = async() => {
-    const trunks  = await getAPICall(`/trunks`);
-    if(trunks.message) {
+const getTrunks = async () => {
+    const trunks = await getAPICall(`/trunks`);
+    if (trunks.message) {
         return Error(trunks.message);
     }
     else return trunks
@@ -192,8 +181,7 @@ const getTrunks = async() => {
  */
 const getPanelSets = async (id: string) => {
     const panel_sets = await getAPICall(`/user/${id}/panel_sets/`);
-    if(panel_sets.message)
-    {
+    if (panel_sets.message) {
         return Error(panel_sets.message);
     }
     else return panel_sets;
@@ -212,8 +200,7 @@ const createUser = async (email: string, displayName: string, password: string) 
         email: email,
         display_name: displayName
     })
-    if(api_response.message)
-    {
+    if (api_response.message) {
         return Error(api_response.message);
     }
     else return api_response;
@@ -228,11 +215,10 @@ const createPanelSet = async (authorID: string) => {
     const api_response = await postAPICall(`/createPanelSet`, {
         author_id: authorID
     });
-    if(api_response.message)
-        {
-            return Error(api_response.message);
-        }
-        else return api_response;
+    if (api_response.message) {
+        return Error(api_response.message);
+    }
+    else return api_response;
 }
 
 
@@ -247,11 +233,10 @@ const createPanel = async (image: string, panelSetID: number) => {
         image: image,
         panel_set_id: panelSetID
     });
-    if(api_response.message)
-        {
-            return Error(api_response.message);
-        }
-        else return api_response;
+    if (api_response.message) {
+        return Error(api_response.message);
+    }
+    else return api_response;
 }
 
 /**
@@ -267,11 +252,10 @@ const createHook = async (position: object[], currentPanelID: number, nextPanelS
         current_panel_id: currentPanelID,
         next_panel_set_id: nextPanelSetID,
     })
-    if(api_response.message)
-        {
-            return Error(api_response.message);
-        }
-        else return api_response;
+    if (api_response.message) {
+        return Error(api_response.message);
+    }
+    else return api_response;
 }
 
 /**
@@ -279,14 +263,12 @@ const createHook = async (position: object[], currentPanelID: number, nextPanelS
  * @param id the id of the hook
  * @returns if the hook's next_panel_set_id is null (or undefined if the hook can't be found)
  */
-const isHookLinked = async(id: number) => {
-    const hook = await getHookByID(id);
-    console.log(hook)
-    //could not find hook with id 100
-    if(typeof hook !== "object") {
-        return undefined;
+const isHookLinked = async (id: number) => {
+    const response = await getHookByID(id);
+    if (response.message) {
+        return Error(response.message);
     }
-    return hook.next_panel_set_id != null;
+    return response.next_panel_set_id != null;
 }
 
 /**
@@ -295,21 +277,29 @@ const isHookLinked = async(id: number) => {
  * @param password 
  * @returns 
  */
-const authenticate = async(email: string, password: string) => {
-    return postAPICall(`/authenticate`, {
+const authenticate = async (email: string, password: string) => {
+    const response = await postAPICall(`/authenticate`, {
         email: email,
         password: password
     })
+    if (response.message) {
+        return Error(response.message);
+    }
+    return response;
 }
 
-const changePassword = async(email :string, password :string, newPassword : string) => {
-    return postAPICall(`/changePassword`, {
+const changePassword = async (email: string, password: string, newPassword: string) => {
+    const response = await postAPICall(`/changePassword`, {
         email: email,
         password: password,
         newPassword: newPassword
     })
-}
 
+    if (response.message) {
+        return Error(response.message);
+    }
+    return response;
+}
 const getAllImageUrlsByPanelSetId = async (id: number) => {
     const response = await getAPICall(`/panel_set/${id}/images`);
     if(response.message) {
@@ -319,13 +309,18 @@ const getAllImageUrlsByPanelSetId = async (id: number) => {
 }
 
 
-const changeDisplayName = async(email: string, password: string, display: string, newDisplayName: string) => {
-    return postAPICall(`/changeDisplayName`, {
+const changeDisplayName = async (email: string, password: string, display: string, newDisplayName: string) => {
+    const response = await postAPICall(`/changeDisplayName`, {
         email: email,
         password: password,
         display: display,
         newDisplayName: newDisplayName
     })
+
+    if (response.message) {
+        return Error(response.message);
+    }
+    return response;
 }
 
 /**
@@ -335,10 +330,16 @@ const changeDisplayName = async(email: string, password: string, display: string
  * @returns 
  */
 const updatePanel = async (id: number, image: string) => {
-    return postAPICall(`/updatePanel`, {
+    const response = await postAPICall(`/updatePanel`, {
         id: id,
         image: image
     });
+
+    if (response.message) {
+        return Error(response.message);
+    }
+
+    return response;
 }
 
 /**
@@ -355,9 +356,27 @@ const getHooksFromPanelSetById = async(id: number) => {
     else return api_response;
 }
 
-//todo implement the following
-// '/saveImage'
-//'/getImage/:id
-// '/addSetToHook'
+/**
+ * Creates a session for a user in the database
+ * @param user_id ID of the user to create session for
+ * @returns 
+ */
+const insertSession = async (user_id: string) => {
+    const api_response = await postAPICall('/createSession', {user_id: user_id});
+    if(api_response.message)
+    {
+        return Error(api_response.message);
+    }
+    else return api_response;
+};
 
-export { getAllImageUrlsByPanelSetId, getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, getHooksFromPanelSetById }
+const getSession = async (session_id: string) => {
+    const api_response = await getAPICall(`/session/${session_id}`);
+    if(api_response.message)
+    {
+        return Error(api_response.message);
+    }
+    else return api_response;
+};
+
+export { getAllImageUrlsByPanelSetId, getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, getHooksFromPanelSetById, insertSession, getSession }

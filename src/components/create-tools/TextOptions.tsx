@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import styles from "@/styles/create.module.css";
 
 interface Props
 {
@@ -82,7 +83,7 @@ const TextOptions = ({enabled, changeTextContent, changeTextFont, changeTextSize
     if(enabled)
     {
         return(
-            <div id="textTools">
+            <div id="textTools" className={styles.toolStyles}>
                 <h3>Text Tools</h3>
                 <div id="textTyper">
                     <p id="contentText">Text: </p>
@@ -118,7 +119,7 @@ const TextOptions = ({enabled, changeTextContent, changeTextFont, changeTextSize
                     </select>
                 </div>
 
-                <div id="textWeight">
+                <div id={styles.textWeight}>
                     <p id="weightText">Font Weight:</p>
                     <div id="normal">
                         <input type="radio" name="fontWeight" id="normalSelect" value="normal" defaultChecked onChange={updateWeight}/>
@@ -136,7 +137,7 @@ const TextOptions = ({enabled, changeTextContent, changeTextFont, changeTextSize
                     </div>
                 </div>
 
-                <div id="textAlignment">
+                <div id={styles.textAlignment}>
                     <p id="alignText">Font Alignment:</p>
                     <div id="leftAlign">
                         <input type="radio" name="alignment" id="left" value="left" defaultChecked onChange={updateAlignment}/>
@@ -154,13 +155,13 @@ const TextOptions = ({enabled, changeTextContent, changeTextFont, changeTextSize
                     </div>
                 </div>
 
-                <div id="textColor">
+                <div id={styles.textColor}>
                     <p id="colorText">Colors:</p>
-                    <button onClick={() => changeTextColor(color1)}></button>
-                    <button onClick={() => changeTextColor(color2)}></button>
-                    <button onClick={() => changeTextColor(color3)}></button>
-                    <button onClick={() => changeTextColor(color4)}></button>
-                    <button onClick={() => changeTextColor(color5)}></button>
+                    <button onClick={() => changeTextColor(color1)} id={styles.whiteButton}></button>
+                    <button onClick={() => changeTextColor(color2)} id={styles.lightGrayButton}></button>
+                    <button onClick={() => changeTextColor(color3)} id={styles.grayButton}></button>
+                    <button onClick={() => changeTextColor(color4)} id={styles.darkGrayButton}></button>
+                    <button onClick={() => changeTextColor(color5)} id={styles.blackButton}></button>
                 </div>
             </div>
         )

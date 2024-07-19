@@ -3,13 +3,13 @@ import {useEffect, useState } from 'react';
 import styles from "@/styles/read.module.css";
 
 interface Props {
-    source_1:string,
-    source_2:string,
-    setting:string,
-    setSetting:Function,
-    state_1:string,
-    state_2:string,
-    buttonId:string
+    source_1:string, //inactive state image/icon
+    source_2:string, //active state image/icon
+    setting:string, //external state
+    setSetting:Function, //external state set method
+    state_1:string, //target css inactive class
+    state_2:string, //target css active class
+    buttonId:string //base css button id
 }
 
 const IconToggleButton = ({source_1,source_2,setting,setSetting,state_1,state_2, buttonId}: Props) => {
@@ -27,7 +27,6 @@ const IconToggleButton = ({source_1,source_2,setting,setSetting,state_1,state_2,
                 setSetting(state_1)
                 setSource(source_1)
             }
-        // console.log("changing to " + setting)
     }
 
 

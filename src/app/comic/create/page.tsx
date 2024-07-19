@@ -1,8 +1,14 @@
 'use client';
-import CreateToolsCanvasPaperJS from '../../../components/CreateToolsCanvasPaperJS';
-import Link from 'next/link';
 import styles from "@/styles/create.module.css";
-import Footer from "@/components/Footer";
+
+import dynamic from 'next/dynamic';
+
+const CreateToolsCanvasPaperJS = dynamic(
+    () => import('../../../components/CreateToolsCanvasPaperJS'),
+    {
+        ssr: false
+    }
+);
 
 const exportToPNG = () => {
     //converts html canvas to png
@@ -20,9 +26,6 @@ const Create = () => {
     return (
         <main className={`${styles.body}`}>
             <CreateToolsCanvasPaperJS />
-            <button id='export-btn' onClick={exportToPNG}>Export To PNG</button>
-            <Link href="/comic/create/publish">Continue</Link>
-            <Footer/>
         </main>
     );
 }

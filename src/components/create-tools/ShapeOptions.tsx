@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import styles from "@/styles/create.module.css";
 
 interface Props
 {
@@ -29,7 +30,11 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
     const shapeStates = Object.freeze({
         RECTANGLE: 0,
         LINE: 1,
-        ELLIPSE: 2
+        ELLIPSE: 2,
+        TRIANGLE: 3,
+        HEXAGON: 4,
+        OCTAGON:5,
+        STAR: 6
     });
 
     // Whenever the slider is adjusted, change the value of penSize.  This will update the label text as well as the value in the parent CreateCanvasTools component
@@ -60,9 +65,9 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
     if(enabled)
     {
         return(
-            <div id="shapeTools">
+            <div id="shapeTools" className={styles.toolStyles}>
                 <h3>Shape Tools</h3>
-                <div id="shapeSelect">
+                <div id={styles.shapeSelect}>
                     <div id="rectangleSelect">
                         <input type="radio" name="shape" id="rectangle" value={shapeStates.RECTANGLE} defaultChecked onChange={updateShape}/>
                         <label htmlFor="rectangle">Rectangle</label>
@@ -77,8 +82,24 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
                         <input type="radio" name="shape" id="ellipse" value={shapeStates.ELLIPSE} onChange={updateShape}/>
                         <label htmlFor="ellipse">Ellipse</label>
                     </div>
+                    <div id="triangleSelect">
+                        <input type="radio" name="shape" id="triangle" value={shapeStates.TRIANGLE} onChange={updateShape}/>
+                        <label htmlFor="triangle">Triangle</label>
+                    </div>
+                    <div id="hexagonSelect">
+                        <input type="radio" name="shape" id="hexagon" value={shapeStates.HEXAGON} onChange={updateShape}/>
+                        <label htmlFor="hexagon">Hexagon</label>
+                    </div>
+                    <div id="octagonSelect">
+                        <input type="radio" name="shape" id="octagon" value={shapeStates.OCTAGON} onChange={updateShape}/>
+                        <label htmlFor="octagon">Octagon</label>
+                    </div>
+                    <div id="starSelect">
+                        <input type="radio" name="shape" id="star" value={shapeStates.STAR} onChange={updateShape}/>
+                        <label htmlFor="star">Star</label>
+                    </div>
                 </div>
-                <div id="shapeBorderSlider">
+                <div id={styles.shapeBorderSlider}>
                     <label id="sliderLabel" htmlFor="shapeBorderRange">Border Size: {shapeBorderSize}</label>
                     <input type="range" min="1" max="20" defaultValue={shapeBorderSize} step="1" id="shapeBorderRange" ref={sliderReference} onChange={updateSize}></input>
                 </div>
@@ -86,23 +107,23 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
                     <input type="checkbox" id="dashedBorderToggle" onChange={updateDashedBorder}></input>
                     <label htmlFor="dashedBorderToggle">Dashed Border</label>
                 </div>
-                <div id="borderPaletteButtons">
+                <div id={styles.borderPaletteButtons}>
                     <label id="colorLabel">Border Colors:</label>
-                    <button onClick={() => changeShapeBorderColor(color1)}></button>
-                    <button onClick={() => changeShapeBorderColor(color2)}></button>
-                    <button onClick={() => changeShapeBorderColor(color3)}></button>
-                    <button onClick={() => changeShapeBorderColor(color4)}></button>
-                    <button onClick={() => changeShapeBorderColor(color5)}></button>
-                    <button onClick={() => changeShapeBorderColor(color6)}></button>
+                    <button onClick={() => changeShapeBorderColor(color1)} id={styles.whiteButton}></button>
+                    <button onClick={() => changeShapeBorderColor(color2)} id={styles.lightGrayButton}></button>
+                    <button onClick={() => changeShapeBorderColor(color3)} id={styles.grayButton}></button>
+                    <button onClick={() => changeShapeBorderColor(color4)} id={styles.darkGrayButton}></button>
+                    <button onClick={() => changeShapeBorderColor(color5)} id={styles.blackButton}></button>
+                    <button onClick={() => changeShapeBorderColor(color6)} id={styles.emptyButton}></button>
                 </div>
-                <div id="fillPaletteButtons">
+                <div id={styles.fillPaletteButtons}>
                     <label id="colorLabel">Fill Colors:</label>
-                    <button onClick={() => changeShapeFillColor(color1)}></button>
-                    <button onClick={() => changeShapeFillColor(color2)}></button>
-                    <button onClick={() => changeShapeFillColor(color3)}></button>
-                    <button onClick={() => changeShapeFillColor(color4)}></button>
-                    <button onClick={() => changeShapeFillColor(color5)}></button>
-                    <button onClick={() => changeShapeFillColor(color6)}></button>
+                    <button onClick={() => changeShapeFillColor(color1)} id={styles.whiteButton}></button>
+                    <button onClick={() => changeShapeFillColor(color2)} id={styles.lightGrayButton}></button>
+                    <button onClick={() => changeShapeFillColor(color3)} id={styles.grayButton}></button>
+                    <button onClick={() => changeShapeFillColor(color4)} id={styles.darkGrayButton}></button>
+                    <button onClick={() => changeShapeFillColor(color5)} id={styles.blackButton}></button>
+                    <button onClick={() => changeShapeFillColor(color6)} id={styles.emptyButton}></button>
                 </div>
             </div>
         )
