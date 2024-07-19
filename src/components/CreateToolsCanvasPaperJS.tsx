@@ -634,7 +634,7 @@ const CreateToolsCanvasPaperJS = () => {
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             if (selectMouseDragged) {
                 //only gets selected area if layer is not empty
-                if (!canvasProject.current.activeLayer.isEmpty()) {
+                if (canvasProject.current.activeLayer.children.length >= 2) {
                     let rasterLT = rasterInfo[0].bounds.topLeft;
                     drawSelectedArea();
                     setSelectionInfo(prevState => [...prevState, new paper.Rectangle(startSelectPoint, endSelectPoint)]);
