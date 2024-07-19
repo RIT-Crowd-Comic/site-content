@@ -334,4 +334,27 @@ const updatePanel = async (id: number, image: string) => {
     return response;
 }
 
-export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel }
+/**
+ * Creates a session for a user in the database
+ * @param user_id ID of the user to create session for
+ * @returns 
+ */
+const insertSession = async (user_id: string) => {
+    const api_response = await postAPICall('/createSession', {user_id: user_id});
+    if(api_response.message)
+    {
+        return Error(api_response.message);
+    }
+    else return api_response;
+};
+
+const getSession = async (session_id: string) => {
+    const api_response = await getAPICall(`/session/${session_id}`);
+    if(api_response.message)
+    {
+        return Error(api_response.message);
+    }
+    else return api_response;
+};
+
+export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, insertSession, getSession }
