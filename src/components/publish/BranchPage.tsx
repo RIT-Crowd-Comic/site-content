@@ -186,7 +186,7 @@ const BranchPage = () => {
                             setErrorMessage(`There was an error: ${errorMessage}`);
                         }
                         else{
-                            const queryString = new URLSearchParams({panel_set_id: response.panel_set}).toString();
+                            const queryString = new URLSearchParams({id: response.panel_set}).toString();
                             router.push(`/comic/?${queryString}`);
                         }    
 
