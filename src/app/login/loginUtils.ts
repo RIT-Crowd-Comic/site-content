@@ -4,7 +4,7 @@ import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import {redirect} from "next/navigation";
-import { insertSession, getSession, getUser, authenticate, createUser } from "@/api/apiCalls";
+import { insertSession, getUserBySession, authenticate, createUser } from "@/api/apiCalls";
 
 const secretKey = 'monkey';
 const key = new TextEncoder().encode(secretKey);
@@ -66,11 +66,10 @@ const authenticateSession = async () => {
     const session = cookies().get('session');
     if(!session) redirect('/sign-in'); //TODO save where redirecting from
     const session_id = await decrypt(session.value);
-    const dbSession = await getSession(session_id.sessionId);
-    if(!dbSession) redirect('/sign-in');
+    const user = await getUserBySession(session_id);
+    if(!user || user instanceof Error) redirect('/sign-in'); //TODO save where redirecting from
     //Refresh the session expiry
     await updateSession(session_id);
-    const user = await getUser(dbSession.user_id);
     return user;
 };
 
