@@ -57,7 +57,9 @@ const BranchPage = () => {
     useEffect(() => {
 
         const getUser = async() =>{
-            setUser((await authenticateSession()).id);
+            const user = await authenticateSession();
+            if(user)
+                setUser(user.id);
         }
         // retrieve comic images from create page using local storage
         const storedImageLinks = [
