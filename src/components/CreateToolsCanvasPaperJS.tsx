@@ -368,7 +368,8 @@ const CreateToolsCanvasPaperJS = () => {
         ELLIPSE: 2,
         TRIANGLE: 3,
         HEXAGON: 4,
-        STAR: 5
+        OCTAGON: 5,
+        STAR: 6
     });
 
     const [shapeSelected, setShapeSelected] = useState<number>(0);
@@ -412,6 +413,13 @@ const CreateToolsCanvasPaperJS = () => {
             shapePath = new paper.Path.RegularPolygon(centerPoint,6,centerPoint.x-startPoint.x);
             // Rotated so that the bottom edge is parallel with the bottom of the screen
             shapePath.rotate(30);
+        }
+        else if (shapeSelected == shapeStates.OCTAGON) {
+            const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
+            const radius = Math.abs(centerPoint.x-startPoint.x);
+            shapePath = new paper.Path.RegularPolygon(centerPoint,8,radius);
+            // Rotated so that the bottom edge is parallel with the bottom of the screen
+            //shapePath.rotate(30);
         }
         else if (shapeSelected == shapeStates.STAR) {
             const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
@@ -1133,20 +1141,22 @@ const CreateToolsCanvasPaperJS = () => {
                         <label htmlFor="eraser" id={styles.eraserLabel}>
                             <input type="radio" name="tools" id="eraser" value={toolStates.ERASER} onChange={findSelectedTool} />
                         </label>
-
-                    </div><div id="shaderTool">
-                        <input type="radio" name="tools" id="shader" value={toolStates.SHADER} onChange={findSelectedTool}/>
-                        <label htmlFor="shader">Shading</label>
                     </div>
 
                     <div id={styles.fillTool} className={styles.toolStyling}>
-                        <label htmlFor="eraser" id={styles.fillLabel}>
+                        <label htmlFor="fill" id={styles.fillLabel}>
                             <input type="radio" name="tools" id="fill" value={toolStates.FILL} onChange={findSelectedTool} />
                         </label>
                     </div>
 
+                    <div id={styles.shaderTool} className={styles.toolStyling}>
+                        <label htmlFor="shader" id={styles.shaderLabel}>
+                            <input type="radio" name="tools" id="shader" value={toolStates.SHADER} onChange={findSelectedTool}/>
+                        </label>
+                    </div>
+
                     <div id={styles.shapeTool} className={styles.toolStyling}>
-                        <label htmlFor="eraser" id={styles.shapeLabel}>
+                        <label htmlFor="shape" id={styles.shapeLabel}>
                             <input type="radio" name="tools" id="shape" value={toolStates.SHAPE} onChange={findSelectedTool} />
                         </label>
                     </div>
@@ -1159,19 +1169,19 @@ const CreateToolsCanvasPaperJS = () => {
                     </div>
 
                     <div id={styles.stickerTool} className={styles.toolStyling}>
-                        <label htmlFor="text" id={styles.stickerLabel}>
+                        <label htmlFor="sticker" id={styles.stickerLabel}>
                             <input type="radio" name="tools" id="sticker" value={toolStates.STICKER} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.selectTool} className={styles.toolStyling}>
-                        <label htmlFor="text" id={styles.selectLabel}>
+                        <label htmlFor="select" id={styles.selectLabel}>
                             <input type="radio" name="tools" id="select" value={toolStates.SELECT} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.transformTool} className={styles.toolStyling}>
-                        <label htmlFor="text" id={styles.transformLabel}>
+                        <label htmlFor="transform" id={styles.transformLabel}>
                             <input type="radio" name="tools" id="transform" value={toolStates.TRANSFORM} onChange={findSelectedTool} />
                             {/* (SEMI FUNCTIONAL) */}
                         </label>
@@ -1189,8 +1199,6 @@ const CreateToolsCanvasPaperJS = () => {
                     <label htmlFor="clearButton" id={styles.clearLabel}>
                         <button className="btn" id="clearButton" onClick={clearLayer}></button>
                     </label>
-                    <button className="btn" id="saveButton" onClick={() => save(true)}>Save</button><br></br>
-                    <button className="btn" id="publishButton" onClick={toPublish}>Publish</button><br></br>
                 </div>
 
                 <div id="backgroundUploadForm" className={styles.backgroundUploadForm}>
@@ -1211,8 +1219,10 @@ const CreateToolsCanvasPaperJS = () => {
                 </div>
             </fieldset>
 
+
             <canvas id={`${styles.canvas}`} ref={canvasReference} className={`${styles.canvas}`} />
 
+          
             <div id={`${styles.toolOptions}`}>
                 <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor} />
                 <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize} />
@@ -1224,8 +1234,11 @@ const CreateToolsCanvasPaperJS = () => {
                     changeFontWeight={setTextFontWeight} changeTextAlignment={setTextAlign} changeTextColor={setTextColor} />
                 <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
                 <ShaderOptions enabled={shadeOptionsEnabled} shaderSize={shadeSize} changeShaderSize={setShadeSize}/>
+            </div>
 
-                <div id={styles.layerOptions}>
+            <div id={styles.layerOptions}>
+                <div id="settings" className={styles.layerSettings}>SETTINGS</div>
+                <div id={styles.layersList}>
                     <div id="layer4" className={styles.layer}>
                         <div id="layer4Visibility" className={styles.visibleStyling}>
                             <label htmlFor="layer4Toggle" className={styles.visibleLabel}>
@@ -1293,6 +1306,7 @@ const CreateToolsCanvasPaperJS = () => {
                             <label htmlFor="layer1">Layer 1</label><br/>
                         </div>
                     </div>
+
                     
                     <div id="backgroundLayer" className={styles.layer}>
                         <div id="backgroundLayerVisibility" className={styles.visibleStyling}>
@@ -1313,25 +1327,31 @@ const CreateToolsCanvasPaperJS = () => {
                 </div>
             </div>
 
-            <Link href="/comic/create/publish" id={styles.publishButton}>PUBLISH</Link>
 
-            {/* <div id="panelSelect">
-                <div id="panel1">
-                    <input type="radio" name="panels" id="panel1Select" value={0} defaultChecked />
-                    <label htmlFor="panel1Select">Panel 1</label><br />
+            <div id="panelSelect" className={styles.panelSelect}>
+                <div id="panel1" className={styles.panelStyling}>
+                    <label htmlFor="panel1Select" className={styles.panelLabel}>
+                        <input type="radio" name="panels" id="panel1Select" value={0} defaultChecked />
+                    </label>
                 </div>
 
-                <div id="panel2">
-                    <input type="radio" name="panels" id="panel2Select" value={1} />
-                    <label htmlFor="panel2Select">Panel 2</label><br />
+                <div id="panel2" className={styles.panelStyling}>
+                    <label htmlFor="panel2Select" className={styles.panelLabel}>
+                        <input type="radio" name="panels" id="panel2Select" value={1} />
+                    </label>
                 </div>
 
-                <div id="panel3">
-                    <input type="radio" name="panels" id="panel3Select" value={2} />
-                    <label htmlFor="panel3Select">Panel 3</label><br />
+                <div id="panel3" className={styles.panelStyling}>
+                    <label htmlFor="panel3Select" className={styles.panelLabel}>
+                        <input type="radio" name="panels" id="panel3Select" value={2} />
+                    </label>
                 </div>
-            </div> */}
-
+            </div>
+        
+            <div id={styles.savePublish}>
+                <button className={`btn ${styles.saveButton}`} id="saveButton" onClick={() => save(true)}>Save</button>
+                <button className={`btn ${styles.publishButton}`} id="publishButton" onClick={toPublish}>Publish</button>
+            </div>
         </div>
     )
 }
