@@ -424,10 +424,33 @@ const publish = async (image1 : File, image2 : File, image3 : File, authorId : s
     if(response.message) return new Error(response.message);
     return response;
 }
+/**
+ * Creates a session for a user in the database
+ * @param user_id ID of the user to create session for
+ * @returns 
+ */
+const insertSession = async (user_id: string) => {
+    const api_response = await postAPICall('/createSession', {user_id: user_id});
+    if(api_response.message)
+    {
+        return Error(api_response.message);
+    }
+    else return api_response;
+};
+
+const getSession = async (session_id: string) => {
+    const api_response = await getAPICall(`/session/${session_id}`);
+    if(api_response.message)
+    {
+        return Error(api_response.message);
+    }
+    else return api_response;
+};
 
 //todo implement the following
 // '/saveImage'
 //'/getImage/:id
 // '/addSetToHook'
 
-export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, publishHandler }
+export { getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, publishHandler, insertSession, getSession }
+
