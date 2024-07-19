@@ -107,6 +107,23 @@
     justify-content: center;
 }
 
+#inputEmail, #inputPassword, #inputUsername
+{
+    /* font-family: var(--font-comic-neue); */
+    font-variant: small-caps;
+}
+
+#inputEmail:invalid
+{
+    
+}
+
+#togglePassword
+{
+    background: url("/../public/images/icons/draw-icons/eyeclose.svg") no-repeat center/contain;
+    width: 25px;
+    height: 25px;
+}
 /* Small devices (portrait phones, less than 7668px) */
 /* @media (max-width: 768px) {
     body

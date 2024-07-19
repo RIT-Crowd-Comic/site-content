@@ -17,6 +17,17 @@ import {loginAction, testAuth} from '@/app/login/actions';
 //         if (!form.checkValidity())
 //     }
 // })
+
+// const togglePassword = document.querySelector('#togglePassword');
+// const password = document.querySelector('#inputPassword');
+
+// togglePassword?.addEventListener('click', () => {
+//     const type = password?.getAttribute('type') === 'password' ?
+//     'text' : 'password';
+//     password?.setAttribute('type', type);
+//     togglePassword.classList.toggle('bi-eye');
+// })
+
 export function SignInForm()
 {
     const [message, errorState] = useState('');
@@ -44,7 +55,10 @@ export function SignInForm()
                 placeholder="name@example.com"
                 className={`form-control`}
                 id={styles.inputEmail}
-                aria-describedby="emailHelp" />
+                aria-describedby="emailHelp" 
+                onInvalid = {e => (e.target as HTMLInputElement).setCustomValidity('Enter Email Here')}
+                onInput = {e => (e.target as HTMLInputElement).setCustomValidity('')}
+                required/>
             </div>
             {/* PASSWORD */}
             <div className={`mb-3 ${styles.formInputs}`}>
@@ -53,9 +67,12 @@ export function SignInForm()
                 name="password"
                 placeholder="password"
                 className={`form-control`}
-                id={styles.inputPassword} />
+                id={`${styles.inputPassword}`}
+                onInvalid = {e => (e.target as HTMLInputElement).setCustomValidity('Enter Password Here')}
+                onInput = {e => (e.target as HTMLInputElement).setCustomValidity('')}
+                required/>
 
-                <i className={`bi bi-eye-slash`} id={styles.togglePassword}></i>
+                <i className={`bi bi-eye-slash`} id={`${styles.togglePassword} togglePassword`}></i>
             </div>
 
             {/* LOGIN */}

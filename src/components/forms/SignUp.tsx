@@ -35,6 +35,8 @@ export function SignUpForm() {
                 placeholder="name"
                 className={`form-control`}
                 id={styles.inputUsername} 
+                onInvalid = {e => (e.target as HTMLInputElement).setCustomValidity('Enter Display Name Here')}
+                onInput = {e => (e.target as HTMLInputElement).setCustomValidity('')}
                 required/>
             </div>
             {/* EMAIL */}
@@ -45,6 +47,8 @@ export function SignUpForm() {
                 placeholder="name@example.com"
                 className={`form-control`}
                 id={styles.inputEmail}
+                onInvalid = {e => (e.target as HTMLInputElement).setCustomValidity('Enter Email Here')}
+                onInput = {e => (e.target as HTMLInputElement).setCustomValidity('')}
                 aria-describedby="emailHelp" 
                 required/>
             </div>
@@ -56,7 +60,8 @@ export function SignUpForm() {
                 placeholder="password"
                 className={`form-control`}
                 id={styles.inputPassword}
-                is-invalid="true"
+                onInvalid = {e => (e.target as HTMLInputElement).setCustomValidity('Enter Password Here')}
+                onInput = {e => (e.target as HTMLInputElement).setCustomValidity('')}
                 required/>
                 
                 <i className={`bi bi-eye-slash`} id={styles.togglePassword}></i>
