@@ -648,9 +648,18 @@ const CreateToolsCanvasPaperJS = () => {
                     drawSelectedArea();
                     setSelectionInfo(prevState => [...prevState, new paper.Rectangle(startSelectPoint, endSelectPoint)]);
 
+                    
+                    console.log(((1200 / canvasProject.current.view.size.width) + (800 / canvasProject.current.view.size.height)))
+                    console.log("canvas to view canvas ratio: " + 1200 / canvasProject.current.view.size.width);
+                    console.log("screen to canvas ratio width: " + screen.width/1200);
+                    console.log("screen to canvas ratio height: " + screen.height/800);
+                    console.log("screen to view canvas ratio width: " + screen.width/canvasProject.current.view.size.width);
+                    console.log("screen to view canvas ratio height: " + screen.height/canvasProject.current.view.size.height);
+
+
                     //translates canvas coordinates to pixel coordinates (for getting subraster in transform)
-                    let pixelStartPoint = startSelectPoint.subtract(rasterLT).multiply(((1200 / canvasProject.view.size.width) + (800 / canvasProject.view.size.height))/1.04);
-                    let pixelEndPoint = endSelectPoint.subtract(rasterLT).multiply(((1200 / canvasProject.view.size.width) + (800 / canvasProject.view.size.height))/1.04);
+                    let pixelStartPoint = startSelectPoint.subtract(rasterLT).multiply(2);
+                    let pixelEndPoint = endSelectPoint.subtract(rasterLT).multiply(2);
 
                     //gets the selected area of the rasterized canvas
                     let selectedArea = new paper.Rectangle(pixelStartPoint, pixelEndPoint);
