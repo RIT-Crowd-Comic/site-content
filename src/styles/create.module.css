@@ -370,6 +370,56 @@
     margin-bottom: 5px;
 }
 
+/* PEN TOOL */
+#penSlider, #shapeBorderSlider, #shapeSelect, #eraserSlider, #textWeight, #textAlignment, #shadeSlider {
+    accent-color: rgb(126, 126, 126);
+}
+
+/* PALETTE BUTTONS GENERIC */
+#paletteButtons p, #fillPaletteButtons p, #borderPaletteButtons p, #textColor p{
+    margin-bottom: 3px;
+}
+
+#paletteButtons button, #fillPaletteButtons button, #borderPaletteButtons button, #textColor button{
+    display: flexbox;
+    height:1.2em; 
+    width:1.2em;
+    margin-left: 2px;
+    margin-top: 1px;
+}
+
+#blackButton{
+    background-color: black;
+}
+
+#darkGrayButton{
+    background-color: rgb(68, 68, 68);
+}
+
+#grayButton{
+    background-color: gray;
+}
+
+#lightGrayButton{
+    background-color: lightgray;
+}
+
+#whiteButton{
+    background-color: white;
+}
+
+#emptyButton{
+    background: url("../../public/images/icons/draw-icons/x.svg") no-repeat center/contain;
+    background-color: white;
+    text-align: center;
+    padding: 0 0.2em;
+    margin: 0;
+    font-size: 1em;
+    position: relative;
+    top:2px;
+    height: 1.2em;
+}
+
 /* SAVE & PUBLISH */
 #savePublish
 {
