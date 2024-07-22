@@ -84,7 +84,7 @@ const login = async (email: string, password: string) => {
     //If user is an error, return that error and don't redirect
     if(!user || user.message) return user.message;
     await saveSession(user.id);
-    redirect('/comic');
+    redirect('/comic/browse/');
 };
 
 /**
