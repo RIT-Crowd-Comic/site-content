@@ -1,4 +1,5 @@
 const baseUrl = 'http://localhost:4000';
+import { CreatePanelSet } from "../components/interfaces";
 
 const getAPICall = async (url: string) => {
     return await fetch(`${baseUrl}${url}`, {
@@ -28,6 +29,20 @@ const postAPICall = async (url: string, body: object) => {
 
     }).catch((error) => {
         return error;
+    });
+}
+
+const postAPICallFormData = async (url: string, formData: FormData) => {
+    return await fetch(`${baseUrl}${url}`, {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response =>{return response.json()})
+    .then(json => {
+      return json;
+    })
+    .catch(error => {
+         return error;
     });
 }
 
@@ -379,4 +394,79 @@ const getSession = async (session_id: string) => {
     else return api_response;
 };
 
-export { getAllImageUrlsByPanelSetId, getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, getHooksFromPanelSetById, insertSession, getSession }
+type hook = {
+    position: { x: number; y: number; }[]
+    panel_index: number
+}
+
+const fetchImage = async(imageUrl : string) =>{
+    return fetch(imageUrl)
+        .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.blob(); // Convert response to Blob
+    })
+    .then(blob => {
+        const imageFile = new File([blob], 'image.jpg', { type: blob.type }); // Create a File object
+        return(imageFile); // Now you have a File object
+        // You can now use imageFile as needed
+    })
+    .catch(error => {
+        return error;
+    });
+}
+
+const publishHandler = async(panelSet : CreatePanelSet, currentUser : string) =>{
+        //get the image files
+        const image1 = await fetchImage(panelSet.panels[0].imgSrc) as File | Error;
+        if(image1 instanceof Error) return new Error(`There was an error getting the 1st image: ${image1.message}`);
+        const image2 = await fetchImage(panelSet.panels[0].imgSrc) as File | Error;
+        if(image2 instanceof Error) return new Error(`There was an error getting the 1st image: ${image2.message}`);
+        const image3 = await fetchImage(panelSet.panels[0].imgSrc) as File | Error;
+        if(image3 instanceof Error) return new Error(`There was an error getting the 1st image: ${image3.message}`);
+
+        //get the hook data
+        const hooks  = [] as Array<hook>;
+
+        panelSet.panels.map( panel =>{
+            panel.hooks.map(hook =>{
+                const positions = hook.points.map(point =>{
+                   return{
+                        x: point[0],
+                        y: point[1]
+                    }
+                })
+                hooks.push(
+                    {
+                        position: positions,
+                        panel_index: hook.current_panel_index
+                    }
+                )
+            })
+        })
+
+        //get the hookId
+        const parentHookID = panelSet.previous_hook?.id;
+
+        //get the hook id
+        return await publish(image1, image2, image3,currentUser, hooks, parentHookID);
+}
+const publish = async (image1 : File, image2 : File, image3 : File, authorId : string, hooks : Array<hook>, hookId : number | undefined) => {
+    const data = {
+        author_id: authorId,
+        hook_id: hookId,
+        hooks: hooks
+    };
+    const formData = new FormData();
+    formData.append('image1', image1);
+    formData.append('image2', image2);
+    formData.append('image3', image3);
+    formData.append('data', JSON.stringify(data, null, 2));
+    const response = await postAPICallFormData(`/publish`, formData );
+    
+    if(response.message) return new Error(response.message);
+    return response;
+}
+
+export { getAllImageUrlsByPanelSetId, getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, getHooksFromPanelSetById, insertSession, getSession, publishHandler }
