@@ -643,7 +643,7 @@ const CreateToolsCanvasPaperJS = () => {
                     let pixelStartPoint = startSelectPoint.subtract(rasterLT).multiply(canvasProject.current.view.pixelRatio);
                     let pixelEndPoint = endSelectPoint.subtract(rasterLT).multiply(canvasProject.current.view.pixelRatio);
 
-                    
+
                     //gets the selected area of the rasterized canvas
                     let selectedArea = new paper.Rectangle(pixelStartPoint, pixelEndPoint);
                     setSelectionInfo(prevState => [...prevState, selectedArea]);
@@ -668,6 +668,10 @@ const CreateToolsCanvasPaperJS = () => {
 
     // String describing action user is doing (moving, resizing, rotating, etc.)
     const [transformAction, setTransformAction] = useState("none");
+
+    //
+    //const [cornerSelected, setCornerSelected] = useState(new paper.Point(0, 0))
+    const [oppositeCorner, setOppositeCorner] = useState(new paper.Point(0, 0))
 
     // The Transform Tool:
     const [transformTool, setTransformTool] = useState<paper.Tool>(new paper.Tool());
@@ -729,22 +733,48 @@ const CreateToolsCanvasPaperJS = () => {
                 //readds selected area to layer
                 setRasterInfo(prevState => [...prevState, tempTransformSelectedArea]);
                 canvasProject.current.activeLayer.addChild(tempTransformSelectedArea);
+                tempTransformSelectedArea.selected = true;
 
                 //contains check for first time transforming only
-                if (tempTransformAreaBounds.contains(event.point)) {
+                if (tempTransformAreaBounds.hitTest(event.point, { segments: true, tolerance: 7 })) {
+                    setTransformAction("resizing");
+                }
+                else if (tempTransformAreaBounds.contains(event.point)) {
                     setTransformAction("moving");
                 }
                 return;
             }
 
             //runs if corners of bounds are hit (segments to check if clicked on rect, tolerance for precision)
-            // if (transformInfo[0].hitTest(event.point, { segments: true, tolerance: 7 })) {
-            //     setTransformAction("resizing");
-            //     return;
-            // }
+            if (transformInfo[0].hitTest(event.point, { segments: true, tolerance: 7 })) {
+                setTransformAction("resizing");
+                //use hitresult fromo hittetst?
+                //check which corner was hit (with bounds)
+                //set opposite corner as base to scale on
+
+                if (transformInfo[0].bounds.bottomLeft.isClose(event.point, 3)) {
+                    setOppositeCorner(transformInfo[0].bounds.topRight);
+                }
+                else if (transformInfo[0].bounds.bottomRight.isClose(event.point, 3)) {
+                    setOppositeCorner(transformInfo[0].bounds.topLeft);
+                }
+                else if (transformInfo[0].bounds.topLeft.isClose(event.point, 3)) {
+                    setOppositeCorner(transformInfo[0].bounds.bottomRight);
+                }
+                else {
+                    setOppositeCorner(transformInfo[0].bounds.bottomLeft);
+                }
+                return;
+            }
             //runs if mouse hits area inside selection
-            if (transformInfo[0].contains(event.point)) {
+            else if (transformInfo[0].contains(event.point)) {
                 setTransformAction("moving");
+                return;
+            }
+            //runs if anywhere outside of box is pressed 
+            //(could be changed to have an additional rotating handler to box)
+            else {
+                setTransformAction("rotating");
                 return;
             }
         }
@@ -755,41 +785,30 @@ const CreateToolsCanvasPaperJS = () => {
             //changes position of selected area if moving
             if (transformAction == "moving") {
                 setIsTransforming(true);
+
+                //moving
                 transformInfo[0].position = event.point;
                 rasterInfo[1].position = event.point;
-                rasterInfo[1].selected = true;
                 return;
             }
-            // else if (transformAction == "resizing") {
-            //     //should instead check against corners to see which is clicked and then set oppposite corner as 
-            //     //opposite point
-            //     //gets opposing segment and point
-            //     let segmentIndex;
-            //     for (segmentIndex = 0; segmentIndex < transformAreaBounds.segments.length; segmentIndex++) {
-            //         let p = transformAreaBounds.segments[segmentIndex].point;
-            //         if (p.isClose(event.point, 3)) {
-            //             break;
-            //         }
-            //     }
-            //     let oppositeSegmentIndex = (segmentIndex + 2) % 4;
-            //     //let oppositePoint = elements[changedElementIndex].segments[oppositeSegmentIndex].point;
-            //     let oppositePoint = new paper.Point(event.point.x - transformAreaBounds.bounds.width,
-            //         event.point.y - transformAreaBounds.bounds.height);
+            else if (transformAction == "resizing") {
+                setIsTransforming(true);
 
-            //     //scales based on scale factor (new size/old size) and around the start point
-            //     shownSelectedAreaBounds.scale(
-            //         (event.point.x - oppositePoint.x) / transformAreaBounds.bounds.width,
-            //         (event.point.y - oppositePoint.y) / transformAreaBounds.bounds.height, oppositePoint);
-
-            //     //selectedArea.scale();
-            //     return;
-            // }
+                //scale
+                transformInfo[0].scale((event.point.x - oppositeCorner.x) / transformInfo[0].bounds.width,
+                    (event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height, oppositeCorner);
+                rasterInfo[1].scale((event.point.x - oppositeCorner.x) / rasterInfo[1].bounds.width,
+                    (event.point.y - oppositeCorner.y) / rasterInfo[1].bounds.height, oppositeCorner);
+                return;
+            }
         }
     }
     transformTool.onMouseUp = function () {
         //resets transform action state
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             setTransformAction("none");
+            //remember to have down reset corner selected when resizing
+
         }
     }
 
