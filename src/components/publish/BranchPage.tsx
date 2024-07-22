@@ -17,7 +17,6 @@ const BranchPage = () => {
         author_id: '',
         panels: emptyPanelSet()
     });
-    const [currentUser, setUser] = useState('');
     const [activePanel, setActivePanel] = useState(0);
     const activePanelHooks = () => panelSet.panels[activePanel].hooks;
     const setActivePanelHooks = (hooks: CreateHook[], panelIndex: number) => {
@@ -57,9 +56,7 @@ const BranchPage = () => {
     useEffect(() => {
 
         const getUser = async () => {
-            const user = await authenticateSession();
-            if (user)
-                setUser(user.id);
+            await authenticateSession();
         }
         // retrieve comic images from create page using local storage
         const storedImageLinks = [
@@ -70,7 +67,7 @@ const BranchPage = () => {
 
         setImageLinks(storedImageLinks);
 
-        if (!currentUser) getUser();
+        getUser();
 
         panelSet.panels[0].imgSrc = storedImageLinks[0];
         panelSet.panels[1].imgSrc = storedImageLinks[1];

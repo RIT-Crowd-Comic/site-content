@@ -423,7 +423,7 @@ const fetchImage = async(imageUrl : string) =>{
     });
 }
 
-const publishHandler = async(panelSet : CreatePanelSet, currentUser : string) =>{
+const publishHandler = async(panelSet : CreatePanelSet) =>{
         //get the image files
         const image1 = await fetchImage(panelSet.panels[0].imgSrc) as File | Error;
         if(image1 instanceof Error) return new Error(`There was an error getting the 1st image: ${image1.message}`);
@@ -456,11 +456,10 @@ const publishHandler = async(panelSet : CreatePanelSet, currentUser : string) =>
         const parentHookID = panelSet.previous_hook?.id;
 
         //get the hook id
-        return await publish(image1, image2, image3,currentUser, hooks, parentHookID);
+        return await publish(image1, image2, image3, hooks, parentHookID);
 }
-const publish = async (image1 : File, image2 : File, image3 : File, authorId : string, hooks : Array<hook>, hookId : number | undefined) => {
+const publish = async (image1 : File, image2 : File, image3 : File, hooks : Array<hook>, hookId : number | undefined) => {
     const data = {
-        author_id: authorId,
         hook_id: hookId,
         hooks: hooks
     };
