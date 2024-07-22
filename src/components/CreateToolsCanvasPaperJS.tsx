@@ -32,16 +32,33 @@ const CreateToolsCanvasPaperJS = () => {
 
     // All 3 Panel Canvases
     // Used to save the state of each panel whenever data needs to be saved (when the save button is pressed or when moving to the Publish page)
-    //const [panel1Project, setPanel1Project] = useState<paper.Layer[]>([]);
-    //const [panel2Project, setPanel2Project] = useState<paper.Layer[]>([]);
-    //const [panel3Project, setPanel3Project] = useState<paper.Layer[]>([]);
-    const [panel1LayerData, setPanel1LayerData] = useState({});
-    const [panel2LayerData, setPanel2LayerData] = useState({});
-    const [panel3LayerData, setPanel3LayerData] = useState({});
+    const [panel1LayerData, setPanel1LayerData] = useState({
+        background: "",
+        shade: "",
+        layer1: "",
+        layer2: "",
+        layer3: "",
+        layer4: ""
+    });
+    const [panel2LayerData, setPanel2LayerData] = useState({
+        background: "",
+        shade: "",
+        layer1: "",
+        layer2: "",
+        layer3: "",
+        layer4: ""
+    });
+    const [panel3LayerData, setPanel3LayerData] = useState({
+        background: "",
+        shade: "",
+        layer1: "",
+        layer2: "",
+        layer3: "",
+        layer4: ""
+    });
 
-    // Used to track which panel is currently being edited so that its state can be saved before switching 
-    //const panelList = [panel1LayerData, panel2LayerData, panel3LayerData];
-    const [currentPanelIndex, setCurrentPanelIndex] = useState<number>(0);
+    // Saves the index of the current canvas being edited
+    const [currentPanelIndex, setCurrentPanelIndex] = useState(0);
 
     // References to the PaperJS Canvas Layers
     let backgroundLayerReference = useRef<paper.Layer>();
@@ -78,6 +95,20 @@ const CreateToolsCanvasPaperJS = () => {
         layer3Reference.current = new paper.Layer();
         layer4Reference.current = new paper.Layer();
         layer1Reference.current.activate();
+
+        // Set up the panelLayerDatas with blank layer data
+        let defaultLayerData = {
+            background: String(backgroundLayerReference.current.exportJSON({asString: true})),
+            shade: String(backgroundLayerReference.current.exportJSON({asString: true})),
+            layer1: String(backgroundLayerReference.current.exportJSON({asString: true})),
+            layer2: String(backgroundLayerReference.current.exportJSON({asString: true})),
+            layer3: String(backgroundLayerReference.current.exportJSON({asString: true})),
+            layer4: String(backgroundLayerReference.current.exportJSON({asString: true}))
+        };
+
+        setPanel1LayerData(defaultLayerData);
+        setPanel2LayerData(defaultLayerData);
+        setPanel3LayerData(defaultLayerData);
 
         // If previous layer data exists, set the layers to that, otherwise make new layers
         try {
@@ -163,9 +194,7 @@ const CreateToolsCanvasPaperJS = () => {
             penPath.strokeCap = 'round';
             penPath.strokeJoin = 'round';
             penPath.blendMode = 'normal';
-
-            //console.log(canvasProject.current);
-            //console.log(panelList);
+            console.log(layer1Reference.current?.exportJSON({asString: true}));
         }
     }
 
@@ -924,48 +953,86 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     const findSelectedPanelProject = () => {
-        let panelSelected = document.querySelector("input[name='panels']:checked") as HTMLInputElement;
-
-        // Save the current state of the panel being worked on
-        /*switch(currentPanelIndex)
+        // Makes sure that the layers aren't undefined
+        if(backgroundLayerReference.current && shadingLayerRef.current && layer1Reference.current && layer2Reference.current &&
+            layer3Reference.current && layer4Reference.current)
         {
-            case 0:
-                //setPanel1Project(canvasProject.current);
-                break;
-            case 1:
-                //setPanel2Project(canvasProject.current);
-                break;
-            case 2:
-                //setPanel3Project(canvasProject.current);
-                break;
-            default:
-                break;
+            let panelSelected = document.querySelector("input[name='panels']:checked") as HTMLInputElement;
+
+            // Save the current state of the panel being worked on
+            let currentPanelData = {
+                background: String(backgroundLayerReference.current?.exportJSON({asString: true})),
+                shade: String(shadingLayerRef.current?.exportJSON({asString: true})),
+                layer1: String(layer1Reference.current?.exportJSON({asString: true})),
+                layer2: String(layer2Reference.current?.exportJSON({asString: true})),
+                layer3: String(layer3Reference.current?.exportJSON({asString: true})),
+                layer4: String(layer4Reference.current?.exportJSON({asString: true}))
+            };
+
+            switch(currentPanelIndex)
+            {
+                case 0:
+                    setPanel1LayerData(currentPanelData);
+                    break;
+                case 1:
+                    setPanel2LayerData(currentPanelData);
+                    break;
+                case 2:
+                    setPanel3LayerData(currentPanelData);
+                    break;
+                default:
+                    break;
+            }
+
+            // Clear the layers
+            backgroundLayerReference.current.removeChildren();
+            shadingLayerRef.current.removeChildren();
+            layer1Reference.current.removeChildren();
+            layer2Reference.current.removeChildren();
+            layer3Reference.current.removeChildren();
+            layer4Reference.current.removeChildren();
+
+            // Change the layers to reflect the newly selected panel
+            if (Number(panelSelected?.value) == 0) 
+            {
+                // Switch the canvasProject to the newly selected panel
+                backgroundLayerReference.current.importJSON(panel1LayerData.background);
+                shadingLayerRef.current.importJSON(panel1LayerData.shade);
+                layer1Reference.current.importJSON(panel1LayerData.layer1);
+                layer2Reference.current.importJSON(panel1LayerData.layer2);
+                layer3Reference.current.importJSON(panel1LayerData.layer3);
+                layer4Reference.current.importJSON(panel1LayerData.layer4);
+
+                // Update the currentPanelIndex
+                setCurrentPanelIndex(0);
+            }
+            if (Number(panelSelected?.value) == 1) 
+            {
+                // Switch the canvasProject to the newly selected panel
+                backgroundLayerReference.current.importJSON(panel2LayerData.background);
+                shadingLayerRef.current.importJSON(panel2LayerData.shade);
+                layer1Reference.current.importJSON(panel2LayerData.layer1);
+                layer2Reference.current.importJSON(panel2LayerData.layer2);
+                layer3Reference.current.importJSON(panel2LayerData.layer3);
+                layer4Reference.current.importJSON(panel2LayerData.layer4);
+
+                // Update the currentPanelIndex
+                setCurrentPanelIndex(1);
+            }
+            if (Number(panelSelected?.value) == 2) 
+            {
+                // Switch the canvasProject to the newly selected panel
+                backgroundLayerReference.current.importJSON(panel3LayerData.background);
+                shadingLayerRef.current.importJSON(panel3LayerData.shade);
+                layer1Reference.current.importJSON(panel3LayerData.layer1);
+                layer2Reference.current.importJSON(panel3LayerData.layer2);
+                layer3Reference.current.importJSON(panel3LayerData.layer3);
+                layer4Reference.current.importJSON(panel3LayerData.layer4);
+
+                // Update the currentPanelIndex
+                setCurrentPanelIndex(2);
+            }
         }
-
-        if (Number(panelSelected?.value) == 0) 
-        {
-            // Switch the canvasProject to the newly selected panel
-            //canvasProject.current = panelList[0];
-
-            // Update the currentPanelIndex
-            setCurrentPanelIndex(0);
-        }
-        if (Number(panelSelected?.value) == 1) 
-        {
-            // Switch the canvasProject to the newly selected panel
-            //canvasProject.current = panelList[1];
-
-            // Update the currentPanelIndex
-            setCurrentPanelIndex(1);
-        }
-        if (Number(panelSelected?.value) == 2) 
-        {
-            // Switch the canvasProject to the newly selected panel
-            //canvasProject.current = panelList[2];
-
-            // Update the currentPanelIndex
-            setCurrentPanelIndex(2);
-        }*/
     }
 
     const changeLayer = () => {
@@ -1080,7 +1147,8 @@ const CreateToolsCanvasPaperJS = () => {
     }*/
 
     // Saves the project's layer image data to localStorage
-    const save = (showAlert: Boolean) => {
+    const save = (showAlert: Boolean) =>
+    {   
         let layerData = {
             background: backgroundLayerReference.current?.exportJSON(),
             shade: shadingLayerRef.current?.exportJSON(),
@@ -1332,19 +1400,19 @@ const CreateToolsCanvasPaperJS = () => {
             <div id="panelSelect" className={styles.panelSelect}>
                 <div id="panel1" className={styles.panelStyling}>
                     <label htmlFor="panel1Select" className={styles.panelLabel}>
-                        <input type="radio" name="panels" id="panel1Select" value={0} defaultChecked />
+                        <input type="radio" name="panels" id="panel1Select" value={0} defaultChecked onChange={findSelectedPanelProject}/>
                     </label>
                 </div>
 
                 <div id="panel2" className={styles.panelStyling}>
                     <label htmlFor="panel2Select" className={styles.panelLabel}>
-                        <input type="radio" name="panels" id="panel2Select" value={1} />
+                        <input type="radio" name="panels" id="panel2Select" value={1} onChange={findSelectedPanelProject}/>
                     </label>
                 </div>
 
                 <div id="panel3" className={styles.panelStyling}>
                     <label htmlFor="panel3Select" className={styles.panelLabel}>
-                        <input type="radio" name="panels" id="panel3Select" value={2} />
+                        <input type="radio" name="panels" id="panel3Select" value={2} onChange={findSelectedPanelProject}/>
                     </label>
                 </div>
             </div>
