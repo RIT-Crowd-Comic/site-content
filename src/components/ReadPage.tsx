@@ -77,7 +77,9 @@ const ReadPage = ({ id }: Props) => {
                             const parentPanelResponse = await apiCalls.getPanelByID(Number(panelSetResponse?.hook.current_panel_id));
                             if (!updateError(parentPanelResponse)) {
                                 const previousPanelSetResponse = await apiCalls.getPanelSetByID(Number(parentPanelResponse.panel_set_id));
-                                setParentPanelSet(previousPanelSetResponse)
+                                if(!updateError(previousPanelSetResponse)) {
+                                    setParentPanelSet(previousPanelSetResponse)
+                                }
                             }
                         }
                     }

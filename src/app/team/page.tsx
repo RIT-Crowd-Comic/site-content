@@ -4,13 +4,13 @@ import Filter from '@/components/Filter'
 import Card from '@/components/Card'
 // import ScrollToTop from "@/components/ScrollToTop"
 import styles from "@/styles/team.module.css"
-
+import Cards from '@/api/cards.json';
 //footer and header
 import Navbar from "../../components/NavBar"
 import Footer from "../../components/Footer"
 
 const TeamPage = () => {
-  return (
+return (
     <main className={styles.body}>
       <Navbar />
       <div className="content text-center">
@@ -20,7 +20,9 @@ const TeamPage = () => {
           <h2 className={`${styles.chapterTitle} py-1`}>Chapter 2024</h2>
           <div>
             <div className='row'>
-              <Card />
+              <div className="d-flex flex-wrap justify-content-center">
+              {Cards.cards.map(card => <Card name={card.name} role={card.role} staticPhoto={card.img} hoverPhoto={card.photo} year={card.year} link={card.linkedin}></Card>)}
+              </div>
             </div>
           </div>
         </div>
