@@ -31,7 +31,7 @@ const NavBar = () => {
               <Link className="nav-link" id="dbLink" href="/db">Database</Link>
               </li>
               <li className="nav-item">
-              <Link href="sign-in"><button className="nav-btn btn btn-outline-dark text-color-white">Sign In</button></Link>
+              <Link href="/sign-in"><button className="nav-btn btn btn-outline-dark text-color-white">Sign In</button></Link>
               </li>
             </ul>
           </div>
