@@ -49,6 +49,9 @@ const CreateToolsCanvasPaperJS = () => {
     // Router for sending the user to other pages (used in toPublish())
     const router = useRouter();
 
+    // Edit stacks for undo/redo feature
+    let [prevEdits,setPrevEdits] = useState<paper.Layer[]>([]) 
+
     // Call useEffect() in order obtain the value of the canvas after the first render
     // Pass in an empty array so that useEffect is only called once, after the initial render
     useEffect(() => {
@@ -71,6 +74,13 @@ const CreateToolsCanvasPaperJS = () => {
         layer1Reference.current = new paper.Layer();
         layer2Reference.current = new paper.Layer();
         layer1Reference.current.activate();
+
+        //Set base undo array
+        if(!prevEdits.includes(canvasProject.current.activeLayer)){
+            prevEdits.push(canvasProject.current.activeLayer)
+            setPrevEdits(prevEdits);
+            console.log(prevEdits)
+        }
 
         // If previous layer data exists, set the layers to that, otherwise make new layers
         try {
@@ -166,6 +176,21 @@ const CreateToolsCanvasPaperJS = () => {
         }
     }
 
+    // Saves edit to edit stack on mouse up 
+    penTool.current.onMouseUp = function (event: paper.ToolEvent) {
+        if(canvasProject.current && canvasProject.current.activeLayer.locked == false) {
+            prevEdits.push(canvasProject.current.activeLayer);
+            setPrevEdits(prevEdits);
+            if(prevEdits) {
+                console.log("Saved edits: " + prevEdits.length)
+            }
+            else
+            {
+                console.log("Edits not tracking")
+            }
+            
+        }
+    }
 
     // *** SHADING TOOL ***
     // This tool creates a comic-styled shading effect on a separate layer to everything else to avoid overlaps. 
@@ -1045,9 +1070,32 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     // Undoes the last stroke to the canvas
-    /*function undo() {
+    function undo() {
+        let change = prevEdits.pop()
         
-    }*/
+        if(change && backgroundLayerReference.current && layer1Reference.current && layer2Reference.current){
+            if(change.id == backgroundLayerReference.current.id){
+                //backgroundLayerReference.current = change;
+                backgroundLayerReference.current.copyContent(change)
+                backgroundLayerReference.current.activate()
+                
+            }
+            if(change.id == layer1Reference.current.id){
+                //layer1Reference.current = change;
+                layer1Reference.current.copyContent(change);
+                layer1Reference.current.activate();
+                
+            }
+            if(change.id == layer2Reference.current.id){
+                //layer2Reference.current = change;
+                layer2Reference.current.copyContent(change);
+                layer2Reference.current.activate();
+                
+            }
+        }
+        setPrevEdits(prevEdits);
+        
+    }
 
     /*function redo() {
         
@@ -1146,7 +1194,7 @@ const CreateToolsCanvasPaperJS = () => {
 
                 <div id={styles.functionButtons}>
                     <label htmlFor="undoButton" id={styles.undoLabel}>
-                        <button className="btn" id="undoButton"></button>
+                        <button className="btn" id="undoButton" onClick={undo}></button>
                     </label>
                     <label htmlFor="redoButton" id={styles.redoLabel}>
                         <button className="btn" id="redoButton"></button>
