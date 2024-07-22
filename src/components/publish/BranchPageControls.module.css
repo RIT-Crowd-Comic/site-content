@@ -71,7 +71,7 @@
     max-width:28vw;
     height: auto;
     object-fit:contain;
-    content: url(../../../public/images/buttons/static-publish-button.PNG);
+    content: url(../../../public/images/buttons/static-publish-button.png);
   }
 
 #publishBtn:hover img{
