@@ -1089,56 +1089,56 @@ const CreateToolsCanvasPaperJS = () => {
                 <div id={styles.toolRadioSelects}>
                     <div id={styles.penTool} className={styles.toolStyling}>
                         <label htmlFor="pen" id={styles.penLabel}>
-                            <input type="radio" name="tools" id="pen" value={toolStates.PEN} defaultChecked onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="pen" title="Pen Tool" value={toolStates.PEN} defaultChecked onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.eraserTool} className={styles.toolStyling}>
                         <label htmlFor="eraser" id={styles.eraserLabel}>
-                            <input type="radio" name="tools" id="eraser" value={toolStates.ERASER} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="eraser" title="Eraser Tool" value={toolStates.ERASER} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.fillTool} className={styles.toolStyling}>
                         <label htmlFor="fill" id={styles.fillLabel}>
-                            <input type="radio" name="tools" id="fill" value={toolStates.FILL} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="fill" title="Fill Tool" value={toolStates.FILL} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.shaderTool} className={styles.toolStyling}>
                         <label htmlFor="shader" id={styles.shaderLabel}>
-                            <input type="radio" name="tools" id="shader" value={toolStates.SHADER} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="shader" title="Shading/Pattern Tool" value={toolStates.SHADER} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.shapeTool} className={styles.toolStyling}>
                         <label htmlFor="shape" id={styles.shapeLabel}>
-                            <input type="radio" name="tools" id="shape" value={toolStates.SHAPE} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="shape" title="Shape Tool" value={toolStates.SHAPE} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.textTool} className={styles.toolStyling}>
                         <label htmlFor="text" id={styles.textLabel}>
-                            <input type="radio" name="tools" id="text" value={toolStates.TEXT} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="text" title="Text Tool" value={toolStates.TEXT} onChange={findSelectedTool} />
                             {/* (HALF FUNCTIONAL) */}
                         </label>
                     </div>
 
                     <div id={styles.stickerTool} className={styles.toolStyling}>
                         <label htmlFor="sticker" id={styles.stickerLabel}>
-                            <input type="radio" name="tools" id="sticker" value={toolStates.STICKER} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="sticker" title="Text Tool" value={toolStates.STICKER} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.selectTool} className={styles.toolStyling}>
                         <label htmlFor="select" id={styles.selectLabel}>
-                            <input type="radio" name="tools" id="select" value={toolStates.SELECT} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="select" title="Selection Tool" value={toolStates.SELECT} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.transformTool} className={styles.toolStyling}>
                         <label htmlFor="transform" id={styles.transformLabel}>
-                            <input type="radio" name="tools" id="transform" value={toolStates.TRANSFORM} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="transform" title="Transform Tool" value={toolStates.TRANSFORM} onChange={findSelectedTool} />
                             {/* (SEMI FUNCTIONAL) */}
                         </label>
                     </div>
@@ -1146,14 +1146,14 @@ const CreateToolsCanvasPaperJS = () => {
 
                 <div id={styles.functionButtons}>
                     <label htmlFor="undoButton" id={styles.undoLabel}>
-                        <button className="btn" id="undoButton"></button>
+                        <button className="btn" id="undoButton" title="Undo"></button>
                     </label>
                     <label htmlFor="redoButton" id={styles.redoLabel}>
-                        <button className="btn" id="redoButton"></button>
+                        <button className="btn" id="redoButton" title="Redo"></button>
                     </label>
 
                     <label htmlFor="clearButton" id={styles.clearLabel}>
-                        <button className="btn" id="clearButton" onClick={clearLayer}></button>
+                        <button className="btn" id="clearButton" title="Clear" onClick={clearLayer}></button>
                     </label>
                 </div>
 
@@ -1196,17 +1196,17 @@ const CreateToolsCanvasPaperJS = () => {
                 <div id="settings" className={styles.layerSettings}>
                     <div id="mergeSetting" className={styles.layerStyling}>
                         <label htmlFor="merge" id={styles.mergeLabel}>
-                            <input type="button" id="merge" />
+                            <input type="button" id="merge" title="Merge Layer"/>
                         </label>
                     </div>
                     <div id="layerDownSetting" className={styles.layerStyling}>
                         <label htmlFor="layerdown" id={styles.layerDownLabel}>
-                            <button type="button" id="layerdown" />
+                            <button type="button" id="layerdown" title="Push Layer Down"/>
                         </label>
                     </div>
                     <div id="layerUpSetting" className={styles.layerStyling}>
                         <label htmlFor="layerup" id={styles.layerUpLabel}>
-                            <input type="button" id="layerup" />
+                            <input type="button" id="layerup" title="Bring Layer Up"/>
                         </label>
                     </div>
                 </div>
@@ -1214,12 +1214,12 @@ const CreateToolsCanvasPaperJS = () => {
                     <div id="layer2" className={styles.layer}>
                         <div id="layer2Visibility" className={styles.visibleStyling}>
                             <label htmlFor="layer2Toggle" className={styles.visibleLabel}>
-                                <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} defaultChecked></input>
+                                <input type="checkbox" id="layer2Toggle" value="2" title="Toggle Layer Visibility" onChange={toggleLayerVisibility} defaultChecked></input>
                             </label>
                         </div>
                         <div id="layer2Lock" className={styles.lockStyling}>
                             <label htmlFor="layer2LockToggle" className={styles.lockLabel}>
-                                <input type="checkbox" id="layer2LockToggle" value="2" onChange={toggleLayerLock}></input>
+                                <input type="checkbox" id="layer2LockToggle" value="2" title="Toggle Layer Lock" onChange={toggleLayerLock}></input>
                             </label>
                         </div>
                         <div id="layer2Select" className={styles.layerSelect}>
@@ -1231,12 +1231,12 @@ const CreateToolsCanvasPaperJS = () => {
                     <div id="layer1" className={styles.layer}>
                         <div id="layer2Visibility" className={styles.visibleStyling}>
                             <label htmlFor="layer1Toggle" className={styles.visibleLabel}>
-                                <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} defaultChecked></input>
+                                <input type="checkbox" id="layer1Toggle" value="1" title="Toggle Layer Visibility" onChange={toggleLayerVisibility} defaultChecked></input>
                             </label>
                         </div>
                         <div id="layer1Lock" className={styles.lockStyling}>
                             <label htmlFor="layer1LockToggle" className={styles.lockLabel}>
-                                <input type="checkbox" id="layer1LockToggle" value="2" onChange={toggleLayerLock}></input>
+                                <input type="checkbox" id="layer1LockToggle" value="2" title="Toggle Layer Lock" onChange={toggleLayerLock}></input>
                             </label>
                         </div>
                         <div id="layer1Select" className={styles.layerSelect}>
@@ -1249,12 +1249,12 @@ const CreateToolsCanvasPaperJS = () => {
                     <div id="backgroundLayer" className={styles.layer}>
                         <div id="backgroundLayerVisibility" className={styles.visibleStyling}>
                             <label htmlFor="backgroundToggle" className={styles.visibleLabel}>
-                                <input type="checkbox" id="backgroundToggle" value="0" onChange={toggleLayerVisibility} defaultChecked></input>
+                                <input type="checkbox" id="backgroundToggle" value="0" title="Toggle Layer Visibility" onChange={toggleLayerVisibility} defaultChecked></input>
                             </label>
                         </div>
                         <div id="backgroundLayerLock" className={styles.lockStyling}>
                             <label htmlFor="backgroundLayerLockToggle" className={styles.lockLabel}>
-                                <input type="checkbox" id="backgroundLayerLockToggle" value="0" onChange={toggleLayerLock}></input>
+                                <input type="checkbox" id="backgroundLayerLockToggle" value="0" title="Toggle Layer Lock" onChange={toggleLayerLock}></input>
                             </label>
                         </div>
                         <div id="backgroundLayerSelect" className={styles.layerSelect}>
