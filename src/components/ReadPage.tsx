@@ -2,17 +2,11 @@
 'use client';
 import styles from "@/styles/read.module.css";
 import IconToggleButton from "@/components/ToggleButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ComicPanels from "@/components/ComicPanels";
-
-//imported base trunk panels as static images
-/* -----TODO-----
-These images must query on initial load the panels of the trunk. This will probably entail a getPanelSet call to call the trunk panel set as a whole and then insert the panel images in their respective order.
-*/
-const firstPanelImage = "/comic-panels/first_panel.png"; //<--- Panel 1
-const secondPanelImage = "/comic-panels/second_panel.png"; //<--- Panel 2
-const thirdPanelImage = "/comic-panels/third_panel.png"; //<--- Panel 3 
-
+import * as apiCalls from "../api/apiCalls"
+import { useRouter, useSearchParams } from 'next/navigation'
+import { parseEnv } from "util";
 //import icons and background
 const backIcon = "/images/back-button-pressed.png"
 const toggleLayoutHorizIcon = "/images/panel-view-button-horizontal-pressed.png"
@@ -21,19 +15,100 @@ const toggleHooksOn = "/images/view-branch-button-on-pressed.png"
 const toggleHooksOff = "/images/view-branch-button-off-pressed.png"
 
 //set the base trunks to display by default on read
-const ReadPage = () => {
-    // const [layout,setLayout] = useState("rowPanels");
-    const [layout,setLayout] = useState(`${styles.rowPanels}`);
-    const [hooks,setHooks] = useState("baseHooks");
-    
+interface PanelSet {
+    id: number,
+    author_id: string,
+    panels: Panel[],
+    hook: Hook;
+}
+interface Panel {
+    id: number,
+    index: number,
+    imageStr: string,
+    hook: Hook
+}
+interface Hook {
+    current_panel_id: number,
+    id: number,
+
+}
+interface Props {
+    id: number
+}
+
+interface ImageUrl {
+    url: string
+}
+//todo need to place hook in right position
+const ReadPage = ({ id }: Props) => {
+    const router = useRouter()
+    const searchParams = useSearchParams()
+    const [layout, setLayout] = useState(`${styles.rowPanels}`);
+    const [hooks, setHooks] = useState("baseHooks");
+    const [isLoading, setIsLoading] = useState(false);
+    const [panelSet, setPanelSet] = useState<PanelSet>();
+    const [parentPanelSet, setParentPanelSet] = useState<PanelSet>();
+    const [error, setError] = useState<string>("");
+    const [actualHooks, setActualHooks] = useState([])
+    const [images, setImages] = useState([])
+    useEffect(() => {
+        async function fetchData() {
+            setIsLoading(true);
+            const panelSetResponse = await apiCalls.getPanelSetByID(id);
+            if (!updateError(panelSetResponse)) {
+                const panels = panelSetResponse.panels.map((p: Panel) => p as Panel);
+                setPanelSet({
+                    id: panelSetResponse.id,
+                    author_id: panelSetResponse.author_id,
+                    panels: panels,
+                    hook: panelSetResponse.hook
+                });
+                const imageUrlsResponse = await apiCalls.getAllImageUrlsByPanelSetId(id);
+                if(!updateError(imageUrlsResponse)) {
+                    setImages((imageUrlsResponse).map((i: ImageUrl) => i.url))
+                    const hookResponses = await apiCalls.getHooksFromPanelSetById(panelSetResponse.id);
+                    if (!updateError(hookResponses)) {
+                        setActualHooks(hookResponses);
+                        //this is a trunk if true
+                        if (panelSetResponse.hook === null) {
+                            setParentPanelSet(undefined);
+                        }
+                        else {
+                            const parentPanelResponse = await apiCalls.getPanelByID(Number(panelSetResponse?.hook.current_panel_id));
+                            if (!updateError(parentPanelResponse)) {
+                                const previousPanelSetResponse = await apiCalls.getPanelSetByID(Number(parentPanelResponse.panel_set_id));
+                                setParentPanelSet(previousPanelSetResponse)
+                            }
+                        }
+                    }
+                }
+                
+            }
+            setIsLoading(false);
+        }
+        fetchData();
+    }, [searchParams]);
+
+    //? may want to change parameter name
+    function updateError(foo: object) {
+        const bool = foo instanceof Error;
+        if(bool) {
+            setError(foo.message);
+        }
+        return bool;
+    }
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+    if (error !== "") {
+        return <div>{error}</div>;
+    }
     return (<>
-        
-        <ComicPanels setting={layout} hook_state={hooks} image_1={firstPanelImage} image_2={secondPanelImage} image_3={thirdPanelImage}/>
-        <div className={`${styles.controlBar}`}>
-                <button id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}></img></button>
-                <IconToggleButton setting={hooks} setSetting={setHooks} state_1="baseHooks" state_2="popHooks" buttonId="hooksToggle" source_1={toggleHooksOff} source_2={toggleHooksOn}/>
-                <IconToggleButton setting={layout} setSetting={setLayout} state_1={`${styles.rowPanels}`} state_2={`${styles.columnPanels}`} buttonId="layoutToggle" source_1={toggleLayoutHorizIcon} source_2={toggleLayoutVertIcon}/>
-                {/* <IconToggleButton setting={layout} setSetting={setLayout} state_1="rowPanels" state_2="columnPanels" buttonId="layoutToggle" source_1={toggleLayoutHorizIcon} source_2={toggleLayoutVertIcon}/> */}
+        <ComicPanels setting={layout} hook_state={hooks} images={images} actualHooks={actualHooks} currentId={id} router={router} />
+        <div className={`${styles.controlBar}`} >
+            <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet !== undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}></img></button>
+            <IconToggleButton setting={hooks} setSetting={setHooks} state_1="baseHooks" state_2="popHooks" buttonId="hooksToggle" source_1={toggleHooksOff} source_2={toggleHooksOn} />
+            <IconToggleButton setting={layout} setSetting={setLayout} state_1={`${styles.rowPanels}`} state_2={`${styles.columnPanels}`} buttonId="layoutToggle" source_1={toggleLayoutHorizIcon} source_2={toggleLayoutVertIcon} />
         </div>
     </>);
 }
