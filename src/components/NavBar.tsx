@@ -28,7 +28,7 @@ const NavBar = () => {
   const handleSignOut = async () => {
     await logout();
     setIsSignedIn(false);
-    window.location.href = '/';
+    window.location.href = '';
   }
   
   return (
