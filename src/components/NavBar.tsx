@@ -22,16 +22,16 @@ const NavBar = () => {
                 <Link className="nav-link" id="homeLink" aria-current="page" href="/">Home</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" id="teamLink" href="team">Team</Link>
+                <Link className="nav-link" id="teamLink" href="/team">Team</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" id="comicLink" href="comic/browse">Browse Comics</Link>
+                <Link className="nav-link" id="comicLink" href="/comic/browse">Browse Comics</Link>
               </li>
               <li className="nav-item">
-              <Link className="nav-link" id="dbLink" href="../db">Database</Link>
+              <Link className="nav-link" id="dbLink" href="/db">Database</Link>
               </li>
               <li className="nav-item">
-              <Link href="sign-in"><button className="nav-btn btn btn-outline-dark text-color-white">Sign In</button></Link>
+              <Link href="/sign-in"><button className="nav-btn btn btn-outline-dark text-color-white">Sign In</button></Link>
               </li>
             </ul>
           </div>
