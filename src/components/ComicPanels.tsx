@@ -1,7 +1,7 @@
 "use client";
 import styles from "@/styles/read.module.css";
 import Panel from './publish/Panel';
-import { Hook, Panel as IPanel } from './interfaces';
+import { CreateHook, Hook, Panel as IPanel } from './interfaces';
 interface Panel {
     id: number,
     index: number,
@@ -28,7 +28,7 @@ interface Props {
 
     NOTE - The current buttons in the html are hard coded and should be removed once the placeButtons() method is created. The positions for the buttons are also currently set in "read.css"
 */
-const ComicPanels = ({ setting, hook_state, panels, currentId, router }: Props) => {
+const ComicPanels = ({ setting, hook_state, panels }: Props) => {
     const hidden = hook_state === 'hidden' ? true : false;
 
     //? Better method name
@@ -39,13 +39,14 @@ const ComicPanels = ({ setting, hook_state, panels, currentId, router }: Props) 
         return '?';
     }
 
-    function hookLink(hook: Hook) {
+    function hookLink(hook: Hook | CreateHook) {
         if (hook.next_panel_set_id) {
             return `/comic?id=${hook.next_panel_set_id}`;
         }
         return `/comic/create`;
     }
-
+    if (!panels || panels.length === 0) return <div id={`${styles.comicPanels}`} className={`${setting}`}></div>;
+    
     return (
         <div id={`${styles.comicPanels}`} className={`${setting}`}>
             <div className={`${styles.firstPanel}`}>

@@ -1,5 +1,5 @@
 const baseUrl = 'http://localhost:4000';
-import { PanelSet } from "../components/interfaces";
+import { CreatePanelSet, PanelSet } from "../components/interfaces";
 
 const getAPICall = async (url: string) => {
     return await fetch(`${baseUrl}${url}`, {
@@ -417,7 +417,7 @@ const fetchImage = async(imageUrl : string) =>{
     });
 }
 
-const publishHandler = async(panelSet : PanelSet, currentUser : string) =>{
+const publishHandler = async(panelSet : CreatePanelSet, currentUser : string) =>{
         //get the image files
         const image1 = await fetchImage(panelSet.panels[0].imgSrc) as File | Error;
         if(image1 instanceof Error) return new Error(`There was an error getting the 1st image: ${image1.message}`);

@@ -1,6 +1,6 @@
 import styles from './Panel.module.css'
 import { SyntheticEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Hook } from '../interfaces';
+import { CreateHook, Hook } from '../interfaces';
 import { createSVGPath } from '@/utils';
 import Image from 'next/image';
 
@@ -39,14 +39,14 @@ const Panel = ({
     hidden: hideUntilHover,
 }: {
     imgSrc: string,
-    hooks: Hook[],
-    setHooks?: (hooks: Hook[], panelIndex: number) => void
+    hooks: (Hook | CreateHook)[],
+    setHooks?: (hooks: (Hook | CreateHook)[], panelIndex: number) => void
     addingHook?: boolean,
     confirmHook?: number,
     setConfirmHook?: (panelIndex: number | undefined) => void,
     selectedHook?: { panelIndex: number, hookIndex: number },
     setSelectedHook?: (hookInfo: { panelIndex: number, hookIndex: number } | undefined) => void,
-    onHookClick?: (hook: Hook, hookIndex: number) => void,
+    onHookClick?: (hook: Hook | CreateHook, hookIndex: number) => void,
     hidden?: boolean
     // active?: boolean
 }) => {
@@ -91,14 +91,13 @@ const Panel = ({
     // add a new hook
     useEffect(() => {
         if (confirmHook != undefined && setHooks && setConfirmHook) {
-
+            console.log('current hook index', confirmHook);
             // prevent adding un-clickable hooks
             if (vertices.length >= 3) {
                 setHooks(
                     [
                         ...hooks,
                         {
-                            id: -1,
                             current_panel_index: confirmHook, //set to zero, will get reset before publish
                             points: vertices
                         }
@@ -178,8 +177,6 @@ const Panel = ({
 
     const editingStyle = addingHook ? styles.editing : '';
     const displayOnLoad = { display: scale == undefined ? 'none' : 'initial' };
-
-   
     return (
         <div className={styles.branchEditor}>
             {/* <img
@@ -202,14 +199,16 @@ const Panel = ({
                 alt="comic panel"
                 width="500"
                 height="500"
+                unoptimized={true}
             />
 
             <svg className={`${styles.hookSvg} ${editingStyle}`} style={displayOnLoad}>
                 <g transform={`scale(${1 / (scale?.x ?? 1)} ${1 / (scale?.y ?? 1)})`}>
                     {/* EXISTING HOOKS */}
-                    {hooks.map((hook, i) =>
+                    {
+                    hooks.map((hook, i) => 
                         <path
-                            d={createSVGPath(hook.points)}
+                            d={createSVGPath( (hook as CreateHook).points ?? (hook as Hook).position.map(p => [p.x, p.y]) ?? '')}
                             fill={(selectedHook?.hookIndex ?? -1) === i ? HIGHLIGHT_COLOR : FILL_COLOR}
                             onClick={() => { if (onHookClick) onHookClick(hook, i) }}
                             className={`${styles.hookPath} ${hideUntilHover ? styles.hidden : ''}`}

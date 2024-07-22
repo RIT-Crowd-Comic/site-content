@@ -2,7 +2,7 @@ import styles from './BranchPage.module.css';
 
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Hook, emptyPanelSet, PanelSet } from "../interfaces";
+import { CreateHook, emptyPanelSet, CreatePanelSet } from "../interfaces";
 import Panel from './Panel';
 import BranchPageControls from './BranchPageControls';
 import { publishHandler } from '../../api/apiCalls';
@@ -13,7 +13,7 @@ const BranchPage = () => {
     const [addingHook, setAddingHook] = useState(false);
     const [confirmHook, setConfirmHook] = useState<number>();
     const [selectedHook, setSelectedHook] = useState<{ panelIndex: number, hookIndex: number }>();
-    const [panelSet, setPanelSet] = useState<PanelSet>({
+    const [panelSet, setPanelSet] = useState<CreatePanelSet>({
         id: 0,
         author_id: '',
         panels: emptyPanelSet()
@@ -21,7 +21,7 @@ const BranchPage = () => {
     const [currentUser, setUser] = useState('');
     const [activePanel, setActivePanel] = useState(0);
     const activePanelHooks = () => panelSet.panels[activePanel].hooks;
-    const setActivePanelHooks = (hooks: Hook[], panelIndex: number) => {
+    const setActivePanelHooks = (hooks: CreateHook[], panelIndex: number) => {
         const panels = panelSet.panels;
         panels[panelIndex].hooks = hooks;
         hooks.map(hook => {
@@ -157,7 +157,7 @@ const BranchPage = () => {
                             <Panel
                                 imgSrc={imageLinks[activePanel]}
                                 hooks={activePanelHooks()}
-                                setHooks={setActivePanelHooks}
+                                setHooks={(hooks, index) => setActivePanelHooks(hooks as CreateHook[], index)}
                                 addingHook={addingHook}
                                 confirmHook={confirmHook}
                                 selectedHook={selectedHook}
