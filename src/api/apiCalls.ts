@@ -1,5 +1,6 @@
 const baseUrl = 'http://localhost:4000';
 import { CreatePanelSet } from "../components/interfaces";
+import { getSessionCookie } from "@/app/login/loginUtils";
 
 const getAPICall = async (url: string) => {
     return await fetch(`${baseUrl}${url}`, {
@@ -17,10 +18,12 @@ const getAPICall = async (url: string) => {
 };
 
 const postAPICall = async (url: string, body: object) => {
+    const sessionObj = await getSessionCookie();
+    const session = JSON.stringify(sessionObj);
     return await fetch(`${baseUrl}${url}`, {
         body: JSON.stringify(body),
         method: 'POST',
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json",  "Session-Cookie": `${session}` },
     }).then(response => {
         return response.json();
 
@@ -33,9 +36,12 @@ const postAPICall = async (url: string, body: object) => {
 }
 
 const postAPICallFormData = async (url: string, formData: FormData) => {
+    const sessionObj = await getSessionCookie();
+    const session = JSON.stringify(sessionObj);
     return await fetch(`${baseUrl}${url}`, {
-      method: 'POST',
       body: formData,
+      headers:{ "Session-Cookie": `${session}`},
+      method: 'POST',
     })
     .then(response =>{return response.json()})
     .then(json => {
