@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react';
 import {getUserBySession} from "@/api/apiCalls";
-import {logout, decrypt} from "@/app/login/loginUtils";
+import {logout, decrypt, getSessionCookie} from "@/app/login/loginUtils";
 import {getCookie, hasCookie, setCookie} from 'cookies-next';
 
 const NavBar = () => {
@@ -12,17 +12,15 @@ const NavBar = () => {
 
   useEffect(() => {
     const checkUserSession = async () => {
-
-      setCookie('session', 'yep');
-      const sessionId = hasCookie('session');
-      console.log(sessionId);
-      // if (sessionId) {
-      //   const session_id = sessionId.split('=')[1];
-      //   const user = await getUserBySession(await decrypt(session_id));
-      //   if (user && !user.message) {
-      //     setIsSignedIn(true);
-      //   }
-      // }
+      const session = await getSessionCookie();
+      const session_id = session?.value;
+      if (session_id) {
+        const parsedCookie = await decrypt(session_id);
+        const user = await getUserBySession(parsedCookie.sessionId);
+        if (user && !user.message) {
+          setIsSignedIn(true);
+        }
+      }
     }
 
     checkUserSession();
