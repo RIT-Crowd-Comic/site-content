@@ -29,11 +29,7 @@ export function SignUpForm() {
             {/* FORM */}
             <form id={styles.loginForm} className="needs-validation" noValidate action={async (formData) => {
                     const response = await registerAction(formData);
-                    if(response != 'Success') {
-                        errorState(response);
-                        return;
-                    }
-                    window.history.go(-1);
+                    if(response != 'Success') errorState(response);
                 }}>
                 <h1 className={styles.h1}>Sign Up</h1>
             {/* USERNAME */}
@@ -91,7 +87,7 @@ export function SignUpForm() {
             <button type="submit" id={styles.loginButton} className={`btn btn-primary`}>Sign Up</button>
 
             {/* LOGIN */}
-            <Link href="sign-in" replace={true}><button type="button" id={styles.registerButton} className={`btn btn-primary`}>Sign In</button></Link>
+            <Link href="sign-in"><button type="button" id={styles.registerButton} className={`btn btn-primary`}>Sign In</button></Link>
             {!!message && <p>{message}</p>}
             </form>
         </section>

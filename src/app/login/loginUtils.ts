@@ -84,7 +84,7 @@ const login = async (email: string, password: string) => {
     //If user is an error, return that error and don't redirect
     if(!user || user.message) return user.message;
     await saveSession(user.id);
-    return 'Success';
+    redirect('/comic/browse/');
 };
 
 /**
@@ -100,7 +100,8 @@ const register = async (email: string, displayName: string, password: string) =>
     if(!user || user instanceof Error) return user;
     //Successful sign-up wil sign-in the user
     await login(email, password);
-    return 'Success';
+    //If login did not redirect to comic,something went wrong so return an error
+    return new Error('Login Failed');
 };
 
 /**
