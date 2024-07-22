@@ -63,10 +63,10 @@ const updateSession = async (session_id: string) => {
  */
 const authenticateSession = async () => {
     const session = cookies().get('session');
-    if(!session) redirect('/sign-in'); //TODO save where redirecting from
+    if(!session) redirect('/sign-in');
     const session_id = await decrypt(session.value);
     const user = await getUserBySession(session_id);
-    if(!user || user instanceof Error) redirect('/sign-in'); //TODO save where redirecting from
+    if(!user || user instanceof Error) redirect('/sign-in');
     //Refresh the session expiry
     await updateSession(session_id);
     return user;
