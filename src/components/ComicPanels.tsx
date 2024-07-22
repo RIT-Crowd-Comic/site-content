@@ -2,6 +2,7 @@
 import styles from "@/styles/read.module.css";
 import Panel from './publish/Panel';
 import { CreateHook, Hook, Panel as IPanel } from './interfaces';
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 interface Panel {
     id: number,
     index: number,
@@ -14,7 +15,7 @@ interface Props {
     // actualHooks: any[],
     panels: IPanel[],
     currentId: number,
-    router: any
+    router: AppRouterInstance
 }
 
 //This is the actual comic panel element which already has the image elements provided. With some changes we could potentially just query the panel set here 
@@ -28,7 +29,7 @@ interface Props {
 
     NOTE - The current buttons in the html are hard coded and should be removed once the placeButtons() method is created. The positions for the buttons are also currently set in "read.css"
 */
-const ComicPanels = ({ setting, hook_state, panels }: Props) => {
+const ComicPanels = ({ setting, hook_state, panels, router }: Props) => {
     const hidden = hook_state === 'hidden' ? true : false;
     let bodyHeight = ""
     if (setting.includes("row")) {
@@ -47,9 +48,9 @@ const ComicPanels = ({ setting, hook_state, panels }: Props) => {
 
     function hookLink(hook: Hook | CreateHook) {
         if (hook.next_panel_set_id) {
-            return `/comic?id=${hook.next_panel_set_id}`;
+            router.push(`/comic?id=${hook.next_panel_set_id}`);
         }
-        return `/comic/create`;
+        router.push(`/comic/create`);
     }
     if (!panels || panels.length === 0) return <div id={`${styles.comicPanels}`} className={`${setting}`}></div>;
 
