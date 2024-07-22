@@ -1,0 +1,177 @@
+.buttonContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+    margin: 20px;
+    text-align: center;
+    color: white;
+}
+
+.buttonContainer p {
+    font-size: 0.75rem;
+}
+
+.buttonContainer button:not([disabled]):hover {
+    background-color: var(--light-blue);
+    color: white;
+}
+
+.buttonContainer>div {
+    background-color: rgba(23, 23, 23, 0.85);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 10px;
+}
+
+.branchHooks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    /* font-size: 24px; */
+}
+
+#branchHookControls {
+    display: flex;
+    margin-bottom: 10px;
+    gap: 10px;
+    
+}
+
+.branchHookText p {
+    margin: 0;
+}
+
+.branchControlBtn {
+    font-size: 1.1rem;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 15px;
+    background-color: #929292;
+    color: black;
+}
+
+.branchControlBtn.selectedHook {
+    background-color: var(--light-blue);
+}
+
+#publishBtn {
+    font-size: 3rem;
+    padding: 0px;
+    background-color: transparent;
+    color: black;
+    border-radius: 20px;
+    border:none;
+    width:28vw;
+    height:15vw;
+}
+
+#publishBtn img{
+    max-width:28vw;
+    height: auto;
+    object-fit:contain;
+    content: url(../../../public/images/buttons/static-publish-button.png);
+  }
+
+#publishBtn:hover img{
+    /* background-color: var(--light-red);
+    color: var(--yellow); */
+    /* transform: scale(1.5) translate(-.25, -.75); */
+    content: url(../../../public/images/GIFs/publish-button-rotating.gif);
+}
+
+button.branchControlBtn:hover {
+    background-color: darkgray;
+}
+
+.landscape {
+    display: none;
+}
+
+.landscape button {
+    padding: 0;
+}
+
+.portrait {
+    display: initial;
+}
+
+@media only screen and (orientation: landscape) and (max-width: 800px) {
+    .landscape {
+        display: initial;
+    }
+
+    .portrait {
+        display: none;
+    }
+
+    .buttonContainer {
+        width: 60px;
+        margin: 0;
+    }
+
+    .buttonContainer>div {
+        padding: 0px;
+    }
+
+    #branchHookControls {
+        flex-direction: column;
+        width: 40px;
+        border-radius: 40px;
+        gap: 10px;
+        padding: 10px 0;
+    }
+
+    .branchControlBtn {
+        width: 30px;
+        height: 30px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .branchControlBtn::after {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        left: 0%;
+        top: 45%;
+        /* right: 50%; */
+        position: absolute;
+        color: white;
+        line-height: 0;
+    }
+
+    #addBranchHook::after {
+        content: '＋';
+    }
+
+    #removeBranchHook::after {
+        content: '–';
+    }
+
+    #confirmBranchHook::after {
+        content: '✓';
+    }
+
+    #cancelBranchHook::after {
+        content: '⤬';
+    }
+}
+@media only screen and (orientation: portrait){
+ 
+    #publishBtn{
+        width:100%;
+        height:80%;
+        max-height:30vw;
+    }
+    #publishBtn img{
+        max-width:100%;
+        max-height:100%;
+    }
+    .buttonContainer{
+        height:70%;
+        max-height:40vh;
+        width:70vw;
+    }
+}
