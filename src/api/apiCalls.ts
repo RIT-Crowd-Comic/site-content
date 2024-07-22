@@ -405,7 +405,6 @@ const getSession = async (session_id: string) => {
  * @returns 
  */
 const getUserBySession = async (session_id: string) => {
-    console.log(session_id);
     const api_response = await getAPICall(`/session/${session_id}/user`);
     if(api_response.message) return Error(api_response);
     else return api_response;

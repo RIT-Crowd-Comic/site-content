@@ -63,6 +63,7 @@ const updateSession = async (session_id: string) => {
  */
 const authenticateSession = async () => {
     const session = cookies().get('session');
+    console.log(`Auth Session: ${session}`);
     if(!session) redirect('/sign-in');
     const session_id = await decrypt(session.value);
     const user = await getUserBySession(session_id);

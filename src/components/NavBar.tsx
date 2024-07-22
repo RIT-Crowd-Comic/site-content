@@ -18,8 +18,12 @@ const NavBar = () => {
         const user = await getUserBySession(parsedCookie.sessionId);
         if (user && !user.message) {
           setIsSignedIn(true);
+          return;
         }
       }
+      //If not signed in, redirect from user locked pages
+      const url = window.location.href;
+      if((url.includes('/create') || url.includes('/publish'))) window.location.href = '/';
     }
 
     checkUserSession();
