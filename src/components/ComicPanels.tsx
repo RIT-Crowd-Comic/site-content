@@ -3,11 +3,7 @@ import styles from "@/styles/read.module.css";
 import Panel from './publish/Panel';
 import { CreateHook, Hook, Panel as IPanel } from './interfaces';
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-interface Panel {
-    id: number,
-    index: number,
-    imageStr: string
-}
+
 interface Props {
     setting: string,
     hook_state: string,
