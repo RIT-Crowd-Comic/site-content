@@ -1,5 +1,5 @@
 'use client'
-import {PaperOffset} from 'paperjs-offset';
+import { PaperOffset } from 'paperjs-offset';
 import { useEffect, useRef, useState } from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
 import paper from 'paper';
@@ -73,13 +73,11 @@ const CreateToolsCanvasPaperJS = () => {
         layer1Reference.current.activate();
 
         // If previous layer data exists, set the layers to that, otherwise make new layers
-        try
-        {
+        try {
             let jsonData = localStorage.getItem("panel-1-layerData");
             //let jsonImageData = localStorage.getItem("image-1");
 
-            if(jsonData)
-            {
+            if (jsonData) {
                 let layerData = JSON.parse(jsonData);
                 backgroundLayerReference.current.importJSON(layerData.background);
                 layer1Reference.current.importJSON(layerData.layer1);
@@ -92,8 +90,7 @@ const CreateToolsCanvasPaperJS = () => {
                 console.log(imageData);
             }*/
         }
-        catch
-        {
+        catch {
 
             console.log("error");
         }
@@ -170,10 +167,10 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
 
-     // *** SHADING TOOL ***
-     // This tool creates a comic-styled shading effect on a separate layer to everything else to avoid overlaps. 
-     const [shadeOptionsEnabled, setShadeOptionsEnabled] = useState<boolean>(false);
-     const [shadeSize, setShadeSize] = useState<number>(10);
+    // *** SHADING TOOL ***
+    // This tool creates a comic-styled shading effect on a separate layer to everything else to avoid overlaps. 
+    const [shadeOptionsEnabled, setShadeOptionsEnabled] = useState<boolean>(false);
+    const [shadeSize, setShadeSize] = useState<number>(10);
 
     const shadingTool = useRef<paper.Tool>(new paper.Tool());
     //reference to the image used for shading
@@ -181,39 +178,35 @@ const CreateToolsCanvasPaperJS = () => {
     let clipPath = useRef<paper.Path>(null).current;
 
     //mouseDown: starts a preview path
-    shadingTool.current.onMouseDown = function()
-    {
+    shadingTool.current.onMouseDown = function () {
         //switches to dedicated shading layer
         ShadingLayerRef.current?.activate;
-       
-        
+
+
         clipPath = new paper.Path();
         clipPath.strokeColor = new paper.Color('pink');
         clipPath.strokeWidth = shadeSize;
         clipPath.strokeCap = 'round';
-       
-          
+
+
     }
 
     //continues drawing preview path
-    shadingTool.current.onMouseDrag = function(event: paper.ToolEvent)
-    {
-       clipPath?.add(event.point);
+    shadingTool.current.onMouseDrag = function (event: paper.ToolEvent) {
+        clipPath?.add(event.point);
     }
-    
+
     // mouseUp: renders path on shading layer
-    shadingTool.current.onMouseUp = function(event: paper.ToolEvent)
-    {
+    shadingTool.current.onMouseUp = function (event: paper.ToolEvent) {
         var temp;
-        
+
         var eRadius = (shadeSize * view.pixelRatio) / 4;
         var deleteShape;
 
-        if (clipPath) { 
-            temp = new paper.CompoundPath(clipPath); 
+        if (clipPath) {
+            temp = new paper.CompoundPath(clipPath);
         }
-        else
-        {
+        else {
             temp = new paper.CompoundPath(new paper.Path.Circle(event.point, eRadius * 2));
         }
 
@@ -222,15 +215,13 @@ const CreateToolsCanvasPaperJS = () => {
         backgroundRaster.position = view.center;
 
         //if there is no clip path create a tiny dot so it doesn't just shade the entire canvas
-        if (clipPath?.length == undefined || clipPath?.length <= 1 )
-        {
+        if (clipPath?.length == undefined || clipPath?.length <= 1) {
             deleteShape = new paper.Path.Circle(event.point, eRadius * 2);
         }
-        else
-        {
+        else {
             //otherwise, create offset shape to use as a mask
             temp = PaperOffset.offsetStroke(temp, -eRadius);
-            deleteShape = PaperOffset.offsetStroke(temp, eRadius, {cap : 'round'});
+            deleteShape = PaperOffset.offsetStroke(temp, eRadius, { cap: 'round' });
             //deleteShape.insert = false;
         }
 
@@ -239,7 +230,7 @@ const CreateToolsCanvasPaperJS = () => {
             children: [deleteShape, backgroundRaster],
             clipped: true,
             blendMode: 'source-over'
-          });
+        });
 
         //remove preview clip path
         clipPath?.remove;
@@ -394,27 +385,27 @@ const CreateToolsCanvasPaperJS = () => {
             shapePath = new paper.Path.Ellipse(new paper.Rectangle(startPoint, endPoint));
         }
         else if (shapeSelected == shapeStates.TRIANGLE) {
-            const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
-            const radius = Math.abs(centerPoint.x-startPoint.x);
-            shapePath = new paper.Path.RegularPolygon(centerPoint,3,radius);
+            const centerPoint = new paper.Point((startPoint.x + endPoint.x) / 2, (startPoint.y + endPoint.y) / 2)
+            const radius = Math.abs(centerPoint.x - startPoint.x);
+            shapePath = new paper.Path.RegularPolygon(centerPoint, 3, radius);
         }
         else if (shapeSelected == shapeStates.HEXAGON) {
-            const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
-            shapePath = new paper.Path.RegularPolygon(centerPoint,6,centerPoint.x-startPoint.x);
+            const centerPoint = new paper.Point((startPoint.x + endPoint.x) / 2, (startPoint.y + endPoint.y) / 2)
+            shapePath = new paper.Path.RegularPolygon(centerPoint, 6, centerPoint.x - startPoint.x);
             // Rotated so that the bottom edge is parallel with the bottom of the screen
             shapePath.rotate(30);
         }
         else if (shapeSelected == shapeStates.OCTAGON) {
-            const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
-            const radius = Math.abs(centerPoint.x-startPoint.x);
-            shapePath = new paper.Path.RegularPolygon(centerPoint,8,radius);
+            const centerPoint = new paper.Point((startPoint.x + endPoint.x) / 2, (startPoint.y + endPoint.y) / 2)
+            const radius = Math.abs(centerPoint.x - startPoint.x);
+            shapePath = new paper.Path.RegularPolygon(centerPoint, 8, radius);
             // Rotated so that the bottom edge is parallel with the bottom of the screen
             //shapePath.rotate(30);
         }
         else if (shapeSelected == shapeStates.STAR) {
-            const centerPoint = new paper.Point((startPoint.x + endPoint.x)/2 , (startPoint.y + endPoint.y)/2)
-            const radius = Math.abs(centerPoint.x-startPoint.x);
-            shapePath = new paper.Path.Star(centerPoint,5,radius, (radius)/2);
+            const centerPoint = new paper.Point((startPoint.x + endPoint.x) / 2, (startPoint.y + endPoint.y) / 2)
+            const radius = Math.abs(centerPoint.x - startPoint.x);
+            shapePath = new paper.Path.Star(centerPoint, 5, radius, (radius) / 2);
         }
 
         // Set the path's style to the user chosen style
@@ -492,7 +483,7 @@ const CreateToolsCanvasPaperJS = () => {
 
     // The Text Tool:
     const textTool = useRef<paper.Tool>(new paper.Tool());
-    let textPath : paper.PointText;
+    let textPath: paper.PointText;
 
     //let textToolTyperReference = useRef<HTMLTextAreaElement | null>(null);
 
@@ -501,10 +492,9 @@ const CreateToolsCanvasPaperJS = () => {
 
     // Point to draw the text starting at
 
-  
-    textTool.current.onMouseDown = function(event: paper.ToolEvent) {
-        if(!isWriting)
-        {
+
+    textTool.current.onMouseDown = function (event: paper.ToolEvent) {
+        if (!isWriting) {
             // Start the process of writing
             setIsWriting(true);
 
@@ -630,6 +620,7 @@ const CreateToolsCanvasPaperJS = () => {
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             if (areaSelected) {
                 canvasProject.current.activeLayer.lastChild.remove();
+                setSelectionInfo([]);
             }
             setEndSelectPoint(event.point);
             setSelectMouseDragged(true);
@@ -643,15 +634,16 @@ const CreateToolsCanvasPaperJS = () => {
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             if (selectMouseDragged) {
                 //only gets selected area if layer is not empty
-                if (!canvasProject.current.activeLayer.isEmpty()) {
+                if (canvasProject.current.activeLayer.children.length >= 2) {
                     let rasterLT = rasterInfo[0].bounds.topLeft;
                     drawSelectedArea();
                     setSelectionInfo(prevState => [...prevState, new paper.Rectangle(startSelectPoint, endSelectPoint)]);
 
                     //translates canvas coordinates to pixel coordinates (for getting subraster in transform)
-                    let pixelStartPoint = startSelectPoint.subtract(rasterLT).multiply(2);
-                    let pixelEndPoint = endSelectPoint.subtract(rasterLT).multiply(2);
+                    let pixelStartPoint = startSelectPoint.subtract(rasterLT).multiply(canvasProject.current.view.pixelRatio);
+                    let pixelEndPoint = endSelectPoint.subtract(rasterLT).multiply(canvasProject.current.view.pixelRatio);
 
+                    
                     //gets the selected area of the rasterized canvas
                     let selectedArea = new paper.Rectangle(pixelStartPoint, pixelEndPoint);
                     setSelectionInfo(prevState => [...prevState, selectedArea]);
@@ -694,8 +686,7 @@ const CreateToolsCanvasPaperJS = () => {
 
     //erases selected area
     function clearAreaSelected(selection: paper.Path.Rectangle) {
-        if(canvasProject.current)
-        {
+        if (canvasProject.current) {
             let eraserSelection = selection;
             eraserSelection.fillColor = new paper.Color("black");
 
@@ -732,18 +723,18 @@ const CreateToolsCanvasPaperJS = () => {
                 let tempTransformAreaBounds = new paper.Path.Rectangle(selectionInfo[0]);
                 setTransformInfo([tempTransformAreaBounds]);
                 let tempTransformSelectedArea = rasterInfo[0].getSubRaster(selectionInfo[1]);
-                
+
                 clearAreaSelected(tempTransformAreaBounds);
 
                 //readds selected area to layer
                 setRasterInfo(prevState => [...prevState, tempTransformSelectedArea]);
                 canvasProject.current.activeLayer.addChild(tempTransformSelectedArea);
-                
+
                 //contains check for first time transforming only
                 if (tempTransformAreaBounds.contains(event.point)) {
                     setTransformAction("moving");
-                    return;
                 }
+                return;
             }
 
             //runs if corners of bounds are hit (segments to check if clicked on rect, tolerance for precision)
@@ -893,7 +884,7 @@ const CreateToolsCanvasPaperJS = () => {
         }
         //rasterize active canvas layer when clicked and set const as it on
         else if (Number(buttonSelected?.value) == toolStates.SELECT) {
-            if(canvasProject.current && !canvasProject.current.activeLayer.isEmpty()){
+            if (canvasProject.current && !canvasProject.current.activeLayer.isEmpty()) {
                 let raster = canvasProject.current.activeLayer.rasterize();
                 clearSelection();
                 setRasterInfo([raster]);
@@ -1038,8 +1029,7 @@ const CreateToolsCanvasPaperJS = () => {
             fileReader.readAsDataURL(file);
 
             fileReader.addEventListener('load', () => {
-                if(canvasProject.current)
-                {
+                if (canvasProject.current) {
                     const url = fileReader.result;
 
                     // Activate the background layer and draw to it
@@ -1064,8 +1054,7 @@ const CreateToolsCanvasPaperJS = () => {
     }*/
 
     // Saves the project's layer image data to localStorage
-    const save = (showAlert: Boolean) =>
-    {
+    const save = (showAlert: Boolean) => {
         let layerData = {
             background: backgroundLayerReference.current?.exportJSON(),
             layer1: layer1Reference.current?.exportJSON(),
@@ -1076,20 +1065,18 @@ const CreateToolsCanvasPaperJS = () => {
         localStorage.setItem("panel-1-layerData", JSON.stringify(layerData));
 
         // Alert the user that their progress has been saved
-        if(showAlert)
-        {
+        if (showAlert) {
             alert("Your progress has been saved!");
         }
     }
 
     // Creates an image out of the project's layers and saves it to localStorage for the publish page
-    const toPublish = () =>
-    {
+    const toPublish = () => {
         // Saves the user's progress for them
         save(false);
 
         // Save the SVG Image to localStorage
-        localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({asString: true})));
+        localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
 
         // Send the user to the publish page
         router.push(`/comic/create/publish`);
@@ -1120,7 +1107,7 @@ const CreateToolsCanvasPaperJS = () => {
 
                     <div id={styles.shaderTool} className={styles.toolStyling}>
                         <label htmlFor="shader" id={styles.shaderLabel}>
-                            <input type="radio" name="tools" id="shader" value={toolStates.SHADER} onChange={findSelectedTool}/>
+                            <input type="radio" name="tools" id="shader" value={toolStates.SHADER} onChange={findSelectedTool} />
                         </label>
                     </div>
 
@@ -1191,7 +1178,7 @@ const CreateToolsCanvasPaperJS = () => {
 
             <canvas id={`${styles.canvas}`} ref={canvasReference} className={`${styles.canvas}`} />
 
-          
+
             <div id={`${styles.toolOptions}`}>
                 <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor} />
                 <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize} />
@@ -1202,24 +1189,24 @@ const CreateToolsCanvasPaperJS = () => {
                 <TextOptions enabled={textOptionsEnabled} changeTextContent={setTextContent} changeTextFont={setTextFont} changeTextSize={setTextSize}
                     changeFontWeight={setTextFontWeight} changeTextAlignment={setTextAlign} changeTextColor={setTextColor} />
                 <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
-                <ShaderOptions enabled={shadeOptionsEnabled} shaderSize={shadeSize} changeShaderSize={setShadeSize}/>
+                <ShaderOptions enabled={shadeOptionsEnabled} shaderSize={shadeSize} changeShaderSize={setShadeSize} />
             </div>
 
             <div id={styles.layerOptions}>
                 <div id="settings" className={styles.layerSettings}>
                     <div id="mergeSetting" className={styles.layerStyling}>
                         <label htmlFor="merge" id={styles.mergeLabel}>
-                            <input type="button" id="merge"/>
+                            <input type="button" id="merge" />
                         </label>
                     </div>
                     <div id="layerDownSetting" className={styles.layerStyling}>
                         <label htmlFor="layerdown" id={styles.layerDownLabel}>
-                            <button type="button" id="layerdown"/>
+                            <button type="button" id="layerdown" />
                         </label>
                     </div>
                     <div id="layerUpSetting" className={styles.layerStyling}>
                         <label htmlFor="layerup" id={styles.layerUpLabel}>
-                            <input type="button" id="layerup"/>
+                            <input type="button" id="layerup" />
                         </label>
                     </div>
                 </div>
@@ -1253,12 +1240,12 @@ const CreateToolsCanvasPaperJS = () => {
                             </label>
                         </div>
                         <div id="layer1Select" className={styles.layerSelect}>
-                            <input type="radio" name="layers" id="layer1"className={styles.layerSelectRadio} value='1' defaultChecked onChange={changeLayer} />
-                            <label htmlFor="layer1">Layer 1</label><br/>
+                            <input type="radio" name="layers" id="layer1" className={styles.layerSelectRadio} value='1' defaultChecked onChange={changeLayer} />
+                            <label htmlFor="layer1">Layer 1</label><br />
                         </div>
                     </div>
 
-                    
+
                     <div id="backgroundLayer" className={styles.layer}>
                         <div id="backgroundLayerVisibility" className={styles.visibleStyling}>
                             <label htmlFor="backgroundToggle" className={styles.visibleLabel}>
@@ -1274,7 +1261,7 @@ const CreateToolsCanvasPaperJS = () => {
                             <input type="radio" name="layers" id="background" className={styles.layerSelectRadio} value='0' onChange={changeLayer} />
                             <label htmlFor="background">Background</label><br />
                         </div>
-                    </div>  
+                    </div>
                 </div>
             </div>
 
@@ -1298,13 +1285,13 @@ const CreateToolsCanvasPaperJS = () => {
                     </label>
                 </div>
             </div>
-        
+
             <div id={styles.savePublish}>
                 <button className={`btn ${styles.saveButton}`} id="saveButton" onClick={() => save(true)}>Save</button>
                 <button className={`btn ${styles.publishButton}`} id="publishButton" onClick={toPublish}>Publish</button>
             </div>
         </div>
-        
+
     )
 }
 
