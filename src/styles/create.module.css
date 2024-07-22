@@ -137,7 +137,9 @@
     display:flex;
     flex-direction: row;
 
-    width: 100%;
+    width: 95%;
+
+    overflow: hidden;
 }
 
 #layersList
@@ -145,7 +147,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
 
-    height: 90%;
+    height: 80%;
 }
 
 .layerSelectRadio
@@ -159,6 +161,18 @@
     opacity: 0;
 }
 
+/* - LAYER SETTINGS OPTIONS */
+.layerSettings
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.layerStyling input
+{
+    padding: 0;
+}
+
 /* - PREVIEW PANEL OPTIONS */
 
 .panelSelect
@@ -170,10 +184,42 @@
     justify-content: space-around;
 }
 
+/* - SCROLLBAR */
+.toolStyles::-webkit-scrollbar, #layersList::-webkit-scrollbar
+{
+    width: 11px;
+    background-color: #b7b7b7;
+
+    border-radius: 6px;
+}
+  
+.toolStyles::-webkit-scrollbar-thumb, #layersList::-webkit-scrollbar-thumb
+{
+    background-color: #535353;
+    border: 2px solid transparent;
+    border-radius: 9px;
+    background-clip: content-box;
+}
+
+.toolStyles::-webkit-scrollbar-thumb:hover, #layersList::-webkit-scrollbar-thumb:hover
+{
+    background-color: #6f6f6f;
+}
+
+.toolStyles::-webkit-scrollbar-thumb:active, #layersList::-webkit-scrollbar-thumb:active
+{
+    background-color: #282828;
+}
+
+.toolStyles::-webkit-scrollbar-button:hover, #layersList::-webkit-scrollbar-thumb:hover
+{
+    background-color: #6f6f6f;
+}
+
 /* ICONS */
 
 /* - HIDES THE BUTTONS */
-#toolRadioSelects [type=radio], #layerOptions [type=checkbox], #backgroundUpload input, .panelSelect [type=radio]
+#toolRadioSelects [type=radio],#layerOptions [type=checkbox], .layerSettings [type=button], #backgroundUpload input, .panelSelect [type=radio]
 {
     position: absolute;
     opacity: 0;
@@ -263,6 +309,28 @@
     filter: brightness(.3);
 }
 
+#mergeLabel
+{
+    background: url("../../public/images/icons/draw-icons/layer_merge.svg") no-repeat center/contain;
+    transform: scaleY(-1);
+    width: 25px;
+    height: 25px;
+}
+
+#layerDownLabel
+{
+    background: url("../../public/images/icons/draw-icons/layer_down.svg") no-repeat center/contain;
+    width: 25px;
+    height: 25px;
+}
+
+#layerUpLabel
+{
+    background: url("../../public/images/icons/draw-icons/layer_up.svg") no-repeat center/contain;
+    width: 25px;
+    height: 25px;
+}
+
 .visibleLabel
 {
     background: url("../../public/images/icons/draw-icons/eyeclose.svg") no-repeat center/contain;
@@ -311,15 +379,19 @@
     height: 25px;
 }
 
-.toolStyling:has([type=radio]:checked), .panelStyling:has([type=radio]:checked)
-{
-    filter: brightness(.5);
-}
-
 .visibleStyling, .lockStyling
 {
-    filter: brightness(.5);
     margin-left: 5px;
+}
+
+.toolStyling:has([type=radio]:checked), .panelStyling:has([type=radio]:checked), .layerStyling:has([type=button]:active), .visibleStyling, .lockStyling
+{
+    filter: brightness(.5) !important;
+}
+
+.toolStyling:has([type=radio]:hover), .panelStyling:has([type=radio]:hover), .layerStyling:has([type=button]:hover)
+{
+    filter: brightness(.7);
 }
 
 .visibleStyling:has([type=checkbox]:checked), .lockStyling:has([type=checkbox]:checked)
@@ -368,6 +440,56 @@
     height: 25px;
 
     margin-bottom: 5px;
+}
+
+/* PEN TOOL */
+#penSlider, #shapeBorderSlider, #shapeSelect, #eraserSlider, #textWeight, #textAlignment, #shadeSlider {
+    accent-color: rgb(126, 126, 126);
+}
+
+/* PALETTE BUTTONS GENERIC */
+#paletteButtons p, #fillPaletteButtons p, #borderPaletteButtons p, #textColor p{
+    margin-bottom: 3px;
+}
+
+#paletteButtons button, #fillPaletteButtons button, #borderPaletteButtons button, #textColor button{
+    display: flexbox;
+    height:1.2em; 
+    width:1.2em;
+    margin-left: 2px;
+    margin-top: 1px;
+}
+
+#blackButton{
+    background-color: black;
+}
+
+#darkGrayButton{
+    background-color: rgb(68, 68, 68);
+}
+
+#grayButton{
+    background-color: gray;
+}
+
+#lightGrayButton{
+    background-color: lightgray;
+}
+
+#whiteButton{
+    background-color: white;
+}
+
+#emptyButton{
+    background: url("../../public/images/icons/draw-icons/x.svg") no-repeat center/contain;
+    background-color: white;
+    text-align: center;
+    padding: 0 0.2em;
+    margin: 0;
+    font-size: 1em;
+    position: relative;
+    top:2px;
+    height: 1.2em;
 }
 
 /* SAVE & PUBLISH */
