@@ -24,7 +24,7 @@ export const emptyPanelSet = () => [
 
 export interface Hook{
     id: number,
-    current_panel_id: number,
+    current_panel_index: number,
     points: number[][],
-    next_panel_set_id?: string
+    next_panel_set_id?: number
 }

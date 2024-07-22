@@ -98,8 +98,8 @@ const Panel = ({
                     [
                         ...hooks,
                         {
-                            id: 0,
-                            current_panel_id: 123412341234,
+                            id: -1,
+                            current_panel_index: confirmHook, //set to zero, will get reset before publish
                             points: vertices
                         }
                     ],
@@ -145,7 +145,6 @@ const Panel = ({
     }
 
     const mouseMoveHandler = (event?: SyntheticEvent<HTMLImageElement, MouseEvent >) => {
-      console.log("mouseMoveHandler")
         if (event?.nativeEvent.buttons === 1) return void mouseDragHandler(event);
         // console.log(event?.nativeEvent.offsetX);
 

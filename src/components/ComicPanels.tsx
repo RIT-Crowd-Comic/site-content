@@ -1,9 +1,7 @@
 "use client";
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import * as apiCalls from '../api/apiCalls'
 import styles from "@/styles/read.module.css";
-import Link from "next/link"
+import Panel from './publish/Panel';
+import { Hook, Panel as IPanel } from './interfaces';
 interface Panel {
     id: number,
     index: number,
@@ -12,8 +10,9 @@ interface Panel {
 interface Props {
     setting: string,
     hook_state: string,
-    images: string[],
-    actualHooks: any[],
+    // images: string[],
+    // actualHooks: any[],
+    panels: IPanel[],
     currentId: number,
     router: any
 }
@@ -29,20 +28,9 @@ interface Props {
 
     NOTE - The current buttons in the html are hard coded and should be removed once the placeButtons() method is created. The positions for the buttons are also currently set in "read.css"
 */
-const ComicPanels = ({ setting, hook_state, images, actualHooks, currentId, router }: Props) => {
-    const button_class = `${styles[hook_state]} ${styles.branchHook}`
-    let bodyHeight = ""
-    if (setting.includes("row")) {
-        bodyHeight = "rowBodyH"
-    } else {
-        bodyHeight = "colBodyH"
-    }
-    function link(actualHook: any) {
-        if (actualHook !== undefined && actualHook.next_panel_set_id !== null) {
-            return `/comic?id=${actualHook.next_panel_set_id}`;
-        }
-        return `/comic/create`;
-    }
+const ComicPanels = ({ setting, hook_state, panels, currentId, router }: Props) => {
+    const hidden = hook_state === 'hidden' ? true : false;
+
     //? Better method name
     function displayLink(actualHook: any) {
         if (actualHook !== undefined && actualHook.next_panel_set_id !== null) {
@@ -50,25 +38,38 @@ const ComicPanels = ({ setting, hook_state, images, actualHooks, currentId, rout
         }
         return '?';
     }
+
+    function hookLink(hook: Hook) {
+        if (hook.next_panel_set_id) {
+            return `/comic?id=${hook.next_panel_set_id}`;
+        }
+        return `/comic/create`;
+    }
+
     return (
-        <main className={`${styles.body} ${styles[bodyHeight]}`}>
-            <div id={`${styles.comicPanels}`} className={`${setting}`}>
-                <div className={`${styles.firstPanel}`}>
-                    <Image id="first-img" width="500" height="500" src={images[0]} alt="" className={setting} unoptimized={true} />
-                    <button onClick={() => {router.push(link(actualHooks[0]));}} id={`${styles.firstBranchHook}`} className={button_class}>{displayLink(actualHooks[0])}</button>
-                </div>
-                <div className={`${styles.secondPanel}`}>
-                    <Image id="second-img" width="500" height="500" src={images[1]} alt="" className={setting} unoptimized={true} />
-                </div>
-                <div className={`${styles.thirdPanel}`}>
-                    <Image id="third-img" width="500" height="500" src={images[2]} alt="" className={setting} unoptimized={true} />
-                    <div className="third-panel-container">
-                        <button onClick={() => {router.push(link(actualHooks[1]));}} id={`${styles.secondBranchHook}`} className={button_class}>{displayLink(actualHooks[1])}</button>
-                        <button onClick={() => {router.push(link(actualHooks[2]));}} id={`${styles.thirdBranchHook}`} className={button_class}>{displayLink(actualHooks[2])}</button>
-                    </div>
-                </div>
+        <div id={`${styles.comicPanels}`} className={`${setting}`}>
+            <div className={`${styles.firstPanel}`}>
+                <Panel
+                    imgSrc={panels[0].imgSrc}
+                    hooks={panels[0].hooks}
+                    onHookClick={hookLink}
+                />
             </div>
-        </main>
+            <div className={`${styles.secondPanel}`}>
+                <Panel
+                    imgSrc={panels[1].imgSrc}
+                    hooks={panels[1].hooks}
+                    onHookClick={hookLink}
+                />
+            </div>
+            <div className={`${styles.thirdPanel}`}>
+                <Panel
+                    imgSrc={panels[2].imgSrc}
+                    hooks={panels[2].hooks}
+                    onHookClick={hookLink}
+                />
+            </div>
+        </div>
     );
 }
 
