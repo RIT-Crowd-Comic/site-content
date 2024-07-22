@@ -111,4 +111,4 @@ const logout = async () => {
     cookies().set('session', '', {expires: new Date(0)});
 }
 
-export {authenticateSession, login, register, logout};
+export {authenticateSession, login, register, logout, decrypt};

@@ -1,7 +1,39 @@
+'use client';
+
 import Link from 'next/link'
 import Image from 'next/image'
+import { useEffect, useState } from 'react';
+import {getUserBySession} from "@/api/apiCalls";
+import {logout, decrypt} from "@/app/login/loginUtils";
+import {getCookie, hasCookie, setCookie} from 'cookies-next';
 
 const NavBar = () => {
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useEffect(() => {
+    const checkUserSession = async () => {
+
+      setCookie('session', 'yep');
+      const sessionId = hasCookie('session');
+      console.log(sessionId);
+      // if (sessionId) {
+      //   const session_id = sessionId.split('=')[1];
+      //   const user = await getUserBySession(await decrypt(session_id));
+      //   if (user && !user.message) {
+      //     setIsSignedIn(true);
+      //   }
+      // }
+    }
+
+    checkUserSession();
+  }, []);
+
+  const handleSignOut = async () => {
+    await logout();
+    setIsSignedIn(false);
+    window.location.href = '/';
+  }
+  
   return (
     <nav className="navbar sticky-top navbar-expand-lg">
       <div className="container-fluid">
@@ -28,7 +60,11 @@ const NavBar = () => {
                 <Link className="nav-link" id="comicLink" href="/comic/browse">Browse Comics</Link>
               </li>
               <li className="nav-item">
-              <Link href="/sign-in"><button className="nav-btn btn btn-outline-dark text-color-white">Sign In</button></Link>
+                {isSignedIn ? (
+                  <button onClick={handleSignOut} className="nav-btn btn btn-outline-dark text-color-white">Sign Out</button>
+                ) : (
+                  <Link href="/sign-in"><button className="nav-btn btn btn-outline-dark text-color-white">Sign In</button></Link>
+                )}
               </li>
             </ul>
           </div>
