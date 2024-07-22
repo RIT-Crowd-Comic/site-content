@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react';
 import {getUserBySession} from "@/api/apiCalls";
 import {logout, decrypt, getSessionCookie} from "@/app/login/loginUtils";
-import {getCookie, hasCookie, setCookie} from 'cookies-next';
 
 const NavBar = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);

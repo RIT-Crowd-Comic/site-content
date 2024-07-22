@@ -2,7 +2,6 @@
 
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
 import {redirect} from "next/navigation";
 import { insertSession, getUserBySession, authenticate, createUser } from "@/api/apiCalls";
 
