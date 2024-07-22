@@ -11,6 +11,11 @@ import { registerAction } from "@/app/login/actions";
 
 export function SignUpForm() {
     const [message, errorState] = useState('');
+    const [passwordVisible, setPasswordVisibility] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setPasswordVisibility(!passwordVisible);
+    }
 
     return (
         <main className={styles.body}>
@@ -55,14 +60,25 @@ export function SignUpForm() {
             {/* PASSWORD */}
             <div className={`mb-3 ${styles.formInputs}`}>
                 <label htmlFor ="inputPassword" className={styles.loginLabel}>Password</label>
-                <input type="password"
-                name="password"
-                placeholder="password"
-                className={`form-control`}
-                id={styles.inputPassword}
-                onInvalid = {e => (e.target as HTMLInputElement).setCustomValidity('Enter Password Here')}
-                onInput = {e => (e.target as HTMLInputElement).setCustomValidity('')}
-                required/>
+                <div className={styles.passwordContainer}>
+                    <input type={passwordVisible ? "text" : "password"}
+                    name="password"
+                    placeholder="password"
+                    className={`form-control`}
+                    id={styles.inputPassword}
+                    onInvalid = {e => (e.target as HTMLInputElement).setCustomValidity('Enter Password Here')}
+                    onInput = {e => (e.target as HTMLInputElement).setCustomValidity('')}
+                    required/>
+                    <button type="button"
+                    className={styles.togglePassword}
+                    onClick={togglePasswordVisibility}
+                    style={{
+                        backgroundImage: `url(${passwordVisible ? "/images/icons/draw-icons/eyeopen.svg" : "/images/icons/draw-icons/eyeclose.svg"})`
+                    }}
+                    >
+                    </button>
+                </div>
+
                 
                 <i className={`bi bi-eye-slash`} id={styles.togglePassword}></i>
             </div>
