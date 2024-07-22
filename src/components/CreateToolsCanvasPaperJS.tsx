@@ -993,44 +993,46 @@ const CreateToolsCanvasPaperJS = () => {
             layer4Reference.current.removeChildren();
 
             // Change the layers to reflect the newly selected panel
-            if (Number(panelSelected?.value) == 0) 
+            switch(Number(panelSelected?.value)) 
             {
-                // Switch the canvasProject to the newly selected panel
-                backgroundLayerReference.current.importJSON(panel1LayerData.background);
-                shadingLayerRef.current.importJSON(panel1LayerData.shade);
-                layer1Reference.current.importJSON(panel1LayerData.layer1);
-                layer2Reference.current.importJSON(panel1LayerData.layer2);
-                layer3Reference.current.importJSON(panel1LayerData.layer3);
-                layer4Reference.current.importJSON(panel1LayerData.layer4);
+                case 0:
+                    // Switch the canvasProject to the newly selected panel
+                    backgroundLayerReference.current.importJSON(panel1LayerData.background);
+                    shadingLayerRef.current.importJSON(panel1LayerData.shade);
+                    layer1Reference.current.importJSON(panel1LayerData.layer1);
+                    layer2Reference.current.importJSON(panel1LayerData.layer2);
+                    layer3Reference.current.importJSON(panel1LayerData.layer3);
+                    layer4Reference.current.importJSON(panel1LayerData.layer4);
 
-                // Update the currentPanelIndex
-                setCurrentPanelIndex(0);
-            }
-            if (Number(panelSelected?.value) == 1) 
-            {
-                // Switch the canvasProject to the newly selected panel
-                backgroundLayerReference.current.importJSON(panel2LayerData.background);
-                shadingLayerRef.current.importJSON(panel2LayerData.shade);
-                layer1Reference.current.importJSON(panel2LayerData.layer1);
-                layer2Reference.current.importJSON(panel2LayerData.layer2);
-                layer3Reference.current.importJSON(panel2LayerData.layer3);
-                layer4Reference.current.importJSON(panel2LayerData.layer4);
+                    // Update the currentPanelIndex
+                    setCurrentPanelIndex(0);
+                    break;
+                case 1:
+                    // Switch the canvasProject to the newly selected panel
+                    backgroundLayerReference.current.importJSON(panel2LayerData.background);
+                    shadingLayerRef.current.importJSON(panel2LayerData.shade);
+                    layer1Reference.current.importJSON(panel2LayerData.layer1);
+                    layer2Reference.current.importJSON(panel2LayerData.layer2);
+                    layer3Reference.current.importJSON(panel2LayerData.layer3);
+                    layer4Reference.current.importJSON(panel2LayerData.layer4);
 
-                // Update the currentPanelIndex
-                setCurrentPanelIndex(1);
-            }
-            if (Number(panelSelected?.value) == 2) 
-            {
-                // Switch the canvasProject to the newly selected panel
-                backgroundLayerReference.current.importJSON(panel3LayerData.background);
-                shadingLayerRef.current.importJSON(panel3LayerData.shade);
-                layer1Reference.current.importJSON(panel3LayerData.layer1);
-                layer2Reference.current.importJSON(panel3LayerData.layer2);
-                layer3Reference.current.importJSON(panel3LayerData.layer3);
-                layer4Reference.current.importJSON(panel3LayerData.layer4);
+                    // Update the currentPanelIndex
+                    setCurrentPanelIndex(1);
+                    break;
+                case 2:
+                    // Switch the canvasProject to the newly selected panel
+                    backgroundLayerReference.current.importJSON(panel3LayerData.background);
+                    shadingLayerRef.current.importJSON(panel3LayerData.shade);
+                    layer1Reference.current.importJSON(panel3LayerData.layer1);
+                    layer2Reference.current.importJSON(panel3LayerData.layer2);
+                    layer3Reference.current.importJSON(panel3LayerData.layer3);
+                    layer4Reference.current.importJSON(panel3LayerData.layer4);
 
-                // Update the currentPanelIndex
-                setCurrentPanelIndex(2);
+                    // Update the currentPanelIndex
+                    setCurrentPanelIndex(2);
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -1149,17 +1151,10 @@ const CreateToolsCanvasPaperJS = () => {
     // Saves the project's layer image data to localStorage
     const save = (showAlert: Boolean) =>
     {   
-        let layerData = {
-            background: backgroundLayerReference.current?.exportJSON(),
-            shade: shadingLayerRef.current?.exportJSON(),
-            layer1: layer1Reference.current?.exportJSON(),
-            layer2: layer2Reference.current?.exportJSON(),
-            layer3: layer3Reference.current?.exportJSON(),
-            layer4: layer4Reference.current?.exportJSON()
-        }
-
         // Save the layerData object to localStorage in JSON string form
-        localStorage.setItem("panel-1-layerData", JSON.stringify(layerData));
+        localStorage.setItem("panel-1-layerData", JSON.stringify(panel1LayerData));
+        localStorage.setItem("panel-2-layerData", JSON.stringify(panel2LayerData));
+        localStorage.setItem("panel-3-layerData", JSON.stringify(panel3LayerData));
 
         // Alert the user that their progress has been saved
         if (showAlert) {
