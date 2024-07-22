@@ -1,5 +1,5 @@
 const baseUrl = 'http://localhost:4000';
-import { CreatePanelSet, PanelSet } from "../components/interfaces";
+import { CreatePanelSet } from "../components/interfaces";
 
 const getAPICall = async (url: string) => {
     return await fetch(`${baseUrl}${url}`, {

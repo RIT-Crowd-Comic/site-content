@@ -18,15 +18,12 @@ interface Props {
     id: number
 }
 
-interface ImageUrl {
-    url: string
-}
 //todo need to place hook in right position
 const ReadPage = ({ id }: Props) => {
     const router = useRouter()
     const searchParams = useSearchParams()
     const [layout, setLayout] = useState(`${styles.rowPanels}`);
-    const [hooks, setHooks] = useState("baseHooks");
+    const [hooks, setHooks] = useState("hidden");
     const [isLoading, setIsLoading] = useState(false);
     const [panelSet, setPanelSet] = useState<PanelSet>();
     const [parentPanelSet, setParentPanelSet] = useState<PanelSet | undefined>();
@@ -92,7 +89,7 @@ const ReadPage = ({ id }: Props) => {
         <ComicPanels setting={layout} hook_state={hooks} panels={panels} currentId={id} router={router} />
         <div className={`${styles.controlBar}`} >
             <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet !== undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}></img></button>
-            <IconToggleButton setting={hooks} setSetting={setHooks} state_1="baseHooks" state_2="popHooks" buttonId="hooksToggle" source_1={toggleHooksOff} source_2={toggleHooksOn} />
+            <IconToggleButton setting={hooks} setSetting={setHooks} state_1="hidden" state_2="visible" buttonId="hooksToggle" source_1={toggleHooksOff} source_2={toggleHooksOn} />
             <IconToggleButton setting={layout} setSetting={setLayout} state_1={`${styles.rowPanels}`} state_2={`${styles.columnPanels}`} buttonId="layoutToggle" source_1={toggleLayoutHorizIcon} source_2={toggleLayoutVertIcon} />
         </div>
     </>);

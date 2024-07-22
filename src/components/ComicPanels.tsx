@@ -39,12 +39,12 @@ const ComicPanels = ({ setting, hook_state, panels, router }: Props) => {
     }
 
     //? Better method name
-    function displayLink(actualHook: any) {
-        if (actualHook !== undefined && actualHook.next_panel_set_id !== null) {
-            return actualHook.next_panel_set_id;
-        }
-        return '?';
-    }
+    // function displayLink(actualHook: any) {
+    //     if (actualHook !== undefined && actualHook.next_panel_set_id !== null) {
+    //         return actualHook.next_panel_set_id;
+    //     }
+    //     return '?';
+    // }
 
     function hookLink(hook: Hook | CreateHook) {
         if (hook.next_panel_set_id) {
@@ -62,6 +62,7 @@ const ComicPanels = ({ setting, hook_state, panels, router }: Props) => {
                         imgSrc={panels[0].imgSrc}
                         hooks={panels[0].hooks}
                         onHookClick={hookLink}
+                        hidden={hidden}
                     />
                 </div>
                 <div className={`${styles.secondPanel}`}>
@@ -69,6 +70,7 @@ const ComicPanels = ({ setting, hook_state, panels, router }: Props) => {
                         imgSrc={panels[1].imgSrc}
                         hooks={panels[1].hooks}
                         onHookClick={hookLink}
+                        hidden={hidden}
                     />
                 </div>
                 <div className={`${styles.thirdPanel}`}>
@@ -76,6 +78,7 @@ const ComicPanels = ({ setting, hook_state, panels, router }: Props) => {
                         imgSrc={panels[2].imgSrc}
                         hooks={panels[2].hooks}
                         onHookClick={hookLink}
+                        hidden={hidden}
                     />
                 </div>
             </div>

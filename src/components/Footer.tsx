@@ -3,7 +3,7 @@ import Link from 'next/link'
 // <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 import linkedin from "../../public/images/icons/LinkedIn.svg";
-import facebook from "../../public/images/icons/Facebook.svg";
+// import facebook from "../../public/images/icons/Facebook.svg";
 import github from "../../public/images/icons/Github.svg"
 
 const Footer = () => {

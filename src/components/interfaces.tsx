@@ -1,5 +1,3 @@
-import paper from 'paper'
-
 
 interface CreatePanel {
     id: number,

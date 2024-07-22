@@ -1,7 +1,6 @@
 import styles from './BranchPage.module.css';
 
 import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { CreateHook, emptyPanelSet, CreatePanelSet } from "../interfaces";
 import Panel from './Panel';
 import BranchPageControls from './BranchPageControls';
@@ -81,7 +80,7 @@ const BranchPage = () => {
         // selectHook(null);
     }, []);
 
-    const isActive = (panelIndex: number) => activePanel === panelIndex;
+    // const isActive = (panelIndex: number) => activePanel === panelIndex;
 
     /**
      * 
@@ -144,7 +143,7 @@ const BranchPage = () => {
     so that the database can work as intended.
     */
     //packages ps and then pushes it to local storage
-    const pushToLocalStorage = () => { }
+    // const pushToLocalStorage = () => { }
 
 
 
