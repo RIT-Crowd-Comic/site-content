@@ -30,6 +30,12 @@ interface Props {
 */
 const ComicPanels = ({ setting, hook_state, panels }: Props) => {
     const hidden = hook_state === 'hidden' ? true : false;
+    let bodyHeight = ""
+    if (setting.includes("row")) {
+        bodyHeight = "rowBodyH"
+    } else {
+        bodyHeight = "colBodyH"
+    }
 
     //? Better method name
     function displayLink(actualHook: any) {
@@ -46,31 +52,33 @@ const ComicPanels = ({ setting, hook_state, panels }: Props) => {
         return `/comic/create`;
     }
     if (!panels || panels.length === 0) return <div id={`${styles.comicPanels}`} className={`${setting}`}></div>;
-    
+
     return (
-        <div id={`${styles.comicPanels}`} className={`${setting}`}>
-            <div className={`${styles.firstPanel}`}>
-                <Panel
-                    imgSrc={panels[0].imgSrc}
-                    hooks={panels[0].hooks}
-                    onHookClick={hookLink}
-                />
+        <main className={`${styles.body} ${styles[bodyHeight]}`}>
+            <div id={`${styles.comicPanels}`} className={`${setting}`}>
+                <div className={`${styles.firstPanel}`}>
+                    <Panel
+                        imgSrc={panels[0].imgSrc}
+                        hooks={panels[0].hooks}
+                        onHookClick={hookLink}
+                    />
+                </div>
+                <div className={`${styles.secondPanel}`}>
+                    <Panel
+                        imgSrc={panels[1].imgSrc}
+                        hooks={panels[1].hooks}
+                        onHookClick={hookLink}
+                    />
+                </div>
+                <div className={`${styles.thirdPanel}`}>
+                    <Panel
+                        imgSrc={panels[2].imgSrc}
+                        hooks={panels[2].hooks}
+                        onHookClick={hookLink}
+                    />
+                </div>
             </div>
-            <div className={`${styles.secondPanel}`}>
-                <Panel
-                    imgSrc={panels[1].imgSrc}
-                    hooks={panels[1].hooks}
-                    onHookClick={hookLink}
-                />
-            </div>
-            <div className={`${styles.thirdPanel}`}>
-                <Panel
-                    imgSrc={panels[2].imgSrc}
-                    hooks={panels[2].hooks}
-                    onHookClick={hookLink}
-                />
-            </div>
-        </div>
+        </main>
     );
 }
 

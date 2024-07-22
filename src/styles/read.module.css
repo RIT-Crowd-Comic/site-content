@@ -20,7 +20,7 @@
   filter: none;
   position: absolute;
   top: 0;
-  padding:100px 0 30px;
+  padding: 100px 0 30px;
 
   min-height: 100%;
   height: fit-content;
@@ -28,6 +28,10 @@
 
 .colBodyH {
   height: fit-content;
+}
+
+.rowBodyH {
+  height: 100%;
 }
 
 /* .body:has(.rowPanels){} */
@@ -68,7 +72,6 @@
 
 #comicPanels>div {
   width: 100%;
-  max-width: fit-content;
 }
 
 #comicPanels img {
@@ -238,6 +241,11 @@
     padding: 0 50px;
   }
 
+  #comicPanels>div {
+    max-width: 900px;
+    max-height: 600px;
+  }
+
   #comicPanels img {
     max-width: 900px;
     max-height: 600px;
@@ -247,7 +255,8 @@
     position: relative;
 
   }
-/* 
+
+  /* 
   #backButton,
   #hooksToggle {
     visibility: visible;
@@ -256,7 +265,7 @@
     border-radius: 50%;
     border: none;
   } */
-/* 
+  /* 
   #backButton {
     top: 12vh;
     left: 2vw;
