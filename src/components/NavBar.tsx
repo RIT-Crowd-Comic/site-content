@@ -1,7 +1,40 @@
+'use client';
+
 import Link from 'next/link'
 import Image from 'next/image'
+import { useEffect, useState } from 'react';
+import {getUserBySession} from "@/api/apiCalls";
+import {logout, decrypt, getSessionCookie} from "@/app/login/loginUtils";
 
 const NavBar = () => {
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useEffect(() => {
+    const checkUserSession = async () => {
+      const session = await getSessionCookie();
+      const session_id = session?.value;
+      if (session_id) {
+        const parsedCookie = await decrypt(session_id);
+        const user = await getUserBySession(parsedCookie.sessionId);
+        if (user && !user.message) {
+          setIsSignedIn(true);
+          return;
+        }
+      }
+      //If not signed in, redirect from user locked pages
+      const url = window.location.href;
+      if((url.includes('/create') || url.includes('/publish'))) window.location.href = '/';
+    }
+
+    checkUserSession();
+  }, []);
+
+  const handleSignOut = async () => {
+    await logout();
+    setIsSignedIn(false);
+    window.location.href = '';
+  }
+  
   return (
     <nav className="navbar sticky-top navbar-expand-lg">
       <div className="container-fluid">
@@ -28,10 +61,11 @@ const NavBar = () => {
                 <Link className="nav-link" id="comicLink" href="/comic/browse">Browse Comics</Link>
               </li>
               <li className="nav-item">
-              <Link className="nav-link" id="dbLink" href="/db">Database</Link>
-              </li>
-              <li className="nav-item">
-              <Link href="/sign-in"><button className="nav-btn btn btn-outline-dark text-color-white">Sign In</button></Link>
+                {isSignedIn ? (
+                  <button onClick={handleSignOut} className="nav-btn btn btn-outline-dark text-color-white">Sign Out</button>
+                ) : (
+                  <Link href="/sign-in"><button className="nav-btn btn btn-outline-dark text-color-white">Sign In</button></Link>
+                )}
               </li>
             </ul>
           </div>

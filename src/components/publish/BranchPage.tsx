@@ -6,7 +6,6 @@ import Panel from './Panel';
 import BranchPageControls from './BranchPageControls';
 import { publishHandler } from '../../api/apiCalls';
 import { useRouter } from 'next/navigation';
-import { authenticateSession } from '@/app/login/loginUtils';
 
 const BranchPage = () => {
     const [addingHook, setAddingHook] = useState(false);
@@ -55,11 +54,11 @@ const BranchPage = () => {
     // one time setup
     useEffect(() => {
 
-
-        authenticateSession().then((user) =>{
-            console.log(user);
-            if(user.message) router.push(`/sign-in`);
-        });
+        //Lack of async in useEffect causes redirection regardless of session pressence. Redir handled in NavBar for now
+        // authenticateSession().then((user) =>{
+        //     console.log(user);
+        //     if(user.message) router.push(`/sign-in`);
+        // });
         
         // retrieve comic images from create page using local storage
         const storedImageLinks = [

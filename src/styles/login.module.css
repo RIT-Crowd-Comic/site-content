@@ -107,6 +107,47 @@
     justify-content: center;
 }
 
+#inputEmail, #inputPassword, #inputUsername
+{
+    /* font-family: var(--font-comic-neue); */
+    font-variant: small-caps;
+}
+
+#inputEmail:invalid
+{
+    
+}
+
+.passwordContainer
+{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#inputPassword
+{
+    width: 100%;
+    /* padding-right: 2.5rem; */
+}
+
+.togglePassword
+{
+    /* position: absolute; */
+    /* right: 0.75rem;  */
+    margin-left: -2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: invert(1);
+}
+
+
 /* Small devices (portrait phones, less than 7668px) */
 /* @media (max-width: 768px) {
     body
@@ -172,6 +213,7 @@
         width: 300px;
         height: auto;
     }
+
 }
 
 
@@ -190,4 +232,5 @@
 
         height: 100%;
     }
+
 }   
