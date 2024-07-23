@@ -6,7 +6,7 @@
     background-color: #2d2d2d;
     max-width: 100%;
     padding-right: 0 !important;
-    /* overflow: hidden; */
+    overflow: hidden;
     background-image: radial-gradient(circle at center,
             #414141 0.15rem,
             transparent 0), radial-gradient(circle at center, #414141 0.15rem, transparent 0);
@@ -23,19 +23,18 @@
 {
     display: grid;
 
-    grid-template-columns: auto auto 25%;
+    grid-template-columns: 60px auto;
     grid-template-rows: 100%;
-    grid-template-areas: 
-    "toolBar canvas tools";
+    grid-template-areas:
+    "toolBar canvas";
 
-    flex-direction: row;   
+    flex-direction: row;
 
-    width: 10vw;
-    height: auto;
+    height: 80vh;
+    width: 80%;
 
     margin: 20px auto;
     align-items: start;
-    justify-content: center;
 }
 
 #canvas
@@ -51,9 +50,6 @@
     height: 100% !important;
     width: auto !important;
 
-    max-width: 50vw;
-    max-height: auto;
-
     aspect-ratio: 3 / 2;
 }
 
@@ -66,7 +62,7 @@
     overflow-x: hidden;
 
     height: 100%;
-    width: 50px;
+    width: 40px;
 
     background-color: #00000062;
     border: 3px solid black;
@@ -74,7 +70,7 @@
 
 #toolRadioSelects, #functionButtons, .backgroundUploadForm
 {
-    width: 25px;
+    width: 20px;
     margin: 0 auto;
 }
 
@@ -82,6 +78,11 @@
 {
     order: 0;
     grid-area: toolBar;
+}
+
+#toolRadioSelects div
+{
+    margin-inline: auto;
 }
 
 
@@ -100,11 +101,13 @@
     margin-left: 20px;
     height: 100%;
     max-height: 100%;
-    grid-area: tools;
+
     display: grid;
     grid-template-rows: auto 40% 10%;
 
     row-gap: 10px;
+
+    display: none;
 }
 
 #toolOptions, #layerOptions, .panelSelect
@@ -131,7 +134,7 @@
     width: 100%;
 
     margin: auto 0;
-    height: 15px;
+    height: 20px;
 }
 
 .layer
@@ -238,8 +241,8 @@
 {
     position: absolute;
     opacity: 0;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 /* - DECLARES ALL ICONS */
@@ -311,7 +314,7 @@
 {
     outline: none !important;
     border: none !important;
-    background-color: none !important; 
+    background-color: none !important;
 }
 
 #undoLabel:has(button:hover), #redoLabel:has(button:hover), #clearLabel:has(button:hover), .formLabel:has(input:hover)
@@ -328,43 +331,43 @@
 {
     background: url("../../public/images/icons/draw-icons/layer_merge.svg") no-repeat center/contain;
     transform: scaleY(-1);
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 #layerDownLabel
 {
     background: url("../../public/images/icons/draw-icons/layer_down.svg") no-repeat center/contain;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 #layerUpLabel
 {
     background: url("../../public/images/icons/draw-icons/layer_up.svg") no-repeat center/contain;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 .visibleLabel
 {
     background: url("../../public/images/icons/draw-icons/eyeclose.svg") no-repeat center/contain;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 .lockLabel
 {
     background: url("../../public/images/icons/draw-icons/unlock.svg") no-repeat center/contain;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 .formLabel
 {
     background: url("../../public/images/icons/draw-icons/upload.svg") no-repeat center/contain;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 .panelLabel
@@ -382,16 +385,16 @@
 
 .toolStyling, .visibleStyling, .lockStyling
 {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 
     margin: 8px 0;
 }
 
 .toolStyling label
 {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 .visibleStyling, .lockStyling
@@ -432,27 +435,27 @@
 
 #functionButtons
 {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     height: auto;
     display:flex;
     flex-direction: column;
-    
+
     justify-content: space-between;
 }
 
 #functionButtons label
 {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 
     margin: 0 0 8px 0;
 }
 
 .backgroundUploadForm
 {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 
     margin-bottom: 5px;
 }
@@ -469,7 +472,7 @@
 
 #paletteButtons button, #fillPaletteButtons button, #borderPaletteButtons button, #textColor button{
     display: flexbox;
-    height:1.2em; 
+    height:1.2em;
     width:1.2em;
     margin-left: 2px;
     margin-top: 1px;
@@ -547,15 +550,80 @@
     top: 1px;
 }
 
+/* FOR PORTRAIT MODE ONLY */
+#warning
+{
+    display: none;
+}
 
 /* [xs] Extra small devices, less than 576px) */
 /* No media query for `xs` since this is the default in Bootstrap */
-@media (orientation: portrait) 
+@media (orientation: portrait)
 {
-    /* .body
+    #createPage
     {
-        transform: rotate(90deg);
-    } */
+        display: grid;
+
+        grid-template-columns: 60px auto;
+        grid-template-rows: 100%;
+        grid-template-areas:
+        "toolBar canvas";
+
+        flex-direction: row;
+
+        height: 160px;
+        width: 80%;
+
+        margin: 20px auto;
+        align-items: start;
+    }
+
+    #canvas
+    {
+        order: 1;
+        border: 3px solid black;
+        grid-area: canvas;
+
+        border-style: solid;
+        background-color: white;
+        cursor: pointer;
+
+        height: auto !important;
+        width: auto !important;
+
+        max-width: 50vw;
+        max-height: auto;
+
+        aspect-ratio: 3 / 2;
+    }
+
+    #fieldSet
+    {
+        margin-right: 20px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+
+        height: 100%;
+        width: 40px;
+
+        background-color: #00000062;
+        border: 3px solid black;
+    }
+
+    #warning
+    {
+        display: inline;
+        position: absolute;
+
+        bottom: 0;
+        left: 0;
+        background-color: white;
+        color: black;
+
+        text-align: center;
+
+        width: 100%;
+    }
 }
 
 /* [sm] Small devices, 576px and up */
@@ -566,6 +634,11 @@
 
 /* [lg] Large desktops, 992px and up */
 @media (min-width: 992px) {
+    
+}
+
+/* [xl] Extra large devices 1200px and up */
+@media (min-width: 1200px) {
     .body
     {
         width: 100%;
@@ -593,10 +666,10 @@
 
         grid-template-columns: auto auto 25%;
         grid-template-rows: 100%;
-        grid-template-areas: 
+        grid-template-areas:
         "toolBar canvas tools";
 
-        flex-direction: row;   
+        flex-direction: row;
 
         height: 80vh;
         max-width: 80vw;
@@ -762,7 +835,7 @@
 
         border-radius: 6px;
     }
-    
+
     .toolStyles::-webkit-scrollbar-thumb, #layersList::-webkit-scrollbar-thumb
     {
         background-color: #535353;
@@ -790,7 +863,7 @@
     {
         display:none;
     }
-    
+
     #fieldSet::-webkit-scrollbar-thumb
     {
         display:none;
@@ -876,7 +949,7 @@
     {
         outline: none !important;
         border: none !important;
-        background-color: none !important; 
+        background-color: none !important;
     }
 
     #undoLabel:has(button:hover), #redoLabel:has(button:hover), #clearLabel:has(button:hover), .formLabel:has(input:hover)
@@ -1002,7 +1075,7 @@
         height: auto;
         display:flex;
         flex-direction: column;
-        
+
         justify-content: space-between;
     }
 
@@ -1034,7 +1107,7 @@
 
     #paletteButtons button, #fillPaletteButtons button, #borderPaletteButtons button, #textColor button{
         display: flexbox;
-        height:1.2em; 
+        height:1.2em;
         width:1.2em;
         margin-left: 2px;
         margin-top: 1px;
@@ -1112,9 +1185,6 @@
         top: 1px;
     }
 }
-
-/* [xl] Extra large devices 1200px and up */
-@media (min-width: 1200px) {}
 
 /* [xxl] Extra extra large devices, 1400px and up */
 @media (min-width: 1400px) {}
