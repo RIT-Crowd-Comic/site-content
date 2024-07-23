@@ -1,5 +1,6 @@
 const baseUrl = 'http://localhost:4000';
 import { CreatePanelSet } from "../components/interfaces";
+import { getSessionCookie } from "@/app/login/loginUtils";
 
 const getAPICall = async (url: string) => {
     return await fetch(`${baseUrl}${url}`, {
@@ -17,10 +18,12 @@ const getAPICall = async (url: string) => {
 };
 
 const postAPICall = async (url: string, body: object) => {
+    const sessionObj = await getSessionCookie();
+    const session = JSON.stringify(sessionObj);
     return await fetch(`${baseUrl}${url}`, {
         body: JSON.stringify(body),
         method: 'POST',
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json",  "Session-Cookie": `${session}` },
     }).then(response => {
         return response.json();
 
@@ -33,9 +36,12 @@ const postAPICall = async (url: string, body: object) => {
 }
 
 const postAPICallFormData = async (url: string, formData: FormData) => {
+    const sessionObj = await getSessionCookie();
+    const session = JSON.stringify(sessionObj);
     return await fetch(`${baseUrl}${url}`, {
-      method: 'POST',
       body: formData,
+      headers:{ "Session-Cookie": `${session}`},
+      method: 'POST',
     })
     .then(response =>{return response.json()})
     .then(json => {
@@ -417,7 +423,7 @@ const fetchImage = async(imageUrl : string) =>{
     });
 }
 
-const publishHandler = async(panelSet : CreatePanelSet, currentUser : string) =>{
+const publishHandler = async(panelSet : CreatePanelSet) =>{
         //get the image files
         const image1 = await fetchImage(panelSet.panels[0].imgSrc) as File | Error;
         if(image1 instanceof Error) return new Error(`There was an error getting the 1st image: ${image1.message}`);
@@ -450,11 +456,10 @@ const publishHandler = async(panelSet : CreatePanelSet, currentUser : string) =>
         const parentHookID = panelSet.previous_hook?.id;
 
         //get the hook id
-        return await publish(image1, image2, image3,currentUser, hooks, parentHookID);
+        return await publish(image1, image2, image3, hooks, parentHookID);
 }
-const publish = async (image1 : File, image2 : File, image3 : File, authorId : string, hooks : Array<hook>, hookId : number | undefined) => {
+const publish = async (image1 : File, image2 : File, image3 : File, hooks : Array<hook>, hookId : number | undefined) => {
     const data = {
-        author_id: authorId,
         hook_id: hookId,
         hooks: hooks
     };

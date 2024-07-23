@@ -17,7 +17,6 @@ const BranchPage = () => {
         author_id: '',
         panels: emptyPanelSet()
     });
-    const [currentUser, setUser] = useState('');
     const [activePanel, setActivePanel] = useState(0);
     const activePanelHooks = () => panelSet.panels[activePanel].hooks;
     const setActivePanelHooks = (hooks: CreateHook[], panelIndex: number) => {
@@ -56,11 +55,12 @@ const BranchPage = () => {
     // one time setup
     useEffect(() => {
 
-        const getUser = async () => {
-            const user = await authenticateSession();
-            if (user)
-                setUser(user.id);
-        }
+
+        authenticateSession().then((user) =>{
+            console.log(user);
+            if(user.message) router.push(`/sign-in`);
+        });
+        
         // retrieve comic images from create page using local storage
         const storedImageLinks = [
             loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[0],
@@ -70,7 +70,6 @@ const BranchPage = () => {
 
         setImageLinks(storedImageLinks);
 
-        if (!currentUser) getUser();
 
         panelSet.panels[0].imgSrc = storedImageLinks[0];
         panelSet.panels[1].imgSrc = storedImageLinks[1];
@@ -137,16 +136,6 @@ const BranchPage = () => {
         setAddingHook(false);
     }
 
-    /*
-    NOTE - pushToLocalStorage will be replaced with a method to push all of the data to the database to be stored as a panel set. As it stands right 
-    now there is no user set up which may cause issue with the data upload. Will need to provide some kind of guest or default user for database uploads 
-    so that the database can work as intended.
-    */
-    //packages ps and then pushes it to local storage
-    // const pushToLocalStorage = () => { }
-
-
-
     return (<>
         <main className={`${styles.body}`}>
             <div id={styles.publishContainer}>
@@ -182,7 +171,7 @@ const BranchPage = () => {
                     confirmBranchHook={() => confirmBranchHook(activePanel)}
                     removeBranchHook={removeBranchHook}
                     publish={async () => {
-                        const response = await publishHandler(panelSet, currentUser);
+                        const response = await publishHandler(panelSet);
                         console.log(response);
 
                         if (response instanceof Error) {
