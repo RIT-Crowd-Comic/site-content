@@ -55,9 +55,11 @@ const BranchPage = () => {
     // one time setup
     useEffect(() => {
 
-        const getUser = async () => {
-            await authenticateSession();
-        }
+
+        authenticateSession().then((user) =>{
+            console.log(user);
+        });
+        
         // retrieve comic images from create page using local storage
         const storedImageLinks = [
             loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[0],
@@ -67,7 +69,6 @@ const BranchPage = () => {
 
         setImageLinks(storedImageLinks);
 
-        getUser();
 
         panelSet.panels[0].imgSrc = storedImageLinks[0];
         panelSet.panels[1].imgSrc = storedImageLinks[1];
