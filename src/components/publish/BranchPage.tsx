@@ -134,16 +134,6 @@ const BranchPage = () => {
         setAddingHook(false);
     }
 
-    /*
-    NOTE - pushToLocalStorage will be replaced with a method to push all of the data to the database to be stored as a panel set. As it stands right 
-    now there is no user set up which may cause issue with the data upload. Will need to provide some kind of guest or default user for database uploads 
-    so that the database can work as intended.
-    */
-    //packages ps and then pushes it to local storage
-    // const pushToLocalStorage = () => { }
-
-
-
     return (<>
         <main className={`${styles.body}`}>
             <div id={styles.publishContainer}>
@@ -179,7 +169,7 @@ const BranchPage = () => {
                     confirmBranchHook={() => confirmBranchHook(activePanel)}
                     removeBranchHook={removeBranchHook}
                     publish={async () => {
-                        const response = await publishHandler(panelSet, currentUser);
+                        const response = await publishHandler(panelSet);
                         console.log(response);
 
                         if (response instanceof Error) {
