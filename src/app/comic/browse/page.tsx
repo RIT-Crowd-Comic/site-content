@@ -1,4 +1,3 @@
-import { useState } from "react";
 import TrunkCollection from "./trunkCollection";
 import NavBar from "@/components/NavBar";
 const Browse = () => {
@@ -8,6 +7,7 @@ const Browse = () => {
             <TrunkCollection/>
         </div>
     );
+
 }
 
 export default Browse;
