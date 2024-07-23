@@ -718,16 +718,16 @@ const CreateToolsCanvasPaperJS = () => {
 
     //check which corner was hit (with bounds) and set opposite corner as base to scale on
     function findOppositeCorner(pointHit: paper.Point, rectToCheck: paper.Path.Rectangle) {
-        if (rectToCheck.bounds.bottomLeft.isClose(pointHit, 5)) {
+        if (rectToCheck.bounds.bottomLeft.isClose(pointHit, 10)) {
             setOppositeCorner(rectToCheck.bounds.topRight);
         }
-        else if (rectToCheck.bounds.bottomRight.isClose(pointHit, 5)) {
+        else if (rectToCheck.bounds.bottomRight.isClose(pointHit, 10)) {
             setOppositeCorner(rectToCheck.bounds.topLeft);
         }
-        else if (rectToCheck.bounds.topLeft.isClose(pointHit, 5)) {
+        else if (rectToCheck.bounds.topLeft.isClose(pointHit, 10)) {
             setOppositeCorner(rectToCheck.bounds.bottomRight);
         }
-        else if (rectToCheck.bounds.topRight.isClose(pointHit, 5)) {
+        else if (rectToCheck.bounds.topRight.isClose(pointHit, 10)) {
             setOppositeCorner(rectToCheck.bounds.bottomLeft);
         }
     }
@@ -753,7 +753,7 @@ const CreateToolsCanvasPaperJS = () => {
                 tempTransformSelectedArea.selected = true;
 
                 //contains check for first time transforming only
-                if (tempTransformAreaBounds.hitTest(event.point, { segments: true, tolerance: 5 })) {
+                if (tempTransformAreaBounds.hitTest(event.point, { segments: true, tolerance: 10 })) {
                     setTransformAction("resizing");
                     findOppositeCorner(event.point, tempTransformAreaBounds);
                 }
@@ -767,7 +767,7 @@ const CreateToolsCanvasPaperJS = () => {
             }
 
             //runs if corners of bounds are hit (segments to check if clicked on rect, tolerance for precision)
-            if (transformInfo[0].hitTest(event.point, { segments: true, tolerance: 5 })) {
+            if (transformInfo[0].hitTest(event.point, { segments: true, tolerance: 10 })) {
                 setTransformAction("resizing");
                 findOppositeCorner(event.point, transformInfo[0]);
             }
@@ -798,22 +798,37 @@ const CreateToolsCanvasPaperJS = () => {
             else if (transformAction == "resizing") {
                 setIsTransforming(true);
 
-                //scale
-                //also tends to flip selection (could be result of -scale values and bc opp corner does not update?)
-                // console.log(oppositeCorner)
-                // console.log((event.point.x - oppositeCorner.x) / transformInfo[0].bounds.width);
-                // console.log((event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height);
+                //scale options
+                //try calcing scale factor with new rect instead 
+                //(doesn't let users flip selection, will need to handle it separately,
+                //ex. if (x or y scale factor is negative (aka if eventpointx-oppositecornerx = -val), then have scaling coefficients be negative)
+                // let newRect = new paper.Rectangle(oppositeCorner, event.point);
+                // transformInfo[0].scale(newRect.width / transformInfo[0].bounds.width,
+                //     newRect.height / transformInfo[0].bounds.height, oppositeCorner);
+                // rasterInfo[1].scale(newRect.width / rasterInfo[1].bounds.width,
+                //     newRect.height / rasterInfo[1].bounds.height, oppositeCorner);
 
-                //try calcing scale factor with new rect instead??
-                //or replicate shape tool drag
-                //edit bounds then use fitBounds?
+                // transformInfo[0].bounds = new paper.Rectangle(oppositeCorner, event.point);
+                // rasterInfo[1].bounds = new paper.Rectangle(oppositeCorner, event.point);
+                // if(event.point.x - oppositeCorner.x){
+                //     rasterInfo[1].scale(-1,1);
+                // }
+                // else if(event.point.y - oppositeCorner.y){
+                //     rasterInfo[1].scale(1,-1);
+                // }
 
-                
-
+                //scale using scale function (have scaling negative be applied differently?)
+                //flickers due to each frame flipping the selection (when negative)
                 transformInfo[0].scale((event.point.x - oppositeCorner.x) / transformInfo[0].bounds.width,
                     (event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height, oppositeCorner);
                 rasterInfo[1].scale((event.point.x - oppositeCorner.x) / rasterInfo[1].bounds.width,
                     (event.point.y - oppositeCorner.y) / rasterInfo[1].bounds.height, oppositeCorner);
+
+                console.log(oppositeCorner)
+                console.log(event.point);
+                console.log((event.point.x - oppositeCorner.x) / transformInfo[0].bounds.width);
+                console.log((event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height);
+
                 return;
             }
             else if (transformAction == "rotating") {
@@ -825,8 +840,8 @@ const CreateToolsCanvasPaperJS = () => {
     transformTool.onMouseUp = function () {
         //resets transform action state
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
-            if(transformAction == "resizing"){
-                setOppositeCorner(new paper.Point(0,0))
+            if (transformAction == "resizing") {
+                setOppositeCorner(new paper.Point(0, 0))
             }
             setTransformAction("none");
         }
