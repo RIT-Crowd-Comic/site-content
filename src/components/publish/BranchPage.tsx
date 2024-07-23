@@ -58,6 +58,7 @@ const BranchPage = () => {
 
         authenticateSession().then((user) =>{
             console.log(user);
+            if(user.message) router.push(`/sign-in`);
         });
         
         // retrieve comic images from create page using local storage
