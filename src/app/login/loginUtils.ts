@@ -62,14 +62,14 @@ const updateSession = async (session_id: string) => {
  * @returns Session user
  */
 const authenticateSession = async () => {
-    const session = cookies().get('session');
-    console.log(`Auth Session: ${session}`);
-    if(!session) redirect('/sign-in');
+    const session = getSessionCookie();
+    if(!session) return new Error('No user session found');
     const session_id = await decrypt(session.value);
     const user = await getUserBySession(session_id);
-    if(!user || user instanceof Error) redirect('/sign-in');
+    if(!user) return new Error('No user found for session');
+    if(user instanceof Error) return user;
     //Refresh the session expiry
-    await updateSession(session_id);
+    //await updateSession(session_id);
     return user;
 };
 
