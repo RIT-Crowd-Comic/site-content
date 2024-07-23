@@ -49,8 +49,13 @@ const CreateToolsCanvasPaperJS = () => {
     // Router for sending the user to other pages (used in toPublish())
     const router = useRouter();
 
-    // Edit stacks for undo/redo feature
-    let [prevEdits,setPrevEdits] = useState<paper.Layer[]>([]) 
+    // Edit stacks for undo feature
+    let [prevEdits,setPrevEdits] = useState<[{id: Number,svg: string}]>([{id:-1,svg:""}]) 
+    const UNDO_CAP = 18; //controls how many edits are tracked with undo tool (must account for -3 for buffer room)
+    let [justUndid,setJustUndid] = useState(false);
+
+    //Redo tracking
+    let [prevUndos,setPrevUndos] = useState<[{id: Number,svg: string}]>([{id:-1,svg:""}]) 
 
     // Call useEffect() in order obtain the value of the canvas after the first render
     // Pass in an empty array so that useEffect is only called once, after the initial render
@@ -74,13 +79,6 @@ const CreateToolsCanvasPaperJS = () => {
         layer1Reference.current = new paper.Layer();
         layer2Reference.current = new paper.Layer();
         layer1Reference.current.activate();
-
-        //Set base undo array
-        if(!prevEdits.includes(canvasProject.current.activeLayer)){
-            prevEdits.push(canvasProject.current.activeLayer)
-            setPrevEdits(prevEdits);
-            console.log(prevEdits)
-        }
 
         // If previous layer data exists, set the layers to that, otherwise make new layers
         try {
@@ -123,6 +121,15 @@ const CreateToolsCanvasPaperJS = () => {
         //setPanel1Project(canvasProject.current.layers);
         //setPanel2Project(canvasProject.current);
         //setPanel3Project(canvasProject.current);
+
+
+        //Set base undo array
+        if(!prevEdits.includes({id: layer1Reference.current.id, svg:String(layer1Reference.current.exportSVG({asString: true}))})){
+            prevEdits.push({id: layer1Reference.current.id, svg:String(layer1Reference.current.exportSVG({asString: true}))})
+            setPrevEdits(prevEdits);
+            console.log(prevEdits)
+        }
+
     }, [])
 
     // === TOOLS ===
@@ -179,16 +186,13 @@ const CreateToolsCanvasPaperJS = () => {
     // Saves edit to edit stack on mouse up 
     penTool.current.onMouseUp = function (event: paper.ToolEvent) {
         if(canvasProject.current && canvasProject.current.activeLayer.locked == false) {
-            prevEdits.push(canvasProject.current.activeLayer);
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
             setPrevEdits(prevEdits);
-            if(prevEdits) {
-                console.log("Saved edits: " + prevEdits.length)
-            }
-            else
-            {
-                console.log("Edits not tracking")
-            }
-            
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
         }
     }
 
@@ -261,6 +265,16 @@ const CreateToolsCanvasPaperJS = () => {
         clipPath?.remove;
         //switch back to old layer
         changeLayer();
+
+        if(canvasProject.current && canvasProject.current.activeLayer.locked == false) {
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
+        }
     }
 
     // --- ERASER TOOL ---
@@ -321,6 +335,15 @@ const CreateToolsCanvasPaperJS = () => {
             canvasProject.current.activeLayer.rasterize({ resolution: 300 });
             tmpGroup?.remove();
             mask?.remove();
+
+            //edit tracking
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
         }
     }
 
@@ -347,6 +370,19 @@ const CreateToolsCanvasPaperJS = () => {
             let fillPath = new paper.Path.Rectangle(point, size);
             fillPath.fillColor = new paper.Color(fillColor);
             fillPath.blendMode = 'normal';
+        }
+    }
+
+    //undo tool for edit tracking
+    fillTool.current.onMouseUp = function (event: paper.ToolEvent) {
+        if(canvasProject.current && canvasProject.current.activeLayer.locked == false) {
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
         }
     }
 
@@ -478,6 +514,15 @@ const CreateToolsCanvasPaperJS = () => {
                 drawShape(currentShape);
             }
             clearStates();
+
+            //edit tracking for undo tool
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
         }
     }
 
@@ -565,6 +610,18 @@ const CreateToolsCanvasPaperJS = () => {
         }
     }
 
+    textTool.current.onMouseUp = function (event: paper.ToolEvent) {
+        if(canvasProject.current && canvasProject.current.activeLayer.locked == false) {
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
+        }
+    }
+
 
     // --- STICKER TOOL ---
     // Boolean used to determine if the sticker tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
@@ -595,6 +652,15 @@ const CreateToolsCanvasPaperJS = () => {
                 sticker.position = event.point;
             }
             setStickerMouseDragged(false);
+
+            //edit tracking fro undo
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
         }
     }
 
@@ -678,6 +744,15 @@ const CreateToolsCanvasPaperJS = () => {
                     setSelectionInfo([]);
                 }
             }
+
+            //edit tracking for undo tool
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
         }
         resetSelectStates();
     }
@@ -815,6 +890,14 @@ const CreateToolsCanvasPaperJS = () => {
         //resets transform action state
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             setTransformAction("none");
+            //edit tracking for undo
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
         }
     }
 
@@ -1012,8 +1095,17 @@ const CreateToolsCanvasPaperJS = () => {
             //deselects if previously was selecting or transforming before clearing
             setAreaSelected(false);
             clearSelection();
+        
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
         }
     }
+    
 
     const toggleLayerVisibility = (event: ChangeEvent<HTMLInputElement>) => {
         if (backgroundLayerReference.current && event.target.value === '0') {
@@ -1071,35 +1163,78 @@ const CreateToolsCanvasPaperJS = () => {
 
     // Undoes the last stroke to the canvas
     function undo() {
-        let change = prevEdits.pop()
-        
+        let change;
+        if(prevEdits.length >= 4){
+            change = prevEdits[prevEdits.length-2]
+            let holder = prevEdits.pop()
+            if(holder)
+            {
+                prevUndos.push(holder);
+            }
+        }
+
         if(change && backgroundLayerReference.current && layer1Reference.current && layer2Reference.current){
             if(change.id == backgroundLayerReference.current.id){
-                //backgroundLayerReference.current = change;
-                backgroundLayerReference.current.copyContent(change)
+                backgroundLayerReference.current.removeChildren();
+                backgroundLayerReference.current.importSVG(change.svg);
                 backgroundLayerReference.current.activate()
                 
             }
             if(change.id == layer1Reference.current.id){
-                //layer1Reference.current = change;
-                layer1Reference.current.copyContent(change);
+                
+                layer1Reference.current.removeChildren();
+                layer1Reference.current.importSVG(change.svg);
                 layer1Reference.current.activate();
                 
             }
             if(change.id == layer2Reference.current.id){
-                //layer2Reference.current = change;
-                layer2Reference.current.copyContent(change);
+                layer2Reference.current.removeChildren();
+                layer2Reference.current.importSVG(change.svg);
                 layer2Reference.current.activate();
                 
             }
+
+            setPrevUndos(prevUndos);
         }
         setPrevEdits(prevEdits);
-        
+        setJustUndid(true);
     }
 
-    /*function redo() {
-        
-    }*/
+    function redo() {
+        let change;
+        if(justUndid){
+            change = prevUndos.pop()
+            if(change)
+            {
+                prevEdits.push(change);
+            }
+        }
+        if(change && backgroundLayerReference.current && layer1Reference.current && layer2Reference.current){
+            if(change.id == backgroundLayerReference.current.id){
+                backgroundLayerReference.current.removeChildren();
+                backgroundLayerReference.current.importSVG(change.svg);
+                backgroundLayerReference.current.activate()
+                
+            }
+            if(change.id == layer1Reference.current.id){
+                
+                layer1Reference.current.removeChildren();
+                layer1Reference.current.importSVG(change.svg);
+                layer1Reference.current.activate();
+                
+            }
+            if(change.id == layer2Reference.current.id){
+                layer2Reference.current.removeChildren();
+                layer2Reference.current.importSVG(change.svg);
+                layer2Reference.current.activate();
+                
+            }
+
+            
+        }
+        setPrevUndos(prevUndos);
+        setPrevEdits(prevEdits);
+    }
 
     // Saves the project's layer image data to localStorage
     const save = (showAlert: Boolean) => {
@@ -1197,7 +1332,7 @@ const CreateToolsCanvasPaperJS = () => {
                         <button className="btn" id="undoButton" onClick={undo}></button>
                     </label>
                     <label htmlFor="redoButton" id={styles.redoLabel}>
-                        <button className="btn" id="redoButton"></button>
+                        <button className="btn" id="redoButton" onClick={redo}></button>
                     </label>
 
                     <label htmlFor="clearButton" id={styles.clearLabel}>
