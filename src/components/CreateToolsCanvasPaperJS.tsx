@@ -670,8 +670,11 @@ const CreateToolsCanvasPaperJS = () => {
     const [transformAction, setTransformAction] = useState("none");
 
     //
-    //const [cornerSelected, setCornerSelected] = useState(new paper.Point(0, 0))
     const [oppositeCorner, setOppositeCorner] = useState(new paper.Point(0, 0))
+
+    //
+    const [scaleFactorX, setScaleFactorX] = useState(0);
+    const [scaleFactorY, setScaleFactorY] = useState(0);
 
     // The Transform Tool:
     const [transformTool, setTransformTool] = useState<paper.Tool>(new paper.Tool());
@@ -790,7 +793,7 @@ const CreateToolsCanvasPaperJS = () => {
             if (transformAction == "moving") {
                 setIsTransforming(true);
 
-                //moving
+                //moves selected area using position
                 transformInfo[0].position = event.point;
                 rasterInfo[1].position = event.point;
                 return;
@@ -798,13 +801,24 @@ const CreateToolsCanvasPaperJS = () => {
             else if (transformAction == "resizing") {
                 setIsTransforming(true);
 
-                //scales using scale function                
+                //figure out scale factor
+                setScaleFactorX((event.point.x - oppositeCorner.x) / transformInfo[0].bounds.width);
+                setScaleFactorY((event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height);
+                //setScaleFactorX(1);
+                //setScaleFactorY(1)
+
+                //adjust selection box
+                transformInfo[0].bounds = new paper.Rectangle(oppositeCorner, event.point);
+                rasterInfo[1].bounds = new paper.Rectangle(oppositeCorner, event.point);
+
+                console.log(scaleFactorX);
+                console.log(scaleFactorY);
+
                 //flickers due to each frame flipping the selection (when negative)
-                //have bounds adjust and scale and then on mouseup scale raster
-                transformInfo[0].scale((event.point.x - oppositeCorner.x) / transformInfo[0].bounds.width,
-                    (event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height, oppositeCorner);
-                rasterInfo[1].scale((event.point.x - oppositeCorner.x) / rasterInfo[1].bounds.width,
-                    (event.point.y - oppositeCorner.y) / rasterInfo[1].bounds.height, oppositeCorner);
+                // transformInfo[0].scale((event.point.x - oppositeCorner.x) / transformInfo[0].bounds.width,
+                //     (event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height, oppositeCorner);
+                // rasterInfo[1].scale((event.point.x - oppositeCorner.x) / rasterInfo[1].bounds.width,
+                //     (event.point.y - oppositeCorner.y) / rasterInfo[1].bounds.height, oppositeCorner);
                 return;
             }
             else if (transformAction == "rotating") {
@@ -817,7 +831,15 @@ const CreateToolsCanvasPaperJS = () => {
         //resets transform action state
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             if (transformAction == "resizing") {
-                setOppositeCorner(new paper.Point(0, 0))
+                console.log(scaleFactorX);
+                console.log(scaleFactorY);
+
+                transformInfo[0].scale(scaleFactorX,scaleFactorY,oppositeCorner);
+                rasterInfo[1].scale(scaleFactorX,scaleFactorY,oppositeCorner);
+
+                setOppositeCorner(new paper.Point(0, 0));
+                setScaleFactorX(0);
+                setScaleFactorY(0);
             }
             setTransformAction("none");
         }
