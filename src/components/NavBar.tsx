@@ -3,8 +3,14 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react';
+import { setCookie } from 'cookies-next';
 import {getUserBySession} from "@/api/apiCalls";
-import {logout, decrypt, getSessionCookie} from "@/app/login/loginUtils";
+import {logout, encrypt, decrypt, getSessionCookie} from "@/app/login/loginUtils";
+
+const updateSession = async (session_id: string) => {
+  const newExpiration = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  setCookie('cookie', await encrypt({session_id, newExpiration}), { expires: newExpiration, httpOnly: true });
+}
 
 const NavBar = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -18,6 +24,7 @@ const NavBar = () => {
         const user = await getUserBySession(parsedCookie.sessionId);
         if (user && !user.message) {
           setIsSignedIn(true);
+          await updateSession(session_id);
           return;
         }
       }

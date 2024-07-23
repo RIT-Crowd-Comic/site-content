@@ -2,7 +2,7 @@
 
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
-import {redirect} from "next/navigation";
+import { setCookie } from "cookies-next";
 import { insertSession, getUserBySession, authenticate, createUser } from "@/api/apiCalls";
 
 const secretKey = 'monkey';
@@ -45,16 +45,6 @@ const saveSession = async (user_id: string) => {
     if (!sessionId) return 'Failed to sign in';
     sessionId = await encrypt({ sessionId, expireDate });
     cookies().set('session', sessionId, { expires: expireDate, httpOnly: true });
-};
-
-/**
- * Refresh expiry date of a session
- * @param request 
- * @returns 
- */
-const updateSession = async (session_id: string) => {
-    const newExpiration = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-    cookies().set('session', await encrypt(session_id), { expires: newExpiration, httpOnly: true });
 };
 
 /**
@@ -114,4 +104,25 @@ const getSessionCookie = () =>{
     return cookies().get('session');
 };
 
-export {authenticateSession, login, register, logout, decrypt, getSessionCookie};
+/**
+ * Refresh expiry date of a session
+ * @param request 
+ * @returns 
+ */
+const updateSession = async (session_id: string) => {
+    console.log('updating');
+    const newExpiration = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    const options = { expires: newExpiration, httpOnly: true };
+    if(!typeof window) {
+        //Server side execution
+        cookies().set('session', await encrypt({session_id, newExpiration}), options);
+        console.log('Server Refresh');
+        return 'Cookie Refreshed';
+    }
+    //Client side executions
+    setCookie('session', await encrypt({session_id, newExpiration}), options);
+    console.log('Client Refresh');
+    return 'Cookie Refreshed';
+};
+
+export {authenticateSession, login, register, logout, encrypt, decrypt, getSessionCookie, updateSession};
