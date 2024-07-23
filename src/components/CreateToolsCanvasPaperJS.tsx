@@ -798,37 +798,13 @@ const CreateToolsCanvasPaperJS = () => {
             else if (transformAction == "resizing") {
                 setIsTransforming(true);
 
-                //scale options
-                //try calcing scale factor with new rect instead 
-                //(doesn't let users flip selection, will need to handle it separately,
-                //ex. if (x or y scale factor is negative (aka if eventpointx-oppositecornerx = -val), then have scaling coefficients be negative)
-                // let newRect = new paper.Rectangle(oppositeCorner, event.point);
-                // transformInfo[0].scale(newRect.width / transformInfo[0].bounds.width,
-                //     newRect.height / transformInfo[0].bounds.height, oppositeCorner);
-                // rasterInfo[1].scale(newRect.width / rasterInfo[1].bounds.width,
-                //     newRect.height / rasterInfo[1].bounds.height, oppositeCorner);
-
-                // transformInfo[0].bounds = new paper.Rectangle(oppositeCorner, event.point);
-                // rasterInfo[1].bounds = new paper.Rectangle(oppositeCorner, event.point);
-                // if(event.point.x - oppositeCorner.x){
-                //     rasterInfo[1].scale(-1,1);
-                // }
-                // else if(event.point.y - oppositeCorner.y){
-                //     rasterInfo[1].scale(1,-1);
-                // }
-
-                //scale using scale function (have scaling negative be applied differently?)
+                //scales using scale function                
                 //flickers due to each frame flipping the selection (when negative)
+                //have bounds adjust and scale and then on mouseup scale raster
                 transformInfo[0].scale((event.point.x - oppositeCorner.x) / transformInfo[0].bounds.width,
                     (event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height, oppositeCorner);
                 rasterInfo[1].scale((event.point.x - oppositeCorner.x) / rasterInfo[1].bounds.width,
                     (event.point.y - oppositeCorner.y) / rasterInfo[1].bounds.height, oppositeCorner);
-
-                console.log(oppositeCorner)
-                console.log(event.point);
-                console.log((event.point.x - oppositeCorner.x) / transformInfo[0].bounds.width);
-                console.log((event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height);
-
                 return;
             }
             else if (transformAction == "rotating") {
