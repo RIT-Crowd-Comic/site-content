@@ -49,6 +49,14 @@ const CreateToolsCanvasPaperJS = () => {
     // Router for sending the user to other pages (used in toPublish())
     const router = useRouter();
 
+    // Edit stacks for undo feature
+    let [prevEdits,setPrevEdits] = useState<[{id: Number,svg: string}]>([{id:-1,svg:""}]) 
+    const UNDO_CAP = 18; //controls how many edits are tracked with undo tool (must account for -3 for buffer room)
+    let [justUndid,setJustUndid] = useState(false);
+
+    //Redo tracking
+    let [prevUndos,setPrevUndos] = useState<[{id: Number,svg: string}]>([{id:-1,svg:""}]) 
+
     // Call useEffect() in order obtain the value of the canvas after the first render
     // Pass in an empty array so that useEffect is only called once, after the initial render
     useEffect(() => {
@@ -113,6 +121,15 @@ const CreateToolsCanvasPaperJS = () => {
         //setPanel1Project(canvasProject.current.layers);
         //setPanel2Project(canvasProject.current);
         //setPanel3Project(canvasProject.current);
+
+
+        //Set base undo array
+        if(!prevEdits.includes({id: layer1Reference.current.id, svg:String(layer1Reference.current.exportSVG({asString: true}))})){
+            prevEdits.push({id: layer1Reference.current.id, svg:String(layer1Reference.current.exportSVG({asString: true}))})
+            setPrevEdits(prevEdits);
+            console.log(prevEdits)
+        }
+
     }, [])
 
     // === TOOLS ===
@@ -166,6 +183,18 @@ const CreateToolsCanvasPaperJS = () => {
         }
     }
 
+    // Saves edit to edit stack on mouse up 
+    penTool.current.onMouseUp = function (event: paper.ToolEvent) {
+        if(canvasProject.current && canvasProject.current.activeLayer.locked == false) {
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
+        }
+    }
 
     // *** SHADING TOOL ***
     // This tool creates a comic-styled shading effect on a separate layer to everything else to avoid overlaps. 
@@ -236,6 +265,16 @@ const CreateToolsCanvasPaperJS = () => {
         clipPath?.remove;
         //switch back to old layer
         changeLayer();
+
+        if(canvasProject.current && canvasProject.current.activeLayer.locked == false) {
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
+        }
     }
 
     // --- ERASER TOOL ---
@@ -296,6 +335,15 @@ const CreateToolsCanvasPaperJS = () => {
             canvasProject.current.activeLayer.rasterize({ resolution: 300 });
             tmpGroup?.remove();
             mask?.remove();
+
+            //edit tracking
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
         }
     }
 
@@ -322,6 +370,19 @@ const CreateToolsCanvasPaperJS = () => {
             let fillPath = new paper.Path.Rectangle(point, size);
             fillPath.fillColor = new paper.Color(fillColor);
             fillPath.blendMode = 'normal';
+        }
+    }
+
+    //undo tool for edit tracking
+    fillTool.current.onMouseUp = function (event: paper.ToolEvent) {
+        if(canvasProject.current && canvasProject.current.activeLayer.locked == false) {
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
         }
     }
 
@@ -453,6 +514,15 @@ const CreateToolsCanvasPaperJS = () => {
                 drawShape(currentShape);
             }
             clearStates();
+
+            //edit tracking for undo tool
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
         }
     }
 
@@ -540,6 +610,18 @@ const CreateToolsCanvasPaperJS = () => {
         }
     }
 
+    textTool.current.onMouseUp = function (event: paper.ToolEvent) {
+        if(canvasProject.current && canvasProject.current.activeLayer.locked == false) {
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
+        }
+    }
+
 
     // --- STICKER TOOL ---
     // Boolean used to determine if the sticker tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
@@ -570,6 +652,15 @@ const CreateToolsCanvasPaperJS = () => {
                 sticker.position = event.point;
             }
             setStickerMouseDragged(false);
+
+            //edit tracking fro undo
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
         }
     }
 
@@ -653,6 +744,15 @@ const CreateToolsCanvasPaperJS = () => {
                     setSelectionInfo([]);
                 }
             }
+
+            //edit tracking for undo tool
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
         }
         resetSelectStates();
     }
@@ -790,6 +890,14 @@ const CreateToolsCanvasPaperJS = () => {
         //resets transform action state
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             setTransformAction("none");
+            //edit tracking for undo
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
         }
     }
 
@@ -987,8 +1095,17 @@ const CreateToolsCanvasPaperJS = () => {
             //deselects if previously was selecting or transforming before clearing
             setAreaSelected(false);
             clearSelection();
+        
+            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
+            if(prevEdits.length > UNDO_CAP){
+                prevEdits.shift();
+            }
+            setPrevEdits(prevEdits);
+            setJustUndid(false);
+            setPrevUndos([{id:-1,svg:""}]);
         }
     }
+    
 
     const toggleLayerVisibility = (event: ChangeEvent<HTMLInputElement>) => {
         if (backgroundLayerReference.current && event.target.value === '0') {
@@ -1045,13 +1162,79 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     // Undoes the last stroke to the canvas
-    /*function undo() {
-        
-    }*/
+    function undo() {
+        let change;
+        if(prevEdits.length >= 4){
+            change = prevEdits[prevEdits.length-2]
+            let holder = prevEdits.pop()
+            if(holder)
+            {
+                prevUndos.push(holder);
+            }
+        }
 
-    /*function redo() {
-        
-    }*/
+        if(change && backgroundLayerReference.current && layer1Reference.current && layer2Reference.current){
+            if(change.id == backgroundLayerReference.current.id){
+                backgroundLayerReference.current.removeChildren();
+                backgroundLayerReference.current.importSVG(change.svg);
+                backgroundLayerReference.current.activate()
+                
+            }
+            if(change.id == layer1Reference.current.id){
+                
+                layer1Reference.current.removeChildren();
+                layer1Reference.current.importSVG(change.svg);
+                layer1Reference.current.activate();
+                
+            }
+            if(change.id == layer2Reference.current.id){
+                layer2Reference.current.removeChildren();
+                layer2Reference.current.importSVG(change.svg);
+                layer2Reference.current.activate();
+                
+            }
+
+            setPrevUndos(prevUndos);
+        }
+        setPrevEdits(prevEdits);
+        setJustUndid(true);
+    }
+
+    function redo() {
+        let change;
+        if(justUndid){
+            change = prevUndos.pop()
+            if(change)
+            {
+                prevEdits.push(change);
+            }
+        }
+        if(change && backgroundLayerReference.current && layer1Reference.current && layer2Reference.current){
+            if(change.id == backgroundLayerReference.current.id){
+                backgroundLayerReference.current.removeChildren();
+                backgroundLayerReference.current.importSVG(change.svg);
+                backgroundLayerReference.current.activate()
+                
+            }
+            if(change.id == layer1Reference.current.id){
+                
+                layer1Reference.current.removeChildren();
+                layer1Reference.current.importSVG(change.svg);
+                layer1Reference.current.activate();
+                
+            }
+            if(change.id == layer2Reference.current.id){
+                layer2Reference.current.removeChildren();
+                layer2Reference.current.importSVG(change.svg);
+                layer2Reference.current.activate();
+                
+            }
+
+            
+        }
+        setPrevUndos(prevUndos);
+        setPrevEdits(prevEdits);
+    }
 
     // Saves the project's layer image data to localStorage
     const save = (showAlert: Boolean) => {
@@ -1089,56 +1272,56 @@ const CreateToolsCanvasPaperJS = () => {
                 <div id={styles.toolRadioSelects}>
                     <div id={styles.penTool} className={styles.toolStyling}>
                         <label htmlFor="pen" id={styles.penLabel}>
-                            <input type="radio" name="tools" id="pen" value={toolStates.PEN} defaultChecked onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="pen" title="Pen Tool" value={toolStates.PEN} defaultChecked onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.eraserTool} className={styles.toolStyling}>
                         <label htmlFor="eraser" id={styles.eraserLabel}>
-                            <input type="radio" name="tools" id="eraser" value={toolStates.ERASER} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="eraser" title="Eraser Tool" value={toolStates.ERASER} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.fillTool} className={styles.toolStyling}>
                         <label htmlFor="fill" id={styles.fillLabel}>
-                            <input type="radio" name="tools" id="fill" value={toolStates.FILL} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="fill" title="Fill Tool" value={toolStates.FILL} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.shaderTool} className={styles.toolStyling}>
                         <label htmlFor="shader" id={styles.shaderLabel}>
-                            <input type="radio" name="tools" id="shader" value={toolStates.SHADER} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="shader" title="Shading/Pattern Tool" value={toolStates.SHADER} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.shapeTool} className={styles.toolStyling}>
                         <label htmlFor="shape" id={styles.shapeLabel}>
-                            <input type="radio" name="tools" id="shape" value={toolStates.SHAPE} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="shape" title="Shape Tool" value={toolStates.SHAPE} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.textTool} className={styles.toolStyling}>
                         <label htmlFor="text" id={styles.textLabel}>
-                            <input type="radio" name="tools" id="text" value={toolStates.TEXT} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="text" title="Text Tool" value={toolStates.TEXT} onChange={findSelectedTool} />
                             {/* (HALF FUNCTIONAL) */}
                         </label>
                     </div>
 
                     <div id={styles.stickerTool} className={styles.toolStyling}>
                         <label htmlFor="sticker" id={styles.stickerLabel}>
-                            <input type="radio" name="tools" id="sticker" value={toolStates.STICKER} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="sticker" title="Text Tool" value={toolStates.STICKER} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.selectTool} className={styles.toolStyling}>
                         <label htmlFor="select" id={styles.selectLabel}>
-                            <input type="radio" name="tools" id="select" value={toolStates.SELECT} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="select" title="Selection Tool" value={toolStates.SELECT} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.transformTool} className={styles.toolStyling}>
                         <label htmlFor="transform" id={styles.transformLabel}>
-                            <input type="radio" name="tools" id="transform" value={toolStates.TRANSFORM} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="transform" title="Transform Tool" value={toolStates.TRANSFORM} onChange={findSelectedTool} />
                             {/* (SEMI FUNCTIONAL) */}
                         </label>
                     </div>
@@ -1146,14 +1329,14 @@ const CreateToolsCanvasPaperJS = () => {
 
                 <div id={styles.functionButtons}>
                     <label htmlFor="undoButton" id={styles.undoLabel}>
-                        <button className="btn" id="undoButton"></button>
+                        <button className="btn" id="undoButton" onClick={undo} title="Undo"></button>
                     </label>
                     <label htmlFor="redoButton" id={styles.redoLabel}>
-                        <button className="btn" id="redoButton"></button>
+                        <button className="btn" id="redoButton" onClick={redo} title="Redo"></button>
                     </label>
 
                     <label htmlFor="clearButton" id={styles.clearLabel}>
-                        <button className="btn" id="clearButton" onClick={clearLayer}></button>
+                        <button className="btn" id="clearButton" title="Clear" onClick={clearLayer}></button>
                     </label>
                 </div>
 
