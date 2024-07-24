@@ -1309,7 +1309,7 @@ const CreateToolsCanvasPaperJS = () => {
 
                     <div id={styles.stickerTool} className={styles.toolStyling}>
                         <label htmlFor="sticker" id={styles.stickerLabel}>
-                            <input type="radio" name="tools" id="sticker" title="Text Tool" value={toolStates.STICKER} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="sticker" title="Sticker Tool" value={toolStates.STICKER} onChange={findSelectedTool} />
                         </label>
                     </div>
 
