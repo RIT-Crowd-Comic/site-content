@@ -30,7 +30,7 @@
 
     flex-direction: row;
 
-    height: 80vh;
+    height: 50vh;
     width: 80%;
 
     margin: 20px auto;
@@ -51,6 +51,11 @@
     width: auto !important;
 
     aspect-ratio: 3 / 2;
+}
+
+#miniNavbar
+{
+    display: none;
 }
 
 /* LEFT SIDE/TOOL BAR */
@@ -86,12 +91,18 @@
 }
 
 
-#toolOptions, #layerOptions, .panelSelect
+#toolOptions, #layerOptions
 {
     background-color: #00000062;
     border: 3px solid black;
 
     padding: 7px;
+}
+
+.panelSelect
+{
+    background-color: #00000062;
+    border: 3px solid black;
 }
 
 /* RIGHT SIDE BAR */
@@ -127,6 +138,11 @@
 }
 
 /* - LAYER OPTIONS */
+
+#layerOptions, .panelSelect
+{
+    overflow: hidden;
+}
 
 .layerSelect
 {
@@ -523,18 +539,20 @@
     bottom: 0;
 }
 
-.publishButton, .saveButton
+.publishButton, .saveButton, .backButton
 {
-    background-color: white;
-    color: black;
-
-    padding: 5px;
-    border: 3px solid black;
-    border-bottom: 4px solid black;
-    margin: 0 5px 5px 0;
+    background-color: transparent;
+    color: white;
+    
+    margin: 0;
 }
 
-.publishButton:hover, .saveButton:hover
+.publishButton
+{
+    margin-left: 5px;
+}
+
+.publishButton:hover, .saveButton:hover, .backButton:hover
 {
     background-color:#242424;
 
@@ -542,7 +560,7 @@
     border-bottom: 4px solid black;
 }
 
-.publishButton:active, .saveButton:active
+.publishButton:active, .saveButton:active, .backButton:active
 {
     background-color: #9c9c9c;
     position: relative;
@@ -627,18 +645,57 @@
 }
 
 /* [sm] Small devices, 576px and up */
-@media (min-width: 576px) {}
+@media (min-width: 576px) {
 
-/* [md] Medium devices, 768px and up */
-@media (min-width: 768px) {}
+    #createPage
+    {
+        display: grid;
 
-/* [lg] Large desktops, 992px and up */
-@media (min-width: 992px) {
+        grid-template-columns: auto auto 25%;
+        grid-template-rows: 100%;
+        grid-template-areas:
+        "toolBar canvas tools";
+
+        flex-direction: row;
+
+        height: 60vh;
+        max-width: 80vw;
+
+        margin: 20px auto;
+        align-items: start;
+        justify-content: center;
+    }
+
+    #pullOut
+    {
+        margin-left: 20px;
+        height: 100%;
+        max-height: 100%;
+        grid-area: tools;
+        display: grid;
+        grid-template-rows: auto 40% 10%;
+
+        row-gap: 10px;
+    }
+
+    #miniNavbar
+    {
+        display: none;
+    }
     
+    .panelStyling
+    {
+        height: 100%;
+    }
+
+    .panelSelect
+    {
+        padding: 2px 7px;
+    }
 }
 
-/* [xl] Extra large devices 1200px and up */
-@media (min-width: 1200px) {
+/* [md] Medium devices, 768px and up */
+@media (min-width: 768px) {
     .body
     {
         width: 100%;
@@ -660,23 +717,74 @@
         position: absolute;
     }
 
+    
     #createPage
     {
         display: grid;
 
         grid-template-columns: auto auto 25%;
-        grid-template-rows: 100%;
+        grid-template-rows: 100% auto;
         grid-template-areas:
-        "toolBar canvas tools";
+        "toolBar canvas tools"
+        "bottomBar bottomBar bottomBar";
 
         flex-direction: row;
 
-        height: 80vh;
+        height: 40vh;
         max-width: 80vw;
 
         margin: 20px auto;
         align-items: start;
         justify-content: center;
+    }
+
+    #pullOut
+    {
+        margin-left: 20px;
+        height: 100%;
+        max-height: 100%;
+        grid-area: tools;
+        display: grid;
+        grid-template-rows: auto 40% 10%;
+
+        row-gap: 10px;
+    }
+
+    
+
+    #miniNavbar
+    {
+        height: auto;
+        width: 100%;
+
+        margin-top: 10px;
+        grid-area: bottomBar;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        background-color: #00000062;
+        border: 3px solid black;
+        padding: 3px;
+    }
+
+    #savePublish
+    {
+        z-index: 99;
+
+        align-self: center;
+        margin: 0;
+    }
+    
+    .panelStyling
+    {
+        height: 100%;
+    }
+
+    .panelSelect
+    {
+        padding: 2px 7px;
     }
 
     #canvas
@@ -723,12 +831,17 @@
     }
 
 
-    #toolOptions, #layerOptions, .panelSelect
+    #toolOptions, #layerOptions
     {
         background-color: #00000062;
         border: 3px solid black;
 
         padding: 7px;
+    }
+    .panelSelect
+    {
+        background-color: #00000062;
+        border: 3px solid black;
     }
 
     /* RIGHT SIDE BAR */
@@ -844,31 +957,6 @@
         background-clip: content-box;
     }
 
-    .toolStyles::-webkit-scrollbar-thumb:hover, #layersList::-webkit-scrollbar-thumb:hover
-    {
-        background-color: #6f6f6f;
-    }
-
-    .toolStyles::-webkit-scrollbar-thumb:active, #layersList::-webkit-scrollbar-thumb:active
-    {
-        background-color: #282828;
-    }
-
-    .toolStyles::-webkit-scrollbar-button:hover, #layersList::-webkit-scrollbar-thumb:hover
-    {
-        background-color: #6f6f6f;
-    }
-
-    #fieldSet::-webkit-scrollbar
-    {
-        display:none;
-    }
-
-    #fieldSet::-webkit-scrollbar-thumb
-    {
-        display:none;
-    }
-
     /* ICONS */
 
     /* - HIDES THE BUTTONS */
@@ -878,70 +966,6 @@
         opacity: 0;
         width: 25px;
         height: 25px;
-    }
-
-    /* - DECLARES ALL ICONS */
-    #penLabel
-    {
-        background: url("../../public/images/icons/draw-icons/pen.svg") no-repeat center/contain;
-        transform: scaleY(-1);
-    }
-
-    #eraserLabel
-    {
-        background: url("../../public/images/icons/draw-icons/eraser.svg") no-repeat center/contain;
-    }
-
-    #fillLabel
-    {
-        background: url("../../public/images/icons/draw-icons/bucket.svg") no-repeat center/contain;
-        transform: scaleX(-1);
-    }
-
-    #shaderLabel
-    {
-        background: url("../../public/images/icons/draw-icons/tone.svg") no-repeat center/contain;
-    }
-
-    #shapeLabel
-    {
-        background: url("../../public/images/icons/draw-icons/shapes.svg") no-repeat center/contain;
-    }
-
-    #textLabel
-    {
-        background: url("../../public/images/icons/draw-icons/text.svg") no-repeat center/contain;
-    }
-
-    #stickerLabel
-    {
-        background: url("../../public/images/icons/draw-icons/sticker.svg") no-repeat center/contain;
-    }
-
-    #selectLabel
-    {
-        background: url("../../public/images/icons/draw-icons/select.svg") no-repeat center/contain;
-    }
-
-    #transformLabel
-    {
-        background: url("../../public/images/icons/draw-icons/transform.svg") no-repeat center/contain;
-    }
-
-    #undoLabel
-    {
-        background: url("../../public/images/icons/draw-icons/undo.svg") no-repeat center/contain;
-    }
-
-    #redoLabel
-    {
-        background: url("../../public/images/icons/draw-icons/undo.svg") no-repeat center/contain;
-        transform: scaleX(-1);
-    }
-
-    #clearLabel
-    {
-        background: url("../../public/images/icons/draw-icons/clear.svg") no-repeat center/contain;
     }
 
     /* - BUTTON CSS */
@@ -1146,44 +1170,19 @@
     }
 
     /* SAVE & PUBLISH */
-    #savePublish
+}
+
+/* [lg] Large desktops, 992px and up */
+@media (min-width: 992px) {
+    #createPage
     {
-        z-index: 99;
-
-        grid-area: canvas;
-
-        align-self: center;
-        margin: 75% auto 0;
-
-        bottom: 0;
+        height: 80vh;
     }
+}
 
-    .publishButton, .saveButton
-    {
-        background-color: white;
-        color: black;
-
-        padding: 5px;
-        border: 3px solid black;
-        border-bottom: 4px solid black;
-        margin: 0 5px 5px 0;
-    }
-
-    .publishButton:hover, .saveButton:hover
-    {
-        background-color:#242424;
-
-        border: 3px solid black;
-        border-bottom: 4px solid black;
-    }
-
-    .publishButton:active, .saveButton:active
-    {
-        background-color: #9c9c9c;
-        position: relative;
-        border: solid 3px #000000;
-        top: 1px;
-    }
+/* [xl] Extra large devices 1200px and up */
+@media (min-width: 1200px) {
+   
 }
 
 /* [xxl] Extra extra large devices, 1400px and up */

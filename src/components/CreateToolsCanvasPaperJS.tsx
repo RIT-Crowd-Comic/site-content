@@ -1288,9 +1288,12 @@ const CreateToolsCanvasPaperJS = () => {
                 </div>
             </div>
 
-            <div id={styles.savePublish}>
-                <button className={`btn ${styles.saveButton}`} id="saveButton" onClick={() => save(true)}>Save</button>
-                <button className={`btn ${styles.publishButton}`} id="publishButton" onClick={toPublish}>Publish</button>
+            <div id={styles.miniNavbar}>
+                <Link href="comic/browse"><button className={`btn ${styles.backButton}`} id="backButton">Back</button></Link>
+                <div id={styles.savePublish}>
+                    <button className={`btn ${styles.saveButton}`} id="saveButton" onClick={() => save(true)}>Save</button>
+                    <button className={`btn ${styles.publishButton}`} id="publishButton" onClick={toPublish}>Publish</button>
+                </div>
             </div>
 
             <p id={styles.warning}>Please rotate your screen for a better user experience!</p>
