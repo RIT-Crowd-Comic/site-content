@@ -1,39 +1,9 @@
 'use server';
 
-import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
-import {redirect} from "next/navigation";
 import { insertSession, getUserBySession, authenticate, createUser } from "@/api/apiCalls";
 
-const secretKey = 'monkey';
-const key = new TextEncoder().encode(secretKey);
-
 const expireDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); //1 week
-
-/**
- * Encode a payload 
- * @param payload 
- * @returns 
- */
-const encrypt = async (payload: any) => {
-    return await new SignJWT(payload)
-        .setProtectedHeader({ alg: 'HS256' })
-        .setIssuedAt()
-        .setExpirationTime('1 week from now')
-        .sign(key);
-};
-
-/**
- * Decrypt a value
- * @param input 
- * @returns 
- */
-const decrypt = async (input: string): Promise<any> => {
-    const { payload } = await jwtVerify(input, key, {
-        algorithms: ['HS256']
-    });
-    return payload;
-};
 
 /**
  * Insert the session into the data base and save the session id in a cookie
@@ -43,7 +13,6 @@ const saveSession = async (user_id: string) => {
     const session = await insertSession(user_id);
     let sessionId = session.id;
     if (!sessionId) return 'Failed to sign in';
-    sessionId = await encrypt({ sessionId, expireDate });
     cookies().set('session', sessionId, { expires: expireDate, httpOnly: true });
 };
 
@@ -54,7 +23,7 @@ const saveSession = async (user_id: string) => {
  */
 const updateSession = async (session_id: string) => {
     const newExpiration = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-    cookies().set('session', await encrypt(session_id), { expires: newExpiration, httpOnly: true });
+    cookies().set('session', session_id, { expires: newExpiration, httpOnly: true });
 };
 
 /**
@@ -64,8 +33,7 @@ const updateSession = async (session_id: string) => {
 const authenticateSession = async () => {
     const session = getSessionCookie();
     if(!session) return new Error('No user session found');
-    const session_id = await decrypt(session.value);
-    const user = await getUserBySession(session_id);
+    const user = await getUserBySession(session.value);
     if(!user) return new Error('No user found for session');
     if(user instanceof Error) return user;
     //Refresh the session expiry
@@ -114,4 +82,4 @@ const getSessionCookie = () =>{
     return cookies().get('session');
 };
 
-export {authenticateSession, login, register, logout, decrypt, getSessionCookie};
+export {authenticateSession, login, register, logout, getSessionCookie};

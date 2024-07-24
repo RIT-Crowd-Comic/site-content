@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react';
 import {getUserBySession} from "@/api/apiCalls";
-import {logout, decrypt, getSessionCookie} from "@/app/login/loginUtils";
+import {logout, getSessionCookie} from "@/app/login/loginUtils";
 
 const NavBar = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -14,8 +14,7 @@ const NavBar = () => {
       const session = await getSessionCookie();
       const session_id = session?.value;
       if (session_id) {
-        const parsedCookie = await decrypt(session_id);
-        const user = await getUserBySession(parsedCookie.sessionId);
+        const user = await getUserBySession(session_id);
         if (user && !user.message) {
           setIsSignedIn(true);
           return;
