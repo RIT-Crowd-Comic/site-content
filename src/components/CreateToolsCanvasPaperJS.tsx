@@ -941,10 +941,6 @@ const CreateToolsCanvasPaperJS = () => {
                 transformInfo[0].scale(Math.abs(scaleFactorX), Math.abs(scaleFactorY), oppositeCorner);
                 rasterInfo[1].scale(Math.abs(scaleFactorX), Math.abs(scaleFactorY), oppositeCorner);
 
-                let test = new paper.Path.Rectangle(transformInfo[0].bounds);
-                test.strokeColor = new paper.Color("red");
-                test.strokeWidth = 5;
-
                 //if prev = opp, then no change to raster only transform + or - else flip according to scale factors
                 if (prevOppCornerName == oppCornerName) {
                     if (scaleFactorX < 0) {
@@ -955,15 +951,20 @@ const CreateToolsCanvasPaperJS = () => {
                     }
                 }
                 else {
-                    //if bottom or top changes -1,1
+                    //if only bottom or top changes -1,1
                     if(prevOppCornerName[0] === oppCornerName[0]){
                         transformInfo[0].scale(-1, 1);
                          rasterInfo[1].scale(-1, 1);
                     }
-                    //if left or right changes 1,-1
-                    if(prevOppCornerName[1] === oppCornerName[1]){
+                    //if only left or right changes 1,-1
+                    else if(prevOppCornerName[1] === oppCornerName[1]){
                         transformInfo[0].scale(1, -1);
                         rasterInfo[1].scale(1, -1);
+                    }
+                    //if both changes
+                    else{
+                        transformInfo[0].scale(-1, -1);
+                        rasterInfo[1].scale(-1, -1);
                     }
                 }
 
