@@ -904,21 +904,19 @@ const CreateToolsCanvasPaperJS = () => {
                 //figure out scale factor
                 setScaleFactorX((event.point.x - oppositeCorner.x) / transformInfo[0].bounds.width);
                 setScaleFactorY((event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height);
-                //setScaleFactorX(1);
-                //setScaleFactorY(1)
 
                 //adjust selection box
-                transformInfo[0].bounds = new paper.Rectangle(oppositeCorner, event.point);
-                rasterInfo[1].bounds = new paper.Rectangle(oppositeCorner, event.point);
+                //transformInfo[0].bounds = new paper.Rectangle(oppositeCorner, event.point);
+                //rasterInfo[1].bounds = new paper.Rectangle(oppositeCorner, event.point);
 
                 console.log(scaleFactorX);
                 console.log(scaleFactorY);
 
                 //flickers due to each frame flipping the selection (when negative)
-                // transformInfo[0].scale((event.point.x - oppositeCorner.x) / transformInfo[0].bounds.width,
-                //     (event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height, oppositeCorner);
-                // rasterInfo[1].scale((event.point.x - oppositeCorner.x) / rasterInfo[1].bounds.width,
-                //     (event.point.y - oppositeCorner.y) / rasterInfo[1].bounds.height, oppositeCorner);
+                transformInfo[0].scale((event.point.x - oppositeCorner.x) / transformInfo[0].bounds.width,
+                   (event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height, oppositeCorner);
+                 rasterInfo[1].scale((event.point.x - oppositeCorner.x) / rasterInfo[1].bounds.width,
+                     (event.point.y - oppositeCorner.y) / rasterInfo[1].bounds.height, oppositeCorner);
                 return;
             }
             else if (transformAction == "rotating") {
@@ -927,20 +925,23 @@ const CreateToolsCanvasPaperJS = () => {
 
         }
     }
-    transformTool.onMouseUp = function () {
+    transformTool.onMouseUp = function (event: paper.ToolEvent) {
         //resets transform action state
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             if (transformAction == "resizing") {
                 console.log(scaleFactorX);
                 console.log(scaleFactorY);
 
-                transformInfo[0].scale(scaleFactorX,scaleFactorY,oppositeCorner);
-                rasterInfo[1].scale(scaleFactorX,scaleFactorY,oppositeCorner);
+                //raster keeps flipping
+                //transformInfo[0].scale(scaleFactorX,scaleFactorY,oppositeCorner);
+                //rasterInfo[1].scale(scaleFactorX,scaleFactorY,oppositeCorner);
+                //rasterInfo[1].position = transformInfo[0].position;
 
                 setOppositeCorner(new paper.Point(0, 0));
                 setScaleFactorX(0);
                 setScaleFactorY(0);
             }
+
             setTransformAction("none");
             //edit tracking for undo
             prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
