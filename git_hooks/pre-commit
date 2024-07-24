@@ -1,0 +1,20 @@
+#!/bin/sh
+# before committing, run eslint --fix on staged files
+
+
+ESLINT="npx eslint --fix --color"
+PRINT_FIX_ERROR=false
+
+for file in $(git diff --cached --name-only | grep ".[tj]s$"); do
+  # potentially check return result to cancel the commit on error
+  echo "[linting] $file"
+  if ! $ESLINT "$file"; then
+    PRINT_FIX_ERROR=true
+  fi
+  # re-stage file after ESLINT fixes
+  git add -u "$file"
+done
+
+if $PRINT_FIX_ERROR; then
+  echo "Please fix ESLINT errors >~<"
+fi
