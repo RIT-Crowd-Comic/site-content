@@ -7,7 +7,6 @@
     "predev": "npm run setup",
     "dev": "next dev",
     "build": "next build",
-    "prestart": "npm run setup",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
