@@ -769,15 +769,17 @@ const CreateToolsCanvasPaperJS = () => {
     // String describing action user is doing (moving, resizing, rotating, etc.)
     const [transformAction, setTransformAction] = useState("none");
 
-    //
+    // Point the selected area is scaled from
     const [oppositeCorner, setOppositeCorner] = useState(new paper.Point(0, 0))
+    
+    // Strings used to see if user flips selection
     const [prevOppCornerName, setPrevOppCornerName] = useState("");
     const [oppCornerName, setOppCornerName] = useState("");
 
-    //
+    // Boolean to check if user dragged mouse
     const [transformMouseDragged, setTransformMouseDragged] = useState(false);
 
-    //
+    // Number the selection is multiplied by when resizing
     const [scaleFactorX, setScaleFactorX] = useState(0);
     const [scaleFactorY, setScaleFactorY] = useState(0);
 
@@ -824,7 +826,8 @@ const CreateToolsCanvasPaperJS = () => {
         }
     }
 
-    //check which corner was hit (with bounds) and set opposite corner as base to scale on
+    //check which corner was hit (with bounds), sets the opposite corner 
+    //and returns the name of the opposite corner
     function findOppositeCorner(pointHit: paper.Point, rectToCheck: paper.Path.Rectangle) {
         let oppCorner = "";
 
@@ -847,46 +850,13 @@ const CreateToolsCanvasPaperJS = () => {
         return oppCorner;
     }
 
+    //sets transform action and does setup for that action
     transformTool.onMouseDown = function (event: paper.ToolEvent) {
         if (areaSelected && canvasProject.current && canvasProject.current.activeLayer.locked == false) {
-            //sets up needed variables for raster moving on first time transforming
-            //take this out of mousedown and into first activation
-            if (!isTranforming) {
-                //gets rid of shown bounds
-                canvasProject.current.activeLayer.lastChild.remove();
-
-                //sets up info needed for transforming
-                let tempTransformAreaBounds = new paper.Path.Rectangle(selectionInfo[0]);
-                setTransformInfo([tempTransformAreaBounds]);
-                let tempTransformSelectedArea = rasterInfo[0].getSubRaster(selectionInfo[1]);
-
-                clearAreaSelected(tempTransformAreaBounds);
-
-                //readds selected area to layer
-                setRasterInfo(prevState => [...prevState, tempTransformSelectedArea]);
-                canvasProject.current.activeLayer.addChild(tempTransformSelectedArea);
-                tempTransformSelectedArea.selected = true;
-
-                //contains check for first time transforming only
-                if (tempTransformAreaBounds.hitTest(event.point, { segments: true, tolerance: 10 })) {
-                    setTransformAction("resizing");
-                    let tempCorner = findOppositeCorner(event.point, tempTransformAreaBounds);
-                    setPrevOppCornerName(tempCorner);
-                }
-                else if (tempTransformAreaBounds.contains(event.point)) {
-                    setTransformAction("moving");
-                }
-                else {
-                    setTransformAction("rotating");
-                }
-                return;
-            }
-
             //runs if corners of bounds are hit (segments to check if clicked on rect, tolerance for precision)
             if (transformInfo[0].hitTest(event.point, { segments: true, tolerance: 10 })) {
                 setTransformAction("resizing");
-                let tempCorner = findOppositeCorner(event.point, transformInfo[0]);
-                setPrevOppCornerName(tempCorner);
+                setPrevOppCornerName(findOppositeCorner(event.point, transformInfo[0]));
             }
             //runs if mouse hits area inside selection
             else if (transformInfo[0].contains(event.point)) {
@@ -920,12 +890,11 @@ const CreateToolsCanvasPaperJS = () => {
                 setScaleFactorX((event.point.x - oppositeCorner.x) / transformInfo[0].bounds.width);
                 setScaleFactorY((event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height);
 
-                //adjust selection box
+                //adjust selection box and set current opposite corner name
                 transformInfo[0].bounds = new paper.Rectangle(oppositeCorner, event.point);
                 rasterInfo[1].bounds = new paper.Rectangle(oppositeCorner, event.point);
+                setOppCornerName(findOppositeCorner(event.point, transformInfo[0]));
 
-                let tempCorner = findOppositeCorner(event.point, transformInfo[0]);
-                setOppCornerName(tempCorner);
                 return;
             }
             else if (transformAction == "rotating") {
@@ -938,10 +907,12 @@ const CreateToolsCanvasPaperJS = () => {
         //resets transform action state
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             if (transformAction == "resizing" && transformMouseDragged == true) {
+                //scales size of selection
                 transformInfo[0].scale(Math.abs(scaleFactorX), Math.abs(scaleFactorY), oppositeCorner);
                 rasterInfo[1].scale(Math.abs(scaleFactorX), Math.abs(scaleFactorY), oppositeCorner);
 
-                //if prev = opp, then no change to raster only transform + or - else flip according to scale factors
+                // HANDLES FLIPPING THE SELECTION
+                //if the previous opposite corner is the same as current, then only changes bounds
                 if (prevOppCornerName == oppCornerName) {
                     if (scaleFactorX < 0) {
                         transformInfo[0].scale(-1, 1);
@@ -950,31 +921,33 @@ const CreateToolsCanvasPaperJS = () => {
                         transformInfo[0].scale(1, -1);
                     }
                 }
+                //if not the same, then changes raster as well
                 else {
-                    //if only bottom or top changes -1,1
-                    if(prevOppCornerName[0] === oppCornerName[0]){
+                    //if only bottom or top changes flips along x axis
+                    if (prevOppCornerName[0] === oppCornerName[0]) {
                         transformInfo[0].scale(-1, 1);
-                         rasterInfo[1].scale(-1, 1);
+                        rasterInfo[1].scale(-1, 1);
                     }
-                    //if only left or right changes 1,-1
-                    else if(prevOppCornerName[1] === oppCornerName[1]){
+                    //if only left or right changes flips along y axis
+                    else if (prevOppCornerName[1] === oppCornerName[1]) {
                         transformInfo[0].scale(1, -1);
                         rasterInfo[1].scale(1, -1);
                     }
-                    //if both changes
-                    else{
+                    //if both changes flips along both axis
+                    else {
                         transformInfo[0].scale(-1, -1);
                         rasterInfo[1].scale(-1, -1);
                     }
                 }
 
+                //resets states used for resizing
                 setOppositeCorner(new paper.Point(0, 0));
                 setScaleFactorX(0);
                 setScaleFactorY(0);
                 setTransformMouseDragged(false);
             }
-
             setTransformAction("none");
+            
             //edit tracking for undo
             prevEdits.push({ id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({ asString: true })) });
             if (prevEdits.length > UNDO_CAP) {
@@ -1096,8 +1069,24 @@ const CreateToolsCanvasPaperJS = () => {
         else if (Number(buttonSelected?.value) == toolStates.TRANSFORM) {
             transformTool.activate();
             clearSelection();
-            setIsTransforming(false);
             setTransformInfo([]);
+            //sets up selected area and bounds for transforming
+            if (!isTranforming && areaSelected) {
+                //gets rid of shown bounds
+                canvasProject.current?.activeLayer.lastChild.remove();
+
+                //sets up info needed for transforming
+                let tempTransformAreaBounds = new paper.Path.Rectangle(selectionInfo[0]);
+                setTransformInfo([tempTransformAreaBounds]);
+                let tempTransformSelectedArea = rasterInfo[0].getSubRaster(selectionInfo[1]);
+
+                clearAreaSelected(tempTransformAreaBounds);
+
+                //readds selected area to layer
+                setRasterInfo(prevState => [...prevState, tempTransformSelectedArea]);
+                canvasProject.current?.activeLayer.addChild(tempTransformSelectedArea);
+                tempTransformSelectedArea.selected = true;
+            }
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
             setFillOptionsEnabled(false);
