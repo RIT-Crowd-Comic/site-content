@@ -391,6 +391,11 @@ const insertSession = async (user_id: string) => {
     else return api_response;
 };
 
+/**
+ * Get a session object
+ * @param {string} session_id ID of the session to be queried from the DB
+ * @returns 
+ */
 const getSession = async (session_id: string) => {
     const api_response = await getAPICall(`/session/${session_id}`);
     if(api_response.message)
@@ -399,6 +404,17 @@ const getSession = async (session_id: string) => {
     }
     else return api_response;
 };
+
+/**
+ * Get a user by providing a session id
+ * @param {string} session_id ID of the session associated with the desired user
+ * @returns 
+ */
+const getUserBySession = async (session_id: string) => {
+    const api_response = await getAPICall(`/session/${session_id}/user`);
+    if(api_response.message) return Error(api_response);
+    else return api_response;
+}
 
 type hook = {
     position: { x: number; y: number; }[]
@@ -474,4 +490,4 @@ const publish = async (image1 : File, image2 : File, image3 : File, hooks : Arra
     return response;
 }
 
-export { getAllImageUrlsByPanelSetId, getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, getHooksFromPanelSetById, insertSession, getSession, publishHandler }
+export { getAllImageUrlsByPanelSetId, getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, getHooksFromPanelSetById, insertSession, getSession, publishHandler, getUserBySession }

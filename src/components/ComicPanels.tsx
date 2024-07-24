@@ -3,6 +3,7 @@ import styles from "@/styles/read.module.css";
 import Panel from './publish/Panel';
 import { CreateHook, Hook, Panel as IPanel } from './interfaces';
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { getSessionCookie } from "@/app/login/loginUtils";
 
 interface Props {
     setting: string,
@@ -42,11 +43,13 @@ const ComicPanels = ({ setting, hook_state, panels, router }: Props) => {
     //     return '?';
     // }
 
-    function hookLink(hook: Hook | CreateHook) {
+    async function hookLink(hook: Hook | CreateHook) {
         if (hook.next_panel_set_id) {
             router.push(`/comic?id=${hook.next_panel_set_id}`);
         }
-        router.push(`/comic/create`);
+        const cookie = await getSessionCookie();
+        if(!cookie || cookie instanceof Error) router.push(`/sign-in`);
+        else router.push(`/comic/create`);
     }
     if (!panels || panels.length === 0) return <div id={`${styles.comicPanels}`} className={`${setting}`}></div>;
 

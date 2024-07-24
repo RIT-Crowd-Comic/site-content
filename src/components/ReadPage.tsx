@@ -41,7 +41,6 @@ const ReadPage = ({ id }: Props) => {
                 const hookResponses = await apiCalls.getHooksFromPanelSetById(panelSetResponse.id) as Hook[];
 
                 if (!updateError(imageUrlsResponse) && !updateError(hookResponses)) {
-
                     // update panels array with image srcs and hooks
                     const panels = (panelSetResponse.panels).map((panel, i) => ({
                         id: panel.id,
