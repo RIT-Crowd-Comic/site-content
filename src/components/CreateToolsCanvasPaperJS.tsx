@@ -50,12 +50,12 @@ const CreateToolsCanvasPaperJS = () => {
     const router = useRouter();
 
     // Edit stacks for undo feature
-    let [prevEdits,setPrevEdits] = useState<[{id: Number,svg: string}]>([{id:-1,svg:""}]) 
+    let [prevEdits, setPrevEdits] = useState<[{ id: Number, svg: string }]>([{ id: -1, svg: "" }])
     const UNDO_CAP = 18; //controls how many edits are tracked with undo tool (must account for -3 for buffer room)
-    let [justUndid,setJustUndid] = useState(false);
+    let [justUndid, setJustUndid] = useState(false);
 
     //Redo tracking
-    let [prevUndos,setPrevUndos] = useState<[{id: Number,svg: string}]>([{id:-1,svg:""}]) 
+    let [prevUndos, setPrevUndos] = useState<[{ id: Number, svg: string }]>([{ id: -1, svg: "" }])
 
     // Call useEffect() in order obtain the value of the canvas after the first render
     // Pass in an empty array so that useEffect is only called once, after the initial render
@@ -124,8 +124,8 @@ const CreateToolsCanvasPaperJS = () => {
 
 
         //Set base undo array
-        if(!prevEdits.includes({id: layer1Reference.current.id, svg:String(layer1Reference.current.exportSVG({asString: true}))})){
-            prevEdits.push({id: layer1Reference.current.id, svg:String(layer1Reference.current.exportSVG({asString: true}))})
+        if (!prevEdits.includes({ id: layer1Reference.current.id, svg: String(layer1Reference.current.exportSVG({ asString: true })) })) {
+            prevEdits.push({ id: layer1Reference.current.id, svg: String(layer1Reference.current.exportSVG({ asString: true })) })
             setPrevEdits(prevEdits);
             console.log(prevEdits)
         }
@@ -185,14 +185,14 @@ const CreateToolsCanvasPaperJS = () => {
 
     // Saves edit to edit stack on mouse up 
     penTool.current.onMouseUp = function (event: paper.ToolEvent) {
-        if(canvasProject.current && canvasProject.current.activeLayer.locked == false) {
-            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
-            if(prevEdits.length > UNDO_CAP){
+        if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
+            prevEdits.push({ id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({ asString: true })) });
+            if (prevEdits.length > UNDO_CAP) {
                 prevEdits.shift();
             }
             setPrevEdits(prevEdits);
             setJustUndid(false);
-            setPrevUndos([{id:-1,svg:""}]);
+            setPrevUndos([{ id: -1, svg: "" }]);
         }
     }
 
@@ -266,14 +266,14 @@ const CreateToolsCanvasPaperJS = () => {
         //switch back to old layer
         changeLayer();
 
-        if(canvasProject.current && canvasProject.current.activeLayer.locked == false) {
-            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
-            if(prevEdits.length > UNDO_CAP){
+        if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
+            prevEdits.push({ id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({ asString: true })) });
+            if (prevEdits.length > UNDO_CAP) {
                 prevEdits.shift();
             }
             setPrevEdits(prevEdits);
             setJustUndid(false);
-            setPrevUndos([{id:-1,svg:""}]);
+            setPrevUndos([{ id: -1, svg: "" }]);
         }
     }
 
@@ -337,13 +337,13 @@ const CreateToolsCanvasPaperJS = () => {
             mask?.remove();
 
             //edit tracking
-            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
-            if(prevEdits.length > UNDO_CAP){
+            prevEdits.push({ id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({ asString: true })) });
+            if (prevEdits.length > UNDO_CAP) {
                 prevEdits.shift();
             }
             setPrevEdits(prevEdits);
             setJustUndid(false);
-            setPrevUndos([{id:-1,svg:""}]);
+            setPrevUndos([{ id: -1, svg: "" }]);
         }
     }
 
@@ -375,14 +375,14 @@ const CreateToolsCanvasPaperJS = () => {
 
     //undo tool for edit tracking
     fillTool.current.onMouseUp = function (event: paper.ToolEvent) {
-        if(canvasProject.current && canvasProject.current.activeLayer.locked == false) {
-            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
-            if(prevEdits.length > UNDO_CAP){
+        if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
+            prevEdits.push({ id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({ asString: true })) });
+            if (prevEdits.length > UNDO_CAP) {
                 prevEdits.shift();
             }
             setPrevEdits(prevEdits);
             setJustUndid(false);
-            setPrevUndos([{id:-1,svg:""}]);
+            setPrevUndos([{ id: -1, svg: "" }]);
         }
     }
 
@@ -516,13 +516,13 @@ const CreateToolsCanvasPaperJS = () => {
             clearStates();
 
             //edit tracking for undo tool
-            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
-            if(prevEdits.length > UNDO_CAP){
+            prevEdits.push({ id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({ asString: true })) });
+            if (prevEdits.length > UNDO_CAP) {
                 prevEdits.shift();
             }
             setPrevEdits(prevEdits);
             setJustUndid(false);
-            setPrevUndos([{id:-1,svg:""}]);
+            setPrevUndos([{ id: -1, svg: "" }]);
         }
     }
 
@@ -611,14 +611,14 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     textTool.current.onMouseUp = function (event: paper.ToolEvent) {
-        if(canvasProject.current && canvasProject.current.activeLayer.locked == false) {
-            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
-            if(prevEdits.length > UNDO_CAP){
+        if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
+            prevEdits.push({ id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({ asString: true })) });
+            if (prevEdits.length > UNDO_CAP) {
                 prevEdits.shift();
             }
             setPrevEdits(prevEdits);
             setJustUndid(false);
-            setPrevUndos([{id:-1,svg:""}]);
+            setPrevUndos([{ id: -1, svg: "" }]);
         }
     }
 
@@ -654,13 +654,13 @@ const CreateToolsCanvasPaperJS = () => {
             setStickerMouseDragged(false);
 
             //edit tracking fro undo
-            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
-            if(prevEdits.length > UNDO_CAP){
+            prevEdits.push({ id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({ asString: true })) });
+            if (prevEdits.length > UNDO_CAP) {
                 prevEdits.shift();
             }
             setPrevEdits(prevEdits);
             setJustUndid(false);
-            setPrevUndos([{id:-1,svg:""}]);
+            setPrevUndos([{ id: -1, svg: "" }]);
         }
     }
 
@@ -746,13 +746,13 @@ const CreateToolsCanvasPaperJS = () => {
             }
 
             //edit tracking for undo tool
-            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
-            if(prevEdits.length > UNDO_CAP){
+            prevEdits.push({ id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({ asString: true })) });
+            if (prevEdits.length > UNDO_CAP) {
                 prevEdits.shift();
             }
             setPrevEdits(prevEdits);
             setJustUndid(false);
-            setPrevUndos([{id:-1,svg:""}]);
+            setPrevUndos([{ id: -1, svg: "" }]);
         }
         resetSelectStates();
     }
@@ -775,7 +775,7 @@ const CreateToolsCanvasPaperJS = () => {
     const [oppCornerName, setOppCornerName] = useState("");
 
     //
-    const[transformMouseDragged, setTransformMouseDragged] = useState(false);
+    const [transformMouseDragged, setTransformMouseDragged] = useState(false);
 
     //
     const [scaleFactorX, setScaleFactorX] = useState(0);
@@ -915,7 +915,7 @@ const CreateToolsCanvasPaperJS = () => {
             else if (transformAction == "resizing") {
                 setIsTransforming(true);
                 setTransformMouseDragged(true);
-                
+
                 //figure out scale factor
                 setScaleFactorX((event.point.x - oppositeCorner.x) / transformInfo[0].bounds.width);
                 setScaleFactorY((event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height);
@@ -924,14 +924,8 @@ const CreateToolsCanvasPaperJS = () => {
                 transformInfo[0].bounds = new paper.Rectangle(oppositeCorner, event.point);
                 rasterInfo[1].bounds = new paper.Rectangle(oppositeCorner, event.point);
 
-                let tempCorner = findOppositeCorner(event.point,transformInfo[0]);
+                let tempCorner = findOppositeCorner(event.point, transformInfo[0]);
                 setOppCornerName(tempCorner);
-
-                //flickers due to each frame flipping the selection (when negative)
-                //transformInfo[0].scale((event.point.x - oppositeCorner.x) / transformInfo[0].bounds.width,
-                  // (event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height, oppositeCorner);
-                // rasterInfo[1].scale((event.point.x - oppositeCorner.x) / rasterInfo[1].bounds.width,
-                  //   (event.point.y - oppositeCorner.y) / rasterInfo[1].bounds.height, oppositeCorner);
                 return;
             }
             else if (transformAction == "rotating") {
@@ -944,40 +938,33 @@ const CreateToolsCanvasPaperJS = () => {
         //resets transform action state
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             if (transformAction == "resizing" && transformMouseDragged == true) {
-                transformInfo[0].scale(Math.abs(scaleFactorX),Math.abs(scaleFactorY),oppositeCorner);
-                rasterInfo[1].scale(Math.abs(scaleFactorX),Math.abs(scaleFactorY),oppositeCorner);
+                transformInfo[0].scale(Math.abs(scaleFactorX), Math.abs(scaleFactorY), oppositeCorner);
+                rasterInfo[1].scale(Math.abs(scaleFactorX), Math.abs(scaleFactorY), oppositeCorner);
 
                 let test = new paper.Path.Rectangle(transformInfo[0].bounds);
                 test.strokeColor = new paper.Color("red");
                 test.strokeWidth = 5;
 
                 //if prev = opp, then no change to raster only transform + or - else flip according to scale factors
-                if(prevOppCornerName == oppCornerName || (prevOppCornerName != oppCornerName && oppCornerName == "tl")){
-                    if(scaleFactorX < 0){
-                        transformInfo[0].scale(-1,1);
+                if (prevOppCornerName == oppCornerName) {
+                    if (scaleFactorX < 0) {
+                        transformInfo[0].scale(-1, 1);
                     }
-                    if(scaleFactorY<0){
-                        transformInfo[0].scale(1,-1);
+                    if (scaleFactorY < 0) {
+                        transformInfo[0].scale(1, -1);
                     }
                 }
-                else{
-                    if(oppCornerName == "tr"){
-                        
+                else {
+                    //if bottom or top changes -1,1
+                    if(prevOppCornerName[0] === oppCornerName[0]){
+                        transformInfo[0].scale(-1, 1);
+                         rasterInfo[1].scale(-1, 1);
                     }
-                    else if (oppCornerName == "br"){
-
+                    //if left or right changes 1,-1
+                    if(prevOppCornerName[1] === oppCornerName[1]){
+                        transformInfo[0].scale(1, -1);
+                        rasterInfo[1].scale(1, -1);
                     }
-                    else if(oppCornerName == "bl"){
-
-                    }
-                    // if(scaleFactorX < 0){
-                    //     transformInfo[0].scale(-1,1);
-                    //     rasterInfo[1].scale(-1,1);
-                    // }
-                    // if(scaleFactorY<0){
-                    //     transformInfo[0].scale(1,-1);
-                    //     rasterInfo[1].scale(1,-1)
-                    // }
                 }
 
                 setOppositeCorner(new paper.Point(0, 0));
@@ -988,13 +975,13 @@ const CreateToolsCanvasPaperJS = () => {
 
             setTransformAction("none");
             //edit tracking for undo
-            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
-            if(prevEdits.length > UNDO_CAP){
+            prevEdits.push({ id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({ asString: true })) });
+            if (prevEdits.length > UNDO_CAP) {
                 prevEdits.shift();
             }
             setPrevEdits(prevEdits);
             setJustUndid(false);
-            setPrevUndos([{id:-1,svg:""}]);
+            setPrevUndos([{ id: -1, svg: "" }]);
         }
     }
 
@@ -1192,17 +1179,17 @@ const CreateToolsCanvasPaperJS = () => {
             //deselects if previously was selecting or transforming before clearing
             setAreaSelected(false);
             clearSelection();
-        
-            prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
-            if(prevEdits.length > UNDO_CAP){
+
+            prevEdits.push({ id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({ asString: true })) });
+            if (prevEdits.length > UNDO_CAP) {
                 prevEdits.shift();
             }
             setPrevEdits(prevEdits);
             setJustUndid(false);
-            setPrevUndos([{id:-1,svg:""}]);
+            setPrevUndos([{ id: -1, svg: "" }]);
         }
     }
-    
+
 
     const toggleLayerVisibility = (event: ChangeEvent<HTMLInputElement>) => {
         if (backgroundLayerReference.current && event.target.value === '0') {
@@ -1261,34 +1248,33 @@ const CreateToolsCanvasPaperJS = () => {
     // Undoes the last stroke to the canvas
     function undo() {
         let change;
-        if(prevEdits.length >= 4){
-            change = prevEdits[prevEdits.length-2]
+        if (prevEdits.length >= 4) {
+            change = prevEdits[prevEdits.length - 2]
             let holder = prevEdits.pop()
-            if(holder)
-            {
+            if (holder) {
                 prevUndos.push(holder);
             }
         }
 
-        if(change && backgroundLayerReference.current && layer1Reference.current && layer2Reference.current){
-            if(change.id == backgroundLayerReference.current.id){
+        if (change && backgroundLayerReference.current && layer1Reference.current && layer2Reference.current) {
+            if (change.id == backgroundLayerReference.current.id) {
                 backgroundLayerReference.current.removeChildren();
                 backgroundLayerReference.current.importSVG(change.svg);
                 backgroundLayerReference.current.activate()
-                
+
             }
-            if(change.id == layer1Reference.current.id){
-                
+            if (change.id == layer1Reference.current.id) {
+
                 layer1Reference.current.removeChildren();
                 layer1Reference.current.importSVG(change.svg);
                 layer1Reference.current.activate();
-                
+
             }
-            if(change.id == layer2Reference.current.id){
+            if (change.id == layer2Reference.current.id) {
                 layer2Reference.current.removeChildren();
                 layer2Reference.current.importSVG(change.svg);
                 layer2Reference.current.activate();
-                
+
             }
 
             setPrevUndos(prevUndos);
@@ -1299,35 +1285,34 @@ const CreateToolsCanvasPaperJS = () => {
 
     function redo() {
         let change;
-        if(justUndid){
+        if (justUndid) {
             change = prevUndos.pop()
-            if(change)
-            {
+            if (change) {
                 prevEdits.push(change);
             }
         }
-        if(change && backgroundLayerReference.current && layer1Reference.current && layer2Reference.current){
-            if(change.id == backgroundLayerReference.current.id){
+        if (change && backgroundLayerReference.current && layer1Reference.current && layer2Reference.current) {
+            if (change.id == backgroundLayerReference.current.id) {
                 backgroundLayerReference.current.removeChildren();
                 backgroundLayerReference.current.importSVG(change.svg);
                 backgroundLayerReference.current.activate()
-                
+
             }
-            if(change.id == layer1Reference.current.id){
-                
+            if (change.id == layer1Reference.current.id) {
+
                 layer1Reference.current.removeChildren();
                 layer1Reference.current.importSVG(change.svg);
                 layer1Reference.current.activate();
-                
+
             }
-            if(change.id == layer2Reference.current.id){
+            if (change.id == layer2Reference.current.id) {
                 layer2Reference.current.removeChildren();
                 layer2Reference.current.importSVG(change.svg);
                 layer2Reference.current.activate();
-                
+
             }
 
-            
+
         }
         setPrevUndos(prevUndos);
         setPrevEdits(prevEdits);
@@ -1476,17 +1461,17 @@ const CreateToolsCanvasPaperJS = () => {
                 <div id="settings" className={styles.layerSettings}>
                     <div id="mergeSetting" className={styles.layerStyling}>
                         <label htmlFor="merge" id={styles.mergeLabel}>
-                            <input type="button" id="merge" title="Merge Layer"/>
+                            <input type="button" id="merge" title="Merge Layer" />
                         </label>
                     </div>
                     <div id="layerDownSetting" className={styles.layerStyling}>
                         <label htmlFor="layerdown" id={styles.layerDownLabel}>
-                            <button type="button" id="layerdown" title="Push Layer Down"/>
+                            <button type="button" id="layerdown" title="Push Layer Down" />
                         </label>
                     </div>
                     <div id="layerUpSetting" className={styles.layerStyling}>
                         <label htmlFor="layerup" id={styles.layerUpLabel}>
-                            <input type="button" id="layerup" title="Bring Layer Up"/>
+                            <input type="button" id="layerup" title="Bring Layer Up" />
                         </label>
                     </div>
                 </div>
