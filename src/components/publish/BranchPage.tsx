@@ -20,8 +20,6 @@ const BranchPage = ({ id }: Props) => {
         id: 0,
         author_id: '',
         panels: emptyPanelSet(),
-        previous_hook_id: parentHookId
-
     });
     const [activePanel, setActivePanel] = useState(0);
     const activePanelHooks = () => panelSet.panels[activePanel].hooks;
@@ -193,6 +191,7 @@ const BranchPage = ({ id }: Props) => {
                     confirmBranchHook={() => confirmBranchHook(activePanel)}
                     removeBranchHook={removeBranchHook}
                     publish={async () => {
+                        panelSet.previous_hook_id = parentHookId;
                         const response = await publishHandler(panelSet);
                         console.log(response);
 

@@ -14,11 +14,10 @@ const Publish = ({
     params: { id: number }
     searchParams: { [key: string]: number | undefined }
   }) => {
-    const id = {searchParams}
-    console.log(id + "ID");
+    const {id} = searchParams;
     return (<>
         <Navbar />
-        <a  href="/comic/create">
+        <a  href={`/comic/create?id=${id}`}>
             <button id={`${styles.backButton}`}>
                 <Image src={backIcon} alt="" className={`${styles.buttonIcon}`} width="60" height="60"></Image>
             </button>
