@@ -2,7 +2,7 @@
 'use client'
 import Image from "next/image"
 import Navbar from '../../../../components/NavBar';
-import BranchPage from "../../../../components/publish/BranchPage"
+import BranchPage from "../../../../components/publish/BranchPage";
 import styles from "@/styles/publish.module.css";
 
 import backIcon from "../../../../../public/images/back-button-pressed.png"
