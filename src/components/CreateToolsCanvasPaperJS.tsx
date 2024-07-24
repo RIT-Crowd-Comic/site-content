@@ -771,6 +771,8 @@ const CreateToolsCanvasPaperJS = () => {
 
     //
     const [oppositeCorner, setOppositeCorner] = useState(new paper.Point(0, 0))
+    const [prevOppCornerName, setPrevOppCornerName] = useState("");
+    const [oppCornerName, setOppCornerName] = useState("");
 
     //
     const [scaleFactorX, setScaleFactorX] = useState(0);
@@ -821,18 +823,25 @@ const CreateToolsCanvasPaperJS = () => {
 
     //check which corner was hit (with bounds) and set opposite corner as base to scale on
     function findOppositeCorner(pointHit: paper.Point, rectToCheck: paper.Path.Rectangle) {
+        let oppCorner = "";
+
         if (rectToCheck.bounds.bottomLeft.isClose(pointHit, 10)) {
             setOppositeCorner(rectToCheck.bounds.topRight);
+            oppCorner = "tr";
         }
         else if (rectToCheck.bounds.bottomRight.isClose(pointHit, 10)) {
             setOppositeCorner(rectToCheck.bounds.topLeft);
+            oppCorner = "tl";
         }
         else if (rectToCheck.bounds.topLeft.isClose(pointHit, 10)) {
             setOppositeCorner(rectToCheck.bounds.bottomRight);
+            oppCorner = "br";
         }
         else if (rectToCheck.bounds.topRight.isClose(pointHit, 10)) {
             setOppositeCorner(rectToCheck.bounds.bottomLeft);
+            oppCorner = "bl";
         }
+        return oppCorner;
     }
 
     transformTool.onMouseDown = function (event: paper.ToolEvent) {
@@ -858,7 +867,8 @@ const CreateToolsCanvasPaperJS = () => {
                 //contains check for first time transforming only
                 if (tempTransformAreaBounds.hitTest(event.point, { segments: true, tolerance: 10 })) {
                     setTransformAction("resizing");
-                    findOppositeCorner(event.point, tempTransformAreaBounds);
+                    let tempCorner = findOppositeCorner(event.point, tempTransformAreaBounds);
+                    setPrevOppCornerName(tempCorner);
                 }
                 else if (tempTransformAreaBounds.contains(event.point)) {
                     setTransformAction("moving");
@@ -872,7 +882,8 @@ const CreateToolsCanvasPaperJS = () => {
             //runs if corners of bounds are hit (segments to check if clicked on rect, tolerance for precision)
             if (transformInfo[0].hitTest(event.point, { segments: true, tolerance: 10 })) {
                 setTransformAction("resizing");
-                findOppositeCorner(event.point, transformInfo[0]);
+                let tempCorner = findOppositeCorner(event.point, transformInfo[0]);
+                setPrevOppCornerName(tempCorner);
             }
             //runs if mouse hits area inside selection
             else if (transformInfo[0].contains(event.point)) {
@@ -906,17 +917,17 @@ const CreateToolsCanvasPaperJS = () => {
                 setScaleFactorY((event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height);
 
                 //adjust selection box
-                //transformInfo[0].bounds = new paper.Rectangle(oppositeCorner, event.point);
-                //rasterInfo[1].bounds = new paper.Rectangle(oppositeCorner, event.point);
+                transformInfo[0].bounds = new paper.Rectangle(oppositeCorner, event.point);
+                rasterInfo[1].bounds = new paper.Rectangle(oppositeCorner, event.point);
 
-                console.log(scaleFactorX);
-                console.log(scaleFactorY);
+                let tempCorner = findOppositeCorner(event.point,transformInfo[0]);
+                setOppCornerName(tempCorner);
 
                 //flickers due to each frame flipping the selection (when negative)
-                transformInfo[0].scale((event.point.x - oppositeCorner.x) / transformInfo[0].bounds.width,
-                   (event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height, oppositeCorner);
-                 rasterInfo[1].scale((event.point.x - oppositeCorner.x) / rasterInfo[1].bounds.width,
-                     (event.point.y - oppositeCorner.y) / rasterInfo[1].bounds.height, oppositeCorner);
+                //transformInfo[0].scale((event.point.x - oppositeCorner.x) / transformInfo[0].bounds.width,
+                  // (event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height, oppositeCorner);
+                // rasterInfo[1].scale((event.point.x - oppositeCorner.x) / rasterInfo[1].bounds.width,
+                  //   (event.point.y - oppositeCorner.y) / rasterInfo[1].bounds.height, oppositeCorner);
                 return;
             }
             else if (transformAction == "rotating") {
@@ -929,13 +940,28 @@ const CreateToolsCanvasPaperJS = () => {
         //resets transform action state
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             if (transformAction == "resizing") {
-                console.log(scaleFactorX);
-                console.log(scaleFactorY);
+                transformInfo[0].scale(Math.abs(scaleFactorX),Math.abs(scaleFactorY),oppositeCorner);
+                rasterInfo[1].scale(Math.abs(scaleFactorX),Math.abs(scaleFactorY),oppositeCorner);
 
-                //raster keeps flipping
-                //transformInfo[0].scale(scaleFactorX,scaleFactorY,oppositeCorner);
-                //rasterInfo[1].scale(scaleFactorX,scaleFactorY,oppositeCorner);
-                //rasterInfo[1].position = transformInfo[0].position;
+                //if prev = opp, then no change to raster only transform + or - else flip according to scale factors
+                if(prevOppCornerName == oppCornerName || (prevOppCornerName != oppCornerName && oppCornerName == "tl")){
+                    if(scaleFactorX < 0){
+                        transformInfo[0].scale(-1,1);
+                    }
+                    if(scaleFactorY<0){
+                        transformInfo[0].scale(1,-1);
+                    }
+                }
+                else{
+                    if(scaleFactorX < 0){
+                        transformInfo[0].scale(-1,1);
+                        rasterInfo[1].scale(-1,1);
+                    }
+                    if(scaleFactorY<0){
+                        transformInfo[0].scale(1,-1);
+                        rasterInfo[1].scale(1,-1)
+                    }
+                }
 
                 setOppositeCorner(new paper.Point(0, 0));
                 setScaleFactorX(0);
