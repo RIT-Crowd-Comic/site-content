@@ -1,11 +1,11 @@
-//This is the publishing page for placing branch hooks
-'use client'
-import Image from "next/image"
+// This is the publishing page for placing branch hooks
+'use client';
+import Image from 'next/image';
 import Navbar from '../../../../components/NavBar';
-import BranchPage from "../../../../components/publish/BranchPage";
-import styles from "@/styles/publish.module.css";
+import BranchPage from '../../../../components/publish/BranchPage';
+import styles from '@/styles/publish.module.css';
 
-import backIcon from "../../../../../public/images/back-button-pressed.png"
+import backIcon from '../../../../../public/images/back-button-pressed.png';
 
 const Publish = () => {
     return (<>
@@ -17,6 +17,6 @@ const Publish = () => {
         </a>
         <BranchPage />
     </>);
-}
+};
 
-export default Publish
+export default Publish;
