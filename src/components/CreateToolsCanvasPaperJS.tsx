@@ -53,6 +53,7 @@ const CreateToolsCanvasPaperJS = () => {
     let [prevEdits,setPrevEdits] = useState<[{id: Number,svg: string}]>([{id:-1,svg:""}]) 
     const UNDO_CAP = 18; //controls how many edits are tracked with undo tool (must account for -3 for buffer room)
     let [justUndid,setJustUndid] = useState(false);
+    
 
     //Redo tracking
     let [prevUndos,setPrevUndos] = useState<[{id: Number,svg: string}]>([{id:-1,svg:""}]) 
@@ -1328,7 +1329,7 @@ const CreateToolsCanvasPaperJS = () => {
                 </div>
 
                 <div id={styles.functionButtons}>
-                    <label htmlFor="undoButton" id={styles.undoLabel}>
+                    <label htmlFor="undoButton" id={styles.undoLabel} >
                         <button className="btn" id="undoButton" onClick={undo} title="Undo"></button>
                     </label>
                     <label htmlFor="redoButton" id={styles.redoLabel}>
@@ -1472,6 +1473,19 @@ const CreateToolsCanvasPaperJS = () => {
             <div id={styles.savePublish}>
                 <button className={`btn ${styles.saveButton}`} id="saveButton" onClick={() => save(true)}>Save</button>
                 <button className={`btn ${styles.publishButton}`} id="publishButton" onClick={toPublish}>Publish</button>
+            </div>
+
+            <div id={styles.info}>
+                <label>
+                    <button id={styles.infoButton}></button>
+                </label>
+            </div>
+
+            <div id={styles.infoModal} className={styles.modal}>
+                <div className={styles.modalContent}>
+                    <span className={styles.closeModal}>&times;</span>
+                    <p>Some text in the Modal..</p>
+                </div>
             </div>
         </div>
 
