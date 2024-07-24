@@ -775,6 +775,9 @@ const CreateToolsCanvasPaperJS = () => {
     const [oppCornerName, setOppCornerName] = useState("");
 
     //
+    const[transformMouseDragged, setTransformMouseDragged] = useState(false);
+
+    //
     const [scaleFactorX, setScaleFactorX] = useState(0);
     const [scaleFactorY, setScaleFactorY] = useState(0);
 
@@ -911,7 +914,8 @@ const CreateToolsCanvasPaperJS = () => {
             }
             else if (transformAction == "resizing") {
                 setIsTransforming(true);
-
+                setTransformMouseDragged(true);
+                
                 //figure out scale factor
                 setScaleFactorX((event.point.x - oppositeCorner.x) / transformInfo[0].bounds.width);
                 setScaleFactorY((event.point.y - oppositeCorner.y) / transformInfo[0].bounds.height);
@@ -939,9 +943,13 @@ const CreateToolsCanvasPaperJS = () => {
     transformTool.onMouseUp = function (event: paper.ToolEvent) {
         //resets transform action state
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
-            if (transformAction == "resizing") {
+            if (transformAction == "resizing" && transformMouseDragged == true) {
                 transformInfo[0].scale(Math.abs(scaleFactorX),Math.abs(scaleFactorY),oppositeCorner);
                 rasterInfo[1].scale(Math.abs(scaleFactorX),Math.abs(scaleFactorY),oppositeCorner);
+
+                let test = new paper.Path.Rectangle(transformInfo[0].bounds);
+                test.strokeColor = new paper.Color("red");
+                test.strokeWidth = 5;
 
                 //if prev = opp, then no change to raster only transform + or - else flip according to scale factors
                 if(prevOppCornerName == oppCornerName || (prevOppCornerName != oppCornerName && oppCornerName == "tl")){
@@ -953,19 +961,29 @@ const CreateToolsCanvasPaperJS = () => {
                     }
                 }
                 else{
-                    if(scaleFactorX < 0){
-                        transformInfo[0].scale(-1,1);
-                        rasterInfo[1].scale(-1,1);
+                    if(oppCornerName == "tr"){
+                        
                     }
-                    if(scaleFactorY<0){
-                        transformInfo[0].scale(1,-1);
-                        rasterInfo[1].scale(1,-1)
+                    else if (oppCornerName == "br"){
+
                     }
+                    else if(oppCornerName == "bl"){
+
+                    }
+                    // if(scaleFactorX < 0){
+                    //     transformInfo[0].scale(-1,1);
+                    //     rasterInfo[1].scale(-1,1);
+                    // }
+                    // if(scaleFactorY<0){
+                    //     transformInfo[0].scale(1,-1);
+                    //     rasterInfo[1].scale(1,-1)
+                    // }
                 }
 
                 setOppositeCorner(new paper.Point(0, 0));
                 setScaleFactorX(0);
                 setScaleFactorY(0);
+                setTransformMouseDragged(false);
             }
 
             setTransformAction("none");
