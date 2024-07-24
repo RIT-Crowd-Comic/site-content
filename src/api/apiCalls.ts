@@ -469,7 +469,7 @@ const publishHandler = async(panelSet : CreatePanelSet) =>{
         })
 
         //get the hookId
-        const parentHookID = panelSet.previous_hook?.id;
+        const parentHookID = panelSet.previous_hook_id;
 
         //get the hook id
         return await publish(image1, image2, image3, hooks, parentHookID);

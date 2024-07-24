@@ -15,10 +15,14 @@ import { useRouter } from 'next/navigation';
 import { Istok_Web } from 'next/font/google';
 
 import Link from 'next/link';
+import { getHookByID } from '@/api/apiCalls';
+import { CreateHook } from './interfaces';
 
-
+interface Props {
+    id: number
+}
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
-const CreateToolsCanvasPaperJS = () => {
+const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     // *** VARIABLES ***
     // === CANVAS ===
     // Need to capture references to the HTML Elements.  canvasRef and contextRef is performed in useEffect().  
@@ -53,6 +57,7 @@ const CreateToolsCanvasPaperJS = () => {
     let [prevEdits,setPrevEdits] = useState<[{id: Number,svg: string}]>([{id:-1,svg:""}]) 
     const UNDO_CAP = 18; //controls how many edits are tracked with undo tool (must account for -3 for buffer room)
     let [justUndid,setJustUndid] = useState(false);
+    const [parentHookId, setParentHookId] = useState<Number>()
 
     //Redo tracking
     let [prevUndos,setPrevUndos] = useState<[{id: Number,svg: string}]>([{id:-1,svg:""}]) 
@@ -66,6 +71,22 @@ const CreateToolsCanvasPaperJS = () => {
         if (!canvas) {
             return;
         }
+
+        //route if the link contains an id already created - get the hook by id and check its next
+        getHookByID(id).then((hook) =>{
+            if((hook instanceof Error)) return router.push(`/comic/browse`);  
+            
+            hook = hook as CreateHook;
+            
+            if(!hook.next_panel_set_id){
+                setParentHookId(id);
+                return;
+            } 
+
+            //use the next id to reroute to read
+            router.push(`/comic/?id=${hook.next_panel_set_id}`);  
+        });
+
 
         // Create a view for the canvas (setup for layers)
         paper.setup(canvas);
@@ -1262,7 +1283,7 @@ const CreateToolsCanvasPaperJS = () => {
         localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
 
         // Send the user to the publish page
-        router.push(`/comic/create/publish`);
+        router.push(`/comic/create/publish?id=${parentHookId}`);
     }
 
     // Return the canvas HTMLElement and its associated functionality
