@@ -1401,36 +1401,18 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
 
             <canvas id={`${styles.canvas}`} ref={canvasReference} className={`${styles.canvas}`} />
 
-            <div id={`${styles.toolOptions}`}>
-                <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor} />
-                <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize} />
-                <FillOptions enabled={fillOptionsEnabled} changeFillColor={setFillColor} />
-                <ShapeOptions enabled={shapeOptionsEnabled} shapeBorderSize={shapeBorderWidth} changeShapeBorderSize={setShapeBorderWidth}
-                    changeShapeBorderColor={setShapeBorderColor} changeShapeFillColor={setShapeFillColor} changeShape={setShapeSelected}
-                    changeDashedBorder={setDashedBorder} />
-                <TextOptions enabled={textOptionsEnabled} changeTextContent={setTextContent} changeTextFont={setTextFont} changeTextSize={setTextSize}
-                    changeFontWeight={setTextFontWeight} changeTextAlignment={setTextAlign} changeTextColor={setTextColor} />
-                <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
-                <ShaderOptions enabled={shadeOptionsEnabled} shaderSize={shadeSize} changeShaderSize={setShadeSize} />
-            </div>
-
-            <div id={styles.layerOptions}>
-                <div id="settings" className={styles.layerSettings}>
-                    <div id="mergeSetting" className={styles.layerStyling}>
-                        <label htmlFor="merge" id={styles.mergeLabel}>
-                            <input type="button" id="merge" title="Merge Layer"/>
-                        </label>
-                    </div>
-                    <div id="layerDownSetting" className={styles.layerStyling}>
-                        <label htmlFor="layerdown" id={styles.layerDownLabel}>
-                            <button type="button" id="layerdown" title="Push Layer Down"/>
-                        </label>
-                    </div>
-                    <div id="layerUpSetting" className={styles.layerStyling}>
-                        <label htmlFor="layerup" id={styles.layerUpLabel}>
-                            <input type="button" id="layerup" title="Bring Layer Up"/>
-                        </label>
-                    </div>
+            <div id={styles.pullOut}>
+                <div id={`${styles.toolOptions}`}>
+                    <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor} />
+                    <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize} />
+                    <FillOptions enabled={fillOptionsEnabled} changeFillColor={setFillColor} />
+                    <ShapeOptions enabled={shapeOptionsEnabled} shapeBorderSize={shapeBorderWidth} changeShapeBorderSize={setShapeBorderWidth}
+                        changeShapeBorderColor={setShapeBorderColor} changeShapeFillColor={setShapeFillColor} changeShape={setShapeSelected}
+                        changeDashedBorder={setDashedBorder} />
+                    <TextOptions enabled={textOptionsEnabled} changeTextContent={setTextContent} changeTextFont={setTextFont} changeTextSize={setTextSize}
+                        changeFontWeight={setTextFontWeight} changeTextAlignment={setTextAlign} changeTextColor={setTextColor} />
+                    <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
+                    <ShaderOptions enabled={shadeOptionsEnabled} shaderSize={shadeSize} changeShaderSize={setShadeSize} />
                 </div>
 
                 <div id={styles.layerOptions}>
@@ -1485,7 +1467,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                                 <label htmlFor="layer1">Layer 1</label><br />
                             </div>
                         </div>
-                    </div>
+
                         <div id="backgroundLayer" className={styles.layer}>
                             <div id="backgroundLayerVisibility" className={styles.visibleStyling}>
                                 <label htmlFor="backgroundToggle" className={` ${styles.visibleLabel} ${styles.sizeConsistency}`}>
@@ -1499,13 +1481,12 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                             </div>
                             <div id="backgroundLayerSelect" className={styles.layerSelect}>
                                 <input type="radio" name="layers" id="background" className={styles.layerSelectRadio} value='0' onChange={changeLayer} />
-                                <label htmlFor="background">Background</label><br />
+                                <label htmlFor="background">Background</label><br/>
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
-                <div id="panelSelect" className={styles.panelSelect}>
+            <div id="panelSelect" className={styles.panelSelect}>
                     <div id="panel1" className={styles.panelStyling}>
                         <label htmlFor="panel1Select" className={styles.panelLabel}>
                             <input type="radio" name="panels" className={`${styles.sizeConsistency}`} id="panel1Select" value={0} defaultChecked />

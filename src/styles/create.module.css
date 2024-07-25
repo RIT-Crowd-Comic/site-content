@@ -570,11 +570,11 @@
 {
     color: white;
     
-    margin: 0;
-    background-color: transparent;
-    border: none;
-    transform: none;
-    box-shadow: none;
+    margin: 0 !important;
+    background-color: transparent !important;
+    border: none !important;
+    transform: none !important;
+    box-shadow: none !important;
 }
 
 .publishButton, .publishButton:hover, .publishButton:active, .publishButton:focus
