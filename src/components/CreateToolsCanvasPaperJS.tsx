@@ -1266,6 +1266,25 @@ const CreateToolsCanvasPaperJS = () => {
         router.push(`/comic/create/publish`);
     }
 
+    const infoDisplay = (visible: boolean) => {
+        const divs = document.querySelectorAll("div")
+        const modal = divs[divs.length-2]
+        if(modal)
+        {
+            if(visible)
+            {
+                modal.style.display = "block";
+            }
+            else
+            {
+                modal.style.display = "none";
+            }
+            
+        }
+        console.log(divs)
+        
+    }
+
     // Return the canvas HTMLElement and its associated functionality
     return (
         <div id={`${styles.createPage}`}>
@@ -1477,14 +1496,20 @@ const CreateToolsCanvasPaperJS = () => {
 
             <div id={styles.info}>
                 <label>
-                    <button id={styles.infoButton}></button>
+                    <button id={styles.infoButton} onClick= {() => infoDisplay(true)}></button> 
                 </label>
             </div>
 
             <div id={styles.infoModal} className={styles.modal}>
                 <div className={styles.modalContent}>
-                    <span className={styles.closeModal}>&times;</span>
-                    <p>Some text in the Modal..</p>
+                    <span className={styles.closeModal} onClick= {() => infoDisplay(false)}></span>
+                    <p>This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
+                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
+                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
+                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
+                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
+                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
+                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.</p>
                 </div>
             </div>
         </div>
