@@ -32,11 +32,11 @@ const NavBar = () => {
 
     const router = useRouter();
 
-    const getComicUrl = async () => {
+    const getTrunkUrl = async () => {
         const trunks = await getTrunks();
-        if (!trunks) return '/comic/browse';
+        if (!trunks) return '/';
         const psID = trunks[0]?.id;
-        if (!psID) return 'comic/browse';
+        if (!psID) return '/';
         console.log(`url: ${psID}`);
         return `/comic?id=${psID}`;
     };
@@ -109,7 +109,7 @@ const NavBar = () => {
                                     href=""
                                     onClick={async (e) => {
                                         e.preventDefault();
-                                        const url = await getComicUrl();
+                                        const url = await getTrunkUrl();
                                         router.push(url);
                                     }}
                                 >
