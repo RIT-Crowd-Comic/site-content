@@ -48,13 +48,22 @@ interface Hook{
     next_panel_set_id?: number
 }
 
+interface PathSize{
+    path: number[][],
+    w:number,
+    h:number,
+    area:number,
+    index:number
+}
+
 export type {
     CreatePanelSet,
     CreatePanel,
     CreateHook,
     PanelSet,
     Panel,
-    Hook
+    Hook,
+    PathSize
 }
 
 export {

@@ -1,6 +1,6 @@
 import styles from './Panel.module.css'
 import { SyntheticEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { CreateHook, Hook } from '../interfaces';
+import { CreateHook, Hook,PathSize } from '../interfaces';
 import { createSVGPath } from '@/utils';
 import Image from 'next/image';
 
@@ -94,6 +94,47 @@ const Panel = ({
             console.log('current hook index', confirmHook);
             // prevent adding un-clickable hooks
             if (vertices.length >= 3) {
+                // let sortHooks= hooks
+                
+                // const isLarger = (elemen) => element > 13;
+                // console.log(array1.findIndex(isLargeNumber));
+
+                // sorting hooks based on Size, biggest to smallest
+                //creating a temp dom element in order to be able to get path size
+                let tempHooks=hooks.map((hook,i)=>{
+                    const p=document.createElement("path")
+                    const svgEl=document.createElement("svg")
+                    p.setAttribute('d',createSVGPath((hook as CreateHook).points))
+                    svgEl.appendChild(p)
+                    svgEl.top=0
+        
+                    let w=svgEl.getBoundingClientRect().width
+                    let h=svgEl.getBoundingClientRect().height
+                    return {
+                        path: (hook as CreateHook).points,
+                        w:w,
+                        h:h,
+                        area:w*h,
+                        index:i
+                    }
+                });
+                const sortedHooks:PathSize[] =[]
+                tempHooks.map((t,i)=>{
+                    if(i==0){
+                        sortedHooks.push(t)
+                    }else {
+                        for( let sIndex in sortedHooks){
+                            let s=sortedHooks[sIndex]
+                            if(t.area>s.area){
+                                sortedHooks.splice(s.index,0,t)
+                                break
+                            }
+                        }
+                    }
+                });
+                sortedHooks.map((s)=>console.log(s.area))
+                //end of sorting
+
                 setHooks(
                     [
                         ...hooks,
@@ -104,11 +145,20 @@ const Panel = ({
                     ],
                     confirmHook
                 );
+                
             }
             setConfirmHook(undefined);
         }
-    }, [confirmHook]);
+        // console.log('hooks')
+        // console.log(hooks.map((h)=>console.log(h.hookIndex)))
 
+        
+        
+        // console.log(tempHooks)
+        // console.log(((hook as CreateHook).points as SVGNumberList).getBoundingClientRect().width)
+        // console.log(vertices.getBBox().width)
+    }, [confirmHook]);
+  
     /**
      * Adds a vertex to the current hook SVG path. This should only be called when 
      * in edit mode.
@@ -211,7 +261,7 @@ const Panel = ({
                                 d={createSVGPath((hook as CreateHook).points ?? (hook as Hook).position.map(p => [p.x, p.y]) ?? '')}
                                 fill={(selectedHook?.hookIndex ?? -1) === i ? HIGHLIGHT_COLOR : hook.next_panel_set_id === null ? NULL_HOOK : FILL_COLOR}
                                 onClick={() => { if (onHookClick) onHookClick(hook, i) }}
-                                className={`${styles.hookPath} ${hideUntilHover ? styles.hidden : ''}`}
+                                className={`${styles.hookPath} ${hideUntilHover ? styles.hidden : ''} ${styles[`hook${i}`]}`}
                                 key={i} />)}
                     {/* EDITOR HOOK */}
                     <path
