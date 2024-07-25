@@ -2,7 +2,9 @@
 
 import { cookies } from 'next/headers';
 import {
-    insertSession, getUserBySession, authenticate, createUser
+    insertSession, getUserBySession, authenticate, createUser,
+    changeDisplayName,
+    changePassword
 } from '@/api/apiCalls';
 
 const expireDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 1 week
@@ -88,6 +90,23 @@ const getSessionCookie = () =>{
     return cookies().get('session');
 };
 
+const updateDisplayName = async (newName: string) => {
+    const session = getSessionCookie();
+    if(!session || session instanceof Error) return session;
+    const user = await getUserBySession(session.value);
+    if(!user || user instanceof Error) return user;
+    return await changeDisplayName(user.email, user.password, newName);
+};
+
+const updatePassword = async (oldPassword: string, newPassword: string, passwordConfirm: string) => {
+    if(newPassword!=passwordConfirm) return 'Password Confirmation must match new password';
+    const session = getSessionCookie();
+    if(!session || session instanceof Error) return session;
+    const user = await getUserBySession(session.value);
+    if(!user || user instanceof Error) return user;
+    return await changePassword(user.email, oldPassword, newPassword);
+}
+
 export {
-    authenticateSession, login, register, logout, getSessionCookie, updateSession,
+    authenticateSession, login, register, logout, getSessionCookie, updateSession, updateDisplayName, updatePassword
 };
