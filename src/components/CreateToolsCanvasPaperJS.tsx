@@ -112,10 +112,33 @@ const CreateToolsCanvasPaperJS = () => {
 
         // If previous layer data exists, set the layers to that, otherwise make new layers
         try {
-            let jsonData = localStorage.getItem("panel-1-layerData");
+            let panel1JsonData = localStorage.getItem("panel-1-layerData");
+            let panel2JsonData = localStorage.getItem("panel-2-layerData");
+            let panel3JsonData = localStorage.getItem("panel-3-layerData");
             //let jsonImageData = localStorage.getItem("image-1");
 
-            if (jsonData) {
+            if(panel1JsonData)
+            {
+                let layerData = JSON.parse(panel1JsonData);
+                setPanel1LayerData(layerData);
+                console.log("1");
+            }
+
+            if(panel2JsonData)
+            {
+                let layerData = JSON.parse(panel2JsonData);
+                setPanel2LayerData(layerData);
+                console.log("2");
+            }
+
+            if(panel3JsonData)
+            {
+                let layerData = JSON.parse(panel3JsonData);
+                setPanel3LayerData(layerData);
+                console.log("3");
+            }
+
+            /*if (jsonData) {
                 let layerData = JSON.parse(jsonData);
                 backgroundLayerReference.current.importJSON(layerData.background);
                 shadingLayerRef.current.importJSON(layerData.shade);
@@ -123,18 +146,20 @@ const CreateToolsCanvasPaperJS = () => {
                 layer2Reference.current.importJSON(layerData.layer2);
                 layer3Reference.current.importJSON(layerData.layer3);
                 layer4Reference.current.importJSON(layerData.layer4);
-            }
-
-            /*if(jsonImageData)
-            {
-                let imageData = JSON.parse(jsonImageData);
-                console.log(imageData);
             }*/
         }
         catch {
 
             console.log("error");
         }
+
+        // Show panel 1
+        backgroundLayerReference.current.importJSON(panel1LayerData.background);
+        shadingLayerRef.current.importJSON(panel1LayerData.shade);
+        layer1Reference.current.importJSON(panel1LayerData.layer1);
+        layer2Reference.current.importJSON(panel1LayerData.layer2);
+        layer3Reference.current.importJSON(panel1LayerData.layer3);
+        layer4Reference.current.importJSON(panel1LayerData.layer4);
 
         const context = canvas.getContext("2d");
 
@@ -149,11 +174,6 @@ const CreateToolsCanvasPaperJS = () => {
 
         // Set the context reference to the context and its default values as defined above
         contextReference.current = context;
-
-        // Set the panelProjects to store canvasProject.current
-        //setPanel1Project(canvasProject.current.layers);
-        //setPanel2Project(canvasProject.current);
-        //setPanel3Project(canvasProject.current);
     }, [])
 
     // === TOOLS ===
