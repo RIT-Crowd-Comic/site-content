@@ -7,7 +7,7 @@ import Link from "next/link";
 import logo from "../../../public/images/logos/Crowd_Comic_Logo_BW.svg";
 
 import { useState } from "react";
-import {loginAction, testAuth} from '@/app/login/actions';
+import { loginAction } from '@/app/login/actions';
 
 
 export function SignInForm()
@@ -81,7 +81,6 @@ export function SignInForm()
             <Link href="sign-up" replace={true}><button type="button" id={styles.registerButton} className={`btn btn-primary`}>Sign Up</button></Link>
             {!!message && <p>{message}</p>}
             </form>
-            {/* FORM TO TEST authenticateSession <form action={testAuth}><button type="submit">Authenticate</button></form> */}
         </section>
         </main>
         );
