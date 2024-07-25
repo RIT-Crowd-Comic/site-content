@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import { Istok_Web } from 'next/font/google';
 
 import Link from 'next/link';
+import test from 'node:test';
 
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
@@ -902,11 +903,18 @@ const CreateToolsCanvasPaperJS = () => {
                 setIsTransforming(true);
                 setTransformMouseDragged(true);
 
-                console.log(event.delta.angle)
+                let testbound = new paper.Path.Rectangle(transformInfo[0].bounds);
+                testbound.strokeWidth = 3;
+                testbound.strokeColor = new paper.Color("red");
+                testbound.removeOnDrag();
 
-                //may cause issues with resizing flipping??? (need to double check after fixing rotate)
-                transformInfo[0].rotate(Math.atan2(event.delta.y, event.delta.x));
-                rasterInfo[1].rotate(Math.atan2(event.delta.y, event.delta.x));
+                var center = transformInfo[0].bounds.center;
+                var baseVec = center.subtract(event.lastPoint);
+                var nowVec = center.subtract(event.point);
+                var angle = nowVec.angle - baseVec.angle;
+                transformInfo[0].rotate(angle);
+                rasterInfo[1].rotate(angle);
+
                 return;
             }
 
@@ -956,6 +964,9 @@ const CreateToolsCanvasPaperJS = () => {
                 setScaleFactorX(0);
                 setScaleFactorY(0);
                 setTransformMouseDragged(false);
+            }
+            else if(transformAction == "rotating"){
+                
             }
             setTransformAction("none");
 
