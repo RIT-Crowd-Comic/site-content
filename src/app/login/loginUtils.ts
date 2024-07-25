@@ -1,9 +1,11 @@
 'use server';
 
-import { cookies } from "next/headers";
-import { insertSession, getUserBySession, authenticate, createUser } from "@/api/apiCalls";
+import { cookies } from 'next/headers';
+import {
+    insertSession, getUserBySession, authenticate, createUser
+} from '@/api/apiCalls';
 
-const expireDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); //1 week
+const expireDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 1 week
 
 /**
  * Insert the session into the data base and save the session id in a cookie
@@ -11,7 +13,7 @@ const expireDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); //1 week
  */
 const saveSession = async (user_id: string) => {
     const session = await insertSession(user_id);
-    let sessionId = session.id;
+    const sessionId = session.id;
     if (!sessionId) return 'Failed to sign in';
     cookies().set('session', sessionId, { expires: expireDate, httpOnly: true });
 };
@@ -32,12 +34,13 @@ const updateSession = async (session_id: string) => {
  */
 const authenticateSession = async () => {
     const session = getSessionCookie();
-    if(!session) return new Error('No user session found');
+    if (!session) return new Error('No user session found');
     const user = await getUserBySession(session.value);
-    if(!user) return new Error('No user found for session');
-    if(user instanceof Error) return user;
-    //Refresh the session expiry
-    //await updateSession(session_id);
+    if (!user) return new Error('No user found for session');
+    if (user instanceof Error) return user;
+
+    // Refresh the session expiry
+    // await updateSession(session_id);
     return user;
 };
 
@@ -49,7 +52,8 @@ const authenticateSession = async () => {
  */
 const login = async (email: string, password: string) => {
     const user = await authenticate(email, password);
-    //If user is an error, return that error and don't redirect
+
+    // If user is an error, return that error and don't redirect
     if (!user || user.message) return user.message;
     await saveSession(user.id);
     return 'Success';
@@ -64,9 +68,11 @@ const login = async (email: string, password: string) => {
  */
 const register = async (email: string, displayName: string, password: string) => {
     const user = await createUser(email, displayName, password);
-    //If user is an error, return that error and don't redirect
+
+    // If user is an error, return that error and don't redirect
     if (!user || user instanceof Error) return user;
-    //Successful sign-up wil sign-in the user
+
+    // Successful sign-up wil sign-in the user
     await login(email, password);
     return 'Success';
 };
@@ -75,11 +81,13 @@ const register = async (email: string, displayName: string, password: string) =>
  * Delete the session cookie to cause a logout
  */
 const logout = async () => {
-    cookies().set('session', '', {expires: new Date(0)});
+    cookies().set('session', '', { expires: new Date(0) });
 };
 
 const getSessionCookie = () =>{
     return cookies().get('session');
 };
 
-export {authenticateSession, login, register, logout, getSessionCookie};
+export {
+    authenticateSession, login, register, logout, getSessionCookie, updateSession,
+};
