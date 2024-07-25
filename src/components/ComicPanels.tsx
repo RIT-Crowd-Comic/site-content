@@ -45,11 +45,12 @@ const ComicPanels = ({ setting, hook_state, panels, router }: Props) => {
 
     async function hookLink(hook: Hook | CreateHook) {
         if (hook.next_panel_set_id) {
-            router.push(`/comic?id=${hook.next_panel_set_id}`);
+            return router.push(`/comic?id=${hook.next_panel_set_id}`);
         }
         const cookie = await getSessionCookie();
-        if(!cookie || cookie instanceof Error) router.push(`/sign-in`);
-        else router.push(`/comic/create`);
+        if(!cookie || cookie instanceof Error) return router.push(`/sign-in`);
+
+        else return router.push(`/comic/create?id=${(hook as Hook).id}`);
     }
     if (!panels || panels.length === 0) return <div id={`${styles.comicPanels}`} className={`${setting}`}></div>;
 
