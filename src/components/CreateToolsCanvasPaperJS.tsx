@@ -771,7 +771,7 @@ const CreateToolsCanvasPaperJS = () => {
 
     // Point the selected area is scaled from
     const [oppositeCorner, setOppositeCorner] = useState(new paper.Point(0, 0))
-    
+
     // Strings used to see if user flips selection
     const [prevOppCornerName, setPrevOppCornerName] = useState("");
     const [oppCornerName, setOppCornerName] = useState("");
@@ -947,7 +947,7 @@ const CreateToolsCanvasPaperJS = () => {
                 setTransformMouseDragged(false);
             }
             setTransformAction("none");
-            
+
             //edit tracking for undo
             prevEdits.push({ id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({ asString: true })) });
             if (prevEdits.length > UNDO_CAP) {
@@ -1435,124 +1435,124 @@ const CreateToolsCanvasPaperJS = () => {
 
 
             <div id={styles.pullOut}>
-              <div id={`${styles.toolOptions}`}>
-                  <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor} />
-                  <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize} />
-                  <FillOptions enabled={fillOptionsEnabled} changeFillColor={setFillColor} />
-                  <ShapeOptions enabled={shapeOptionsEnabled} shapeBorderSize={shapeBorderWidth} changeShapeBorderSize={setShapeBorderWidth}
-                      changeShapeBorderColor={setShapeBorderColor} changeShapeFillColor={setShapeFillColor} changeShape={setShapeSelected}
-                      changeDashedBorder={setDashedBorder} />
-                  <TextOptions enabled={textOptionsEnabled} changeTextContent={setTextContent} changeTextFont={setTextFont} changeTextSize={setTextSize}
-                      changeFontWeight={setTextFontWeight} changeTextAlignment={setTextAlign} changeTextColor={setTextColor} />
-                  <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
-                  <ShaderOptions enabled={shadeOptionsEnabled} shaderSize={shadeSize} changeShaderSize={setShadeSize} />
-              </div>
+                <div id={`${styles.toolOptions}`}>
+                    <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor} />
+                    <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize} />
+                    <FillOptions enabled={fillOptionsEnabled} changeFillColor={setFillColor} />
+                    <ShapeOptions enabled={shapeOptionsEnabled} shapeBorderSize={shapeBorderWidth} changeShapeBorderSize={setShapeBorderWidth}
+                        changeShapeBorderColor={setShapeBorderColor} changeShapeFillColor={setShapeFillColor} changeShape={setShapeSelected}
+                        changeDashedBorder={setDashedBorder} />
+                    <TextOptions enabled={textOptionsEnabled} changeTextContent={setTextContent} changeTextFont={setTextFont} changeTextSize={setTextSize}
+                        changeFontWeight={setTextFontWeight} changeTextAlignment={setTextAlign} changeTextColor={setTextColor} />
+                    <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
+                    <ShaderOptions enabled={shadeOptionsEnabled} shaderSize={shadeSize} changeShaderSize={setShadeSize} />
+                </div>
 
-              <div id={styles.layerOptions}>
-                  <div id="settings" className={styles.layerSettings}>
-                    <div id="mergeSetting" className={styles.layerStyling}>
-                        <label htmlFor="merge" id={styles.mergeLabel}>
-                            <input type="button" id="merge" title="Merge Layer" />
-                        </label>
-                    </div>
-                    <div id="layerDownSetting" className={styles.layerStyling}>
-                        <label htmlFor="layerdown" id={styles.layerDownLabel}>
-                            <button type="button" id="layerdown" title="Push Layer Down" />
-                        </label>
-                    </div>
-                    <div id="layerUpSetting" className={styles.layerStyling}>
-                        <label htmlFor="layerup" id={styles.layerUpLabel}>
-                            <input type="button" id="layerup" title="Bring Layer Up" />
-                        </label>
-                    </div>
-                    <div id={styles.layersList}>
-                        <div id="layer2" className={styles.layer}>
-                            <div id="layer2Visibility" className={styles.visibleStyling}>
-                                <label htmlFor="layer2Toggle" className={styles.visibleLabel}>
-                                    <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} defaultChecked></input>
-                                </label>
+                <div id={styles.layerOptions}>
+                    <div id="settings" className={styles.layerSettings}>
+                        <div id="mergeSetting" className={styles.layerStyling}>
+                            <label htmlFor="merge" id={styles.mergeLabel}>
+                                <input type="button" id="merge" title="Merge Layer" />
+                            </label>
+                        </div>
+                        <div id="layerDownSetting" className={styles.layerStyling}>
+                            <label htmlFor="layerdown" id={styles.layerDownLabel}>
+                                <button type="button" id="layerdown" title="Push Layer Down" />
+                            </label>
+                        </div>
+                        <div id="layerUpSetting" className={styles.layerStyling}>
+                            <label htmlFor="layerup" id={styles.layerUpLabel}>
+                                <input type="button" id="layerup" title="Bring Layer Up" />
+                            </label>
+                        </div>
+                        <div id={styles.layersList}>
+                            <div id="layer2" className={styles.layer}>
+                                <div id="layer2Visibility" className={styles.visibleStyling}>
+                                    <label htmlFor="layer2Toggle" className={styles.visibleLabel}>
+                                        <input type="checkbox" id="layer2Toggle" value="2" onChange={toggleLayerVisibility} defaultChecked></input>
+                                    </label>
+                                </div>
+                                <div id="layer2Lock" className={styles.lockStyling}>
+                                    <label htmlFor="layer2LockToggle" className={styles.lockLabel}>
+                                        <input type="checkbox" id="layer2LockToggle" value="2" onChange={toggleLayerLock}></input>
+                                    </label>
+                                </div>
+                                <div id="layer2Select" className={styles.layerSelect}>
+                                    <input type="radio" name="layers" id="layer2" className={styles.layerSelectRadio} value='2' onChange={changeLayer} />
+                                    <label htmlFor="layer2">Layer 2</label><br />
+                                </div>
                             </div>
-                            <div id="layer2Lock" className={styles.lockStyling}>
-                                <label htmlFor="layer2LockToggle" className={styles.lockLabel}>
-                                    <input type="checkbox" id="layer2LockToggle" value="2" onChange={toggleLayerLock}></input>
-                                </label>
+
+                            <div id="layer1" className={styles.layer}>
+                                <div id="layer2Visibility" className={styles.visibleStyling}>
+                                    <label htmlFor="layer1Toggle" className={styles.visibleLabel}>
+                                        <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} defaultChecked></input>
+                                    </label>
+                                </div>
+                                <div id="layer1Lock" className={styles.lockStyling}>
+                                    <label htmlFor="layer1LockToggle" className={styles.lockLabel}>
+                                        <input type="checkbox" id="layer1LockToggle" value="2" onChange={toggleLayerLock}></input>
+                                    </label>
+                                </div>
+                                <div id="layer1Select" className={styles.layerSelect}>
+                                    <input type="radio" name="layers" id="layer1" className={styles.layerSelectRadio} value='1' defaultChecked onChange={changeLayer} />
+                                    <label htmlFor="layer1">Layer 1</label><br />
+                                </div>
                             </div>
-                            <div id="layer2Select" className={styles.layerSelect}>
-                                <input type="radio" name="layers" id="layer2" className={styles.layerSelectRadio} value='2' onChange={changeLayer} />
-                                <label htmlFor="layer2">Layer 2</label><br />
+
+
+                            <div id="backgroundLayer" className={styles.layer}>
+                                <div id="backgroundLayerVisibility" className={styles.visibleStyling}>
+                                    <label htmlFor="backgroundToggle" className={styles.visibleLabel}>
+                                        <input type="checkbox" id="backgroundToggle" value="0" onChange={toggleLayerVisibility} defaultChecked></input>
+                                    </label>
+                                </div>
+                                <div id="backgroundLayerLock" className={styles.lockStyling}>
+                                    <label htmlFor="backgroundLayerLockToggle" className={styles.lockLabel}>
+                                        <input type="checkbox" id="backgroundLayerLockToggle" value="0" onChange={toggleLayerLock}></input>
+                                    </label>
+                                </div>
+                                <div id="backgroundLayerSelect" className={styles.layerSelect}>
+                                    <input type="radio" name="layers" id="background" className={styles.layerSelectRadio} value='0' onChange={changeLayer} />
+                                    <label htmlFor="background">Background</label><br />
+                                </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div id="layer1" className={styles.layer}>
-                            <div id="layer2Visibility" className={styles.visibleStyling}>
-                                <label htmlFor="layer1Toggle" className={styles.visibleLabel}>
-                                    <input type="checkbox" id="layer1Toggle" value="1" onChange={toggleLayerVisibility} defaultChecked></input>
-                                </label>
-                            </div>
-                            <div id="layer1Lock" className={styles.lockStyling}>
-                                <label htmlFor="layer1LockToggle" className={styles.lockLabel}>
-                                    <input type="checkbox" id="layer1LockToggle" value="2" onChange={toggleLayerLock}></input>
-                                </label>
-                            </div>
-                            <div id="layer1Select" className={styles.layerSelect}>
-                                <input type="radio" name="layers" id="layer1" className={styles.layerSelectRadio} value='1' defaultChecked onChange={changeLayer} />
-                                <label htmlFor="layer1">Layer 1</label><br />
-                            </div>
+
+                    <div id="panelSelect" className={styles.panelSelect}>
+                        <div id="panel1" className={styles.panelStyling}>
+                            <label htmlFor="panel1Select" className={styles.panelLabel}>
+                                <input type="radio" name="panels" id="panel1Select" value={0} defaultChecked />
+                            </label>
                         </div>
 
+                        <div id="panel2" className={styles.panelStyling}>
+                            <label htmlFor="panel2Select" className={styles.panelLabel}>
+                                <input type="radio" name="panels" id="panel2Select" value={1} />
+                            </label>
+                        </div>
 
-                        <div id="backgroundLayer" className={styles.layer}>
-                            <div id="backgroundLayerVisibility" className={styles.visibleStyling}>
-                                <label htmlFor="backgroundToggle" className={styles.visibleLabel}>
-                                    <input type="checkbox" id="backgroundToggle" value="0" onChange={toggleLayerVisibility} defaultChecked></input>
-                                </label>
-                            </div>
-                            <div id="backgroundLayerLock" className={styles.lockStyling}>
-                                <label htmlFor="backgroundLayerLockToggle" className={styles.lockLabel}>
-                                    <input type="checkbox" id="backgroundLayerLockToggle" value="0" onChange={toggleLayerLock}></input>
-                                </label>
-                            </div>
-                            <div id="backgroundLayerSelect" className={styles.layerSelect}>
-                                <input type="radio" name="layers" id="background" className={styles.layerSelectRadio} value='0' onChange={changeLayer} />
-                                <label htmlFor="background">Background</label><br />
-                            </div>
+                        <div id="panel3" className={styles.panelStyling}>
+                            <label htmlFor="panel3Select" className={styles.panelLabel}>
+                                <input type="radio" name="panels" id="panel3Select" value={2} />
+                            </label>
                         </div>
                     </div>
                 </div>
 
-
-                <div id="panelSelect" className={styles.panelSelect}>
-                    <div id="panel1" className={styles.panelStyling}>
-                        <label htmlFor="panel1Select" className={styles.panelLabel}>
-                            <input type="radio" name="panels" id="panel1Select" value={0} defaultChecked />
-                        </label>
-                    </div>
-
-                    <div id="panel2" className={styles.panelStyling}>
-                        <label htmlFor="panel2Select" className={styles.panelLabel}>
-                            <input type="radio" name="panels" id="panel2Select" value={1} />
-                        </label>
-                    </div>
-
-                    <div id="panel3" className={styles.panelStyling}>
-                        <label htmlFor="panel3Select" className={styles.panelLabel}>
-                            <input type="radio" name="panels" id="panel3Select" value={2} />
-                        </label>
+                <div id={styles.miniNavbar}>
+                    <Link href="comic/browse"><button className={`btn ${styles.backButton}`} id="backButton">Back</button></Link>
+                    <div id={styles.savePublish}>
+                        <button className={`btn ${styles.saveButton}`} id="saveButton" onClick={() => save(true)}>Save</button>
+                        <button className={`btn ${styles.publishButton}`} id="publishButton" onClick={toPublish}>Publish</button>
                     </div>
                 </div>
+
+                <p id={styles.warning}>Please rotate your screen for a better user experience!</p>
             </div>
-
-            <div id={styles.miniNavbar}>
-                <Link href="comic/browse"><button className={`btn ${styles.backButton}`} id="backButton">Back</button></Link>
-                <div id={styles.savePublish}>
-                    <button className={`btn ${styles.saveButton}`} id="saveButton" onClick={() => save(true)}>Save</button>
-                    <button className={`btn ${styles.publishButton}`} id="publishButton" onClick={toPublish}>Publish</button>
-                </div>
-            </div>
-
-            <p id={styles.warning}>Please rotate your screen for a better user experience!</p>
         </div>
-
     )
 }
 
