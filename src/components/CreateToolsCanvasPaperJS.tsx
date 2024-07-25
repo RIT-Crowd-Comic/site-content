@@ -1220,6 +1220,16 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         }
         setPrevEdits(prevEdits);
         setJustUndid(true);
+
+        const button = document.getElementById(styles.undoButton)
+
+        if(button && prevEdits.length < 4){
+            button.style.filter = "brightness(0.6)"
+        }
+        else if (button)
+        {
+            button.style.filter = "brightness(1)"
+        }
     }
 
     function redo() {
