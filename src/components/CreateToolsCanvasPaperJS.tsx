@@ -899,6 +899,15 @@ const CreateToolsCanvasPaperJS = () => {
             }
             else if (transformAction == "rotating") {
                 //rotate around center based on drag of mouse
+                setIsTransforming(true);
+                setTransformMouseDragged(true);
+
+                console.log(event.delta.angle)
+
+                //may cause issues with resizing flipping??? (need to double check after fixing rotate)
+                transformInfo[0].rotate(Math.atan2(event.delta.y, event.delta.x));
+                rasterInfo[1].rotate(Math.atan2(event.delta.y, event.delta.x));
+                return;
             }
 
         }
@@ -942,6 +951,8 @@ const CreateToolsCanvasPaperJS = () => {
 
                 //resets states used for resizing
                 setOppositeCorner(new paper.Point(0, 0));
+                setOppCornerName("");
+                setPrevOppCornerName("");
                 setScaleFactorX(0);
                 setScaleFactorY(0);
                 setTransformMouseDragged(false);
