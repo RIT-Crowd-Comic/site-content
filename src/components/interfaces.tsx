@@ -38,7 +38,7 @@ interface PanelSet{
     id: number,
     author_id: string,
     panels: Panel[],
-    previous_hook?: Hook | undefined;
+    hook?: Hook | undefined;
 }
 
 interface Hook{

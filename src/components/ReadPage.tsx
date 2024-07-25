@@ -41,7 +41,6 @@ const ReadPage = ({ id }: Props) => {
                 const hookResponses = await apiCalls.getHooksFromPanelSetById(panelSetResponse.id) as Hook[];
 
                 if (!updateError(imageUrlsResponse) && !updateError(hookResponses)) {
-
                     // update panels array with image srcs and hooks
                     const panels = (panelSetResponse.panels).map((panel, i) => ({
                         id: panel.id,
@@ -56,12 +55,16 @@ const ReadPage = ({ id }: Props) => {
                         ...panelSetResponse,
                         panels
                     });
+                    // console.log(panelSetResponse)
 
-                    if (panelSetResponse?.previous_hook) {
-                        const parentPanelResponse = await apiCalls.getPanelByID(Number(panelSetResponse.previous_hook.current_panel_id));
+                    if (panelSetResponse.hook === null) {
+                        setParentPanelSet(undefined);
+                    }
+                    else {
+                        const parentPanelResponse = await apiCalls.getPanelByID(Number(panelSetResponse?.hook?.current_panel_id));
                         if (!updateError(parentPanelResponse)) {
                             const previousPanelSetResponse = await apiCalls.getPanelSetByID(Number(parentPanelResponse.panel_set_id));
-                            setParentPanelSet(previousPanelSetResponse);
+                            setParentPanelSet(previousPanelSetResponse)
                         }
                     }
                 }
@@ -88,7 +91,7 @@ const ReadPage = ({ id }: Props) => {
     return (<>
         <ComicPanels setting={layout} hook_state={hooks} panels={panels} currentId={id} router={router} />
         <div className={`${styles.controlBar}`} >
-            <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet !== undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}></img></button>
+            <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet != undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}></img></button>
             <IconToggleButton setting={hooks} setSetting={setHooks} state_1="hidden" state_2="visible" buttonId="hooksToggle" source_1={toggleHooksOff} source_2={toggleHooksOn} />
             <IconToggleButton setting={layout} setSetting={setLayout} state_1={`${styles.rowPanels}`} state_2={`${styles.columnPanels}`} buttonId="layoutToggle" source_1={toggleLayoutHorizIcon} source_2={toggleLayoutVertIcon} />
         </div>

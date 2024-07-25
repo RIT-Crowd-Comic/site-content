@@ -7,6 +7,7 @@ import Image from 'next/image';
 // perhaps load this from a global color palette file
 const FILL_COLOR = '#009BC6AA';
 const HIGHLIGHT_COLOR = '#FFD172AA';
+const NULL_HOOK = '#D91911AA'
 const MIN_DRAWING_DIST = 3;
 
 // reference https://www.pluralsight.com/resources/blog/guides/re-render-react-component-on-window-resize
@@ -50,7 +51,6 @@ const Panel = ({
     hidden?: boolean
     // active?: boolean
 }) => {
-
     // for creating hooks
     const [vertices, setVertices] = useState<number[][]>([]);
     const imgRef = useRef<HTMLImageElement | null>(null);
@@ -143,7 +143,7 @@ const Panel = ({
         }
     }
 
-    const mouseMoveHandler = (event?: SyntheticEvent<HTMLImageElement, MouseEvent >) => {
+    const mouseMoveHandler = (event?: SyntheticEvent<HTMLImageElement, MouseEvent>) => {
         if (event?.nativeEvent.buttons === 1) return void mouseDragHandler(event);
         // console.log(event?.nativeEvent.offsetX);
 
@@ -155,10 +155,10 @@ const Panel = ({
 
 
     const touchMoveHandler = (event: SyntheticEvent<HTMLImageElement, TouchEvent>) => {
-   
+
         let touch = event.nativeEvent.touches[0];
 
-        let bcr = (touch.target  as HTMLElement).getBoundingClientRect();
+        let bcr = (touch.target as HTMLElement).getBoundingClientRect();
         let x = touch.clientX - bcr.x;
         let y = touch.clientY - bcr.y;
 
@@ -168,7 +168,7 @@ const Panel = ({
 
     }
 
-    
+
 
     // const imgRect = imgRef.current?.getBoundingClientRect().left ?? 0;
     // const svgStyle = `
@@ -206,13 +206,13 @@ const Panel = ({
                 <g transform={`scale(${1 / (scale?.x ?? 1)} ${1 / (scale?.y ?? 1)})`}>
                     {/* EXISTING HOOKS */}
                     {
-                    hooks.map((hook, i) => 
-                        <path
-                            d={createSVGPath( (hook as CreateHook).points ?? (hook as Hook).position.map(p => [p.x, p.y]) ?? '')}
-                            fill={(selectedHook?.hookIndex ?? -1) === i ? HIGHLIGHT_COLOR : FILL_COLOR}
-                            onClick={() => { if (onHookClick) onHookClick(hook, i) }}
-                            className={`${styles.hookPath} ${hideUntilHover ? styles.hidden : ''}`}
-                            key={i} />)}
+                        hooks.map((hook, i) =>
+                            <path
+                                d={createSVGPath((hook as CreateHook).points ?? (hook as Hook).position.map(p => [p.x, p.y]) ?? '')}
+                                fill={(selectedHook?.hookIndex ?? -1) === i ? HIGHLIGHT_COLOR : hook.next_panel_set_id === null ? NULL_HOOK : FILL_COLOR}
+                                onClick={() => { if (onHookClick) onHookClick(hook, i) }}
+                                className={`${styles.hookPath} ${hideUntilHover ? styles.hidden : ''}`}
+                                key={i} />)}
                     {/* EDITOR HOOK */}
                     <path
                         d={createSVGPath(vertices)}
