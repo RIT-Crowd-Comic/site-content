@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useState } from 'react';
-import Trunk from './trunk';
 import * as apiCalls from '../../../api/apiCalls';
 import Card from '@/components/Card';
 import { getTrunks } from '../../../api/apiCalls';
