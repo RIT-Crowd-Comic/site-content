@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import React from "react";
-import { Inter, Ceviche_One, Comic_Neue } from "next/font/google";
+import { Inter, Ceviche_One, Comic_Neue} from "next/font/google";
 import 'bootstrap/dist/css/bootstrap.css';
 import "../styles/globals.css";
 import BootstrapClient from "../scripts/BootstrapClient";
@@ -36,9 +36,9 @@ const backIssues = localFont({
 })
 
 const inter = Inter({ 
-  subsets: ["latin"], 
+  subsets: ["latin"],
   display: 'swap',
-  variable: '--font-inter' 
+  variable: '--font-inter'
 });
 
 const cevicheOne = Ceviche_One({

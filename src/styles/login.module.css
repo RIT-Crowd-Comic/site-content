@@ -109,8 +109,8 @@
 
 #inputEmail, #inputPassword, #inputUsername
 {
-    /* font-family: var(--font-comic-neue); */
-    font-variant: small-caps;
+    font-family: var(--font-inter);
+    /* font-variant: small-caps; */
 }
 
 #inputEmail:invalid

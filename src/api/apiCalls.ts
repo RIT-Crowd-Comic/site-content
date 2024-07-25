@@ -164,7 +164,7 @@ const getPanelByIndex = async (panelSetID: number, index: number) => {
  * @param id the id of the user
  * @returns the API response which is either a user under a specific user id or an Error message. A correct response will have the following properties:
  *  email: (email of user)
- *  display_name: (dispaly name of user)
+ *  display_name: (display name of user)
  *  id: (id of user)
  */
 const getUser = async (id: string) => {

@@ -45,9 +45,32 @@ const NavBar = () => {
                         width={78}
                         height={46}
                     />
+                    {/* Crowd Comic */}
                 </Link>
+
+                <div className="d-flex order-lg-3 ms-auto me-3">
+                    {isSignedIn ? (
+                        <div className="dropdown">
+                            <button
+                                className="nav-btn btn btn-outline-dark text-color-white dropdown-toggle"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                View Profile
+                            </button>
+                            <ul className="dropdown-menu">
+                                <li><Link href="/profile"><button className="dropdown-item">Dashboard</button></Link></li>
+                                <li><button onClick={handleSignOut} className="dropdown-item">Sign Out</button></li>
+                            </ul>
+                        </div>
+                    ) : (
+                        <Link href="/sign-in"><button className="nav-btn btn btn-outline-dark text-color-white">Sign In</button></Link>
+                    )}
+                </div>
+
                 <button
-                    className="navbar-toggler"
+                    className="navbar-toggler order-lg-2"
                     type="button"
                     data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasNavbar"
@@ -61,6 +84,7 @@ const NavBar = () => {
                         height={46}
                     />
                 </button>
+
                 <div
                     className="offcanvas offcanvas-end w-50"
                     tabIndex={-1}
@@ -79,28 +103,13 @@ const NavBar = () => {
                     <div className="offcanvas-body">
                         <ul className="navbar-nav justify-content-end flex-grow-1">
                             <li className="nav-item">
-                                <Link
-                                    className="nav-link"
-                                    id="homeLink"
-                                    aria-current="page"
-                                    href="/"
-                                >Home
-                                </Link>
+                                <Link className="nav-link" aria-current="page" href="/">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" id="teamLink" href="/team">Team</Link>
+                                <Link className="nav-link" href="/team">Team</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" id="comicLink" href="/comic/browse">Browse Comics</Link>
-                            </li>
-                            <li className="nav-item">
-                                {isSignedIn ?
-                                    (
-                                        <button onClick={handleSignOut} className="nav-btn btn btn-outline-dark text-color-white">Sign Out</button>
-                                    ) :
-                                    (
-                                        <Link href="/sign-in"><button className="nav-btn btn btn-outline-dark text-color-white">Sign In</button></Link>
-                                    )}
+                                <Link className="nav-link" href="/comic/browse">Browse Comics</Link>
                             </li>
                         </ul>
                     </div>

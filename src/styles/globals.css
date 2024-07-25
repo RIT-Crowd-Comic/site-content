@@ -18,6 +18,7 @@
         Inter: --font-inter
         Ceviche One: --font-ceviche-one
         Comic Neue: --font-comic-neue
+        Open Sans: --font-open-sans
          */
 }
 
@@ -116,6 +117,11 @@ body
 
 .offcanvas-header {
     font-size: 1.5rem;
+}
+
+.dropdown-item
+{
+    font-size: 1rem;
 }
 
 /* FOOTER */
