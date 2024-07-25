@@ -115,51 +115,39 @@ const CreateToolsCanvasPaperJS = () => {
             let panel1JsonData = localStorage.getItem("panel-1-layerData");
             let panel2JsonData = localStorage.getItem("panel-2-layerData");
             let panel3JsonData = localStorage.getItem("panel-3-layerData");
-            //let jsonImageData = localStorage.getItem("image-1");
 
             if(panel1JsonData)
             {
+                // Set panel1's layer data from storage
                 let layerData = JSON.parse(panel1JsonData);
                 setPanel1LayerData(layerData);
-                console.log("1");
-            }
 
-            if(panel2JsonData)
-            {
-                let layerData = JSON.parse(panel2JsonData);
-                setPanel2LayerData(layerData);
-                console.log("2");
-            }
-
-            if(panel3JsonData)
-            {
-                let layerData = JSON.parse(panel3JsonData);
-                setPanel3LayerData(layerData);
-                console.log("3");
-            }
-
-            /*if (jsonData) {
-                let layerData = JSON.parse(jsonData);
+                // Need to show panel 1 on screen as it is the 1st panel you see in the editor
                 backgroundLayerReference.current.importJSON(layerData.background);
                 shadingLayerRef.current.importJSON(layerData.shade);
                 layer1Reference.current.importJSON(layerData.layer1);
                 layer2Reference.current.importJSON(layerData.layer2);
                 layer3Reference.current.importJSON(layerData.layer3);
                 layer4Reference.current.importJSON(layerData.layer4);
-            }*/
-        }
-        catch {
+            }
 
-            console.log("error");
-        }
+            if(panel2JsonData)
+            {
+                let layerData = JSON.parse(panel2JsonData);
+                setPanel2LayerData(layerData);
+            }
 
-        // Show panel 1
-        backgroundLayerReference.current.importJSON(panel1LayerData.background);
-        shadingLayerRef.current.importJSON(panel1LayerData.shade);
-        layer1Reference.current.importJSON(panel1LayerData.layer1);
-        layer2Reference.current.importJSON(panel1LayerData.layer2);
-        layer3Reference.current.importJSON(panel1LayerData.layer3);
-        layer4Reference.current.importJSON(panel1LayerData.layer4);
+            if(panel3JsonData)
+            {
+                let layerData = JSON.parse(panel3JsonData);
+                setPanel3LayerData(layerData);
+            }
+
+        }
+        catch(error) {
+
+            console.log(error);
+        }
 
         const context = canvas.getContext("2d");
 
@@ -214,7 +202,6 @@ const CreateToolsCanvasPaperJS = () => {
             penPath.strokeCap = 'round';
             penPath.strokeJoin = 'round';
             penPath.blendMode = 'normal';
-            console.log(layer1Reference.current?.exportJSON({asString: true}));
         }
     }
 
@@ -972,7 +959,7 @@ const CreateToolsCanvasPaperJS = () => {
         }
     }
 
-    const findSelectedPanelProject = () => {
+    const findSelectedPanel = () => {
         // Makes sure that the layers aren't undefined
         if(backgroundLayerReference.current && shadingLayerRef.current && layer1Reference.current && layer2Reference.current &&
             layer3Reference.current && layer4Reference.current)
@@ -1415,19 +1402,19 @@ const CreateToolsCanvasPaperJS = () => {
             <div id="panelSelect" className={styles.panelSelect}>
                 <div id="panel1" className={styles.panelStyling}>
                     <label htmlFor="panel1Select" className={styles.panelLabel}>
-                        <input type="radio" name="panels" id="panel1Select" value={0} defaultChecked onChange={findSelectedPanelProject}/>
+                        <input type="radio" name="panels" id="panel1Select" value={0} defaultChecked onChange={findSelectedPanel}/>
                     </label>
                 </div>
 
                 <div id="panel2" className={styles.panelStyling}>
                     <label htmlFor="panel2Select" className={styles.panelLabel}>
-                        <input type="radio" name="panels" id="panel2Select" value={1} onChange={findSelectedPanelProject}/>
+                        <input type="radio" name="panels" id="panel2Select" value={1} onChange={findSelectedPanel}/>
                     </label>
                 </div>
 
                 <div id="panel3" className={styles.panelStyling}>
                     <label htmlFor="panel3Select" className={styles.panelLabel}>
-                        <input type="radio" name="panels" id="panel3Select" value={2} onChange={findSelectedPanelProject}/>
+                        <input type="radio" name="panels" id="panel3Select" value={2} onChange={findSelectedPanel}/>
                     </label>
                 </div>
             </div>
