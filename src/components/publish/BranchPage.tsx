@@ -6,15 +6,20 @@ import Panel from './Panel';
 import BranchPageControls from './BranchPageControls';
 import { publishHandler } from '../../api/apiCalls';
 import { useRouter } from 'next/navigation';
+import { getHookByID } from '../../api/apiCalls';
 
-const BranchPage = () => {
+interface Props {
+ id : number;
+}
+const BranchPage = ({ id }: Props) => {
     const [addingHook, setAddingHook] = useState(false);
+    const [parentHookId, setParentHookId] = useState<number>();
     const [confirmHook, setConfirmHook] = useState<number>();
     const [selectedHook, setSelectedHook] = useState<{ panelIndex: number, hookIndex: number }>();
     const [panelSet, setPanelSet] = useState<CreatePanelSet>({
         id: 0,
         author_id: '',
-        panels: emptyPanelSet()
+        panels: emptyPanelSet(),
     });
     const [activePanel, setActivePanel] = useState(0);
     const activePanelHooks = () => panelSet.panels[activePanel].hooks;
@@ -59,6 +64,22 @@ const BranchPage = () => {
         //     console.log(user);
         //     if(user.message) router.push(`/sign-in`);
         // });
+
+        //check the id and reroute if needed
+        //route if the link contains an id already created - get the hook by id and check its next
+        getHookByID(id).then((hook) => {
+            if ((hook instanceof Error)) return router.push(`/comic/browse`);
+
+            console.log(id);
+            hook = hook as CreateHook;
+
+            if (!hook.next_panel_set_id) {
+                setParentHookId(id);
+                return;
+            }
+            //use the next id to reroute to read
+            router.push(`/comic/?id=${hook.next_panel_set_id}`);
+        });
         
         // retrieve comic images from create page using local storage
         const storedImageLinks = [
@@ -170,6 +191,7 @@ const BranchPage = () => {
                     confirmBranchHook={() => confirmBranchHook(activePanel)}
                     removeBranchHook={removeBranchHook}
                     publish={async () => {
+                        panelSet.previous_hook_id = parentHookId;
                         const response = await publishHandler(panelSet);
                         console.log(response);
 
