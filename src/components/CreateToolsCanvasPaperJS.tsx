@@ -57,8 +57,6 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     let [prevEdits,setPrevEdits] = useState<[{id: Number,svg: string}]>([{id:-1,svg:""}]) 
     const UNDO_CAP = 18; //controls how many edits are tracked with undo tool (must account for -3 for buffer room)
     let [justUndid,setJustUndid] = useState(false);
-
-    let [justUndid, setJustUndid] = useState(false);
     const [parentHookId, setParentHookId] = useState<Number>()
 
 
