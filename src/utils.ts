@@ -1,4 +1,4 @@
-const createSVGPath = (points: number[][]) => points.map((point, i) => (i === 0 ? 'M' : 'L') + `${point[0]} ${point[1]}`).join(' ')
+const createSVGPath = (points: number[][]) => points.map((point, i) => (i === 0 ? 'M' : 'L') + `${point[0]} ${point[1]}`).join(' ');
 
 /**
  * Calculate the area of a polygon
@@ -13,7 +13,8 @@ const calculateArea = (points: number[][]) =>
             (i < points.length - 1 ? // prevent array out of bounds
                 (current[1] + points[i + 1][1]) * (points[i + 1][0] - current[0]) / 2 :
                 (current[1] + points[0][1]) * (points[0][0] - current[0]) / 2) // loop back to from last to first point
-        , 0));
+        , 0
+    ));
 
 
 /**
@@ -28,10 +29,11 @@ const toggleClassForAllElements = (selector: string, className: string, predicat
         panelContainer.classList.remove(className);
         if (predicate(panelContainer, i)) panelContainer.classList.add(className);
     });
-}
+};
 
 
 export {
     createSVGPath,
-    toggleClassForAllElements
-}
+    toggleClassForAllElements,
+    calculateArea
+};
