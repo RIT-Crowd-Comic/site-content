@@ -863,8 +863,7 @@ const CreateToolsCanvasPaperJS = () => {
             else if (transformInfo[0].contains(event.point)) {
                 setTransformAction("moving");
             }
-            //runs if anywhere outside of box is pressed 
-            //(could be changed to have an additional rotating handler to box)
+            //runs if anywhere outside of box is pressed (could be changed to have an additional rotating handler to box)
             else {
                 setTransformAction("rotating");
             }
@@ -899,19 +898,20 @@ const CreateToolsCanvasPaperJS = () => {
                 return;
             }
             else if (transformAction == "rotating") {
-                //rotate around center based on drag of mouse
                 setIsTransforming(true);
                 setTransformMouseDragged(true);
 
-                let testbound = new paper.Path.Rectangle(transformInfo[0].bounds);
+                //testing purposes
+                let testbound = new paper.Path.Rectangle(rasterInfo[1].bounds);
                 testbound.strokeWidth = 3;
                 testbound.strokeColor = new paper.Color("red");
                 testbound.removeOnDrag();
 
-                var center = transformInfo[0].bounds.center;
-                var baseVec = center.subtract(event.lastPoint);
-                var nowVec = center.subtract(event.point);
-                var angle = nowVec.angle - baseVec.angle;
+                //calculates math for rotating based on mouse drag then rotates both
+                let center = transformInfo[0].bounds.center;
+                let baseVec = center.subtract(event.lastPoint);
+                let nowVec = center.subtract(event.point);
+                let angle = nowVec.angle - baseVec.angle;
                 transformInfo[0].rotate(angle);
                 rasterInfo[1].rotate(angle);
 
@@ -923,7 +923,7 @@ const CreateToolsCanvasPaperJS = () => {
     transformTool.onMouseUp = function (event: paper.ToolEvent) {
         //resets transform action state
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
-            if (transformAction == "resizing" && transformMouseDragged == true) {
+            if (transformAction == "resizing" && transformMouseDragged) {
                 //scales size of selection
                 transformInfo[0].scale(Math.abs(scaleFactorX), Math.abs(scaleFactorY), oppositeCorner);
                 rasterInfo[1].scale(Math.abs(scaleFactorX), Math.abs(scaleFactorY), oppositeCorner);
@@ -965,8 +965,8 @@ const CreateToolsCanvasPaperJS = () => {
                 setScaleFactorY(0);
                 setTransformMouseDragged(false);
             }
-            else if(transformAction == "rotating"){
-                
+            else if(transformAction == "rotating" && transformMouseDragged){
+                setTransformMouseDragged(false);
             }
             setTransformAction("none");
 
