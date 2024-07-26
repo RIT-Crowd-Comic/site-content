@@ -469,14 +469,14 @@ const publishHandler = async(panelSet : CreatePanelSet) =>{
         })
 
         //get the hookId
-        const parentHookID = panelSet.previous_hook?.id;
+        const parentHookId = panelSet.previous_hook_id;
 
         //get the hook id
-        return await publish(image1, image2, image3, hooks, parentHookID);
+        return await publish(image1, image2, image3, hooks, parentHookId);
 }
-const publish = async (image1 : File, image2 : File, image3 : File, hooks : Array<hook>, hookId : number | undefined) => {
+const publish = async (image1 : File, image2 : File, image3 : File, hooks : Array<hook>, parentHookId : number | undefined) => {
     const data = {
-        hook_id: hookId,
+        hook_id: parentHookId,
         hooks: hooks
     };
     const formData = new FormData();
