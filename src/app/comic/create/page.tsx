@@ -1,6 +1,5 @@
 'use client';
 import styles from "@/styles/create.module.css";
-
 import dynamic from 'next/dynamic';
 
 const CreateToolsCanvasPaperJS = dynamic(
@@ -22,10 +21,18 @@ const exportToPNG = () => {
     downloadLink.click();
 }
 
-const Create = () => {
+const Create = ({
+    params,
+    searchParams,
+  }: {
+    params: { id: number }
+    searchParams: { [key: string]: number | undefined }
+  }) => {
+    //redirect if link is incorrect
+    const { id } = searchParams;
     return (
         <main className={`${styles.body}`}>
-            <CreateToolsCanvasPaperJS />
+            <CreateToolsCanvasPaperJS id={Number(id)} />
         </main>
     );
 }
