@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { CreateHook, emptyPanelSet, CreatePanelSet } from "../interfaces";
 import Panel from './Panel';
 import BranchPageControls from './BranchPageControls';
+import InfoBox from '../info/InfoBox';
+import InfoBtn from '../info/InfoBtn';
 import { publishHandler } from '../../api/apiCalls';
 import { useRouter } from 'next/navigation';
 import { getHookByID } from '../../api/apiCalls';
@@ -156,6 +158,25 @@ const BranchPage = ({ id }: Props) => {
         setAddingHook(false);
     }
 
+    const infoDisplay = (visible: boolean) => {
+        const divs = document.querySelectorAll("div")
+        const modal = divs[divs.length-2]
+        if(modal)
+        {
+            if(visible)
+            {
+                modal.style.display = "block";
+            }
+            else
+            {
+                modal.style.display = "none";
+            }
+            
+        }
+        console.log(divs)
+        
+    }
+
     return (<>
         <main className={`${styles.body}`}>
             <div id={styles.publishContainer}>
@@ -235,6 +256,8 @@ const BranchPage = ({ id }: Props) => {
                     <button onClick={pushToLocalStorage} id={`${styles.publishBtn}`}>Publish</button>
                 </div> */}
             </div>
+            <InfoBtn toggle={infoDisplay}></InfoBtn>
+            <InfoBox instructions="These are instructions" toggle={infoDisplay}></InfoBox>
         </main>
     </>);
 }
