@@ -30,10 +30,11 @@
 
     flex-direction: row;
 
-    height: 50vh;
+    height: 50vw;
+    max-height: 80vh;
     width: 80%;
 
-    margin: 20px auto;
+    margin: 5vw 20px;
     align-items: start;
 }
 
@@ -44,12 +45,22 @@
     grid-area: canvas;
 
     border-style: solid;
-    background-color: white;
+    border-style: solid;
+    background: conic-gradient(
+        #cccccc70 90deg,
+        #ffffff70 90deg 180deg,
+        #cccccc70 180deg 270deg,
+        #ffffff70 270deg
+    );
+    background-repeat: repeat;
+    background-size: 20px 20px;
+    background-position: top left;
+
     cursor: pointer;
 
     height: 100% !important;
     width: auto !important;
-
+    
     aspect-ratio: 3 / 2;
 }
 
@@ -149,8 +160,14 @@
     position: relative;
     width: 100%;
 
-    margin: auto 0;
-    height: 20px;
+    margin: 0 0;
+    height: 100%;
+}
+
+.layerSelect label
+{
+    margin: 10px 0;
+    height: 10%;
 }
 
 .layer
@@ -164,6 +181,8 @@
     flex-direction: row;
 
     width: 95%;
+    height: 50%;
+    max-height: 50px;
 
     overflow: hidden;
 }
@@ -425,12 +444,17 @@
 
 .toolStyling:has([type=radio]:hover), .panelStyling:has([type=radio]:hover), .layerStyling:has([type=button]:hover)
 {
-    filter: brightness(.7);
+    filter: brightness(.7) !important;
 }
 
 .visibleStyling:has([type=checkbox]:checked), .lockStyling:has([type=checkbox]:checked)
 {
-    filter: brightness(1);
+    filter: brightness(1) !important;
+}
+
+.visibleStyling:has([type=checkbox]:hover), .lockStyling:has([type=checkbox]:hover)
+{
+    filter: brightness(.3) !important;
 }
 
 .layer:has([type=radio]:checked)
@@ -539,19 +563,24 @@
     bottom: 0;
 }
 
-.publishButton, .saveButton, .backButton
+.publishButton, .saveButton, .backButton,
+.publishButton:hover, .saveButton:hover, .backButton:hover,
+.publishButton:active, .saveButton:active, .backButton:active,
+.publishButton:focus, .saveButton:focus, .backButton:focus
 {
-    background-color: transparent;
     color: white;
     
-    margin: 0;
+    margin: 0 !important;
+    background-color: transparent !important;
+    border: none !important;
+    transform: none !important;
+    box-shadow: none !important;
 }
 
-.publishButton
+.publishButton, .publishButton:hover, .publishButton:active, .publishButton:focus
 {
     margin-left: 5px;
 }
-
 .publishButton:hover, .saveButton:hover, .backButton:hover
 {
     background-color:#242424;
@@ -568,31 +597,98 @@
     top: 1px;
 }
 
+#info{
+    position:fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+#infoButton{
+    height:40px;
+    width:40px;
+    background: url("../../public/images/icons/draw-icons/info.svg") no-repeat center/contain;
+    border: none;
+    filter: invert();
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); 
+  }
+
+  .modalContent {
+    background-color: #313131a4;
+    margin: 15% auto;
+    padding: 5px;
+    border: 3px solid #000000;
+    width: 60%; 
+  }
+
+  .modalContent p{
+    margin: 15px 20px;
+  }
+
+  .closeModal {
+    background: url("../../public/images/icons/draw-icons/clear.svg") no-repeat center/contain;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    width:20px;
+    height:20px;
+    z-index: 50;
+  }
+  
+  .closeModal:hover,
+  .closeModal:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
 /* FOR PORTRAIT MODE ONLY */
 #warning
 {
     display: none;
 }
 
-/* [xs] Extra small devices, less than 576px) */
-/* No media query for `xs` since this is the default in Bootstrap */
+/* [xs] Extra small devices, less than 386px) */
+@media (max-width: 389px)
+{
+    #createPage
+    {
+        height: 50vh;
+    }
+}
+
+/* Portrait */
 @media (orientation: portrait)
 {
     #createPage
     {
         display: grid;
 
-        grid-template-columns: 60px auto;
+        grid-template-columns: 50px auto !important;
         grid-template-rows: 100%;
         grid-template-areas:
-        "toolBar canvas";
+        "toolBar canvas" !important;
 
         flex-direction: row;
 
-        height: 160px;
-        width: 80%;
+        height: 50vw !important;
+        max-height: 40vh !important;
 
-        margin: 20px auto;
+        width: 90vw !important;
+        max-width: 100vw !important;
+
+        margin: 35px auto;
+
+
         align-items: start;
     }
 
@@ -606,23 +702,28 @@
         background-color: white;
         cursor: pointer;
 
-        height: auto !important;
+        height: 100% !important;
         width: auto !important;
 
-        max-width: 50vw;
-        max-height: auto;
-
+        min-height: 0 !important;
+        min-width: 0 !important;
+        
         aspect-ratio: 3 / 2;
+    }
+
+    #miniNavbar, #pullOut
+    {
+        display: none !important;
     }
 
     #fieldSet
     {
-        margin-right: 20px;
+        margin-right: 10px;
         overflow-y: scroll;
         overflow-x: hidden;
 
         height: 100%;
-        width: 40px;
+        width: 30px;
 
         background-color: #00000062;
         border: 3px solid black;
@@ -642,6 +743,28 @@
 
         width: 100%;
     }
+
+    
+    
+    .toolStyling, .visibleStyling, .lockStyling, .sizeConsistency
+    {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    .panelLabel
+    {
+        height: 100%;
+    }
+
+    #functionButtons
+    {
+        height: auto;
+        display:flex;
+        flex-direction: column;
+
+        justify-content: space-between;
+    }
 }
 
 /* [sm] Small devices, 576px and up */
@@ -651,31 +774,48 @@
     {
         display: grid;
 
-        grid-template-columns: auto auto 25%;
+        grid-template-columns: 40px auto;
         grid-template-rows: 100%;
         grid-template-areas:
-        "toolBar canvas tools";
+        "toolBar canvas";
 
         flex-direction: row;
 
-        height: 60vh;
+        height: 50vw;
+        max-height: 90vh;
         max-width: 80vw;
 
-        margin: 20px auto;
+        margin: 2% 10px;
         align-items: start;
-        justify-content: center;
     }
 
-    #pullOut
+    #canvas
     {
-        margin-left: 20px;
-        height: 100%;
-        max-height: 100%;
-        grid-area: tools;
-        display: grid;
-        grid-template-rows: auto 40% 10%;
+        order: 1;
+        border: 3px solid black;
+        grid-area: canvas;
 
-        row-gap: 10px;
+        border-style: solid;
+        background-color: white;
+        cursor: pointer;
+
+        height: 100% !important;
+        width: auto !important;
+        
+        aspect-ratio: 3 / 2;
+    }
+    
+    #fieldSet
+    {
+        margin-right: 10px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+
+        height: 100%;
+        width: 30px;
+
+        background-color: #00000062;
+        border: 3px solid black;
     }
 
     #miniNavbar
@@ -696,28 +836,6 @@
 
 /* [md] Medium devices, 768px and up */
 @media (min-width: 768px) {
-    .body
-    {
-        width: 100%;
-        height: 100vh;
-        font-family: var(--font-back-issues);
-        background-color: #2d2d2d;
-        max-width: 100%;
-        padding-right: 0 !important;
-        /* overflow: hidden; */
-        background-image: radial-gradient(circle at center,
-                #414141 0.15rem,
-                transparent 0), radial-gradient(circle at center, #414141 0.15rem, transparent 0);
-        background-size: 1.3rem 1.3rem;
-        background-position: 0 0, 0.65rem 0.65rem;
-
-        color:white;
-        font-size: small;
-
-        position: absolute;
-    }
-
-    
     #createPage
     {
         display: grid;
@@ -730,7 +848,8 @@
 
         flex-direction: row;
 
-        height: 40vh;
+        height: 35vw;
+        max-height: 75vh;
         max-width: 80vw;
 
         margin: 20px auto;
@@ -749,8 +868,6 @@
 
         row-gap: 10px;
     }
-
-    
 
     #miniNavbar
     {
@@ -793,8 +910,6 @@
         border: 3px solid black;
         grid-area: canvas;
 
-        border-style: solid;
-        background-color: white;
         cursor: pointer;
 
         height: 100% !important;
@@ -807,15 +922,7 @@
 
     #fieldSet
     {
-        margin-right: 20px;
-        overflow-y: scroll;
-        overflow-x: hidden;
-
-        height: 100%;
         width: 50px;
-
-        background-color: #00000062;
-        border: 3px solid black;
     }
 
     #toolRadioSelects, #functionButtons, .backgroundUploadForm
@@ -824,365 +931,46 @@
         margin: 0 auto;
     }
 
-    #toolRadioSelects
-    {
-        order: 0;
-        grid-area: toolBar;
-    }
-
-
-    #toolOptions, #layerOptions
-    {
-        background-color: #00000062;
-        border: 3px solid black;
-
-        padding: 7px;
-    }
-    .panelSelect
-    {
-        background-color: #00000062;
-        border: 3px solid black;
-    }
-
-    /* RIGHT SIDE BAR */
-
-    #pullOut
-    {
-        margin-left: 20px;
-        height: 100%;
-        max-height: 100%;
-        grid-area: tools;
-        display: grid;
-        grid-template-rows: auto 40% 10%;
-
-        row-gap: 10px;
-    }
-
-    #toolOptions, #layerOptions, .panelSelect
-    {
-        height: 100%;
-        overflow-x: hidden;
-    }
-
-    /* - TOOL OPTIONS */
-
-    .toolStyles
-    {
-        overflow-y: scroll;
-        overflow-x: hidden;
-
-        height: 100%;
-    }
-
-    /* - LAYER OPTIONS */
-
-    .layerSelect
-    {
-        position: relative;
-        width: 100%;
-
-        margin: auto 0;
-        height: 15px;
-    }
-
-    .layer
-    {
-        padding: 2px;
-        margin: 2px 0;
-        border: solid 3px white;
-        background-color: black;
-
-        display:flex;
-        flex-direction: row;
-
-        width: 95%;
-
-        overflow: hidden;
-    }
-
-    #layersList
-    {
-        overflow-y: scroll;
-        overflow-x: hidden;
-
-        height: 80%;
-    }
-
-    .layerSelectRadio
-    {
-        /* MAKES IT SO MOST OF LAYER BOX IS SELECTABLE */
-        left: 0;
-        width: 100%;
-        height: 100%;
-
-        position: absolute;
-        opacity: 0;
-    }
-
-    /* - LAYER SETTINGS OPTIONS */
-    .layerSettings
-    {
-        display: flex;
-        flex-direction: row;
-    }
-
-    .layerStyling input
-    {
-        padding: 0;
-    }
-
-    /* - PREVIEW PANEL OPTIONS */
-
-    .panelSelect
-    {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-    }
-
-    /* - SCROLLBAR */
-    .toolStyles::-webkit-scrollbar, #layersList::-webkit-scrollbar
-    {
-        width: 11px;
-        background-color: #b7b7b7;
-
-        border-radius: 6px;
-    }
-
-    .toolStyles::-webkit-scrollbar-thumb, #layersList::-webkit-scrollbar-thumb
-    {
-        background-color: #535353;
-        border: 2px solid transparent;
-        border-radius: 9px;
-        background-clip: content-box;
-    }
-
     /* ICONS */
-
-    /* - HIDES THE BUTTONS */
-    #toolRadioSelects [type=radio],#layerOptions [type=checkbox], .layerSettings [type=button], #backgroundUpload input, .panelSelect [type=radio]
-    {
-        position: absolute;
-        opacity: 0;
-        width: 25px;
-        height: 25px;
-    }
-
     /* - BUTTON CSS */
-    #undoLabel button, #redoLabel button, #clearLabel button
-    {
-        outline: none !important;
-        border: none !important;
-        background-color: none !important;
-    }
 
-    #undoLabel:has(button:hover), #redoLabel:has(button:hover), #clearLabel:has(button:hover), .formLabel:has(input:hover)
+    .toolStyling, .visibleStyling, .lockStyling, .sizeConsistency
     {
-        filter: brightness(.5);
-    }
-
-    #undoLabel:has(button:active), #redoLabel:has(button:active), #clearLabel:has(button:active), .formLabel:has(input:active)
-    {
-        filter: brightness(.3);
-    }
-
-    #mergeLabel
-    {
-        background: url("../../public/images/icons/draw-icons/layer_merge.svg") no-repeat center/contain;
-        transform: scaleY(-1);
-        width: 25px;
-        height: 25px;
-    }
-
-    #layerDownLabel
-    {
-        background: url("../../public/images/icons/draw-icons/layer_down.svg") no-repeat center/contain;
-        width: 25px;
-        height: 25px;
-    }
-
-    #layerUpLabel
-    {
-        background: url("../../public/images/icons/draw-icons/layer_up.svg") no-repeat center/contain;
-        width: 25px;
-        height: 25px;
-    }
-
-    .visibleLabel
-    {
-        background: url("../../public/images/icons/draw-icons/eyeclose.svg") no-repeat center/contain;
-        width: 25px;
-        height: 25px;
-    }
-
-    .lockLabel
-    {
-        background: url("../../public/images/icons/draw-icons/unlock.svg") no-repeat center/contain;
-        width: 25px;
-        height: 25px;
-    }
-
-    .formLabel
-    {
-        background: url("../../public/images/icons/draw-icons/upload.svg") no-repeat center/contain;
-        width: 25px;
-        height: 25px;
+        width: 25px !important;
+        height: 25px !important;
     }
 
     .panelLabel
     {
-        background: url("../../public/images/icons/draw-icons/panels.svg") no-repeat center/contain;
-        width: 30px;
         height: 100%;
-    }
-
-    /* - ONTO STYLING... */
-    .lockStyling
-    {
-        margin: 8px 5px !important;
-    }
-
-    .toolStyling, .visibleStyling, .lockStyling
-    {
-        width: 25px;
-        height: 25px;
-
-        margin: 8px 0;
-    }
-
-    .toolStyling label
-    {
-        width: 25px;
-        height: 25px;
-    }
-
-    .visibleStyling, .lockStyling
-    {
-        margin-left: 5px;
-    }
-
-    .toolStyling:has([type=radio]:checked), .panelStyling:has([type=radio]:checked), .layerStyling:has([type=button]:active), .visibleStyling, .lockStyling
-    {
-        filter: brightness(.5) !important;
-    }
-
-    .toolStyling:has([type=radio]:hover), .panelStyling:has([type=radio]:hover), .layerStyling:has([type=button]:hover)
-    {
-        filter: brightness(.7);
-    }
-
-    .visibleStyling:has([type=checkbox]:checked), .lockStyling:has([type=checkbox]:checked)
-    {
-        filter: brightness(1);
-    }
-
-    .layer:has([type=radio]:checked)
-    {
-        background-color: #414141;
-        border-color:#cccccc;
-    }
-
-    .visibleStyling:has([type=checkbox]:checked) .visibleLabel
-    {
-        background: url("../../public/images/icons/draw-icons/eyeopen.svg") no-repeat center/contain;
-    }
-
-    .lockStyling:has([type=checkbox]:checked) .lockLabel
-    {
-        background: url("../../public/images/icons/draw-icons/lock.svg") no-repeat center/contain;
     }
 
     #functionButtons
     {
-        width: 25px;
-        height: 25px;
         height: auto;
         display:flex;
         flex-direction: column;
 
         justify-content: space-between;
     }
-
-    #functionButtons label
-    {
-        width: 25px;
-        height: 25px;
-
-        margin: 0 0 8px 0;
-    }
-
-    .backgroundUploadForm
-    {
-        width: 25px;
-        height: 25px;
-
-        margin-bottom: 5px;
-    }
-
-    /* PEN TOOL */
-    #penSlider, #shapeBorderSlider, #shapeSelect, #eraserSlider, #textWeight, #textAlignment, #shadeSlider {
-        accent-color: rgb(126, 126, 126);
-    }
-
-    /* PALETTE BUTTONS GENERIC */
-    #paletteButtons p, #fillPaletteButtons p, #borderPaletteButtons p, #textColor p{
-        margin-bottom: 3px;
-    }
-
-    #paletteButtons button, #fillPaletteButtons button, #borderPaletteButtons button, #textColor button{
-        display: flexbox;
-        height:1.2em;
-        width:1.2em;
-        margin-left: 2px;
-        margin-top: 1px;
-    }
-
-    #blackButton{
-        background-color: black;
-    }
-
-    #darkGrayButton{
-        background-color: rgb(68, 68, 68);
-    }
-
-    #grayButton{
-        background-color: gray;
-    }
-
-    #lightGrayButton{
-        background-color: lightgray;
-    }
-
-    #whiteButton{
-        background-color: white;
-    }
-
-    #emptyButton{
-        background: url("../../public/images/icons/draw-icons/x.svg") no-repeat center/contain;
-        background-color: white;
-        text-align: center;
-        padding: 0 0.2em;
-        margin: 0;
-        font-size: 1em;
-        position: relative;
-        top:2px;
-        height: 1.2em;
-    }
-
-    /* SAVE & PUBLISH */
 }
 
 /* [lg] Large desktops, 992px and up */
 @media (min-width: 992px) {
     #createPage
     {
-        height: 80vh;
+        height: 65vw;
+        max-height: 50vh;
     }
 }
 
 /* [xl] Extra large devices 1200px and up */
 @media (min-width: 1200px) {
-   
+    #createPage
+    {
+        height: 45vw;
+        max-height: 80vh;
+    }
 }
 
 /* [xxl] Extra extra large devices, 1400px and up */

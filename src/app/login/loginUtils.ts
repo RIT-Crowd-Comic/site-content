@@ -1,40 +1,11 @@
 'use server';
 
-import { SignJWT, jwtVerify } from "jose";
-import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
-import {redirect} from "next/navigation";
-import { insertSession, getSession, getUser, authenticate, createUser } from "@/api/apiCalls";
+import { cookies } from 'next/headers';
+import {
+    insertSession, getUserBySession, authenticate, createUser
+} from '@/api/apiCalls';
 
-const secretKey = 'monkey';
-const key = new TextEncoder().encode(secretKey);
-
-const expireDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); //1 week
-
-/**
- * Encode a payload 
- * @param payload 
- * @returns 
- */
-const encrypt = async (payload: any) => {
-    return await new SignJWT(payload)
-        .setProtectedHeader({alg: 'HS256'})
-        .setIssuedAt()
-        .setExpirationTime('1 week from now')
-        .sign(key);
-};
-
-/**
- * Decrypt a value
- * @param input 
- * @returns 
- */
-const decrypt = async (input: string) : Promise<any> => {
-    const {payload} = await jwtVerify(input, key, {
-        algorithms: ['HS256']
-    });
-    return payload;
-};
+const expireDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 1 week
 
 /**
  * Insert the session into the data base and save the session id in a cookie
@@ -42,10 +13,9 @@ const decrypt = async (input: string) : Promise<any> => {
  */
 const saveSession = async (user_id: string) => {
     const session = await insertSession(user_id);
-    let sessionId = session.id;
-    if(!sessionId) return 'Failed to sign in';
-    sessionId = await encrypt({sessionId, expireDate});
-    cookies().set('session', sessionId, {expires: expireDate, httpOnly: true});
+    const sessionId = session.id;
+    if (!sessionId) return 'Failed to sign in';
+    cookies().set('session', sessionId, { expires: expireDate, httpOnly: true });
 };
 
 /**
@@ -55,7 +25,7 @@ const saveSession = async (user_id: string) => {
  */
 const updateSession = async (session_id: string) => {
     const newExpiration = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-    cookies().set('session', await encrypt(session_id), {expires: newExpiration, httpOnly: true});
+    cookies().set('session', session_id, { expires: newExpiration, httpOnly: true });
 };
 
 /**
@@ -63,14 +33,14 @@ const updateSession = async (session_id: string) => {
  * @returns Session user
  */
 const authenticateSession = async () => {
-    const session = cookies().get('session');
-    if(!session) redirect('/sign-in'); //TODO save where redirecting from
-    const session_id = await decrypt(session.value);
-    const dbSession = await getSession(session_id.sessionId);
-    if(!dbSession) redirect('/sign-in');
-    //Refresh the session expiry
-    await updateSession(session_id);
-    const user = await getUser(dbSession.user_id);
+    const session = getSessionCookie();
+    if (!session) return new Error('No user session found');
+    const user = await getUserBySession(session.value);
+    if (!user) return new Error('No user found for session');
+    if (user instanceof Error) return user;
+
+    // Refresh the session expiry
+    // await updateSession(session_id);
     return user;
 };
 
@@ -82,10 +52,11 @@ const authenticateSession = async () => {
  */
 const login = async (email: string, password: string) => {
     const user = await authenticate(email, password);
-    //If user is an error, return that error and don't redirect
-    if(!user || user.message) return user.message;
+
+    // If user is an error, return that error and don't redirect
+    if (!user || user.message) return user.message;
     await saveSession(user.id);
-    redirect('/comic');
+    return 'Success';
 };
 
 /**
@@ -97,19 +68,26 @@ const login = async (email: string, password: string) => {
  */
 const register = async (email: string, displayName: string, password: string) => {
     const user = await createUser(email, displayName, password);
-    //If user is an error, return that error and don't redirect
-    if(!user || user instanceof Error) return user;
-    //Successful sign-up wil sign-in the user
+
+    // If user is an error, return that error and don't redirect
+    if (!user || user instanceof Error) return user;
+
+    // Successful sign-up wil sign-in the user
     await login(email, password);
-    //If login did not redirect to comic,something went wrong so return an error
-    return new Error('Login Failed');
+    return 'Success';
 };
 
 /**
  * Delete the session cookie to cause a logout
  */
 const logout = async () => {
-    cookies().set('session', '', {expires: new Date(0)});
-}
+    cookies().set('session', '', { expires: new Date(0) });
+};
 
-export {authenticateSession, login, register, logout};
+const getSessionCookie = () =>{
+    return cookies().get('session');
+};
+
+export {
+    authenticateSession, login, register, logout, getSessionCookie, updateSession,
+};
