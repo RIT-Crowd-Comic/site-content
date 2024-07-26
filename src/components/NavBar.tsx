@@ -139,15 +139,6 @@ const NavBar = () => {
                                   Browse Comics
                                 </Link>
                             </li>
-                            <li className="nav-item">
-                                {isSignedIn ?
-                                    (
-                                        <button onClick={handleSignOut} className="nav-btn btn btn-outline-dark text-color-white">Sign Out</button>
-                                    ) :
-                                    (
-                                        <Link href="/sign-in"><button className="nav-btn btn btn-outline-dark text-color-white">Sign In</button></Link>
-                                    )}
-                            </li>
                         </ul>
                     </div>
                 </div>

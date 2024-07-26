@@ -168,9 +168,9 @@
     /* font-variant: small-caps; */
 }
 
-#inputEmail:invalid
+#inputEmail
 {
-    
+    background-color: #9c9c9c;
 }
 
 .passwordContainer
