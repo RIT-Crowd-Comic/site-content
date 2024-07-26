@@ -8,7 +8,7 @@ import logo from "../../public/images/logos/Crowd_Comic_Logo_BW.svg";
 import Navbar from "@/components/NavBar"
 
 import { useEffect, useState } from "react";
-import { loginAction, nameAction, passwordAction } from '@/app/login/actions';
+import { nameAction, passwordAction } from '@/app/login/actions';
 import { getUserBySession } from "@/api/apiCalls";
 import { getSessionCookie } from "@/app/login/loginUtils";
 
@@ -21,6 +21,9 @@ export function Profile()
     const [currentPasswordVisible, setCurrentPasswordVisibility] = useState(false);
     const [newPasswordVisible, setNewPasswordVisibility] = useState(false);
     const [retypePasswordVisible, setRetypePasswordVisibility] = useState(false);
+    const [password, setPass] = useState('');
+    const [newPass, setNewPass] = useState('');
+    const [confPass, setConfPass] = useState('');
 
     const toggleCurrentPasswordVisibility = () => {
         setCurrentPasswordVisibility(!currentPasswordVisible);
@@ -54,10 +57,7 @@ export function Profile()
             <div className='mt-5 d-flex flex-fill gap-3 justify-content-center flex-wrap'>
             <form id={styles.loginForm} action={async (formData) => {
                     const response = await nameAction(formData);
-                    if(response != 'Success') {
-                        errorState(response);
-                        return;
-                    }
+                    errorState(response);
                 }} >
                 
                 {/* USERNAME */}
@@ -97,17 +97,19 @@ export function Profile()
             </div>
 
                 <div className={styles.buttonContainer}>
-                    <button type="submit" id={styles.saveButton} className={`btn btn-primary`}>Save</button>
-                    <Link href="" replace={true}><button type="button" id={styles.resetButton} className={`btn btn-primary`}>Reset</button></Link>
+                    <button type="submit" id={styles.saveButton} className={`btn btn-primary`}>Save</button>    
                 </div>
             </form>
 
             <form id={styles.passwordForm} action={async (formData) => {
                     const response = await passwordAction(formData);
-                    if(response != 'Success') {
-                        errorState(response);
+                    errorState(response);
+                    if(response != 'password successfully changed') {
                         return;
                     }
+                    setPass('');
+                    setNewPass('');
+                    setConfPass('');
                 }} >
 
                 <div className={`${styles.h1} mb-3`}>
@@ -121,6 +123,8 @@ export function Profile()
                     <div className={styles.passwordContainer}>
                         <input type={currentPasswordVisible ? "text" : "password"}
                         name="oldPassword"
+                        value={password}
+                        onChange={(e) => setPass(e.target.value)}
                         placeholder="********"
                         className="form-control"
                         id={`${styles.inputPassword}`}
@@ -143,6 +147,8 @@ export function Profile()
                     <div className={styles.passwordContainer}>
                         <input type={newPasswordVisible ? "text" : "password"}
                         name="newPassword"
+                        value={newPass}
+                        onChange={(e) => setNewPass(e.target.value)}
                         placeholder="********"
                         className={`form-control`}
                         id={`${styles.inputPassword}`}
@@ -164,6 +170,8 @@ export function Profile()
                     <div className={styles.passwordContainer}>
                         <input type={retypePasswordVisible ? "text" : "password"}
                         name="confirmPassword"
+                        value={confPass}
+                        onChange={(e) => setConfPass(e.target.value)}
                         placeholder="********"
                         className={`form-control`}
                         id={`${styles.inputPassword}`}
