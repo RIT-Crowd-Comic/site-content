@@ -1082,6 +1082,19 @@ const CreateToolsCanvasPaperJS = () => {
         router.push(`/comic/create/publish`);
     }
 
+
+
+
+    function openNav() {
+        const mobileTools = document.getElementById(styles.pullOut);
+        mobileTools.style.display = "grid";
+      }
+      
+      function closeNav() {
+        const mobileTools = document.getElementById(styles.pullOut);
+       mobileTools.style.display = "none";
+      }
+
     // Return the canvas HTMLElement and its associated functionality
     return (
         <div id={`${styles.createPage}`}>
@@ -1177,10 +1190,16 @@ const CreateToolsCanvasPaperJS = () => {
 
 
             <canvas id={`${styles.canvas}`} ref={canvasReference} className={`${styles.canvas}`} />
-
+            
+            <label htmlFor="openNavButton" id={styles.clearLabel}>
+                        <button className="btn" id="openNavButton" onClick={openNav}></button>
+                    </label>
 
             <div id={styles.pullOut}>
-                <div id={`${styles.toolOptions}`}>
+            <label htmlFor="closeNavButton" id={styles.clearLabel}>
+                        <button className="btn" id="closeNavButton" onClick={closeNav}></button>
+                    </label>
+                <div  id={`${styles.toolOptions}`}>
                     <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor} />
                     <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize} />
                     <FillOptions enabled={fillOptionsEnabled} changeFillColor={setFillColor} />
