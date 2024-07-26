@@ -1,6 +1,10 @@
-const baseUrl = 'http://localhost:4000';
 import { CreatePanelSet } from "../components/interfaces";
 import { getSessionCookie } from "@/app/login/loginUtils";
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const baseUrl = process.env.NODE_ENV === 'production' ? 'https://crowd-comic-back-end-6417ec5ea59c.herokuapp.com' : 'http://localhost:4000';
 
 const getAPICall = async (url: string) => {
     return await fetch(`${baseUrl}${url}`, {
