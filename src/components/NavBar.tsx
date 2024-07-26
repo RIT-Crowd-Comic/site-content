@@ -3,8 +3,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { getUserBySession } from '@/api/apiCalls';
+import { getTrunks, getUserBySession } from '@/api/apiCalls';
 import { logout, getSessionCookie } from '@/app/login/loginUtils';
+import { useRouter } from 'next/navigation';
 
 const NavBar = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
@@ -28,6 +29,17 @@ const NavBar = () => {
 
         checkUserSession();
     }, []);
+
+    const router = useRouter();
+
+    const getTrunkUrl = async () => {
+        const trunks = await getTrunks();
+        if (!trunks) return '/';
+        const psID = trunks[0]?.id;
+        if (!psID) return '/';
+        console.log(`url: ${psID}`);
+        return `/comic?id=${psID}`;
+    };
 
     const handleSignOut = async () => {
         await logout();
@@ -91,7 +103,18 @@ const NavBar = () => {
                                 <Link className="nav-link" id="teamLink" href="/team">Team</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" id="comicLink" href="/comic/browse">Browse Comics</Link>
+                                <Link
+                                    className="nav-link"
+                                    id="comicLink"
+                                    href=""
+                                    onClick={async (e) => {
+                                        e.preventDefault();
+                                        const url = await getTrunkUrl();
+                                        router.push(url);
+                                    }}
+                                >
+                                  Browse Comics
+                                </Link>
                             </li>
                             <li className="nav-item">
                                 {isSignedIn ?
