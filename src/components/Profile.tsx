@@ -103,12 +103,11 @@ export function Profile()
             </form>
 
             <form id={styles.passwordForm} action={async (formData) => {
-                    const response = await loginAction(formData);
+                    const response = await passwordAction(formData);
                     if(response != 'Success') {
                         errorState(response);
                         return;
                     }
-                    window.history.go(-1);
                 }} >
 
                 <div className={`${styles.h1} mb-3`}>
@@ -121,7 +120,7 @@ export function Profile()
                     <label htmlFor ="inputPassword" className={styles.loginLabel}>Current Password</label>
                     <div className={styles.passwordContainer}>
                         <input type={currentPasswordVisible ? "text" : "password"}
-                        name="password"
+                        name="oldPassword"
                         placeholder="********"
                         className="form-control"
                         id={`${styles.inputPassword}`}
@@ -143,7 +142,7 @@ export function Profile()
                     <label htmlFor ="inputPassword" className={styles.loginLabel}>New Password</label>
                     <div className={styles.passwordContainer}>
                         <input type={newPasswordVisible ? "text" : "password"}
-                        name="password"
+                        name="newPassword"
                         placeholder="********"
                         className={`form-control`}
                         id={`${styles.inputPassword}`}
@@ -164,7 +163,7 @@ export function Profile()
                     <label htmlFor ="inputPassword" className={styles.loginLabel}>Retype New Password</label>
                     <div className={styles.passwordContainer}>
                         <input type={retypePasswordVisible ? "text" : "password"}
-                        name="password"
+                        name="confirmPassword"
                         placeholder="********"
                         className={`form-control`}
                         id={`${styles.inputPassword}`}
