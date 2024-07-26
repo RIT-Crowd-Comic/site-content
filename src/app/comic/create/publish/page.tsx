@@ -7,15 +7,22 @@ import styles from '@/styles/publish.module.css';
 
 import backIcon from '../../../../../public/images/back-button-pressed.png';
 
-const Publish = () => {
+const Publish = ({
+    params,
+    searchParams,
+  }: {
+    params: { id: number }
+    searchParams: { [key: string]: number | undefined }
+  }) => {
+    const {id} = searchParams;
     return (<>
         <Navbar />
-        <a  href="/comic/create">
+        <a  href={`/comic/create?id=${id}`}>
             <button id={`${styles.backButton}`}>
                 <Image src={backIcon} alt="" className={`${styles.buttonIcon}`} width="60" height="60"></Image>
             </button>
         </a>
-        <BranchPage />
+        <BranchPage id = {Number(id)}/>
         <h1></h1>
     </>);
 };
