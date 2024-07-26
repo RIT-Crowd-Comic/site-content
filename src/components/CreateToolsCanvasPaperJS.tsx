@@ -231,7 +231,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     //mouseDown: starts a preview path
     shadingTool.current.onMouseDown = function () {
         //switches to dedicated shading layer
-        ShadingLayerRef.current?.activate;
+        //ShadingLayerRef.current?.activate;
 
 
         clipPath = new paper.Path();
@@ -286,7 +286,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         //remove preview clip path
         clipPath?.remove;
         //switch back to old layer
-        changeLayer();
+        //changeLayer();
 
         if(canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
@@ -1309,12 +1309,12 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
 
 
 
-    function openNav() {
+    function openSidebar() {
         const mobileTools = document.getElementById(styles.pullOut);
         mobileTools.style.display = "grid";
       }
       
-      function closeNav() {
+      function closeSidebar() {
         const mobileTools = document.getElementById(styles.pullOut);
        mobileTools.style.display = "none";
       }
@@ -1414,13 +1414,13 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
 
             <canvas id={`${styles.canvas}`} ref={canvasReference} className={`${styles.canvas}`} />
             
-            <label htmlFor="openNavButton" id={styles.clearLabel}>
-                        <button className="btn" id="openNavButton" onClick={openNav}></button>
+            <label htmlFor="openSidebarButton" id={styles.clearLabel}>
+                        <button className="btn" id={styles.openSidebarButton} onClick={openSidebar}></button>
                     </label>
 
             <div id={styles.pullOut}>
-            <label htmlFor="closeNavButton" id={styles.clearLabel}>
-                        <button className="btn" id="closeNavButton" onClick={closeNav}></button>
+            <label htmlFor="closeSidebarButton" id={styles.clearLabel}>
+                        <button className="btn" id={styles.closeSidebarButton} onClick={closeSidebar}></button>
                     </label>
                 <div  id={`${styles.toolOptions}`}>
                     <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor} />

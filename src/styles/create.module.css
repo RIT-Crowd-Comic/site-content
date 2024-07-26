@@ -412,6 +412,16 @@
     height: 100%;
 }
 
+/* Hide sidebar on desktop */
+#openSidebarButton
+{
+    display:none;
+}
+#closeSidebarButton
+{
+    display:none;
+}
+
 /* - ONTO STYLING... */
 .lockStyling
 {
@@ -817,6 +827,15 @@
         background-color: #00000062;
         border: 3px solid black;
     }
+    /* show buttons! */ 
+    #openSidebarButton
+    {
+        display:inline;
+    }
+    #closeSidebarButton
+    {
+        display:inline;
+    }
 
     #miniNavbar
     {
@@ -832,6 +851,7 @@
     {
         padding: 2px 7px;
     }
+    
 }
 
 /* [md] Medium devices, 768px and up */
@@ -931,6 +951,15 @@
         margin: 0 auto;
     }
 
+    /* show buttons! */ 
+    #openSidebarButton
+    {
+        display:inline;
+    }
+    #closeSidebarButton
+    {
+        display:inline;
+    }
     /* ICONS */
     /* - BUTTON CSS */
 
