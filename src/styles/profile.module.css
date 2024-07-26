@@ -1,0 +1,293 @@
+/* LOGIN */
+
+.body
+{
+    width: 100%;
+    font-family: var(--font-back-issues);
+    background-color: #2d2d2d;
+    max-width: 100%;
+    padding-right: 0 !important;
+    overflow-x: clip;
+    background-image: radial-gradient(circle at center,#414141 0.15rem, transparent 0), 
+        radial-gradient(circle at center, #414141 0.15rem, transparent 0);
+    background-size: 1.3rem 1.3rem;
+    background-position: 0 0, 0.65rem 0.65rem;
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+.h1
+{
+    font-family: var(--font-back-issues);
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--grayscale-text-bg-color);
+    text-align: center;
+}
+
+
+#profilePage
+{
+    color: white;
+
+    position: relative;
+    /* top: 0; */
+
+    /* height: 100%; */
+
+    overflow: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#loginForm
+{
+    border: 3px solid var(--grayscale-primary-color);
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* width: 80%; */
+    /* max-width: 500px; */
+    margin-bottom: 20px;
+}
+
+#passwordForm
+{
+    border: 3px solid var(--grayscale-primary-color);
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* width: 80%; */
+    /* max-width: 500px; */
+    margin-bottom: 20px;
+}
+
+
+#profileIcon
+{
+    filter: invert(1);
+    /* margin-bottom: 20px; */
+    /* max-width: 75%;
+    height: auto; */
+}
+
+.formInputs
+{
+    width: 100%;
+    margin: 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.buttonContainer
+{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+}
+
+.formControl {
+    width: 100%;
+}
+
+#resetButton, #cancelButton
+{
+    background-color: transparent;
+    border: none;
+    /* border: solid 3px #000000; */
+    /* border-bottom: solid 4px #000000; */
+    margin: 0 5px;
+}
+
+#saveButton, #setPasswordButton
+{
+    background-color: var(--grayscale-background-color);
+    border: solid 3px #000000;
+    border-bottom: solid 4px #000000;
+    margin: 0 5px;
+    /* width: 48%; */
+}
+
+#saveButton:hover, #setPasswordButton:hover, #resetButton:hover, #cancelButton:hover
+{
+    background-color:#242424;
+    margin: 0 5px;
+}
+
+#saveButton:active, #setPasswordButton:active
+{
+    background-color: #9c9c9c;
+    position: relative;
+    border: solid 3px #000000;
+    top: 1px;
+}
+
+#resetButton:active, #cancelButton:active
+{
+    /* background-color: #9c9c9c; */
+    position: relative;
+    /* border: solid 3px #000000; */
+    background-color:#9c9c9c;
+    margin: 0 5px;
+    /* top: 1px; */
+}
+
+.loginLabel
+{
+    display: block;
+    margin-bottom: 5px;
+}
+
+.loginLogo
+{
+    width: 60%;
+    max-width: 350px;
+    height: auto;
+}
+
+.loginImageDiv
+{
+    max-width: 350px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+#inputEmail, #inputPassword, #inputUsername
+{
+    font-family: var(--font-inter);
+    /* font-variant: small-caps; */
+}
+
+#inputEmail:invalid
+{
+    
+}
+
+.passwordContainer
+{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#inputPassword
+{
+    width: 100%;
+    /* padding-right: 2.5rem; */
+}
+
+.togglePassword
+{
+    /* position: absolute; */
+    /* right: 0.75rem;  */
+    margin-left: -2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: invert(1);
+}
+
+
+/* Small devices (portrait phones, less than 7668px) */
+/* @media (max-width: 768px) {
+    body
+    {
+        background-color: #626262;
+        background-image: none;
+    }
+} */
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+
+    /* .formInputs, .h1
+    {
+        margin: 0 10px;
+
+        text-align: center;
+    }
+
+    .h1
+    {
+        color: rgb(255, 255, 255);
+        margin-bottom: 40px;
+        padding-top: 20px;
+        
+    }
+
+    #loginPage
+    {
+        text-align: left;
+    } */
+
+    /* #loginForm
+    {
+        width: 40vw;
+        margin-top: 0;
+        margin-right: 0;
+        margin-left: auto;
+        background-color: #626262;
+
+        padding-left: 5px;
+        border: none;
+        border-left: solid 3px black;
+
+        height: 100%;
+    } */
+
+    /* #registerButton
+    {
+        margin-left: 10px !important;
+    }
+
+    #loginButton, #registerButton
+    {
+        margin: 0 5px;
+    }
+
+    .loginLogo
+    {
+        display:inline;
+        position:absolute;
+        left: 2%;
+        top: 5%;
+        width: 300px;
+        height: auto;
+    } */
+
+}
+
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    /* #loginForm
+    {
+        width: 25vw;
+        margin-top: 0;
+        margin-right: 0;
+        margin-left: auto;
+        background-color: #626262;
+
+        padding-left: 5px;
+        border-left: solid 3px black;
+
+        height: 100%;
+    } */
+
+}   

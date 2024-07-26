@@ -124,6 +124,10 @@ body
     font-size: 1rem;
 }
 
+.dropdown-item:active
+{
+    background-color: #3e3e3e;
+}
 /* FOOTER */
 
 .footer-bar {

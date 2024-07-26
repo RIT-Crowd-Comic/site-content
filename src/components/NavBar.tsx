@@ -56,8 +56,13 @@ const NavBar = () => {
                                 type="button"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
+                                
                             >
-                                View Profile
+                                {/* <Image src="/images/icons/Profile.svg"
+                                width={50}
+                                height={50}
+                                alt="Profile"/> */}
+                                Profile
                             </button>
                             <ul className="dropdown-menu">
                                 <li><Link href="/profile"><button className="dropdown-item">Dashboard</button></Link></li>
