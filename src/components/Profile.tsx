@@ -15,10 +15,20 @@ import { loginAction } from '@/app/login/actions';
 export function Profile()
 {
     const [message, errorState] = useState('');
-    const [passwordVisible, setPasswordVisibility] = useState(false);
+    const [currentPasswordVisible, setCurrentPasswordVisibility] = useState(false);
+    const [newPasswordVisible, setNewPasswordVisibility] = useState(false);
+    const [retypePasswordVisible, setRetypePasswordVisibility] = useState(false);
 
-    const togglePasswordVisibility = () => {
-        setPasswordVisibility(!passwordVisible);
+    const toggleCurrentPasswordVisibility = () => {
+        setCurrentPasswordVisibility(!currentPasswordVisible);
+    }
+
+    const toggleNewPasswordVisibility = () => {
+        setNewPasswordVisibility(!newPasswordVisible);
+    }
+
+    const toggleRetypePasswordVisibility = () => {
+        setRetypePasswordVisibility(!retypePasswordVisible);
     }
 
     return (
@@ -96,7 +106,7 @@ export function Profile()
                 <div className={`mb-3 ${styles.formInputs}`}>
                     <label htmlFor ="inputPassword" className={styles.loginLabel}>Current Password</label>
                     <div className={styles.passwordContainer}>
-                        <input type={passwordVisible ? "text" : "password"}
+                        <input type={currentPasswordVisible ? "text" : "password"}
                         name="password"
                         placeholder="********"
                         className="form-control"
@@ -107,9 +117,9 @@ export function Profile()
                         />
                         <button type="button"
                         className={styles.togglePassword}
-                        onClick={togglePasswordVisibility}
+                        onClick={toggleCurrentPasswordVisibility}
                         style={{
-                            backgroundImage: `url(${passwordVisible ? "/images/icons/draw-icons/eyeopen.svg" : "/images/icons/draw-icons/eyeclose.svg"})`
+                            backgroundImage: `url(${currentPasswordVisible ? "/images/icons/draw-icons/eyeopen.svg" : "/images/icons/draw-icons/eyeclose.svg"})`
                         }}
                         >
                         </button>
@@ -118,7 +128,7 @@ export function Profile()
                 <div className={`mb-3 ${styles.formInputs}`}>
                     <label htmlFor ="inputPassword" className={styles.loginLabel}>New Password</label>
                     <div className={styles.passwordContainer}>
-                        <input type={passwordVisible ? "text" : "password"}
+                        <input type={newPasswordVisible ? "text" : "password"}
                         name="password"
                         placeholder="********"
                         className={`form-control`}
@@ -128,9 +138,9 @@ export function Profile()
                         required/>
                         <button type="button"
                         className={styles.togglePassword}
-                        onClick={togglePasswordVisibility}
+                        onClick={toggleNewPasswordVisibility}
                         style={{
-                            backgroundImage: `url(${passwordVisible ? "/images/icons/draw-icons/eyeopen.svg" : "/images/icons/draw-icons/eyeclose.svg"})`
+                            backgroundImage: `url(${newPasswordVisible ? "/images/icons/draw-icons/eyeopen.svg" : "/images/icons/draw-icons/eyeclose.svg"})`
                         }}
                         >
                         </button>
@@ -139,7 +149,7 @@ export function Profile()
                 <div className={`mb-3 ${styles.formInputs}`}>
                     <label htmlFor ="inputPassword" className={styles.loginLabel}>Retype New Password</label>
                     <div className={styles.passwordContainer}>
-                        <input type={passwordVisible ? "text" : "password"}
+                        <input type={retypePasswordVisible ? "text" : "password"}
                         name="password"
                         placeholder="********"
                         className={`form-control`}
@@ -149,9 +159,9 @@ export function Profile()
                         required/>
                         <button type="button"
                         className={styles.togglePassword}
-                        onClick={togglePasswordVisibility}
+                        onClick={toggleRetypePasswordVisibility}
                         style={{
-                            backgroundImage: `url(${passwordVisible ? "/images/icons/draw-icons/eyeopen.svg" : "/images/icons/draw-icons/eyeclose.svg"})`
+                            backgroundImage: `url(${retypePasswordVisible ? "/images/icons/draw-icons/eyeopen.svg" : "/images/icons/draw-icons/eyeclose.svg"})`
                         }}
                         >
                         </button>
