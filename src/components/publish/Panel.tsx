@@ -1,7 +1,7 @@
 import styles from './Panel.module.css'
 import { SyntheticEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { CreateHook, Hook,PathSize } from '../interfaces';
-import { createSVGPath } from '@/utils';
+import { CreateHook, Hook } from '../interfaces';
+import { createSVGPath, calculateArea} from '@/utils';
 import Image from 'next/image';
 
 // perhaps load this from a global color palette file
@@ -91,72 +91,37 @@ const Panel = ({
     // add a new hook
     useEffect(() => {
         if (confirmHook != undefined && setHooks && setConfirmHook) {
-            console.log('current hook index', confirmHook);
             // prevent adding un-clickable hooks
             if (vertices.length >= 3) {
-                // let sortHooks= hooks
+               
+                let insertIndex:number=-1;
                 
-                // const isLarger = (elemen) => element > 13;
-                // console.log(array1.findIndex(isLargeNumber));
+                // find index to insert new hook at biggest -> smallest
+                hooks.map((hook,index)=>{
+                    const tArea:number=calculateArea((hook as CreateHook).points)
+                    const sArea:number=calculateArea(vertices)
 
-                // sorting hooks based on Size, biggest to smallest
-                //creating a temp dom element in order to be able to get path size
-                let tempHooks=hooks.map((hook,i)=>{
-                    const p=document.createElement("path")
-                    const svgEl=document.createElement("svg")
-                    p.setAttribute('d',createSVGPath((hook as CreateHook).points))
-                    svgEl.appendChild(p)
-                    svgEl.top=0
-        
-                    let w=svgEl.getBoundingClientRect().width
-                    let h=svgEl.getBoundingClientRect().height
-                    return {
-                        path: (hook as CreateHook).points,
-                        w:w,
-                        h:h,
-                        area:w*h,
-                        index:i
+                    if(sArea>tArea&&insertIndex<0){//if new hook is bigger and hasn't already been set
+                        insertIndex=index
+                        return
+                    }else if(index==hooks.length-1&&insertIndex<0){//if new hook the smallest and hasn't already been set
+                        insertIndex=hooks.length
                     }
                 });
-                const sortedHooks:PathSize[] =[]
-                tempHooks.map((t,i)=>{
-                    if(i==0){
-                        sortedHooks.push(t)
-                    }else {
-                        for( let sIndex in sortedHooks){
-                            let s=sortedHooks[sIndex]
-                            if(t.area>s.area){
-                                sortedHooks.splice(s.index,0,t)
-                                break
-                            }
-                        }
-                    }
-                });
-                sortedHooks.map((s)=>console.log(s.area))
-                //end of sorting
-
+                    // console.log('insertIndex:',insertIndex)
                 setHooks(
                     [
-                        ...hooks,
+                        ...hooks.slice(0,insertIndex),
                         {
                             current_panel_index: confirmHook, //set to zero, will get reset before publish
                             points: vertices
-                        }
+                        },
+                        ...hooks.slice(insertIndex)
                     ],
-                    confirmHook
-                );
-                
+                    confirmHook);
             }
             setConfirmHook(undefined);
         }
-        // console.log('hooks')
-        // console.log(hooks.map((h)=>console.log(h.hookIndex)))
-
-        
-        
-        // console.log(tempHooks)
-        // console.log(((hook as CreateHook).points as SVGNumberList).getBoundingClientRect().width)
-        // console.log(vertices.getBBox().width)
     }, [confirmHook]);
   
     /**
