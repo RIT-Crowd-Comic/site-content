@@ -44,12 +44,11 @@ export function Profile()
             <h1 className={`${styles.h1} pt-5 pb-3 px-3`}>Dashboard</h1>
             <div className='mt-5 d-flex flex-fill gap-3 justify-content-center flex-wrap'>
             <form id={styles.loginForm} action={async (formData) => {
-                    const response = await loginAction(formData);
+                    const response = await nameAction(formData);
                     if(response != 'Success') {
                         errorState(response);
                         return;
                     }
-                    window.history.go(-1);
                 }} >
                 
                 {/* USERNAME */}
