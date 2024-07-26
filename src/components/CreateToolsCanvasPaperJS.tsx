@@ -873,6 +873,12 @@ const CreateToolsCanvasPaperJS = () => {
 
     transformTool.onMouseDrag = function (event: paper.ToolEvent) {
         if (areaSelected && canvasProject.current && canvasProject.current.activeLayer.locked == false) {
+            //testing purposes
+            let testbound = new paper.Path.Rectangle(transformInfo[0].bounds);
+            testbound.strokeWidth = 3;
+            testbound.strokeColor = new paper.Color("red");
+            testbound.removeOnDrag();
+
             //changes position of selected area if moving
             if (transformAction == "moving") {
                 setIsTransforming(true);
@@ -901,19 +907,18 @@ const CreateToolsCanvasPaperJS = () => {
                 setIsTransforming(true);
                 setTransformMouseDragged(true);
 
-                //testing purposes
-                let testbound = new paper.Path.Rectangle(rasterInfo[1].bounds);
-                testbound.strokeWidth = 3;
-                testbound.strokeColor = new paper.Color("red");
-                testbound.removeOnDrag();
-
-                //calculates math for rotating based on mouse drag then rotates both
+                //calculates math for rotating based on mouse drag
                 let center = transformInfo[0].bounds.center;
                 let baseVec = center.subtract(event.lastPoint);
                 let nowVec = center.subtract(event.point);
                 let angle = nowVec.angle - baseVec.angle;
+                
                 transformInfo[0].rotate(angle);
                 rasterInfo[1].rotate(angle);
+
+                //have bounds update and then save (bounds are always rectangle)
+                //bounds needs to rotate
+                //create new selection box
 
                 return;
             }
@@ -965,7 +970,7 @@ const CreateToolsCanvasPaperJS = () => {
                 setScaleFactorY(0);
                 setTransformMouseDragged(false);
             }
-            else if(transformAction == "rotating" && transformMouseDragged){
+            else if (transformAction == "rotating" && transformMouseDragged) {
                 setTransformMouseDragged(false);
             }
             setTransformAction("none");
