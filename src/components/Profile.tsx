@@ -6,7 +6,6 @@ import Link from "next/link";
 
 import logo from "../../public/images/logos/Crowd_Comic_Logo_BW.svg";
 import Navbar from "@/components/NavBar"
-import ProfileIcon from '@images/icons/Profile.svg';
 
 import { useState } from "react";
 import { loginAction } from '@/app/login/actions';
