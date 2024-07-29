@@ -1389,7 +1389,6 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
 
         // Create a temp dummy layer to add layer data to publish
         let publishLayer = new paper.Layer();
-        publishLayer.visible = false;
 
         // Export Panel 1
         publishLayer.importJSON(panel1LayerData.background);
