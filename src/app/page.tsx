@@ -25,6 +25,7 @@ import thirdPanelImage from "../../public/comic-panels/third_panel.png";
 
 import Navbar from "../components/NavBar"
 import Footer from "../components/Footer"
+import GetStarted from "../components/GetStartedButton"
 
 export default function Home() {
   return (
@@ -111,13 +112,9 @@ export default function Home() {
               </div>
 
               <div className="row">
-                <div className="col">
-                </div>
+                <div className="col"></div>
                 <div className="col-auto">
-                  <div className={`${styles.getStarted}`}>
-                    <div className={`${styles.bookAnimation}`}></div>
-                    <button className={`${styles.getStartedButton}`}><Link href="/comic">Get Started</Link></button>
-                  </div>
+                  <GetStarted />
                 </div>
                 <div className="col"></div>
               </div>
