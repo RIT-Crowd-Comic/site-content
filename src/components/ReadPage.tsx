@@ -7,6 +7,8 @@ import ComicPanels from "@/components/ComicPanels";
 import * as apiCalls from "../api/apiCalls"
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Panel, PanelSet, Hook } from "./interfaces";
+import InfoBox from './info/InfoBox';
+import InfoBtn from './info/InfoBtn';
 //import icons and background
 const backIcon = "/images/back-button-pressed.png"
 const toggleLayoutHorizIcon = "/images/panel-view-button-horizontal-pressed.png"
@@ -88,6 +90,26 @@ const ReadPage = ({ id }: Props) => {
     if (error !== "") {
         return <div>{error}</div>;
     }
+
+    const infoDisplay = (visible: boolean) => {
+        const divs = document.querySelectorAll("div")
+        const modal = divs[divs.length-2]
+        if(modal)
+        {
+            if(visible)
+            {
+                modal.style.display = "block";
+            }
+            else
+            {
+                modal.style.display = "none";
+            }
+            
+        }
+        console.log(divs)
+        
+    }
+
     return (<>
         <ComicPanels setting={layout} hook_state={hooks} panels={panels} currentId={id} router={router} />
         <div className={`${styles.controlBar}`} >
@@ -95,6 +117,16 @@ const ReadPage = ({ id }: Props) => {
             <IconToggleButton setting={hooks} setSetting={setHooks} state_1="hidden" state_2="visible" buttonId="hooksToggle" source_1={toggleHooksOff} source_2={toggleHooksOn} />
             <IconToggleButton setting={layout} setSetting={setLayout} state_1={`${styles.rowPanels}`} state_2={`${styles.columnPanels}`} buttonId="layoutToggle" source_1={toggleLayoutHorizIcon} source_2={toggleLayoutVertIcon} />
         </div>
+        <InfoBtn toggle={infoDisplay}></InfoBtn>
+        <InfoBox instructions={`You can read though different story lines throught the panels. \n
+        Instructions: \n
+         -Use the back button to take you back to the parent pannel
+         -Use the lightbulb to toggle the hooks on and off
+         \t-Red hooks: These do not currently have a comic panel connected to them asnd will take you to the create page
+         \t-Blue hooks: These have a comic panel connected to them and you can click on them to explore that branch of the story
+         -Use the + looking symbol to toggle between horizontal and vertical view
+         \t-This will only work for larger screen sizes 
+         `}toggle={infoDisplay}></InfoBox>
     </>);
 }
 

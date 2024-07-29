@@ -39,3 +39,6 @@
     text-decoration: none;
     cursor: pointer;
   }
+  .displayLinebreak {
+    white-space: pre-line;
+  }

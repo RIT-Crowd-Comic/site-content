@@ -173,7 +173,6 @@ const BranchPage = ({ id }: Props) => {
             }
             
         }
-        console.log(divs)
         
     }
 
@@ -257,7 +256,12 @@ const BranchPage = ({ id }: Props) => {
                 </div> */}
             </div>
             <InfoBtn toggle={infoDisplay}></InfoBtn>
-            <InfoBox instructions="These are instructions" toggle={infoDisplay}></InfoBox>
+            <InfoBox instructions={`Instructions:\n
+            -click on the add hook button to start drawing a hook on the comic
+            -once done, click on accept hook to keep or remove to delete the hook
+            - to remove a hook: click on the hook you wish to remove then click on remove hook to delete it\n 
+            *YOU MUSH HAVE 3 HOOKS IN ORDER TO PUBLISH YOUR COMIC*
+            `} toggle={infoDisplay}></InfoBox>
         </main>
     </>);
 }
