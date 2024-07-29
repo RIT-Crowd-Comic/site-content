@@ -37,7 +37,6 @@ const NavBar = () => {
         if (!trunks) return '/';
         const psID = trunks[0]?.id;
         if (!psID) return '/';
-        console.log(`url: ${psID}`);
         return `/comic?id=${psID}`;
     };
 
