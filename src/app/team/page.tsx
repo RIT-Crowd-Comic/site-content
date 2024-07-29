@@ -43,4 +43,4 @@ const TeamPage = () => {
   )
 }
 
-export default TeamPage
+export default TeamPage;
