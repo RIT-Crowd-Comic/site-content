@@ -17,6 +17,9 @@
     font-size: small;
 
     position: absolute;
+
+    display: grid;
+    align-items: center;
 }
 
 #createPage
@@ -46,6 +49,7 @@
 
     border-style: solid;
     border-style: solid;
+    background-color: white !important;
     background: conic-gradient(
         #cccccc70 90deg,
         #ffffff70 90deg 180deg,
@@ -73,7 +77,6 @@
 
 #fieldSet
 {
-    margin-right: 20px;
     overflow-y: scroll;
     overflow-x: hidden;
 
@@ -563,24 +566,23 @@
     bottom: 0;
 }
 
-.publishButton, .saveButton, .backButton,
-.publishButton:hover, .saveButton:hover, .backButton:hover,
-.publishButton:active, .saveButton:active, .backButton:active,
-.publishButton:focus, .saveButton:focus, .backButton:focus
+.publishButton, .saveButton, .backButton
 {
+    height: 40px;
     color: white;
+    background-color: #4b4b4b;
     
     margin: 0 !important;
-    background-color: transparent !important;
-    border: none !important;
-    transform: none !important;
-    box-shadow: none !important;
+
+    border: 3px solid #000000;
+    border-bottom: 4px solid #000000;
 }
 
 .publishButton, .publishButton:hover, .publishButton:active, .publishButton:focus
 {
-    margin-left: 5px;
+    margin-left: 10px !important;
 }
+
 .publishButton:hover, .saveButton:hover, .backButton:hover
 {
     background-color:#242424;
@@ -591,7 +593,7 @@
 
 .publishButton:active, .saveButton:active, .backButton:active
 {
-    background-color: #9c9c9c;
+    background-color: #151515 !important;
     position: relative;
     border: solid 3px #000000;
     top: 1px;
@@ -666,7 +668,6 @@
 
     #fieldSet
     {
-        margin-right: 10px;
         overflow-y: scroll;
         overflow-x: hidden;
 
@@ -755,7 +756,6 @@
     
     #fieldSet
     {
-        margin-right: 10px;
         overflow-y: scroll;
         overflow-x: hidden;
 
@@ -788,8 +788,8 @@
     {
         display: grid;
 
-        grid-template-columns: auto auto 25%;
-        grid-template-rows: 100% auto;
+        grid-template-columns: 60px calc(100% - 320px) 260px;
+        grid-template-rows: calc(100% - 60px) 60px;
         grid-template-areas:
         "toolBar canvas tools"
         "bottomBar bottomBar bottomBar";
@@ -797,17 +797,19 @@
         flex-direction: row;
 
         height: 35vw;
-        max-height: 75vh;
-        max-width: 80vw;
+        max-height: 90vh;
 
-        margin: 20px auto;
+        width: auto;
+        max-width: 90vw;
+
+        margin: 0 auto;
         align-items: start;
         justify-content: center;
     }
 
     #pullOut
     {
-        margin-left: 20px;
+        margin-left: 10px;
         height: 100%;
         max-height: 100%;
         grid-area: tools;
@@ -819,10 +821,11 @@
 
     #miniNavbar
     {
-        height: auto;
+        height: 50px;
         width: 100%;
 
         margin-top: 10px;
+
         grid-area: bottomBar;
 
         display: flex;
@@ -862,6 +865,8 @@
 
         height: 100% !important;
         width: auto !important;
+
+        max-width: 100% !important;
 
         aspect-ratio: 3 / 2;
     }
@@ -904,22 +909,22 @@
 }
 
 /* [lg] Large desktops, 992px and up */
-@media (min-width: 992px) {
+/* @media (min-width: 992px) {
     #createPage
     {
         height: 65vw;
         max-height: 50vh;
     }
-}
+} */
 
 /* [xl] Extra large devices 1200px and up */
-@media (min-width: 1200px) {
+/* @media (min-width: 1200px) {
     #createPage
     {
         height: 45vw;
         max-height: 80vh;
     }
-}
+} */
 
 /* [xxl] Extra extra large devices, 1400px and up */
 @media (min-width: 1400px) {}

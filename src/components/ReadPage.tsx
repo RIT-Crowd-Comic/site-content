@@ -37,9 +37,8 @@ const ReadPage = ({ id }: Props) => {
         async function fetchData() {
             setIsLoading(true);
             const panelSetResponse = await apiCalls.getPanelSetByID(id) as PanelSet;
-            // return;
             if (!updateError(panelSetResponse)) {
-                const imageUrlsResponse = await apiCalls.getAllImageUrlsByPanelSetId(id);
+                const imageUrlsResponse = await apiCalls.getAllImageUrlsByPanelSetId(panelSetResponse.id);
                 const hookResponses = await apiCalls.getHooksFromPanelSetById(panelSetResponse.id) as Hook[];
 
                 if (!updateError(imageUrlsResponse) && !updateError(hookResponses)) {
