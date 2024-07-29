@@ -57,7 +57,7 @@ export function SignInForm()
                 <div className={styles.passwordContainer}>
                     <input type={passwordVisible ? "text" : "password"}
                     name="password"
-                    placeholder="password"
+                    placeholder="********"
                     className={`form-control`}
                     id={`${styles.inputPassword}`}
                     onInvalid = {e => (e.target as HTMLInputElement).setCustomValidity('Enter Password Here')}

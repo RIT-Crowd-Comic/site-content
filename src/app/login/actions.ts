@@ -24,4 +24,26 @@ const registerAction = async (formData: FormData) => {
     return 'Success';
 };
 
-export { loginAction, registerAction, };
+const nameAction = async (formData: FormData) => {
+    const rawFormData = {
+        displayName: formData.get('displayName')
+    };
+    if(!rawFormData.displayName) return 'Please fill all fields';
+    const response = await loginUtils.updateDisplayName(rawFormData.displayName.toString());
+    if(!response || response instanceof Error) return response.message;
+    return 'Success';
+};
+
+const passwordAction = async (formData: FormData) => {
+    const rawFormData = {
+        oldPassword: formData.get('oldPassword'),
+        newPassword: formData.get('newPassword'),
+        confirmPassword: formData.get('confirmPassword')
+    };
+    if(!rawFormData.oldPassword || !rawFormData.newPassword || !rawFormData.confirmPassword) return 'Please fill all fields';
+    const response = await loginUtils.updatePassword(rawFormData.oldPassword.toString(), rawFormData.newPassword.toString(), rawFormData.confirmPassword.toString());
+    if(!response || response instanceof Error) return response.message;
+    return 'Success';
+}
+
+export { loginAction, registerAction, nameAction, passwordAction };
