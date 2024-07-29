@@ -34,19 +34,10 @@ const ReadPage = ({ id }: Props) => {
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
-            console.log(id);
-            if(id==0 || isNaN(id)){
-                const trunks = await apiCalls.getTrunks();
-                if(!updateError(trunks)) {
-                    const trunk = trunks[0];
-                    await router.push(`/comic?id=${trunk.id}`)
-                    return;
-                }
-            }
             const panelSetResponse = await apiCalls.getPanelSetByID(id) as PanelSet;
             // return;
             if (!updateError(panelSetResponse)) {
-                const imageUrlsResponse = await apiCalls.getAllImageUrlsByPanelSetId(id);
+                const imageUrlsResponse = await apiCalls.getAllImageUrlsByPanelSetId(panelSetResponse.id);
                 const hookResponses = await apiCalls.getHooksFromPanelSetById(panelSetResponse.id) as Hook[];
 
                 if (!updateError(imageUrlsResponse) && !updateError(hookResponses)) {

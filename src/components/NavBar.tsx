@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { getTrunks, getUserBySession } from '@/api/apiCalls';
 import { logout, getSessionCookie } from '@/app/login/loginUtils';
-import { useRouter } from 'next/navigation';
 
 const NavBar = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
@@ -29,8 +28,6 @@ const NavBar = () => {
 
         checkUserSession();
     }, []);
-
-    const router = useRouter();
 
     const getTrunkUrl = async () => {
         const trunks = await getTrunks();
@@ -108,8 +105,7 @@ const NavBar = () => {
                                     href=""
                                     onClick={async (e) => {
                                         e.preventDefault();
-                                        const url = await getTrunkUrl();
-                                        router.push(url);
+                                        window.location.href = '/comic';
                                     }}
                                 >
                                   Browse Comics
