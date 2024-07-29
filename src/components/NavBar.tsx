@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { getTrunks, getUserBySession } from '@/api/apiCalls';
 import { logout, getSessionCookie } from '@/app/login/loginUtils';
-import { useRouter } from 'next/navigation';
 
 const NavBar = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
@@ -40,14 +39,11 @@ const NavBar = () => {
         return () => window.removeEventListener('resize', handleResize);
     },[]);
 
-    const router = useRouter();
-
     const getTrunkUrl = async () => {
         const trunks = await getTrunks();
         if (!trunks) return '/';
         const psID = trunks[0]?.id;
         if (!psID) return '/';
-        console.log(`url: ${psID}`);
         return `/comic?id=${psID}`;
     };
 
@@ -142,8 +138,7 @@ const NavBar = () => {
                                     href=""
                                     onClick={async (e) => {
                                         e.preventDefault();
-                                        const url = await getTrunkUrl();
-                                        router.push(url);
+                                        window.location.href = '/comic';
                                     }}
                                 >
                                   Browse Comics
