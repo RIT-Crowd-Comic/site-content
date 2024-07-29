@@ -916,6 +916,9 @@ const CreateToolsCanvasPaperJS = () => {
                 transformInfo[0].rotate(angle);
                 rasterInfo[1].rotate(angle);
 
+                //rotation causes errors for scaling (due to scaling being based on bounds (specifically finding corners))
+                //maybe add an else (if rotating, then add raster selection handles as corners)
+                
                 //have bounds update and then save (bounds are always rectangle)
                 //bounds needs to rotate
                 //create new selection box
