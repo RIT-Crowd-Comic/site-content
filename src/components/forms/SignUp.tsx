@@ -67,7 +67,7 @@ export function SignUpForm() {
                 <div className={styles.passwordContainer}>
                     <input type={passwordVisible ? "text" : "password"}
                     name="password"
-                    placeholder="password"
+                    placeholder="********"
                     className={`form-control`}
                     id={styles.inputPassword}
                     onInvalid = {e => (e.target as HTMLInputElement).setCustomValidity('Enter Password Here')}
@@ -91,7 +91,7 @@ export function SignUpForm() {
             <button type="submit" id={styles.loginButton} className={`btn btn-primary`}>Sign Up</button>
 
             {/* LOGIN */}
-            <Link href="sign-in" replace={true}><button type="button" id={styles.registerButton} className={`btn btn-primary`}>Sign In</button></Link>
+            <Link href="sign-in" replace={true}><button type="button" id={styles.registerButton} className={`btn btn-primary`}>Back</button></Link>
             {!!message && <p>{message}</p>}
             </form>
         </section>

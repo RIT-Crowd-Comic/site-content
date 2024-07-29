@@ -18,6 +18,7 @@
         Inter: --font-inter
         Ceviche One: --font-ceviche-one
         Comic Neue: --font-comic-neue
+        Open Sans: --font-open-sans
          */
 }
 
@@ -60,28 +61,32 @@ body
     border-bottom: solid 3px black;
 }
 
-.nav-link,
-.nav-btn {
+.nav-link, .nav-btn {
     color: var(--grayscale-primary-color);
     font-size: 1.5rem;
 }
 
 .nav-btn
 {
-    border: none;
-    padding: 8px 0;
+    border: solid 3px #000000;
+    border-bottom: solid 4px #000000;
+    color: black;
+    background-color: #898989;
+    padding: 8px;
 }
 
 .nav-btn:hover
 {
-    background-color: transparent;
-    border-bottom: none;
+    background-color: #3e3e3e;
+    border: solid 3px #000000;
+    border-bottom: solid 4px #000000;
 }
 
 .nav-btn:active
 {   
-    background-color: transparent;
-    border: none;
+    background-color: #3e3e3e;
+    margin-top: 1px;
+    border: solid 3px #000000;
 }
 
 .navbar-toggler
@@ -116,6 +121,16 @@ body
 
 .offcanvas-header {
     font-size: 1.5rem;
+}
+
+.dropdown-item
+{
+    font-size: 1rem;
+}
+
+.dropdown-item:active
+{
+    background-color: #3e3e3e;
 }
 
 /* FOOTER */
@@ -259,11 +274,6 @@ body
 {
     outline: none;
     box-shadow: none;
-}
-
-.btn
-{
-    color: white;
 }
 
 /* [xs] Extra small devices, less than 576px) */
