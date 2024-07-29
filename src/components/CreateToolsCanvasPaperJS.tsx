@@ -1284,7 +1284,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
 
         // Send the user to the publish page
-        router.push(`/comic/create/publish?id=${parentHookId}`);
+        router.replace(`/comic/create/publish?id=${parentHookId}`);
     }
 
     const infoDisplay = (visible: boolean) => {
