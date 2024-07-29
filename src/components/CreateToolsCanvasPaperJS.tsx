@@ -1367,7 +1367,10 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
 
     // Saves the project's layer image data to localStorage
     const save = (showAlert: Boolean) =>
-    {   
+    {    
+        // Update the ldayerData variables with the most current edits
+        findSelectedPanel();
+
         // Save the layerData object to localStorage in JSON string form
         localStorage.setItem("panel-1-layerData", JSON.stringify(panel1LayerData));
         localStorage.setItem("panel-2-layerData", JSON.stringify(panel2LayerData));
@@ -1384,8 +1387,42 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         // Saves the user's progress for them
         save(false);
 
+        // Create a temp dummy layer to add layer data to publish
+        let publishLayer = new paper.Layer();
+        publishLayer.visible = false;
+
+        // Export Panel 1
+        publishLayer.importJSON(panel1LayerData.background);
+        publishLayer.importJSON(panel1LayerData.shade);
+        publishLayer.importJSON(panel1LayerData.layer1);
+        publishLayer.importJSON(panel1LayerData.layer2);
+        publishLayer.importJSON(panel1LayerData.layer3);
+        publishLayer.importJSON(panel1LayerData.layer4);
+        localStorage.setItem("image-1", String(publishLayer.exportSVG({ asString: true })));
+        publishLayer.removeChildren();
+
+        // Export Panel 2
+        publishLayer.importJSON(panel2LayerData.background);
+        publishLayer.importJSON(panel2LayerData.shade);
+        publishLayer.importJSON(panel2LayerData.layer1);
+        publishLayer.importJSON(panel2LayerData.layer2);
+        publishLayer.importJSON(panel2LayerData.layer3);
+        publishLayer.importJSON(panel2LayerData.layer4);
+        localStorage.setItem("image-2", String(publishLayer.exportSVG({ asString: true })));
+        publishLayer.removeChildren();
+
+        // Export Panel 3
+        publishLayer.importJSON(panel3LayerData.background);
+        publishLayer.importJSON(panel3LayerData.shade);
+        publishLayer.importJSON(panel3LayerData.layer1);
+        publishLayer.importJSON(panel3LayerData.layer2);
+        publishLayer.importJSON(panel3LayerData.layer3);
+        publishLayer.importJSON(panel3LayerData.layer4);
+        localStorage.setItem("image-3", String(publishLayer.exportSVG({ asString: true })));
+        publishLayer.removeChildren();
+
         // Save the SVG Image to localStorage
-        localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
+        //localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
 
         // Send the user to the publish page
         router.push(`/comic/create/publish?id=${parentHookId}`);
