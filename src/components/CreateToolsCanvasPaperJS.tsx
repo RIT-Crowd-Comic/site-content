@@ -1,6 +1,6 @@
 'use client'
 import { PaperOffset } from 'paperjs-offset';
-import { useEffect, useRef, useState } from 'react';
+import { use, useEffect, useRef, useState } from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
 import paper from 'paper';
 import PenOptions from './create-tools/PenOptions';
@@ -17,6 +17,7 @@ import { Istok_Web } from 'next/font/google';
 import Link from 'next/link';
 import { getHookByID } from '@/api/apiCalls';
 import { CreateHook } from './interfaces';
+import test from 'node:test';
 
 interface Props {
     id: number
@@ -805,6 +806,9 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     const [scaleFactorX, setScaleFactorX] = useState(0);
     const [scaleFactorY, setScaleFactorY] = useState(0);
 
+    //
+    const [rotationAngle, setRotationAngle] = useState(0);
+
     // The Transform Tool:
     const [transformTool, setTransformTool] = useState<paper.Tool>(new paper.Tool());
 
@@ -851,25 +855,41 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     //check which corner was hit (with bounds), sets the opposite corner 
     //and returns the name of the opposite corner
     function findOppositeCorner(pointHit: paper.Point, rectToCheck: paper.Path.Rectangle) {
-        let oppCorner = "";
+        let tempOppCornerName = "";
+        let tempOppCorner = new paper.Point(0, 0);
 
-        if (rectToCheck.bounds.bottomLeft.isClose(pointHit, 10)) {
+        //use rotation to unrotate and find correct points
+        //then set point to rotate as opposite to current point
+        //maybe move set opposite corner out of ifs
+
+        //needs to account for rotating
+        //either find which corner it is closest to and scale from that
+        //OR 
+        //find the actual opposite corner to scale 
+
+
+        if (rotationAngle != 0) {
+            //little wonky but works well enough
+            setOppositeCorner(rectToCheck.getNearestPoint(pointHit.multiply(-1)));
+        }
+        else if (rectToCheck.bounds.bottomLeft.isClose(pointHit, 10)) {
             setOppositeCorner(rectToCheck.bounds.topRight);
-            oppCorner = "tr";
+            tempOppCornerName = "tr";
         }
         else if (rectToCheck.bounds.bottomRight.isClose(pointHit, 10)) {
             setOppositeCorner(rectToCheck.bounds.topLeft);
-            oppCorner = "tl";
+            tempOppCornerName = "tl";
         }
         else if (rectToCheck.bounds.topLeft.isClose(pointHit, 10)) {
             setOppositeCorner(rectToCheck.bounds.bottomRight);
-            oppCorner = "br";
+            tempOppCornerName = "br";
         }
         else if (rectToCheck.bounds.topRight.isClose(pointHit, 10)) {
             setOppositeCorner(rectToCheck.bounds.bottomLeft);
-            oppCorner = "bl";
+            tempOppCornerName = "bl";
         }
-        return oppCorner;
+        // setOppositeCorner();
+        return tempOppCornerName;
     }
 
     //sets transform action and does setup for that action
@@ -887,18 +907,21 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             //runs if anywhere outside of box is pressed (could be changed to have an additional rotating handler to box)
             else {
                 setTransformAction("rotating");
+                setRotationAngle(0);
             }
             return;
         }
     }
 
     transformTool.onMouseDrag = function (event: paper.ToolEvent) {
+        console.log(transformAction);
+
         if (areaSelected && canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             //testing purposes
-            let testbound = new paper.Path.Rectangle(transformInfo[0].bounds);
-            testbound.strokeWidth = 3;
-            testbound.strokeColor = new paper.Color("red");
-            testbound.removeOnDrag();
+            // let testbound = new paper.Path.Rectangle(transformInfo[0].bounds);
+            // testbound.strokeWidth = 3;
+            // testbound.strokeColor = new paper.Color("red");
+            // testbound.removeOnDrag();
 
             //changes position of selected area if moving
             if (transformAction == "moving") {
@@ -910,6 +933,10 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 return;
             }
             else if (transformAction == "resizing") {
+                let testPoint = new paper.Path.Rectangle(oppositeCorner, new paper.Size(5, 5));
+                testPoint.strokeColor = new paper.Color("Red");
+                testPoint.strokeWidth = 5;
+
                 setIsTransforming(true);
                 setTransformMouseDragged(true);
 
@@ -937,13 +964,9 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 transformInfo[0].rotate(angle);
                 rasterInfo[1].rotate(angle);
 
-                //rotation causes errors for scaling (due to scaling being based on bounds (specifically finding corners))
-                //maybe add an else (if rotating, then add raster selection handles as corners)
+                setRotationAngle(angle);
 
-                //have bounds update and then save (bounds are always rectangle)
-                //bounds needs to rotate
                 //create new selection box
-
                 return;
             }
 
@@ -956,6 +979,10 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 //scales size of selection
                 transformInfo[0].scale(Math.abs(scaleFactorX), Math.abs(scaleFactorY), oppositeCorner);
                 rasterInfo[1].scale(Math.abs(scaleFactorX), Math.abs(scaleFactorY), oppositeCorner);
+
+                console.log(oppCornerName);
+                console.log(prevOppCornerName);
+                console.log(oppositeCorner);
 
                 // HANDLES FLIPPING THE SELECTION
                 //if the previous opposite corner is the same as current, then only changes bounds
