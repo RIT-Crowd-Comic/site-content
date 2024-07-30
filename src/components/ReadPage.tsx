@@ -9,6 +9,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Panel, PanelSet, Hook } from "./interfaces";
 import InfoBox from './info/InfoBox';
 import InfoBtn from './info/InfoBtn';
+import { getSessionCookie } from "@/app/login/loginUtils";
 //import icons and background
 const backIcon = "/images/back-button-pressed.png"
 const toggleLayoutHorizIcon = "/images/panel-view-button-horizontal-pressed.png"
@@ -30,12 +31,25 @@ const ReadPage = ({ id }: Props) => {
     const [panelSet, setPanelSet] = useState<PanelSet>();
     const [parentPanelSet, setParentPanelSet] = useState<PanelSet | undefined>();
     const [error, setError] = useState<string>("");
-    // const [actualHooks, setActualHooks] = useState([])
-    // const [images, setImages] = useState([])
+    const [userId, setUserId] = useState<string>("");
     const [panels, setPanels] = useState<Panel[]>([]);
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
+
+            const session = await getSessionCookie();
+            let userResponse = null;
+            let newUserId = "";
+            if(typeof session !== 'undefined') {
+                userResponse = await apiCalls.getUserBySession(session.value);
+                newUserId = userResponse.id
+            }
+
+            else {
+                console.log("Failed to get session. User is not logged in. I think")
+                newUserId = "";
+            }
+
             const panelSetResponse = await apiCalls.getPanelSetByID(id) as PanelSet;
             if (!updateError(panelSetResponse)) {
                 const imageUrlsResponse = await apiCalls.getAllImageUrlsByPanelSetId(panelSetResponse.id);
@@ -56,7 +70,6 @@ const ReadPage = ({ id }: Props) => {
                         ...panelSetResponse,
                         panels
                     });
-                    // console.log(panelSetResponse)
 
                     if (panelSetResponse.hook === null) {
                         setParentPanelSet(undefined);
@@ -70,6 +83,7 @@ const ReadPage = ({ id }: Props) => {
                     }
                 }
             }
+            setUserId(newUserId);
             setIsLoading(false);
         }
         fetchData();
@@ -83,6 +97,7 @@ const ReadPage = ({ id }: Props) => {
         }
         return bool;
     }
+
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -110,9 +125,9 @@ const ReadPage = ({ id }: Props) => {
     }
 
     return (<>
-        <ComicPanels setting={layout} hook_state={hooks} panels={panels} currentId={id} router={router} />
+        <ComicPanels setting={layout} hook_state={hooks} panels={panels} currentId={id} router={router} panel_set={panelSet} />
         <div className={`${styles.controlBar}`} >
-            <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet != undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}></img></button>
+            <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet !== undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}></img></button>
             <IconToggleButton setting={hooks} setSetting={setHooks} state_1="hidden" state_2="visible" buttonId="hooksToggle" source_1={toggleHooksOff} source_2={toggleHooksOn} />
             <IconToggleButton setting={layout} setSetting={setLayout} state_1={`${styles.rowPanels}`} state_2={`${styles.columnPanels}`} buttonId="layoutToggle" source_1={toggleLayoutHorizIcon} source_2={toggleLayoutVertIcon} />
         </div>

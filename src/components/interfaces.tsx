@@ -31,7 +31,7 @@ interface Panel {
     index: number,
     imgSrc: string,
     previous_hook?: Hook | undefined,
-    hooks: Hook[]
+    hooks: Hook[],
 }
 
 interface PanelSet{
