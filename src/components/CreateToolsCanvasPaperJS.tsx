@@ -52,7 +52,8 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     let ShadingLayerRef = useRef<paper.Layer>();
     let layer1Reference = useRef<paper.Layer>();
     let layer2Reference = useRef<paper.Layer>();
-
+    let cursorLayerRef = useRef<paper.Layer>();
+    
     // Router for sending the user to other pages (used in toPublish())
     const router = useRouter();
 
@@ -100,6 +101,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         // Set the layer references
         // Set the layer references as well as the default active layer
         backgroundLayerReference.current = canvasProject.current.activeLayer;
+        cursorLayerRef.current = new paper.Layer();
         ShadingLayerRef.current = new paper.Layer();
         layer1Reference.current = new paper.Layer();
         layer2Reference.current = new paper.Layer();
@@ -186,8 +188,60 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     const penTool = useRef<paper.Tool>(new paper.Tool());
     let penPath: paper.Path | undefined;
 
+    let ccArry = []; //array to keep track of circle cursor
+    // let [cursorArry,setcursorArry] = useState<[{index: Number}]>([{index:0}]) 
+
+    // Draw Circle Cursor
+    function cursor(toolSize: number, event: paper.ToolEvent){
+        var cursorRadius = (toolSize * view.pixelRatio) / 2;
+        var circleCursor = new paper.Path.Circle(
+            event.point, // Circle follows mouse
+            cursorRadius // Cursor size is the same size as the tool
+        );
+        circleCursor.strokeColor = new paper.Color('black');
+        circleCursor.fillColor = new paper.Color('white');
+        ccArry.push(circleCursor);
+    }
+
+    // Mouse cursor changed to circle cursor on Mouse Move to visually display pen size 
+    penTool.current.onMouseMove = function(event: paper.ToolEvent) {
+        //Start in the Cursor Layer
+        cursorLayerRef.current?.activate();
+
+        if (canvasProject.current && cursorLayerRef.current?.activate) {
+            //Draws Circle
+            cursor(penSize, event);
+
+            // Removes all cursor child on cursor layer except the most recent one
+            if(canvasProject.current.activeLayer.children.length > 1){
+                cursorLayerRef.current?.activate;
+                for (var i = 0; i < canvasProject.current.activeLayer.children.length; i++)
+                {
+                    canvasProject.current.activeLayer.firstChild.remove();
+                }
+            }
+
+            // Remove the first cursor from the cursor array and the cursor associated with that ref
+            // if(ccArry.length > 1){
+            //     console.log("ARRY "+ccArry);
+            //     ccArry.shift();
+            //     console.log("ARRY shift "+ccArry);
+
+            //     // circleCursor.index?this.remove():
+            //     console.log("first child pre " + circleCursor.index);
+            //     circleCursor.remove();
+            //     // circleCursor.removeChildren();
+            //     console.log("first index " + circleCursor.index + " post");
+            //     console.log("first child"+circleCursor.firstChild);
+            // }
+        }
+    }
+
     // Begins the process of drawing the user's input to the canvas HTMLElement
     penTool.current.onMouseDown = function () {
+        // Change to drawing layer
+        changeLayer();
+
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             penPath = new paper.Path();
             penPath.strokeColor = new paper.Color(penColor);
@@ -196,8 +250,8 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             penPath.strokeJoin = 'round';
             penPath.blendMode = 'normal';
 
-            //console.log(canvasProject.current);
-            //console.log(panelList);
+            // console.log(canvasProject.current);
+            // console.log(panelList);
         }
     }
 
@@ -210,6 +264,12 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
 
     // Saves edit to edit stack on mouse up 
     penTool.current.onMouseUp = function (event: paper.ToolEvent) {
+        // Change to cursor layer
+        cursorLayerRef.current?.activate();
+
+        // Draw circle cursor
+        cursor(penSize, event);
+
         if(canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
             if(prevEdits.length > UNDO_CAP){
@@ -236,13 +296,10 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         //switches to dedicated shading layer
         ShadingLayerRef.current?.activate;
 
-
         clipPath = new paper.Path();
         clipPath.strokeColor = new paper.Color('pink');
         clipPath.strokeWidth = shadeSize;
         clipPath.strokeCap = 'round';
-
-
     }
 
     //continues drawing preview path
@@ -317,8 +374,31 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     let tmpGroup = useRef<paper.Group>(null).current;
     let mask = useRef<paper.Group>(null).current;
 
+
+    eraserTool.current.onMouseMove = function (event: paper.ToolEvent) {
+        //Start in the Cursor Layer
+        cursorLayerRef.current?.activate();
+
+        if (canvasProject.current && cursorLayerRef.current?.activate) {
+            //Draws Circle
+            cursor(eraserSize, event);
+
+            // Removes all cursor child on cursor layer except the most recent one
+            if(canvasProject.current.activeLayer.children.length > 1){
+                cursorLayerRef.current?.activate;
+                for (var i = 0; i < canvasProject.current.activeLayer.children.length; i++)
+                {
+                    canvasProject.current.activeLayer.firstChild.remove();
+                }
+            }
+        }
+    }
+
     // Begins the process of drawing the user's input to the canvas HTMLElement
     eraserTool.current.onMouseDown = function () {
+        // Change to drawing layer
+        changeLayer();
+
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             let newPath = new paper.Path();
 
@@ -355,7 +435,13 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         }
     }
 
-    eraserTool.current.onMouseUp = function () {
+    eraserTool.current.onMouseUp = function (event: paper.ToolEvent) {
+        // Change to cursor layer
+        cursorLayerRef.current?.activate();
+
+        // Draw circle cursor
+        cursor(eraserSize, event);
+        
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             canvasProject.current.activeLayer.rasterize({ resolution: 300 });
             tmpGroup?.remove();
@@ -911,6 +997,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             // }
         }
     }
+
     transformTool.onMouseUp = function () {
         //resets transform action state
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
@@ -1306,7 +1393,23 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             
         }
         console.log(divs)
-        
+    }
+
+    const showCursor = (visible: boolean) => {
+        const pen = document.getElementById("penTool");
+        const canva = document.getElementById("canvas");
+        if(canva)
+        {
+            if(visible)
+            {
+                canva.style.cursor = "crosshair";
+            }
+            else
+            {
+                canva.style.cursor= "default";
+            }
+        }
+        console.log(pen);
     }
 
     // Return the canvas HTMLElement and its associated functionality   1
@@ -1314,15 +1417,15 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         <div id={`${styles.createPage}`}>
             <fieldset id={styles.fieldSet}>
                 <div id={styles.toolRadioSelects}>
-                    <div id={styles.penTool} className={styles.toolStyling} >
+                    <div id= {`penTool ${styles.penTool}`} className={styles.toolStyling} onClick={() => showCursor(true)}>
                         <label htmlFor="pen" className={`${styles.sizeConsistency}`} id={styles.penLabel}>
                             <input type="radio" name="tools" id="pen" title="Pen Tool" value={toolStates.PEN} className={`${styles.sizeConsistency}`} defaultChecked onChange={findSelectedTool} />
                         </label>
                     </div>
 
-                    <div id={styles.eraserTool} className={styles.toolStyling}>
+                    <div id={styles.eraserTool} className={styles.toolStyling} onClick={() => showCursor(true)}>
                         <label htmlFor="eraser" className={`${styles.sizeConsistency}`} id={styles.eraserLabel}>
-                            <input type="radio" name="tools" id="eraser" title="Eraser Tool" value={toolStates.ERASER} className={`${styles.sizeConsistency}`} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="eraser" title="Eraser Tool" value={toolStates.ERASER} className={`${styles.sizeConsistency}`} onChange={findSelectedTool}/>
                         </label>
                     </div>
 
@@ -1402,7 +1505,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 </div>
             </fieldset>
 
-            <canvas id={`${styles.canvas}`} ref={canvasReference} className={`${styles.canvas}`} />
+            <canvas id={`${styles.canvas} `} ref={canvasReference} className={`${styles.canvas}`} />
 
             <div id={styles.pullOut}>
                 <div id={`${styles.toolOptions}`}>

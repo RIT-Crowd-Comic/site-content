@@ -283,6 +283,11 @@
     height: 20px;
 }
 
+/* Show Circle Cursor */
+#showCursor{
+    cursor: crosshair;
+}
+
 /* - DECLARES ALL ICONS */
 #penLabel
 {
