@@ -26,7 +26,7 @@ img.preview {
     left: 0;
     padding: 0;
     margin: 0;
-    animation: pulse_2 1s linear alternate-reverse infinite;
+    
     
     /* pointer-events: none; */
 }
@@ -49,6 +49,13 @@ img.preview {
     filter: none;
 }
 
+.hookEmpty{
+    animation: pulse_3 1s linear alternate-reverse infinite;
+}
+.hookTaken{
+    animation: pulse_2 1s linear alternate-reverse infinite;
+}
+
 @keyframes pulse_2 {
     0% {
       filter: drop-shadow(2px 4px 20px #009BC6) drop-shadow(2px 4px 20px #009BC6);
@@ -58,6 +65,14 @@ img.preview {
     }
   }
 
+  @keyframes pulse_3 {
+    0% {
+      filter: drop-shadow(2px 4px 20px #d91911) drop-shadow(2px 4px 20px #d91911);
+    }
+    100% {
+      filter: drop-shadow(2px 4px 50px #d91911) drop-shadow(2px 4px 50px #d91911);
+    }
+  }
 .hookSvg.editing {
     pointer-events: none;
 }
