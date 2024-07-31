@@ -38,9 +38,11 @@ const ReadPage = ({ id }: Props) => {
             setIsLoading(true);
 
             const session = await getSessionCookie();
+            console.log(session);
             let userResponse = null;
             let newUserId = "";
-            if(typeof session !== 'undefined') {
+            if(session) {
+                console.log("Session exists")
                 userResponse = await apiCalls.getUserBySession(session.value);
                 newUserId = userResponse.id
             }
@@ -125,7 +127,7 @@ const ReadPage = ({ id }: Props) => {
     }
 
     return (<>
-        <ComicPanels setting={layout} hook_state={hooks} panels={panels} currentId={id} router={router} panel_set={panelSet} />
+        <ComicPanels setting={layout} hook_state={hooks} panels={panels} currentId={id} router={router} panel_set={panelSet} userId={userId} />
         <div className={`${styles.controlBar}`} >
             <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet !== undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}></img></button>
             <IconToggleButton setting={hooks} setSetting={setHooks} state_1="hidden" state_2="visible" buttonId="hooksToggle" source_1={toggleHooksOff} source_2={toggleHooksOn} />

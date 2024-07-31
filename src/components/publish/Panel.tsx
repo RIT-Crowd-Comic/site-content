@@ -42,7 +42,8 @@ const Panel = ({
     setSelectedHook,
     onHookClick,
     hidden: hideUntilHover,
-    author_id: string
+    panel_set,
+    userId
 }: {
     imgSrc: string,
     hooks: (Hook | CreateHook)[],
@@ -54,14 +55,13 @@ const Panel = ({
     setSelectedHook?: (hookInfo: { panelIndex: number, hookIndex: number } | undefined) => void,
     onHookClick?: (hook: Hook | CreateHook, hookIndex: number) => void,
     hidden?: boolean,
-    author_id: string
+    panel_set: PanelSet | undefined,
+    userId: string
 }) => {
     // for creating hooks
     const [vertices, setVertices] = useState<number[][]>([]);
     const imgRef = useRef<HTMLImageElement | null>(null);
     const [scale, setScale] = useState<{ x: number, y: number }>();
-    const [nextPanelSets, setNextPanelSets] = useState<any[]>([]);
-
     useLayoutEffect(() => {
 
         // set svg scale when the panel img resizes
@@ -103,8 +103,6 @@ const Panel = ({
                 newPanelSets.push(undefined);
             }
         }
-
-        setNextPanelSets(newPanelSets);
     }
     // add a new hook
     useEffect(() => {
@@ -231,7 +229,7 @@ const Panel = ({
                         hooks.map((hook, i) =>
                             <path
                                 d={createSVGPath((hook as CreateHook).points ?? (hook as Hook).position.map(p => [p.x, p.y]) ?? '')}
-                                fill={(selectedHook?.hookIndex ?? -1) === i ? HIGHLIGHT_COLOR : hook.next_panel_set_id !== null && nextPanelSets[i].author_id === author_id ? FORBIDDEN_HOOK : hook.next_panel_set_id !== null ?  FILL_COLOR : NULL_HOOK}
+                                fill={(selectedHook?.hookIndex ?? -1) === i ? HIGHLIGHT_COLOR : hook.next_panel_set_id === null && panel_set?.author_id === userId ? FORBIDDEN_HOOK : hook.next_panel_set_id !== null ?  FILL_COLOR : NULL_HOOK}
                                 onClick={() => { if (onHookClick) onHookClick(hook, i) }}
                                 className={`${styles.hookPath} ${hideUntilHover ? styles.hidden : ''} ${styles[`hook${i}`]}`}
                                 key={i} />)}
