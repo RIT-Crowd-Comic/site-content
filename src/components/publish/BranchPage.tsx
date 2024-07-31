@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { CreateHook, emptyPanelSet, CreatePanelSet } from "../interfaces";
 import Panel from './Panel';
 import BranchPageControls from './BranchPageControls';
+import InfoBox from '../info/InfoBox';
+import InfoBtn from '../info/InfoBtn';
 import { publishHandler } from '../../api/apiCalls';
 import { useRouter } from 'next/navigation';
 import { getHookByID } from '../../api/apiCalls';
@@ -161,6 +163,24 @@ const BranchPage = ({ id }: Props) => {
         setAddingHook(false);
     }
 
+    const infoDisplay = (visible: boolean) => {
+        const divs = document.querySelectorAll("div")
+        const modal = divs[divs.length-2]
+        if(modal)
+        {
+            if(visible)
+            {
+                modal.style.display = "block";
+            }
+            else
+            {
+                modal.style.display = "none";
+            }
+            
+        }
+        
+    }
+
     return (<>
         <main className={`${styles.body}`}>
             <div id={styles.publishContainer}>
@@ -240,6 +260,13 @@ const BranchPage = ({ id }: Props) => {
                     <button onClick={pushToLocalStorage} id={`${styles.publishBtn}`}>Publish</button>
                 </div> */}
             </div>
+            <InfoBtn toggle={infoDisplay}></InfoBtn>
+            <InfoBox instructions={`Instructions:\n
+            -click on the add hook button to start drawing a hook on the comic
+            -once done, click on accept hook to keep or remove to delete the hook
+            - to remove a hook: click on the hook you wish to remove then click on remove hook to delete it\n 
+            *YOU MUSH HAVE 3 HOOKS IN ORDER TO PUBLISH YOUR COMIC*
+            `} toggle={infoDisplay}></InfoBox>
         </main>
     </>);
 }

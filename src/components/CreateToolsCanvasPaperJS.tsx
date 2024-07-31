@@ -14,6 +14,9 @@ import styles from "@/styles/create.module.css";
 import { useRouter } from 'next/navigation';
 import { Istok_Web } from 'next/font/google';
 
+import InfoBox from './info/InfoBox';
+import InfoBtn from './info/InfoBtn';
+
 import Link from 'next/link';
 import { getHookByID } from '@/api/apiCalls';
 import { CreateHook } from './interfaces';
@@ -1424,7 +1427,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         //localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
 
         // Send the user to the publish page
-        router.push(`/comic/create/publish?id=${parentHookId}`);
+        router.replace(`/comic/create/publish?id=${parentHookId}`);
     }
 
     const infoDisplay = (visible: boolean) => {
@@ -1689,24 +1692,15 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 </div>
             </div>
 
-            <div id={styles.info}>
-                <label>
-                    <button id={styles.infoButton} onClick= {() => infoDisplay(true)}></button> 
-                </label>
-            </div>
-
-            <div id={styles.infoModal} className={styles.modal}>
-                <div className={styles.modalContent}>
-                    <span className={styles.closeModal} onClick= {() => infoDisplay(false)}></span>
-                    <p>This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
+            
+            <InfoBtn toggle={infoDisplay}></InfoBtn>
+            <InfoBox instructions="This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
                         This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
                         This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
                         This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
                         This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
                         This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
-                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.</p>
-                </div>
-            </div>
+                        This is information about the drawing page and what you are able to do with it." toggle={infoDisplay}></InfoBox>
         </div>
     )
 }
