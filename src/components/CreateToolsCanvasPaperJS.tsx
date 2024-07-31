@@ -73,6 +73,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             return;
         }
 
+        
         //route if the link contains an id already created - get the hook by id and check its next
         getHookByID(id).then((hook) =>{
             if((hook instanceof Error)) return router.push(`/comic/browse`);  
@@ -87,7 +88,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             //use the next id to reroute to read
             router.push(`/comic/?id=${hook.next_panel_set_id}`);  
         });
-
+        
 
         // Create a view for the canvas (setup for layers)
         paper.setup(canvas);
@@ -1311,12 +1312,18 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
 
     function openSidebar() {
         const mobileTools = document.getElementById(styles.pullOut);
+        const sidebarButton = document.getElementById(styles.openLabel);
         mobileTools.style.display = "grid";
+        sidebarButton.style.visibility = "hidden";
+        console.log("ping");
       }
       
       function closeSidebar() {
         const mobileTools = document.getElementById(styles.pullOut);
+        const sidebarButton =document.getElementById(styles.openLabel);
        mobileTools.style.display = "none";
+       sidebarButton.style.visibility = "visible";
+       console.log("pong");
       }
 
     // Return the canvas HTMLElement and its associated functionality
@@ -1413,16 +1420,20 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             </fieldset>
 
             <canvas id={`${styles.canvas}`} ref={canvasReference} className={`${styles.canvas}`} />
-            
-            <label htmlFor="openSidebarButton" id={styles.clearLabel}>
-                        <button className="btn" id={styles.openSidebarButton} onClick={openSidebar}></button>
-                    </label>
+           
+
+                
+            <label htmlFor={styles.openSidebarButton} className={`btn ${styles.sizeConsistency}`} id={styles.openLabel}>
+                    <input type="button" className={`btn ${styles.sizeConsistency}`} id={styles.openSidebarButton} onClick={openSidebar}/>
+            </label>     
 
             <div id={styles.pullOut}>
-            <label htmlFor="closeSidebarButton" id={styles.clearLabel}>
-                        <button className="btn" id={styles.closeSidebarButton} onClick={closeSidebar}></button>
-                    </label>
                 <div  id={`${styles.toolOptions}`}>
+
+                <label htmlFor={styles.closeSidebarButton} className={`btn ${styles.sizeConsistency}`} id={styles.closeLabel}>
+                        <input type="button" className={`btn ${styles.sizeConsistency}`} id={styles.closeSidebarButton} onClick={closeSidebar} />
+                    </label>
+
                     <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor} />
                     <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize} />
                     <FillOptions enabled={fillOptionsEnabled} changeFillColor={setFillColor} />
