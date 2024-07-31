@@ -159,6 +159,14 @@ const NavBar = () => {
                                 </li>
                                 </>
                             )}
+                            {!isSignedIn && isMobile && (
+                                <>
+                                <li className="nav-item">
+                                    <Link className="nav-link" href="/sign-in">Sign In</Link>
+                                    {/* <button onClick={handleSignOut} className="nav-link btn-link">Sign In</button> */}
+                                </li>
+                                </>
+                            )}
                         </ul>
                     </div>
                 </div>
