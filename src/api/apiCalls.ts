@@ -446,10 +446,10 @@ const publishHandler = async(panelSet : CreatePanelSet) =>{
         //get the image files
         const image1 = await fetchImage(panelSet.panels[0].imgSrc) as File | Error;
         if(image1 instanceof Error) return new Error(`There was an error getting the 1st image: ${image1.message}`);
-        const image2 = await fetchImage(panelSet.panels[0].imgSrc) as File | Error;
-        if(image2 instanceof Error) return new Error(`There was an error getting the 1st image: ${image2.message}`);
-        const image3 = await fetchImage(panelSet.panels[0].imgSrc) as File | Error;
-        if(image3 instanceof Error) return new Error(`There was an error getting the 1st image: ${image3.message}`);
+        const image2 = await fetchImage(panelSet.panels[1].imgSrc) as File | Error;
+        if(image2 instanceof Error) return new Error(`There was an error getting the 2nd image: ${image2.message}`);
+        const image3 = await fetchImage(panelSet.panels[2].imgSrc) as File | Error;
+        if(image3 instanceof Error) return new Error(`There was an error getting the 3rd image: ${image3.message}`);
 
         //get the hook data
         const hooks  = [] as Array<hook>;
