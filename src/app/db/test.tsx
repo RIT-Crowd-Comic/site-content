@@ -1,13 +1,11 @@
 import { useState } from "react";
 import * as apiCalls from "../../api/apiCalls"
-import { parse } from "path";
 
 function Test() {
   const [results, setResults] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
-  const [newDisplayName, setNewDisplayName] = useState("");
   const [userID, setUserID] = useState("");
   const [imageName, setImageName] = useState("")
   const [panelSetID, setPanelSetID] = useState("")
@@ -67,18 +65,12 @@ function Test() {
         <textarea onChange={(e) => setIndex(e.target.value)}></textarea><br />
         <button onClick={async()=> {setResults(parseResults(await apiCalls.getPanelByID(Number(panelID))))}}>Get Panel By ID</button>
         <hr />
-        <p>Panel ID</p>
-        <textarea onChange={(e) => setPanelID(e.target.value)}></textarea><br />
-        <button onClick={async() => {setResults(parseResults(await apiCalls.getPanelByIndex(Number(panelID), Number(index))))}}>Get Panel By Index</button>
         <hr />
         <p>Hook ID</p>
         <textarea onChange={(e) => setHookID(e.target.value)}></textarea> <br />
         <button onClick={async() => {setResults(parseResults(await apiCalls.getHookByID(Number(hookID))))}}>Get Hook By ID</button>
         <hr />
         <button onClick={async() => {setResults(parseResults(await apiCalls.getTrunks()))}}>Trunks</button>
-        <p>Hook ID</p>
-        <textarea onChange={(e) => setHookID(e.target.value)}></textarea> <br />
-        <button onClick={async() => {setResults(parseResults(await apiCalls.isHookLinked(Number(hookID))))}}>Is Hook Linked</button>
         <hr />
         <p>User ID</p>
         <textarea onChange={(e) => setUserID(e.target.value)}></textarea><br />
@@ -102,15 +94,9 @@ function Test() {
         <textarea onChange={(e) => setPassword(e.target.value)}></textarea>
         <p>Display</p>
         <textarea onChange={(e) => setDisplayName(e.target.value)}></textarea>
-        <p>New Display Name</p>
-        <textarea onChange={(e) => setNewDisplayName(e.target.value)}></textarea><br />
-        <button onClick={async() => {setResults(parseResults(await apiCalls.changeDisplayName(email, password, displayName, newDisplayName)))}}>Change Display Name</button>
         <hr />
         <p>Panel ID</p>
         <textarea onChange={(e => setPanelID(e.target.value))}></textarea>
-        <p>image</p>
-        <textarea onChange={(e => setImageName(e.target.value))}></textarea> <br />
-        <button onClick={async() => {setResults(parseResults(await apiCalls.updatePanel(Number(panelID), imageName)))}}>Update Panel</button>
     </div>
   );
 }
