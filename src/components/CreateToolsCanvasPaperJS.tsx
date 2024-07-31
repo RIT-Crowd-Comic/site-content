@@ -1580,7 +1580,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                         <div id="layer4" className={styles.layer}>
                             <div id="layer4Visibility" className={styles.visibleStyling}>
                                 <label htmlFor="layer4Toggle" className={` ${styles.visibleLabel} ${styles.sizeConsistency}`}>
-                                    <input type="checkbox" className={`${styles.sizeConsistency}`} id="layer4Toggle" value="4" title="Toggle Layer Visibility" onChange={toggleLayerVisibility}></input>
+                                    <input type="checkbox" className={`${styles.sizeConsistency}`} id="layer4Toggle" value="4" title="Toggle Layer Visibility" onChange={toggleLayerVisibility} defaultChecked></input>
                                 </label>
                             </div>
                             <div id="layer4Lock" className={styles.lockStyling}>
@@ -1597,7 +1597,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                         <div id="layer3" className={styles.layer}>
                             <div id="layer3Visibility" className={styles.visibleStyling}>
                                 <label htmlFor="layer3Toggle" className={` ${styles.visibleLabel} ${styles.sizeConsistency}`}>
-                                    <input type="checkbox" className={`${styles.sizeConsistency}`} id="layer3Toggle" value="3" title="Toggle Layer Visibility" onChange={toggleLayerVisibility}></input>
+                                    <input type="checkbox" className={`${styles.sizeConsistency}`} id="layer3Toggle" value="3" title="Toggle Layer Visibility" onChange={toggleLayerVisibility} defaultChecked></input>
                                 </label>
                             </div>
                             <div id="layer3Lock" className={styles.lockStyling}>
