@@ -1133,6 +1133,11 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         if(backgroundLayerReference.current && shadingLayerRef.current && layer1Reference.current && layer2Reference.current &&
             layer3Reference.current && layer4Reference.current)
         {
+            //clears undo stack
+            for(let i = 0; i < prevEdits.length-1; i++){
+                prevEdits.pop();
+            }
+
             updateCurrentPanel();
 
             let panelSelected = document.querySelector("input[name='panels']:checked") as HTMLInputElement;
@@ -1186,6 +1191,10 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                     break;
                 default:
                     break;
+            }
+
+            if(canvasProject.current){
+                prevEdits.push({id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({asString: true}))});
             }
         }
     }
