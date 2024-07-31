@@ -1,7 +1,3 @@
-/*img
-{
-    filter: grayscale(100);
-}*/
 .body
 {
     width: 100%;
@@ -10,7 +6,7 @@
     background-color: #2d2d2d;
     max-width: 100%;
     padding-right: 0 !important;
-    /* overflow: hidden; */
+    overflow: hidden;
     background-image: radial-gradient(circle at center,
             #414141 0.15rem,
             transparent 0), radial-gradient(circle at center, #414141 0.15rem, transparent 0);
@@ -21,26 +17,28 @@
     font-size: small;
 
     position: absolute;
+
+    display: grid;
+    align-items: center;
 }
 
 #createPage
 {
     display: grid;
 
-    grid-template-columns: auto auto 20%;
-    grid-template-rows: 50% 40% 10%;
-    grid-template-areas: 
-    "toolBar canvas penTools"
-    "toolBar canvas layers"
-    "toolBar canvas previewPanels";
+    grid-template-columns: 60px auto;
+    grid-template-rows: 100%;
+    grid-template-areas:
+    "toolBar canvas";
 
-    flex-direction: row;   
+    flex-direction: row;
 
-    height: 80vh;
+    height: 50vw;
+    max-height: 80vh;
+    width: 80%;
 
-    margin: 20px auto;
+    margin: 5vw 20px;
     align-items: start;
-    justify-content: center;
 }
 
 #canvas
@@ -50,22 +48,40 @@
     grid-area: canvas;
 
     border-style: solid;
-    background-color: white;
+    border-style: solid;
+    background-color: white !important;
+    background: conic-gradient(
+        #cccccc70 90deg,
+        #ffffff70 90deg 180deg,
+        #cccccc70 180deg 270deg,
+        #ffffff70 270deg
+    );
+    background-repeat: repeat;
+    background-size: 20px 20px;
+    background-position: top left;
+
     cursor: pointer;
 
     height: 100% !important;
     width: auto !important;
-
+    
     aspect-ratio: 3 / 2;
+}
+
+#miniNavbar
+{
+    display: none;
 }
 
 /* LEFT SIDE/TOOL BAR */
 
 #fieldSet
 {
-    margin-right: 20px;
-    height: 200%;
-    width: 50px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    height: 100%;
+    width: 40px;
 
     background-color: #00000062;
     border: 3px solid black;
@@ -73,7 +89,7 @@
 
 #toolRadioSelects, #functionButtons, .backgroundUploadForm
 {
-    width: 25px;
+    width: 20px;
     margin: 0 auto;
 }
 
@@ -83,25 +99,49 @@
     grid-area: toolBar;
 }
 
+#toolRadioSelects div
+{
+    margin-inline: auto;
+}
 
-#toolOptions, #layerOptions, .panelSelect
+
+#toolOptions, #layerOptions
 {
     background-color: #00000062;
     border: 3px solid black;
 
-    height: 95%;
     padding: 7px;
+}
 
-    margin-left: 20px;
+.panelSelect
+{
+    background-color: #00000062;
+    border: 3px solid black;
 }
 
 /* RIGHT SIDE BAR */
-/* - TOOL OPTIONS */
 
-#toolOptions
+#pullOut
 {
-    grid-area: penTools;
+    margin-left: 20px;
+    height: 100%;
+    max-height: 100%;
+
+    display: grid;
+    grid-template-rows: auto 40% 10%;
+
+    row-gap: 10px;
+
+    display: none;
 }
+
+#toolOptions, #layerOptions, .panelSelect
+{
+    height: 100%;
+    overflow-x: hidden;
+}
+
+/* - TOOL OPTIONS */
 
 .toolStyles
 {
@@ -113,9 +153,9 @@
 
 /* - LAYER OPTIONS */
 
-#layerOptions
+#layerOptions, .panelSelect
 {
-    grid-area: layers;
+    overflow: hidden;
 }
 
 .layerSelect
@@ -123,8 +163,14 @@
     position: relative;
     width: 100%;
 
-    margin: auto 0;
-    height: 15px;
+    margin: 0 0;
+    height: 100%;
+}
+
+.layerSelect label
+{
+    margin: 10px 0;
+    height: 10%;
 }
 
 .layer
@@ -138,6 +184,8 @@
     flex-direction: row;
 
     width: 95%;
+    height: 50%;
+    max-height: 50px;
 
     overflow: hidden;
 }
@@ -177,8 +225,6 @@
 
 .panelSelect
 {
-    grid-area: previewPanels;
-
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -192,7 +238,7 @@
 
     border-radius: 6px;
 }
-  
+
 .toolStyles::-webkit-scrollbar-thumb, #layersList::-webkit-scrollbar-thumb
 {
     background-color: #535353;
@@ -216,6 +262,16 @@
     background-color: #6f6f6f;
 }
 
+#fieldSet::-webkit-scrollbar
+{
+    display:none;
+}
+
+#fieldSet::-webkit-scrollbar-thumb
+{
+    display:none;
+}
+
 /* ICONS */
 
 /* - HIDES THE BUTTONS */
@@ -223,8 +279,8 @@
 {
     position: absolute;
     opacity: 0;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 /* - DECLARES ALL ICONS */
@@ -296,7 +352,7 @@
 {
     outline: none !important;
     border: none !important;
-    background-color: none !important; 
+    background-color: none !important;
 }
 
 #undoLabel:has(button:hover), #redoLabel:has(button:hover), #clearLabel:has(button:hover), .formLabel:has(input:hover)
@@ -313,43 +369,43 @@
 {
     background: url("../../public/images/icons/draw-icons/layer_merge.svg") no-repeat center/contain;
     transform: scaleY(-1);
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 #layerDownLabel
 {
     background: url("../../public/images/icons/draw-icons/layer_down.svg") no-repeat center/contain;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 #layerUpLabel
 {
     background: url("../../public/images/icons/draw-icons/layer_up.svg") no-repeat center/contain;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 .visibleLabel
 {
     background: url("../../public/images/icons/draw-icons/eyeclose.svg") no-repeat center/contain;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 .lockLabel
 {
     background: url("../../public/images/icons/draw-icons/unlock.svg") no-repeat center/contain;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 .formLabel
 {
     background: url("../../public/images/icons/draw-icons/upload.svg") no-repeat center/contain;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 .panelLabel
@@ -367,16 +423,16 @@
 
 .toolStyling, .visibleStyling, .lockStyling
 {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 
     margin: 8px 0;
 }
 
 .toolStyling label
 {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 .visibleStyling, .lockStyling
@@ -391,12 +447,17 @@
 
 .toolStyling:has([type=radio]:hover), .panelStyling:has([type=radio]:hover), .layerStyling:has([type=button]:hover)
 {
-    filter: brightness(.7);
+    filter: brightness(.7) !important;
 }
 
 .visibleStyling:has([type=checkbox]:checked), .lockStyling:has([type=checkbox]:checked)
 {
-    filter: brightness(1);
+    filter: brightness(1) !important;
+}
+
+.visibleStyling:has([type=checkbox]:hover), .lockStyling:has([type=checkbox]:hover)
+{
+    filter: brightness(.3) !important;
 }
 
 .layer:has([type=radio]:checked)
@@ -417,27 +478,27 @@
 
 #functionButtons
 {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     height: auto;
     display:flex;
     flex-direction: column;
-    
+
     justify-content: space-between;
 }
 
 #functionButtons label
 {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 
     margin: 0 0 8px 0;
 }
 
 .backgroundUploadForm
 {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 
     margin-bottom: 5px;
 }
@@ -454,7 +515,7 @@
 
 #paletteButtons button, #fillPaletteButtons button, #borderPaletteButtons button, #textColor button{
     display: flexbox;
-    height:1.2em; 
+    height:1.2em;
     width:1.2em;
     margin-left: 2px;
     margin-top: 1px;
@@ -505,18 +566,24 @@
     bottom: 0;
 }
 
-.publishButton, .saveButton
+.publishButton, .saveButton, .backButton
 {
-    background-color: white;
-    color: black;
+    height: 40px;
+    color: white;
+    background-color: #4b4b4b;
+    
+    margin: 0 !important;
 
-    padding: 5px;
-    border: 3px solid black;
-    border-bottom: 4px solid black;
-    margin: 0 5px 5px 0;
+    border: 3px solid #000000;
+    border-bottom: 4px solid #000000;
 }
 
-.publishButton:hover, .saveButton:hover
+.publishButton, .publishButton:hover, .publishButton:active, .publishButton:focus
+{
+    margin-left: 10px !important;
+}
+
+.publishButton:hover, .saveButton:hover, .backButton:hover
 {
     background-color:#242424;
 
@@ -524,9 +591,9 @@
     border-bottom: 4px solid black;
 }
 
-.publishButton:active, .saveButton:active
+.publishButton:active, .saveButton:active, .backButton:active
 {
-    background-color: #9c9c9c;
+    background-color: #151515 !important;
     position: relative;
     border: solid 3px #000000;
     top: 1px;
@@ -534,20 +601,330 @@
 
 
 
-/* [xs] Extra small devices, less than 576px) */
-/* No media query for `xs` since this is the default in Bootstrap */
+/* FOR PORTRAIT MODE ONLY */
+#warning
+{
+    display: none;
+}
+
+/* [xs] Extra small devices, less than 386px) */
+@media (max-width: 389px)
+{
+    #createPage
+    {
+        height: 50vh;
+    }
+}
+
+/* Portrait */
+@media (orientation: portrait)
+{
+    #createPage
+    {
+        display: grid;
+
+        grid-template-columns: 50px auto !important;
+        grid-template-rows: 100%;
+        grid-template-areas:
+        "toolBar canvas" !important;
+
+        flex-direction: row;
+
+        height: 50vw !important;
+        max-height: 40vh !important;
+
+        width: 90vw !important;
+        max-width: 100vw !important;
+
+        margin: 35px auto;
+
+
+        align-items: start;
+    }
+
+    #canvas
+    {
+        order: 1;
+        border: 3px solid black;
+        grid-area: canvas;
+
+        border-style: solid;
+        background-color: white;
+        cursor: pointer;
+
+        height: 100% !important;
+        width: auto !important;
+
+        min-height: 0 !important;
+        min-width: 0 !important;
+        
+        aspect-ratio: 3 / 2;
+    }
+
+    #miniNavbar, #pullOut
+    {
+        display: none !important;
+    }
+
+    #fieldSet
+    {
+        overflow-y: scroll;
+        overflow-x: hidden;
+
+        height: 100%;
+        width: 30px;
+
+        background-color: #00000062;
+        border: 3px solid black;
+    }
+
+    #warning
+    {
+        display: inline;
+        position: absolute;
+
+        bottom: 0;
+        left: 0;
+        background-color: white;
+        color: black;
+
+        text-align: center;
+
+        width: 100%;
+    }
+
+    
+    
+    .toolStyling, .visibleStyling, .lockStyling, .sizeConsistency
+    {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    .panelLabel
+    {
+        height: 100%;
+    }
+
+    #functionButtons
+    {
+        height: auto;
+        display:flex;
+        flex-direction: column;
+
+        justify-content: space-between;
+    }
+}
 
 /* [sm] Small devices, 576px and up */
-@media (min-width: 576px) {}
+@media (min-width: 576px) {
+
+    #createPage
+    {
+        display: grid;
+
+        grid-template-columns: 40px auto;
+        grid-template-rows: 100%;
+        grid-template-areas:
+        "toolBar canvas";
+
+        flex-direction: row;
+
+        height: 50vw;
+        max-height: 90vh;
+        max-width: 80vw;
+
+        margin: 2% 10px;
+        align-items: start;
+    }
+
+    #canvas
+    {
+        order: 1;
+        border: 3px solid black;
+        grid-area: canvas;
+
+        border-style: solid;
+        background-color: white;
+        cursor: pointer;
+
+        height: 100% !important;
+        width: auto !important;
+        
+        aspect-ratio: 3 / 2;
+    }
+    
+    #fieldSet
+    {
+        overflow-y: scroll;
+        overflow-x: hidden;
+
+        height: 100%;
+        width: 30px;
+
+        background-color: #00000062;
+        border: 3px solid black;
+    }
+
+    #miniNavbar
+    {
+        display: none;
+    }
+    
+    .panelStyling
+    {
+        height: 100%;
+    }
+
+    .panelSelect
+    {
+        padding: 2px 7px;
+    }
+}
 
 /* [md] Medium devices, 768px and up */
-@media (min-width: 768px) {}
+@media (min-width: 768px) {
+    #createPage
+    {
+        display: grid;
+
+        grid-template-columns: 60px calc(100% - 320px) 260px;
+        grid-template-rows: calc(100% - 60px) 60px;
+        grid-template-areas:
+        "toolBar canvas tools"
+        "bottomBar bottomBar bottomBar";
+
+        flex-direction: row;
+
+        height: 35vw;
+        max-height: 90vh;
+
+        width: auto;
+        max-width: 90vw;
+
+        margin: 0 auto;
+        align-items: start;
+        justify-content: center;
+    }
+
+    #pullOut
+    {
+        margin-left: 10px;
+        height: 100%;
+        max-height: 100%;
+        grid-area: tools;
+        display: grid;
+        grid-template-rows: auto 40% 10%;
+
+        row-gap: 10px;
+    }
+
+    #miniNavbar
+    {
+        height: 50px;
+        width: 100%;
+
+        margin-top: 10px;
+
+        grid-area: bottomBar;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        background-color: #00000062;
+        border: 3px solid black;
+        padding: 3px;
+    }
+
+    #savePublish
+    {
+        z-index: 99;
+
+        align-self: center;
+        margin: 0;
+    }
+    
+    .panelStyling
+    {
+        height: 100%;
+    }
+
+    .panelSelect
+    {
+        padding: 2px 7px;
+    }
+
+    #canvas
+    {
+        order: 1;
+        border: 3px solid black;
+        grid-area: canvas;
+
+        cursor: pointer;
+
+        height: 100% !important;
+        width: auto !important;
+
+        max-width: 100% !important;
+
+        aspect-ratio: 3 / 2;
+    }
+
+    /* LEFT SIDE/TOOL BAR */
+
+    #fieldSet
+    {
+        width: 50px;
+    }
+
+    #toolRadioSelects, #functionButtons, .backgroundUploadForm
+    {
+        width: 25px;
+        margin: 0 auto;
+    }
+
+    /* ICONS */
+    /* - BUTTON CSS */
+
+    .toolStyling, .visibleStyling, .lockStyling, .sizeConsistency
+    {
+        width: 25px !important;
+        height: 25px !important;
+    }
+
+    .panelLabel
+    {
+        height: 100%;
+    }
+
+    #functionButtons
+    {
+        height: auto;
+        display:flex;
+        flex-direction: column;
+
+        justify-content: space-between;
+    }
+}
 
 /* [lg] Large desktops, 992px and up */
-@media (min-width: 992px) {}
+/* @media (min-width: 992px) {
+    #createPage
+    {
+        height: 65vw;
+        max-height: 50vh;
+    }
+} */
 
 /* [xl] Extra large devices 1200px and up */
-@media (min-width: 1200px) {}
+/* @media (min-width: 1200px) {
+    #createPage
+    {
+        height: 45vw;
+        max-height: 80vh;
+    }
+} */
 
 /* [xxl] Extra extra large devices, 1400px and up */
 @media (min-width: 1400px) {}

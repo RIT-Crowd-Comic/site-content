@@ -14,11 +14,18 @@ import styles from "@/styles/create.module.css";
 import { useRouter } from 'next/navigation';
 import { Istok_Web } from 'next/font/google';
 
+import InfoBox from './info/InfoBox';
+import InfoBtn from './info/InfoBtn';
+
 import Link from 'next/link';
+import { getHookByID } from '@/api/apiCalls';
+import { CreateHook } from './interfaces';
 
-
+interface Props {
+    id: number
+}
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
-const CreateToolsCanvasPaperJS = () => {
+const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     // *** VARIABLES ***
     // === CANVAS ===
     // Need to capture references to the HTML Elements.  canvasRef and contextRef is performed in useEffect().  
@@ -32,19 +39,41 @@ const CreateToolsCanvasPaperJS = () => {
 
     // All 3 Panel Canvases
     // Used to save the state of each panel whenever data needs to be saved (when the save button is pressed or when moving to the Publish page)
-    //const [panel1Project, setPanel1Project] = useState<paper.Layer[]>([]);
-    //const [panel2Project, setPanel2Project] = useState<paper.Layer[]>([]);
-    //const [panel3Project, setPanel3Project] = useState<paper.Layer[]>([]);
+    const [panel1LayerData, setPanel1LayerData] = useState({
+        background: "",
+        shade: "",
+        layer1: "",
+        layer2: "",
+        layer3: "",
+        layer4: ""
+    });
+    const [panel2LayerData, setPanel2LayerData] = useState({
+        background: "",
+        shade: "",
+        layer1: "",
+        layer2: "",
+        layer3: "",
+        layer4: ""
+    });
+    const [panel3LayerData, setPanel3LayerData] = useState({
+        background: "",
+        shade: "",
+        layer1: "",
+        layer2: "",
+        layer3: "",
+        layer4: ""
+    });
 
-    // Used to track which panel is currently being edited so that its state can be saved before switching 
-    //const panelList = [panel1Project, panel2Project, panel3Project];
-    //const [currentPanelIndex, setCurrentPanelIndex] = useState<number>(0);
+    // Saves the index of the current canvas being edited
+    const [currentPanelIndex, setCurrentPanelIndex] = useState(0);
 
     // References to the PaperJS Canvas Layers
     let backgroundLayerReference = useRef<paper.Layer>();
-    let ShadingLayerRef = useRef<paper.Layer>();
+    let shadingLayerRef = useRef<paper.Layer>();
     let layer1Reference = useRef<paper.Layer>();
     let layer2Reference = useRef<paper.Layer>();
+    let layer3Reference = useRef<paper.Layer>();
+    let layer4Reference = useRef<paper.Layer>();
 
     // Router for sending the user to other pages (used in toPublish())
     const router = useRouter();
@@ -53,6 +82,8 @@ const CreateToolsCanvasPaperJS = () => {
     let [prevEdits,setPrevEdits] = useState<[{id: Number,svg: string}]>([{id:-1,svg:""}]) 
     const UNDO_CAP = 18; //controls how many edits are tracked with undo tool (must account for -3 for buffer room)
     let [justUndid,setJustUndid] = useState(false);
+    const [parentHookId, setParentHookId] = useState<Number>()
+
 
     //Redo tracking
     let [prevUndos,setPrevUndos] = useState<[{id: Number,svg: string}]>([{id:-1,svg:""}]) 
@@ -67,6 +98,22 @@ const CreateToolsCanvasPaperJS = () => {
             return;
         }
 
+        //route if the link contains an id already created - get the hook by id and check its next
+        getHookByID(id).then((hook) =>{
+            if((hook instanceof Error)) return router.push(`/comic/browse`);  
+            
+            hook = hook as CreateHook;
+            
+            if(!hook.next_panel_set_id){
+                setParentHookId(id);
+                return;
+            } 
+
+            //use the next id to reroute to read
+            router.push(`/comic/?id=${hook.next_panel_set_id}`);  
+        });
+
+
         // Create a view for the canvas (setup for layers)
         paper.setup(canvas);
         view = paper.view;
@@ -75,32 +122,64 @@ const CreateToolsCanvasPaperJS = () => {
         // Set the layer references
         // Set the layer references as well as the default active layer
         backgroundLayerReference.current = canvasProject.current.activeLayer;
-        ShadingLayerRef.current = new paper.Layer();
+        shadingLayerRef.current = new paper.Layer();
         layer1Reference.current = new paper.Layer();
         layer2Reference.current = new paper.Layer();
+        layer3Reference.current = new paper.Layer();
+        layer4Reference.current = new paper.Layer();
         layer1Reference.current.activate();
+
+        // Set up the panelLayerDatas with blank layer data
+        let defaultLayerData = {
+            background: String(backgroundLayerReference.current.exportJSON({asString: true})),
+            shade: String(backgroundLayerReference.current.exportJSON({asString: true})),
+            layer1: String(backgroundLayerReference.current.exportJSON({asString: true})),
+            layer2: String(backgroundLayerReference.current.exportJSON({asString: true})),
+            layer3: String(backgroundLayerReference.current.exportJSON({asString: true})),
+            layer4: String(backgroundLayerReference.current.exportJSON({asString: true}))
+        };
+
+        setPanel1LayerData(defaultLayerData);
+        setPanel2LayerData(defaultLayerData);
+        setPanel3LayerData(defaultLayerData);
 
         // If previous layer data exists, set the layers to that, otherwise make new layers
         try {
-            let jsonData = localStorage.getItem("panel-1-layerData");
-            //let jsonImageData = localStorage.getItem("image-1");
+            let panel1JsonData = localStorage.getItem("panel-1-layerData");
+            let panel2JsonData = localStorage.getItem("panel-2-layerData");
+            let panel3JsonData = localStorage.getItem("panel-3-layerData");
 
-            if (jsonData) {
-                let layerData = JSON.parse(jsonData);
+            if(panel1JsonData)
+            {
+                // Set panel1's layer data from storage
+                let layerData = JSON.parse(panel1JsonData);
+                setPanel1LayerData(layerData);
+
+                // Need to show panel 1 on screen as it is the 1st panel you see in the editor
                 backgroundLayerReference.current.importJSON(layerData.background);
+                shadingLayerRef.current.importJSON(layerData.shade);
                 layer1Reference.current.importJSON(layerData.layer1);
                 layer2Reference.current.importJSON(layerData.layer2);
+                layer3Reference.current.importJSON(layerData.layer3);
+                layer4Reference.current.importJSON(layerData.layer4);
             }
 
-            /*if(jsonImageData)
+            if(panel2JsonData)
             {
-                let imageData = JSON.parse(jsonImageData);
-                console.log(imageData);
-            }*/
-        }
-        catch {
+                let layerData = JSON.parse(panel2JsonData);
+                setPanel2LayerData(layerData);
+            }
 
-            console.log("error");
+            if(panel3JsonData)
+            {
+                let layerData = JSON.parse(panel3JsonData);
+                setPanel3LayerData(layerData);
+            }
+
+        }
+        catch(error) {
+
+            console.log(error);
         }
 
         const context = canvas.getContext("2d");
@@ -170,9 +249,6 @@ const CreateToolsCanvasPaperJS = () => {
             penPath.strokeCap = 'round';
             penPath.strokeJoin = 'round';
             penPath.blendMode = 'normal';
-
-            //console.log(canvasProject.current);
-            //console.log(panelList);
         }
     }
 
@@ -209,9 +285,7 @@ const CreateToolsCanvasPaperJS = () => {
     //mouseDown: starts a preview path
     shadingTool.current.onMouseDown = function () {
         //switches to dedicated shading layer
-        ShadingLayerRef.current?.activate;
-
-
+        shadingLayerRef.current?.activate;
         clipPath = new paper.Path();
         clipPath.strokeColor = new paper.Color('pink');
         clipPath.strokeWidth = shadeSize;
@@ -1023,49 +1097,97 @@ const CreateToolsCanvasPaperJS = () => {
         }
     }
 
-    const findSelectedPanelProject = () => {
-        let panelSelected = document.querySelector("input[name='panels']:checked") as HTMLInputElement;
-
-        // Save the current state of the panel being worked on
-        /*switch(currentPanelIndex)
+    const updateCurrentPanel = () => {
+        if(backgroundLayerReference.current && shadingLayerRef.current && layer1Reference.current && layer2Reference.current &&
+            layer3Reference.current && layer4Reference.current)
         {
-            case 0:
-                //setPanel1Project(canvasProject.current);
-                break;
-            case 1:
-                //setPanel2Project(canvasProject.current);
-                break;
-            case 2:
-                //setPanel3Project(canvasProject.current);
-                break;
-            default:
-                break;
+            // Save the current state of the panel being worked on
+            let currentPanelData = {
+                background: String(backgroundLayerReference.current?.exportJSON({asString: true})),
+                shade: String(shadingLayerRef.current?.exportJSON({asString: true})),
+                layer1: String(layer1Reference.current?.exportJSON({asString: true})),
+                layer2: String(layer2Reference.current?.exportJSON({asString: true})),
+                layer3: String(layer3Reference.current?.exportJSON({asString: true})),
+                layer4: String(layer4Reference.current?.exportJSON({asString: true}))
+            };
+
+            switch(currentPanelIndex)
+            {
+                case 0:
+                    setPanel1LayerData(currentPanelData);
+                    break;
+                case 1:
+                    setPanel2LayerData(currentPanelData);
+                    break;
+                case 2:
+                    setPanel3LayerData(currentPanelData);
+                    break;
+                default:
+                    break;
+            }
         }
+    }
 
-        if (Number(panelSelected?.value) == 0) 
+    const findSelectedPanel = () => {
+        // Makes sure that the layers aren't undefined
+        if(backgroundLayerReference.current && shadingLayerRef.current && layer1Reference.current && layer2Reference.current &&
+            layer3Reference.current && layer4Reference.current)
         {
-            // Switch the canvasProject to the newly selected panel
-            //canvasProject.current = panelList[0];
+            updateCurrentPanel();
 
-            // Update the currentPanelIndex
-            setCurrentPanelIndex(0);
+            let panelSelected = document.querySelector("input[name='panels']:checked") as HTMLInputElement;
+
+            // Clear the layers
+            backgroundLayerReference.current.removeChildren();
+            shadingLayerRef.current.removeChildren();
+            layer1Reference.current.removeChildren();
+            layer2Reference.current.removeChildren();
+            layer3Reference.current.removeChildren();
+            layer4Reference.current.removeChildren();
+
+            // Change the layers to reflect the newly selected panel
+            switch(Number(panelSelected?.value)) 
+            {
+                case 0:
+                    // Switch the canvasProject to the newly selected panel
+                    backgroundLayerReference.current.importJSON(panel1LayerData.background);
+                    shadingLayerRef.current.importJSON(panel1LayerData.shade);
+                    layer1Reference.current.importJSON(panel1LayerData.layer1);
+                    layer2Reference.current.importJSON(panel1LayerData.layer2);
+                    layer3Reference.current.importJSON(panel1LayerData.layer3);
+                    layer4Reference.current.importJSON(panel1LayerData.layer4);
+
+                    // Update the currentPanelIndex
+                    setCurrentPanelIndex(0);
+                    break;
+                case 1:
+                    // Switch the canvasProject to the newly selected panel
+                    backgroundLayerReference.current.importJSON(panel2LayerData.background);
+                    shadingLayerRef.current.importJSON(panel2LayerData.shade);
+                    layer1Reference.current.importJSON(panel2LayerData.layer1);
+                    layer2Reference.current.importJSON(panel2LayerData.layer2);
+                    layer3Reference.current.importJSON(panel2LayerData.layer3);
+                    layer4Reference.current.importJSON(panel2LayerData.layer4);
+
+                    // Update the currentPanelIndex
+                    setCurrentPanelIndex(1);
+                    break;
+                case 2:
+                    // Switch the canvasProject to the newly selected panel
+                    backgroundLayerReference.current.importJSON(panel3LayerData.background);
+                    shadingLayerRef.current.importJSON(panel3LayerData.shade);
+                    layer1Reference.current.importJSON(panel3LayerData.layer1);
+                    layer2Reference.current.importJSON(panel3LayerData.layer2);
+                    layer3Reference.current.importJSON(panel3LayerData.layer3);
+                    layer4Reference.current.importJSON(panel3LayerData.layer4);
+
+                    // Update the currentPanelIndex
+                    setCurrentPanelIndex(2);
+                    break;
+                default:
+                    break;
+            }
         }
-        if (Number(panelSelected?.value) == 1) 
-        {
-            // Switch the canvasProject to the newly selected panel
-            //canvasProject.current = panelList[1];
-
-            // Update the currentPanelIndex
-            setCurrentPanelIndex(1);
-        }
-        if (Number(panelSelected?.value) == 2) 
-        {
-            // Switch the canvasProject to the newly selected panel
-            //canvasProject.current = panelList[2];
-
-            // Update the currentPanelIndex
-            setCurrentPanelIndex(2);
-        }*/
     }
 
     const changeLayer = () => {
@@ -1080,6 +1202,12 @@ const CreateToolsCanvasPaperJS = () => {
                 break;
             case 2:
                 layer2Reference.current?.activate();
+                break;
+            case 3:
+                layer3Reference.current?.activate();
+                break;
+            case 4:
+                layer4Reference.current?.activate();
                 break;
             default:
                 layer1Reference.current?.activate();
@@ -1117,6 +1245,12 @@ const CreateToolsCanvasPaperJS = () => {
         else if (layer2Reference.current && event.target.value === '2') {
             layer2Reference.current.visible = !layer2Reference.current.visible;
         }
+        else if (layer3Reference.current && event.target.value === '3') {
+            layer3Reference.current.visible = !layer3Reference.current.visible;
+        }
+        else if (layer4Reference.current && event.target.value === '4') {
+            layer4Reference.current.visible = !layer4Reference.current.visible;
+        }
     }
 
     const toggleLayerLock = (event: ChangeEvent<HTMLInputElement>) => {
@@ -1128,6 +1262,12 @@ const CreateToolsCanvasPaperJS = () => {
         }
         else if (layer2Reference.current && event.target.value === '2') {
             layer2Reference.current.locked = !layer2Reference.current.locked;
+        }
+        else if (layer3Reference.current && event.target.value === '3') {
+            layer3Reference.current.locked = !layer3Reference.current.locked;
+        }
+        else if (layer4Reference.current && event.target.value === '4') {
+            layer4Reference.current.locked = !layer4Reference.current.locked;
         }
     }
 
@@ -1237,15 +1377,15 @@ const CreateToolsCanvasPaperJS = () => {
     }
 
     // Saves the project's layer image data to localStorage
-    const save = (showAlert: Boolean) => {
-        let layerData = {
-            background: backgroundLayerReference.current?.exportJSON(),
-            layer1: layer1Reference.current?.exportJSON(),
-            layer2: layer2Reference.current?.exportJSON()
-        }
+    const save = (showAlert: Boolean) =>
+    {    
+        // Update the layerData variables with the most current edits
+        updateCurrentPanel();
 
         // Save the layerData object to localStorage in JSON string form
-        localStorage.setItem("panel-1-layerData", JSON.stringify(layerData));
+        localStorage.setItem("panel-1-layerData", JSON.stringify(panel1LayerData));
+        localStorage.setItem("panel-2-layerData", JSON.stringify(panel2LayerData));
+        localStorage.setItem("panel-3-layerData", JSON.stringify(panel3LayerData));
 
         // Alert the user that their progress has been saved
         if (showAlert) {
@@ -1258,93 +1398,145 @@ const CreateToolsCanvasPaperJS = () => {
         // Saves the user's progress for them
         save(false);
 
+        // Create a temp dummy layer to add layer data to publish
+        let publishLayer = new paper.Layer();
+
+        // Export Panel 1
+        publishLayer.importJSON(panel1LayerData.background);
+        publishLayer.importJSON(panel1LayerData.shade);
+        publishLayer.importJSON(panel1LayerData.layer1);
+        publishLayer.importJSON(panel1LayerData.layer2);
+        publishLayer.importJSON(panel1LayerData.layer3);
+        publishLayer.importJSON(panel1LayerData.layer4);
+        localStorage.setItem("image-1", String(publishLayer.exportSVG({ asString: true })));
+        publishLayer.removeChildren();
+
+        // Export Panel 2
+        publishLayer.importJSON(panel2LayerData.background);
+        publishLayer.importJSON(panel2LayerData.shade);
+        publishLayer.importJSON(panel2LayerData.layer1);
+        publishLayer.importJSON(panel2LayerData.layer2);
+        publishLayer.importJSON(panel2LayerData.layer3);
+        publishLayer.importJSON(panel2LayerData.layer4);
+        localStorage.setItem("image-2", String(publishLayer.exportSVG({ asString: true })));
+        publishLayer.removeChildren();
+
+        // Export Panel 3
+        publishLayer.importJSON(panel3LayerData.background);
+        publishLayer.importJSON(panel3LayerData.shade);
+        publishLayer.importJSON(panel3LayerData.layer1);
+        publishLayer.importJSON(panel3LayerData.layer2);
+        publishLayer.importJSON(panel3LayerData.layer3);
+        publishLayer.importJSON(panel3LayerData.layer4);
+        localStorage.setItem("image-3", String(publishLayer.exportSVG({ asString: true })));
+        publishLayer.removeChildren();
+
         // Save the SVG Image to localStorage
-        localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
+        //localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
 
         // Send the user to the publish page
-        router.push(`/comic/create/publish`);
+        router.replace(`/comic/create/publish?id=${parentHookId}`);
     }
 
-    // Return the canvas HTMLElement and its associated functionality
+    const infoDisplay = (visible: boolean) => {
+        const divs = document.querySelectorAll("div")
+        const modal = divs[divs.length-2]
+        if(modal)
+        {
+            if(visible)
+            {
+                modal.style.display = "block";
+            }
+            else
+            {
+                modal.style.display = "none";
+            }
+            
+        }
+        console.log(divs)
+        
+    }
+
+    // Return the canvas HTMLElement and its associated functionality   1
     return (
         <div id={`${styles.createPage}`}>
             <fieldset id={styles.fieldSet}>
                 <div id={styles.toolRadioSelects}>
-                    <div id={styles.penTool} className={styles.toolStyling}>
-                        <label htmlFor="pen" id={styles.penLabel}>
-                            <input type="radio" name="tools" id="pen" title="Pen Tool" value={toolStates.PEN} defaultChecked onChange={findSelectedTool} />
+                    <div id={styles.penTool} className={styles.toolStyling} >
+                        <label htmlFor="pen" className={`${styles.sizeConsistency}`} id={styles.penLabel}>
+                            <input type="radio" name="tools" id="pen" title="Pen Tool" value={toolStates.PEN} className={`${styles.sizeConsistency}`} defaultChecked onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.eraserTool} className={styles.toolStyling}>
-                        <label htmlFor="eraser" id={styles.eraserLabel}>
-                            <input type="radio" name="tools" id="eraser" title="Eraser Tool" value={toolStates.ERASER} onChange={findSelectedTool} />
+                        <label htmlFor="eraser" className={`${styles.sizeConsistency}`} id={styles.eraserLabel}>
+                            <input type="radio" name="tools" id="eraser" title="Eraser Tool" value={toolStates.ERASER} className={`${styles.sizeConsistency}`} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.fillTool} className={styles.toolStyling}>
-                        <label htmlFor="fill" id={styles.fillLabel}>
-                            <input type="radio" name="tools" id="fill" title="Fill Tool" value={toolStates.FILL} onChange={findSelectedTool} />
+                        <label htmlFor="fill" className={`${styles.sizeConsistency}`} id={styles.fillLabel}>
+                            <input type="radio" name="tools" id="fill" title="Fill Tool" value={toolStates.FILL} className={`${styles.sizeConsistency}`} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.shaderTool} className={styles.toolStyling}>
-                        <label htmlFor="shader" id={styles.shaderLabel}>
-                            <input type="radio" name="tools" id="shader" title="Shading/Pattern Tool" value={toolStates.SHADER} onChange={findSelectedTool} />
+                        <label htmlFor="shader" className={`${styles.sizeConsistency}`} id={styles.shaderLabel}>
+                            <input type="radio" name="tools" id="shader" title="Shading/Pattern Tool" value={toolStates.SHADER} className={`${styles.sizeConsistency}`} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.shapeTool} className={styles.toolStyling}>
-                        <label htmlFor="shape" id={styles.shapeLabel}>
-                            <input type="radio" name="tools" id="shape" title="Shape Tool" value={toolStates.SHAPE} onChange={findSelectedTool} />
+                        <label htmlFor="shape" className={`${styles.sizeConsistency}`} id={styles.shapeLabel}>
+                            <input type="radio" name="tools" id="shape" title="Shape Tool" value={toolStates.SHAPE} className={`${styles.sizeConsistency}`} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.textTool} className={styles.toolStyling}>
-                        <label htmlFor="text" id={styles.textLabel}>
-                            <input type="radio" name="tools" id="text" title="Text Tool" value={toolStates.TEXT} onChange={findSelectedTool} />
+                        <label htmlFor="text" className={`${styles.sizeConsistency}`} id={styles.textLabel}>
+                            <input type="radio" name="tools" id="text" title="Text Tool" value={toolStates.TEXT} className={`${styles.sizeConsistency}`} onChange={findSelectedTool} />
                             {/* (HALF FUNCTIONAL) */}
                         </label>
                     </div>
 
                     <div id={styles.stickerTool} className={styles.toolStyling}>
-                        <label htmlFor="sticker" id={styles.stickerLabel}>
-                            <input type="radio" name="tools" id="sticker" title="Text Tool" value={toolStates.STICKER} onChange={findSelectedTool} />
+                        <label htmlFor="sticker" className={`${styles.sizeConsistency}`} id={styles.stickerLabel}>
+                            <input type="radio" name="tools" id="sticker" title="Sticker Tool" value={toolStates.STICKER} className={`${styles.sizeConsistency}`} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.selectTool} className={styles.toolStyling}>
-                        <label htmlFor="select" id={styles.selectLabel}>
-                            <input type="radio" name="tools" id="select" title="Selection Tool" value={toolStates.SELECT} onChange={findSelectedTool} />
+                        <label htmlFor="select" className={`${styles.sizeConsistency}`} id={styles.selectLabel}>
+                            <input type="radio" name="tools" id="select" title="Selection Tool" value={toolStates.SELECT} className={`${styles.sizeConsistency}`} onChange={findSelectedTool} />
                         </label>
                     </div>
 
                     <div id={styles.transformTool} className={styles.toolStyling}>
-                        <label htmlFor="transform" id={styles.transformLabel}>
-                            <input type="radio" name="tools" id="transform" title="Transform Tool" value={toolStates.TRANSFORM} onChange={findSelectedTool} />
+                        <label htmlFor="transform" className={`${styles.sizeConsistency}`} id={styles.transformLabel}>
+                            <input type="radio" name="tools" id="transform" title="Transform Tool" value={toolStates.TRANSFORM} className={`${styles.sizeConsistency}`} onChange={findSelectedTool} />
                             {/* (SEMI FUNCTIONAL) */}
                         </label>
                     </div>
                 </div>
 
                 <div id={styles.functionButtons}>
-                    <label htmlFor="undoButton" id={styles.undoLabel}>
-                        <button className="btn" id="undoButton" onClick={undo} title="Undo"></button>
+                    <label htmlFor="undoButton" className={`${styles.sizeConsistency}`} id={styles.undoLabel}>
+                        <button className={`btn ${styles.sizeConsistency}`} id="undoButton" onClick={undo} title="Undo"></button>
                     </label>
-                    <label htmlFor="redoButton" id={styles.redoLabel}>
-                        <button className="btn" id="redoButton" onClick={redo} title="Redo"></button>
+                    <label htmlFor="redoButton" className={`${styles.sizeConsistency}`} id={styles.redoLabel}>
+                        <button className={`btn ${styles.sizeConsistency}`} id="redoButton" onClick={redo} title="Redo"></button>
                     </label>
 
-                    <label htmlFor="clearButton" id={styles.clearLabel}>
-                        <button className="btn" id="clearButton" title="Clear" onClick={clearLayer}></button>
+                    <label htmlFor="clearButton" className={`${styles.sizeConsistency}`} id={styles.clearLabel}>
+                        <button className={`btn ${styles.sizeConsistency}`} id="clearButton" title="Clear" onClick={clearLayer}></button>
                     </label>
                 </div>
 
-                <div id="backgroundUploadForm" className={styles.backgroundUploadForm}>
+                <div id="backgroundUploadForm" className={`${styles.backgroundUploadForm} ${styles.sizeConsistency}`}>
                     <form id={styles.backgroundUpload}>
-                        <label htmlFor="imageDropbox" className={`form-label ${styles.formLabel}`}>{/* Upload a Background (Recommended Size: 1200x800p) */}
+                        <label htmlFor="imageDropbox" className={`form-label ${styles.formLabel} ${styles.sizeConsistency}`}>{/* Upload a Background (Recommended Size: 1200x800p) */}
                             <input
-                                className="form-control"
+                                 className={`form-control ${styles.sizeConsistency}`}
                                 id="imageDropbox"
                                 type="file"
                                 accept="image/*"
@@ -1358,123 +1550,166 @@ const CreateToolsCanvasPaperJS = () => {
                 </div>
             </fieldset>
 
-
             <canvas id={`${styles.canvas}`} ref={canvasReference} className={`${styles.canvas}`} />
 
-
-            <div id={`${styles.toolOptions}`}>
-                <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor} />
-                <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize} />
-                <FillOptions enabled={fillOptionsEnabled} changeFillColor={setFillColor} />
-                <ShapeOptions enabled={shapeOptionsEnabled} shapeBorderSize={shapeBorderWidth} changeShapeBorderSize={setShapeBorderWidth}
-                    changeShapeBorderColor={setShapeBorderColor} changeShapeFillColor={setShapeFillColor} changeShape={setShapeSelected}
-                    changeDashedBorder={setDashedBorder} />
-                <TextOptions enabled={textOptionsEnabled} changeTextContent={setTextContent} changeTextFont={setTextFont} changeTextSize={setTextSize}
-                    changeFontWeight={setTextFontWeight} changeTextAlignment={setTextAlign} changeTextColor={setTextColor} />
-                <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
-                <ShaderOptions enabled={shadeOptionsEnabled} shaderSize={shadeSize} changeShaderSize={setShadeSize} />
-            </div>
-
-            <div id={styles.layerOptions}>
-                <div id="settings" className={styles.layerSettings}>
-                    <div id="mergeSetting" className={styles.layerStyling}>
-                        <label htmlFor="merge" id={styles.mergeLabel}>
-                            <input type="button" id="merge" title="Merge Layer"/>
-                        </label>
-                    </div>
-                    <div id="layerDownSetting" className={styles.layerStyling}>
-                        <label htmlFor="layerdown" id={styles.layerDownLabel}>
-                            <button type="button" id="layerdown" title="Push Layer Down"/>
-                        </label>
-                    </div>
-                    <div id="layerUpSetting" className={styles.layerStyling}>
-                        <label htmlFor="layerup" id={styles.layerUpLabel}>
-                            <input type="button" id="layerup" title="Bring Layer Up"/>
-                        </label>
-                    </div>
+            <div id={styles.pullOut}>
+                <div id={`${styles.toolOptions}`}>
+                    <PenOptions enabled={penOptionsEnabled} penSize={penSize} changePenSize={setPenSize} changePenColor={setPenColor} />
+                    <EraserOptions enabled={eraserOptionsEnabled} eraserSize={eraserSize} changeEraserSize={setEraserSize} />
+                    <FillOptions enabled={fillOptionsEnabled} changeFillColor={setFillColor} />
+                    <ShapeOptions enabled={shapeOptionsEnabled} shapeBorderSize={shapeBorderWidth} changeShapeBorderSize={setShapeBorderWidth}
+                        changeShapeBorderColor={setShapeBorderColor} changeShapeFillColor={setShapeFillColor} changeShape={setShapeSelected}
+                        changeDashedBorder={setDashedBorder} />
+                    <TextOptions enabled={textOptionsEnabled} changeTextContent={setTextContent} changeTextFont={setTextFont} changeTextSize={setTextSize}
+                        changeFontWeight={setTextFontWeight} changeTextAlignment={setTextAlign} changeTextColor={setTextColor} />
+                    <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
+                    <ShaderOptions enabled={shadeOptionsEnabled} shaderSize={shadeSize} changeShaderSize={setShadeSize} />
                 </div>
-                <div id={styles.layersList}>
-                    <div id="layer2" className={styles.layer}>
-                        <div id="layer2Visibility" className={styles.visibleStyling}>
-                            <label htmlFor="layer2Toggle" className={styles.visibleLabel}>
-                                <input type="checkbox" id="layer2Toggle" value="2" title="Toggle Layer Visibility" onChange={toggleLayerVisibility} defaultChecked></input>
+
+                <div id={styles.layerOptions}>
+                    <div id="settings" className={styles.layerSettings}>
+                        <div id="mergeSetting" className={styles.layerStyling}>
+                            <label htmlFor="merge" id={styles.mergeLabel} className={`${styles.sizeConsistency}`}>
+                                <input type="button" className={`${styles.sizeConsistency}`} title="Merge Down" id="merge" />
                             </label>
                         </div>
-                        <div id="layer2Lock" className={styles.lockStyling}>
-                            <label htmlFor="layer2LockToggle" className={styles.lockLabel}>
-                                <input type="checkbox" id="layer2LockToggle" value="2" title="Toggle Layer Lock" onChange={toggleLayerLock}></input>
+                        <div id="layerDownSetting" className={styles.layerStyling}>
+                            <label htmlFor="layerdown" id={styles.layerDownLabel} className={`${styles.sizeConsistency}`}>
+                                <button type="button" className={`${styles.sizeConsistency}`} title="Move Layer Down" id="layerdown" />
                             </label>
                         </div>
-                        <div id="layer2Select" className={styles.layerSelect}>
-                            <input type="radio" name="layers" id="layer2" className={styles.layerSelectRadio} value='2' onChange={changeLayer} />
-                            <label htmlFor="layer2">Layer 2</label><br />
+                        <div id="layerUpSetting" className={styles.layerStyling}>
+                            <label htmlFor="layerup" id={styles.layerUpLabel} className={`${styles.sizeConsistency}`}>
+                                <input type="button" className={`${styles.sizeConsistency}`} title="TMove Layer Up" id="layerup" />
+                            </label>
                         </div>
                     </div>
+                    <div id={styles.layersList}>
+                        <div id="layer4" className={styles.layer}>
+                            <div id="layer4Visibility" className={styles.visibleStyling}>
+                                <label htmlFor="layer4Toggle" className={` ${styles.visibleLabel} ${styles.sizeConsistency}`}>
+                                    <input type="checkbox" className={`${styles.sizeConsistency}`} id="layer4Toggle" value="4" title="Toggle Layer Visibility" onChange={toggleLayerVisibility} defaultChecked></input>
+                                </label>
+                            </div>
+                            <div id="layer4Lock" className={styles.lockStyling}>
+                                <label htmlFor="layer4LockToggle"  className={` ${styles.lockLabel} ${styles.sizeConsistency}`}>
+                                    <input type="checkbox" className={`${styles.sizeConsistency}`} id="layer4LockToggle" value="4" title="Toggle Layer Lock" onChange={toggleLayerLock}></input>
+                                </label>
+                            </div>
+                            <div id="layer4Select" className={styles.layerSelect}>
+                                <input type="radio" name="layers" id="layer4" className={styles.layerSelectRadio} value='4' onChange={changeLayer} />
+                                <label htmlFor="layer4">Layer 4</label><br />
+                            </div>
+                        </div>
 
-                    <div id="layer1" className={styles.layer}>
-                        <div id="layer2Visibility" className={styles.visibleStyling}>
-                            <label htmlFor="layer1Toggle" className={styles.visibleLabel}>
-                                <input type="checkbox" id="layer1Toggle" value="1" title="Toggle Layer Visibility" onChange={toggleLayerVisibility} defaultChecked></input>
-                            </label>
+                        <div id="layer3" className={styles.layer}>
+                            <div id="layer3Visibility" className={styles.visibleStyling}>
+                                <label htmlFor="layer3Toggle" className={` ${styles.visibleLabel} ${styles.sizeConsistency}`}>
+                                    <input type="checkbox" className={`${styles.sizeConsistency}`} id="layer3Toggle" value="3" title="Toggle Layer Visibility" onChange={toggleLayerVisibility} defaultChecked></input>
+                                </label>
+                            </div>
+                            <div id="layer3Lock" className={styles.lockStyling}>
+                                <label htmlFor="layer3LockToggle"  className={` ${styles.lockLabel} ${styles.sizeConsistency}`}>
+                                    <input type="checkbox" className={`${styles.sizeConsistency}`} id="layer3LockToggle" value="3" title="Toggle Layer Lock" onChange={toggleLayerLock}></input>
+                                </label>
+                            </div>
+                            <div id="layer3Select" className={styles.layerSelect}>
+                                <input type="radio" name="layers" id="layer3" className={styles.layerSelectRadio} value='3' onChange={changeLayer} />
+                                <label htmlFor="layer3">Layer 3</label><br />
+                            </div>
                         </div>
-                        <div id="layer1Lock" className={styles.lockStyling}>
-                            <label htmlFor="layer1LockToggle" className={styles.lockLabel}>
-                                <input type="checkbox" id="layer1LockToggle" value="2" title="Toggle Layer Lock" onChange={toggleLayerLock}></input>
-                            </label>
+                        
+                        <div id="layer2" className={styles.layer}>
+                            <div id="layer2Visibility" className={styles.visibleStyling}>
+                                <label htmlFor="layer2Toggle" className={` ${styles.visibleLabel} ${styles.sizeConsistency}`}>
+                                    <input type="checkbox" className={`${styles.sizeConsistency}`} id="layer2Toggle" value="2" title="Toggle Layer Visibility" onChange={toggleLayerVisibility} defaultChecked></input>
+                                </label>
+                            </div>
+                            <div id="layer2Lock" className={styles.lockStyling}>
+                                <label htmlFor="layer2LockToggle"  className={` ${styles.lockLabel} ${styles.sizeConsistency}`}>
+                                    <input type="checkbox" className={`${styles.sizeConsistency}`} id="layer2LockToggle" value="2" title="Toggle Layer Lock" onChange={toggleLayerLock}></input>
+                                </label>
+                            </div>
+                            <div id="layer2Select" className={styles.layerSelect}>
+                                <input type="radio" name="layers" id="layer2" className={styles.layerSelectRadio} value='2' onChange={changeLayer} />
+                                <label htmlFor="layer2">Layer 2</label><br />
+                            </div>
                         </div>
-                        <div id="layer1Select" className={styles.layerSelect}>
-                            <input type="radio" name="layers" id="layer1" className={styles.layerSelectRadio} value='1' defaultChecked onChange={changeLayer} />
-                            <label htmlFor="layer1">Layer 1</label><br />
+
+                        <div id="layer1" className={styles.layer}>
+                            <div id="layer2Visibility" className={styles.visibleStyling}>
+                                <label htmlFor="layer1Toggle" className={` ${styles.visibleLabel} ${styles.sizeConsistency}`}>
+                                    <input type="checkbox" className={`${styles.sizeConsistency}`} id="layer1Toggle" value="1" title="Toggle Layer Visibility" onChange={toggleLayerVisibility} defaultChecked></input>
+                                </label>
+                            </div>
+                            <div id="layer1Lock" className={styles.lockStyling}>
+                                <label htmlFor="layer1LockToggle"  className={` ${styles.lockLabel} ${styles.sizeConsistency}`}>
+                                    <input type="checkbox" className={`${styles.sizeConsistency}`} id="layer1LockToggle" value="2" title="Toggle Layer Lock" onChange={toggleLayerLock}></input>
+                                </label>
+                            </div>
+                            <div id="layer1Select" className={styles.layerSelect}>
+                                <input type="radio" name="layers" id="layer1" className={styles.layerSelectRadio} value='1' defaultChecked onChange={changeLayer} />
+                                <label htmlFor="layer1">Layer 1</label><br />
+                            </div>
+                        </div>
+
+                        <div id="backgroundLayer" className={styles.layer}>
+                            <div id="backgroundLayerVisibility" className={styles.visibleStyling}>
+                                <label htmlFor="backgroundToggle" className={` ${styles.visibleLabel} ${styles.sizeConsistency}`}>
+                                    <input type="checkbox" className={`${styles.sizeConsistency}`} id="backgroundToggle" value="0" title="Toggle Layer Visibility" onChange={toggleLayerVisibility} defaultChecked></input>
+                                </label>
+                            </div>
+                            <div id="backgroundLayerLock" className={styles.lockStyling}>
+                                <label htmlFor="backgroundLayerLockToggle" className={` ${styles.lockLabel} ${styles.sizeConsistency}`}>
+                                    <input type="checkbox" className={`${styles.sizeConsistency}`} id="backgroundLayerLockToggle" value="0" title="Toggle Layer Lock" onChange={toggleLayerLock}></input>
+                                </label>
+                            </div>
+                            <div id="backgroundLayerSelect" className={styles.layerSelect}>
+                                <input type="radio" name="layers" id="background" className={styles.layerSelectRadio} value='0' onChange={changeLayer} />
+                                <label htmlFor="background">Background</label><br/>
+                            </div>
                         </div>
                     </div>
-
-
-                    <div id="backgroundLayer" className={styles.layer}>
-                        <div id="backgroundLayerVisibility" className={styles.visibleStyling}>
-                            <label htmlFor="backgroundToggle" className={styles.visibleLabel}>
-                                <input type="checkbox" id="backgroundToggle" value="0" title="Toggle Layer Visibility" onChange={toggleLayerVisibility} defaultChecked></input>
-                            </label>
-                        </div>
-                        <div id="backgroundLayerLock" className={styles.lockStyling}>
-                            <label htmlFor="backgroundLayerLockToggle" className={styles.lockLabel}>
-                                <input type="checkbox" id="backgroundLayerLockToggle" value="0" title="Toggle Layer Lock" onChange={toggleLayerLock}></input>
-                            </label>
-                        </div>
-                        <div id="backgroundLayerSelect" className={styles.layerSelect}>
-                            <input type="radio" name="layers" id="background" className={styles.layerSelectRadio} value='0' onChange={changeLayer} />
-                            <label htmlFor="background">Background</label><br />
-                        </div>
-                    </div>
-                </div>
             </div>
-
-
             <div id="panelSelect" className={styles.panelSelect}>
-                <div id="panel1" className={styles.panelStyling}>
-                    <label htmlFor="panel1Select" className={styles.panelLabel}>
-                        <input type="radio" name="panels" id="panel1Select" value={0} defaultChecked />
-                    </label>
-                </div>
+                    <div id="panel1" className={styles.panelStyling}>
+                        <label htmlFor="panel1Select" className={styles.panelLabel}>
+                            <input type="radio" name="panels" className={`${styles.sizeConsistency}`} id="panel1Select" value={0} defaultChecked onChange={findSelectedPanel}/>
+                        </label>
+                    </div>
 
-                <div id="panel2" className={styles.panelStyling}>
-                    <label htmlFor="panel2Select" className={styles.panelLabel}>
-                        <input type="radio" name="panels" id="panel2Select" value={1} />
-                    </label>
-                </div>
+                    <div id="panel2" className={styles.panelStyling}>
+                        <label htmlFor="panel2Select" className={styles.panelLabel}>
+                            <input type="radio" name="panels" className={`${styles.sizeConsistency}`} id="panel2Select" value={1} onChange={findSelectedPanel}/>
+                        </label>
+                    </div>
 
-                <div id="panel3" className={styles.panelStyling}>
-                    <label htmlFor="panel3Select" className={styles.panelLabel}>
-                        <input type="radio" name="panels" id="panel3Select" value={2} />
-                    </label>
+                    <div id="panel3" className={styles.panelStyling}>
+                        <label htmlFor="panel3Select" className={styles.panelLabel}>
+                            <input type="radio" name="panels" className={`${styles.sizeConsistency}`} id="panel3Select" value={2} onChange={findSelectedPanel}/>
+                        </label>
+                    </div>
                 </div>
             </div>
 
-            <div id={styles.savePublish}>
-                <button className={`btn ${styles.saveButton}`} id="saveButton" onClick={() => save(true)}>Save</button>
-                <button className={`btn ${styles.publishButton}`} id="publishButton" onClick={toPublish}>Publish</button>
+            <div id={styles.miniNavbar}>
+                <button className={`btn ${styles.backButton}`} id="backButton" onClick={(e) => {e.preventDefault();history.go(-1);}}>Back</button>
+                <div id={styles.savePublish}>
+                    <button className={`btn ${styles.saveButton}`} id="saveButton" onClick={() => save(true)}>Save</button>
+                    <button className={`btn ${styles.publishButton}`} id="publishButton" onClick={toPublish}>Publish</button>
+                </div>
             </div>
+
+            
+            <InfoBtn toggle={infoDisplay}></InfoBtn>
+            <InfoBox instructions="This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
+                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
+                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
+                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
+                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
+                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
+                        This is information about the drawing page and what you are able to do with it." toggle={infoDisplay}></InfoBox>
         </div>
-
     )
 }
 

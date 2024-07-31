@@ -7,6 +7,8 @@ import ComicPanels from "@/components/ComicPanels";
 import * as apiCalls from "../api/apiCalls"
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Panel, PanelSet, Hook } from "./interfaces";
+import InfoBox from './info/InfoBox';
+import InfoBtn from './info/InfoBtn';
 //import icons and background
 const backIcon = "/images/back-button-pressed.png"
 const toggleLayoutHorizIcon = "/images/panel-view-button-horizontal-pressed.png"
@@ -35,13 +37,11 @@ const ReadPage = ({ id }: Props) => {
         async function fetchData() {
             setIsLoading(true);
             const panelSetResponse = await apiCalls.getPanelSetByID(id) as PanelSet;
-            // return;
             if (!updateError(panelSetResponse)) {
-                const imageUrlsResponse = await apiCalls.getAllImageUrlsByPanelSetId(id);
+                const imageUrlsResponse = await apiCalls.getAllImageUrlsByPanelSetId(panelSetResponse.id);
                 const hookResponses = await apiCalls.getHooksFromPanelSetById(panelSetResponse.id) as Hook[];
 
                 if (!updateError(imageUrlsResponse) && !updateError(hookResponses)) {
-
                     // update panels array with image srcs and hooks
                     const panels = (panelSetResponse.panels).map((panel, i) => ({
                         id: panel.id,
@@ -56,12 +56,16 @@ const ReadPage = ({ id }: Props) => {
                         ...panelSetResponse,
                         panels
                     });
+                    // console.log(panelSetResponse)
 
-                    if (panelSetResponse?.previous_hook) {
-                        const parentPanelResponse = await apiCalls.getPanelByID(Number(panelSetResponse.previous_hook.current_panel_id));
+                    if (panelSetResponse.hook === null) {
+                        setParentPanelSet(undefined);
+                    }
+                    else {
+                        const parentPanelResponse = await apiCalls.getPanelByID(Number(panelSetResponse?.hook?.current_panel_id));
                         if (!updateError(parentPanelResponse)) {
                             const previousPanelSetResponse = await apiCalls.getPanelSetByID(Number(parentPanelResponse.panel_set_id));
-                            setParentPanelSet(previousPanelSetResponse);
+                            setParentPanelSet(previousPanelSetResponse)
                         }
                     }
                 }
@@ -85,13 +89,43 @@ const ReadPage = ({ id }: Props) => {
     if (error !== "") {
         return <div>{error}</div>;
     }
+
+    const infoDisplay = (visible: boolean) => {
+        const divs = document.querySelectorAll("div")
+        const modal = divs[divs.length-2]
+        if(modal)
+        {
+            if(visible)
+            {
+                modal.style.display = "block";
+            }
+            else
+            {
+                modal.style.display = "none";
+            }
+            
+        }
+        console.log(divs)
+        
+    }
+
     return (<>
         <ComicPanels setting={layout} hook_state={hooks} panels={panels} currentId={id} router={router} />
         <div className={`${styles.controlBar}`} >
-            <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet !== undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}></img></button>
+            <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet != undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}></img></button>
             <IconToggleButton setting={hooks} setSetting={setHooks} state_1="hidden" state_2="visible" buttonId="hooksToggle" source_1={toggleHooksOff} source_2={toggleHooksOn} />
             <IconToggleButton setting={layout} setSetting={setLayout} state_1={`${styles.rowPanels}`} state_2={`${styles.columnPanels}`} buttonId="layoutToggle" source_1={toggleLayoutHorizIcon} source_2={toggleLayoutVertIcon} />
         </div>
+        <InfoBtn toggle={infoDisplay}></InfoBtn>
+        <InfoBox instructions={`You can read though different story lines throught the panels. \n
+        Instructions: \n
+         -Use the back button to take you back to the parent pannel
+         -Use the lightbulb to toggle the hooks on and off
+         \t-Red hooks: These do not currently have a comic panel connected to them asnd will take you to the create page
+         \t-Blue hooks: These have a comic panel connected to them and you can click on them to explore that branch of the story
+         -Use the + looking symbol to toggle between horizontal and vertical view
+         \t-This will only work for larger screen sizes 
+         `}toggle={infoDisplay}></InfoBox>
     </>);
 }
 
