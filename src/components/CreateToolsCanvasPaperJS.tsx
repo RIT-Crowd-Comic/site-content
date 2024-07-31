@@ -105,7 +105,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             }
 
             // If not signed in, redirect from user locked pages
-            window.location.href = '/comic';
+            window.location.href = '/sign-in';
         };
 
         checkUserSession();
