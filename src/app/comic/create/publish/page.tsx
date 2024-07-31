@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Navbar from '../../../../components/NavBar';
 import BranchPage from '../../../../components/publish/BranchPage';
 import styles from '@/styles/publish.module.css';
+import Link from 'next/link';
 
 import backIcon from '../../../../../public/images/back-button-pressed.png';
 
@@ -17,11 +18,11 @@ const Publish = ({
     const {id} = searchParams;
     return (<>
         <Navbar />
-        <a  href={`/comic/create?id=${id}`}>
+        <Link  href={`/comic/create?id=${id}`} replace={true}>
             <button id={`${styles.backButton}`}>
                 <Image src={backIcon} alt="" className={`${styles.buttonIcon}`} width="60" height="60"></Image>
             </button>
-        </a>
+        </Link>
         <BranchPage id = {Number(id)}/>
         <h1></h1>
     </>);

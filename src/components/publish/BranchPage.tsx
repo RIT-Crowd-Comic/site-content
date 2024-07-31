@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { CreateHook, emptyPanelSet, CreatePanelSet } from "../interfaces";
 import Panel from './Panel';
 import BranchPageControls from './BranchPageControls';
+import InfoBox from '../info/InfoBox';
+import InfoBtn from '../info/InfoBtn';
 import { publishHandler } from '../../api/apiCalls';
 import { useRouter } from 'next/navigation';
 import { getHookByID } from '../../api/apiCalls';
@@ -47,6 +49,12 @@ const BranchPage = ({ id }: Props) => {
 
     const loadImageAndConvertToURL = (svgString: string | null) => {
         if (svgString) {
+            
+            if(!svgString.includes('<svg')){
+                svgString = svgString.replace('<g', '<svg');
+                svgString = svgString.replace('/g>', '/svg>');
+            }
+          
             // Convert the SVG string to a data URL
             // Encode the SVG string in Base64
             const encoded = btoa(unescape(encodeURIComponent(svgString)));
@@ -70,7 +78,6 @@ const BranchPage = ({ id }: Props) => {
         getHookByID(id).then((hook) => {
             if ((hook instanceof Error)) return router.push(`/comic/browse`);
 
-            console.log(id);
             hook = hook as CreateHook;
 
             if (!hook.next_panel_set_id) {
@@ -84,8 +91,8 @@ const BranchPage = ({ id }: Props) => {
         // retrieve comic images from create page using local storage
         const storedImageLinks = [
             loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[0],
-            loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[1],
-            loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[2]
+            loadImageAndConvertToURL(localStorage.getItem('image-2')) || imageLinks[1],
+            loadImageAndConvertToURL(localStorage.getItem('image-3')) || imageLinks[2]
         ];
 
         setImageLinks(storedImageLinks);
@@ -154,6 +161,24 @@ const BranchPage = ({ id }: Props) => {
         })
         setSelectedHook(undefined);
         setAddingHook(false);
+    }
+
+    const infoDisplay = (visible: boolean) => {
+        const divs = document.querySelectorAll("div")
+        const modal = divs[divs.length-2]
+        if(modal)
+        {
+            if(visible)
+            {
+                modal.style.display = "block";
+            }
+            else
+            {
+                modal.style.display = "none";
+            }
+            
+        }
+        
     }
 
     return (<>
@@ -235,6 +260,13 @@ const BranchPage = ({ id }: Props) => {
                     <button onClick={pushToLocalStorage} id={`${styles.publishBtn}`}>Publish</button>
                 </div> */}
             </div>
+            <InfoBtn toggle={infoDisplay}></InfoBtn>
+            <InfoBox instructions={`Instructions:\n
+            -click on the add hook button to start drawing a hook on the comic
+            -once done, click on accept hook to keep or remove to delete the hook
+            - to remove a hook: click on the hook you wish to remove then click on remove hook to delete it\n 
+            *YOU MUSH HAVE 3 HOOKS IN ORDER TO PUBLISH YOUR COMIC*
+            `} toggle={infoDisplay}></InfoBox>
         </main>
     </>);
 }

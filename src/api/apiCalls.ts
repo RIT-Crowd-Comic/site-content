@@ -1,6 +1,10 @@
-const baseUrl = 'http://localhost:4000';
 import { CreatePanelSet } from "../components/interfaces";
 import { getSessionCookie } from "@/app/login/loginUtils";
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const baseUrl = process.env.NODE_ENV === 'production' ? 'https://crowd-comic-back-end-6417ec5ea59c.herokuapp.com' : 'http://localhost:4000';
 
 const getAPICall = async (url: string) => {
     return await fetch(`${baseUrl}${url}`, {
@@ -164,7 +168,7 @@ const getPanelByIndex = async (panelSetID: number, index: number) => {
  * @param id the id of the user
  * @returns the API response which is either a user under a specific user id or an Error message. A correct response will have the following properties:
  *  email: (email of user)
- *  display_name: (dispaly name of user)
+ *  display_name: (display name of user)
  *  id: (id of user)
  */
 const getUser = async (id: string) => {
@@ -330,11 +334,10 @@ const getAllImageUrlsByPanelSetId = async (id: number) => {
 }
 
 
-const changeDisplayName = async (email: string, password: string, display: string, newDisplayName: string) => {
+const changeDisplayName = async (email: string, password: string, newDisplayName: string) => {
     const response = await postAPICall(`/changeDisplayName`, {
         email: email,
         password: password,
-        display: display,
         newDisplayName: newDisplayName
     })
 
