@@ -25,7 +25,8 @@ const NavBar = () => {
 
             // If not signed in, redirect from user locked pages
             const url = window.location.href;
-            if (url.includes('/create') || url.includes('/publish') || url.includes('/profile')) window.location.href = '/';
+            if (url.includes('/publish')) window.location.href = '/comic';
+            else if(url.includes('/profile')) window.location.href = '/'
         };
 
         checkUserSession();
