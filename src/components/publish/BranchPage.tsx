@@ -49,6 +49,12 @@ const BranchPage = ({ id }: Props) => {
 
     const loadImageAndConvertToURL = (svgString: string | null) => {
         if (svgString) {
+            
+            if(!svgString.includes('<svg')){
+                svgString = svgString.replace('<g', '<svg');
+                svgString = svgString.replace('/g>', '/svg>');
+            }
+          
             // Convert the SVG string to a data URL
             // Encode the SVG string in Base64
             const encoded = btoa(unescape(encodeURIComponent(svgString)));
@@ -72,7 +78,6 @@ const BranchPage = ({ id }: Props) => {
         getHookByID(id).then((hook) => {
             if ((hook instanceof Error)) return router.push(`/comic/browse`);
 
-            console.log(id);
             hook = hook as CreateHook;
 
             if (!hook.next_panel_set_id) {
@@ -86,8 +91,8 @@ const BranchPage = ({ id }: Props) => {
         // retrieve comic images from create page using local storage
         const storedImageLinks = [
             loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[0],
-            loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[1],
-            loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[2]
+            loadImageAndConvertToURL(localStorage.getItem('image-2')) || imageLinks[1],
+            loadImageAndConvertToURL(localStorage.getItem('image-3')) || imageLinks[2]
         ];
 
         setImageLinks(storedImageLinks);

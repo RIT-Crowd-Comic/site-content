@@ -39,19 +39,41 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
 
     // All 3 Panel Canvases
     // Used to save the state of each panel whenever data needs to be saved (when the save button is pressed or when moving to the Publish page)
-    //const [panel1Project, setPanel1Project] = useState<paper.Layer[]>([]);
-    //const [panel2Project, setPanel2Project] = useState<paper.Layer[]>([]);
-    //const [panel3Project, setPanel3Project] = useState<paper.Layer[]>([]);
+    const [panel1LayerData, setPanel1LayerData] = useState({
+        background: "",
+        shade: "",
+        layer1: "",
+        layer2: "",
+        layer3: "",
+        layer4: ""
+    });
+    const [panel2LayerData, setPanel2LayerData] = useState({
+        background: "",
+        shade: "",
+        layer1: "",
+        layer2: "",
+        layer3: "",
+        layer4: ""
+    });
+    const [panel3LayerData, setPanel3LayerData] = useState({
+        background: "",
+        shade: "",
+        layer1: "",
+        layer2: "",
+        layer3: "",
+        layer4: ""
+    });
 
-    // Used to track which panel is currently being edited so that its state can be saved before switching 
-    //const panelList = [panel1Project, panel2Project, panel3Project];
-    //const [currentPanelIndex, setCurrentPanelIndex] = useState<number>(0);
+    // Saves the index of the current canvas being edited
+    const [currentPanelIndex, setCurrentPanelIndex] = useState(0);
 
     // References to the PaperJS Canvas Layers
     let backgroundLayerReference = useRef<paper.Layer>();
-    let ShadingLayerRef = useRef<paper.Layer>();
+    let shadingLayerRef = useRef<paper.Layer>();
     let layer1Reference = useRef<paper.Layer>();
     let layer2Reference = useRef<paper.Layer>();
+    let layer3Reference = useRef<paper.Layer>();
+    let layer4Reference = useRef<paper.Layer>();
 
     // Router for sending the user to other pages (used in toPublish())
     const router = useRouter();
@@ -100,32 +122,64 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         // Set the layer references
         // Set the layer references as well as the default active layer
         backgroundLayerReference.current = canvasProject.current.activeLayer;
-        ShadingLayerRef.current = new paper.Layer();
+        shadingLayerRef.current = new paper.Layer();
         layer1Reference.current = new paper.Layer();
         layer2Reference.current = new paper.Layer();
+        layer3Reference.current = new paper.Layer();
+        layer4Reference.current = new paper.Layer();
         layer1Reference.current.activate();
+
+        // Set up the panelLayerDatas with blank layer data
+        let defaultLayerData = {
+            background: String(backgroundLayerReference.current.exportJSON({asString: true})),
+            shade: String(backgroundLayerReference.current.exportJSON({asString: true})),
+            layer1: String(backgroundLayerReference.current.exportJSON({asString: true})),
+            layer2: String(backgroundLayerReference.current.exportJSON({asString: true})),
+            layer3: String(backgroundLayerReference.current.exportJSON({asString: true})),
+            layer4: String(backgroundLayerReference.current.exportJSON({asString: true}))
+        };
+
+        setPanel1LayerData(defaultLayerData);
+        setPanel2LayerData(defaultLayerData);
+        setPanel3LayerData(defaultLayerData);
 
         // If previous layer data exists, set the layers to that, otherwise make new layers
         try {
-            let jsonData = localStorage.getItem("panel-1-layerData");
-            //let jsonImageData = localStorage.getItem("image-1");
+            let panel1JsonData = localStorage.getItem("panel-1-layerData");
+            let panel2JsonData = localStorage.getItem("panel-2-layerData");
+            let panel3JsonData = localStorage.getItem("panel-3-layerData");
 
-            if (jsonData) {
-                let layerData = JSON.parse(jsonData);
+            if(panel1JsonData)
+            {
+                // Set panel1's layer data from storage
+                let layerData = JSON.parse(panel1JsonData);
+                setPanel1LayerData(layerData);
+
+                // Need to show panel 1 on screen as it is the 1st panel you see in the editor
                 backgroundLayerReference.current.importJSON(layerData.background);
+                shadingLayerRef.current.importJSON(layerData.shade);
                 layer1Reference.current.importJSON(layerData.layer1);
                 layer2Reference.current.importJSON(layerData.layer2);
+                layer3Reference.current.importJSON(layerData.layer3);
+                layer4Reference.current.importJSON(layerData.layer4);
             }
 
-            /*if(jsonImageData)
+            if(panel2JsonData)
             {
-                let imageData = JSON.parse(jsonImageData);
-                console.log(imageData);
-            }*/
-        }
-        catch {
+                let layerData = JSON.parse(panel2JsonData);
+                setPanel2LayerData(layerData);
+            }
 
-            console.log("error");
+            if(panel3JsonData)
+            {
+                let layerData = JSON.parse(panel3JsonData);
+                setPanel3LayerData(layerData);
+            }
+
+        }
+        catch(error) {
+
+            console.log(error);
         }
 
         const context = canvas.getContext("2d");
@@ -195,9 +249,6 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             penPath.strokeCap = 'round';
             penPath.strokeJoin = 'round';
             penPath.blendMode = 'normal';
-
-            //console.log(canvasProject.current);
-            //console.log(panelList);
         }
     }
 
@@ -234,9 +285,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     //mouseDown: starts a preview path
     shadingTool.current.onMouseDown = function () {
         //switches to dedicated shading layer
-        ShadingLayerRef.current?.activate;
-
-
+        shadingLayerRef.current?.activate;
         clipPath = new paper.Path();
         clipPath.strokeColor = new paper.Color('pink');
         clipPath.strokeWidth = shadeSize;
@@ -1048,49 +1097,97 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         }
     }
 
-    const findSelectedPanelProject = () => {
-        let panelSelected = document.querySelector("input[name='panels']:checked") as HTMLInputElement;
-
-        // Save the current state of the panel being worked on
-        /*switch(currentPanelIndex)
+    const updateCurrentPanel = () => {
+        if(backgroundLayerReference.current && shadingLayerRef.current && layer1Reference.current && layer2Reference.current &&
+            layer3Reference.current && layer4Reference.current)
         {
-            case 0:
-                //setPanel1Project(canvasProject.current);
-                break;
-            case 1:
-                //setPanel2Project(canvasProject.current);
-                break;
-            case 2:
-                //setPanel3Project(canvasProject.current);
-                break;
-            default:
-                break;
+            // Save the current state of the panel being worked on
+            let currentPanelData = {
+                background: String(backgroundLayerReference.current?.exportJSON({asString: true})),
+                shade: String(shadingLayerRef.current?.exportJSON({asString: true})),
+                layer1: String(layer1Reference.current?.exportJSON({asString: true})),
+                layer2: String(layer2Reference.current?.exportJSON({asString: true})),
+                layer3: String(layer3Reference.current?.exportJSON({asString: true})),
+                layer4: String(layer4Reference.current?.exportJSON({asString: true}))
+            };
+
+            switch(currentPanelIndex)
+            {
+                case 0:
+                    setPanel1LayerData(currentPanelData);
+                    break;
+                case 1:
+                    setPanel2LayerData(currentPanelData);
+                    break;
+                case 2:
+                    setPanel3LayerData(currentPanelData);
+                    break;
+                default:
+                    break;
+            }
         }
+    }
 
-        if (Number(panelSelected?.value) == 0) 
+    const findSelectedPanel = () => {
+        // Makes sure that the layers aren't undefined
+        if(backgroundLayerReference.current && shadingLayerRef.current && layer1Reference.current && layer2Reference.current &&
+            layer3Reference.current && layer4Reference.current)
         {
-            // Switch the canvasProject to the newly selected panel
-            //canvasProject.current = panelList[0];
+            updateCurrentPanel();
 
-            // Update the currentPanelIndex
-            setCurrentPanelIndex(0);
+            let panelSelected = document.querySelector("input[name='panels']:checked") as HTMLInputElement;
+
+            // Clear the layers
+            backgroundLayerReference.current.removeChildren();
+            shadingLayerRef.current.removeChildren();
+            layer1Reference.current.removeChildren();
+            layer2Reference.current.removeChildren();
+            layer3Reference.current.removeChildren();
+            layer4Reference.current.removeChildren();
+
+            // Change the layers to reflect the newly selected panel
+            switch(Number(panelSelected?.value)) 
+            {
+                case 0:
+                    // Switch the canvasProject to the newly selected panel
+                    backgroundLayerReference.current.importJSON(panel1LayerData.background);
+                    shadingLayerRef.current.importJSON(panel1LayerData.shade);
+                    layer1Reference.current.importJSON(panel1LayerData.layer1);
+                    layer2Reference.current.importJSON(panel1LayerData.layer2);
+                    layer3Reference.current.importJSON(panel1LayerData.layer3);
+                    layer4Reference.current.importJSON(panel1LayerData.layer4);
+
+                    // Update the currentPanelIndex
+                    setCurrentPanelIndex(0);
+                    break;
+                case 1:
+                    // Switch the canvasProject to the newly selected panel
+                    backgroundLayerReference.current.importJSON(panel2LayerData.background);
+                    shadingLayerRef.current.importJSON(panel2LayerData.shade);
+                    layer1Reference.current.importJSON(panel2LayerData.layer1);
+                    layer2Reference.current.importJSON(panel2LayerData.layer2);
+                    layer3Reference.current.importJSON(panel2LayerData.layer3);
+                    layer4Reference.current.importJSON(panel2LayerData.layer4);
+
+                    // Update the currentPanelIndex
+                    setCurrentPanelIndex(1);
+                    break;
+                case 2:
+                    // Switch the canvasProject to the newly selected panel
+                    backgroundLayerReference.current.importJSON(panel3LayerData.background);
+                    shadingLayerRef.current.importJSON(panel3LayerData.shade);
+                    layer1Reference.current.importJSON(panel3LayerData.layer1);
+                    layer2Reference.current.importJSON(panel3LayerData.layer2);
+                    layer3Reference.current.importJSON(panel3LayerData.layer3);
+                    layer4Reference.current.importJSON(panel3LayerData.layer4);
+
+                    // Update the currentPanelIndex
+                    setCurrentPanelIndex(2);
+                    break;
+                default:
+                    break;
+            }
         }
-        if (Number(panelSelected?.value) == 1) 
-        {
-            // Switch the canvasProject to the newly selected panel
-            //canvasProject.current = panelList[1];
-
-            // Update the currentPanelIndex
-            setCurrentPanelIndex(1);
-        }
-        if (Number(panelSelected?.value) == 2) 
-        {
-            // Switch the canvasProject to the newly selected panel
-            //canvasProject.current = panelList[2];
-
-            // Update the currentPanelIndex
-            setCurrentPanelIndex(2);
-        }*/
     }
 
     const changeLayer = () => {
@@ -1105,6 +1202,12 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 break;
             case 2:
                 layer2Reference.current?.activate();
+                break;
+            case 3:
+                layer3Reference.current?.activate();
+                break;
+            case 4:
+                layer4Reference.current?.activate();
                 break;
             default:
                 layer1Reference.current?.activate();
@@ -1142,6 +1245,12 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         else if (layer2Reference.current && event.target.value === '2') {
             layer2Reference.current.visible = !layer2Reference.current.visible;
         }
+        else if (layer3Reference.current && event.target.value === '3') {
+            layer3Reference.current.visible = !layer3Reference.current.visible;
+        }
+        else if (layer4Reference.current && event.target.value === '4') {
+            layer4Reference.current.visible = !layer4Reference.current.visible;
+        }
     }
 
     const toggleLayerLock = (event: ChangeEvent<HTMLInputElement>) => {
@@ -1153,6 +1262,12 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         }
         else if (layer2Reference.current && event.target.value === '2') {
             layer2Reference.current.locked = !layer2Reference.current.locked;
+        }
+        else if (layer3Reference.current && event.target.value === '3') {
+            layer3Reference.current.locked = !layer3Reference.current.locked;
+        }
+        else if (layer4Reference.current && event.target.value === '4') {
+            layer4Reference.current.locked = !layer4Reference.current.locked;
         }
     }
 
@@ -1262,15 +1377,15 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     }
 
     // Saves the project's layer image data to localStorage
-    const save = (showAlert: Boolean) => {
-        let layerData = {
-            background: backgroundLayerReference.current?.exportJSON(),
-            layer1: layer1Reference.current?.exportJSON(),
-            layer2: layer2Reference.current?.exportJSON()
-        }
+    const save = (showAlert: Boolean) =>
+    {    
+        // Update the layerData variables with the most current edits
+        updateCurrentPanel();
 
         // Save the layerData object to localStorage in JSON string form
-        localStorage.setItem("panel-1-layerData", JSON.stringify(layerData));
+        localStorage.setItem("panel-1-layerData", JSON.stringify(panel1LayerData));
+        localStorage.setItem("panel-2-layerData", JSON.stringify(panel2LayerData));
+        localStorage.setItem("panel-3-layerData", JSON.stringify(panel3LayerData));
 
         // Alert the user that their progress has been saved
         if (showAlert) {
@@ -1283,8 +1398,41 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         // Saves the user's progress for them
         save(false);
 
+        // Create a temp dummy layer to add layer data to publish
+        let publishLayer = new paper.Layer();
+
+        // Export Panel 1
+        publishLayer.importJSON(panel1LayerData.background);
+        publishLayer.importJSON(panel1LayerData.shade);
+        publishLayer.importJSON(panel1LayerData.layer1);
+        publishLayer.importJSON(panel1LayerData.layer2);
+        publishLayer.importJSON(panel1LayerData.layer3);
+        publishLayer.importJSON(panel1LayerData.layer4);
+        localStorage.setItem("image-1", String(publishLayer.exportSVG({ asString: true })));
+        publishLayer.removeChildren();
+
+        // Export Panel 2
+        publishLayer.importJSON(panel2LayerData.background);
+        publishLayer.importJSON(panel2LayerData.shade);
+        publishLayer.importJSON(panel2LayerData.layer1);
+        publishLayer.importJSON(panel2LayerData.layer2);
+        publishLayer.importJSON(panel2LayerData.layer3);
+        publishLayer.importJSON(panel2LayerData.layer4);
+        localStorage.setItem("image-2", String(publishLayer.exportSVG({ asString: true })));
+        publishLayer.removeChildren();
+
+        // Export Panel 3
+        publishLayer.importJSON(panel3LayerData.background);
+        publishLayer.importJSON(panel3LayerData.shade);
+        publishLayer.importJSON(panel3LayerData.layer1);
+        publishLayer.importJSON(panel3LayerData.layer2);
+        publishLayer.importJSON(panel3LayerData.layer3);
+        publishLayer.importJSON(panel3LayerData.layer4);
+        localStorage.setItem("image-3", String(publishLayer.exportSVG({ asString: true })));
+        publishLayer.removeChildren();
+
         // Save the SVG Image to localStorage
-        localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
+        //localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
 
         // Send the user to the publish page
         router.replace(`/comic/create/publish?id=${parentHookId}`);
@@ -1437,6 +1585,40 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                         </div>
                     </div>
                     <div id={styles.layersList}>
+                        <div id="layer4" className={styles.layer}>
+                            <div id="layer4Visibility" className={styles.visibleStyling}>
+                                <label htmlFor="layer4Toggle" className={` ${styles.visibleLabel} ${styles.sizeConsistency}`}>
+                                    <input type="checkbox" className={`${styles.sizeConsistency}`} id="layer4Toggle" value="4" title="Toggle Layer Visibility" onChange={toggleLayerVisibility} defaultChecked></input>
+                                </label>
+                            </div>
+                            <div id="layer4Lock" className={styles.lockStyling}>
+                                <label htmlFor="layer4LockToggle"  className={` ${styles.lockLabel} ${styles.sizeConsistency}`}>
+                                    <input type="checkbox" className={`${styles.sizeConsistency}`} id="layer4LockToggle" value="4" title="Toggle Layer Lock" onChange={toggleLayerLock}></input>
+                                </label>
+                            </div>
+                            <div id="layer4Select" className={styles.layerSelect}>
+                                <input type="radio" name="layers" id="layer4" className={styles.layerSelectRadio} value='4' onChange={changeLayer} />
+                                <label htmlFor="layer4">Layer 4</label><br />
+                            </div>
+                        </div>
+
+                        <div id="layer3" className={styles.layer}>
+                            <div id="layer3Visibility" className={styles.visibleStyling}>
+                                <label htmlFor="layer3Toggle" className={` ${styles.visibleLabel} ${styles.sizeConsistency}`}>
+                                    <input type="checkbox" className={`${styles.sizeConsistency}`} id="layer3Toggle" value="3" title="Toggle Layer Visibility" onChange={toggleLayerVisibility} defaultChecked></input>
+                                </label>
+                            </div>
+                            <div id="layer3Lock" className={styles.lockStyling}>
+                                <label htmlFor="layer3LockToggle"  className={` ${styles.lockLabel} ${styles.sizeConsistency}`}>
+                                    <input type="checkbox" className={`${styles.sizeConsistency}`} id="layer3LockToggle" value="3" title="Toggle Layer Lock" onChange={toggleLayerLock}></input>
+                                </label>
+                            </div>
+                            <div id="layer3Select" className={styles.layerSelect}>
+                                <input type="radio" name="layers" id="layer3" className={styles.layerSelectRadio} value='3' onChange={changeLayer} />
+                                <label htmlFor="layer3">Layer 3</label><br />
+                            </div>
+                        </div>
+                        
                         <div id="layer2" className={styles.layer}>
                             <div id="layer2Visibility" className={styles.visibleStyling}>
                                 <label htmlFor="layer2Toggle" className={` ${styles.visibleLabel} ${styles.sizeConsistency}`}>
@@ -1492,19 +1674,19 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             <div id="panelSelect" className={styles.panelSelect}>
                     <div id="panel1" className={styles.panelStyling}>
                         <label htmlFor="panel1Select" className={styles.panelLabel}>
-                            <input type="radio" name="panels" className={`${styles.sizeConsistency}`} id="panel1Select" value={0} defaultChecked />
+                            <input type="radio" name="panels" className={`${styles.sizeConsistency}`} id="panel1Select" value={0} defaultChecked onChange={findSelectedPanel}/>
                         </label>
                     </div>
 
                     <div id="panel2" className={styles.panelStyling}>
                         <label htmlFor="panel2Select" className={styles.panelLabel}>
-                            <input type="radio" name="panels" className={`${styles.sizeConsistency}`} id="panel2Select" value={1} />
+                            <input type="radio" name="panels" className={`${styles.sizeConsistency}`} id="panel2Select" value={1} onChange={findSelectedPanel}/>
                         </label>
                     </div>
 
                     <div id="panel3" className={styles.panelStyling}>
                         <label htmlFor="panel3Select" className={styles.panelLabel}>
-                            <input type="radio" name="panels" className={`${styles.sizeConsistency}`} id="panel3Select" value={2} />
+                            <input type="radio" name="panels" className={`${styles.sizeConsistency}`} id="panel3Select" value={2} onChange={findSelectedPanel}/>
                         </label>
                     </div>
                 </div>
