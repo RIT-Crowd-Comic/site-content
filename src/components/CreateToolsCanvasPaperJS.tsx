@@ -1097,13 +1097,10 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         }
     }
 
-    const findSelectedPanel = () => {
-        // Makes sure that the layers aren't undefined
+    const updateCurrentPanel = () => {
         if(backgroundLayerReference.current && shadingLayerRef.current && layer1Reference.current && layer2Reference.current &&
             layer3Reference.current && layer4Reference.current)
         {
-            let panelSelected = document.querySelector("input[name='panels']:checked") as HTMLInputElement;
-
             // Save the current state of the panel being worked on
             let currentPanelData = {
                 background: String(backgroundLayerReference.current?.exportJSON({asString: true})),
@@ -1128,6 +1125,17 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 default:
                     break;
             }
+        }
+    }
+
+    const findSelectedPanel = () => {
+        // Makes sure that the layers aren't undefined
+        if(backgroundLayerReference.current && shadingLayerRef.current && layer1Reference.current && layer2Reference.current &&
+            layer3Reference.current && layer4Reference.current)
+        {
+            updateCurrentPanel();
+
+            let panelSelected = document.querySelector("input[name='panels']:checked") as HTMLInputElement;
 
             // Clear the layers
             backgroundLayerReference.current.removeChildren();
@@ -1371,8 +1379,8 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     // Saves the project's layer image data to localStorage
     const save = (showAlert: Boolean) =>
     {    
-        // Update the ldayerData variables with the most current edits
-        findSelectedPanel();
+        // Update the layerData variables with the most current edits
+        updateCurrentPanel();
 
         // Save the layerData object to localStorage in JSON string form
         localStorage.setItem("panel-1-layerData", JSON.stringify(panel1LayerData));
