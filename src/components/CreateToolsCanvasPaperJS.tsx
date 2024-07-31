@@ -852,49 +852,42 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         }
     }
 
-    //check which corner was hit (with bounds), sets the opposite corner 
-    //and returns the name of the opposite corner
+    //check which corner was hit (with bounds) 
+    //and returns the name and point of the opposite corner (to scale from)
     function findOppositeCorner(pointHit: paper.Point, rectToCheck: paper.Path.Rectangle) {
         let tempOppCornerName = "";
-        // let tempOppCorner = new paper.Point(0, 0);
+        let tempOppCorner = new paper.Point(0, 0);
 
         //needs to account for rotating
         //either find which corner it is closest to and scale from that
         //OR 
         //find the actual opposite corner to scale 
 
-
-        if (rectToCheck.bounds.bottomLeft.isClose(pointHit, 10)) {
-            setOppositeCorner(rectToCheck.bounds.topRight);
+        if (rectToCheck.bounds.bottomLeft.isClose(pointHit, 15)) {
+            tempOppCorner = rectToCheck.bounds.topRight;
             tempOppCornerName = "tr";
         }
-        else if (rectToCheck.bounds.bottomRight.isClose(pointHit, 10)) {
-            setOppositeCorner(rectToCheck.bounds.topLeft);
+        else if (rectToCheck.bounds.bottomRight.isClose(pointHit, 15)) {
+            tempOppCorner = rectToCheck.bounds.topLeft;
             tempOppCornerName = "tl";
         }
-        else if (rectToCheck.bounds.topLeft.isClose(pointHit, 10)) {
-            setOppositeCorner(rectToCheck.bounds.bottomRight);
+        else if (rectToCheck.bounds.topLeft.isClose(pointHit, 15)) {
+            tempOppCorner = rectToCheck.bounds.bottomRight;
             tempOppCornerName = "br";
         }
-        else if (rectToCheck.bounds.topRight.isClose(pointHit, 10)) {
-            setOppositeCorner(rectToCheck.bounds.bottomLeft);
+        else if (rectToCheck.bounds.topRight.isClose(pointHit, 15)) {
+            tempOppCorner = rectToCheck.bounds.bottomLeft;
             tempOppCornerName = "bl";
         }
         else /*(rotationAngle != 0)*/ {
-            //use rotation to unrotate and find correct points
-            //then set point to rotate as opposite to current point
-            //maybe move set opposite corner out of ifs
-
-            let tempRotatedRect = rectToCheck;
-            tempRotatedRect.rotate(-rotationAngle);
-            let tempOppCornerName = findOppositeCorner(pointHit, tempRotatedRect);
-
-
             //little wonky but works well enough
-            setOppositeCorner(rectToCheck.getNearestPoint(pointHit.multiply(-1)));
+            tempOppCorner = rectToCheck.getNearestPoint(pointHit.multiply(-1));
         }
-        // setOppositeCorner();
-        return tempOppCornerName;
+
+        return {
+            'name': tempOppCornerName,
+            'point': tempOppCorner
+        };
     }
 
     //sets transform action and does setup for that action
@@ -902,9 +895,19 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         if (areaSelected && canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             //runs if corners of bounds are hit (segments to check if clicked on rect, tolerance for precision)
             //doesn't work well after rotation?
-            if (transformInfo[0].hitTest(event.point, { segments: true, tolerance: 10 })) {
+            if (transformInfo[0].hitTest(event.point, { segments: true, tolerance: 15 })) {
                 setTransformAction("resizing");
-                setPrevOppCornerName(findOppositeCorner(event.point, transformInfo[0]));
+                let oppCornerInfo = findOppositeCorner(event.point, transformInfo[0]);
+                setOppositeCorner(oppCornerInfo.point);
+
+                //use rotation to unrotate and find correct points
+                //then set point to rotate as opposite to current point
+                //maybe move set opposite corner out of ifs
+                let tempRotatedRect = transformInfo[0];
+                tempRotatedRect.rotate(-rotationAngle);
+                oppCornerInfo = findOppositeCorner(event.point, tempRotatedRect);
+
+                setPrevOppCornerName(oppCornerInfo.name);
             }
             //runs if mouse hits area inside selection
             else if (transformInfo[0].contains(event.point)) {
@@ -924,10 +927,10 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
 
         if (areaSelected && canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             //testing purposes
-            // let testbound = new paper.Path.Rectangle(transformInfo[0].bounds);
-            // testbound.strokeWidth = 3;
-            // testbound.strokeColor = new paper.Color("red");
-            // testbound.removeOnDrag();
+            let testbound = new paper.Path.Rectangle(rasterInfo[1].bounds);
+            testbound.strokeWidth = 3;
+            testbound.strokeColor = new paper.Color("red");
+            testbound.removeOnDrag();
 
             //changes position of selected area if moving
             if (transformAction == "moving") {
@@ -953,8 +956,18 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 //adjust selection box and set current opposite corner name
                 transformInfo[0].bounds = new paper.Rectangle(oppositeCorner, event.point);
                 rasterInfo[1].bounds = new paper.Rectangle(oppositeCorner, event.point);
-                setOppCornerName(findOppositeCorner(event.point, transformInfo[0]));
 
+                //use rotation to unrotate and find correct points
+                //then set point to rotate as opposite to current point
+                //maybe move set opposite corner out of ifs
+
+                //does not work??
+                let tempRotatedRect = transformInfo[0];
+                tempRotatedRect.rotate(-rotationAngle);
+                let oppCornerInfo = findOppositeCorner(event.point, tempRotatedRect);
+                console.log(oppCornerInfo);
+
+                setOppCornerName(oppCornerInfo.name);
                 return;
             }
             else if (transformAction == "rotating") {
@@ -1030,6 +1043,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             else if (transformAction == "rotating" && transformMouseDragged) {
                 setTransformMouseDragged(false);
             }
+            
             setTransformAction("none");
 
             //edit tracking for undo
