@@ -72,6 +72,7 @@ const getHookByID = async (id: number) => {
 };
 
 /**
+<<<<<<< HEAD
  * Gets an image based on the id
  * @param id the id of the image
  * @returns the url of the image
@@ -85,6 +86,8 @@ const getImageByID = async (id: number) => {
 };
 
 /**
+=======
+>>>>>>> main
  * Get a panel
  * @param id the id of the panel
  * @returns the API response which is either a panel set under a specific id or an Error message. A correct response will have the following properties:
@@ -137,6 +140,7 @@ const getPanelSetByID = async (id: number) => {
 };
 
 /**
+<<<<<<< HEAD
  * Get all the panels from a panel set
  * @param panelSetID the id of the panel set
  * @returns the API response which is either the panel sets under a specific user id or an Error message. A correct response will have the following properties:
@@ -166,6 +170,8 @@ const getPanelByIndex = async (panelSetID: number, index: number) => {
 };
 
 /**
+=======
+>>>>>>> main
  * Get a user
  * @param id the id of the user
  * @returns the API response which is either a user under a specific user id or an Error message. A correct response will have the following properties:
@@ -284,6 +290,7 @@ const createHook = async (position: object[], currentPanelID: number, nextPanelS
 };
 
 /**
+<<<<<<< HEAD
  * Tells if a hook leads anywhere
  * @param id the id of the hook
  * @returns if the hook's next_panel_set_id is null (or undefined if the hook can't be found)
@@ -297,6 +304,8 @@ const isHookLinked = async (id: number) => {
 };
 
 /**
+=======
+>>>>>>> main
  * Check if the user's credentials are correct
  * @param email 
  * @param password 
@@ -348,6 +357,7 @@ const changeDisplayName = async (email: string, password: string, newDisplayName
 };
 
 /**
+<<<<<<< HEAD
  * Changes the image of a panel
  * @param id the id of the panel
  * @param image the new image of the panel
@@ -367,6 +377,8 @@ const updatePanel = async (id: number, image: string) => {
 };
 
 /**
+=======
+>>>>>>> main
  * Get a list of hooks from a panel set
  * @param id the id of the panel set
  * @returns 
@@ -440,6 +452,16 @@ const fetchImage = async(imageUrl : string) =>{
 };
 
 const publishHandler = async(panelSet : CreatePanelSet) =>{
+<<<<<<< HEAD
+=======
+        //get the image files
+        const image1 = await fetchImage(panelSet.panels[0].imgSrc) as File | Error;
+        if(image1 instanceof Error) return new Error(`There was an error getting the 1st image: ${image1.message}`);
+        const image2 = await fetchImage(panelSet.panels[1].imgSrc) as File | Error;
+        if(image2 instanceof Error) return new Error(`There was an error getting the 2nd image: ${image2.message}`);
+        const image3 = await fetchImage(panelSet.panels[2].imgSrc) as File | Error;
+        if(image3 instanceof Error) return new Error(`There was an error getting the 3rd image: ${image3.message}`);
+>>>>>>> main
 
     // get the image files
     const image1 = await fetchImage(panelSet.panels[0].imgSrc) as File | Error;
@@ -485,6 +507,7 @@ const publish = async (image1 : File, image2 : File, image3 : File, hooks : Arra
     formData.append('data', JSON.stringify(data, null, 2));
     const response = await postAPICallFormData(`/publish`, formData);
 
+<<<<<<< HEAD
     if (response.message) return new Error(response.message);
     return response;
 };
@@ -492,3 +515,6 @@ const publish = async (image1 : File, image2 : File, image3 : File, hooks : Arra
 export {
     getAllImageUrlsByPanelSetId, getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, getHooksFromPanelSetById, insertSession, getSession, publishHandler, getUserBySession
 };
+=======
+export { getAllImageUrlsByPanelSetId, getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, authenticate, changePassword, changeDisplayName, getHooksFromPanelSetById, insertSession, getSession, publishHandler, getUserBySession }
+>>>>>>> main
