@@ -1,13 +1,17 @@
-import styles from './Panel.module.css'
-import { SyntheticEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import styles from './Panel.module.css';
+import {
+    SyntheticEvent, useEffect, useLayoutEffect, useRef, useState
+} from 'react';
 import { CreateHook, Hook } from '../interfaces';
-import { createSVGPath, calculateArea} from '@/utils';
+import {
+    createSVGPath, calculateArea, checkForMin, findCenter
+} from '@/utils';
 import Image from 'next/image';
 
 // perhaps load this from a global color palette file
 const FILL_COLOR = '#009BC6AA';
 const HIGHLIGHT_COLOR = '#FFD172AA';
-const NULL_HOOK = '#D91911AA'
+const NULL_HOOK = '#D91911AA';
 const MIN_DRAWING_DIST = 3;
 
 // reference https://www.pluralsight.com/resources/blog/guides/re-render-react-component-on-window-resize
@@ -49,8 +53,10 @@ const Panel = ({
     setSelectedHook?: (hookInfo: { panelIndex: number, hookIndex: number } | undefined) => void,
     onHookClick?: (hook: Hook | CreateHook, hookIndex: number) => void,
     hidden?: boolean
+
     // active?: boolean
 }) => {
+
     // for creating hooks
     const [vertices, setVertices] = useState<number[][]>([]);
     const imgRef = useRef<HTMLImageElement | null>(null);
@@ -79,6 +85,7 @@ const Panel = ({
             }
             if (setSelectedHook) setSelectedHook(undefined);
         };
+
         // window.current?.addEventListener('resize', setScaleOnReload);
         // return () => window.current?.removeEventListener('resize', setScaleOnReload);
     }, []);
@@ -91,39 +98,42 @@ const Panel = ({
     // add a new hook
     useEffect(() => {
         if (confirmHook != undefined && setHooks && setConfirmHook) {
-            // prevent adding un-clickable hooks
-            if (vertices.length >= 3) {
-               
-                let insertIndex:number=-1;
-                
-                // find index to insert new hook at biggest -> smallest
-                hooks.map((hook,index)=>{
-                    const tArea:number=calculateArea((hook as CreateHook).points)
-                    const sArea:number=calculateArea(vertices)
 
-                    if(sArea>tArea&&insertIndex<0){//if new hook is bigger and hasn't already been set
-                        insertIndex=index
-                        return
-                    }else if(index==hooks.length-1&&insertIndex<0){//if new hook the smallest and hasn't already been set
-                        insertIndex=hooks.length
+            // prevent adding un-clickable hooks
+            if (vertices.length >= 3 && calculateArea(vertices) > 1000 && checkForMin(vertices, findCenter(vertices))) {
+                let insertIndex:number = -1;
+
+                // find index to insert new hook at biggest -> smallest
+                hooks.map((hook, index)=>{
+                    const tArea:number = calculateArea((hook as CreateHook).points);
+                    const sArea:number = calculateArea(vertices);
+
+                    if (sArea > tArea && insertIndex < 0) { // if new hook is bigger and hasn't already been set
+                        insertIndex = index;
+                        return;
+                    }
+                    else if (index == hooks.length - 1 && insertIndex < 0) { // if new hook the smallest and hasn't already been set
+                        insertIndex = hooks.length;
                     }
                 });
-                    // console.log('insertIndex:',insertIndex)
+
+                // console.log('insertIndex:',insertIndex)
                 setHooks(
                     [
-                        ...hooks.slice(0,insertIndex),
+                        ...hooks.slice(0, insertIndex),
                         {
-                            current_panel_index: confirmHook, //set to zero, will get reset before publish
-                            points: vertices
+                            current_panel_index: confirmHook, // set to zero, will get reset before publish
+                            points:              vertices
                         },
                         ...hooks.slice(insertIndex)
                     ],
-                    confirmHook);
+                    confirmHook
+                );
             }
             setConfirmHook(undefined);
         }
     }, [confirmHook]);
-  
+
     /**
      * Adds a vertex to the current hook SVG path. This should only be called when 
      * in edit mode.
@@ -148,21 +158,22 @@ const Panel = ({
         // to {x: [0, 1200], y: [0, 800] } 
         const newVertices = [...vertices, [normalizedRoundedX, normalizedRoundedY]];
         setVertices(newVertices);
-    }
+    };
 
     // const mouseDownHandler = (event?: SyntheticEvent<HTMLImageElement, MouseEvent>) => { }
 
     const mouseDragHandler = (event?: SyntheticEvent<HTMLImageElement, MouseEvent>) => {
         if (addingHook) {
-            addVertex(event?.nativeEvent.offsetX, event?.nativeEvent.offsetY)
+            addVertex(event?.nativeEvent.offsetX, event?.nativeEvent.offsetY);
         }
-    }
+    };
 
     const mouseMoveHandler = (event?: SyntheticEvent<HTMLImageElement, MouseEvent>) => {
         if (event?.nativeEvent.buttons === 1) return void mouseDragHandler(event);
+
         // console.log(event?.nativeEvent.offsetX);
 
-    }
+    };
 
     // const touchToMouse =(event?:native.MouseEvent)=>{
     //    void mouseDragHandler(event);
@@ -171,17 +182,17 @@ const Panel = ({
 
     const touchMoveHandler = (event: SyntheticEvent<HTMLImageElement, TouchEvent>) => {
 
-        let touch = event.nativeEvent.touches[0];
+        const touch = event.nativeEvent.touches[0];
 
-        let bcr = (touch.target as HTMLElement).getBoundingClientRect();
-        let x = touch.clientX - bcr.x;
-        let y = touch.clientY - bcr.y;
+        const bcr = (touch.target as HTMLElement).getBoundingClientRect();
+        const x = touch.clientX - bcr.x;
+        const y = touch.clientY - bcr.y;
 
         if (addingHook) {
-            addVertex(x, y)
+            addVertex(x, y);
         }
 
-    }
+    };
 
 
 
@@ -205,7 +216,7 @@ const Panel = ({
             <Image
                 src={imgSrc}
                 className={`${styles.preview} ${addingHook ? styles.editing : ''}`}
-                draggable='false'
+                draggable="false"
                 onMouseDown={mouseMoveHandler}
                 onMouseMove={mouseMoveHandler}
                 onTouchStart={touchMoveHandler}
@@ -221,28 +232,31 @@ const Panel = ({
                 <g transform={`scale(${1 / (scale?.x ?? 1)} ${1 / (scale?.y ?? 1)})`}>
                     {/* EXISTING HOOKS */}
                     {
-                        hooks.map((hook, i) =>
+                        hooks.map((hook, i) => (
                             <path
                                 d={createSVGPath((hook as CreateHook).points ?? (hook as Hook).position.map(p => [p.x, p.y]) ?? '')}
                                 fill={(selectedHook?.hookIndex ?? -1) === i ? HIGHLIGHT_COLOR : hook.next_panel_set_id === null ? NULL_HOOK : FILL_COLOR}
-                                onClick={() => { if (onHookClick) onHookClick(hook, i) }}
+                                onClick={() => { if (onHookClick) onHookClick(hook, i); }}
                                 className={`${styles.hookPath} ${hideUntilHover ? styles.hidden : ''} ${styles[`hook${i}`]}`}
-                                key={i} />)}
+                                key={i}
+                            />
+                        ))
+                    }
                     {/* EDITOR HOOK */}
                     <path
                         d={createSVGPath(vertices)}
                         fill={FILL_COLOR}
-                        stroke='black'
-                        strokeWidth='3'
-                        strokeDasharray='10 10'
-                        strokeLinejoin='round'
-                        strokeLinecap='round'
-                        key='new-hook-path'
+                        stroke="black"
+                        strokeWidth="3"
+                        strokeDasharray="10 10"
+                        strokeLinejoin="round"
+                        strokeLinecap="round"
+                        key="new-hook-path"
                     />
                 </g>
             </svg>
         </div>
-    )
-}
+    );
+};
 
 export default Panel;
