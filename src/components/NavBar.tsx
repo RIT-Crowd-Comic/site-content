@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { getTrunks, getUserBySession } from '@/api/apiCalls';
-import { logout, getSessionCookie } from '@/app/login/loginUtils';
+import { logout, getSessionCookie, updateSession } from '@/app/login/loginUtils';
 
 const NavBar = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
@@ -18,6 +18,7 @@ const NavBar = () => {
                 const user = await getUserBySession(session_id);
                 if (user && !user.message) {
                     setIsSignedIn(true);
+                    updateSession(session_id);
                     return;
                 }
             }
