@@ -70,19 +70,6 @@ const getHookByID = async (id: number) => {
 };
 
 /**
- * Gets an image based on the id
- * @param id the id of the image
- * @returns the url of the image
- */
-const getImageByID = async (id: number) => {
-    const image = await getAPICall(`/getImage/${id}`);
-    if (image.message) {
-        return Error(image.message);
-    }
-    return image;
-}
-
-/**
  * Get a panel
  * @param id the id of the panel
  * @returns the API response which is either a panel set under a specific id or an Error message. A correct response will have the following properties:
@@ -132,35 +119,6 @@ const getPanelSetByID = async (id: number) => {
         return Error(panel_set.message);
     }
     return panel_set;
-}
-
-/**
- * Get all the panels from a panel set
- * @param panelSetID the id of the panel set
- * @returns the API response which is either the panel sets under a specific user id or an Error message. A correct response will have the following properties:
- */
-const getPanels = async (panelSetID: number[]) => {
-    const panels = await getAPICall(`/panel_sets/${panelSetID.join("-")}/panels/`);
-    if (panels.message) {
-        return Error(panels.message);
-    }
-    return panels;
-}
-
-/**
- * Get a panel based on the index
- * @param panelSetID the id of the panel set
- * @param index the index of the panel
- *  * @returns the API response which is either a panel set under a specific id or an Error message. A correct response will have the following properties:
- *  id: (id # of panel)
- *  image: (path to image)
- */
-const getPanelByIndex = async (panelSetID: number, index: number) => {
-    const panel = await getAPICall(`/panel_set/${panelSetID}/${index}/panel`);
-    if (panel.message) {
-        return Error(panel.message);
-    }
-    else return panel;
 }
 
 /**
@@ -284,19 +242,6 @@ const createHook = async (position: object[], currentPanelID: number, nextPanelS
 }
 
 /**
- * Tells if a hook leads anywhere
- * @param id the id of the hook
- * @returns if the hook's next_panel_set_id is null (or undefined if the hook can't be found)
- */
-const isHookLinked = async (id: number) => {
-    const response = await getHookByID(id);
-    if (response.message) {
-        return Error(response.message);
-    }
-    return response.next_panel_set_id != null;
-}
-
-/**
  * Check if the user's credentials are correct
  * @param email 
  * @param password 
@@ -344,25 +289,6 @@ const changeDisplayName = async (email: string, password: string, newDisplayName
     if (response.message) {
         return Error(response.message);
     }
-    return response;
-}
-
-/**
- * Changes the image of a panel
- * @param id the id of the panel
- * @param image the new image of the panel
- * @returns 
- */
-const updatePanel = async (id: number, image: string) => {
-    const response = await postAPICall(`/updatePanel`, {
-        id: id,
-        image: image
-    });
-
-    if (response.message) {
-        return Error(response.message);
-    }
-
     return response;
 }
 
@@ -493,4 +419,4 @@ const publish = async (image1 : File, image2 : File, image3 : File, hooks : Arra
     return response;
 }
 
-export { getAllImageUrlsByPanelSetId, getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, getHooksFromPanelSetById, insertSession, getSession, publishHandler, getUserBySession }
+export { getAllImageUrlsByPanelSetId, getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, authenticate, changePassword, changeDisplayName, getHooksFromPanelSetById, insertSession, getSession, publishHandler, getUserBySession }
