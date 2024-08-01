@@ -75,6 +75,9 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     let layer3Reference = useRef<paper.Layer>();
     let layer4Reference = useRef<paper.Layer>();
 
+    const layers = [backgroundLayerReference, layer1Reference, layer2Reference, layer3Reference, layer4Reference];
+    const [currentLayerIndex, setCurrentLayerIndex] = useState<Number>(1);
+
     // Router for sending the user to other pages (used in toPublish())
     const router = useRouter();
 
@@ -122,6 +125,12 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         // Set the layer references
         // Set the layer references as well as the default active layer
         backgroundLayerReference.current = canvasProject.current.activeLayer;
+        
+        // Add a white background the size of the canvas by default
+        //let backgroundPath = new paper.Path.Rectangle(new paper.Point(0, 0), new paper.Point(canvas.width, canvas.height));
+        //backgroundPath.fillColor = new paper.Color(new paper.Color("white"));
+        //backgroundPath.strokeColor = new paper.Color(new paper.Color("white"));
+
         shadingLayerRef.current = new paper.Layer();
         layer1Reference.current = new paper.Layer();
         layer2Reference.current = new paper.Layer();
@@ -156,6 +165,8 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 setPanel1LayerData(layerData);
 
                 // Need to show panel 1 on screen as it is the 1st panel you see in the editor
+                // Get rid of the background applied earlier
+                //backgroundLayerReference.current.removeChildren();
                 backgroundLayerReference.current.importJSON(layerData.background);
                 shadingLayerRef.current.importJSON(layerData.shade);
                 layer1Reference.current.importJSON(layerData.layer1);
@@ -1205,21 +1216,27 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         switch (Number(layerSelected.value)) {
             case 0:
                 backgroundLayerReference.current?.activate();
+                setCurrentLayerIndex(0);
                 break;
             case 1:
                 layer1Reference.current?.activate();
+                setCurrentLayerIndex(1);
                 break;
             case 2:
                 layer2Reference.current?.activate();
+                setCurrentLayerIndex(2);
                 break;
             case 3:
                 layer3Reference.current?.activate();
+                setCurrentLayerIndex(3);
                 break;
             case 4:
                 layer4Reference.current?.activate();
+                setCurrentLayerIndex(4);
                 break;
             default:
                 layer1Reference.current?.activate();
+                setCurrentLayerIndex(1);
                 break;
         }
     }
@@ -1491,7 +1508,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
 
                     <div id={styles.shaderTool} className={styles.toolStyling}>
                         <label htmlFor="shader" className={`${styles.sizeConsistency}`} id={styles.shaderLabel}>
-                            <input type="radio" name="tools" id="shader" title="Shading/Pattern Tool" value={toolStates.SHADER} className={`${styles.sizeConsistency}`} onChange={findSelectedTool} />
+                            <input type="radio" name="tools" id="shader" title="Pattern Tool" value={toolStates.SHADER} className={`${styles.sizeConsistency}`} onChange={findSelectedTool} />
                         </label>
                     </div>
 
@@ -1537,7 +1554,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                     </label>
 
                     <label htmlFor="clearButton" className={`${styles.sizeConsistency}`} id={styles.clearLabel}>
-                        <button className={`btn ${styles.sizeConsistency}`} id="clearButton" title="Clear" onClick={clearLayer}></button>
+                        <button className={`btn ${styles.sizeConsistency}`} id="clearButton" title="Clear Layer" onClick={clearLayer}></button>
                     </label>
                 </div>
 
@@ -1545,7 +1562,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                     <form id={styles.backgroundUpload}>
                         <label htmlFor="imageDropbox" className={`form-label ${styles.formLabel} ${styles.sizeConsistency}`}>{/* Upload a Background (Recommended Size: 1200x800p) */}
                             <input
-                                 className={`form-control ${styles.sizeConsistency}`}
+                                className={`form-control ${styles.sizeConsistency}`}
                                 id="imageDropbox"
                                 type="file"
                                 accept="image/*"
@@ -1579,17 +1596,17 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                     <div id="settings" className={styles.layerSettings}>
                         <div id="mergeSetting" className={styles.layerStyling}>
                             <label htmlFor="merge" id={styles.mergeLabel} className={`${styles.sizeConsistency}`}>
-                                <input type="button" className={`${styles.sizeConsistency}`} title="Merge Down" id="merge" />
+                                <input type="button" className={`${styles.sizeConsistency}`} title="Merge Layer Down" id="merge" />
+                            </label>
+                        </div>
+                        <div id="layerUpSetting" className={styles.layerStyling}>
+                            <label htmlFor="layerup" id={styles.layerUpLabel} className={`${styles.sizeConsistency}`}>
+                                <input type="button" className={`${styles.sizeConsistency}`} title="Move Layer Up" id="layerup" />
                             </label>
                         </div>
                         <div id="layerDownSetting" className={styles.layerStyling}>
                             <label htmlFor="layerdown" id={styles.layerDownLabel} className={`${styles.sizeConsistency}`}>
                                 <button type="button" className={`${styles.sizeConsistency}`} title="Move Layer Down" id="layerdown" />
-                            </label>
-                        </div>
-                        <div id="layerUpSetting" className={styles.layerStyling}>
-                            <label htmlFor="layerup" id={styles.layerUpLabel} className={`${styles.sizeConsistency}`}>
-                                <input type="button" className={`${styles.sizeConsistency}`} title="TMove Layer Up" id="layerup" />
                             </label>
                         </div>
                     </div>
@@ -1683,19 +1700,19 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             <div id="panelSelect" className={styles.panelSelect}>
                     <div id="panel1" className={styles.panelStyling}>
                         <label htmlFor="panel1Select" className={styles.panelLabel}>
-                            <input type="radio" name="panels" className={`${styles.sizeConsistency}`} id="panel1Select" value={0} defaultChecked onChange={findSelectedPanel}/>
+                            <input type="radio" name="panels" className={`${styles.sizeConsistency}`} id="panel1Select" value={0} title="Panel 1" defaultChecked onChange={findSelectedPanel}/>
                         </label>
                     </div>
 
                     <div id="panel2" className={styles.panelStyling}>
                         <label htmlFor="panel2Select" className={styles.panelLabel}>
-                            <input type="radio" name="panels" className={`${styles.sizeConsistency}`} id="panel2Select" value={1} onChange={findSelectedPanel}/>
+                            <input type="radio" name="panels" className={`${styles.sizeConsistency}`} id="panel2Select" value={1} title="Panel 2" onChange={findSelectedPanel}/>
                         </label>
                     </div>
 
                     <div id="panel3" className={styles.panelStyling}>
                         <label htmlFor="panel3Select" className={styles.panelLabel}>
-                            <input type="radio" name="panels" className={`${styles.sizeConsistency}`} id="panel3Select" value={2} onChange={findSelectedPanel}/>
+                            <input type="radio" name="panels" className={`${styles.sizeConsistency}`} id="panel3Select" value={2} title="Panel 3" onChange={findSelectedPanel}/>
                         </label>
                     </div>
                 </div>
