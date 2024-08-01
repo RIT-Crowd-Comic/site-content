@@ -1268,12 +1268,49 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             if(layers[currentLayerIndex].current && layers[currentLayerIndex - 1].current)
             {
                 // Import the layer's data to the layer below it
+                // NOTE: exportSVG must be used instead of exportJSON as importJSON will overwrite any preexisting changes to the layer, importSVG adds to the layer
                 let mergeData = String(layers[currentLayerIndex].current.exportSVG({asString: true}));
                 layers[currentLayerIndex - 1].current?.importSVG(mergeData);
 
                 // Clear the layer's data
                 layers[currentLayerIndex].current.removeChildren();
             }
+        }
+    }
+
+    // Helper Function for the layer moving functions
+    // Swaps layer data between two layers
+    const swapLayers = (currentIndex: number, swapIndex: number) => {
+        // First make sure that the layer indicies exist
+        if(currentIndex >= 0 && swapIndex >= 0)
+        {
+            const currentData = String(layers[currentIndex].current?.exportJSON({ asString: true}));
+            const swapData = String(layers[swapIndex].current?.exportJSON({ asString: true}));
+            layers[currentIndex].current?.importJSON(swapData);
+            layers[swapIndex].current?.importJSON(currentData);
+        }
+    }
+
+    const moveLayerUp = () => {
+        // First make sure that there is a layer above the current selected one to move to
+        if(currentLayerIndex < layers.length - 1)
+        {
+            // Swap layer data between the two layers
+            swapLayers(currentLayerIndex, currentLayerIndex + 1);
+
+            // Swap layer titles between the two
+
+        }
+    }
+
+    const moveLayerDown = () => {
+        // First make sure that there is a layer below the current selected one to move to
+        if(currentLayerIndex > 0)
+        {
+            // Swap layer data between the two layers
+            swapLayers(currentLayerIndex, currentLayerIndex - 1);
+
+            // Swap layer titles between the two
         }
     }
 
@@ -1617,12 +1654,12 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                         </div>
                         <div id="layerUpSetting" className={styles.layerStyling}>
                             <label htmlFor="layerup" id={styles.layerUpLabel} className={`${styles.sizeConsistency}`}>
-                                <input type="button" className={`${styles.sizeConsistency}`} title="Move Layer Up" id="layerup" />
+                                <input type="button" className={`${styles.sizeConsistency}`} title="Move Layer Up" id="layerup" onClick={moveLayerUp}/>
                             </label>
                         </div>
                         <div id="layerDownSetting" className={styles.layerStyling}>
                             <label htmlFor="layerdown" id={styles.layerDownLabel} className={`${styles.sizeConsistency}`}>
-                                <button type="button" className={`${styles.sizeConsistency}`} title="Move Layer Down" id="layerdown" />
+                                <button type="button" className={`${styles.sizeConsistency}`} title="Move Layer Down" id="layerdown" onClick={moveLayerDown}/>
                             </label>
                         </div>
                     </div>
