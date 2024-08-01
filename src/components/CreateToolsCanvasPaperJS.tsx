@@ -1603,7 +1603,6 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             
         }
         console.log(divs)
-        
     }
 
     // Return the canvas HTMLElement and its associated functionality   1
