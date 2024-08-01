@@ -42,6 +42,7 @@ const Panel = ({
     setSelectedHook,
     onHookClick,
     hidden: hideUntilHover,
+    allowAnimation = false
 }: {
     imgSrc: string,
     hooks: (Hook | CreateHook)[],
@@ -52,7 +53,8 @@ const Panel = ({
     selectedHook?: { panelIndex: number, hookIndex: number },
     setSelectedHook?: (hookInfo: { panelIndex: number, hookIndex: number } | undefined) => void,
     onHookClick?: (hook: Hook | CreateHook, hookIndex: number) => void,
-    hidden?: boolean
+    hidden?: boolean,
+    allowAnimation?:boolean
 
     // active?: boolean
 }) => {
@@ -237,7 +239,7 @@ const Panel = ({
                                 d={createSVGPath((hook as CreateHook).points ?? (hook as Hook).position.map(p => [p.x, p.y]) ?? '')}
                                 fill={(selectedHook?.hookIndex ?? -1) === i ? HIGHLIGHT_COLOR : hook.next_panel_set_id === null ? NULL_HOOK : FILL_COLOR}
                                 onClick={() => { if (onHookClick) onHookClick(hook, i); }}
-                                className={`${styles.hookPath} ${hideUntilHover ? styles.hidden : ''} ${styles[hook.next_panel_set_id === null ? 'hookEmpty' : 'hookTaken']} ${styles[`hook${i}`]}`}
+                                className={`${styles.hookPath} ${hideUntilHover ? styles.hidden : ''} ${!allowAnimation ? '' : styles[(selectedHook?.hookIndex ?? -1) === i ? 'hookBlocked' : hook.next_panel_set_id === null ? 'hookEmpty' : 'hookTaken']} ${styles[`hook${i}`]}`}
                                 key={i}
                             />
                         ))

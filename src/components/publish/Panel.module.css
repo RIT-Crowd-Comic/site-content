@@ -49,30 +49,44 @@ img.preview {
     filter: none;
 }
 
+
 .hookEmpty{
     animation: pulse_3 1s linear alternate-reverse infinite;
 }
 .hookTaken{
     animation: pulse_2 1s linear alternate-reverse infinite;
 }
+.hookBlocked{
+    animation: pulse_4 1s linear alternate-reverse infinite;
+}
 
 @keyframes pulse_2 {
     0% {
-      filter: drop-shadow(2px 4px 20px #009BC6) drop-shadow(2px 4px 20px #009BC6);
+        filter: drop-shadow(2px 4px 20px #009BC6) drop-shadow(2px 4px 20px #009BC6);
     }
     100% {
-      filter: drop-shadow(2px 4px 50px #009BC6) drop-shadow(2px 4px 50px #009BC6);
+        filter: drop-shadow(2px 4px 50px #009BC6) drop-shadow(2px 4px 50px #009BC6);
     }
-  }
+}
 
-  @keyframes pulse_3 {
+@keyframes pulse_3 {
     0% {
-      filter: drop-shadow(2px 4px 20px #d91911) drop-shadow(2px 4px 20px #d91911);
+        filter: drop-shadow(2px 4px 20px #d91911) drop-shadow(2px 4px 20px #d91911);
     }
     100% {
-      filter: drop-shadow(2px 4px 50px #d91911) drop-shadow(2px 4px 50px #d91911);
+        filter: drop-shadow(2px 4px 50px #d91911) drop-shadow(2px 4px 50px #d91911);
     }
-  }
+}
+
+@keyframes pulse_4 {
+    0% {
+        filter: drop-shadow(2px 4px 20px #FFD172) drop-shadow(2px 4px 20px #FFD172);
+    }
+    100% {
+        filter: drop-shadow(2px 4px 50px #FFD172) drop-shadow(2px 4px 50px #FFD172);
+    }
+}
+
 .hookSvg.editing {
     pointer-events: none;
 }
