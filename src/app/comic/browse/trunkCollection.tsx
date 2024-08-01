@@ -82,8 +82,9 @@ const TrunkCollection = () => {
                     hoverPhoto={ps.images[1]}
                     link={`/comic?id=${ps.id}`}
                     bottomString="Author Name | Jul 22, 2024"
-                    year="" 
-                    newPage={false} />
+                    year=""
+                    newPage={false}
+                />
             ))}
             </ul>
         );
