@@ -633,7 +633,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     const [textFont, setTextFont] = useState<string>("Arial");
 
     // Integer that determines the size of the text 
-    const [textSize, setTextSize] = useState<number>(30);
+    const [textSize, setTextSize] = useState<number>(12);
 
     // String that determines the font weight of the text being printed to the layer
     // !!! Can only be "normal", "bold", or "italic"
@@ -1275,18 +1275,18 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         // Check to make sure that this is not being called on the bottom layer (backgroundLayer) that has nowhere to merge down to 
         if(currentLayerIndex > 0)
         {
-            if(layers[currentLayerIndex].current && layers[currentLayerIndex - 1].current)
+            if(layers[currentLayerIndex]?.current && layers[currentLayerIndex - 1].current)
             {
                 // Import the layer's data to the layer below it
                 // NOTE: exportSVG must be used instead of exportJSON as importJSON will overwrite any preexisting changes to the layer, importSVG adds to the layer
-                let toSVG = layers[currentLayerIndex]?.current.exportSVG({asString: true});
+                let toSVG = layers[currentLayerIndex]?.current?.exportSVG({asString: true});
                 if(toSVG)
                 {
                     let mergeData = String(toSVG);
-                    layers[currentLayerIndex - 1].current?.importSVG(mergeData);
-
+                    layers[currentLayerIndex - 1]?.current?.importSVG(mergeData);
+                    
                     // Clear the layer's data
-                    layers[currentLayerIndex].current.removeChildren();
+                    layers[currentLayerIndex]?.current?.removeChildren();
                 }
             }
         }
