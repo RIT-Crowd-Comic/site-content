@@ -196,8 +196,10 @@ const BranchPage = ({ id }: Props) => {
                                 selectedHook={selectedHook}
                                 setSelectedHook={setSelectedHook}
                                 setConfirmHook={setConfirmHook}
-                                onHookClick={(_, hookIndex) => selectHook(hookIndex)}
-                            ></Panel>
+                                onHookClick={(_, hookIndex) => selectHook(hookIndex)} 
+                                panel_set={undefined} 
+                                userId={''}>
+                            </Panel>
                         </div>
                         <a className={`${styles.carouselControlPrev}`} href="#publish-slideshow" role="button" data-slide="prev" onClick={() => nextPanel(-1)}>
                             <img alt="previous button" />
