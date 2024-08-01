@@ -1571,7 +1571,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                         changeDashedBorder={setDashedBorder} />
                     <TextOptions enabled={textOptionsEnabled} changeTextContent={setTextContent} changeTextFont={setTextFont} changeTextSize={setTextSize}
                         changeFontWeight={setTextFontWeight} changeTextAlignment={setTextAlign} changeTextColor={setTextColor} />
-                    <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
+                    <StickerOptions enabled={stickerOptionsEnabled} setSticker={setStickerLink} />
                     <ShaderOptions enabled={shadeOptionsEnabled} shaderSize={shadeSize} changeShaderSize={setShadeSize} />
                 </div>
 
