@@ -1279,7 +1279,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             {
                 // Import the layer's data to the layer below it
                 // NOTE: exportSVG must be used instead of exportJSON as importJSON will overwrite any preexisting changes to the layer, importSVG adds to the layer
-                let mergeData = String(layers[currentLayerIndex].current.exportSVG({asString: true}));
+                let mergeData = String(layers[currentLayerIndex]?.current.exportSVG({asString: true}));
                 layers[currentLayerIndex - 1].current?.importSVG(mergeData);
 
                 // Clear the layer's data
