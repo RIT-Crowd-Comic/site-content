@@ -95,7 +95,7 @@ const updateDisplayName = async (newName: string) => {
     if (!session || session instanceof Error) return session;
     const user = await getUserBySession(session.value);
     if (!user || user instanceof Error) return user;
-    return await changeDisplayName(user.email, user.password, newName);
+    return await changeDisplayName(user.email, newName);
 };
 
 const updatePassword = async (oldPassword: string, newPassword: string, passwordConfirm: string) => {

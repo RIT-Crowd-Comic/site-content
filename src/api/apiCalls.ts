@@ -279,10 +279,9 @@ const getAllImageUrlsByPanelSetId = async (id: number) => {
 };
 
 
-const changeDisplayName = async (email: string, password: string, newDisplayName: string) => {
+const changeDisplayName = async (email: string, newDisplayName: string) => {
     const response = await postAPICall(`/changeDisplayName`, {
         email:          email,
-        password:       password,
         newDisplayName: newDisplayName
     });
 
