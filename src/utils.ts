@@ -24,7 +24,7 @@ const calculateArea = (points: number[][]) =>{
  * @param center center of points [x,y]
  */
 const checkForMin = (verticies:number[][], center:number[])=>{
-    const min = 25;
+    const min = 10;
     for (const v of verticies) {
         const x = v[0];
         const y = v[1];
