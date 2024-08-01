@@ -239,7 +239,7 @@ const Panel = ({
                                 d={createSVGPath((hook as CreateHook).points ?? (hook as Hook).position.map(p => [p.x, p.y]) ?? '')}
                                 fill={(selectedHook?.hookIndex ?? -1) === i ? HIGHLIGHT_COLOR : hook.next_panel_set_id === null ? NULL_HOOK : FILL_COLOR}
                                 onClick={() => { if (onHookClick) onHookClick(hook, i); }}
-                                className={`${styles.hookPath} ${hideUntilHover ? styles.hidden : ''} ${!allowAnimation ? '' : styles[(selectedHook?.hookIndex ?? -1) === i ? 'hookBlocked' : hook.next_panel_set_id === null ? 'hookEmpty' : 'hookTaken']} ${styles[`hook${i}`]}`}
+                                className={`${styles.hookPath} ${hideUntilHover ? styles.hidden : ''} ${styles[`hook${i}`]} ${!allowAnimation ? '' : styles[(selectedHook?.hookIndex ?? -1) === i ? 'hookBlocked' : hook.next_panel_set_id === null ? 'hookEmpty' : 'hookTaken']}`}
                                 key={i}
                             />
                         ))

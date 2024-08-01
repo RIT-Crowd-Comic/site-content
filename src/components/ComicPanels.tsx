@@ -76,6 +76,7 @@ const ComicPanels = ({
                         hooks={panels[1].hooks}
                         onHookClick={hookLink}
                         hidden={hidden}
+                        allowAnimation={true}
                     />
                 </div>
                 <div className={`${styles.thirdPanel}`}>
@@ -84,6 +85,7 @@ const ComicPanels = ({
                         hooks={panels[2].hooks}
                         onHookClick={hookLink}
                         hidden={hidden}
+                        allowAnimation={true}
                     />
                 </div>
             </div>
