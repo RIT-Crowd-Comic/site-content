@@ -10,7 +10,7 @@ interface Props
 // *** Sticker Options is used in order to changed the different values associated with the sticker tool in CreateToolsCanvas ***
 const StickerOptions = ({enabled, setSticker} : Props) =>
 {
-    const STICKER_COUNT = 50 //Must be increased when new stickers are added
+    const STICKER_COUNT = 51 //Must be increased when new stickers are added
     const [stickerChosen, setChosen] = useState<string[]>([])
     const [run, setRun] = useState(false)
     /*
@@ -105,6 +105,7 @@ const StickerOptions = ({enabled, setSticker} : Props) =>
                     <img className={stickerChosen[48]} src="/stickers/g6.png" alt="Gerald 6 Sticker" onClick={() => changeSticker("/stickers/g6.png", 48)}></img><br/>
                     <img className={stickerChosen[49]} src="/stickers/g7.png" alt="Gerald 7 Sticker" onClick={() => changeSticker("/stickers/g7.png", 49)}></img><br/>
                     <img className={stickerChosen[50]} src="/stickers/g8.png" alt="Gerald 8 Sticker" onClick={() => changeSticker("/stickers/g8.png", 50)}></img><br/>
+                    <img className={stickerChosen[51]} src="/stickers/sten.png" alt="Sten Sticker" onClick={() => changeSticker("/stickers/sten.png", 51)}></img><br/>
                 </div>
             </div>
         )
