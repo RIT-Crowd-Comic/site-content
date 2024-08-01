@@ -76,7 +76,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     let layer4Reference = useRef<paper.Layer>();
 
     const layers = [backgroundLayerReference, layer1Reference, layer2Reference, layer3Reference, layer4Reference];
-    const [currentLayerIndex, setCurrentLayerIndex] = useState<Number>(1);
+    const [currentLayerIndex, setCurrentLayerIndex] = useState<number>(1);
 
     // Router for sending the user to other pages (used in toPublish())
     const router = useRouter();
@@ -1260,6 +1260,22 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         }
     }
     
+    // If the selected layer isn't the last layer in the hierarchy, merge it a layer down
+    const mergeLayer = () => {
+        // Check to make sure that this is not being called on the bottom layer (backgroundLayer) that has nowhere to merge down to 
+        if(currentLayerIndex > 0)
+        {
+            if(layers[currentLayerIndex].current && layers[currentLayerIndex - 1].current)
+            {
+                // Import the layer's data to the layer below it
+                let mergeData = String(layers[currentLayerIndex].current.exportSVG({asString: true}));
+                layers[currentLayerIndex - 1].current?.importSVG(mergeData);
+
+                // Clear the layer's data
+                layers[currentLayerIndex].current.removeChildren();
+            }
+        }
+    }
 
     const toggleLayerVisibility = (event: ChangeEvent<HTMLInputElement>) => {
         if (backgroundLayerReference.current && event.target.value === '0') {
@@ -1596,7 +1612,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                     <div id="settings" className={styles.layerSettings}>
                         <div id="mergeSetting" className={styles.layerStyling}>
                             <label htmlFor="merge" id={styles.mergeLabel} className={`${styles.sizeConsistency}`}>
-                                <input type="button" className={`${styles.sizeConsistency}`} title="Merge Layer Down" id="merge" />
+                                <input type="button" className={`${styles.sizeConsistency}`} title="Merge Layer Down" id="merge" onClick={mergeLayer}/>
                             </label>
                         </div>
                         <div id="layerUpSetting" className={styles.layerStyling}>
