@@ -9,6 +9,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Panel, PanelSet, Hook } from './interfaces';
 import InfoBox from './info/InfoBox';
 import InfoBtn from './info/InfoBtn';
+import { getSessionCookie } from '@/app/login/loginUtils';
 
 // import icons and background
 const backIcon = '/images/back-button-pressed.png';
@@ -31,13 +32,27 @@ const ReadPage = ({ id }: Props) => {
     const [panelSet, setPanelSet] = useState<PanelSet>();
     const [parentPanelSet, setParentPanelSet] = useState<PanelSet | undefined>();
     const [error, setError] = useState<string>('');
-
-    // const [actualHooks, setActualHooks] = useState([])
-    // const [images, setImages] = useState([])
+    const [userId, setUserId] = useState<string>('');
     const [panels, setPanels] = useState<Panel[]>([]);
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
+
+            const session = await getSessionCookie();
+            console.log(session);
+            let userResponse = null;
+            let newUserId = '';
+            if (session) {
+                console.log('Session exists');
+                userResponse = await apiCalls.getUserBySession(session.value);
+                newUserId = userResponse.id;
+            }
+
+            else {
+                console.log('Failed to get session. User is not logged in. I think');
+                newUserId = '';
+            }
+
             const panelSetResponse = await apiCalls.getPanelSetByID(id) as PanelSet;
             if (!updateError(panelSetResponse)) {
                 const imageUrlsResponse = await apiCalls.getAllImageUrlsByPanelSetId(panelSetResponse.id);
@@ -60,8 +75,6 @@ const ReadPage = ({ id }: Props) => {
                         panels
                     });
 
-                    // console.log(panelSetResponse)
-
                     if (panelSetResponse.hook === null) {
                         setParentPanelSet(undefined);
                     }
@@ -74,6 +87,7 @@ const ReadPage = ({ id }: Props) => {
                     }
                 }
             }
+            setUserId(newUserId);
             setIsLoading(false);
         }
         fetchData();
@@ -87,6 +101,7 @@ const ReadPage = ({ id }: Props) => {
         }
         return bool;
     }
+
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -144,10 +159,12 @@ const ReadPage = ({ id }: Props) => {
             <InfoBox
                 instructions={`You can read though different story lines throught the panels. \n
         Instructions: \n
-         -Use the back button to take you back to the parent pannel
+         -Use the back button to take you back to the parent panel
          -Use the lightbulb to toggle the hooks on and off
-         \t-Red hooks: These do not currently have a comic panel connected to them asnd will take you to the create page
+         \t-Red hooks: These do not currently have a comic panel connected to them and will take you to the create page
          \t-Blue hooks: These have a comic panel connected to them and you can click on them to explore that branch of the story
+         \t-Yellow hooks: These have a comic panel connected to them. However, you are the author of the current panel set, so you cannot create a new panel set off this one
+
          -Use the + looking symbol to toggle between horizontal and vertical view
          \t-This will only work for larger screen sizes 
          `}

@@ -78,6 +78,9 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     const layer3Reference = useRef<paper.Layer>();
     const layer4Reference = useRef<paper.Layer>();
 
+    const layers = [backgroundLayerReference, layer1Reference, layer2Reference, layer3Reference, layer4Reference];
+    const [currentLayerIndex, setCurrentLayerIndex] = useState<number>(1);
+
     // Router for sending the user to other pages (used in toPublish())
     const router = useRouter();
 
@@ -125,6 +128,12 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         // Set the layer references
         // Set the layer references as well as the default active layer
         backgroundLayerReference.current = canvasProject.current.activeLayer;
+
+        // Add a white background the size of the canvas by default
+        // let backgroundPath = new paper.Path.Rectangle(new paper.Point(0, 0), new paper.Point(canvas.width, canvas.height));
+        // backgroundPath.fillColor = new paper.Color(new paper.Color("white"));
+        // backgroundPath.strokeColor = new paper.Color(new paper.Color("white"));
+
         shadingLayerRef.current = new paper.Layer();
         layer1Reference.current = new paper.Layer();
         layer2Reference.current = new paper.Layer();
@@ -147,11 +156,9 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         setPanel3LayerData(defaultLayerData);
 
         // If previous layer data exists, set the layers to that, otherwise make new layers
+        // Panel 1
         try {
             const panel1JsonData = localStorage.getItem('panel-1-layerData');
-            const panel2JsonData = localStorage.getItem('panel-2-layerData');
-            const panel3JsonData = localStorage.getItem('panel-3-layerData');
-
             if (panel1JsonData) {
 
                 // Set panel1's layer data from storage
@@ -159,6 +166,8 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 setPanel1LayerData(layerData);
 
                 // Need to show panel 1 on screen as it is the 1st panel you see in the editor
+                // Get rid of the background applied earlier
+                // backgroundLayerReference.current.removeChildren();
                 backgroundLayerReference.current.importJSON(layerData.background);
                 shadingLayerRef.current.importJSON(layerData.shade);
                 layer1Reference.current.importJSON(layerData.layer1);
@@ -166,21 +175,33 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 layer3Reference.current.importJSON(layerData.layer3);
                 layer4Reference.current.importJSON(layerData.layer4);
             }
+        }
+        catch (error) {
+            alert('Error loading panel 1 data from localStorage: ' + error);
+        }
 
+        // Panel 2
+        try {
+            const panel2JsonData = localStorage.getItem('panel-2-layerData');
             if (panel2JsonData) {
                 const layerData = JSON.parse(panel2JsonData);
                 setPanel2LayerData(layerData);
             }
+        }
+        catch (error) {
+            alert('Error loading panel 2 data from localStorage: ' + error);
+        }
 
+        // Panel 3
+        try {
+            const panel3JsonData = localStorage.getItem('panel-3-layerData');
             if (panel3JsonData) {
                 const layerData = JSON.parse(panel3JsonData);
                 setPanel3LayerData(layerData);
             }
-
         }
         catch (error) {
-
-            console.log(error);
+            alert('Error loading panel 3 data from localStorage: ' + error);
         }
 
         const context = canvas.getContext('2d');
@@ -293,8 +314,6 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         clipPath.strokeColor = new paper.Color('pink');
         clipPath.strokeWidth = shadeSize;
         clipPath.strokeCap = 'round';
-
-
     };
 
     // continues drawing preview path
@@ -623,7 +642,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     const [textFont, setTextFont] = useState<string>('Arial');
 
     // Integer that determines the size of the text 
-    const [textSize, setTextSize] = useState<number>(30);
+    const [textSize, setTextSize] = useState<number>(12);
 
     // String that determines the font weight of the text being printed to the layer
     // !!! Can only be "normal", "bold", or "italic"
@@ -1229,21 +1248,27 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         switch (Number(layerSelected.value)) {
         case 0:
             backgroundLayerReference.current?.activate();
+            setCurrentLayerIndex(0);
             break;
         case 1:
             layer1Reference.current?.activate();
+            setCurrentLayerIndex(1);
             break;
         case 2:
             layer2Reference.current?.activate();
+            setCurrentLayerIndex(2);
             break;
         case 3:
             layer3Reference.current?.activate();
+            setCurrentLayerIndex(3);
             break;
         case 4:
             layer4Reference.current?.activate();
+            setCurrentLayerIndex(4);
             break;
         default:
             layer1Reference.current?.activate();
+            setCurrentLayerIndex(1);
             break;
         }
     };
@@ -1267,6 +1292,65 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         }
     };
 
+    // If the selected layer isn't the last layer in the hierarchy, merge it a layer down
+    const mergeLayer = () => {
+
+        // Check to make sure that this is not being called on the bottom layer (backgroundLayer) that has nowhere to merge down to 
+        if (currentLayerIndex > 0) {
+            if (layers[currentLayerIndex]?.current && layers[currentLayerIndex - 1].current) {
+
+                // Import the layer's data to the layer below it
+                // NOTE: exportSVG must be used instead of exportJSON as importJSON will overwrite any preexisting changes to the layer, importSVG adds to the layer
+                const toSVG = layers[currentLayerIndex]?.current?.exportSVG({ asString: true });
+                if (toSVG) {
+                    const mergeData = String(toSVG);
+                    layers[currentLayerIndex - 1]?.current?.importSVG(mergeData);
+
+                    // Clear the layer's data
+                    layers[currentLayerIndex]?.current?.removeChildren();
+                }
+            }
+        }
+    };
+
+    // Helper Function for the layer moving functions
+    // Swaps layer data between two layers
+    const swapLayers = (currentIndex: number, swapIndex: number) => {
+
+        // First make sure that the layer indicies exist
+        if (currentIndex >= 0 && swapIndex >= 0) {
+            const currentData = String(layers[currentIndex].current?.exportJSON({ asString: true }));
+            const swapData = String(layers[swapIndex].current?.exportJSON({ asString: true }));
+            layers[currentIndex].current?.importJSON(swapData);
+            layers[swapIndex].current?.importJSON(currentData);
+        }
+    };
+
+    const moveLayerUp = () => {
+
+        // First make sure that there is a layer above the current selected one to move to
+        if (currentLayerIndex < layers.length - 1) {
+
+            // Swap layer data between the two layers
+            swapLayers(currentLayerIndex, currentLayerIndex + 1);
+
+            // Swap layer titles between the two
+
+        }
+    };
+
+    const moveLayerDown = () => {
+
+        // First make sure that there is a layer below the current selected one to move to
+        if (currentLayerIndex > 0) {
+
+            // Swap layer data between the two layers
+            swapLayers(currentLayerIndex, currentLayerIndex - 1);
+
+            // Swap layer titles between the two
+
+        }
+    };
 
     const toggleLayerVisibility = (event: ChangeEvent<HTMLInputElement>) => {
         if (backgroundLayerReference.current && event.target.value === '0') {
@@ -1415,9 +1499,29 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         updateCurrentPanel();
 
         // Save the layerData object to localStorage in JSON string form
-        localStorage.setItem('panel-1-layerData', JSON.stringify(panel1LayerData));
-        localStorage.setItem('panel-2-layerData', JSON.stringify(panel2LayerData));
-        localStorage.setItem('panel-3-layerData', JSON.stringify(panel3LayerData));
+        // Panel 1
+        try {
+            localStorage.setItem('panel-1-layerData', JSON.stringify(panel1LayerData));
+        }
+        catch (error) {
+            alert("Error saving panel 1's layer data to localStorage: " + error);
+        }
+
+        // Panel 2
+        try {
+            localStorage.setItem('panel-2-layerData', JSON.stringify(panel2LayerData));
+        }
+        catch (error) {
+            alert("Error saving panel 2's layer data to localStorage: " + error);
+        }
+
+        // Panel 1
+        try {
+            localStorage.setItem('panel-3-layerData', JSON.stringify(panel3LayerData));
+        }
+        catch (error) {
+            alert("Error saving panel 3's layer data to localStorage: " + error);
+        }
 
         // Alert the user that their progress has been saved
         if (showAlert) {
@@ -1432,37 +1536,73 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         save(false);
 
         // Create a temp dummy layer to add layer data to publish
-        const publishLayer = new paper.Layer();
+        // let publishLayer = new paper.Layer();
 
         // Export Panel 1
-        publishLayer.importJSON(panel1LayerData.background);
+        /* publishLayer.importJSON(panel1LayerData.background);
         publishLayer.importJSON(panel1LayerData.shade);
         publishLayer.importJSON(panel1LayerData.layer1);
         publishLayer.importJSON(panel1LayerData.layer2);
         publishLayer.importJSON(panel1LayerData.layer3);
         publishLayer.importJSON(panel1LayerData.layer4);
-        localStorage.setItem('image-1', String(publishLayer.exportSVG({ asString: true })));
-        publishLayer.removeChildren();
+        localStorage.setItem("image-1", String(publishLayer.exportSVG({ asString: true })));
+        publishLayer.removeChildren();*/
+        backgroundLayerReference.current?.importJSON(panel1LayerData.background);
+        shadingLayerRef.current?.importJSON(panel1LayerData.shade);
+        layer1Reference.current?.importJSON(panel1LayerData.layer1);
+        layer2Reference.current?.importJSON(panel1LayerData.layer2);
+        layer3Reference.current?.importJSON(panel1LayerData.layer3);
+        layer4Reference.current?.importJSON(panel1LayerData.layer4);
+        try {
+            localStorage.setItem('image-1', String(canvasProject.current?.exportSVG({ asString: true })));
+        }
+        catch (error) {
+            alert('Error publishing panel 1 to localStorage: ' + error);
+        }
 
         // Export Panel 2
-        publishLayer.importJSON(panel2LayerData.background);
+        /* publishLayer.importJSON(panel2LayerData.background);
         publishLayer.importJSON(panel2LayerData.shade);
         publishLayer.importJSON(panel2LayerData.layer1);
         publishLayer.importJSON(panel2LayerData.layer2);
         publishLayer.importJSON(panel2LayerData.layer3);
         publishLayer.importJSON(panel2LayerData.layer4);
-        localStorage.setItem('image-2', String(publishLayer.exportSVG({ asString: true })));
-        publishLayer.removeChildren();
+        localStorage.setItem("image-2", String(publishLayer.exportSVG({ asString: true })));
+        publishLayer.removeChildren();*/
+        backgroundLayerReference.current?.importJSON(panel2LayerData.background);
+        shadingLayerRef.current?.importJSON(panel2LayerData.shade);
+        layer1Reference.current?.importJSON(panel2LayerData.layer1);
+        layer2Reference.current?.importJSON(panel2LayerData.layer2);
+        layer3Reference.current?.importJSON(panel2LayerData.layer3);
+        layer4Reference.current?.importJSON(panel2LayerData.layer4);
+        try {
+            localStorage.setItem('image-2', String(canvasProject.current?.exportSVG({ asString: true })));
+        }
+        catch (error) {
+            alert('Error publishing panel 2 to localStorage: ' + error);
+        }
 
         // Export Panel 3
-        publishLayer.importJSON(panel3LayerData.background);
+        /* publishLayer.importJSON(panel3LayerData.background);
         publishLayer.importJSON(panel3LayerData.shade);
         publishLayer.importJSON(panel3LayerData.layer1);
         publishLayer.importJSON(panel3LayerData.layer2);
         publishLayer.importJSON(panel3LayerData.layer3);
         publishLayer.importJSON(panel3LayerData.layer4);
-        localStorage.setItem('image-3', String(publishLayer.exportSVG({ asString: true })));
-        publishLayer.removeChildren();
+        localStorage.setItem("image-3", String(publishLayer.exportSVG({ asString: true })));
+        publishLayer.removeChildren();*/
+        backgroundLayerReference.current?.importJSON(panel3LayerData.background);
+        shadingLayerRef.current?.importJSON(panel3LayerData.shade);
+        layer1Reference.current?.importJSON(panel3LayerData.layer1);
+        layer2Reference.current?.importJSON(panel3LayerData.layer2);
+        layer3Reference.current?.importJSON(panel3LayerData.layer3);
+        layer4Reference.current?.importJSON(panel3LayerData.layer4);
+        try {
+            localStorage.setItem('image-3', String(canvasProject.current?.exportSVG({ asString: true })));
+        }
+        catch (error) {
+            alert('Error publishing panel 3 to localStorage: ' + error);
+        }
 
         // Save the SVG Image to localStorage
         // localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
@@ -1484,7 +1624,6 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
 
         }
         console.log(divs);
-
     };
 
     // Return the canvas HTMLElement and its associated functionality   1
@@ -1541,7 +1680,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                                 type="radio"
                                 name="tools"
                                 id="shader"
-                                title="Shading/Pattern Tool"
+                                title="Pattern Tool"
                                 value={toolStates.SHADER}
                                 className={`${styles.sizeConsistency}`}
                                 onChange={findSelectedTool}
@@ -1644,7 +1783,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                         <button
                             className={`btn ${styles.sizeConsistency}`}
                             id="clearButton"
-                            title="Clear"
+                            title="Clear Layer"
                             onClick={clearLayer}
                         />
                     </label>
@@ -1699,7 +1838,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                         changeTextAlignment={setTextAlign}
                         changeTextColor={setTextColor}
                     />
-                    <StickerOptions enabled={stickerOptionsEnabled} changeSticker={setStickerLink} />
+                    <StickerOptions enabled={stickerOptionsEnabled} setSticker={setStickerLink} />
                     <ShaderOptions enabled={shadeOptionsEnabled} shaderSize={shadeSize} changeShaderSize={setShadeSize} />
                 </div>
 
@@ -1710,8 +1849,20 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                                 <input
                                     type="button"
                                     className={`${styles.sizeConsistency}`}
-                                    title="Merge Down"
+                                    title="Merge Layer Down"
                                     id="merge"
+                                    onClick={mergeLayer}
+                                />
+                            </label>
+                        </div>
+                        <div id="layerUpSetting" className={styles.layerStyling}>
+                            <label htmlFor="layerup" id={styles.layerUpLabel} className={`${styles.sizeConsistency}`}>
+                                <input
+                                    type="button"
+                                    className={`${styles.sizeConsistency}`}
+                                    title="Move Layer Up"
+                                    id="layerup"
+                                    onClick={moveLayerUp}
                                 />
                             </label>
                         </div>
@@ -1722,16 +1873,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                                     className={`${styles.sizeConsistency}`}
                                     title="Move Layer Down"
                                     id="layerdown"
-                                />
-                            </label>
-                        </div>
-                        <div id="layerUpSetting" className={styles.layerStyling}>
-                            <label htmlFor="layerup" id={styles.layerUpLabel} className={`${styles.sizeConsistency}`}>
-                                <input
-                                    type="button"
-                                    className={`${styles.sizeConsistency}`}
-                                    title="TMove Layer Up"
-                                    id="layerup"
+                                    onClick={moveLayerDown}
                                 />
                             </label>
                         </div>
@@ -1943,6 +2085,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                                 className={`${styles.sizeConsistency}`}
                                 id="panel1Select"
                                 value={0}
+                                title="Panel 1"
                                 defaultChecked
                                 onChange={findSelectedPanel}
                             />
@@ -1957,6 +2100,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                                 className={`${styles.sizeConsistency}`}
                                 id="panel2Select"
                                 value={1}
+                                title="Panel 2"
                                 onChange={findSelectedPanel}
                             />
                         </label>
@@ -1970,6 +2114,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                                 className={`${styles.sizeConsistency}`}
                                 id="panel3Select"
                                 value={2}
+                                title="Panel 3"
                                 onChange={findSelectedPanel}
                             />
                         </label>

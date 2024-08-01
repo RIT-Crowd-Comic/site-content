@@ -7,11 +7,15 @@ import {
     createSVGPath, calculateArea, checkForMin, findCenter
 } from '@/utils';
 import Image from 'next/image';
+import * as apiCalls from "../../api/apiCalls"
+
 
 // perhaps load this from a global color palette file
 const FILL_COLOR = '#009BC6AA';
 const HIGHLIGHT_COLOR = '#FFD172AA';
 const NULL_HOOK = '#D91911AA';
+const FORBIDDEN_HOOK = '#FFA500AA';
+
 const MIN_DRAWING_DIST = 3;
 
 // reference https://www.pluralsight.com/resources/blog/guides/re-render-react-component-on-window-resize
@@ -43,6 +47,8 @@ const Panel = ({
     onHookClick,
     hidden: hideUntilHover,
     allowAnimation = false
+    panel_set,
+    userId
 }: {
     imgSrc: string,
     hooks: (Hook | CreateHook)[],
@@ -54,16 +60,15 @@ const Panel = ({
     setSelectedHook?: (hookInfo: { panelIndex: number, hookIndex: number } | undefined) => void,
     onHookClick?: (hook: Hook | CreateHook, hookIndex: number) => void,
     hidden?: boolean,
-    allowAnimation?:boolean
-
-    // active?: boolean
+    allowAnimation?:boolean,
+    panel_set: PanelSet | undefined,
+    userId: string
 }) => {
 
     // for creating hooks
     const [vertices, setVertices] = useState<number[][]>([]);
     const imgRef = useRef<HTMLImageElement | null>(null);
     const [scale, setScale] = useState<{ x: number, y: number }>();
-
     useLayoutEffect(() => {
 
         // set svg scale when the panel img resizes
@@ -87,9 +92,6 @@ const Panel = ({
             }
             if (setSelectedHook) setSelectedHook(undefined);
         };
-
-        // window.current?.addEventListener('resize', setScaleOnReload);
-        // return () => window.current?.removeEventListener('resize', setScaleOnReload);
     }, []);
 
     // clear current hook data when {addingHook} becomes false
@@ -97,6 +99,18 @@ const Panel = ({
         if (!addingHook) setVertices([]);
     }, [addingHook]);
 
+    async function getChildrenPanelSets() {
+        const newPanelSets = [] as any;
+        for (let i = 0; i < 3; i++) {
+            if (hooks[i].next_panel_set_id !== undefined) {
+                const panel_set = await apiCalls.getPanelSetByID(Number(hooks[i].next_panel_set_id));
+                newPanelSets.push(panel_set as PanelSet)
+            }
+            else {
+                newPanelSets.push(undefined);
+            }
+        }
+    }
     // add a new hook
     useEffect(() => {
         if (confirmHook != undefined && setHooks && setConfirmHook) {
@@ -119,7 +133,6 @@ const Panel = ({
                     }
                 });
 
-                // console.log('insertIndex:',insertIndex)
                 setHooks(
                     [
                         ...hooks.slice(0, insertIndex),
@@ -129,8 +142,9 @@ const Panel = ({
                         },
                         ...hooks.slice(insertIndex)
                     ],
-                    confirmHook
-                );
+                    confirmHook);
+
+                getChildrenPanelSets();
             }
             setConfirmHook(undefined);
         }
@@ -162,7 +176,6 @@ const Panel = ({
         setVertices(newVertices);
     };
 
-    // const mouseDownHandler = (event?: SyntheticEvent<HTMLImageElement, MouseEvent>) => { }
 
     const mouseDragHandler = (event?: SyntheticEvent<HTMLImageElement, MouseEvent>) => {
         if (addingHook) {
@@ -173,14 +186,8 @@ const Panel = ({
     const mouseMoveHandler = (event?: SyntheticEvent<HTMLImageElement, MouseEvent>) => {
         if (event?.nativeEvent.buttons === 1) return void mouseDragHandler(event);
 
-        // console.log(event?.nativeEvent.offsetX);
 
-    };
-
-    // const touchToMouse =(event?:native.MouseEvent)=>{
-    //    void mouseDragHandler(event);
-    // }
-
+    }
 
     const touchMoveHandler = (event: SyntheticEvent<HTMLImageElement, TouchEvent>) => {
 
@@ -194,14 +201,7 @@ const Panel = ({
             addVertex(x, y);
         }
 
-    };
-
-
-
-    // const imgRect = imgRef.current?.getBoundingClientRect().left ?? 0;
-    // const svgStyle = `
-    //     left: ${imgRect}px
-    // `;
+    }
 
     const editingStyle = addingHook ? styles.editing : '';
     const displayOnLoad = { display: scale == undefined ? 'none' : 'initial' };
@@ -237,7 +237,7 @@ const Panel = ({
                         hooks.map((hook, i) => (
                             <path
                                 d={createSVGPath((hook as CreateHook).points ?? (hook as Hook).position.map(p => [p.x, p.y]) ?? '')}
-                                fill={(selectedHook?.hookIndex ?? -1) === i ? HIGHLIGHT_COLOR : hook.next_panel_set_id === null ? NULL_HOOK : FILL_COLOR}
+                                fill={(selectedHook?.hookIndex ?? -1) === i ? HIGHLIGHT_COLOR : hook.next_panel_set_id === null && panel_set?.author_id === userId ? FORBIDDEN_HOOK : hook.next_panel_set_id !== null ?  FILL_COLOR : NULL_HOOK}
                                 onClick={() => { if (onHookClick) onHookClick(hook, i); }}
                                 className={`${styles.hookPath} ${hideUntilHover ? styles.hidden : ''} ${styles[`hook${i}`]} ${!allowAnimation ? '' : styles[(selectedHook?.hookIndex ?? -1) === i ? 'hookBlocked' : hook.next_panel_set_id === null ? 'hookEmpty' : 'hookTaken']}`}
                                 key={i}
