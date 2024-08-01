@@ -10,7 +10,7 @@ interface Props
 // *** Sticker Options is used in order to changed the different values associated with the sticker tool in CreateToolsCanvas ***
 const StickerOptions = ({enabled, setSticker} : Props) =>
 {
-    const STICKER_COUNT = 22 //Must be increased when new stickers are added
+    const STICKER_COUNT = 50 //Must be increased when new stickers are added
     const [stickerChosen, setChosen] = useState<string[]>([])
     const [run, setRun] = useState(false)
     /*
@@ -49,7 +49,7 @@ const StickerOptions = ({enabled, setSticker} : Props) =>
                     <img className={stickerChosen[1]} src="/stickers/speechBubbleR.png" alt="Speech Bubble Right Sticker" onClick={() => changeSticker("/stickers/speechBubbleR.png", 1)}></img><br/>
                     <img className={stickerChosen[2]} src="/stickers/thoughtBubbleL.png" alt="Thought Bubble Left Sticker" onClick={() => changeSticker("/stickers/thoughtBubbleL.png", 2)}></img><br/>
                     <img className={stickerChosen[3]} src="/stickers/thoughtBubbleR.png" alt="Thought Bubble Right Sticker" onClick={() => changeSticker("/stickers/thoughtBubbleR.png", 3)}></img><br/>
-                    <img className={stickerChosen[4]} src="/stickers/exclamationBubble.png" alt="Exclamation Bubble Sticker" onClick={() => changeSticker("/stickers/exclamation.png", 4)}></img><br/>
+                    <img className={stickerChosen[4]} src="/stickers/exclamationBubble.png" alt="Exclamation Bubble Sticker" onClick={() => changeSticker("/stickers/exclamationBubble.png", 4)}></img><br/>
                     <img className={stickerChosen[5]} src="/stickers/detachedBubble.png" alt="Detached Bubble Sticker" onClick={() => changeSticker("/stickers/detachedBubble.png", 5)}></img><br/>
                     <img className={stickerChosen[6]} src="/stickers/woozyBubbleL.png" alt="Woozy Bubble Left Sticker" onClick={() => changeSticker("/stickers/woozyBubbleL.png", 6)}></img><br/>
                     <img className={stickerChosen[7]} src="/stickers/woozyBubbleR.png" alt="Woozy Bubble Right Sticker" onClick={() => changeSticker("/stickers/woozyBubbleR.png", 7)}></img><br/>
@@ -76,7 +76,35 @@ const StickerOptions = ({enabled, setSticker} : Props) =>
                 </div>
                 <label id="actorLabel">Actors:</label><br/>
                 <div id={styles.actorImgs}>
-                    <img className={stickerChosen[22] ? stickerChosen[22] : ""} src="/stickers/crawly.png" alt="Gnome Sticker" onClick={() => changeSticker("/stickers/crawly.png", 22)}></img><br/>
+                    <img className={stickerChosen[22]} src="/stickers/crawly.png" alt="Gnome Sticker" onClick={() => changeSticker("/stickers/crawly.png", 22)}></img><br/>
+                    <img className={stickerChosen[23]} src="/stickers/monkeFace.png" alt="Monkey Face Sticker" onClick={() => changeSticker("/stickers/monkeFace.png", 23)}></img><br/>
+                    <img className={stickerChosen[24]} src="/stickers/monkeR.png" alt="Monkey Face Right Sticker" onClick={() => changeSticker("/stickers/monkeR.png", 24)}></img><br/>
+                    <img className={stickerChosen[25]} src="/stickers/monkeL.png" alt="Monkey Face Left Sticker" onClick={() => changeSticker("/stickers/monkeL.png", 25)}></img><br/>
+                    <img className={stickerChosen[26]} src="/stickers/monkeMadR.png" alt="Monkey Mad Right Sticker" onClick={() => changeSticker("/stickers/monkeMadR.png", 26)}></img><br/>
+                    <img className={stickerChosen[27]} src="/stickers/monkeMadL.png" alt="Monkey Mad Left Sticker" onClick={() => changeSticker("/stickers/monkeMadL.png", 27)}></img><br/>
+                    <img className={stickerChosen[28]} src="/stickers/monkePoutR.png" alt="Monkey Pout Right Sticker" onClick={() => changeSticker("/stickers/monkePoutR.png", 28)}></img><br/>
+                    <img className={stickerChosen[29]} src="/stickers/monkePoutL.png" alt="Monkey Pout Left Sticker" onClick={() => changeSticker("/stickers/monkePoutL.png", 29)}></img><br/>
+                    <img className={stickerChosen[30]} src="/stickers/monkeWaveR.png" alt="Monkey Wave Right Sticker" onClick={() => changeSticker("/stickers/monkeWaveR.png", 30)}></img><br/>
+                    <img className={stickerChosen[31]} src="/stickers/monkeWaveL.png" alt="Monkey Wave Left Sticker" onClick={() => changeSticker("/stickers/monkeWaveL.png", 31)}></img><br/>
+                    <img className={stickerChosen[32]} src="/stickers/frgR.png" alt="Frog Right Sticker" onClick={() => changeSticker("/stickers/frgR.png", 32)}></img><br/>
+                    <img className={stickerChosen[33]} src="/stickers/frgL.png" alt="Frog Left Sticker" onClick={() => changeSticker("/stickers/frgL.png", 33)}></img><br/>
+                    <img className={stickerChosen[34]} src="/stickers/frgCryR.png" alt="Frog Cry Right Sticker" onClick={() => changeSticker("/stickers/frgCryR.png", 34)}></img><br/>
+                    <img className={stickerChosen[35]} src="/stickers/frgCryR.png" alt="Frog Cry Left Sticker" onClick={() => changeSticker("/stickers/frgCryR.png", 35)}></img><br/>
+                    <img className={stickerChosen[36]} src="/stickers/frgPartyR.png" alt="Frog Party Right Sticker" onClick={() => changeSticker("/stickers/frgPartyR.png", 36)}></img><br/>
+                    <img className={stickerChosen[37]} src="/stickers/frgPartyL.png" alt="Frog Party Left Sticker" onClick={() => changeSticker("/stickers/frgPartyL.png", 37)}></img><br/>
+                    <img className={stickerChosen[38]} src="/stickers/frgRageR.png" alt="Frog Rage Right Sticker" onClick={() => changeSticker("/stickers/frgRageR.png", 38)}></img><br/>
+                    <img className={stickerChosen[39]} src="/stickers/frgRageL.png" alt="Frog Rage Left Sticker" onClick={() => changeSticker("/stickers/frgRageL.png", 39)}></img><br/>
+                    <img className={stickerChosen[40]} src="/stickers/frgWorryR.png" alt="Frog Worry Right Sticker" onClick={() => changeSticker("/stickers/frgWorryR.png", 40)}></img><br/>
+                    <img className={stickerChosen[41]} src="/stickers/frgWorryL.png" alt="Frog Worry Left Sticker" onClick={() => changeSticker("/stickers/frgWorryL.png", 41)}></img><br/>
+                    <img className={stickerChosen[42]} src="/stickers/frgFace.png" alt="Frog Face Sticker" onClick={() => changeSticker("/stickers/frgFace.png", 42)}></img><br/>
+                    <img className={stickerChosen[43]} src="/stickers/g1.png" alt="Gerald 1 Sticker" onClick={() => changeSticker("/stickers/g1.png", 43)}></img><br/>
+                    <img className={stickerChosen[44]} src="/stickers/g2.png" alt="Gerald 2 Sticker" onClick={() => changeSticker("/stickers/g2.png", 44)}></img><br/>
+                    <img className={stickerChosen[45]} src="/stickers/g3.png" alt="Gerald 3 Sticker" onClick={() => changeSticker("/stickers/g3.png", 45)}></img><br/>
+                    <img className={stickerChosen[46]} src="/stickers/g4.png" alt="Gerald 4 Sticker" onClick={() => changeSticker("/stickers/g4.png", 46)}></img><br/>
+                    <img className={stickerChosen[47]} src="/stickers/g5.png" alt="Gerald 5 Sticker" onClick={() => changeSticker("/stickers/g5.png", 47)}></img><br/>
+                    <img className={stickerChosen[48]} src="/stickers/g6.png" alt="Gerald 6 Sticker" onClick={() => changeSticker("/stickers/g6.png", 48)}></img><br/>
+                    <img className={stickerChosen[49]} src="/stickers/g7.png" alt="Gerald 7 Sticker" onClick={() => changeSticker("/stickers/g7.png", 49)}></img><br/>
+                    <img className={stickerChosen[50]} src="/stickers/g8.png" alt="Gerald 8 Sticker" onClick={() => changeSticker("/stickers/g8.png", 50)}></img><br/>
                 </div>
             </div>
         )
