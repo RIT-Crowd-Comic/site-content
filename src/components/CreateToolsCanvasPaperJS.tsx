@@ -301,8 +301,6 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         clipPath.strokeColor = new paper.Color('pink');
         clipPath.strokeWidth = shadeSize;
         clipPath.strokeCap = 'round';
-
-
     }
 
     //continues drawing preview path
@@ -1478,37 +1476,58 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         save(false);
 
         // Create a temp dummy layer to add layer data to publish
-        let publishLayer = new paper.Layer();
+        //let publishLayer = new paper.Layer();
 
         // Export Panel 1
-        publishLayer.importJSON(panel1LayerData.background);
+        /*publishLayer.importJSON(panel1LayerData.background);
         publishLayer.importJSON(panel1LayerData.shade);
         publishLayer.importJSON(panel1LayerData.layer1);
         publishLayer.importJSON(panel1LayerData.layer2);
         publishLayer.importJSON(panel1LayerData.layer3);
         publishLayer.importJSON(panel1LayerData.layer4);
         localStorage.setItem("image-1", String(publishLayer.exportSVG({ asString: true })));
-        publishLayer.removeChildren();
+        publishLayer.removeChildren();*/
+        backgroundLayerReference.current?.importJSON(panel1LayerData.background);
+        shadingLayerRef.current?.importJSON(panel1LayerData.shade);
+        layer1Reference.current?.importJSON(panel1LayerData.layer1);
+        layer2Reference.current?.importJSON(panel1LayerData.layer2);
+        layer3Reference.current?.importJSON(panel1LayerData.layer3);
+        layer4Reference.current?.importJSON(panel1LayerData.layer4);
+        localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
 
         // Export Panel 2
-        publishLayer.importJSON(panel2LayerData.background);
+        /*publishLayer.importJSON(panel2LayerData.background);
         publishLayer.importJSON(panel2LayerData.shade);
         publishLayer.importJSON(panel2LayerData.layer1);
         publishLayer.importJSON(panel2LayerData.layer2);
         publishLayer.importJSON(panel2LayerData.layer3);
         publishLayer.importJSON(panel2LayerData.layer4);
         localStorage.setItem("image-2", String(publishLayer.exportSVG({ asString: true })));
-        publishLayer.removeChildren();
+        publishLayer.removeChildren();*/
+        backgroundLayerReference.current?.importJSON(panel2LayerData.background);
+        shadingLayerRef.current?.importJSON(panel2LayerData.shade);
+        layer1Reference.current?.importJSON(panel2LayerData.layer1);
+        layer2Reference.current?.importJSON(panel2LayerData.layer2);
+        layer3Reference.current?.importJSON(panel2LayerData.layer3);
+        layer4Reference.current?.importJSON(panel2LayerData.layer4);
+        localStorage.setItem("image-2", String(canvasProject.current?.exportSVG({ asString: true })));
 
         // Export Panel 3
-        publishLayer.importJSON(panel3LayerData.background);
+        /*publishLayer.importJSON(panel3LayerData.background);
         publishLayer.importJSON(panel3LayerData.shade);
         publishLayer.importJSON(panel3LayerData.layer1);
         publishLayer.importJSON(panel3LayerData.layer2);
         publishLayer.importJSON(panel3LayerData.layer3);
         publishLayer.importJSON(panel3LayerData.layer4);
         localStorage.setItem("image-3", String(publishLayer.exportSVG({ asString: true })));
-        publishLayer.removeChildren();
+        publishLayer.removeChildren();*/
+        backgroundLayerReference.current?.importJSON(panel3LayerData.background);
+        shadingLayerRef.current?.importJSON(panel3LayerData.shade);
+        layer1Reference.current?.importJSON(panel3LayerData.layer1);
+        layer2Reference.current?.importJSON(panel3LayerData.layer2);
+        layer3Reference.current?.importJSON(panel3LayerData.layer3);
+        layer4Reference.current?.importJSON(panel3LayerData.layer4);
+        localStorage.setItem("image-3", String(canvasProject.current?.exportSVG({ asString: true })));
 
         // Save the SVG Image to localStorage
         //localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
