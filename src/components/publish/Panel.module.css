@@ -55,9 +55,9 @@ img.preview {
 .hookTaken{
     animation: pulse_2 1s linear alternate-reverse infinite;
 }
-/* .hookBlocked{
-    animation: pulse_4 1s linear alternate-reverse infinite;
-} */
+.hookBlocked{
+    filter:none;
+}
 
 @keyframes pulse_2 {
     0% {
@@ -87,7 +87,7 @@ img.preview {
 } */
 
 .hookBlocked:hover{
-    filter:opacity(50%);
+    filter:none;
 }
 .hookEmpty:hover{
     animation: pulse_3h 1s linear alternate-reverse infinite;
