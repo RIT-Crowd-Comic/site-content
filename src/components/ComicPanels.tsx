@@ -1,6 +1,6 @@
 "use client";
 import styles from "@/styles/read.module.css";
-import Panel from './publish/Panel';
+import ReadPanel from './ReadPanel';
 import { CreateHook, Hook, Panel as IPanel, PanelSet } from './interfaces';
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { getSessionCookie } from "@/app/login/loginUtils";
@@ -64,7 +64,7 @@ const ComicPanels = ({ setting, panel_set, hook_state, panels, router, userId }:
         <main className={`${styles.body} ${styles[bodyHeight]}`}>
             <div id={`${styles.comicPanels}`} className={`${setting}`}>
                 <div className={`${styles.firstPanel}`}>
-                    <Panel
+                    <ReadPanel
                         imgSrc={panels[0].imgSrc}
                         hooks={panels[0].hooks}
                         onHookClick={hookLink}
@@ -74,7 +74,7 @@ const ComicPanels = ({ setting, panel_set, hook_state, panels, router, userId }:
                     />
                 </div>
                 <div className={`${styles.secondPanel}`}>
-                    <Panel
+                    <ReadPanel
                         imgSrc={panels[1].imgSrc}
                         hooks={panels[1].hooks}
                         onHookClick={hookLink}
@@ -84,7 +84,7 @@ const ComicPanels = ({ setting, panel_set, hook_state, panels, router, userId }:
                     />
                 </div>
                 <div className={`${styles.thirdPanel}`}>
-                    <Panel
+                    <ReadPanel
                         imgSrc={panels[2].imgSrc}
                         hooks={panels[2].hooks}
                         onHookClick={hookLink}
