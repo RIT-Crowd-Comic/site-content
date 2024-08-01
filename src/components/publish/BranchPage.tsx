@@ -226,6 +226,15 @@ const BranchPage = ({ id }: Props) => {
                         }
                         else {
                             const queryString = new URLSearchParams({ id: response.panel_set }).toString();
+                            
+                            // Clear localStorage so that the user can create new panels in the future
+                            localStorage.setItem("panel-1-layerData", "");
+                            localStorage.setItem("panel-2-layerData", "");
+                            localStorage.setItem("panel-3-layerData", "");
+                            localStorage.setItem("image-1", "");
+                            localStorage.setItem("image-2", "");
+                            localStorage.setItem("image-3", "");
+                            
                             router.push(`/comic/?${queryString}`);
                         }
 
