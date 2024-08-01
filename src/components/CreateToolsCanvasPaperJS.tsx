@@ -105,7 +105,8 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             }
 
             // If not signed in, redirect from user locked pages
-            window.location.href = '/sign-in';
+            console.log(window.history.length);
+            window.history.length < 2 ? window.history.go(-1) : router.push('/comic');
         };
 
         checkUserSession();
@@ -119,7 +120,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
 
         //route if the link contains an id already created - get the hook by id and check its next
         getHookByID(id).then((hook) =>{
-            if((hook instanceof Error)) return router.push(`/comic`);  
+            if((hook instanceof Error)) return window.history.go(-1);  
             
             hook = hook as CreateHook;
             
