@@ -8,8 +8,8 @@ const baseUrl = process.env.NODE_ENV === 'production' ? 'https://crowd-comic-bac
 
 const getAPICall = async (url: string) => {
     return await fetch(`${baseUrl}${url}`, {
-        headers: { 'Content-Type': 'application/json' },
-        method:  'GET'
+        headers: { "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*' },
+        method: 'GET'
     }).then(response => {
         return response.json();
 
@@ -26,9 +26,9 @@ const postAPICall = async (url: string, body: object) => {
     const sessionObj = await getSessionCookie();
     const session = JSON.stringify(sessionObj);
     return await fetch(`${baseUrl}${url}`, {
-        body:    JSON.stringify(body),
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json', 'Session-Cookie': `${session}` },
+        body: JSON.stringify(body),
+        method: 'POST',
+        headers: { "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*',  "Session-Cookie": `${session}` },
     }).then(response => {
         return response.json();
 
@@ -45,9 +45,9 @@ const postAPICallFormData = async (url: string, formData: FormData) => {
     const sessionObj = await getSessionCookie();
     const session = JSON.stringify(sessionObj);
     return await fetch(`${baseUrl}${url}`, {
-        body:    formData,
-        headers: { 'Session-Cookie': `${session}` },
-        method:  'POST',
+      body: formData,
+      headers:{ 'Access-Control-Allow-Origin': '*', "Session-Cookie": `${session}`},
+      method: 'POST',
     })
         .then(response =>{ return response.json(); })
         .then(json => {
