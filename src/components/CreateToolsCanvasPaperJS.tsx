@@ -153,11 +153,9 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         setPanel3LayerData(defaultLayerData);
 
         // If previous layer data exists, set the layers to that, otherwise make new layers
+        // Panel 1
         try {
             let panel1JsonData = localStorage.getItem("panel-1-layerData");
-            let panel2JsonData = localStorage.getItem("panel-2-layerData");
-            let panel3JsonData = localStorage.getItem("panel-3-layerData");
-
             if(panel1JsonData)
             {
                 // Set panel1's layer data from storage
@@ -174,23 +172,37 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 layer3Reference.current.importJSON(layerData.layer3);
                 layer4Reference.current.importJSON(layerData.layer4);
             }
+        }
+        catch(error) {
+            alert("Error loading panel 1 data from localStorage: " + error);
+        }
 
+        // Panel 2
+        try {
+            let panel2JsonData = localStorage.getItem("panel-2-layerData");
             if(panel2JsonData)
             {
                 let layerData = JSON.parse(panel2JsonData);
                 setPanel2LayerData(layerData);
             }
+        }
+        catch(error)
+        {
+            alert("Error loading panel 2 data from localStorage: " + error);
+        }
 
+        // Panel 3
+        try {
+            let panel3JsonData = localStorage.getItem("panel-3-layerData");
             if(panel3JsonData)
             {
                 let layerData = JSON.parse(panel3JsonData);
                 setPanel3LayerData(layerData);
             }
-
         }
-        catch(error) {
-
-            console.log(error);
+        catch(error)
+        {
+            alert("Error loading panel 3 data from localStorage: " + error);
         }
 
         const context = canvas.getContext("2d");
@@ -1309,6 +1321,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             swapLayers(currentLayerIndex, currentLayerIndex - 1);
 
             // Swap layer titles between the two
+
         }
     }
 
@@ -1460,9 +1473,32 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         updateCurrentPanel();
 
         // Save the layerData object to localStorage in JSON string form
-        localStorage.setItem("panel-1-layerData", JSON.stringify(panel1LayerData));
-        localStorage.setItem("panel-2-layerData", JSON.stringify(panel2LayerData));
-        localStorage.setItem("panel-3-layerData", JSON.stringify(panel3LayerData));
+        // Panel 1
+        try{
+            localStorage.setItem("panel-1-layerData", JSON.stringify(panel1LayerData));
+        }
+        catch(error)
+        {
+            alert("Error saving panel 1's layer data to localStorage: " + error);
+        }
+        
+        // Panel 2
+        try{
+            localStorage.setItem("panel-2-layerData", JSON.stringify(panel2LayerData));
+        }
+        catch(error)
+        {
+            alert("Error saving panel 2's layer data to localStorage: " + error);
+        }
+
+        // Panel 1
+        try{
+            localStorage.setItem("panel-3-layerData", JSON.stringify(panel3LayerData));
+        }
+        catch(error)
+        {
+            alert("Error saving panel 3's layer data to localStorage: " + error);
+        }
 
         // Alert the user that their progress has been saved
         if (showAlert) {
@@ -1493,7 +1529,12 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         layer2Reference.current?.importJSON(panel1LayerData.layer2);
         layer3Reference.current?.importJSON(panel1LayerData.layer3);
         layer4Reference.current?.importJSON(panel1LayerData.layer4);
-        localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
+        try{
+            localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
+        }
+        catch(error){
+            alert("Error publishing panel 1 to localStorage: " + error);
+        }
 
         // Export Panel 2
         /*publishLayer.importJSON(panel2LayerData.background);
@@ -1510,7 +1551,12 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         layer2Reference.current?.importJSON(panel2LayerData.layer2);
         layer3Reference.current?.importJSON(panel2LayerData.layer3);
         layer4Reference.current?.importJSON(panel2LayerData.layer4);
-        localStorage.setItem("image-2", String(canvasProject.current?.exportSVG({ asString: true })));
+        try{
+            localStorage.setItem("image-2", String(canvasProject.current?.exportSVG({ asString: true })));
+        }
+        catch(error){
+            alert("Error publishing panel 2 to localStorage: " + error);
+        }
 
         // Export Panel 3
         /*publishLayer.importJSON(panel3LayerData.background);
@@ -1527,7 +1573,12 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         layer2Reference.current?.importJSON(panel3LayerData.layer2);
         layer3Reference.current?.importJSON(panel3LayerData.layer3);
         layer4Reference.current?.importJSON(panel3LayerData.layer4);
-        localStorage.setItem("image-3", String(canvasProject.current?.exportSVG({ asString: true })));
+        try{
+            localStorage.setItem("image-3", String(canvasProject.current?.exportSVG({ asString: true })));
+        }
+        catch(error){
+            alert("Error publishing panel 3 to localStorage: " + error);
+        }
 
         // Save the SVG Image to localStorage
         //localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
