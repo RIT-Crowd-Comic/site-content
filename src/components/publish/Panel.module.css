@@ -49,7 +49,6 @@ img.preview {
     filter: none;
 }
 
-
 .hookEmpty{
     animation: pulse_3 1s linear alternate-reverse infinite;
 }
@@ -62,28 +61,64 @@ img.preview {
 
 @keyframes pulse_2 {
     0% {
-        filter: drop-shadow(2px 4px 20px #009BC6) drop-shadow(2px 4px 20px #009BC6);
+        filter:opacity(50%) drop-shadow(2px 4px 20px #009BC6) drop-shadow(2px 4px 20px #009BC6);
     }
     100% {
-        filter: drop-shadow(2px 4px 50px #009BC6) drop-shadow(2px 4px 50px #009BC6);
+        filter:opacity(50%) drop-shadow(2px 4px 50px #009BC6) drop-shadow(2px 4px 50px #009BC6);
     }
 }
 
 @keyframes pulse_3 {
     0% {
-        filter: drop-shadow(2px 4px 20px #d91911) drop-shadow(2px 4px 20px #d91911);
+        filter:opacity(50%) drop-shadow(2px 4px 20px #d91911) drop-shadow(2px 4px 20px #d91911);
     }
     100% {
-        filter: drop-shadow(2px 4px 50px #d91911) drop-shadow(2px 4px 50px #d91911);
+        filter:opacity(50%) drop-shadow(2px 4px 50px #d91911) drop-shadow(2px 4px 50px #d91911);
     }
 }
 
 @keyframes pulse_4 {
     0% {
-        filter: drop-shadow(2px 4px 20px #FFD172) drop-shadow(2px 4px 20px #FFD172);
+        filter:opacity(50%) drop-shadow(2px 4px 20px #FFD172) drop-shadow(2px 4px 20px #FFD172);
     }
     100% {
-        filter: drop-shadow(2px 4px 50px #FFD172) drop-shadow(2px 4px 50px #FFD172);
+        filter:opacity(50%) drop-shadow(2px 4px 50px #FFD172) drop-shadow(2px 4px 50px #FFD172);
+    }
+}
+
+.hookBlocked:hover{
+    animation: pulse_4h 1s linear alternate-reverse infinite;
+}
+.hookEmpty:hover{
+    animation: pulse_3h 1s linear alternate-reverse infinite;
+}
+.hookTaken:hover{
+    animation: pulse_2h 1s linear alternate-reverse infinite;
+}
+@keyframes pulse_2h {
+    0% {
+        filter:brightness(200%) opacity(50%) drop-shadow(2px 4px 20px #009BC6) drop-shadow(2px 4px 20px #009BC6);
+    }
+    100% {
+        filter:brightness(200%) opacity(50%) drop-shadow(2px 4px 50px #009BC6) drop-shadow(2px 4px 50px #009BC6);
+    }
+}
+
+@keyframes pulse_3h {
+    0% {
+        filter:brightness(200%) opacity(50%) drop-shadow(2px 4px 20px #d91911) drop-shadow(2px 4px 20px #d91911);
+    }
+    100% {
+        filter:brightness(200%) opacity(50%) drop-shadow(2px 4px 50px #d91911) drop-shadow(2px 4px 50px #d91911);
+    }
+}
+
+@keyframes pulse_4h {
+    0% {
+        filter:brightness(200%) opacity(50%) drop-shadow(2px 4px 20px #FFD172) drop-shadow(2px 4px 20px #FFD172);
+    }
+    100% {
+        filter:brightness(200%) opacity(50%) drop-shadow(2px 4px 50px #FFD172) drop-shadow(2px 4px 50px #FFD172);
     }
 }
 
