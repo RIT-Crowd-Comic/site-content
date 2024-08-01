@@ -165,7 +165,7 @@ const ReadPage = ({ id }: Props) => {
          -Use the lightbulb to toggle the hooks on and off
          \t-Red hooks (empty): These do not currently have a comic panel connected to them and will take you to the create page
          \t-Blue hooks (filled): These have a comic panel connected to them and you can click on them to explore that branch of the story
-         \t-Yellow hooks (blocked): These have a comic panel connected to them. However, you are the author of the current panel set, so you cannot create a new panel set off this one
+         \t-Grey hooks (blocked): These have a comic panel connected to them. However, you are the author of the current panel set, so you cannot create a new panel set off this one
 
          -Use the + looking symbol to toggle between horizontal and vertical view
          \t-This will only work for larger screen sizes 

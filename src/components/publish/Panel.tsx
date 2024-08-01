@@ -14,7 +14,7 @@ import * as apiCalls from '../../api/apiCalls';
 const FILL_COLOR = '#009BC6AA';
 const HIGHLIGHT_COLOR = '#FFD172AA';
 const NULL_HOOK = '#D91911AA';
-const FORBIDDEN_HOOK = '#FFA500AA';
+const FORBIDDEN_HOOK = '#939393AA';
 
 const MIN_DRAWING_DIST = 3;
 

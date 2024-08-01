@@ -55,9 +55,9 @@ img.preview {
 .hookTaken{
     animation: pulse_2 1s linear alternate-reverse infinite;
 }
-.hookBlocked{
+/* .hookBlocked{
     animation: pulse_4 1s linear alternate-reverse infinite;
-}
+} */
 
 @keyframes pulse_2 {
     0% {
@@ -77,17 +77,17 @@ img.preview {
     }
 }
 
-@keyframes pulse_4 {
+/* @keyframes pulse_4 {
     0% {
-        filter:opacity(50%) drop-shadow(2px 4px 20px #FFD172) drop-shadow(2px 4px 20px #FFD172);
+        filter:opacity(50%) drop-shadow(2px 4px 20px #939393) drop-shadow(2px 4px 20px #939393);
     }
     100% {
-        filter:opacity(50%) drop-shadow(2px 4px 50px #FFD172) drop-shadow(2px 4px 50px #FFD172);
+        filter:opacity(50%) drop-shadow(2px 4px 50px #939393) drop-shadow(2px 4px 50px #939393);
     }
-}
+} */
 
 .hookBlocked:hover{
-    animation: pulse_4h 1s linear alternate-reverse infinite;
+    filter:opacity(50%);
 }
 .hookEmpty:hover{
     animation: pulse_3h 1s linear alternate-reverse infinite;
@@ -113,14 +113,14 @@ img.preview {
     }
 }
 
-@keyframes pulse_4h {
+/* @keyframes pulse_4h {
     0% {
         filter:brightness(200%) opacity(50%) drop-shadow(2px 4px 20px #FFD172) drop-shadow(2px 4px 20px #FFD172);
     }
     100% {
         filter:brightness(200%) opacity(50%) drop-shadow(2px 4px 50px #FFD172) drop-shadow(2px 4px 50px #FFD172);
     }
-}
+} */
 
 .hookSvg.editing {
     pointer-events: none;
