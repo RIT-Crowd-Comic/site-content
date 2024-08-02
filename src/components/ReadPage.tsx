@@ -137,7 +137,7 @@ const ReadPage = ({ id }: Props) => {
                 userId={userId}
             />
             <div className={`${styles.controlBar}`}  >
-                <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet != undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`} /></button>
+                <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet != undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}/></button>
                 <IconToggleButton
                     setting={hooks}
                     setSetting={setHooks}
@@ -159,16 +159,15 @@ const ReadPage = ({ id }: Props) => {
             </div>
             <InfoBtn toggle={infoDisplay} />
             <InfoBox
-                instructions={`-Read though different story lines by clicking through the panelhooks
-         -Use the lightbulb to toggle the hooks on and off
+                instructions={`Read though different story lines by clicking through the panelhooks.
 
-         .   \t-Red hooks (empty): do not currently have a comic panel connected to them and will take you to the create page
-         .   \t-Blue hooks (filled): have a comic panel connected to them and you can click on them to explore that branch of the story
-         .   \t-Grey hooks (blocked): have a comic panel connected to them. However, you are the author of the current panel set, so you cannot create a new panel set off this one
+         Use the lightbulb to toggle the hooks on and off.
+         - Red hooks (empty): do not currently have a comic panel connected to them and will take you to the create page.
+         - Blue hooks (filled): have a comic panel connected to them and you can click on them to explore that branch of the story.
+         - Grey hooks (blocked): have a comic panel connected to them. However, you are the author of the current panel set, so you cannot create a new panel set off this one.
 
-         -Use the back button to take you back to the parent panel
-         -Use the + looking symbol to toggle between horizontal and vertical view
-         .   \t-This will only work for larger screen sizes 
+         Use the back button to take you back to the parent panel.
+         Use the + looking symbol to toggle between horizontal and vertical view. This will only work for larger screen sizes.
          `}
                 toggle={infoDisplay}
             />
