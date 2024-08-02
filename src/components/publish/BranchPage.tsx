@@ -50,6 +50,7 @@ const BranchPage = ({ id }: Props) => {
     const loadImageAndConvertToURL = (svgString: string | null) => {
         if (svgString) {
 
+            //if create page doesn't upload svg
             if (!svgString.includes('<svg')) {
                 svgString = svgString.replace('<g', '<svg');
                 svgString = svgString.replace('/g>', '/svg>');
@@ -67,13 +68,6 @@ const BranchPage = ({ id }: Props) => {
 
     // one time setup
     useEffect(() => {
-
-        // Lack of async in useEffect causes redirection regardless of session pressence. Redir handled in NavBar for now
-        // authenticateSession().then((user) =>{
-        //     console.log(user);
-        //     if(user.message) router.push(`/sign-in`);
-        // });
-
         // check the id and reroute if needed
         // route if the link contains an id already created - get the hook by id and check its next
         getHookByID(id).then((hook) => {
