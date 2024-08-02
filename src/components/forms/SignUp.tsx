@@ -33,7 +33,7 @@ export function SignUpForm() {
                         errorState(response);
                         return;
                     }
-                    window.history.go(-1);
+                    window.history.length > 2 ? await window.history.go(-1) : window.location.href = '/';
                 }}>
                 <h1 className={styles.h1}>Sign Up</h1>
             {/* USERNAME */}

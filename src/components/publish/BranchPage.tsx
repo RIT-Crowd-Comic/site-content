@@ -76,7 +76,7 @@ const BranchPage = ({ id }: Props) => {
         //check the id and reroute if needed
         //route if the link contains an id already created - get the hook by id and check its next
         getHookByID(id).then((hook) => {
-            if((hook instanceof Error)) window.history.length < 2 ? window.history.go(-1) : router.push('/comic');
+            if((hook instanceof Error)) window.history.length > 2 ? window.history.go(-1) : router.push('/comic');
 
             hook = hook as CreateHook;
 
