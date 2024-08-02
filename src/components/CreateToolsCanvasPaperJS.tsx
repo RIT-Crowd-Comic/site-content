@@ -806,9 +806,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     const [scaleFactorX, setScaleFactorX] = useState(0);
     const [scaleFactorY, setScaleFactorY] = useState(0);
 
-    //
-    const [rotationAngle, setRotationAngle] = useState(0);
-
+    // Object containing specifics of the hit-test (what to check for, etc.)
     let hitOptions = {
         segments: true,
         fill: true,
@@ -859,12 +857,12 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         }
     }
 
-    //check which corner was hit (with bounds) 
-    //and returns the name and point of the opposite corner (to scale from)
+    //check which corner was hit, then returns the name and point of the opposite corner (to scale from)
     function findOppositeCorner(pointHit: paper.Point, rectToCheck: paper.Path.Rectangle) {
         let tempOppCornerName = "";
         let tempOppCorner = new paper.Point(0, 0);
 
+        //uses bounds to find opposite corner
         if (rectToCheck.bounds.bottomLeft.isClose(pointHit, 15)) {
             tempOppCorner = rectToCheck.bounds.topRight;
             tempOppCornerName = "tr";
@@ -881,10 +879,12 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             tempOppCorner = rectToCheck.bounds.bottomLeft;
             tempOppCornerName = "bl";
         }
+        //if point hit is not close to any corner (rotation), then sets the closest opposite point as opp corner
         else {
             tempOppCorner = rectToCheck.getNearestPoint(pointHit.multiply(-1));
         }
 
+        //returns an object with the name and point of the opposite corner
         return {
             'name': tempOppCornerName,
             'point': tempOppCorner
@@ -894,18 +894,20 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     //sets transform action and does setup for that action
     transformTool.onMouseDown = function (event: paper.ToolEvent) {
         if (areaSelected && canvasProject.current && canvasProject.current.activeLayer.locked == false) {
+            // hitTest checks if point clicked is on area selected (null if not on selected area)
             let hitResult = transformInfo[0].hitTest(event.point, hitOptions);
 
             if (hitResult) {
-                // //runs if corners of bounds are hit (segments to check if clicked on rect, tolerance for precision)
+                //runs if bounds or corners of selected area are hit 
                 if (hitResult.type == 'segment' || hitResult.type == 'bounds') {
                     setTransformAction("resizing");
+                    setScaleFactorX(0);
+                    setScaleFactorY(0)
+
+                    //finds and sets opposite corner (as well as setting the prev opp corner name for flipping purposes)
                     let oppCornerInfo = findOppositeCorner(event.point, transformInfo[0]);
                     setOppositeCorner(oppCornerInfo.point);
-                    setPrevOppCornerName(oppCornerInfo.name);
-
-                    setScaleFactorX(0);
-                    setScaleFactorY(0);
+                    setPrevOppCornerName(oppCornerInfo.name);;
                 }
                 //runs if mouse hits area inside selection
                 else if (hitResult.type == 'fill') {
@@ -915,14 +917,13 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             //runs if anywhere outside of box is pressed
             else {
                 setTransformAction("rotating");
-                setRotationAngle(0);
             }
         }
     }
 
+    //runs corresponding transform code based on set transform action
     transformTool.onMouseDrag = function (event: paper.ToolEvent) {
         if (areaSelected && canvasProject.current && canvasProject.current.activeLayer.locked == false) {
-
             //changes position of selected area if moving
             if (transformAction == "moving") {
                 setIsTransforming(true);
@@ -932,8 +933,8 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 rasterInfo[1].position = event.point;
                 return;
             }
+            //scales selected area if resizing
             else if (transformAction == "resizing") {
-
                 setIsTransforming(true);
                 setTransformMouseDragged(true);
 
@@ -944,32 +945,32 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 //adjust selection box and set current opposite corner name
                 transformInfo[0].bounds = new paper.Rectangle(oppositeCorner, event.point);
                 rasterInfo[1].bounds = new paper.Rectangle(oppositeCorner, event.point);
-
                 let oppCornerInfo = findOppositeCorner(event.point, transformInfo[0]);
                 setOppCornerName(oppCornerInfo.name);
                 return;
             }
+            // rotates selected area if rotating
             else if (transformAction == "rotating") {
                 setIsTransforming(true);
                 setTransformMouseDragged(true);
 
-                //calculates math for rotating based on mouse drag
+                //calculates angle for rotating based on mouse drag
                 let center = transformInfo[0].bounds.center;
                 let baseVec = center.subtract(event.lastPoint);
                 let nowVec = center.subtract(event.point);
                 let angle = nowVec.angle - baseVec.angle;
 
+                //rotates selected area based on calculated angle
                 transformInfo[0].rotate(angle);
                 rasterInfo[1].rotate(angle);
-
-                setRotationAngle(angle);
                 return;
             }
 
         }
     }
+
+    //finishes transform action and resets states (depending on set transform action)
     transformTool.onMouseUp = function (event: paper.ToolEvent) {
-        //resets transform action state
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             if (transformAction == "resizing" && transformMouseDragged) {
                 //scales size of selection
@@ -988,7 +989,11 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 }
                 //if not the same, then changes raster as well
                 else {
-                    if (prevOppCornerName == "" || oppCornerName == "") { }
+                    //if no corner was found for either corner, then don't flip (rotated)
+                    if (prevOppCornerName == "" || oppCornerName == "") { 
+                        transformInfo[0].scale(1, 1);
+                        rasterInfo[1].scale(1, 1);
+                    }
                     //if only bottom or top changes flips along x axis
                     else if (prevOppCornerName[0] === oppCornerName[0]) {
                         transformInfo[0].scale(-1, 1);
@@ -1015,7 +1020,6 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             else if (transformAction == "rotating" && transformMouseDragged) {
                 setTransformMouseDragged(false);
             }
-
             setTransformAction("none");
 
             //edit tracking for undo
@@ -1118,7 +1122,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             clearSelection();
             setAreaSelected(false);
         }
-        //rasterize active canvas layer when clicked and set const as it on
+        //rasterize active canvas layer when clicked and set rasterInfo as it
         else if (Number(buttonSelected?.value) == toolStates.SELECT) {
             if (canvasProject.current && !canvasProject.current.activeLayer.isEmpty()) {
                 let raster = canvasProject.current.activeLayer.rasterize();
@@ -1155,7 +1159,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 //readds selected area to layer
                 setRasterInfo(prevState => [...prevState, tempTransformSelectedArea]);
                 canvasProject.current?.activeLayer.addChild(tempTransformSelectedArea);
-                tempTransformSelectedArea.selected = true;
+                tempTransformSelectedArea.bounds.selected = true;
             }
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
