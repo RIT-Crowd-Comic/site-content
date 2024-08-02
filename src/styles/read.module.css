@@ -179,6 +179,9 @@
   width: 40px;
   height: auto;
   filter: invert(1);
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 #hooksToggle .buttonIcon:hover {
