@@ -1,58 +1,71 @@
-"use client";
-import styles from "@/styles/read.module.css";
+'use client';
+import styles from '@/styles/read.module.css';
 import Panel from './publish/Panel';
-import { CreateHook, Hook, Panel as IPanel } from './interfaces';
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { getSessionCookie } from "@/app/login/loginUtils";
-
+import {
+    CreateHook, Hook, Panel as IPanel, PanelSet
+} from './interfaces';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { getSessionCookie } from '@/app/login/loginUtils';
+import * as apiCalls from '../api/apiCalls';
 interface Props {
     setting: string,
     hook_state: string,
-    // images: string[],
-    // actualHooks: any[],
+    panel_set: PanelSet | undefined,
     panels: IPanel[],
     currentId: number,
-    router: AppRouterInstance
+    router: AppRouterInstance,
+    userId: string
 }
 
-//This is the actual comic panel element which already has the image elements provided. With some changes we could potentially just query the panel set here 
-
-//A method will also need to be created to append buttons onto the comic panel and placing them based on the positions provided in the query
-/*
-    Method would be called like getButtons() or PlaceButtons() and would take in the hook data from the queried panel set then for each button hook 
-    info will append the hook placement to the correlating panel and in the given positon on that panel. Buttons will have to be placed with I believe 
-    relative positioning along with percentage values based on image width. The buttons will probably have to be react components with a target panel
-    set that it leads to or possibly another approach.
-
-    NOTE - The current buttons in the html are hard coded and should be removed once the placeButtons() method is created. The positions for the buttons are also currently set in "read.css"
-*/
-const ComicPanels = ({ setting, hook_state, panels, router }: Props) => {
+const ComicPanels = ({
+    setting, panel_set, hook_state, panels, router, userId
+}: Props) => {
     const hidden = hook_state === 'hidden' ? true : false;
-    let bodyHeight = ""
-    if (setting.includes("row")) {
-        bodyHeight = "rowBodyH"
-    } else {
-        bodyHeight = "colBodyH"
+    let bodyHeight = '';
+    if (setting.includes('row')) {
+        bodyHeight = 'rowBodyH';
     }
-
-    //? Better method name
-    // function displayLink(actualHook: any) {
-    //     if (actualHook !== undefined && actualHook.next_panel_set_id !== null) {
-    //         return actualHook.next_panel_set_id;
-    //     }
-    //     return '?';
-    // }
+    else {
+        bodyHeight = 'colBodyH';
+    }
 
     async function hookLink(hook: Hook | CreateHook) {
+
+        // if the hook is set up, go to the next panel set
         if (hook.next_panel_set_id) {
+            console.log('hook is linked');
             return router.push(`/comic?id=${hook.next_panel_set_id}`);
         }
-        const cookie = await getSessionCookie();
-        if(!cookie || cookie instanceof Error) return router.push(`/sign-in`);
+        const session = await getSessionCookie();
 
-        else return router.push(`/comic/create?id=${(hook as Hook).id}`);
+        // if they are not signed in, go to the sign in page
+        if (session instanceof Error || !session) {
+            console.log('user is not signed in');
+            return router.push(`/sign-in`);
+        }
+        const dbSession = await apiCalls.getSession(session?.value);
+        if (dbSession instanceof Error || !dbSession) {
+            console.log('user is not signed in');
+            return router.push(`/sign-in`);
+        }
+
+        // if they are signed in check to see if they made the current panel set
+
+        const user = await apiCalls.getUserBySession(session.value);
+
+        // if they are the author, make it so they can't go to the create page
+        if (panel_set?.author_id === user.id) {
+            console.log('user is author');
+            return router.push(`/comic?id=${panel_set?.id}`);
+        }
+
+        // otherwise, make them go to the create page
+        console.log('user is not author');
+        return router.push(`/comic/create?id=${(hook as Hook).id}`);
     }
-    if (!panels || panels.length === 0) return <div id={`${styles.comicPanels}`} className={`${setting}`}></div>;
+
+
+    if (!panels || panels.length === 0) return <div id={`${styles.comicPanels}`} className={`${setting}`} />;
 
     return (
         <main className={`${styles.body} ${styles[bodyHeight]}`}>
@@ -63,6 +76,9 @@ const ComicPanels = ({ setting, hook_state, panels, router }: Props) => {
                         hooks={panels[0].hooks}
                         onHookClick={hookLink}
                         hidden={hidden}
+                        allowAnimation={true}
+                        panel_set={panel_set}
+                        userId={userId}
                     />
                 </div>
                 <div className={`${styles.secondPanel}`}>
@@ -71,6 +87,9 @@ const ComicPanels = ({ setting, hook_state, panels, router }: Props) => {
                         hooks={panels[1].hooks}
                         onHookClick={hookLink}
                         hidden={hidden}
+                        allowAnimation={true}
+                        panel_set={panel_set}
+                        userId={userId}
                     />
                 </div>
                 <div className={`${styles.thirdPanel}`}>
@@ -79,11 +98,14 @@ const ComicPanels = ({ setting, hook_state, panels, router }: Props) => {
                         hooks={panels[2].hooks}
                         onHookClick={hookLink}
                         hidden={hidden}
+                        allowAnimation={true}
+                        panel_set={panel_set}
+                        userId={userId}
                     />
                 </div>
             </div>
         </main>
     );
-}
+};
 
-export default ComicPanels
+export default ComicPanels;

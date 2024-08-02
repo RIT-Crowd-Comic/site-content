@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { getTrunks, getUserBySession } from '@/api/apiCalls';
-import { logout, getSessionCookie } from '@/app/login/loginUtils';
+import { logout, getSessionCookie, updateSession } from '@/app/login/loginUtils';
 
 const NavBar = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
@@ -18,6 +18,7 @@ const NavBar = () => {
                 const user = await getUserBySession(session_id);
                 if (user && !user.message) {
                     setIsSignedIn(true);
+                    updateSession(session_id);
                     return;
                 }
             }
@@ -37,7 +38,7 @@ const NavBar = () => {
         window.addEventListener('resize', handleResize);
 
         return () => window.removeEventListener('resize', handleResize);
-    },[]);
+    }, []);
 
     const getTrunkUrl = async () => {
         const trunks = await getTrunks();
@@ -67,29 +68,33 @@ const NavBar = () => {
                 </Link>
 
                 <div className="d-flex order-lg-3 ms-auto me-3">
-                    {isSignedIn ? (
-                        <div className="dropdown">
-                            <button
-                                className="nav-btn btn btn-outline-dark text-color-white"
-                                type="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                
-                            >
-                                <Image src="/images/icons/Profile.svg"
-                                width={39}
-                                height={39}
-                                alt="Profile"></Image>
-                                
-                            </button>
-                            <ul className="dropdown-menu dropdown-menu-lg-end">
-                                <li><Link href="/profile"><button className="dropdown-item">Dashboard</button></Link></li>
-                                <li><button onClick={handleSignOut} className="dropdown-item">Sign Out</button></li>
-                            </ul>
-                        </div>
-                    ) : (
-                        <Link href="/sign-in"><button className="nav-btn btn btn-outline-dark">Sign In</button></Link>
-                    )}
+                    {isSignedIn ?
+                        (
+                            <div className="dropdown">
+                                <button
+                                    className="nav-btn btn btn-outline-dark text-color-white"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+
+                                >
+                                    <Image
+                                        src="/images/icons/Profile.svg"
+                                        width={39}
+                                        height={39}
+                                        alt="Profile"
+                                    />
+
+                                </button>
+                                <ul className="dropdown-menu dropdown-menu-lg-end">
+                                    <li><Link href="/profile"><button className="dropdown-item">Dashboard</button></Link></li>
+                                    <li><button onClick={handleSignOut} className="dropdown-item">Sign Out</button></li>
+                                </ul>
+                            </div>
+                        ) :
+                        (
+                            <Link href="/sign-in"><button className="nav-btn btn btn-outline-dark">Sign In</button></Link>
+                        )}
                 </div>
 
                 <button
@@ -146,12 +151,12 @@ const NavBar = () => {
                             </li>
                             {isSignedIn && isMobile && (
                                 <>
-                                <li className="nav-item">
-                                    <Link className="nav-link" href="/profile">Dashboard</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <button onClick={handleSignOut} className="nav-link btn-link">Sign Out</button>
-                                </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" href="/profile">Dashboard</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <button onClick={handleSignOut} className="nav-link btn-link">Sign Out</button>
+                                    </li>
                                 </>
                             )}
                         </ul>

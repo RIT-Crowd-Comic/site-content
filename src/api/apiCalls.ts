@@ -1,5 +1,5 @@
-import { CreatePanelSet } from "../components/interfaces";
-import { getSessionCookie } from "@/app/login/loginUtils";
+import { CreatePanelSet } from '../components/interfaces';
+import { getSessionCookie } from '@/app/login/loginUtils';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -8,53 +8,55 @@ const baseUrl = process.env.NODE_ENV === 'production' ? 'https://crowd-comic-bac
 
 const getAPICall = async (url: string) => {
     return await fetch(`${baseUrl}${url}`, {
-        headers: { "Content-Type": "application/json" },
-        method: 'GET'
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        method:  'GET'
     }).then(response => {
         return response.json();
 
     }).then(json => {
         return json;
 
-    }).catch((error) => {
-        return error;
-    });
+    })
+        .catch((error) => {
+            return error;
+        });
 };
 
 const postAPICall = async (url: string, body: object) => {
     const sessionObj = await getSessionCookie();
     const session = JSON.stringify(sessionObj);
     return await fetch(`${baseUrl}${url}`, {
-        body: JSON.stringify(body),
-        method: 'POST',
-        headers: { "Content-Type": "application/json",  "Session-Cookie": `${session}` },
+        body:    JSON.stringify(body),
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Session-Cookie': `${session}` },
     }).then(response => {
         return response.json();
 
     }).then(json => {
         return json;
 
-    }).catch((error) => {
-        return error;
-    });
-}
+    })
+        .catch((error) => {
+            return error;
+        });
+};
 
 const postAPICallFormData = async (url: string, formData: FormData) => {
     const sessionObj = await getSessionCookie();
     const session = JSON.stringify(sessionObj);
     return await fetch(`${baseUrl}${url}`, {
-      body: formData,
-      headers:{ "Session-Cookie": `${session}`},
-      method: 'POST',
+        body:    formData,
+        headers: { 'Access-Control-Allow-Origin': '*', 'Session-Cookie': `${session}` },
+        method:  'POST',
     })
-    .then(response =>{return response.json()})
-    .then(json => {
-      return json;
-    })
-    .catch(error => {
-         return error;
-    });
-}
+        .then(response =>{ return response.json(); })
+        .then(json => {
+            return json;
+        })
+        .catch(error => {
+            return error;
+        });
+};
 
 /**
  * Get hook based on its id
@@ -70,19 +72,6 @@ const getHookByID = async (id: number) => {
 };
 
 /**
- * Gets an image based on the id
- * @param id the id of the image
- * @returns the url of the image
- */
-const getImageByID = async (id: number) => {
-    const image = await getAPICall(`/getImage/${id}`);
-    if (image.message) {
-        return Error(image.message);
-    }
-    return image;
-}
-
-/**
  * Get a panel
  * @param id the id of the panel
  * @returns the API response which is either a panel set under a specific id or an Error message. A correct response will have the following properties:
@@ -96,7 +85,7 @@ const getPanelByID = async (id: number) => {
         return Error(panel.message);
     }
     return panel;
-}
+};
 
 
 /**
@@ -116,7 +105,7 @@ const getHooksFromPanel = async (panelID: number) => {
         return Error(panel_hooks.message);
     }
     return panel_hooks;
-}
+};
 
 /**
  * Get a panel set
@@ -132,36 +121,7 @@ const getPanelSetByID = async (id: number) => {
         return Error(panel_set.message);
     }
     return panel_set;
-}
-
-/**
- * Get all the panels from a panel set
- * @param panelSetID the id of the panel set
- * @returns the API response which is either the panel sets under a specific user id or an Error message. A correct response will have the following properties:
- */
-const getPanels = async (panelSetID: number[]) => {
-    const panels = await getAPICall(`/panel_sets/${panelSetID.join("-")}/panels/`);
-    if (panels.message) {
-        return Error(panels.message);
-    }
-    return panels;
-}
-
-/**
- * Get a panel based on the index
- * @param panelSetID the id of the panel set
- * @param index the index of the panel
- *  * @returns the API response which is either a panel set under a specific id or an Error message. A correct response will have the following properties:
- *  id: (id # of panel)
- *  image: (path to image)
- */
-const getPanelByIndex = async (panelSetID: number, index: number) => {
-    const panel = await getAPICall(`/panel_set/${panelSetID}/${index}/panel`);
-    if (panel.message) {
-        return Error(panel.message);
-    }
-    else return panel;
-}
+};
 
 /**
  * Get a user
@@ -177,7 +137,7 @@ const getUser = async (id: string) => {
         return Error(user.message);
     }
     else return user;
-}
+};
 
 /**
  * Get all of the trunk panel sets
@@ -192,8 +152,8 @@ const getTrunks = async () => {
     if (trunks.message) {
         return Error(trunks.message);
     }
-    else return trunks
-}
+    else return trunks;
+};
 
 /**
  * Get all panel sets from a user
@@ -210,7 +170,7 @@ const getPanelSets = async (id: string) => {
         return Error(panel_sets.message);
     }
     else return panel_sets;
-}
+};
 
 /**
  * Creates a new user
@@ -221,15 +181,15 @@ const getPanelSets = async (id: string) => {
  */
 const createUser = async (email: string, displayName: string, password: string) => {
     const api_response = await postAPICall(`/createUser`, {
-        password: password,
-        email: email,
+        password:     password,
+        email:        email,
         display_name: displayName
-    })
+    });
     if (api_response.message) {
         return Error(api_response.message);
     }
     else return api_response;
-}
+};
 
 /**
  * Creates a new panel
@@ -237,14 +197,12 @@ const createUser = async (email: string, displayName: string, password: string) 
  * @returns the API response as what was posted or an Error w/ message which must be handled since post method failed 
  */
 const createPanelSet = async (authorID: string) => {
-    const api_response = await postAPICall(`/createPanelSet`, {
-        author_id: authorID
-    });
+    const api_response = await postAPICall(`/createPanelSet`, { author_id: authorID });
     if (api_response.message) {
         return Error(api_response.message);
     }
     else return api_response;
-}
+};
 
 
 /**
@@ -255,14 +213,14 @@ const createPanelSet = async (authorID: string) => {
  */
 const createPanel = async (image: string, panelSetID: number) => {
     const api_response = await postAPICall(`/createPanel`, {
-        image: image,
+        image:        image,
         panel_set_id: panelSetID
     });
     if (api_response.message) {
         return Error(api_response.message);
     }
     else return api_response;
-}
+};
 
 /**
  * Create a hook
@@ -273,28 +231,15 @@ const createPanel = async (image: string, panelSetID: number) => {
  */
 const createHook = async (position: object[], currentPanelID: number, nextPanelSetID: number) => {
     const api_response = await postAPICall(`/createHook`, {
-        position: position,
-        current_panel_id: currentPanelID,
+        position:          position,
+        current_panel_id:  currentPanelID,
         next_panel_set_id: nextPanelSetID,
-    })
+    });
     if (api_response.message) {
         return Error(api_response.message);
     }
     else return api_response;
-}
-
-/**
- * Tells if a hook leads anywhere
- * @param id the id of the hook
- * @returns if the hook's next_panel_set_id is null (or undefined if the hook can't be found)
- */
-const isHookLinked = async (id: number) => {
-    const response = await getHookByID(id);
-    if (response.message) {
-        return Error(response.message);
-    }
-    return response.next_panel_set_id != null;
-}
+};
 
 /**
  * Check if the user's credentials are correct
@@ -304,67 +249,47 @@ const isHookLinked = async (id: number) => {
  */
 const authenticate = async (email: string, password: string) => {
     const response = await postAPICall(`/authenticate`, {
-        email: email,
+        email:    email,
         password: password
-    })
+    });
     if (response.message) {
         return Error(response.message);
     }
     return response;
-}
+};
 
 const changePassword = async (email: string, password: string, newPassword: string) => {
     const response = await postAPICall(`/changePassword`, {
-        email: email,
-        password: password,
+        email:       email,
+        password:    password,
         newPassword: newPassword
-    })
-
-    if (response.message) {
-        return Error(response.message);
-    }
-    return response;
-}
-const getAllImageUrlsByPanelSetId = async (id: number) => {
-    const response = await getAPICall(`/panel_set/${id}/images`);
-    if(response.message) {
-        return new Error(response.message)
-    }
-    return response;
-}
-
-
-const changeDisplayName = async (email: string, password: string, newDisplayName: string) => {
-    const response = await postAPICall(`/changeDisplayName`, {
-        email: email,
-        password: password,
-        newDisplayName: newDisplayName
-    })
-
-    if (response.message) {
-        return Error(response.message);
-    }
-    return response;
-}
-
-/**
- * Changes the image of a panel
- * @param id the id of the panel
- * @param image the new image of the panel
- * @returns 
- */
-const updatePanel = async (id: number, image: string) => {
-    const response = await postAPICall(`/updatePanel`, {
-        id: id,
-        image: image
     });
 
     if (response.message) {
         return Error(response.message);
     }
-
     return response;
-}
+};
+const getAllImageUrlsByPanelSetId = async (id: number) => {
+    const response = await getAPICall(`/panel_set/${id}/images`);
+    if (response.message) {
+        return new Error(response.message);
+    }
+    return response;
+};
+
+
+const changeDisplayName = async (email: string, newDisplayName: string) => {
+    const response = await postAPICall(`/changeDisplayName`, {
+        email:          email,
+        newDisplayName: newDisplayName
+    });
+
+    if (response.message) {
+        return Error(response.message);
+    }
+    return response;
+};
 
 /**
  * Get a list of hooks from a panel set
@@ -373,12 +298,11 @@ const updatePanel = async (id: number, image: string) => {
  */
 const getHooksFromPanelSetById = async(id: number) => {
     const api_response = await getAPICall(`/panel_sets/${id}/hooks`);
-    if(api_response.message)
-    {
+    if (api_response.message) {
         return Error(api_response.message);
     }
     else return api_response;
-}
+};
 
 /**
  * Creates a session for a user in the database
@@ -386,9 +310,8 @@ const getHooksFromPanelSetById = async(id: number) => {
  * @returns 
  */
 const insertSession = async (user_id: string) => {
-    const api_response = await postAPICall('/createSession', {user_id: user_id});
-    if(api_response.message)
-    {
+    const api_response = await postAPICall('/createSession', { user_id: user_id });
+    if (api_response.message) {
         return Error(api_response.message);
     }
     else return api_response;
@@ -401,8 +324,7 @@ const insertSession = async (user_id: string) => {
  */
 const getSession = async (session_id: string) => {
     const api_response = await getAPICall(`/session/${session_id}`);
-    if(api_response.message)
-    {
+    if (api_response.message) {
         return Error(api_response.message);
     }
     else return api_response;
@@ -415,9 +337,9 @@ const getSession = async (session_id: string) => {
  */
 const getUserBySession = async (session_id: string) => {
     const api_response = await getAPICall(`/session/${session_id}/user`);
-    if(api_response.message) return Error(api_response);
+    if (api_response.message) return Error(api_response);
     else return api_response;
-}
+};
 
 type hook = {
     position: { x: number; y: number; }[]
@@ -427,70 +349,71 @@ type hook = {
 const fetchImage = async(imageUrl : string) =>{
     return fetch(imageUrl)
         .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.blob(); // Convert response to Blob
-    })
-    .then(blob => {
-        const imageFile = new File([blob], 'image.jpg', { type: blob.type }); // Create a File object
-        return(imageFile); // Now you have a File object
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob(); // Convert response to Blob
+        })
+        .then(blob => {
+            const imageFile = new File([blob], 'image.jpg', { type: blob.type }); // Create a File object
+            return imageFile; // Now you have a File object
         // You can now use imageFile as needed
-    })
-    .catch(error => {
-        return error;
-    });
-}
+        })
+        .catch(error => {
+            return error;
+        });
+};
 
 const publishHandler = async(panelSet : CreatePanelSet) =>{
-        //get the image files
-        const image1 = await fetchImage(panelSet.panels[0].imgSrc) as File | Error;
-        if(image1 instanceof Error) return new Error(`There was an error getting the 1st image: ${image1.message}`);
-        const image2 = await fetchImage(panelSet.panels[0].imgSrc) as File | Error;
-        if(image2 instanceof Error) return new Error(`There was an error getting the 1st image: ${image2.message}`);
-        const image3 = await fetchImage(panelSet.panels[0].imgSrc) as File | Error;
-        if(image3 instanceof Error) return new Error(`There was an error getting the 1st image: ${image3.message}`);
 
-        //get the hook data
-        const hooks  = [] as Array<hook>;
+    // get the image files
+    const image1 = await fetchImage(panelSet.panels[0].imgSrc) as File | Error;
+    if (image1 instanceof Error) return new Error(`There was an error getting the 1st image: ${image1.message}`);
+    const image2 = await fetchImage(panelSet.panels[1].imgSrc) as File | Error;
+    if (image2 instanceof Error) return new Error(`There was an error getting the 2nd image: ${image2.message}`);
+    const image3 = await fetchImage(panelSet.panels[2].imgSrc) as File | Error;
+    if (image3 instanceof Error) return new Error(`There was an error getting the 3rd image: ${image3.message}`);
 
-        panelSet.panels.map( panel =>{
-            panel.hooks.map(hook =>{
-                const positions = hook.points.map(point =>{
-                   return{
-                        x: point[0],
-                        y: point[1]
-                    }
-                })
-                hooks.push(
-                    {
-                        position: positions,
-                        panel_index: hook.current_panel_index
-                    }
-                )
-            })
-        })
+    // get the hook data
+    const hooks  = [] as Array<hook>;
 
-        //get the hookId
-        const parentHookId = panelSet.previous_hook_id;
+    panelSet.panels.map(panel =>{
+        panel.hooks.map(hook =>{
+            const positions = hook.points.map(point =>{
+                return {
+                    x: point[0],
+                    y: point[1]
+                };
+            });
+            hooks.push({
+                position:    positions,
+                panel_index: hook.current_panel_index
+            });
+        });
+    });
 
-        //get the hook id
-        return await publish(image1, image2, image3, hooks, parentHookId);
-}
+    // get the hookId
+    const parentHookId = panelSet.previous_hook_id;
+
+    // get the hook id
+    return await publish(image1, image2, image3, hooks, parentHookId);
+};
 const publish = async (image1 : File, image2 : File, image3 : File, hooks : Array<hook>, parentHookId : number | undefined) => {
     const data = {
         hook_id: parentHookId,
-        hooks: hooks
+        hooks:   hooks
     };
     const formData = new FormData();
     formData.append('image1', image1);
     formData.append('image2', image2);
     formData.append('image3', image3);
     formData.append('data', JSON.stringify(data, null, 2));
-    const response = await postAPICallFormData(`/publish`, formData );
-    
-    if(response.message) return new Error(response.message);
-    return response;
-}
+    const response = await postAPICallFormData(`/publish`, formData);
 
-export { getAllImageUrlsByPanelSetId, getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, isHookLinked, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, getPanelByIndex, authenticate, changePassword, changeDisplayName, updatePanel, getHooksFromPanelSetById, insertSession, getSession, publishHandler, getUserBySession }
+    if (response.message) return new Error(response.message);
+    return response;
+};
+
+export {
+    getAllImageUrlsByPanelSetId, getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, authenticate, changePassword, changeDisplayName, getHooksFromPanelSetById, insertSession, getSession, publishHandler, getUserBySession
+};

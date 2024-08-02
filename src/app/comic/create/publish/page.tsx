@@ -11,21 +11,29 @@ import backIcon from '../../../../../public/images/back-button-pressed.png';
 const Publish = ({
     params,
     searchParams,
-  }: {
+}: {
     params: { id: number }
     searchParams: { [key: string]: number | undefined }
   }) => {
-    const {id} = searchParams;
-    return (<>
-        <Navbar />
-        <Link  href={`/comic/create?id=${id}`} replace={true}>
-            <button id={`${styles.backButton}`}>
-                <Image src={backIcon} alt="" className={`${styles.buttonIcon}`} width="60" height="60"></Image>
-            </button>
-        </Link>
-        <BranchPage id = {Number(id)}/>
-        <h1></h1>
-    </>);
+    const { id } = searchParams;
+    return (
+        <>
+            <Navbar />
+            <Link href={`/comic/create?id=${id}`} replace={true}>
+                <button id={`${styles.backButton}`}>
+                    <Image
+                        src={backIcon}
+                        alt=""
+                        className={`${styles.buttonIcon}`}
+                        width="60"
+                        height="60"
+                    />
+                </button>
+            </Link>
+            <BranchPage id={Number(id)} />
+            <h1 />
+        </>
+    );
 };
 
 export default Publish;
