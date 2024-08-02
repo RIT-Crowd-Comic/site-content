@@ -1,7 +1,7 @@
 import styles from './BranchPage.module.css';
 
 import { useEffect, useState } from 'react';
-import { CreateHook, emptyPanelSet, CreatePanelSet } from "../interfaces";
+import { CreateHook, emptyPanelSet, CreatePanelSet } from '../interfaces';
 import Panel from './Panel';
 import BranchPageControls from './BranchPageControls';
 import InfoBox from '../info/InfoBox';
@@ -19,9 +19,9 @@ const BranchPage = ({ id }: Props) => {
     const [confirmHook, setConfirmHook] = useState<number>();
     const [selectedHook, setSelectedHook] = useState<{ panelIndex: number, hookIndex: number }>();
     const [panelSet, setPanelSet] = useState<CreatePanelSet>({
-        id: 0,
+        id:        0,
         author_id: '',
-        panels: emptyPanelSet(),
+        panels:    emptyPanelSet(),
     });
     const [activePanel, setActivePanel] = useState(0);
     const activePanelHooks = () => panelSet.panels[activePanel].hooks;
@@ -30,7 +30,7 @@ const BranchPage = ({ id }: Props) => {
         panels[panelIndex].hooks = hooks;
         hooks.map(hook => {
             hook.current_panel_index = panelIndex;
-        })
+        });
         setPanelSet({
             ...panelSet,
             panels
@@ -42,39 +42,40 @@ const BranchPage = ({ id }: Props) => {
 
     // load images from create page
     const [imageLinks, setImageLinks] = useState([
-        "/comic-panels/first_panel.png",
-        "/comic-panels/second_panel.png",
-        "/comic-panels/third_panel.png"
+        '/comic-panels/first_panel.png',
+        '/comic-panels/second_panel.png',
+        '/comic-panels/third_panel.png'
     ]);
 
     const loadImageAndConvertToURL = (svgString: string | null) => {
         if (svgString) {
-            
-            if(!svgString.includes('<svg')){
+
+            if (!svgString.includes('<svg')) {
                 svgString = svgString.replace('<g', '<svg');
                 svgString = svgString.replace('/g>', '/svg>');
             }
-          
+
             // Convert the SVG string to a data URL
             // Encode the SVG string in Base64
             const encoded = btoa(unescape(encodeURIComponent(svgString)));
+
             // Create a data URL
             return `data:image/svg+xml;base64,${encoded}`;
         }
         return undefined;
-    }
+    };
 
     // one time setup
     useEffect(() => {
 
-        //Lack of async in useEffect causes redirection regardless of session pressence. Redir handled in NavBar for now
+        // Lack of async in useEffect causes redirection regardless of session pressence. Redir handled in NavBar for now
         // authenticateSession().then((user) =>{
         //     console.log(user);
         //     if(user.message) router.push(`/sign-in`);
         // });
 
-        //check the id and reroute if needed
-        //route if the link contains an id already created - get the hook by id and check its next
+        // check the id and reroute if needed
+        // route if the link contains an id already created - get the hook by id and check its next
         getHookByID(id).then((hook) => {
             if((hook instanceof Error)) window.history.length > 2 ? window.history.go(-1) : router.push('/comic');
 
@@ -84,10 +85,11 @@ const BranchPage = ({ id }: Props) => {
                 setParentHookId(id);
                 return;
             }
-            //use the next id to reroute to read
+
+            // use the next id to reroute to read
             router.push(`/comic/?id=${hook.next_panel_set_id}`);
         });
-        
+
         // retrieve comic images from create page using local storage
         const storedImageLinks = [
             loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[0],
@@ -103,6 +105,7 @@ const BranchPage = ({ id }: Props) => {
         panelSet.panels[2].imgSrc = storedImageLinks[2];
 
         nextPanel(0);
+
         // selectHook(null);
     }, []);
 
@@ -113,6 +116,7 @@ const BranchPage = ({ id }: Props) => {
      * @param direction positive for forward, negative for backward
      */
     const nextPanel = (increment: number) => {
+
         // constain to values -1, 0, 1
         if (addingHook) confirmBranchHook(activePanel);
 
@@ -125,10 +129,10 @@ const BranchPage = ({ id }: Props) => {
 
         const removeBtn = document.querySelector('#remove-branch-hook') as HTMLButtonElement;
         if (removeBtn) {
-            removeBtn.classList.toggle('selectedHook', selectedHook != undefined)
+            removeBtn.classList.toggle('selectedHook', selectedHook != undefined);
             removeBtn.disabled = selectHook == undefined;
         }
-    }
+    };
 
     /*
     Adds a branch hook to ps with a new branch
@@ -139,95 +143,114 @@ const BranchPage = ({ id }: Props) => {
         if (panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0) >= 3) return;
 
         setAddingHook(true);
-    }
+    };
 
     const confirmBranchHook = (panelIndex: number) => {
         setSelectedHook(undefined);
         setConfirmHook(panelIndex);
         setAddingHook(false);
-    }
+    };
 
     /*
     Removes the most recent branch and returns that branch to default
     */
     const removeBranchHook = () => {
         const panels = panelSet.panels;
-        panels[activePanel].hooks = panels[activePanel].hooks.filter(
-            (_, i) => selectedHook?.hookIndex !== i
-        );
+        panels[activePanel].hooks = panels[activePanel].hooks.filter((_, i) => selectedHook?.hookIndex !== i);
         setPanelSet({
             ...panelSet,
             panels
-        })
+        });
         setSelectedHook(undefined);
         setAddingHook(false);
-    }
+    };
 
     const infoDisplay = (visible: boolean) => {
-        const divs = document.querySelectorAll("div")
-        const modal = divs[divs.length-2]
-        if(modal)
-        {
-            if(visible)
-            {
-                modal.style.display = "block";
+        const divs = document.querySelectorAll('div');
+        const modal = divs[divs.length - 2];
+        if (modal) {
+            if (visible) {
+                modal.style.display = 'block';
             }
-            else
-            {
-                modal.style.display = "none";
+            else {
+                modal.style.display = 'none';
             }
-            
+
         }
-        
-    }
 
-    return (<>
-        <main className={`${styles.body}`}>
-            <div id={styles.publishContainer}>
-                <div id={styles.publishSlideshow}>
-                    <div className={`${styles.carouselInner} carousel-inner`}>
-                        <div className={`${styles.comicPanelContainer} ${styles.carouselView} ${styles.active}`}>
-                            <Panel
-                                imgSrc={imageLinks[activePanel]}
-                                hooks={activePanelHooks()}
-                                setHooks={(hooks, index) => setActivePanelHooks(hooks as CreateHook[], index)}
-                                addingHook={addingHook}
-                                confirmHook={confirmHook}
-                                selectedHook={selectedHook}
-                                setSelectedHook={setSelectedHook}
-                                setConfirmHook={setConfirmHook}
-                                onHookClick={(_, hookIndex) => selectHook(hookIndex)}
-                            ></Panel>
+    };
+
+    return (
+        <>
+            <main className={`${styles.body}`}>
+                <div id={styles.publishContainer}>
+                    <div id={styles.publishSlideshow}>
+                        <div className={`${styles.carouselInner} carousel-inner`}>
+                            <div className={`${styles.comicPanelContainer} ${styles.carouselView} ${styles.active}`}>
+                                <Panel
+                                    imgSrc={imageLinks[activePanel]}
+                                    hooks={activePanelHooks()}
+                                    setHooks={(hooks, index) => setActivePanelHooks(hooks as CreateHook[], index)}
+                                    addingHook={addingHook}
+                                    confirmHook={confirmHook}
+                                    selectedHook={selectedHook}
+                                    setSelectedHook={setSelectedHook}
+                                    setConfirmHook={setConfirmHook}
+                                    onHookClick={(_, hookIndex) => selectHook(hookIndex)}
+                                    panel_set={undefined}
+                                    userId=""
+                                />
+                            </div>
+                            <a
+                                className={`${styles.carouselControlPrev}`}
+                                href="#publish-slideshow"
+                                role="button"
+                                data-slide="prev"
+                                onClick={() => nextPanel(-1)}
+                            >
+                                <img alt="previous button" />
+                                {/* <span className="carousel-control-prev-icon" aria-hidden="true"></span> */}
+                                {/* <span className="sr-only">Previous</span> */}
+                            </a>
+                            <a
+                                className={`${styles.carouselControlNext}`}
+                                href="#publish-slideshow"
+                                role="button"
+                                data-slide="next"
+                                onClick={() => nextPanel(1)}
+                            >
+                                <img alt="next button" />
+                                {/* <span className="sr-only">Next</span> */}
+                            </a>
                         </div>
-                        <a className={`${styles.carouselControlPrev}`} href="#publish-slideshow" role="button" data-slide="prev" onClick={() => nextPanel(-1)}>
-                            <img alt="previous button" />
-                            {/* <span className="carousel-control-prev-icon" aria-hidden="true"></span> */}
-                            {/* <span className="sr-only">Previous</span> */}
-                        </a>
-                        <a className={`${styles.carouselControlNext}`} href="#publish-slideshow" role="button" data-slide="next" onClick={() => nextPanel(1)}>
-                            <img alt="next button" />
-                            {/* <span className="sr-only">Next</span> */}
-                        </a>
                     </div>
-                </div>
-                <BranchPageControls
-                    addingHook={addingHook}
-                    addBranchHook={addBranchHook}
-                    confirmBranchHook={() => confirmBranchHook(activePanel)}
-                    removeBranchHook={removeBranchHook}
-                    publish={async () => {
-                        panelSet.previous_hook_id = parentHookId;
-                        const response = await publishHandler(panelSet);
-                        console.log(response);
+                    <BranchPageControls
+                        addingHook={addingHook}
+                        addBranchHook={addBranchHook}
+                        confirmBranchHook={() => confirmBranchHook(activePanel)}
+                        removeBranchHook={removeBranchHook}
+                        publish={async () => {
+                            panelSet.previous_hook_id = parentHookId;
+                            const response = await publishHandler(panelSet);
+                            console.log(response);
 
-                        if (response instanceof Error) {
-                            const errorMessage = response.message || "An unknown error occurred";
-                            setErrorMessage(`There was an error: ${errorMessage}`);
-                        }
-                        else {
-                            const queryString = new URLSearchParams({ id: response.panel_set }).toString();
-                            router.push(`/comic/?${queryString}`);
-                        }
+                            if (response instanceof Error) {
+                                const errorMessage = response.message || 'An unknown error occurred';
+                                setErrorMessage(`There was an error: ${errorMessage}`);
+                            }
+                            else {
+                                const queryString = new URLSearchParams({ id: response.panel_set }).toString();
+
+                                // Clear localStorage so that the user can create new panels in the future
+                                localStorage.setItem('panel-1-layerData', '');
+                                localStorage.setItem('panel-2-layerData', '');
+                                localStorage.setItem('panel-3-layerData', '');
+                                localStorage.setItem('image-1', '');
+                                localStorage.setItem('image-2', '');
+                                localStorage.setItem('image-3', '');
+
+                                router.push(`/comic/?${queryString}`);
+                            }
 
                         /*
                         get the data on the page this was sent to
@@ -238,11 +261,11 @@ const BranchPage = ({ id }: Props) => {
                                 const { id, name } = router.query;
                             }
                         */
-                    }}
-                    branchCount={panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)}
-                ></BranchPageControls>
-                {errorMessage && <div id="errorPublish" style={{ color: 'white' }}> {errorMessage} </div>}
-                {/* <div className={`${styles.buttonContainer}`}>
+                        }}
+                        branchCount={panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)}
+                    />
+                    {errorMessage && <div id="errorPublish" style={{ color: 'white' }}> {errorMessage} </div>}
+                    {/* <div className={`${styles.buttonContainer}`}>
                     <div className={`${styles.branchHooks}`}>
                         <div id={`${styles.branchHookControls}`}>
                             {
@@ -259,16 +282,21 @@ const BranchPage = ({ id }: Props) => {
                     </div>
                     <button onClick={pushToLocalStorage} id={`${styles.publishBtn}`}>Publish</button>
                 </div> */}
-            </div>
-            <InfoBtn toggle={infoDisplay}></InfoBtn>
-            <InfoBox instructions={`Instructions:\n
+                </div>
+                <InfoBtn toggle={infoDisplay} />
+                <InfoBox
+                    instructions={`
             -click on the add hook button to start drawing a hook on the comic
             -once done, click on accept hook to keep or remove to delete the hook
+            - *hooks do have a minimum size and dimention so you can't make itty bitty unclickable hooks
             - to remove a hook: click on the hook you wish to remove then click on remove hook to delete it\n 
             *YOU MUSH HAVE 3 HOOKS IN ORDER TO PUBLISH YOUR COMIC*
-            `} toggle={infoDisplay}></InfoBox>
-        </main>
-    </>);
-}
+            `}
+                    toggle={infoDisplay}
+                />
+            </main>
+        </>
+    );
+};
 
 export default BranchPage;
