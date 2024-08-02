@@ -1175,7 +1175,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             layer3Reference.current && layer4Reference.current) {
 
             // clears undo stack
-            for (let i = 0; i < prevEdits.length - 1; i++) {
+            for (let i = 0; i < prevEdits.length - 2; i++) {
                 prevEdits.pop();
             }
 
@@ -1270,6 +1270,9 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             layer1Reference.current?.activate();
             setCurrentLayerIndex(1);
             break;
+        }
+        if(canvasProject.current){
+            prevEdits.push({ id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({ asString: true })) });
         }
     };
 
@@ -1430,25 +1433,32 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             }
         }
 
-        if (change && backgroundLayerReference.current && layer1Reference.current && layer2Reference.current) {
+        if (change && backgroundLayerReference.current && layer1Reference.current && layer2Reference.current && layer3Reference.current && layer4Reference.current) {
             if (change.id == backgroundLayerReference.current.id) {
                 backgroundLayerReference.current.removeChildren();
                 backgroundLayerReference.current.importSVG(change.svg);
                 backgroundLayerReference.current.activate();
-
             }
             if (change.id == layer1Reference.current.id) {
 
                 layer1Reference.current.removeChildren();
                 layer1Reference.current.importSVG(change.svg);
                 layer1Reference.current.activate();
-
             }
             if (change.id == layer2Reference.current.id) {
                 layer2Reference.current.removeChildren();
                 layer2Reference.current.importSVG(change.svg);
                 layer2Reference.current.activate();
-
+            }
+            if (change.id == layer3Reference.current.id) {
+                layer3Reference.current.removeChildren();
+                layer3Reference.current.importSVG(change.svg);
+                layer3Reference.current.activate();
+            }
+            if (change.id == layer4Reference.current.id) {
+                layer4Reference.current.removeChildren();
+                layer4Reference.current.importSVG(change.svg);
+                layer4Reference.current.activate();
             }
 
             setPrevUndos(prevUndos);
@@ -1465,28 +1475,33 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 prevEdits.push(change);
             }
         }
-        if (change && backgroundLayerReference.current && layer1Reference.current && layer2Reference.current) {
+        if (change && backgroundLayerReference.current && layer1Reference.current && layer2Reference.current && layer3Reference.current && layer4Reference.current) {
             if (change.id == backgroundLayerReference.current.id) {
                 backgroundLayerReference.current.removeChildren();
                 backgroundLayerReference.current.importSVG(change.svg);
                 backgroundLayerReference.current.activate();
-
             }
             if (change.id == layer1Reference.current.id) {
 
                 layer1Reference.current.removeChildren();
                 layer1Reference.current.importSVG(change.svg);
                 layer1Reference.current.activate();
-
             }
             if (change.id == layer2Reference.current.id) {
                 layer2Reference.current.removeChildren();
                 layer2Reference.current.importSVG(change.svg);
                 layer2Reference.current.activate();
-
             }
-
-
+            if (change.id == layer3Reference.current.id) {
+                layer3Reference.current.removeChildren();
+                layer3Reference.current.importSVG(change.svg);
+                layer3Reference.current.activate();
+            }
+            if (change.id == layer4Reference.current.id) {
+                layer4Reference.current.removeChildren();
+                layer4Reference.current.importSVG(change.svg);
+                layer4Reference.current.activate();
+            }
         }
         setPrevUndos(prevUndos);
         setPrevEdits(prevEdits);
