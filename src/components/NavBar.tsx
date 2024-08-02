@@ -24,7 +24,6 @@ const NavBar = () => {
             }
 
             // If not signed in, redirect from user locked pages
-            console.log(window.history);
             const url = window.location.href;
             if (url.includes('/publish')) window.history.length > 2 ? await window.history.go(-1) : window.location.href = '/comic';
             if (url.includes('/profile')) window.history.length > 2 ? await window.history.go(-1) : window.location.href = '/';
