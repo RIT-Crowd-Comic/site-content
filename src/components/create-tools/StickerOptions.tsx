@@ -1,16 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import styles from '@/styles/create.module.css';
 import stickersMap from '../../../data/stickers-map.json';
 
 interface Props {
     enabled: boolean;               // Should the HTML of this component be displayed on the page currently?
-    setSticker: Function;        // Method for setting the url of the sticker tool
+    setSticker: Dispatch<SetStateAction<string>>;        // Method for setting the url of the sticker tool
 }
 
-interface Sticker {
-    src: string,
-    alt: string
-}
+// interface Sticker {
+//     src: string,
+//     alt: string
+// }
 
 type StickerProps = 'bubbles' | 'word-effects' | 'particles-accents' | 'actors';
 
@@ -64,33 +64,29 @@ const StickerOptions = ({ enabled, setSticker }: Props) => {
     };
 
     // If the component is set to be enabled, return HTML, otherwise, return nothing
-    if (enabled) {
-        return (
-            <div id={styles.stickerTools} className={styles.toolStyles}>
-                <h3>Sticker Tools</h3>
-                <label id="bubbleLabel">Bubbles:</label><br />
-                <div id={styles.bubbleImgs}>
-                    {createStickerImages('bubbles')}
-                </div>
-                <label id="fxLabel">Word Effects:</label><br />
-                <div id={styles.fxImgs}>
-                    {createStickerImages('word-effects')}
-                </div>
-                <label id="bubbleLabel">Particles & Accents:</label><br />
-                <div id={styles.particleImgs}>
-                    {createStickerImages('particles-accents')}
-                </div>
-                <label id="actorLabel">Actors:</label><br />
-                <div id={styles.actorImgs}>
-                    {createStickerImages('actors')}
-                </div>
-            </div>
-        );
-    }
-    else {
-        return (null);
-    }
+    if (!enabled) return undefined;
 
+    return (
+        <div id={styles.stickerTools} className={styles.toolStyles}>
+            <h3>Sticker Tools</h3>
+            <label id="bubbleLabel">Bubbles:</label><br />
+            <div id={styles.bubbleImgs}>
+                {createStickerImages('bubbles')}
+            </div>
+            <label id="fxLabel">Word Effects:</label><br />
+            <div id={styles.fxImgs}>
+                {createStickerImages('word-effects')}
+            </div>
+            <label id="bubbleLabel">Particles & Accents:</label><br />
+            <div id={styles.particleImgs}>
+                {createStickerImages('particles-accents')}
+            </div>
+            <label id="actorLabel">Actors:</label><br />
+            <div id={styles.actorImgs}>
+                {createStickerImages('actors')}
+            </div>
+        </div>
+    );
 };
 
 export default StickerOptions;
