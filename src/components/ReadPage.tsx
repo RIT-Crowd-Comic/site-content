@@ -149,7 +149,7 @@ const ReadPage = ({ id }: Props) => {
                     style={backVisibility}
                     id={`${styles.backButton}`}
                 >
-                    <img src={backIcon} className={`${styles.buttonIcon}`} />
+                    <img src={backIcon} className={`${styles.buttonIcon}`} alt="back button" />
                 </button>
                 <IconToggleButton
                     setting={hooks}
