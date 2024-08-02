@@ -358,7 +358,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         });
 
         //remove preview clip path
-        clipPath?.remove;
+        clipPath?.remove();
         //switch back to old layer
         changeLayer();
 
