@@ -111,7 +111,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             }
 
             // If not signed in, redirect from user locked pages
-            window.history.length < 2 ? window.history.go(-1) : router.push('/comic');
+            window.history.length > 2 ? window.history.go(-1) : router.push('/comic');
         };
 
         checkUserSession();
