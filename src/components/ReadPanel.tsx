@@ -8,12 +8,10 @@ import {
 } from '@/utils';
 import Image from 'next/image';
 
-
 // perhaps load this from a global color palette file
 const FILL_COLOR = '#009BC6AA';
 const NULL_HOOK = '#D91911AA';
 const FORBIDDEN_HOOK = '#939393AA';
-
 
 /**
  * If any parameters for editing are missing, just display the existing panel.
@@ -30,8 +28,8 @@ const ReadPanel = ({
 }: {
     imgSrc: string,
     hooks: (Hook | CreateHook)[],
-    onHookClick?: (hook: Hook | CreateHook, hookIndex: number) => void,
-    hidden?: boolean,
+    onHookClick: (hook: Hook | CreateHook, hookIndex: number) => void,
+    hidden: boolean,
     panel_set: PanelSet | undefined,
     userId: string
 }) => {

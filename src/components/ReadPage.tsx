@@ -137,7 +137,7 @@ const ReadPage = ({ id }: Props) => {
                 userId={userId}
             />
             <div className={`${styles.controlBar}`}  >
-                <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet != undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`} /></button>
+                <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet != undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}/></button>
                 <IconToggleButton
                     setting={hooks}
                     setSetting={setHooks}

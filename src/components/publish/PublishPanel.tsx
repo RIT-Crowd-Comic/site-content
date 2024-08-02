@@ -33,13 +33,13 @@ const Panel = ({
 }: {
     imgSrc: string,
     hooks: (Hook | CreateHook)[],
-    setHooks?: (hooks: (Hook | CreateHook)[], panelIndex: number) => void
-    addingHook?: boolean,
+    setHooks: (hooks: (Hook | CreateHook)[], panelIndex: number) => void
+    addingHook: boolean,
     confirmHook?: number,
     setConfirmHook?: (panelIndex: number | undefined) => void,
     selectedHook?: { panelIndex: number, hookIndex: number },
-    setSelectedHook?: (hookInfo: { panelIndex: number, hookIndex: number } | undefined) => void,
-    onHookClick?: (hook: Hook | CreateHook, hookIndex: number) => void,
+    setSelectedHook: (hookInfo: { panelIndex: number, hookIndex: number } | undefined) => void,
+    onHookClick: (hook: Hook | CreateHook, hookIndex: number) => void,
 }) => {
 
     // for creating hooks
