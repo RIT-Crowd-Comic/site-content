@@ -40,11 +40,14 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
         return(
             <div id="penTools" className={styles.toolStyles}>
                 <h3>Pen Tools</h3>
-                <div id={styles.penSlider}>
+                <div id={styles.penSlider} className="">
                     <label id="sliderLabel" htmlFor="penRange">Pen Size: {penSize}</label>
-                    {/* <span id={styles.sliderValue} style={{width: `${penSize}px`}}>{penSize}</span> */}
-                    <div id={styles.progressBar} style={{width: `${penSize*3.32+1}%`}} onChange={updateSize}></div>
-                    <input type="range" min="1" max="20" defaultValue={penSize} step="1" id={styles.rangeSlider} ref={sliderReference} onChange={updateSize}></input>
+                    <span id={styles.sliderValue} style={{left:`${penSize*3.3-3}%`}}>
+                        {penSize}
+                        <span id={styles.pointy}></span>
+                    </span>
+                    <div id={styles.progressBar} style={{width:`${penSize*3.32+1}%`}} onChange={updateSize}></div>
+                    <input type="range" min="1" max="20" defaultValue={penSize} step="1" className={styles.rangeSlider} ref={sliderReference} onChange={updateSize}></input>
                 </div>
                 <div id={styles.paletteButtons}>
                     <p id="colorText">Colors:</p>
