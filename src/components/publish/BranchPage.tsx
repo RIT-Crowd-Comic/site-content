@@ -2,7 +2,7 @@ import styles from './BranchPage.module.css';
 
 import { useEffect, useState } from 'react';
 import { CreateHook, emptyPanelSet, CreatePanelSet } from '../interfaces';
-import Panel from './Panel';
+import Panel from './PublishPanel';
 import BranchPageControls from './BranchPageControls';
 import InfoBox from '../info/InfoBox';
 import InfoBtn from '../info/InfoBtn';
@@ -197,8 +197,6 @@ const BranchPage = ({ id }: Props) => {
                                     setSelectedHook={setSelectedHook}
                                     setConfirmHook={setConfirmHook}
                                     onHookClick={(_, hookIndex) => selectHook(hookIndex)}
-                                    panel_set={undefined}
-                                    userId=""
                                 />
                             </div>
                             <a
@@ -232,7 +230,6 @@ const BranchPage = ({ id }: Props) => {
                         publish={async () => {
                             panelSet.previous_hook_id = parentHookId;
                             const response = await publishHandler(panelSet);
-                            console.log(response);
 
                             if (response instanceof Error) {
                                 const errorMessage = response.message || 'An unknown error occurred';
@@ -251,37 +248,10 @@ const BranchPage = ({ id }: Props) => {
 
                                 router.push(`/comic/?${queryString}`);
                             }
-
-                        /*
-                        get the data on the page this was sent to
-                            import { useRouter } from 'next/router';
-
-                            const page = () => {
-                                const router = useRouter();
-                                const { id, name } = router.query;
-                            }
-                        */
                         }}
                         branchCount={panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)}
                     />
                     {errorMessage && <div id="errorPublish" style={{ color: 'white' }}> {errorMessage} </div>}
-                    {/* <div className={`${styles.buttonContainer}`}>
-                    <div className={`${styles.branchHooks}`}>
-                        <div id={`${styles.branchHookControls}`}>
-                            {
-                                addingHook ? <button id="add-branch-hook" className={`${styles.branchControlBtn} ${styles.selectedHook}`} onClick={() => confirmBranchHook(activePanel)}>Accept Hook</button> :
-                                    <button id="add-branch-hook" className={`${styles.branchControlBtn}`} onClick={addBranchHook}>Add Hook</button>
-                            }
-                            {/* <button id="add-branch-hook" className="branch-control-btn" onClick={addBranchHook}>Add Hook</button> }
-                            <button id="remove-branch-hook" className={`${styles.branchControlBtn}`} onClick={removeBranchHook}>Remove Hook</button>
-                        </div>
-                        <div className={`${styles.branchHookText}`}>
-                            <p>{panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)} OF 3 REQUIRED BRANCHES PLACED</p>
-                            {/* starting text to be updated when either add or remove branch hook button is pressed }
-                        </div>
-                    </div>
-                    <button onClick={pushToLocalStorage} id={`${styles.publishBtn}`}>Publish</button>
-                </div> */}
                 </div>
                 <InfoBtn toggle={infoDisplay} />
                 <InfoBox
