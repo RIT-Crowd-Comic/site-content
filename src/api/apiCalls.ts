@@ -132,7 +132,7 @@ const getPanelSetByID = async (id: number) => {
  *  id: (id of user)
  */
 const getUser = async (id: string) => {
-    const user = await getAPICall(`/user/${id}/`);
+    const user = await getAPICall(`/user/${id}`);
     if (user.message) {
         return Error(user.message);
     }

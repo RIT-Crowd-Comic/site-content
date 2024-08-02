@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import ComicPanels from '@/components/ComicPanels';
 import * as apiCalls from '../api/apiCalls';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Panel, PanelSet, Hook } from './interfaces';
+import { Panel, PanelSet, Hook, User } from './interfaces';
 import InfoBox from './info/InfoBox';
 import InfoBtn from './info/InfoBtn';
 import { getSessionCookie } from '@/app/login/loginUtils';
@@ -34,6 +34,7 @@ const ReadPage = ({ id }: Props) => {
     const [error, setError] = useState<string>('');
     const [userId, setUserId] = useState<string>('');
     const [panels, setPanels] = useState<Panel[]>([]);
+    const [author, setAuthor] = useState<User>();
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
@@ -46,6 +47,11 @@ const ReadPage = ({ id }: Props) => {
                 console.log('Session exists');
                 userResponse = await apiCalls.getUserBySession(session.value);
                 newUserId = userResponse.id;
+                const authorResponse = await apiCalls.getUser(newUserId);
+                if (!updateError(authorResponse)) {
+                    setAuthor(authorResponse)
+                    console.log(authorResponse)
+                }
             }
 
             else {
@@ -82,7 +88,9 @@ const ReadPage = ({ id }: Props) => {
                         const parentPanelResponse = await apiCalls.getPanelByID(Number(panelSetResponse?.hook?.current_panel_id));
                         if (!updateError(parentPanelResponse)) {
                             const previousPanelSetResponse = await apiCalls.getPanelSetByID(Number(parentPanelResponse.panel_set_id));
-                            setParentPanelSet(previousPanelSetResponse);
+                            if(!updateError(previousPanelSetResponse)) {
+                                setParentPanelSet(previousPanelSetResponse)
+                            }
                         }
                     }
                 }
@@ -134,7 +142,7 @@ const ReadPage = ({ id }: Props) => {
                 currentId={id}
                 router={router}
                 panel_set={panelSet}
-                userId={userId}
+                user={author}
             />
             <div className={`${styles.controlBar}`}  >
                 <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet != undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}/></button>

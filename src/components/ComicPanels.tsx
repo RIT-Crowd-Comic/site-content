@@ -2,7 +2,7 @@
 import styles from '@/styles/read.module.css';
 import ReadPanel from './ReadPanel';
 import {
-    CreateHook, Hook, Panel as IPanel, PanelSet
+    CreateHook, Hook, Panel as IPanel, PanelSet, User
 } from './interfaces';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { getSessionCookie } from '@/app/login/loginUtils';
@@ -14,11 +14,11 @@ interface Props {
     panels: IPanel[],
     currentId: number,
     router: AppRouterInstance,
-    userId: string
+    user: User | null | undefined
 }
 
 const ComicPanels = ({
-    setting, panel_set, hook_state, panels, router, userId
+    setting, panel_set, hook_state, panels, router, user
 }: Props) => {
     const hidden = hook_state === 'hidden' ? true : false;
     let bodyHeight = '';
@@ -77,7 +77,7 @@ const ComicPanels = ({
                         onHookClick={hookLink}
                         hidden={hidden}
                         panel_set={panel_set}
-                        userId={userId}
+                        userId={user != null ? user.id : "this should never happen"}
                     />
                 </div>
                 <div className={`${styles.secondPanel}`}>
@@ -87,7 +87,7 @@ const ComicPanels = ({
                         onHookClick={hookLink}
                         hidden={hidden}
                         panel_set={panel_set}
-                        userId={userId}
+                        userId={user != null ? user.id : "this should never happen"}
                     />
                 </div>
                 <div className={`${styles.thirdPanel}`}>
@@ -97,7 +97,7 @@ const ComicPanels = ({
                         onHookClick={hookLink}
                         hidden={hidden}
                         panel_set={panel_set}
-                        userId={userId}
+                        userId={user != null ? user.id : "this should never happen"}
                     />
                 </div>
             </div>
