@@ -1,0 +1,218 @@
+{
+    "bubbles": [
+        {
+            "src": "http://localhost:3000/stickers/speechBubbleL.png",
+            "alt": "Speech Bubble Left Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/speechBubbleR.png",
+            "alt": "Speech Bubble Right Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/thoughtBubbleL.png",
+            "alt": "Thought Bubble Left Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/thoughtBubbleR.png",
+            "alt": "Thought Bubble Right Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/exclamationBubble.png",
+            "alt": "Exclamation Bubble Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/detachedBubble.png",
+            "alt": "Detached Bubble Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/woozyBubbleL.png",
+            "alt": "Woozy Bubble Left Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/woozyBubbleR.png",
+            "alt": "Woozy Bubble Right Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/dashBubbleL.png",
+            "alt": "Dash Bubble Left Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/dashBubbleR.png",
+            "alt": "Dash Bubble Right Sticker"
+        }
+    ],
+    "word-effects": [
+        {
+            "src": "http://localhost:3000/stickers/boom.png",
+            "alt": "Boom Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/kablam.png",
+            "alt": "Kablam Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/oof.png",
+            "alt": "Oof Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/poof.png",
+            "alt": "Poof Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/wham.png",
+            "alt": "Wham Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/zoom.png",
+            "alt": "Zoom Sticker"
+        }
+    ],
+    "particles-accents": [
+        {
+            "src": "http://localhost:3000/stickers/angry.png",
+            "alt": "Angry Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/heart.png",
+            "alt": "Heart Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/shock.png",
+            "alt": "Shock Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/silence.png",
+            "alt": "Silence Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/sparkle.png",
+            "alt": "Sparkle Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/sparkles.png",
+            "alt": "Sparkles Sticker"
+        }
+    ],
+    "actors": [
+        {
+            "src": "http://localhost:3000/stickers/crawly.png",
+            "alt": "Gnome Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/monkeFace.png",
+            "alt": "Monkey Face Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/monkeR.png",
+            "alt": "Monkey Face Right Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/monkeL.png",
+            "alt": "Monkey Face Left Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/monkeMadR.png",
+            "alt": "Monkey Mad Right Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/monkeMadL.png",
+            "alt": "Monkey Mad Left Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/monkePoutR.png",
+            "alt": "Monkey Pout Right Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/monkePoutL.png",
+            "alt": "Monkey Pout Left Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/monkeWaveR.png",
+            "alt": "Monkey Wave Right Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/monkeWaveL.png",
+            "alt": "Monkey Wave Left Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/frgR.png",
+            "alt": "Frog Right Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/frgL.png",
+            "alt": "Frog Left Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/frgCryR.png",
+            "alt": "Frog Cry Right Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/frgCryR.png",
+            "alt": "Frog Cry Left Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/frgPartyR.png",
+            "alt": "Frog Party Right Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/frgPartyL.png",
+            "alt": "Frog Party Left Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/frgRageR.png",
+            "alt": "Frog Rage Right Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/frgRageL.png",
+            "alt": "Frog Rage Left Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/frgWorryR.png",
+            "alt": "Frog Worry Right Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/frgWorryL.png",
+            "alt": "Frog Worry Left Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/frgFace.png",
+            "alt": "Frog Face Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/g1.png",
+            "alt": "Gerald 1 Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/g2.png",
+            "alt": "Gerald 2 Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/g3.png",
+            "alt": "Gerald 3 Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/g4.png",
+            "alt": "Gerald 4 Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/g5.png",
+            "alt": "Gerald 5 Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/g6.png",
+            "alt": "Gerald 6 Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/g7.png",
+            "alt": "Gerald 7 Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/g8.png",
+            "alt": "Gerald 8 Sticker"
+        },
+        {
+            "src": "http://localhost:3000/stickers/sten.png",
+            "alt": "Sten Sticker"
+        }
+    ]
+}
