@@ -1,12 +1,12 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import styles from '@/styles/read.module.css';
 
 interface Props {
     source_1:string, // inactive state image/icon
     source_2:string, // active state image/icon
     setting:string, // external state
-    setSetting:Function, // external state set method
+    setSetting:Dispatch<SetStateAction<string>>, // external state set method
     state_1:string, // target css inactive class
     state_2:string, // target css active class
     buttonId:string // base css button id
