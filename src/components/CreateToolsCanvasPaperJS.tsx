@@ -334,8 +334,13 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             temp = new paper.CompoundPath(new paper.Path.Circle(event.point, eRadius * 2));
         }
 
+<<<<<<< Updated upstream
         //load background image
         backgroundRaster = new paper.Raster('/images/shading.png');
+=======
+        // load background image
+        backgroundRaster = new paper.Raster('/images/patterns/Dots_Compressed.GIF');
+>>>>>>> Stashed changes
         backgroundRaster.position = view.center;
 
         //if there is no clip path create a tiny dot so it doesn't just shade the entire canvas
