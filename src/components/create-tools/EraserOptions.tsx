@@ -33,7 +33,7 @@ const EraserOptions = ({enabled, eraserSize, changeEraserSize} : Props) =>
                 <h3>Eraser Tools</h3>
                 <div id={styles.eraserSlider}>
                     <label id="sliderLabel" htmlFor="eraserRange">Eraser Size: {eraserSize}</label>
-                    <div id={styles.progressBar} style={{width: `${eraserSize*3.4 +2}%`}} onChange={updateSize}></div>
+                    <div id={styles.progressBar} style={{width: `${eraserSize*3.32+1}%`}} onChange={updateSize}></div>
                     <input type="range" min="1" max="20" defaultValue={eraserSize} step="1" id={styles.rangeSlider} ref={sliderReference} onChange={updateSize}></input>
                 </div>
             </div>
