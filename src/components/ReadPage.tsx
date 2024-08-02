@@ -2,7 +2,7 @@
 'use client';
 import styles from '@/styles/read.module.css';
 import IconToggleButton from '@/components/ToggleButton';
-import { useEffect, useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 import ComicPanels from '@/components/ComicPanels';
 import * as apiCalls from '../api/apiCalls';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -125,6 +125,13 @@ const ReadPage = ({ id }: Props) => {
 
     };
 
+    const backVisibility: CSSProperties = parentPanelSet == undefined ?
+        {
+            filter:        'brightness(0.2)',
+            pointerEvents: 'none'
+        } :
+        { };
+
     return (
         <>
             <ComicPanels
@@ -137,7 +144,13 @@ const ReadPage = ({ id }: Props) => {
                 userId={userId}
             />
             <div className={`${styles.controlBar}`}  >
-                <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet != undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}/></button>
+                <button
+                    onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)}
+                    style={backVisibility}
+                    id={`${styles.backButton}`}
+                >
+                    <img src={backIcon} className={`${styles.buttonIcon}`} />
+                </button>
                 <IconToggleButton
                     setting={hooks}
                     setSetting={setHooks}
