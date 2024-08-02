@@ -230,7 +230,6 @@ const BranchPage = ({ id }: Props) => {
                         publish={async () => {
                             panelSet.previous_hook_id = parentHookId;
                             const response = await publishHandler(panelSet);
-                            console.log(response);
 
                             if (response instanceof Error) {
                                 const errorMessage = response.message || 'An unknown error occurred';
