@@ -18,6 +18,82 @@
     height: auto;
 }
 
+/* LOADING ANIMATION */
+
+@keyframes loading {
+    0% {
+        background-image: url(../../public/images/GIFs/loading-split/loading_1.png);
+    }
+
+    7% {
+        background-image: url(../../public/images/GIFs/loading-split/loading_2.png);
+    }
+
+    14% {
+        background-image: url(../../public/images/GIFs/loading-split/loading_3.png);
+    }
+
+    21% {
+        background-image: url(../../public/images/GIFs/loading-split/loading_4.png);
+    }
+
+    28% {
+        background-image: url(../../public/images/GIFs/loading-split/loading_5.png);
+    }
+
+    35% {
+        background-image: url(../../public/images/GIFs/loading-split/loading_6.png);
+    }
+
+    42% {
+        background-image: url(../../public/images/GIFs/loading-split/loading_7.png);
+    }
+
+    49% {
+        background-image: url(../../public/images/GIFs/loading-split/loading_8.png);
+    }
+
+    56% {
+        background-image: url(../../public/images/GIFs/loading-split/loading_9.png);
+    }
+
+    63% {
+        background-image: url(../../public/images/GIFs/loading-split/loading_10.png);
+    }
+
+    70% {
+        background-image: url(../../public/images/GIFs/loading-split/loading_11.png);
+    }
+
+    77% {
+        background-image: url(../../public/images/GIFs/loading-split/loading_12.png);
+    }
+
+    84% {
+        background-image: url(../../public/images/GIFs/loading-split/loading_13.png);
+    }
+
+    91% {
+        background-image: url(../../public/images/GIFs/loading-split/loading_14.png);
+    }
+
+    100% {
+        background-image: url(../../public/images/GIFs/loading-split/loading_15.png);
+    }
+}
+
+.loadingAnimation {
+    z-index: 99;
+    background-image: url(../../public/images/GIFs/loading-split/loading_1.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 45%;
+    height: 25vw;
+    animation: linear infinite;
+    
+    position: absolute;
+}
+
 /* HERO */
 
 .hero {
