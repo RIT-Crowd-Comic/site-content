@@ -998,7 +998,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
 
     //sets transform action and does setup for that action
     transformTool.onMouseDown = function (event: paper.ToolEvent) {
-        if (areaSelected && canvasProject.current && canvasProject.current.activeLayer.locked == false) {
+        if (areaSelected && canvasProject.current && canvasProject.current.activeLayer.locked == false) {            
             // hitTest checks if point clicked is on area selected (null if not on selected area)
             let hitResult = transformInfo[0].hitTest(event.point, hitOptions);
 
@@ -1032,8 +1032,6 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
 
             // changes position of selected area if moving
             if (transformAction == 'moving') {
-                setIsTransforming(true);
-
                 //moves selected area using position
                 transformInfo[0].position = event.point;
                 rasterInfo[1].position = event.point;
@@ -1041,7 +1039,6 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             }
             //scales selected area if resizing
             else if (transformAction == "resizing") {
-                setIsTransforming(true);
                 setTransformMouseDragged(true);
 
                 //figure out scale factor
@@ -1057,7 +1054,6 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             }
             // rotates selected area if rotating
             else if (transformAction == "rotating") {
-                setIsTransforming(true);
                 setTransformMouseDragged(true);
 
                 //calculates angle for rotating based on mouse drag
@@ -1265,7 +1261,9 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 //readds selected area to layer
                 setRasterInfo(prevState => [...prevState, tempTransformSelectedArea]);
                 canvasProject.current?.activeLayer.addChild(tempTransformSelectedArea);
-                tempTransformSelectedArea.bounds.selected = true;
+                tempTransformSelectedArea.selected = true;
+
+                setIsTransforming(true);
             }
             setPenOptionsEnabled(false);
             setEraserOptionsEnabled(false);
