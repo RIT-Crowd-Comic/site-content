@@ -993,7 +993,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                     //finds and sets opposite corner (as well as setting the prev opp corner name for flipping purposes)
                     let oppCornerInfo = findOppositeCorner(event.point, transformInfo[0]);
                     setOppositeCorner(oppCornerInfo.point);
-                    setPrevOppCornerName(oppCornerInfo.name);;
+                    setPrevOppCornerName(oppCornerInfo.name);
                 }
                 //runs if mouse hits area inside selection
                 else if (hitResult.type == 'fill') {
