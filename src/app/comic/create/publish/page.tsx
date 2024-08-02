@@ -23,7 +23,7 @@ const Publish = ({
                 <button id={`${styles.backButton}`}>
                     <Image
                         src={backIcon}
-                        alt=""
+                        alt="back button"
                         className={`${styles.buttonIcon}`}
                         width="60"
                         height="60"
