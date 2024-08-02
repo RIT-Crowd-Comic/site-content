@@ -2,33 +2,18 @@ import styles from './Panel.module.css';
 import {
     SyntheticEvent, useEffect, useLayoutEffect, useRef, useState
 } from 'react';
-import { CreateHook, Hook, PanelSet } from '../interfaces';
+import { CreateHook, Hook } from '../interfaces';
 import {
     createSVGPath, calculateArea, checkForMin, findCenter
 } from '@/utils';
 import Image from 'next/image';
-import * as apiCalls from '../../api/apiCalls';
 
 
 // perhaps load this from a global color palette file
 const FILL_COLOR = '#009BC6AA';
 const HIGHLIGHT_COLOR = '#FFD172AA';
-const NULL_HOOK = '#D91911AA';
-const FORBIDDEN_HOOK = '#939393AA';
 
 const MIN_DRAWING_DIST = 3;
-
-// reference https://www.pluralsight.com/resources/blog/guides/re-render-react-component-on-window-resize
-// const debounce = (fn: Function, ms: number) => {
-//     let timerId: NodeJS.Timeout | undefined;
-//     return () => {
-//       clearTimeout(timerId);
-//       timerId = setTimeout(() => {
-//         timerId = undefined;
-//         fn();
-//       }, ms);
-//     };
-//   }
 
 /**
  * If any parameters for editing are missing, just display the existing panel.
@@ -45,10 +30,6 @@ const Panel = ({
     selectedHook,
     setSelectedHook,
     onHookClick,
-    hidden: hideUntilHover,
-    allowAnimation = false,
-    panel_set,
-    userId
 }: {
     imgSrc: string,
     hooks: (Hook | CreateHook)[],
@@ -59,10 +40,6 @@ const Panel = ({
     selectedHook?: { panelIndex: number, hookIndex: number },
     setSelectedHook?: (hookInfo: { panelIndex: number, hookIndex: number } | undefined) => void,
     onHookClick?: (hook: Hook | CreateHook, hookIndex: number) => void,
-    hidden?: boolean,
-    allowAnimation?:boolean,
-    panel_set: PanelSet | undefined,
-    userId: string
 }) => {
 
     // for creating hooks
@@ -99,19 +76,6 @@ const Panel = ({
         if (!addingHook) setVertices([]);
     }, [addingHook]);
 
-    async function getChildrenPanelSets() {
-        const newPanelSets = [] as any;
-        for (let i = 0; i < 3; i++) {
-            if (hooks[i].next_panel_set_id !== undefined) {
-                const panel_set = await apiCalls.getPanelSetByID(Number(hooks[i].next_panel_set_id));
-                newPanelSets.push(panel_set as PanelSet);
-            }
-            else {
-                newPanelSets.push(undefined);
-            }
-        }
-    }
-
     // add a new hook
     useEffect(() => {
         if (confirmHook != undefined && setHooks && setConfirmHook) {
@@ -145,8 +109,6 @@ const Panel = ({
                     ],
                     confirmHook
                 );
-
-                getChildrenPanelSets();
             }
             setConfirmHook(undefined);
         }
@@ -187,8 +149,6 @@ const Panel = ({
 
     const mouseMoveHandler = (event?: SyntheticEvent<HTMLImageElement, MouseEvent>) => {
         if (event?.nativeEvent.buttons === 1) return void mouseDragHandler(event);
-
-
     };
 
     const touchMoveHandler = (event: SyntheticEvent<HTMLImageElement, TouchEvent>) => {
@@ -202,21 +162,12 @@ const Panel = ({
         if (addingHook) {
             addVertex(x, y);
         }
-
     };
 
     const editingStyle = addingHook ? styles.editing : '';
     const displayOnLoad = { display: scale == undefined ? 'none' : 'initial' };
     return (
         <div className={styles.branchEditor}>
-            {/* <img
-                src={imgSrc}
-                className={`${styles.preview} ${addingHook ? styles.editing : ''}`}
-                draggable='false'
-                onMouseDown={mouseDownHandler}
-                onMouseMove={mouseMoveHandler}
-                ref={imgRef}
-            /> */}
             <Image
                 src={imgSrc}
                 className={`${styles.preview} ${addingHook ? styles.editing : ''}`}
@@ -239,9 +190,9 @@ const Panel = ({
                         hooks.map((hook, i) => (
                             <path
                                 d={createSVGPath((hook as CreateHook).points ?? (hook as Hook).position.map(p => [p.x, p.y]) ?? '')}
-                                fill={(selectedHook?.hookIndex ?? -1) === i ? HIGHLIGHT_COLOR : hook.next_panel_set_id === null && panel_set?.author_id === userId ? FORBIDDEN_HOOK : hook.next_panel_set_id !== null ? FILL_COLOR : NULL_HOOK}
+                                fill={(selectedHook?.hookIndex ?? -1) === i ? HIGHLIGHT_COLOR :  FILL_COLOR }
                                 onClick={() => { if (onHookClick) onHookClick(hook, i); }}
-                                className={`${styles.hookPath} ${hideUntilHover ? styles.hidden : ''} ${styles[hook.next_panel_set_id === null && panel_set?.author_id === userId ? 'hookBlocked' : hook.next_panel_set_id == null ? 'hookEmpty' : 'hookTaken']}`}
+                                className={`${styles.hookPath}  ${styles['hookTaken']}`}
                                 key={i}
                             />
                         ))
