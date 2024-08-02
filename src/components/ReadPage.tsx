@@ -27,7 +27,7 @@ const ReadPage = ({ id }: Props) => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [layout, setLayout] = useState(`${styles.rowPanels}`);
-    const [hooks, setHooks] = useState('hidden');
+    const [hooks, setHooks] = useState('visible');
     const [isLoading, setIsLoading] = useState(false);
     const [panelSet, setPanelSet] = useState<PanelSet>();
     const [parentPanelSet, setParentPanelSet] = useState<PanelSet | undefined>();
