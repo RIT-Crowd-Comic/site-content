@@ -49,6 +49,13 @@ const BranchPage = ({ id }: Props) => {
 
     const loadImageAndConvertToURL = (svgString: string | null) => {
         if (svgString) {
+
+            //if create page doesn't upload svg
+            if (!svgString.includes('<svg')) {
+                svgString = svgString.replace('<g', '<svg');
+                svgString = svgString.replace('/g>', '/svg>');
+            }
+
             // Convert the SVG string to a data URL
             // Encode the SVG string in Base64
             const encoded = btoa(unescape(encodeURIComponent(svgString)));
