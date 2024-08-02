@@ -56,6 +56,7 @@ const ReadPanel = ({
     return (
         <div className={styles.branchEditor}>
             <Image
+                className={`${styles.preview}`}
                 src={imgSrc}
                 draggable="false"
                 ref={imgRef}
