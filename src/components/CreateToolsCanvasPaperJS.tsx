@@ -18,8 +18,9 @@ import InfoBox from './info/InfoBox';
 import InfoBtn from './info/InfoBtn';
 
 import Link from 'next/link';
-import { getHookByID } from '@/api/apiCalls';
+import { getHookByID, getUserBySession } from '@/api/apiCalls';
 import { CreateHook } from './interfaces';
+import { getSessionCookie, updateSession } from '@/app/login/loginUtils';
 import test from 'node:test';
 
 interface Props {
@@ -98,6 +99,24 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     // Call useEffect() in order obtain the value of the canvas after the first render
     // Pass in an empty array so that useEffect is only called once, after the initial render
     useEffect(() => {
+        //Redirect from create if not signed in
+        const checkUserSession = async () => {
+            const session = await getSessionCookie();
+            const session_id = session?.value;
+            if (session_id) {
+                const user = await getUserBySession(session_id);
+                if (user && !user.message) {
+                    updateSession(session_id);
+                    return;
+                }
+            }
+
+            // If not signed in, redirect from user locked pages
+            window.history.length > 2 ? window.history.go(-1) : router.push('/comic');
+        };
+
+        checkUserSession();
+        
         const canvas = canvasReference.current;
 
         // If canvas is null, return out
@@ -107,8 +126,8 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
 
         // route if the link contains an id already created - get the hook by id and check its next
         getHookByID(id).then((hook) =>{
-            if ((hook instanceof Error)) return router.push(`/comic/browse`);
-
+            if((hook instanceof Error)) window.history.length > 2 ? window.history.go(-1) : router.push('/comic');  
+            
             hook = hook as CreateHook;
 
             if (!hook.next_panel_set_id) {
