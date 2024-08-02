@@ -1,20 +1,26 @@
-import styles from './publish/Panel.module.css'
-import {useLayoutEffect, useRef, useState } from 'react';
+import styles from './publish/Panel.module.css';
+import {
+    useLayoutEffect, useRef, useState
+} from 'react';
 import { CreateHook, Hook, PanelSet } from './interfaces';
-import { createSVGPath } from '@/utils';
+import {
+    createSVGPath
+} from '@/utils';
 import Image from 'next/image';
+
 
 // perhaps load this from a global color palette file
 const FILL_COLOR = '#009BC6AA';
 const NULL_HOOK = '#D91911AA';
-const FORBIDDEN_HOOK = '#FFA500AA';
+const FORBIDDEN_HOOK = '#939393AA';
+
 
 /**
  * If any parameters for editing are missing, just display the existing panel.
  * Otherwise, display the panel and allow editing
  * @returns 
  */
-const Panel = ({
+const ReadPanel = ({
     imgSrc,
     hooks,
     onHookClick,
@@ -29,6 +35,7 @@ const Panel = ({
     panel_set: PanelSet | undefined,
     userId: string
 }) => {
+
     const imgRef = useRef<HTMLImageElement | null>(null);
     const [scale, setScale] = useState<{ x: number, y: number }>();
     useLayoutEffect(() => {
@@ -45,15 +52,14 @@ const Panel = ({
         const ro = new ResizeObserver(setScaleOnReload);
         if (imgRef.current) ro.observe(imgRef.current);
 
-
-         }, []);
+    }, []);
 
     const displayOnLoad = { display: scale == undefined ? 'none' : 'initial' };
     return (
         <div className={styles.branchEditor}>
             <Image
                 src={imgSrc}
-                draggable='false'
+                draggable="false"
                 ref={imgRef}
                 alt="comic panel"
                 width="500"
@@ -64,17 +70,20 @@ const Panel = ({
             <svg className={`${styles.hookSvg}`} style={displayOnLoad}>
                 <g transform={`scale(${1 / (scale?.x ?? 1)} ${1 / (scale?.y ?? 1)})`}>
                     {
-                        hooks.map((hook, i) =>
+                        hooks.map((hook, i) => (
                             <path
                                 d={createSVGPath((hook as CreateHook).points ?? (hook as Hook).position.map(p => [p.x, p.y]) ?? '')}
-                                fill={hook.next_panel_set_id === null && panel_set?.author_id === userId ? FORBIDDEN_HOOK : hook.next_panel_set_id !== null ?  FILL_COLOR : NULL_HOOK}
-                                onClick={() => { if (onHookClick) onHookClick(hook, i) }}
-                                className={`${styles.hookPath} ${hideUntilHover ? styles.hidden : ''} ${styles[`hook${i}`]}`}
-                                key={i} />)}
-                                </g>
+                                fill={ hook.next_panel_set_id === null && panel_set?.author_id === userId ? FORBIDDEN_HOOK : hook.next_panel_set_id !== null ? FILL_COLOR : NULL_HOOK}
+                                onClick={() => { if (onHookClick) onHookClick(hook, i); }}
+                                className={`${styles.hookPath} ${hideUntilHover ? styles.hidden : ''} ${styles[hook.next_panel_set_id === null && panel_set?.author_id === userId ? 'hookBlocked' : hook.next_panel_set_id == null ? 'hookEmpty' : 'hookTaken']}`}
+                                key={i}
+                            />
+                        ))
+                    }
+                </g>
             </svg>
         </div>
-    )
-}
+    );
+};
 
-export default Panel;
+export default ReadPanel;
