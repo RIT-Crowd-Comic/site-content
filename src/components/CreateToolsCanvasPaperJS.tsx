@@ -808,7 +808,6 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                     let pixelStartPoint = startSelectPoint.subtract(rasterLT).multiply(canvasProject.current.view.pixelRatio);
                     let pixelEndPoint = endSelectPoint.subtract(rasterLT).multiply(canvasProject.current.view.pixelRatio);
 
-                    
                     //gets the selected area of the rasterized canvas
                     let selectedArea = new paper.Rectangle(pixelStartPoint, pixelEndPoint);
                     setSelectionInfo(prevState => [...prevState, selectedArea]);
@@ -1326,23 +1325,18 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             if(change.id == backgroundLayerReference.current.id){
                 backgroundLayerReference.current.removeChildren();
                 backgroundLayerReference.current.importSVG(change.svg);
-                backgroundLayerReference.current.activate()
-                
+                backgroundLayerReference.current.activate()              
             }
-            if(change.id == layer1Reference.current.id){
-                
+            if(change.id == layer1Reference.current.id){              
                 layer1Reference.current.removeChildren();
                 layer1Reference.current.importSVG(change.svg);
-                layer1Reference.current.activate();
-                
+                layer1Reference.current.activate();           
             }
             if(change.id == layer2Reference.current.id){
                 layer2Reference.current.removeChildren();
                 layer2Reference.current.importSVG(change.svg);
-                layer2Reference.current.activate();
-                
+                layer2Reference.current.activate();        
             }
-
             setPrevUndos(prevUndos);
         }
         setPrevEdits(prevEdits);
@@ -1362,24 +1356,18 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             if(change.id == backgroundLayerReference.current.id){
                 backgroundLayerReference.current.removeChildren();
                 backgroundLayerReference.current.importSVG(change.svg);
-                backgroundLayerReference.current.activate()
-                
+                backgroundLayerReference.current.activate()               
             }
-            if(change.id == layer1Reference.current.id){
-                
+            if(change.id == layer1Reference.current.id){              
                 layer1Reference.current.removeChildren();
                 layer1Reference.current.importSVG(change.svg);
-                layer1Reference.current.activate();
-                
+                layer1Reference.current.activate();               
             }
             if(change.id == layer2Reference.current.id){
                 layer2Reference.current.removeChildren();
                 layer2Reference.current.importSVG(change.svg);
-                layer2Reference.current.activate();
-                
-            }
-
-            
+                layer2Reference.current.activate();   
+            }            
         }
         setPrevUndos(prevUndos);
         setPrevEdits(prevEdits);
@@ -1459,11 +1447,9 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             else
             {
                 modal.style.display = "none";
-            }
-            
+            }   
         }
-        console.log(divs)
-        
+        console.log(divs)  
     }
 
     // Return the canvas HTMLElement and its associated functionality   1

@@ -506,6 +506,102 @@
 /* PEN TOOL */
 #penSlider, #shapeBorderSlider, #shapeSelect, #eraserSlider, #textWeight, #textAlignment, #shadeSlider {
     accent-color: rgb(126, 126, 126);
+    position: relative;
+}
+
+/* Range Slider */
+#rangeSlider{
+    /* display: block; */
+    -webkit-appearance: none;
+    appearance:none;
+    cursor: pointer;
+    background-color: #6d6d6da2;
+    width: 70%;
+    height: 15px;
+    border-radius: 10px;
+    outline: 0;
+    margin-left: 1px;
+}
+
+/* Chrome, Edge, Safari */
+/* Thumb or circle button for range slider*/
+#rangeSlider::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance:none;
+    border-radius: 20px solid #b14040;
+    background: #c7c7c7;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: 0;
+    /* position: absolute;
+    transform: translateY(-7.3px);
+    will-change: left; */
+    &:active{
+        border: 1.5px solid #4d4d4d;
+    }
+    +#sliderValue{
+        opacity: 1;
+        transform:scale(1,1) translateX(-50%);
+    }
+}
+
+#rangeSlider::-webkit-slider-thumb:hover,
+#rangeSlider::-webkit-slider-thumb:focus{
+    border: 1.5px solid #4d4d4d;
+    /* box-shadow: inset 3px 3px rgba(255, 254, 254, 0.5); */
+    transform: scale(1.2);
+    /* transform: translateY(-7.3px); */
+}
+
+/* Firefox */
+#rangeSlider::-moz-range-thumb{
+    -webkit-appearance: none;
+    appearance:none;
+    border-radius: 20px solid #ababab;
+    background: #c7c7c7;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: .05s ease-in-out;
+    outline: 0;
+}
+
+#rangeSlider::-moz-range-track{
+
+}
+
+#sliderValue{
+    /* position:relative;
+    opacity: 0.8;
+    display:block;
+    transform: scale(0,0) translateX(-50%);
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    line-height:60px;
+    background-color: #d8d7d7;
+    color:#FFF;
+    text-align:center;
+    font-size: 15px;
+    font-weight:bolder;
+    opacity:0;
+    top:-40px;
+    z-index:-1;
+    transition:0.15s top ease-in-out, 0.15s opacity ease-in-out 0.05s, 0.15s scale ease-in-out; */
+}
+
+#progressBar{
+    width: 30px;
+    height: 15px;
+    background: #c7c7c7;
+    border-radius: 20px;
+    position: absolute;
+    will-change: width;
+    left: 1px;
+    overflow: hidden;
 }
 
 /* PALETTE BUTTONS GENERIC */
@@ -598,7 +694,6 @@
     border: solid 3px #000000;
     top: 1px;
 }
-
 
 
 /* FOR PORTRAIT MODE ONLY */
