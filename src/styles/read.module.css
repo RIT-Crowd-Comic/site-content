@@ -30,9 +30,9 @@
   height: fit-content;
 }
 
-.rowBodyH {
+/* .rowBodyH {
   height: 100%;
-}
+} */
 
 /* .body:has(.rowPanels){} */
 
@@ -70,9 +70,9 @@
   height: 100%;
 }
 
-#comicPanels>div {
+/* #comicPanels>div {
   width: 100%;
-}
+} */
 
 #comicPanels img {
   max-width: 100%;
@@ -215,14 +215,22 @@
   top: 20px;
   margin-top: 100px;
   left: 20px;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
+}
+
+#backButton img{
+  width:30px;
+  
 }
 
 #hooksToggle {
-  bottom: 3vh;
-  right: 4vw;
-  padding: 5px;
+  bottom: 50px;
+  right: 2.5px;
+  padding: 2px;
+}
+#hooksToggle img{
+  width:30px;
 }
 
 #layoutToggle .buttonIcon {
@@ -233,11 +241,37 @@
   #comicPanels {
     padding: 0 100px;
   }
+  /* #hooksToggle {
+    bottom: 3vh;
+    right: 4vw;
+    padding: 5px;
+  } */
+  #hooksToggle img{
+    width:40px;
+  }
+
 }
 
 @media (min-width: 1200px) {
   .rowBodyH {
     height: fit-content;
+  }
+  #hooksToggle {
+    bottom: 3vh;
+    right: 4vw;
+    padding: 5px;
+  }
+  #hooksToggle img{
+    width:40px;
+  }
+  #backButton {
+    width: 60px;
+    height: 60px;
+  }
+
+  #backButton img{
+    width: 40px;
+    /* height: 40px; */
   }
 
   .colBodyH #comicPanels {
@@ -253,11 +287,11 @@
     max-width: 900px;
     max-height: 600px;
   }
-
+/* 
   .controlBar {
     position: relative;
 
-  }
+  } */
 
   /* 
   #backButton,
