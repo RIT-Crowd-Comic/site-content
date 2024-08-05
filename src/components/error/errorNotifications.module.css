@@ -1,5 +1,5 @@
 .toastContainer {
-    --bs-bg-opacity: 1; /* Override Bootstrap's variable to ensure full background color */
+    --bs-bg-opacity: 1; 
     background-color: #00000000;
     color: #333;
     font-style:var(--font-back-issues);
