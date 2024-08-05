@@ -6,6 +6,7 @@ interface ToastData {
   title: string;
   delay?: number;
   animation?: boolean;
+  isError? : boolean;
 }
 const useNotification = () => {
   const [toasts, setToasts] = useState<ToastData[]>([]);

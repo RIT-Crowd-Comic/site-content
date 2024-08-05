@@ -1,15 +1,7 @@
 import React from 'react';
 import { ToastContainer, Toast } from 'react-bootstrap';
 import styles from './notifications.module.css';
-
-interface ToastData {
-    id: number;
-    message: string;
-    title: string;
-    delay?: number;
-    animation?: boolean;
-    isError?: boolean,
-}
+import {ToastData} from './interfaces'
 
 interface ErrorNotificationProps {
     toasts: ToastData[];
