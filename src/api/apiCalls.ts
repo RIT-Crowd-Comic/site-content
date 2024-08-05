@@ -414,10 +414,8 @@ const publish = async (image1 : File, image2 : File, image3 : File, hooks : Arra
     return response;
 };
 
-const changePfp = async (session_id: string, image: File) => {
-    const user = await getUserBySession(session_id);
-    if(user.message) return new Error(user.message);
-    const data = { email: user.email };
+const changePfp = async (email: string, image: File) => {
+    const data = { email: email };
     const formData = new FormData();
     formData.append('image', image);
     formData.append('data', JSON.stringify(data, null, 2));

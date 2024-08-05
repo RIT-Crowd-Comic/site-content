@@ -8,7 +8,7 @@ export default function Signature( {user} : Props) {
         <Image
                 width={50}
                 height={50}
-                src={user ? user.profile_picture : '/images/icons/Profile.svg'}
+                src={user?.profile_picture ? user.profile_picture : '/images/icons/Profile.svg'}
                 style = {{borderRadius: 100}}
                 alt={`${user?.display_name}'s profile picture`}
                 unoptimized={true}

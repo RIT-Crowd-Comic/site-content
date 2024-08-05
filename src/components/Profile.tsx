@@ -9,14 +9,19 @@ import Navbar from '@/components/NavBar';
 
 import { useEffect, useState } from 'react';
 import { nameAction, passwordAction } from '@/app/login/actions';
-import { getUserBySession } from '@/api/apiCalls';
+import { getUserBySession, changePfp } from '@/api/apiCalls';
 import { getSessionCookie } from '@/app/login/loginUtils';
+import { User } from './interfaces';
+import ProfilePicture from './ProfilePicture';
 
 
 export function Profile() {
+    const [session_id, setSession] = useState('');
+    const [user, setUser] = useState<User>();
     const [message, errorState] = useState('');
     const [displayName, updateName] = useState('Display Name');
     const [email, updateEmail] = useState('email@example.com');
+    const [pfp, updatePfp] = useState('/images/icons/Profile.svg');
     const [currentPasswordVisible, setCurrentPasswordVisibility] = useState(false);
     const [newPasswordVisible, setNewPasswordVisibility] = useState(false);
     const [retypePasswordVisible, setRetypePasswordVisibility] = useState(false);
@@ -40,12 +45,15 @@ export function Profile() {
         const getProfileValues = async () => {
             const session = await getSessionCookie();
             if (!session) return;
+            setSession(session.value);
             const user = await getUserBySession(session.value);
             if (!user) return;
+            setUser(user);
             updateName(user.display_name);
             updateEmail(user.email);
+            if(user.profile_picture) updatePfp(user.profile_picture);
         };
-        getProfileValues();
+        if(!user) getProfileValues();
     });
 
     return (
@@ -64,14 +72,20 @@ export function Profile() {
 
                         {/* USERNAME */}
                         <div className={`mb-3 ${styles.formInputs}`}>
-                            <Image
-                                id={styles.profileIcon}
-                                className="m-auto"
-                                src="/images/icons/Profile.svg"
-                                width={200}
-                                height={200}
-                                alt="Profile"
-                            />
+                        <label htmlFor="changePfp" className={styles.loginLabel}>Change Profile Picture</label>
+                        <input
+                            onChange={async e => {
+                                if(!e.target.files || !email) return;
+                                await changePfp(email, e.target.files[0]);
+                                const updatedUser = await getUserBySession(session_id);
+                                if(!updatedUser) return;
+                                updatePfp(updatedUser.profile_picture);
+                                window.history.go(); //TODO: Find more elegant solution than refreshing the page to update navbar
+                            }} 
+                            type="file" 
+                            accept="image/*"
+                        ></input>
+                        <ProfilePicture pfp={pfp}/>
                         </div>
                         <div className={`mb-3 ${styles.formInputs}`}>
                             <label htmlFor="inputUsername" className={styles.loginLabel}>Display Name</label>
