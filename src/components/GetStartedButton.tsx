@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import { getTrunks} from '@/api/apiCalls';
+import { getTrunks } from '@/api/apiCalls';
 import { useRouter } from 'next/navigation';
 
-import Link from 'next/link'
-import styles from "@/styles/home.module.css"
+import Link from 'next/link';
+import styles from '@/styles/home.module.css';
 
 const GetStartedButton = () => {
     const router = useRouter();
@@ -18,10 +18,10 @@ const GetStartedButton = () => {
         return `/comic?id=${psID}`;
     };
 
-    return(
+    return (
         <div className={`${styles.getStarted}`}>
-            <div className={`${styles.bookAnimation}`}></div>
-            <button className={`${styles.getStartedButton}`}>      
+            <div className={`${styles.bookAnimation}`} />
+            <button className={`${styles.getStartedButton}`}>
                 <Link
                     id="comicLink"
                     href=""
@@ -30,11 +30,11 @@ const GetStartedButton = () => {
                         const url = await getTrunkUrl();
                         router.push(url);
                     }}
-                    >Get Started
+                >Get Started
                 </Link>
             </button>
         </div>
-    )
-}
+    );
+};
 
 export default GetStartedButton;

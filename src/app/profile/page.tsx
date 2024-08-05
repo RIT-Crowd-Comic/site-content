@@ -1,6 +1,5 @@
-import {Profile} from '@/components/Profile';
+import { Profile } from '@/components/Profile';
 
-export default function SignIn()
-{
-    return <Profile/>
+export default function SignIn() {
+    return <Profile />;
 }

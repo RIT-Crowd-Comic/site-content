@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { getTrunks, getUserBySession } from '@/api/apiCalls';
-import { logout, getSessionCookie } from '@/app/login/loginUtils';
+import { logout, getSessionCookie, updateSession } from '@/app/login/loginUtils';
 
 const NavBar = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
@@ -18,13 +18,15 @@ const NavBar = () => {
                 const user = await getUserBySession(session_id);
                 if (user && !user.message) {
                     setIsSignedIn(true);
+                    updateSession(session_id);
                     return;
                 }
             }
 
             // If not signed in, redirect from user locked pages
             const url = window.location.href;
-            if (url.includes('/create') || url.includes('/publish') || url.includes('/profile')) window.location.href = '/';
+            if (url.includes('/publish')) window.history.length > 2 ? await window.history.go(-1) : window.location.href = '/comic';
+            if (url.includes('/profile')) window.history.length > 2 ? await window.history.go(-1) : window.location.href = '/';
         };
 
         checkUserSession();
@@ -67,29 +69,33 @@ const NavBar = () => {
                 </Link>
 
                 <div className="d-flex order-lg-3 ms-auto me-3">
-                    {isSignedIn ? (
-                        <div className="dropdown">
-                            <button
-                                className="nav-btn btn btn-outline-dark text-color-white"
-                                type="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
+                    {isSignedIn ?
+                        (
+                            <div className="dropdown">
+                                <button
+                                    className="nav-btn btn btn-outline-dark text-color-white"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
 
-                            >
-                                <Image src="/images/icons/Profile.svg"
-                                    width={39}
-                                    height={39}
-                                    alt="Profile"></Image>
+                                >
+                                    <Image
+                                        src="/images/icons/Profile.svg"
+                                        width={39}
+                                        height={39}
+                                        alt="Profile"
+                                    />
 
-                            </button>
-                            <ul className="dropdown-menu dropdown-menu-lg-end">
-                                <li><Link href="/profile"><button className="dropdown-item">Dashboard</button></Link></li>
-                                <li><button onClick={handleSignOut} className="dropdown-item">Sign Out</button></li>
-                            </ul>
-                        </div>
-                    ) : (
-                        <Link href="/sign-in"><button className="nav-btn btn btn-outline-dark">Sign In</button></Link>
-                    )}
+                                </button>
+                                <ul className="dropdown-menu dropdown-menu-lg-end">
+                                    <li><Link href="/profile"><button className="dropdown-item">Dashboard</button></Link></li>
+                                    <li><button onClick={handleSignOut} className="dropdown-item">Sign Out</button></li>
+                                </ul>
+                            </div>
+                        ) :
+                        (
+                            <Link href="/sign-in"><button className="nav-btn btn btn-outline-dark">Sign In</button></Link>
+                        )}
                 </div>
 
                 <button

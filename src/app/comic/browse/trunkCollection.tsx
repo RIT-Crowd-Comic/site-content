@@ -6,7 +6,7 @@ import { getTrunks } from '../../../api/apiCalls';
 import { useRouter } from 'next/navigation';
 
 interface PanelSet {
-    id : number,
+    id: number,
     name: string,
     images: string[],
 }
@@ -75,7 +75,7 @@ const TrunkCollection = () => {
     }
     if (panelSets.length > 0) {
         return (
-            <ul>{panelSets.map((ps : PanelSet) => (
+            <ul>{panelSets.map((ps: PanelSet) => (
                 <Card
                     topString={ps.name}
                     staticPhoto={ps.images[0]}
@@ -83,6 +83,7 @@ const TrunkCollection = () => {
                     link={`/comic?id=${ps.id}`}
                     bottomString="Author Name | Jul 22, 2024"
                     year=""
+                    newPage={false}
                 />
             ))}
             </ul>
