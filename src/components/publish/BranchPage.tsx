@@ -1,5 +1,4 @@
 import styles from './BranchPage.module.css';
-
 import { useEffect, useState } from 'react';
 import { CreateHook, emptyPanelSet, CreatePanelSet } from '../interfaces';
 import Panel from './PublishPanel';
@@ -9,6 +8,7 @@ import InfoBtn from '../info/InfoBtn';
 import { publishHandler } from '../../api/apiCalls';
 import { useRouter } from 'next/navigation';
 import { getHookByID } from '../../api/apiCalls';
+import {Toast, ToastContainer} from 'react-bootstrap'
 
 interface Props {
  id : number;
@@ -245,7 +245,16 @@ const PublishPage = ({ id }: Props) => {
                         }}
                         hookCount={panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)}
                     />
-                    {errorMessage && <div id="errorPublish" style={{ color: 'white' }}> {errorMessage} </div>}
+
+                    <ToastContainer position = {'middle-center'}>
+                        <Toast bg={'warning'} onClose={() => { setErrorMessage(''); console.log('closed') }} show={errorMessage ? true : false} animation={false} delay={3000} autohide>
+                            <Toast.Header>
+                                <strong className="me-auto">Error</strong>
+                            </Toast.Header>
+                            <Toast.Body>{'There was an error. Please try again.' }</Toast.Body>
+                        </Toast>
+                    </ToastContainer>
+                   
                 </div>
                 <InfoBtn toggle={infoDisplay} />
                 <InfoBox

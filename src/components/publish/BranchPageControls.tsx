@@ -55,7 +55,7 @@ const HookPageControls = ({
                     {/* starting text to be updated when either add or remove branch hook button is pressed */}
                 </div>
             </div>
-            <button onClick={publish} id={`${styles.publishBtn}`}>
+            <button onClick={publish} disabled = {hookCount != 3 ? true : false} id={`${styles.publishBtn}`}>
                 <img alt="publish button"/>
             </button>
         </div>
