@@ -37,7 +37,7 @@ const NavBar = () => {
         window.addEventListener('resize', handleResize);
 
         return () => window.removeEventListener('resize', handleResize);
-    },[]);
+    }, []);
 
     const getTrunkUrl = async () => {
         const trunks = await getTrunks();
@@ -74,13 +74,13 @@ const NavBar = () => {
                                 type="button"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
-                                
+
                             >
                                 <Image src="/images/icons/Profile.svg"
-                                width={39}
-                                height={39}
-                                alt="Profile"></Image>
-                                
+                                    width={39}
+                                    height={39}
+                                    alt="Profile"></Image>
+
                             </button>
                             <ul className="dropdown-menu dropdown-menu-lg-end">
                                 <li><Link href="/profile"><button className="dropdown-item">Dashboard</button></Link></li>
@@ -131,7 +131,7 @@ const NavBar = () => {
                             <li className="nav-item">
                                 <Link className="nav-link" href="/team">Team</Link>
                             </li>
-                            <li className="nav-item">
+                            <li className="nav-item read-btn">
                                 <Link
                                     className="nav-link"
                                     id="comicLink"
@@ -141,17 +141,17 @@ const NavBar = () => {
                                         window.location.href = '/comic';
                                     }}
                                 >
-                                  Browse Comics
+                                    <div className="">Read</div>   
                                 </Link>
                             </li>
                             {isSignedIn && isMobile && (
                                 <>
-                                <li className="nav-item">
-                                    <Link className="nav-link" href="/profile">Dashboard</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <button onClick={handleSignOut} className="nav-link btn-link">Sign Out</button>
-                                </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" href="/profile">Dashboard</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <button onClick={handleSignOut} className="nav-link btn-link">Sign Out</button>
+                                    </li>
                                 </>
                             )}
                         </ul>

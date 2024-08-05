@@ -62,8 +62,15 @@ body
 }
 
 .nav-link, .nav-btn {
+    position: relative;
     color: var(--grayscale-primary-color);
     font-size: 1.5rem;
+    z-index: 1;
+}
+
+.read-btn{
+    background: url(../../public/images/background-boxes/readButton.svg) no-repeat center/contain;
+    z-index: 0;
 }
 
 .nav-btn

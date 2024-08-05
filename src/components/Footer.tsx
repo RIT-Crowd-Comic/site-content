@@ -46,13 +46,6 @@ const Footer = () => {
             <div className="social-div">
                 <ul className="social">
                     <li>
-                        <Link href="">
-                            <div className="icondiv">
-                                <Image className="iconcolor" src={linkedin} alt="LinkedIn" fill={true} />
-                            </div>
-                        </Link>
-                    </li>
-                    <li>
                         <Link href="https://github.com/RIT-Crowd-Comic">
                             <div className="icondiv">
                                 <Image className="iconcolor" src={github} alt="GitHub" fill={true} />

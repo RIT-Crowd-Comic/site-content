@@ -14,7 +14,6 @@ import bottomCreate from "../../public/images/background-boxes/bw/Create_Bottom_
 // Desktop Assets
 import desktopMission from "../../public/images/background-boxes/bw/Desktop_Mission_BW.svg"
 import desktopRead from "../../public/images/background-boxes/bw/Desktop_Read_BW.svg"
-import desktopCreate from "../../public/images/background-boxes/bw/Desktop_Create_BW.svg"
 
 // import arrow from "../../public/images/GIFs/Arrow.gif"
 
@@ -45,7 +44,6 @@ export default function Home() {
             <div className="card-img-overlay">
               <Image className={`${styles.bottomMission} card-img-top z-0`} src={bottomMission} alt="" />
               <Image className={`${styles.topMission} card-img-top z-0`} src={topMission} alt="" />
-
               <Image className={`${styles.desktopMission} card-img-top z-0`} src={desktopMission} alt="" />
             </div>
             <div className="card-body">
