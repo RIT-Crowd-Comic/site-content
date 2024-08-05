@@ -22,10 +22,10 @@ import { getHookByID, getUserBySession } from '@/api/apiCalls';
 import { CreateHook } from './interfaces';
 import { getSessionCookie, updateSession } from '@/app/login/loginUtils';
 import test from 'node:test';
-
+import type { addToastFunction } from './error/interfaces';
 interface Props {
     id: number
-    sendError :  (message : string, animation : boolean, delay : number) => void
+    sendError : addToastFunction
 }
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas

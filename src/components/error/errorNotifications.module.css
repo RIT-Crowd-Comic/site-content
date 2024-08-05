@@ -15,5 +15,6 @@
 .toastBody {
     background-color: #e6e6e6;
     color: #333;
-    border-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 }

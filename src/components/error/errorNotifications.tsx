@@ -1,6 +1,6 @@
 import React from 'react';
 import { ToastContainer, Toast } from 'react-bootstrap';
-import styles from './errorNotification.module.css';
+import styles from './errorNotifications.module.css';
 
 interface ToastData {
     id: number;

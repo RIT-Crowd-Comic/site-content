@@ -8,10 +8,11 @@ import InfoBtn from '../info/InfoBtn';
 import { publishHandler } from '../../api/apiCalls';
 import { useRouter } from 'next/navigation';
 import { getHookByID } from '../../api/apiCalls';
+import { addToastFunction } from '../error/interfaces';
 
 interface Props {
  id : number;
- sendError :  (message : string, title: string,  animation : boolean, delay : number) => void
+ sendError : addToastFunction
 }
 const PublishPage = ({ id, sendError }: Props) => {
     const [addingHook, setAddingHook] = useState(false);

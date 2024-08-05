@@ -6,8 +6,8 @@ import BranchPage from '../../../../components/publish/BranchPage';
 import styles from '@/styles/publish.module.css';
 import Link from 'next/link';
 import backIcon from '../../../../../public/images/back-button-pressed.png';
-import ErrorNotifications from '@/components/error/errorNotification';
-import useErrorNotification from '@/components/error/useErrorNotification';
+import ErrorNotifications from '@/components/error/errorNotifications';
+import useErrorNotification from '@/components/error/useErrorNotifications';
 
 const Publish = ({
     params,
@@ -18,7 +18,7 @@ const Publish = ({
   }) => {
     const { id } = searchParams;
      
-      const {
+    const {
         toasts,
         addErrorMessage,
         removeToast,
