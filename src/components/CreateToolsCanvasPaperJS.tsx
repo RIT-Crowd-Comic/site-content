@@ -1276,7 +1276,8 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         // Check to make sure that this is not being called on the bottom layer (backgroundLayer) that has nowhere to merge down to 
         if(currentLayerIndex > 0)
         {
-            if(layers[currentLayerIndex]?.current && layers[currentLayerIndex - 1].current)
+            if(layers[currentLayerIndex]?.current && layers[currentLayerIndex - 1].current && 
+                layers[currentLayerIndex].current.locked == false && layers[currentLayerIndex - 1].current?.locked == false)
             {
                 // Import the layer's data to the layer below it
                 // NOTE: exportSVG must be used instead of exportJSON as importJSON will overwrite any preexisting changes to the layer, importSVG adds to the layer
