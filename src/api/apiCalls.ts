@@ -291,6 +291,8 @@ const changeDisplayName = async (email: string, newDisplayName: string) => {
     return response;
 };
 
+// const changeProfileIcon = async (email: string, )
+
 /**
  * Get a list of hooks from a panel set
  * @param id the id of the panel set

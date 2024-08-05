@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { nameAction, passwordAction } from '@/app/login/actions';
 import { getUserBySession } from '@/api/apiCalls';
 import { getSessionCookie } from '@/app/login/loginUtils';
+import { ProfileEditor } from './ProfileEditor';
 
 
 export function Profile() {
@@ -23,6 +24,7 @@ export function Profile() {
     const [password, setPass] = useState('');
     const [newPass, setNewPass] = useState('');
     const [confPass, setConfPass] = useState('');
+    const [profileEditorState, setProfileEditorState] = useState(false);
 
     const toggleCurrentPasswordVisibility = () => {
         setCurrentPasswordVisibility(!currentPasswordVisible);
@@ -64,14 +66,17 @@ export function Profile() {
 
                         {/* USERNAME */}
                         <div className={`mb-3 ${styles.formInputs}`}>
-                            <Image
-                                id={styles.profileIcon}
-                                className="m-auto"
-                                src="/images/icons/Profile.svg"
-                                width={200}
-                                height={200}
-                                alt="Profile"
-                            />
+                            <div id={styles.profileIconContainer}>
+                                <Image
+                                    id={styles.profileIcon}
+                                    className="m-auto"
+                                    src="/images/icons/Profile.svg"
+                                    width={200}
+                                    height={200}
+                                    alt="Profile"
+                                />
+                                <a id={styles.profileIconEdit} onClick={() => setProfileEditorState(!profileEditorState)}> </a>
+                            </div>
                         </div>
                         <div className={`mb-3 ${styles.formInputs}`}>
                             <label htmlFor="inputUsername" className={styles.loginLabel}>Display Name</label>
@@ -211,6 +216,7 @@ export function Profile() {
                 {/* FORM */}
 
             </section>
+            <ProfileEditor editorState={profileEditorState} setEditorState={setProfileEditorState} />
         </main>
     );
 }
