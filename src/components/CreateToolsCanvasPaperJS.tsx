@@ -1487,6 +1487,15 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
 
             // Swap layer titles between the two
 
+
+            // Swap layer visibility
+
+
+            // Swap layer lock status
+
+
+            // Swap checked status
+            
         }
     };
 
@@ -1500,6 +1509,15 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
 
             // Swap layer titles between the two
 
+
+            // Swap layer visibility
+
+
+            // Swap layer lock status
+
+
+            // Swap checked status
+            
         }
     };
 
