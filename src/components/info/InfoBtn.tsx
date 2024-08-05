@@ -2,17 +2,17 @@ import React from 'react';
 import styles from './InfoBtn.module.css';
 
 
-const InfoBtn = ({toggle}:{toggle:(stat:boolean)=>void}) =>{
+const InfoBtn = ({ toggle }:{toggle:(stat:boolean)=>void}) =>{
 
     return (
         <div id={styles.info}>
             <label>
-                <button id={styles.infoButton} onClick= {()=>toggle(true)}></button> 
+                <button id={styles.infoButton} onClick={()=>toggle(true)} />
             </label>
         </div>
 
-       
-    )
-}
+
+    );
+};
 
 export default InfoBtn;
