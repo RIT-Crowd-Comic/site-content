@@ -2,7 +2,7 @@
 'use client';
 import styles from '@/styles/read.module.css';
 import IconToggleButton from '@/components/ToggleButton';
-import { useEffect, useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 import ComicPanels from '@/components/ComicPanels';
 import * as apiCalls from '../api/apiCalls';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -27,7 +27,7 @@ const ReadPage = ({ id }: Props) => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [layout, setLayout] = useState(`${styles.rowPanels}`);
-    const [hooks, setHooks] = useState('hidden');
+    const [hooks, setHooks] = useState('visible');
     const [isLoading, setIsLoading] = useState(false);
     const [panelSet, setPanelSet] = useState<PanelSet>();
     const [parentPanelSet, setParentPanelSet] = useState<PanelSet | undefined>();
@@ -125,6 +125,13 @@ const ReadPage = ({ id }: Props) => {
 
     };
 
+    const backVisibility: CSSProperties = parentPanelSet == undefined ?
+        {
+            filter:        'brightness(0.2)',
+            pointerEvents: 'none'
+        } :
+        { };
+
     return (
         <>
             <ComicPanels
@@ -137,7 +144,13 @@ const ReadPage = ({ id }: Props) => {
                 userId={userId}
             />
             <div className={`${styles.controlBar}`}  >
-                <button onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)} style={{ visibility: parentPanelSet != undefined ? 'visible' : 'hidden' }} id={`${styles.backButton}`}><img src={backIcon} className={`${styles.buttonIcon}`}/></button>
+                <button
+                    onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)}
+                    style={backVisibility}
+                    id={`${styles.backButton}`}
+                >
+                    <img src={backIcon} className={`${styles.buttonIcon}`} alt="back button" />
+                </button>
                 <IconToggleButton
                     setting={hooks}
                     setSetting={setHooks}
@@ -161,10 +174,10 @@ const ReadPage = ({ id }: Props) => {
             <InfoBox
                 instructions={`Read though different story lines by clicking through the panelhooks.
 
-         Use the lightbulb to toggle the hooks on and off.
-         - Red hooks (empty): do not currently have a comic panel connected to them and will take you to the create page.
-         - Blue hooks (filled): have a comic panel connected to them and you can click on them to explore that branch of the story.
-         - Grey hooks (blocked): have a comic panel connected to them. However, you are the author of the current panel set, so you cannot create a new panel set off this one.
+         Use the lightbulb to toggle the hooks on and off
+         - Red hooks (empty): do not currently have a comic panel connected to them and will take you to the create page
+         - Blue hooks (filled): have a comic panel connected to them and you can click on them to explore that branch of the story
+         - Grey hooks (blocked): have a comic panel connected to them. However, you are the author of the current panel set, so you cannot create a new panel set off this one
 
          Use the back button to take you back to the parent panel.
          Use the + looking symbol to toggle between horizontal and vertical view. This will only work for larger screen sizes.
