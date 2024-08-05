@@ -32,26 +32,12 @@ const Create = ({
     //redirect if link is incorrect
     const { id } = searchParams;
 
-    const {
-        errorMessage,
-        showToast,
-        animation,
-        delay,
-        sendErrorMessage,
-        closeToast,
-      } = useErrorNotification();
+
 
     return (
         <main className={`${styles.body}`}>
-            <ErrorNotification
-                message={errorMessage}
-                show={showToast}
-                onClose={() => { closeToast() }}
-                delay={delay ? delay : 5000}
-                animation={animation}
-                title={'Error'}
-            />
-            <CreateToolsCanvasPaperJS id={Number(id)} sendError={sendErrorMessage} />
+
+            <CreateToolsCanvasPaperJS id={Number(id)} sendError={() => {}}/>
         </main>
     );
 }

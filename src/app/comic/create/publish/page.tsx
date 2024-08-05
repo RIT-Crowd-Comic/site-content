@@ -6,7 +6,7 @@ import BranchPage from '../../../../components/publish/BranchPage';
 import styles from '@/styles/publish.module.css';
 import Link from 'next/link';
 import backIcon from '../../../../../public/images/back-button-pressed.png';
-import ErrorNotification from '@/components/error/errorNotification';
+import ErrorNotifications from '@/components/error/errorNotification';
 import useErrorNotification from '@/components/error/useErrorNotification';
 
 const Publish = ({
@@ -19,23 +19,16 @@ const Publish = ({
     const { id } = searchParams;
      
       const {
-        errorMessage,
-        showToast,
-        animation,
-        delay,
-        sendErrorMessage,
-        closeToast,
+        toasts,
+        addErrorMessage,
+        removeToast,
     } = useErrorNotification();
     return (
         <>
             <Navbar />
-            <ErrorNotification
-                    message={errorMessage}
-                    show={showToast}
-                    onClose={() =>{closeToast()}}
-                    delay = {delay ? delay : 5000}
-                    animation = {animation}
-                    title = {'Error'}
+            <ErrorNotifications
+            toasts={toasts}
+            onClose={removeToast}
             />
             <Link href={`/comic/create?id=${id}`} replace={true}>
                 <button id={`${styles.backButton}`}>
@@ -48,7 +41,7 @@ const Publish = ({
                     />
                 </button>
             </Link>
-            <BranchPage id={Number(id)} sendError = {sendErrorMessage}/>
+            <BranchPage id={Number(id)} sendError = {addErrorMessage}/>
         </>
     );
 };

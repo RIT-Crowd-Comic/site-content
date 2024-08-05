@@ -1,29 +1,46 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 
+interface ToastData {
+  id: number;
+  message: string;
+  title: string;
+  delay?: number;
+  animation?: boolean;
+}
 const useErrorNotification = () => {
-  const [errorMessage, setErrorMessage] = useState('');
-  const [showToast, setShowToast] = useState(false);
-  const [animation, setAnimation] = useState(false);
-  const [delay, setDelay] = useState(5000);
+  const [toasts, setToasts] = useState<ToastData[]>([]);
+  
+  
+  /**
+   * Adds a toast to the array and sets up its values
+   * @param message 
+   * @param title 
+   * @param animation 
+   * @param delay 
+   */
+  const addErrorMessage = (message: string, title: string, animation = false, delay = 5000) => {
+    const newToast = {
+      id: Date.now(), // Unique ID for each toast
+      message,
+      title,
+      delay,
+      animation,
+    };
+    setToasts((prevToasts) => [...prevToasts, newToast]);
+  };
 
-  const sendErrorMessage = useCallback((message : string, animation = false, delay = 5000) => {
-    setErrorMessage(message);
-    setAnimation(animation);
-    setDelay(delay);
-    setShowToast(true);
-  }, []);
-
-  const closeToast = useCallback(() => {
-    setShowToast(false);
-  }, []);
+/**
+ * removes a toast based on its id(date)
+ * @param id 
+ */
+  const removeToast = (id: number) => {
+    setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
+  };
 
   return {
-    errorMessage,
-    showToast,
-    animation,
-    delay,
-    sendErrorMessage,
-    closeToast,
+    toasts,
+    addErrorMessage,
+    removeToast,
   };
 };
 

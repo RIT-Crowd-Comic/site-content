@@ -11,7 +11,7 @@ import { getHookByID } from '../../api/apiCalls';
 
 interface Props {
  id : number;
- sendError :  (message : string, animation : boolean, delay : number) => void
+ sendError :  (message : string, title: string,  animation : boolean, delay : number) => void
 }
 const PublishPage = ({ id, sendError }: Props) => {
     const [addingHook, setAddingHook] = useState(false);
@@ -227,10 +227,7 @@ const PublishPage = ({ id, sendError }: Props) => {
 
                             if (response instanceof Error) {
                                 console.log(response.message);
-                                sendError('Something went wrong, ensure you are signed in and try again.', false, 4000);
-                                sendError('Something went wrong, signed in and try again.', false, 4000);
-                                sendError('Somet wrong, egned in and.', false, 4000);
-                                sendError('Somt wrong, ensure you are signed in and try again.', false, 4000);
+                                sendError('Something went wrong, ensure you are signed in and try again.', 'error', false, 4000);
                             }
                             else {
                                 const queryString = new URLSearchParams({ id: response.panel_set }).toString();
