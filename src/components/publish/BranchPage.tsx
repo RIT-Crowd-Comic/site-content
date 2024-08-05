@@ -1,5 +1,4 @@
 import styles from './BranchPage.module.css';
-
 import { useEffect, useState } from 'react';
 import { CreateHook, emptyPanelSet, CreatePanelSet } from '../interfaces';
 import Panel from './PublishPanel';
@@ -9,11 +8,13 @@ import InfoBtn from '../info/InfoBtn';
 import { publishHandler } from '../../api/apiCalls';
 import { useRouter } from 'next/navigation';
 import { getHookByID } from '../../api/apiCalls';
+import { addToastFunction } from '../toast-notifications/interfaces';
 
 interface Props {
  id : number;
+ sendError : addToastFunction
 }
-const BranchPage = ({ id }: Props) => {
+const PublishPage = ({ id, sendError }: Props) => {
     const [addingHook, setAddingHook] = useState(false);
     const [parentHookId, setParentHookId] = useState<number>();
     const [confirmHook, setConfirmHook] = useState<number>();
@@ -24,6 +25,7 @@ const BranchPage = ({ id }: Props) => {
         panels:    emptyPanelSet(),
     });
     const [activePanel, setActivePanel] = useState(0);
+    
     const activePanelHooks = () => panelSet.panels[activePanel].hooks;
     const setActivePanelHooks = (hooks: CreateHook[], panelIndex: number) => {
         const panels = panelSet.panels;
@@ -36,7 +38,6 @@ const BranchPage = ({ id }: Props) => {
             panels
         });
     };
-    const [errorMessage, setErrorMessage] = useState('');
     const router = useRouter();
 
 
@@ -113,7 +114,7 @@ const BranchPage = ({ id }: Props) => {
     const nextPanel = (increment: number) => {
 
         // constain to values -1, 0, 1
-        if (addingHook) confirmBranchHook(activePanel);
+        if (addingHook) confirmHookAndUnselect(activePanel);
 
         increment = Math.min(Math.max(Math.floor(increment), -1), 1);
         setActivePanel((3 + activePanel + increment) % 3);
@@ -132,7 +133,7 @@ const BranchPage = ({ id }: Props) => {
     /*
     Adds a branch hook to ps with a new branch
     */
-    const addBranchHook = () => {
+    const addHook = () => {
 
         // if exceeding max limit, don't do anything
         if (panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0) >= 3) return;
@@ -140,7 +141,7 @@ const BranchPage = ({ id }: Props) => {
         setAddingHook(true);
     };
 
-    const confirmBranchHook = (panelIndex: number) => {
+    const confirmHookAndUnselect = (panelIndex: number) => {
         setSelectedHook(undefined);
         setConfirmHook(panelIndex);
         setAddingHook(false);
@@ -149,7 +150,7 @@ const BranchPage = ({ id }: Props) => {
     /*
     Removes the most recent branch and returns that branch to default
     */
-    const removeBranchHook = () => {
+    const removeHook = () => {
         const panels = panelSet.panels;
         panels[activePanel].hooks = panels[activePanel].hooks.filter((_, i) => selectedHook?.hookIndex !== i);
         setPanelSet({
@@ -219,16 +220,16 @@ const BranchPage = ({ id }: Props) => {
                     </div>
                     <BranchPageControls
                         addingHook={addingHook}
-                        addBranchHook={addBranchHook}
-                        confirmBranchHook={() => confirmBranchHook(activePanel)}
-                        removeBranchHook={removeBranchHook}
+                        addHook={addHook}
+                        confirmHook={() => confirmHookAndUnselect(activePanel)}
+                        removeHook={removeHook}
                         publish={async () => {
                             panelSet.previous_hook_id = parentHookId;
                             const response = await publishHandler(panelSet);
 
                             if (response instanceof Error) {
-                                const errorMessage = response.message || 'An unknown error occurred';
-                                setErrorMessage(`There was an error: ${errorMessage}`);
+                                console.log(response.message);
+                                sendError('Something went wrong, ensure you are signed in and try again.', 'Error', false, 4000, true);
                             }
                             else {
                                 const queryString = new URLSearchParams({ id: response.panel_set }).toString();
@@ -244,9 +245,8 @@ const BranchPage = ({ id }: Props) => {
                                 router.push(`/comic/?${queryString}`);
                             }
                         }}
-                        branchCount={panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)}
+                        hookCount={panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)}
                     />
-                    {errorMessage && <div id="errorPublish" style={{ color: 'white' }}> {errorMessage} </div>}
                 </div>
                 <InfoBtn toggle={infoDisplay} />
                 <InfoBox
@@ -264,4 +264,4 @@ const BranchPage = ({ id }: Props) => {
     );
 };
 
-export default BranchPage;
+export default PublishPage;
