@@ -1300,8 +1300,15 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
         // First make sure that the layer indicies exist
         if(currentIndex >= 0 && swapIndex >= 0)
         {
+            // Get access to the layers' current data
             const currentData = String(layers[currentIndex].current?.exportJSON({ asString: true}));
             const swapData = String(layers[swapIndex].current?.exportJSON({ asString: true}));
+
+            // Clear both layers so that they are a blank slate for importing
+            layers[currentIndex].current?.removeChildren();
+            layers[swapIndex].current?.removeChildren();
+
+            // Import the layer data
             layers[currentIndex].current?.importJSON(swapData);
             layers[swapIndex].current?.importJSON(currentData);
         }
