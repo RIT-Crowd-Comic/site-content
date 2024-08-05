@@ -10,6 +10,7 @@ import { Panel, PanelSet, Hook, User } from './interfaces';
 import InfoBox from './info/InfoBox';
 import InfoBtn from './info/InfoBtn';
 import { getSessionCookie } from '@/app/login/loginUtils';
+import Signature from './Signature';
 
 // import icons and background
 const backIcon = '/images/back-button-pressed.png';
@@ -178,6 +179,7 @@ const ReadPage = ({ id }: Props) => {
                     source_2={toggleLayoutVertIcon}
                 />
             </div>
+            <Signature user={author}></Signature>
             <InfoBtn toggle={infoDisplay} />
             <InfoBox
                 instructions={`Read though different story lines by clicking through the panelhooks.
