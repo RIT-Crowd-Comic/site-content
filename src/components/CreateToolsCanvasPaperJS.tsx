@@ -29,7 +29,7 @@ interface Props {
 }
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
-const CreateToolsCanvasPaperJS = ({ id }: Props) => {
+const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
 
     // *** VARIABLES ***
     // === CANVAS ===
@@ -198,7 +198,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             }
         }
         catch (error) {
-            alert('Error loading panel 1 data from localStorage: ' + error);
+            sendError('Error loading panel 1 data from localStorage', 'Error', false, 4000);
         }
 
         // Panel 2
@@ -210,7 +210,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             }
         }
         catch (error) {
-            alert('Error loading panel 2 data from localStorage: ' + error);
+            sendError('Error loading panel 2 data from localStorage', 'Error', false, 4000);
         }
 
         // Panel 3
@@ -222,7 +222,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             }
         }
         catch (error) {
-            alert('Error loading panel 3 data from localStorage: ' + error);
+            sendError('Error loading panel 3 data from localStorage', 'Error', false, 4000);
         }
 
         const context = canvas.getContext('2d');
@@ -1659,7 +1659,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             localStorage.setItem('panel-1-layerData', JSON.stringify(panel1LayerData));
         }
         catch (error) {
-            alert("Error saving panel 1's layer data to localStorage: " + error);
+            sendError('Error saving panel 1s layer data to localStorage', 'Error', false, 4000);
         }
 
         // Panel 2
@@ -1667,7 +1667,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             localStorage.setItem('panel-2-layerData', JSON.stringify(panel2LayerData));
         }
         catch (error) {
-            alert("Error saving panel 2's layer data to localStorage: " + error);
+            sendError('Error saving panel 2s layer data to localStorage', 'Error', false, 4000);
         }
 
         // Panel 1
@@ -1675,12 +1675,12 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             localStorage.setItem('panel-3-layerData', JSON.stringify(panel3LayerData));
         }
         catch (error) {
-            alert("Error saving panel 3's layer data to localStorage: " + error);
+            sendError('Error saving panel 3s layer data to localStorage', 'Error', false, 4000);
         }
 
         // Alert the user that their progress has been saved
         if (showAlert) {
-            alert('Your progress has been saved!');
+            sendError('Your progress has been saved!', 'Success', false, 4000);
         }
     };
 
@@ -1689,6 +1689,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
 
         // Saves the user's progress for them
         save(false);
+        let error = false;
 
         // Create a temp dummy layer to add layer data to publish
         // let publishLayer = new paper.Layer();
@@ -1712,7 +1713,8 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             localStorage.setItem('image-1', String(canvasProject.current?.exportSVG({ asString: true })));
         }
         catch (error) {
-            alert('Error publishing panel 1 to localStorage: ' + error);
+            error = true;
+            sendError('Error publishing panel 1 to localStorage', 'Error', false, 4000);
         }
 
         // Export Panel 2
@@ -1734,7 +1736,8 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             localStorage.setItem('image-2', String(canvasProject.current?.exportSVG({ asString: true })));
         }
         catch (error) {
-            alert('Error publishing panel 2 to localStorage: ' + error);
+            error = true;
+            sendError('Error publishing panel 2 to localStorage', 'Error', false, 4000);
         }
 
         // Export Panel 3
@@ -1756,14 +1759,16 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             localStorage.setItem('image-3', String(canvasProject.current?.exportSVG({ asString: true })));
         }
         catch (error) {
-            alert('Error publishing panel 3 to localStorage: ' + error);
+            error = true;
+            sendError('Error publishing panel 3 to localStorage', 'Error', false, 4000);
         }
 
         // Save the SVG Image to localStorage
         // localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
 
         // Send the user to the publish page
-        router.replace(`/comic/create/publish?id=${parentHookId}`);
+        if(!error)
+            router.replace(`/comic/create/publish?id=${parentHookId}`);
     };
 
     const infoDisplay = (visible: boolean) => {
