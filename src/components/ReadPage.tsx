@@ -138,7 +138,7 @@ const ReadPage = ({ id }: Props) => {
                 panel_set={panelSet}
                 userId={userId}
             />
-            <div className={`${styles.controlBar}`}  >
+            <div className={`${styles.controlBar}`} >
                 <button
                     onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)}
                     style={backVisibility}
