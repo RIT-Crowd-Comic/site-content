@@ -19,7 +19,6 @@ const useErrorNotification = () => {
    * @param delay 
    */
   const addErrorMessage = (message: string, title: string, animation = false, delay = 5000, isError : boolean) => {
-    console.log(isError);
     const newToast = {
       id: Date.now(), // Unique ID for each toast
       message,
