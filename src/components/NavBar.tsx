@@ -29,7 +29,7 @@ const NavBar = () => {
             if (url.includes('/profile')) window.history.length > 2 ? await window.history.go(-1) : window.location.href = '/';
         };
 
-        //checkUserSession();
+        checkUserSession();
 
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 992);
