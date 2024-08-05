@@ -35,7 +35,7 @@ const Create = ({
 
     const {
         toasts,
-        addErrorMessage,
+        addToast,
         removeToast,
     } = useNotifications();
     return (
@@ -44,7 +44,7 @@ const Create = ({
                 toasts={toasts}
                 onClose={removeToast}
             />
-            <CreateToolsCanvasPaperJS id={Number(id)} sendError={addErrorMessage}/>
+            <CreateToolsCanvasPaperJS id={Number(id)} sendError={addToast}/>
         </main>
     );
 }

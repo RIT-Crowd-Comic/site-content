@@ -8,7 +8,7 @@ interface ToastData {
     title: string;
     delay?: number;
     animation?: boolean;
-    isError?: boolean
+    isError?: boolean,
 }
 
 interface ErrorNotificationProps {
@@ -22,7 +22,7 @@ interface ErrorNotificationProps {
  */
 const Notification: React.FC<ErrorNotificationProps> = ({ toasts, onClose }) => {
     return (
-        <ToastContainer className={`${styles.toastContainer}`} position="bottom-center">
+        <ToastContainer className={`${styles.toastContainer}`} position={'bottom-center'}>
             {toasts.map((toast) => (
                 <Toast
                     key={toast.id}

@@ -7,7 +7,7 @@ interface ToastData {
   delay?: number;
   animation?: boolean;
 }
-const useErrorNotification = () => {
+const useNotification = () => {
   const [toasts, setToasts] = useState<ToastData[]>([]);
   
   
@@ -18,7 +18,7 @@ const useErrorNotification = () => {
    * @param animation 
    * @param delay 
    */
-  const addErrorMessage = (message: string, title: string, animation = false, delay = 5000, isError : boolean) => {
+  const addToast = (message: string, title: string, animation = false, delay = 5000, isError : boolean) => {
     const newToast = {
       id: Date.now(), // Unique ID for each toast
       message,
@@ -40,9 +40,9 @@ const useErrorNotification = () => {
 
   return {
     toasts,
-    addErrorMessage,
+    addToast,
     removeToast,
   };
 };
 
-export default useErrorNotification;
+export default useNotification;
