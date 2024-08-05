@@ -5,8 +5,8 @@ interface ToastData {
     id: number;
     message: string;
     title: string;
-    delay?: number;
-    animation?: boolean;
-    isError? : boolean;
+    delay: number;
+    animation: boolean;
+    isError : boolean;
 }
 export type {addToastFunction, ToastData}

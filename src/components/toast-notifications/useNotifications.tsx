@@ -1,13 +1,6 @@
 import { useState } from 'react';
+import {ToastData} from './interfaces'
 
-interface ToastData {
-  id: number;
-  message: string;
-  title: string;
-  delay?: number;
-  animation?: boolean;
-  isError? : boolean;
-}
 const useNotification = () => {
   const [toasts, setToasts] = useState<ToastData[]>([]);
   
@@ -19,7 +12,7 @@ const useNotification = () => {
    * @param animation 
    * @param delay 
    */
-  const addToast = (message: string, title: string, animation = false, delay = 5000, isError : boolean) => {
+  const addToast = (message: string, title: string, animation = false, delay = 5000, isError = true) => {
     const newToast = {
       id: Date.now(), // Unique ID for each toast
       message,
