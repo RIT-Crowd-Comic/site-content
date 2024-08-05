@@ -35,6 +35,7 @@ const Publish = ({
                     onClose={() =>{closeToast()}}
                     delay = {delay ? delay : 5000}
                     animation = {animation}
+                    title = {'Error'}
             />
             <Link href={`/comic/create?id=${id}`} replace={true}>
                 <button id={`${styles.backButton}`}>

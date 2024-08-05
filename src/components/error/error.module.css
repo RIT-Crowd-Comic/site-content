@@ -3,6 +3,8 @@
     background-color: #f0f0f0;
     color: #333;
     font-style:var(--font-back-issues);
+    margin-bottom: 20px;
+    border-radius: 8px;
 }
 
 .toastHeader {
@@ -13,4 +15,5 @@
 .toastBody {
     background-color: #e6e6e6;
     color: #333;
+    border-radius: 8px;
 }
