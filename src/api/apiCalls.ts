@@ -414,6 +414,19 @@ const publish = async (image1 : File, image2 : File, image3 : File, hooks : Arra
     return response;
 };
 
+const changePfp = async (session_id: string, image: File) => {
+    const user = await getUserBySession(session_id);
+    if(user.message) return new Error(user.message);
+    const data = { email: user.email };
+    const formData = new FormData();
+    formData.append('image', image);
+    formData.append('data', JSON.stringify(data, null, 2));
+    const response = await postAPICallFormData('/changePfp', formData);
+
+    if(response.message) return new Error(response.message);
+    return response;
+}
+
 export {
-    getAllImageUrlsByPanelSetId, getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, authenticate, changePassword, changeDisplayName, getHooksFromPanelSetById, insertSession, getSession, publishHandler, getUserBySession
+    getAllImageUrlsByPanelSetId, getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, authenticate, changePassword, changeDisplayName, getHooksFromPanelSetById, insertSession, getSession, publishHandler, getUserBySession, changePfp
 };
