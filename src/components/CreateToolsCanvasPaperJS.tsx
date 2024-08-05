@@ -25,6 +25,7 @@ import test from 'node:test';
 
 interface Props {
     id: number
+    sendError :  (message : string, animation : boolean, delay : number) => void
 }
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas

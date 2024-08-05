@@ -1,7 +1,8 @@
 'use client';
 import styles from "@/styles/create.module.css";
 import dynamic from 'next/dynamic';
-
+import ErrorNotification from '@/components/error/errorNotification';
+import useErrorNotification from '@/components/error/useErrorNotification';
 const CreateToolsCanvasPaperJS = dynamic(
     () => import('../../../components/CreateToolsCanvasPaperJS'),
     {
@@ -30,9 +31,27 @@ const Create = ({
   }) => {
     //redirect if link is incorrect
     const { id } = searchParams;
+
+    const {
+        errorMessage,
+        showToast,
+        animation,
+        delay,
+        sendErrorMessage,
+        closeToast,
+      } = useErrorNotification();
+
     return (
         <main className={`${styles.body}`}>
-            <CreateToolsCanvasPaperJS id={Number(id)} />
+            <ErrorNotification
+                message={errorMessage}
+                show={showToast}
+                onClose={() => { closeToast() }}
+                delay={delay ? delay : 5000}
+                animation={animation}
+                title={'Error'}
+            />
+            <CreateToolsCanvasPaperJS id={Number(id)} sendError={sendErrorMessage} />
         </main>
     );
 }
