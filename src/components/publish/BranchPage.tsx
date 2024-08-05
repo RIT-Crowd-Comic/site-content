@@ -50,7 +50,7 @@ const BranchPage = ({ id }: Props) => {
     const loadImageAndConvertToURL = (svgString: string | null) => {
         if (svgString) {
 
-            //if create page doesn't upload svg
+            // if create page doesn't upload svg
             if (!svgString.includes('<svg')) {
                 svgString = svgString.replace('<g', '<svg');
                 svgString = svgString.replace('/g>', '/svg>');
@@ -68,10 +68,11 @@ const BranchPage = ({ id }: Props) => {
 
     // one time setup
     useEffect(() => {
+
         // check the id and reroute if needed
         // route if the link contains an id already created - get the hook by id and check its next
         getHookByID(id).then((hook) => {
-            if((hook instanceof Error)) window.history.length > 2 ? window.history.go(-1) : router.push('/comic');
+            if ((hook instanceof Error)) window.history.length > 2 ? window.history.go(-1) : router.push('/comic');
 
             hook = hook as CreateHook;
 
@@ -252,7 +253,7 @@ const BranchPage = ({ id }: Props) => {
                     instructions={`
             -click on the add hook button to start drawing a hook on the comic
             -once done, click on accept hook to keep or remove to delete the hook
-            - *hooks do have a minimum size and dimention so you can't make itty bitty unclickable hooks
+             *hooks do have a minimum size and dimention so you can't make itty bitty unclickable hooks
             - to remove a hook: click on the hook you wish to remove then click on remove hook to delete it\n 
             *YOU MUSH HAVE 3 HOOKS IN ORDER TO PUBLISH YOUR COMIC*
             `}
