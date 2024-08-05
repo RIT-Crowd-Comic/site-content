@@ -8,7 +8,7 @@ import InfoBtn from '../info/InfoBtn';
 import { publishHandler } from '../../api/apiCalls';
 import { useRouter } from 'next/navigation';
 import { getHookByID } from '../../api/apiCalls';
-import { addToastFunction } from '../error/interfaces';
+import { addToastFunction } from '../toast-notifications/interfaces';
 
 interface Props {
  id : number;

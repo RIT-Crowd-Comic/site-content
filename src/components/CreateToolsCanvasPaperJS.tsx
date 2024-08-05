@@ -22,7 +22,7 @@ import { getHookByID, getUserBySession } from '@/api/apiCalls';
 import { CreateHook } from './interfaces';
 import { getSessionCookie, updateSession } from '@/app/login/loginUtils';
 import test from 'node:test';
-import type { addToastFunction } from './error/interfaces';
+import type { addToastFunction } from './toast-notifications/interfaces';
 interface Props {
     id: number
     sendError : addToastFunction

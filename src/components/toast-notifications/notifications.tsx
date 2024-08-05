@@ -1,6 +1,6 @@
 import React from 'react';
 import { ToastContainer, Toast } from 'react-bootstrap';
-import styles from './errorNotifications.module.css';
+import styles from './notifications.module.css';
 
 interface ToastData {
     id: number;
@@ -20,7 +20,7 @@ interface ErrorNotificationProps {
  * Dynamic toast amount, they delete on close. Setup in the useErrorNotifications
  * @returns 
  */
-const ErrorNotification: React.FC<ErrorNotificationProps> = ({ toasts, onClose }) => {
+const Notification: React.FC<ErrorNotificationProps> = ({ toasts, onClose }) => {
     return (
         <ToastContainer className={`${styles.toastContainer}`} position="bottom-center">
             {toasts.map((toast) => (
@@ -42,4 +42,4 @@ const ErrorNotification: React.FC<ErrorNotificationProps> = ({ toasts, onClose }
     );
 };
 
-export default ErrorNotification;
+export default Notification;

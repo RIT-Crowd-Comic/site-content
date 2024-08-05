@@ -1,8 +1,8 @@
 'use client';
 import styles from "@/styles/create.module.css";
 import dynamic from 'next/dynamic';
-import ErrorNotifications from '@/components/error/errorNotifications';
-import useErrorNotification from '@/components/error/useErrorNotifications';
+import Notifications from '@/components/toast-notifications/notifications';
+import useNotifications from '@/components/toast-notifications/useNotifications';
 const CreateToolsCanvasPaperJS = dynamic(
     () => import('../../../components/CreateToolsCanvasPaperJS'),
     {
@@ -37,10 +37,10 @@ const Create = ({
         toasts,
         addErrorMessage,
         removeToast,
-    } = useErrorNotification();
+    } = useNotifications();
     return (
         <main className={`${styles.body}`}>
-            <ErrorNotifications
+            <Notifications
                 toasts={toasts}
                 onClose={removeToast}
             />

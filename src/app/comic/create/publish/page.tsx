@@ -6,8 +6,8 @@ import BranchPage from '../../../../components/publish/BranchPage';
 import styles from '@/styles/publish.module.css';
 import Link from 'next/link';
 import backIcon from '../../../../../public/images/back-button-pressed.png';
-import ErrorNotifications from '@/components/error/errorNotifications';
-import useErrorNotification from '@/components/error/useErrorNotifications';
+import Notifications from '@/components/toast-notifications/notifications';
+import useNotifications from '@/components/toast-notifications/useNotifications';
 
 const Publish = ({
     params,
@@ -22,11 +22,11 @@ const Publish = ({
         toasts,
         addErrorMessage,
         removeToast,
-    } = useErrorNotification();
+    } = useNotifications();
     return (
         <>
             <Navbar />
-            <ErrorNotifications
+            <Notifications
             toasts={toasts}
             onClose={removeToast}
             />
