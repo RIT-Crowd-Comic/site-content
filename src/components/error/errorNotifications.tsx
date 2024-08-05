@@ -32,7 +32,7 @@ const ErrorNotification: React.FC<ErrorNotificationProps> = ({ toasts, onClose }
                     delay={toast.delay ?? 5000}
                     autohide
                 >
-                    <Toast.Header className={`${styles.toastHeader}  ${toast.isError ? styles.toastError: ''}`}>
+                    <Toast.Header className={`${styles.toastHeader}  ${toast.isError ? styles.toastError : ''}`}>
                         <strong className="me-auto">{toast.title}</strong>
                     </Toast.Header>
                     <Toast.Body className={styles.toastBody}>{toast.message}</Toast.Body>

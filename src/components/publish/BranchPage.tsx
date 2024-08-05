@@ -228,7 +228,7 @@ const PublishPage = ({ id, sendError }: Props) => {
 
                             if (response instanceof Error) {
                                 console.log(response.message);
-                                sendError('Something went wrong, ensure you are signed in and try again.', 'error', false, 4000);
+                                sendError('Something went wrong, ensure you are signed in and try again.', 'error', false, 4000, true);
                             }
                             else {
                                 const queryString = new URLSearchParams({ id: response.panel_set }).toString();

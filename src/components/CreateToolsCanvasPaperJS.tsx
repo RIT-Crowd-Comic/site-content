@@ -1689,6 +1689,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
 
         // Saves the user's progress for them
         save(false);
+        let success = true;
 
         // Create a temp dummy layer to add layer data to publish
         // let publishLayer = new paper.Layer();
@@ -1713,7 +1714,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         }
         catch (error) {
             sendError('Error publishing panel 1 to localStorage', 'Error', false, 4000, true);
-            return;
+            success = false;
         }
 
         // Export Panel 2
@@ -1736,7 +1737,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         }
         catch (error) {
             sendError('Error publishing panel 2 to localStorage', 'Error', false, 4000, true);
-            return;
+            success = false;
         }
 
         // Export Panel 3
@@ -1759,12 +1760,13 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         }
         catch (error) {
             sendError('Error publishing panel 3 to localStorage', 'Error', false, 4000, true);
-            return;
+            success = false;
         }
 
         // Save the SVG Image to localStorage
         // localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
 
+        if(!success) return;
         // Send the user to the publish page
         router.replace(`/comic/create/publish?id=${parentHookId}`);
     };
