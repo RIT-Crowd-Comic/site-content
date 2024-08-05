@@ -20,7 +20,7 @@ const Publish = ({
      
     const {
         toasts,
-        addErrorMessage,
+        addToast,
         removeToast,
     } = useNotifications();
     return (
@@ -41,7 +41,7 @@ const Publish = ({
                     />
                 </button>
             </Link>
-            <BranchPage id={Number(id)} sendError = {addErrorMessage}/>
+            <BranchPage id={Number(id)} sendError = {addToast}/>
         </>
     );
 };
