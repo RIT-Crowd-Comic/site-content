@@ -84,6 +84,7 @@ export function SignUpForm() {
                                 onInput={e => (e.target as HTMLInputElement).setCustomValidity('')}
                                 required
                             />
+
                             <button
                                 type="button"
                                 className={styles.togglePassword}
@@ -91,8 +92,30 @@ export function SignUpForm() {
                                 style={{ backgroundImage: `url(${passwordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
                             />
                         </div>
+                        <i className="bi bi-eye-slash" id={styles.togglePassword} />
+                    </div>
+                    {/* CONFIRM PASSWORD */}
+                    <div className={`mb-3 ${styles.formInputs}`}>
+                        <label htmlFor="inputPassword" className={styles.loginLabel}>Confirm Password</label>
+                        <div className={styles.passwordContainer}>
+                            <input
+                                type={passwordVisible ? 'text' : 'password'}
+                                name="password2"
+                                placeholder="********"
+                                className="form-control"
+                                id={styles.inputPassword}
+                                onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Confirm Password Here')}
+                                onInput={e => (e.target as HTMLInputElement).setCustomValidity('')}
+                                required
+                            />
 
-
+                            <button
+                                type="button"
+                                className={styles.togglePassword}
+                                onClick={togglePasswordVisibility}
+                                style={{ backgroundImage: `url(${passwordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
+                            />
+                        </div>
                         <i className="bi bi-eye-slash" id={styles.togglePassword} />
                     </div>
 

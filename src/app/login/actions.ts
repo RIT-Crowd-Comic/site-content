@@ -16,9 +16,11 @@ const registerAction = async (formData: FormData) => {
     const rawFormData = {
         displayName: formData.get('displayName'),
         email:       formData.get('email'),
-        password:    formData.get('password')
+        password:    formData.get('password'),
+        password2:   formData.get('password2')
     };
-    if (!(rawFormData.displayName && rawFormData.email && rawFormData.password)) return 'Please fill all fields';
+    if (!(rawFormData.displayName && rawFormData.email && rawFormData.password && rawFormData.password2)) return 'Please fill all fields';
+    if (rawFormData.password !== rawFormData.password2) return 'Password confirmation must match';
     const response = await loginUtils.register(rawFormData.email.toString(), rawFormData.displayName.toString(), rawFormData.password.toString());
     if (!response || response instanceof Error) return response.message;
     return 'Success';
