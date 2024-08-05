@@ -9,7 +9,7 @@ export default function Signature( {user} : Props) {
                 width={300}
                 height={300}
                 src={user.profile_picture}
-                alt={`${user.display_name}User's profile picture`}
+                alt={`${user.display_name}'s profile picture`}
                 unoptimized={true}
             />
         <p>{user.display_name}</p>
