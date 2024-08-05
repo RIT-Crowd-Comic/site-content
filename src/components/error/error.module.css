@@ -2,7 +2,7 @@
     --bs-bg-opacity: 1; /* Override Bootstrap's variable to ensure full background color */
     background-color: #f0f0f0;
     color: #333;
-    font-family: 'Arial', sans-serif;
+    font-style:var(--font-back-issues);
 }
 
 .toastHeader {
@@ -13,5 +13,4 @@
 .toastBody {
     background-color: #e6e6e6;
     color: #333;
-    font-family: 'Courier New', Courier, monospace;
 }

@@ -8,12 +8,12 @@ import InfoBtn from '../info/InfoBtn';
 import { publishHandler } from '../../api/apiCalls';
 import { useRouter } from 'next/navigation';
 import { getHookByID } from '../../api/apiCalls';
-import ErrorNotification from '../error/errorNotification'
 
 interface Props {
  id : number;
+ sendError :  (message : string, animation : boolean, delay : number) => void
 }
-const PublishPage = ({ id }: Props) => {
+const PublishPage = ({ id, sendError }: Props) => {
     const [addingHook, setAddingHook] = useState(false);
     const [parentHookId, setParentHookId] = useState<number>();
     const [confirmHook, setConfirmHook] = useState<number>();
@@ -24,6 +24,7 @@ const PublishPage = ({ id }: Props) => {
         panels:    emptyPanelSet(),
     });
     const [activePanel, setActivePanel] = useState(0);
+    
     const activePanelHooks = () => panelSet.panels[activePanel].hooks;
     const setActivePanelHooks = (hooks: CreateHook[], panelIndex: number) => {
         const panels = panelSet.panels;
@@ -36,8 +37,6 @@ const PublishPage = ({ id }: Props) => {
             panels
         });
     };
-    const [errorMessage, setErrorMessage] = useState('');
-    const [showToast, setShowToast] = useState(false);
     const router = useRouter();
 
 
@@ -228,8 +227,7 @@ const PublishPage = ({ id }: Props) => {
 
                             if (response instanceof Error) {
                                 console.log(response.message);
-                                setErrorMessage(`There was an error: Ensure you are signed in and try again.`);
-                                setShowToast(true);
+                                sendError('Something went wrong, ensure you are signed in and try again.', false, 4000);
                             }
                             else {
                                 const queryString = new URLSearchParams({ id: response.panel_set }).toString();
@@ -248,13 +246,6 @@ const PublishPage = ({ id }: Props) => {
                         hookCount={panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)}
                     />
                 </div>
-                <ErrorNotification
-                    message={errorMessage}
-                    show={showToast}
-                    onClose={() =>{setShowToast(false)}}
-                    delay = {4000}
-                    animation = {false}
-                />
                 <InfoBtn toggle={infoDisplay} />
                 <InfoBox
                     instructions={`
