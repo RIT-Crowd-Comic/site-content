@@ -16,7 +16,6 @@ const Footer = () => {
         if (!trunks) return '/';
         const psID = trunks[0]?.id;
         if (!psID) return '/';
-        console.log(`url: ${psID}`);
         return `/comic?id=${psID}`;
     };
 
@@ -39,25 +38,13 @@ const Footer = () => {
                             const url = await getTrunkUrl();
                             router.push(url);
                         }}
-                        >Comic
+                    >Read
                     </Link>
                     </li>
                 </ul>
             </div>
             <div className="social-div">
                 <ul className="social">
-                    <li>
-                        <Link href="">
-                            <div className="icondiv">
-                                <Image
-                                    className="iconcolor"
-                                    src={linkedin}
-                                    alt="LinkedIn"
-                                    fill={true}
-                                />
-                            </div>
-                        </Link>
-                    </li>
                     <li>
                         <Link href="https://github.com/RIT-Crowd-Comic">
                             <div className="icondiv">
@@ -73,7 +60,7 @@ const Footer = () => {
                 </ul>
             </div>
             <div className="copyright-div">
-                <p className="copyright">Copyright © {current_year}</p>
+                <small className="copyright">Copyright © {current_year}</small>
             </div>
             <div className="row" />
         </div>

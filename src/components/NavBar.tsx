@@ -13,6 +13,7 @@ interface Props {
 
 const NavBar = ({p_pfp}: Props) => {
     const [pfp, updatePfp] = useState('/images/icons/Profile.svg');
+    const [displayName, setDisplayName] = useState('');
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
 
@@ -25,6 +26,7 @@ const NavBar = ({p_pfp}: Props) => {
                 if (user && !user.message) {
                     setIsSignedIn(true);
                     if(!p_pfp && user.profile_picture) updatePfp(user.profile_picture);
+                    setDisplayName(user.display_name);
                     updateSession(session_id);
                     return;
                 }
@@ -75,8 +77,8 @@ const NavBar = ({p_pfp}: Props) => {
                     {/* Crowd Comic */}
                 </Link>
 
-                <div className="d-flex order-lg-3 ms-auto me-3">
-                    {isSignedIn ?
+                <div className="d-flex order-lg-3 ms-auto me-4">
+                    {isSignedIn &&
                         (
                             <div className="dropdown">
                                 <button
@@ -95,9 +97,6 @@ const NavBar = ({p_pfp}: Props) => {
                                     <li><button onClick={handleSignOut} className="dropdown-item">Sign Out</button></li>
                                 </ul>
                             </div>
-                        ) :
-                        (
-                            <Link href="/sign-in"><button className="nav-btn btn btn-outline-dark">Sign In</button></Link>
                         )}
                 </div>
 
@@ -132,15 +131,23 @@ const NavBar = ({p_pfp}: Props) => {
                             aria-label="Close"
                         />
                     </div>
+                    {isSignedIn && isMobile &&
+                    <div className="d-flex align-items-center gap-2 offcanvas-hello">
+                        <ProfilePicture pfp={p_pfp ? p_pfp : pfp} width={39} height={39}/>
+                        <h5 className="pt-2">Hi, {displayName}!</h5>
+                    </div>}
+
                     <div className="offcanvas-body">
+
                         <ul className="navbar-nav justify-content-end flex-grow-1">
+
                             <li className="nav-item">
                                 <Link className="nav-link" aria-current="page" href="/">Home</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" href="/team">Team</Link>
                             </li>
-                            <li className="nav-item">
+                            <li className="nav-item read-btn">
                                 <Link
                                     className="nav-link"
                                     id="comicLink"
@@ -150,19 +157,16 @@ const NavBar = ({p_pfp}: Props) => {
                                         window.location.href = '/comic';
                                     }}
                                 >
-                                  Browse Comics
+                                    <div className="">Read</div>   
                                 </Link>
                             </li>
-                            {isSignedIn && isMobile && (
-                                <>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" href="/profile">Dashboard</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <button onClick={handleSignOut} className="nav-link btn-link">Sign Out</button>
-                                    </li>
-                                </>
-                            )}
+                            {!isSignedIn &&
+                            <li className="nav-item">
+                                <Link href="/sign-in" className="nav-link">
+                                    <button className="nav-btn btn btn-outline-dark">Sign In</button>
+                                </Link>
+                            </li>}
+
                         </ul>
                     </div>
                 </div>
