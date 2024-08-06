@@ -14,7 +14,6 @@ import Row from 'react-bootstrap/Row';
 export function SignInForm() {
     const [message, errorState] = useState('');
     const [passwordVisible, setPasswordVisibility] = useState(false);
-    const [validated, setValidated] = useState(false);
     const [emailValid, setEmailValid] = useState(true);
     const [passwordValid, setPasswordValid] = useState(true);
 
@@ -23,12 +22,10 @@ export function SignInForm() {
     };
 
     const handleSubmit = (event: any) => {
-        if (emailValid === false || passwordValid === false) {
+        if (!emailValid || !passwordValid) {
             event.preventDefault();
             event.stopPropagation();
         }
-
-        setValidated(true);
     };
 
     const handleEmailChange = (e: any) => {
@@ -56,7 +53,6 @@ export function SignInForm() {
                 {/* FORM */}
                 <Form
                     noValidate
-                    validated={validated}
                     onSubmit={handleSubmit}
                     id={styles.loginForm}
                     action={async (formData) => {
@@ -81,7 +77,7 @@ export function SignInForm() {
                                 aria-describedby="emailHelp"
                                 required
                                 onChange={handleEmailChange}
-                                isInvalid={!emailValid}
+                                isInvalid={!emailValid }
                                 className={`${emailValid ? styles.formControlValid : styles.formControlInvalid}`}
                             />
                                 <Form.Control.Feedback type = 'invalid' className={styles.feedback}>

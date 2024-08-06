@@ -8,13 +8,37 @@ import logo from '../../../public/images/logos/Crowd_Comic_Logo_BW.svg';
 
 import { useState } from 'react';
 import { registerAction } from '@/app/login/actions';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 
 export function SignUpForm() {
     const [message, errorState] = useState('');
     const [passwordVisible, setPasswordVisibility] = useState(false);
+    const [emailValid, setEmailValid] = useState(true);
+    const [passwordValid, setPasswordValid] = useState(true);
 
     const togglePasswordVisibility = () => {
         setPasswordVisibility(!passwordVisible);
+    };
+
+    const handleSubmit = (event: any) => {
+        if (!emailValid || !passwordValid) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    };
+
+    const handleEmailChange = (e: any) => {
+        const { value } = e.target;
+        let isValid = value.includes('@') && value.includes('.');  
+        setEmailValid(isValid);
+    };
+
+    // Handler to validate password input
+    const handlePasswordChange = (e: any) => {
+        const { value } = e.target;
+        const isValid = value.length >= 8;
+        setPasswordValid(isValid);
     };
 
     return (
@@ -27,12 +51,12 @@ export function SignUpForm() {
                     </div>
                 </Link>
                 {/* FORM */}
-                <form
+                <Form
                     id={styles.loginForm}
                     className="needs-validation"
                     noValidate
-                    action={async (formData) => {
-                        const response = await registerAction(formData);
+                    action={async (FormData) => {
+                        const response = await registerAction(FormData);
                         if (response != 'Success') {
                             errorState(response);
                             return;
@@ -42,34 +66,39 @@ export function SignUpForm() {
                 >
                     <h1 className={styles.h1}>Sign Up</h1>
                     {/* USERNAME */}
-                    <div className={`mb-3 ${styles.formInputs}`}>
-                        <label htmlFor="inputUsername" className={styles.loginLabel}>Display Name</label>
-                        <input
-                            type="displayname"
-                            name="displayName"
-                            placeholder="name"
-                            className="form-control"
-                            id={styles.inputUsername}
-                            onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Enter Display Name Here')}
-                            onInput={e => (e.target as HTMLInputElement).setCustomValidity('')}
-                            required
-                        />
-                    </div>
+                    <Row className={`mb-3 ${styles.FormInputs}`}>
+                        <Form.Group>
+                            <Form.Label htmlFor="inputUsername" className={styles.loginLabel}>Display Name</Form.Label>
+                            <Form.Control
+                                type="displayname"
+                                name="displayName"
+                                placeholder="name"
+                                className="form-control"
+                                id={styles.inputUsername}
+                                required
+                            />
+                        </Form.Group>
+                    </Row>
                     {/* EMAIL */}
-                    <div className={`mb-3 ${styles.formInputs}`}>
-                        <label htmlFor="inputEmail" className={styles.loginLabel}>Email Address</label>
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="name@example.com"
-                            className="form-control"
-                            id={styles.inputEmail}
-                            onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Enter Email Here')}
-                            onInput={e => (e.target as HTMLInputElement).setCustomValidity('')}
-                            aria-describedby="emailHelp"
-                            required
-                        />
-                    </div>
+                    <Row className={`mb-3 ${styles.formInputs}`}>
+                        <Form.Group>
+                            <Form.Label htmlFor="inputEmail" className={styles.loginLabel}>Email Address</Form.Label>
+                            <Form.Control
+                                type="email"
+                                name="email"
+                                placeholder="name@example.com"
+                                className="form-control"
+                                id={styles.inputEmail}
+                                isInvalid={!emailValid}
+                                aria-describedby="emailHelp"
+                                onChange={handleEmailChange}
+                                required
+                            />
+                            <Form.Control.Feedback type='invalid' className={styles.feedback}>
+                                Please enter a valid email with "@" and ".".
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Row>
                     {/* PASSWORD */}
                     <div className={`mb-3 ${styles.formInputs}`}>
                         <label htmlFor="inputPassword" className={styles.loginLabel}>Password</label>
@@ -125,7 +154,7 @@ export function SignUpForm() {
                     {/* LOGIN */}
                     <Link href="sign-in" replace={true}><button type="button" id={styles.registerButton} className="btn btn-primary">Back</button></Link>
                     {!!message && <p>{message}</p>}
-                </form>
+                </Form>
             </section>
         </main>
     );
