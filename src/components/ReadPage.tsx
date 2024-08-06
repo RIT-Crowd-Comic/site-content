@@ -150,6 +150,7 @@ const ReadPage = ({ id }: Props) => {
                 panel_set={panelSet}
                 user={currentUser}
             />
+            <Signature author={null}></Signature>
             <div className={`${styles.controlBar}`}  >
                 <button
                     onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)}
@@ -177,7 +178,6 @@ const ReadPage = ({ id }: Props) => {
                     source_2={toggleLayoutVertIcon}
                 />
             </div>
-            <Signature author={author}></Signature>
             <InfoBtn toggle={infoDisplay} />
             <InfoBox
                 instructions={`Read though different story lines by clicking through the panelhooks.
