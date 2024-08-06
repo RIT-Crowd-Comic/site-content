@@ -7,6 +7,7 @@ import { getTrunks, getUserBySession } from '@/api/apiCalls';
 import { logout, getSessionCookie, updateSession } from '@/app/login/loginUtils';
 
 const NavBar = () => {
+    const [displayName, setDisplayName] = useState('');
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
 
@@ -18,6 +19,7 @@ const NavBar = () => {
                 const user = await getUserBySession(session_id);
                 if (user && !user.message) {
                     setIsSignedIn(true);
+                    setDisplayName(user.display_name);
                     updateSession(session_id);
                     return;
                 }
