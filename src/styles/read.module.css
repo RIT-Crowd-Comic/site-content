@@ -247,7 +247,7 @@ div#signature {
   width: 100%;
   height: 100%;
   gap: 1%;
-  bottom: -210px;
+  /* bottom: -210px; */
 }
 
 img#signature {
@@ -309,34 +309,6 @@ p#signature {
     max-width: 900px;
     max-height: 600px;
   }
-/* 
-  .controlBar {
-    position: relative;
-
-  } */
-
-  /* 
-  #backButton,
-  #hooksToggle {
-    visibility: visible;
-    position: fixed;
-    background-color: black;
-    border-radius: 50%;
-    border: none;
-  } */
-  /* 
-  #backButton {
-    top: 12vh;
-    left: 2vw;
-    width: 60px;
-    height: 60px;
-  } */
-
-  /* #hooksToggle {
-    bottom: 3vh;
-    right: 3vw;
-    padding: 5px;
-  } */
 
   #layoutToggle .buttonIcon {
     visibility: hidden;
@@ -419,7 +391,12 @@ p#signature {
 /* No media query for `xs` since this is the default in Bootstrap */
 
 /* [sm] Small devices, 576px and up */
-@media (min-width: 576px) {}
+@media (min-width: 576px) {
+  div#signature {
+    bottom: -825px;
+  }
+
+}
 
 /* [md] Medium devices, 768px and up */
 @media (min-width: 768px) {}
