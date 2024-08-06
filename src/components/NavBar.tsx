@@ -70,7 +70,7 @@ const NavBar = () => {
                     {/* Crowd Comic */}
                 </Link>
 
-                <div className="d-flex order-lg-3 ms-auto me-3">
+                <div className="d-flex order-lg-3 ms-auto me-4">
                     {isSignedIn &&
                         (
                             <div className="dropdown">
