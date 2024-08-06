@@ -37,8 +37,7 @@ a {
     text-decoration: none;
 }
 
-body
-{
+body {
     overflow: auto !important;
 }
 
@@ -61,20 +60,14 @@ body
     border-bottom: solid 3px black;
 }
 
-.nav-link, .nav-btn {
+.nav-link,
+.nav-btn {
     position: relative;
     color: var(--grayscale-primary-color);
     font-size: 1.5rem;
-    z-index: 1;
 }
 
-.read-btn{
-    background: url(../../public/images/background-boxes/readButton.svg) no-repeat center/contain;
-    z-index: 0;
-}
-
-.nav-btn
-{
+.nav-btn {
     border: solid 3px #000000;
     border-bottom: solid 4px #000000;
     color: black;
@@ -82,22 +75,19 @@ body
     padding: 8px;
 }
 
-.nav-btn:hover
-{
+.nav-btn:hover {
     background-color: #3e3e3e;
     border: solid 3px #000000;
     border-bottom: solid 4px #000000;
 }
 
-.nav-btn:active
-{   
+.nav-btn:active {
     background-color: #3e3e3e;
     margin-top: 1px;
     border: solid 3px #000000;
 }
 
-.navbar-toggler
-{
+.navbar-toggler {
     border: solid 3px #000000;
     border-bottom: solid 4px #000000;
     color: black;
@@ -106,22 +96,19 @@ body
     box-shadow: none !important;
 }
 
-.navbar-toggler:hover
-{
+.navbar-toggler:hover {
     background-color: #3e3e3e;
     border: solid 3px #000000;
     border-bottom: solid 4px #000000;
 }
 
-.navbar-toggler:active
-{   
+.navbar-toggler:active {
     background-color: #3e3e3e;
     margin-top: 1px;
     border: solid 3px #000000;
 }
 
-.navbar-nav
-{
+.navbar-nav {
     text-align: left;
     margin-left: 1.5rem;
 }
@@ -130,13 +117,11 @@ body
     font-size: 1.5rem;
 }
 
-.dropdown-item
-{
+.dropdown-item {
     font-size: 1rem;
 }
 
-.dropdown-item:active
-{
+.dropdown-item:active {
     background-color: #3e3e3e;
 }
 
@@ -229,56 +214,52 @@ body
 }
 
 /* FORMS */
-.form-control, .form-select
-{
+.form-control,
+.form-select {
     margin: 0;
     max-width: 300px;
     border-radius: 6px;
     border: solid 3px #000000;
 }
 
-.accordion-item
-{
+.accordion-item {
     border-radius: 6px;
     border: solid 3px #000000;
 
     background-color: black;
 }
 
-.form-control:focus, .team-form:focus, .form-select:focus
-{
+.form-control:focus,
+.team-form:focus,
+.form-select:focus {
     outline: none;
     border-color: #ffffff;
     box-shadow: 0 0 3px #ffffff;
     background-color: white;
 }
 
-.accordion-body
-{
+.accordion-body {
     width: 100%;
     margin: 0;
 }
 
-.input-group
-{
+.input-group {
     flex-wrap: nowrap !important;
 }
 
-.form-select:focus
-{
+.form-select:focus {
     background-color: white;
     color: black;
 }
 
-.accordion-button
-{
+.accordion-button {
     color: white;
     filter: grayscale(1);
     border-bottom: 3px solid black !important;
 }
 
-.accordion-button:hover, .accordion-button:focus
-{
+.accordion-button:hover,
+.accordion-button:focus {
     outline: none;
     box-shadow: none;
 }
@@ -318,7 +299,7 @@ body
     }
 
     .footer-nav-list {
-      margin: 0;
+        margin: 0;
     }
 
     #scroll-text {
@@ -332,8 +313,7 @@ body
 
 /* [lg] Large desktops, 992px and up */
 @media (min-width: 992px) {
-    .nav-btn
-    {
+    .nav-btn {
         border: solid 3px #000000;
         border-bottom: solid 4px #000000;
         color: black;
@@ -342,20 +322,22 @@ body
         padding: 8px;
     }
 
-    .nav-btn:hover
-    {
+
+    .read-btn {
+        background: url(../../public/images/background-boxes/readButton.svg) no-repeat center/contain;
+    }
+
+    .nav-btn:hover {
         border: solid 3px #000000;
         border-bottom: solid 4px #000000;
     }
 
-    .nav-btn:active
-    {   
+    .nav-btn:active {
         margin-top: 1px;
         border: solid 3px #000000;
     }
 
-    .nav-item
-    {
+    .nav-item {
         margin: auto 1.5rem auto 0;
     }
 }
