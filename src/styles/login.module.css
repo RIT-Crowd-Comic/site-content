@@ -110,19 +110,31 @@
 #inputEmail, #inputPassword, #inputUsername
 {
     font-family: var(--font-inter);
+    border-color: black;
+    box-shadow: none;
+    background-image: none;
     /* font-variant: small-caps; */
 }
 
-#inputEmail:invalid
-{
-    
+.formControlInvalid {
+    border-color: #ff6b6b; 
+    box-shadow: none; 
+}
+
+.formControlValid {
+    border-color: black; 
+    box-shadow: none; 
 }
 
 .passwordContainer
 {
     position: relative;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+}
+.feedback {
+   color: white
 }
 
 #inputPassword
