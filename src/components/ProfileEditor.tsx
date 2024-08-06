@@ -45,7 +45,7 @@ const ProfileEditor = ({
 
     // Set up image uploader when component loads
     const uploadInputRef = useCallback((node: HTMLInputElement) => {
-        node?.addEventListener('change', event => {
+        node?.addEventListener('change', () => {
             if (!node.files) return;
 
             const url = URL.createObjectURL(node.files[0]);
