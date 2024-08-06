@@ -128,8 +128,21 @@ const NavBar = () => {
                             aria-label="Close"
                         />
                     </div>
+                    {isSignedIn && isMobile &&
+                    <div className="d-flex align-items-center gap-2 offcanvas-hello">
+                        <Image
+                            src="/images/icons/Profile.svg"
+                            width={39}
+                            height={39}
+                            alt="Profile"
+                        />
+                        <h5 className="pt-2">Hi, {displayName}!</h5>
+                    </div>}
+
                     <div className="offcanvas-body">
+
                         <ul className="navbar-nav justify-content-end flex-grow-1">
+
                             <li className="nav-item">
                                 <Link className="nav-link" aria-current="page" href="/">Home</Link>
                             </li>
