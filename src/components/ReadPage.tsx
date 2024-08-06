@@ -9,6 +9,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Panel, PanelSet, Hook, User } from './interfaces';
 import InfoBox from './info/InfoBox';
 import InfoBtn from './info/InfoBtn';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { getSessionCookie } from '@/app/login/loginUtils';
 import Signature from './Signature';
 
@@ -118,7 +119,6 @@ const ReadPage = ({ id }: Props) => {
     const backVisibility: CSSProperties = parentPanelSet == undefined ?
         {
             filter:        'brightness(0.2)',
-            pointerEvents: 'none'
         } :
         { };
 
@@ -135,13 +135,22 @@ const ReadPage = ({ id }: Props) => {
             />
             <Signature author={author} toggleAuthorCredit={setAuthorCreditVisible}></Signature>
             <div className={`${styles.controlBar}`}  >
-                <button
-                    onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)}
-                    style={backVisibility}
-                    id={`${styles.backButton}`}
-                >
-                    <img src={backIcon} className={`${styles.buttonIcon}`} alt="back button" />
-                </button>
+                <OverlayTrigger trigger={["focus", "hover"]} placement="bottom" overlay={parentPanelSet ? (<div></div>):(
+                    <Popover>
+                        <Popover.Body>
+                            You are at the start of the comic and cannot go back any further.
+                        </Popover.Body>
+                    </Popover>
+                )}>
+                    <button
+                        disabled = {!parentPanelSet}
+                        onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)}
+                        style={backVisibility}
+                        id={`${styles.backButton}`}
+                    >
+                        <img src={backIcon} className={`${styles.buttonIcon}`} alt="back button" />
+                    </button>
+                </OverlayTrigger>
                 <IconToggleButton
                     setting={hooks}
                     setSetting={setHooks}

@@ -1,5 +1,6 @@
 import { MouseEventHandler } from 'react';
 import styles from './BranchPageControls.module.css'
+import { OverlayTrigger, Popover } from 'react-bootstrap';
 
 const HookPageControls = ({
     addingHook,
@@ -55,9 +56,18 @@ const HookPageControls = ({
                     {/* starting text to be updated when either add or remove branch hook button is pressed */}
                 </div>
             </div>
-            <button onClick={publish} disabled = {hookCount != 3 ? true : false} id={`${styles.publishBtn}`}>
-                <img alt="publish button"/>
-            </button>
+            <OverlayTrigger trigger={["focus", "hover"]} placement="bottom" overlay={hookCount != 3 ?(
+                 <Popover id="popover">
+                 <Popover.Header as="h3">Reminder</Popover.Header>
+                 <Popover.Body>
+                   You need to have 3 hooks placed before you can publish.
+                 </Popover.Body>
+               </Popover>
+            ): (<div></div>)}>
+                <button onClick={publish} disabled={hookCount != 3 ? true : false} id={`${styles.publishBtn}`}>
+                    <img alt="publish button" />
+                </button>
+            </OverlayTrigger>
         </div>
     </>)
 }
