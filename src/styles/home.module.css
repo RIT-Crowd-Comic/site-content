@@ -153,9 +153,9 @@
 .missionHeading {
     position: relative;
     background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
-    padding: 6vw 8vw 6vw 6vw;
+    padding: 6vw;
     z-index: 1;
-    margin: 5vh 2vw auto auto;
+    margin: 2vh 1vw 0vh auto;
 }
 
 .missionImage {
@@ -199,7 +199,7 @@
     position: relative;
     background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
     padding: 7vw;
-    margin: -5vw auto;
+    margin: -5vh 1vw 0vh auto;
     z-index: 1;
 }
 
@@ -245,8 +245,8 @@
 .createHeading {
     position: relative;
     background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
-    padding: 5vw 9vw 5vw 6vw;
-    margin: 0 auto;
+    padding: 5vw 6vw 5vw 6vw;
+    margin: 2vh auto 2vh 1vw;
     z-index: 1;
 }
 
@@ -268,7 +268,7 @@
 
 .bottomCreate {
     position: absolute;
-    bottom: 0%;
+    bottom: -5%;
     right: 4%;
     height: auto;
     width: 90vw;
@@ -590,7 +590,8 @@
 
 
     .missionHeading {
-        margin: 5vh 1vw auto auto;
+        margin: 5vh 1vw 2vh auto;
+        padding: auto;
     }
 
     .missionImage {
@@ -615,14 +616,13 @@
         display: grid;
         grid-template-rows: repeat(3, auto);
         width: 80vw;
-        max-width: 1200px;
         margin: 30px auto 50px;
     }
 
     .previewPanels {
         width: 37%;
         height: auto;
-        margin: 0 auto;
+        margin: -2vh auto;
         border: 5px solid black;
     }
 
@@ -639,6 +639,10 @@
     }
 
     /* READ */
+    .readHeading {
+        margin: 2vh 1vw 0vh auto;
+        padding: auto;
+    }
 
     .readImage {
         margin: -5vh auto auto 10vw;
@@ -659,7 +663,8 @@
     /* CREATE */
 
     .createHeading {
-        margin: 7vh auto;
+        margin: 7vh auto 12vh 1vw;
+        padding: auto;
     }
 
     .createImage {
@@ -953,14 +958,11 @@
 
     .missionParagraph {
         width: 86%;
-        height: auto;
         padding: 1.2rem;
         margin: -65px 83px 50px;
     }
 
     .desktopMission {
-        display: inline;
-        position: absolute;
         width: 1100px;
         height: 405px;
         margin: -13% auto;
@@ -974,14 +976,13 @@
 
     .readHeading {
         padding: 2.5rem;
-        margin: -110px 30px ;
+        margin: -110px 80px ;
     }
 
     .readParagraph {
         padding: 1.2rem;
         width: 85%;
-        height: auto;
-        margin: 0px 85px 10px;
+        margin: 0px 80px 10px;
     }
 
     .desktopRead {
@@ -1004,13 +1005,10 @@
     .createParagraph {
         padding: 1.2rem;
         width: 85%;
-        height: auto;
         margin: -30px 80px 10px;
     }
 
     .desktopCreate {
-        display: inline;
-        position: absolute;
         width: 980px;
         height: 350px;
         margin: -7% 5%;
@@ -1040,9 +1038,6 @@
     .ourTeam {
         width: 1200px;
         height: 363px;
-        padding: 0;
-        background-size: 100% 100%;
-        text-align: center;
         margin: -100px auto -50px;
     }
 
@@ -1050,12 +1045,23 @@
         width: 300px;
         height: 120px;
         font-size: 2.2rem;
-
     }
 
     /* PREVIEW */
     .preview {
         width: 950px;
+    }
+
+    .panelOne {
+        margin: 0 -1%;
+    }
+
+    .panelTwo {
+        margin: -17% 32% 0;
+    }
+
+    .panelThree {
+        margin: -17% 65% 0;
     }
 
     /* BACK TO TOP */
@@ -1066,6 +1072,131 @@
 }
 
 /* [xxl] Extra extra large devices, 1400px and up */
-@media (min-width: 1400px) {
-    
+@media (min-width: 1600px) {
+    .body h2 {
+        font-size: 3rem;
+    }
+
+    .body p {
+        font-size: 1.7rem;
+    }
+
+    /* MISSION */
+    .missionHeading {
+        padding: 3rem 2rem;
+        margin: 70px 50px;
+    }
+    .missionSec {
+        width: 1600px;
+    }
+
+    .missionParagraph {
+        width: 86%;
+        margin: -65px 125px 100px;
+    }
+
+    .desktopMission {
+        width: 1500px;
+        height: 535px;
+        margin: -13% auto;
+    }
+
+    /* READ */
+    .readSec {
+        width: 1600px;
+        margin: 130px auto 0px;
+    }
+
+    .readHeading {
+        padding: 2.8rem;
+        margin: -110px 80px ;
+    }
+
+    .readParagraph {
+        width: 85%;
+        margin: 30px 120px 60px;
+    }
+
+    .desktopRead {
+        width: 1330px;
+        height: 425px;
+    }
+
+    /* CREATE */
+    .createSec {
+        width: 1600px;
+        margin: 40px auto 60px;
+    }
+
+    .createHeading {
+        margin: 0px 30px 40px;
+    }
+
+    .createParagraph {
+        width: 85%;
+        margin: -30px 115px 10px;
+    }
+
+    .desktopCreate {
+        width: 1330px;
+        height: 425px;
+    }
+
+    /* GET STARTED */
+
+    .getStarted {
+        margin: -70px 0px -50px 20px;
+    }
+
+    .bookAnimation {
+        width: 280px;
+        height: 280px;
+        top: 42px;
+        left: -135px;
+    }
+
+    .getStarted button {
+        font-size: 2.6rem;
+        width: 500px;
+        height: 350px;
+        padding: 1rem 1rem 2rem 1rem;
+        margin: -30px auto 0px;
+    }
+
+    /* OUR TEAM */
+    .ourTeam {
+        width: 1600px;
+        height: 484px;
+        margin: -100px auto -50px;
+    }
+
+    .ourTeam button {
+        width: 400px;
+        height: 150px;
+        font-size: 3rem;
+        margin: 10px auto
+    }
+
+    /* PREVIEW */
+    .preview {
+        width: 1350px;
+    }
+
+    .panelOne {
+        margin: 0 2%;
+    }
+
+    .panelTwo {
+        margin: -17% 33% 0;
+    }
+
+    .panelThree {
+        margin: -17% 65% 0;
+    }
+
+    /* BACK TO TOP */
+    .scrollButtonContainer {
+        width: 100px;
+        height: 70px;
+    } 
 }

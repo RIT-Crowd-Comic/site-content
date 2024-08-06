@@ -1,12 +1,12 @@
-'use client'
+'use client';
 
-import { getTrunks} from '@/api/apiCalls';
+import { getTrunks } from '@/api/apiCalls';
 import { useRouter } from 'next/navigation';
 
-import Image from "next/image";
-import Link from 'next/link'
-import linkedin from "../../public/images/icons/LinkedIn.svg";
-import github from "../../public/images/icons/Github.svg"
+import Image from 'next/image';
+import Link from 'next/link';
+import linkedin from '../../public/images/icons/LinkedIn.svg';
+import github from '../../public/images/icons/Github.svg';
 
 const Footer = () => {
     const router = useRouter();
@@ -31,7 +31,7 @@ const Footer = () => {
                 <ul className="footer-nav-list">
                     <li><Link href="/">Home</Link></li>
                     <li><Link href="/team" >Team</Link></li>
-                    <li><Link 
+                    <li><Link
                         id="comicLink"
                         href=""
                         onClick={async (e) => {
@@ -40,33 +40,32 @@ const Footer = () => {
                             router.push(url);
                         }}
                         >Comic
-                    </Link></li>
+                    </Link>
+                    </li>
                 </ul>
             </div>
             <div className="social-div">
                 <ul className="social">
                     <li>
-                        <Link href="">
-                            <div className="icondiv">
-                                <Image className="iconcolor" src={linkedin} alt="LinkedIn" fill={true} />
-                            </div>
-                        </Link>
-                    </li>
-                    <li>
                         <Link href="https://github.com/RIT-Crowd-Comic">
                             <div className="icondiv">
-                                <Image className="iconcolor" src={github} alt="GitHub" fill={true} />
+                                <Image
+                                    className="iconcolor"
+                                    src={github}
+                                    alt="GitHub"
+                                    fill={true}
+                                />
                             </div>
                         </Link>
                     </li>
                 </ul>
             </div>
-            <div className='copyright-div'>
-                <p className='copyright'>Copyright © {current_year}</p>
+            <div className="copyright-div">
+                <p className="copyright">Copyright © {current_year}</p>
             </div>
-            <div className="row"></div>
+            <div className="row" />
         </div>
-    )
-}
+    );
+};
 
 export default Footer;
