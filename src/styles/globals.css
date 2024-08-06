@@ -85,7 +85,7 @@ body
 
 .nav-btn:active
 {   
-    background-color: #3e3e3e;
+    background-color: #3e3e3e; 
     margin-top: 1px;
     border: solid 3px #000000;
 }

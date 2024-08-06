@@ -69,7 +69,7 @@ const NavBar = () => {
                 </Link>
 
                 <div className="d-flex order-lg-3 ms-auto me-3">
-                    {isSignedIn ?
+                    {isSignedIn &&
                         (
                             <div className="dropdown">
                                 <button
@@ -92,9 +92,6 @@ const NavBar = () => {
                                     <li><button onClick={handleSignOut} className="dropdown-item">Sign Out</button></li>
                                 </ul>
                             </div>
-                        ) :
-                        (
-                            <Link href="/sign-in"><button className="nav-btn btn btn-outline-dark">Sign In</button></Link>
                         )}
                 </div>
 
@@ -150,24 +147,13 @@ const NavBar = () => {
                                   Browse Comics
                                 </Link>
                             </li>
-                            {isSignedIn && isMobile && (
-                                <>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" href="/profile">Dashboard</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <button onClick={handleSignOut} className="nav-link btn-link">Sign Out</button>
-                                    </li>
-                                </>
-                            )}
-                            {!isSignedIn && isMobile && (
-                                <>
-                                <li className="nav-item">
-                                    <Link className="nav-link" href="/sign-in">Sign In</Link>
-                                    {/* <button onClick={handleSignOut} className="nav-link btn-link">Sign In</button> */}
-                                </li>
-                                </>
-                            )}
+                            {!isSignedIn &&
+                            <li className="nav-item">
+                                <Link href="/sign-in" className="nav-link">
+                                    <button className="nav-btn btn btn-outline-dark">Sign In</button>
+                                </Link>
+                            </li>}
+
                         </ul>
                     </div>
                 </div>
