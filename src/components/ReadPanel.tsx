@@ -1,12 +1,9 @@
 import styles from './publish/Panel.module.css';
-import {
-    useLayoutEffect, useRef, useState
-} from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { CreateHook, Hook, PanelSet } from './interfaces';
-import {
-    createSVGPath
-} from '@/utils';
+import { createSVGPath } from '@/utils';
 import Image from 'next/image';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
 
 // perhaps load this from a global color palette file
 const FILL_COLOR = '#009BC6AA';
@@ -70,13 +67,26 @@ const ReadPanel = ({
                 <g transform={`scale(${1 / (scale?.x ?? 1)} ${1 / (scale?.y ?? 1)})`}>
                     {
                         hooks.map((hook, i) => (
-                            <path
-                                d={createSVGPath((hook as CreateHook).points ?? (hook as Hook).position.map(p => [p.x, p.y]) ?? '')}
-                                fill={ hook.next_panel_set_id === null && panel_set?.author_id === userId ? FORBIDDEN_HOOK : hook.next_panel_set_id !== null ? FILL_COLOR : NULL_HOOK}
-                                onClick={() => { if (onHookClick) onHookClick(hook, i); }}
-                                className={`${styles.hookPath} ${hideUntilHover ? styles.hidden : ''} ${styles[hook.next_panel_set_id === null && panel_set?.author_id === userId ? 'hookBlocked' : hook.next_panel_set_id == null ? 'hookEmpty' : 'hookTaken']}`}
-                                key={i}
-                            />
+                            <OverlayTrigger
+                                trigger={['focus', 'hover']}
+                                placement="bottom"
+                                overlay={(
+                                    <Popover id="popover">
+                                        <Popover.Body>
+                                            {hook.next_panel_set_id === null && panel_set?.author_id === userId ? 'You cannot add to a comic panel you created!' : hook.next_panel_set_id == null ? 'Create a new comic panel.' : 'Continue the story.'}
+                                        </Popover.Body>
+                                    </Popover>
+                                )}
+                            >
+                                <path
+                                    d={createSVGPath((hook as CreateHook).points ?? (hook as Hook).position.map(p => [p.x, p.y]) ?? '')}
+                                    fill={hook.next_panel_set_id === null && panel_set?.author_id === userId ? FORBIDDEN_HOOK : hook.next_panel_set_id !== null ? FILL_COLOR : NULL_HOOK}
+                                    onClick={() => { if (onHookClick) onHookClick(hook, i); }}
+                                    className={`${styles.hookPath} ${hideUntilHover ? styles.hidden : ''} ${styles[hook.next_panel_set_id === null && panel_set?.author_id === userId ? 'hookBlocked' : hook.next_panel_set_id == null ? 'hookEmpty' : 'hookTaken']}`}
+                                    key={i}
+                                />
+                            </OverlayTrigger>
+
                         ))
                     }
                 </g>
