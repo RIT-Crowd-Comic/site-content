@@ -8,10 +8,7 @@ import logo from '../../../public/images/logos/Crowd_Comic_Logo_BW.svg';
 
 import { useState } from 'react';
 import { loginAction } from '@/app/login/actions';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 
 export function SignInForm() {
@@ -19,9 +16,7 @@ export function SignInForm() {
     const [passwordVisible, setPasswordVisibility] = useState(false);
     const [validated, setValidated] = useState(false);
     const [emailValid, setEmailValid] = useState(true);
-    const [emailValidMessage, setEmailValidMessage] = useState('');
     const [passwordValid, setPasswordValid] = useState(true);
-    const [passwordValidMessage, setPasswordValidMessage] = useState('');
 
     const togglePasswordVisibility = () => {
         setPasswordVisibility(!passwordVisible);
@@ -38,20 +33,14 @@ export function SignInForm() {
 
     const handleEmailChange = (e: any) => {
         const { value } = e.target;
-        const isValid = value.includes('@') &&  value.includes('.');
-        const message = 'Invalid email.';
-        setEmailValidMessage(message)
-        console.log(isValid)
+        let isValid = value.includes('@') && value.includes('.');  
         setEmailValid(isValid);
-        setValidated(true);
     };
 
     // Handler to validate password input
     const handlePasswordChange = (e: any) => {
         const { value } = e.target;
-        console.log(value)
-        const isValid = value.length >= 6;
-        console.log(isValid)
+        const isValid = value.length >= 8;
         setPasswordValid(isValid);
     };
 
@@ -94,11 +83,12 @@ export function SignInForm() {
                                 onChange={handleEmailChange}
                                 className={`${emailValid ? styles.formControlValid : styles.formControlInvalid}`}
                             />
-                            {!emailValid && (
-                                <Form.Control.Feedback type="invalid" className={styles.feedback}>
-                                    {emailValidMessage}
+                             {!emailValid && (
+                                <Form.Control.Feedback className={styles.feedback}>
+                                    Please enter a valid email with "@" and ".".
                                 </Form.Control.Feedback>
                             )}
+
                         </Form.Group>
                     </Row>
                     {/* PASSWORD */}
@@ -123,7 +113,7 @@ export function SignInForm() {
                                 />
                                 {!passwordValid && (
                                     <Form.Control.Feedback className={styles.feedback}>
-                                        Password must be at least 8 characters and contain an uppercase letter.
+                                        Password in invalid. Ensure it has at least 8 characters.
                                     </Form.Control.Feedback>
                                 )}
                             </div>
@@ -135,6 +125,7 @@ export function SignInForm() {
 
                     {/* REGISTER */}
                     <Link href="sign-up" replace={true}><button type="button" id={styles.registerButton} className="btn btn-primary">Sign Up</button></Link>
+                    <div>{message}</div>
                 </Form>
             </section>
         </main>
