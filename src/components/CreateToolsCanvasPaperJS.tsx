@@ -696,18 +696,19 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
     // },[isWriting, /*selected element */])
 
     textTool.current.onMouseDown = function (event: paper.ToolEvent) {
-        if (!isWriting && canvasProject.current) {
+        if (!isWriting && canvasReference.current) {
             // Start the process of writing
             setIsWriting(true);
 
-            if (!textToolTyperReference.current) 
-             {
-                  throw new Error("textToolTyperReference is null");
-            }
-            textToolTyperReference.current.hidden = false;
+            // if (!textToolTyperReference.current) 
+            //  {
+            //       throw new Error("textToolTyperReference is null");
+            // }
+            // textToolTyperReference.current.hidden = false;
 
-            // may need additional calc work
-            let clickedViewPoint = event.point.subtract(new paper.Point(screenLeft,screenTop)).multiply(view.pixelRatio);
+            let canvasLT = canvasReference.current.getBoundingClientRect();
+            let clickedViewPoint = event.point.add(canvasLT);
+
 
             // Create a textArea element for the user to write in 
             let textTyper = document.createElement('textarea');
@@ -716,7 +717,8 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
             textTyper.style.top = `${clickedViewPoint.y}px`;
 
             // Add the textArea to the DOM
-            document.body.appendChild(textTyper);
+            //document.body.appendChild(textTyper);
+            document.querySelector(`#${styles.createPage}`)?.appendChild(textTyper);
         }
         else {
             // Set the textContent to what the user has written in the textArea
