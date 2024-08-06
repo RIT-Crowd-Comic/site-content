@@ -35,7 +35,7 @@ const InfoBox = ({ instructions, toggle }:{instructions:string, toggle:(stat:boo
     };
     return (
         <div id={styles.infoModal} className={styles.modal}>
-            <div className={styles.modalContent}>
+            <div id='' className={styles.modalContent}>
                 <span className={styles.closeModal} onClick={() => toggle(false)} />
                 <p className={styles.displayLinebreak}>{instructions}</p>
             </div>
