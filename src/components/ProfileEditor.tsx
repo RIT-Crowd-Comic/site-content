@@ -5,6 +5,7 @@ import styles from '../styles/profileEditor.module.css';
 import Image from 'next/image';
 import Croppie from 'croppie';
 import '../styles/croppie-extended.css';
+import { changePfp } from '@/api/apiCalls';
 
 interface Props {
     editorState: boolean;
@@ -93,10 +94,19 @@ const ProfileEditor = ({
     };
 
     const save = async () => {
-        const image = await croppie?.result();
-        pfp = image
-        console.log(image);
-    }
+        if(!croppie || !email) return;
+        croppie.result({type: 'base64'}).then( async (resp) => {
+            const arr = resp.split(',') as string[];
+            let bstr = atob(arr[1]), n = bstr.length;
+            let u8arr = new Uint8Array(n);
+            while(n--){
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            const file = new File([u8arr], 'image.png', {type:'image/png'});
+            console.log(file);
+            await changePfp(email, file);
+        });
+    };
 
     if (!editorState) return undefined;
 
