@@ -81,13 +81,12 @@ export function SignInForm() {
                                 aria-describedby="emailHelp"
                                 required
                                 onChange={handleEmailChange}
+                                isInvalid={!emailValid}
                                 className={`${emailValid ? styles.formControlValid : styles.formControlInvalid}`}
                             />
-                             {!emailValid && (
-                                <Form.Control.Feedback className={styles.feedback}>
+                                <Form.Control.Feedback type = 'invalid' className={styles.feedback}>
                                     Please enter a valid email with "@" and ".".
                                 </Form.Control.Feedback>
-                            )}
 
                         </Form.Group>
                     </Row>
@@ -101,6 +100,7 @@ export function SignInForm() {
                                     name="password"
                                     placeholder="********"
                                     id={`${styles.inputPassword}`}
+                                    isInvalid={!passwordValid}
                                     required
                                     onChange={handlePasswordChange}
                                     className={`${passwordValid ? styles.formControlValid : styles.formControlInvalid}`}
@@ -111,11 +111,9 @@ export function SignInForm() {
                                     onClick={togglePasswordVisibility}
                                     style={{ backgroundImage: `url(${passwordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
                                 />
-                                {!passwordValid && (
-                                    <Form.Control.Feedback className={styles.feedback}>
+                                    <Form.Control.Feedback type = 'invalid' className={styles.feedback}>
                                         Password in invalid. Ensure it has at least 8 characters.
                                     </Form.Control.Feedback>
-                                )}
                             </div>
 
                         </Form.Group>
