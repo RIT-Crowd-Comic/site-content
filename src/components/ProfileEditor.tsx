@@ -6,18 +6,19 @@ import Image from 'next/image';
 import Croppie from 'croppie';
 import '../styles/croppie-extended.css';
 import { changePfp } from '@/api/apiCalls';
+import { MutableRefObject } from 'react';
 
 interface Props {
     editorState: boolean;
     setEditorState: Dispatch<SetStateAction<boolean>>;
-    pfp?: string;
+    pfpRef?: MutableRefObject<string | undefined>;
     email?: string
 }
 
 const ProfileEditor = ({
     editorState = false,
     setEditorState,
-    pfp, 
+    pfpRef, 
     email
 }: Props) => {
 
@@ -93,6 +94,7 @@ const ProfileEditor = ({
         setEdit(false);
     };
 
+    //Save the image in the croppie window to the database and update pfp use on the page
     const save = async () => {
         if(!croppie || !email) return;
         croppie.result({type: 'base64'}).then( async (resp) => {
@@ -103,8 +105,10 @@ const ProfileEditor = ({
                 u8arr[n] = bstr.charCodeAt(n);
             }
             const file = new File([u8arr], 'image.png', {type:'image/png'});
-            console.log(file);
-            await changePfp(email, file);
+            const url = await changePfp(email, file);
+            if(!pfpRef) return;
+            pfpRef.current = url;
+            close();
         });
     };
 
@@ -124,7 +128,7 @@ const ProfileEditor = ({
                             <Image
                                 id={styles.profileIcon}
                                 className="m-auto"
-                                src={pfp ? pfp : "/images/icons/Profile.svg"}
+                                src={pfpRef?.current ? pfpRef.current : "/images/icons/Profile.svg"}
                                 width={200}
                                 height={200}
                                 alt="Profile"

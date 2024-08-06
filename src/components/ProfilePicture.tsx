@@ -1,7 +1,7 @@
 import styles from '@/styles/profile.module.css';
 import Image from 'next/image';
 interface Props {
-    pfp: string,
+    pfp: string | undefined,
     width: number,
     height: number
 }
