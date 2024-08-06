@@ -14,6 +14,6 @@ export default function ProfilePicture( {pfp, width, height} : Props) {
         width={width}
         height={height}
         style={{borderRadius:100}}
-        alt="Profile"
+        alt="Profile Picture"
     />
 }

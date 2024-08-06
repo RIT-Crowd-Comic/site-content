@@ -150,7 +150,7 @@ const ReadPage = ({ id }: Props) => {
                 panel_set={panelSet}
                 user={currentUser}
             />
-            <Signature author={null}></Signature>
+            <Signature author={author}></Signature>
             <div className={`${styles.controlBar}`}  >
                 <button
                     onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)}

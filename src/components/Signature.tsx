@@ -5,6 +5,7 @@ interface Props {
     author: User | null | undefined
 }
 export default function Signature( {author} : Props) {
+    console.log(author);
     return <div id={styles.signature}>
         <Image
                 id={styles.signature}
@@ -12,10 +13,9 @@ export default function Signature( {author} : Props) {
                 height={50}
                 src={author?.profile_picture ? author.profile_picture : '/images/icons/Profile.svg'}
                 style = {{borderRadius: 100}}
-                alt={`${author != null ? author?.display_name : "Test" }'s profile picture`}
+                alt={`${author != null ? author?.display_name : "Crowd Comic User" }'s profile picture`}
                 unoptimized={true}
             />
-            <p id={styles.signature}>Alexander Hamilton</p>
-            {/* <p>{author?.display_name}</p> */}
+            <p id={styles.signature}>{author?.display_name ? author.display_name : 'Crowd Comic User'}</p>
     </div>
 }
