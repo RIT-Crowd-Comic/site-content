@@ -9,11 +9,15 @@ import '../styles/croppie-extended.css';
 interface Props {
     editorState: boolean;
     setEditorState: Dispatch<SetStateAction<boolean>>;
+    pfp?: string;
+    email?: string
 }
 
 const ProfileEditor = ({
     editorState = false,
-    setEditorState
+    setEditorState,
+    pfp, 
+    email
 }: Props) => {
 
     const previewRef = useRef<HTMLImageElement | null>(null);
@@ -88,6 +92,12 @@ const ProfileEditor = ({
         setEdit(false);
     };
 
+    const save = async () => {
+        const image = await croppie?.result();
+        pfp = image
+        console.log(image);
+    }
+
     if (!editorState) return undefined;
 
     return (
@@ -104,7 +114,7 @@ const ProfileEditor = ({
                             <Image
                                 id={styles.profileIcon}
                                 className="m-auto"
-                                src="/images/icons/Profile.svg"
+                                src={pfp ? pfp : "/images/icons/Profile.svg"}
                                 width={200}
                                 height={200}
                                 alt="Profile"
@@ -143,6 +153,11 @@ const ProfileEditor = ({
                                     <span className="btn btn-outline-dark" >Change Photo</span>
                                     <div style={{}} />
                                 </label>
+                                <button
+                                    className="btn btn-outline-dark mx-2"
+                                    onClick={() => save()}
+                                >Save
+                                </button>
                             </div>
                         </div>
                     </div>

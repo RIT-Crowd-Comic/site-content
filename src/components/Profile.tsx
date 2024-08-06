@@ -11,13 +11,18 @@ import { useEffect, useState } from 'react';
 import { nameAction, passwordAction } from '@/app/login/actions';
 import { getUserBySession } from '@/api/apiCalls';
 import { getSessionCookie } from '@/app/login/loginUtils';
+import { User } from './interfaces'
 import { ProfileEditor } from './ProfileEditor';
+import ProfilePicture from './ProfilePicture';
 
 
 export function Profile() {
+    const [session_id, setSession] = useState('');
+    const [user, setUser] = useState<User>();
     const [message, errorState] = useState('');
     const [displayName, updateName] = useState('Display Name');
     const [email, updateEmail] = useState('email@example.com');
+    const [pfp, updatePfp] = useState('/images/icons/Profile.svg');
     const [currentPasswordVisible, setCurrentPasswordVisibility] = useState(false);
     const [newPasswordVisible, setNewPasswordVisibility] = useState(false);
     const [retypePasswordVisible, setRetypePasswordVisibility] = useState(false);
@@ -42,17 +47,21 @@ export function Profile() {
         const getProfileValues = async () => {
             const session = await getSessionCookie();
             if (!session) return;
+            setSession(session.value);
             const user = await getUserBySession(session.value);
             if (!user) return;
+            setUser(user);
             updateName(user.display_name);
             updateEmail(user.email);
+            if(user.profile_picture) updatePfp(user.profile_picture);
+            else updatePfp('/images/icons/Profile.svg');
         };
-        getProfileValues();
+        if(!user) getProfileValues();
     });
 
     return (
         <main className={styles.body}>
-            <Navbar />
+            <Navbar p_pfp={pfp}/>
             <section id={styles.profilePage} className="content">
                 <h1 className={`${styles.h1} pt-5 pb-3 px-3`}>Dashboard</h1>
                 <div className="mt-5 d-flex flex-fill gap-3 justify-content-center flex-wrap">
@@ -67,15 +76,8 @@ export function Profile() {
                         {/* USERNAME */}
                         <div className={`mb-3 ${styles.formInputs}`}>
                             <div id={styles.profileIconContainer}>
-                                <Image
-                                    id={styles.profileIcon}
-                                    className="m-auto"
-                                    src="/images/icons/Profile.svg"
-                                    width={200}
-                                    height={200}
-                                    alt="Profile"
-                                />
-                                <a id={styles.profileIconEdit} onClick={() => setProfileEditorState(!profileEditorState)}> </a>
+                            <ProfilePicture pfp={pfp} width={200} height={200}/>
+                            <a id={styles.profileIconEdit} onClick={() => setProfileEditorState(!profileEditorState)}> </a>
                             </div>
                         </div>
                         <div className={`mb-3 ${styles.formInputs}`}>
@@ -216,7 +218,7 @@ export function Profile() {
                 {/* FORM */}
 
             </section>
-            <ProfileEditor editorState={profileEditorState} setEditorState={setProfileEditorState} />
+            <ProfileEditor editorState={profileEditorState} setEditorState={setProfileEditorState} pfp={pfp} email={email} />
         </main>
     );
 }
