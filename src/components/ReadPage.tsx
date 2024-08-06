@@ -40,17 +40,14 @@ const ReadPage = ({ id }: Props) => {
             setIsLoading(true);
 
             const session = await getSessionCookie();
-            console.log(session);
             let userResponse = null;
             let newUserId = '';
             if (session) {
-                console.log('Session exists');
                 userResponse = await apiCalls.getUserBySession(session.value);
                 newUserId = userResponse.id;
             }
 
             else {
-                console.log('Failed to get session. User is not logged in. I think');
                 newUserId = '';
             }
 
@@ -122,8 +119,6 @@ const ReadPage = ({ id }: Props) => {
             }
 
         }
-        console.log(divs);
-
     };
 
     const backVisibility: CSSProperties = parentPanelSet == undefined ?
