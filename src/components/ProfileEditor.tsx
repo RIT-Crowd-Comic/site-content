@@ -1,9 +1,10 @@
 import {
-    Dispatch, SetStateAction, useEffect, useRef, useState
+    Dispatch, SetStateAction, useCallback, useEffect, useRef, useState
 } from 'react';
 import styles from '../styles/profileEditor.module.css';
 import Image from 'next/image';
 import Croppie from 'croppie';
+import '../styles/croppie-extended.css';
 
 interface Props {
     editorState: boolean;
@@ -15,27 +16,77 @@ const ProfileEditor = ({
     setEditorState
 }: Props) => {
 
+    const previewRef = useRef<HTMLImageElement | null>(null);
     const profileEditorRef = useRef<HTMLDivElement | null>(null);
     const [croppie, setCroppie] = useState<Croppie>();
     const [edit, setEdit] = useState(false);
+    const [reloadEditorFlag, reloadEditor] = useState(false);
 
-    useEffect(() => {
-        if (!edit) return;
-        console.log('hi');
+    // const uploadInputRef = useRef<HTMLInputElement | null>(null);
+
+    const initializeCropper = () => {
         if (profileEditorRef.current) {
             const options = {
                 viewport:        { width: 200, height: 200, type: 'circle' },
                 boundary:        { width: 200, height: 200 },
                 enforceBoundary: true,
             };
-            croppie?.destroy();
-            setCroppie(new Croppie(profileEditorRef.current, options as any));
-        }
-    }, [edit]);
 
+            // create the editor and bind the profile picture
+            const imgSrc = previewRef.current?.src;
+            if (imgSrc) {
+                croppie?.destroy();
+                const newCroppie = new Croppie(profileEditorRef.current, options as any);
+                newCroppie.bind({ url: imgSrc, orientation: 1 });
+                setCroppie(newCroppie);
+            }
+        }
+    };
+
+    // Set up image uploader when component loads
+    const uploadInputRef = useCallback((node: HTMLInputElement) => {
+        node?.addEventListener('change', event => {
+            if (!node.files) return;
+
+            const url = URL.createObjectURL(node.files[0]);
+
+            if (previewRef.current) {
+                previewRef.current.src = url;
+                previewRef.current.onload = () => {
+                    setEdit(true);
+                    reloadEditor(flag => !flag);
+                    console.log('reloading editor', !reloadEditorFlag);
+                };
+            }
+
+            // const fileReader = new FileReader();
+            // fileReader.onload = (event) => {
+            //     const uploadedImage = event.target?.result;
+            //     if (uploadedImage) console.log(uploadedImage.)
+            // }
+            // fileReader.readAsArrayBuffer(node.files[0]);
+        });
+    }, []);
+
+    // Open the croppie image editor 
     useEffect(() => {
-        croppie?.bind({ url: '/images/icons/Profile.svg', orientation: 1 });
-    }, [croppie]);
+        if (!edit) return;
+        console.log('edit changed', edit, reloadEditorFlag);
+        initializeCropper();
+    }, [edit, reloadEditorFlag]);
+
+    // bind the image to the croppie image editor
+    // useEffect(() => {
+    //     if (previewRef.current) {
+    //         croppie?.bind({ url: previewRef.current.src, orientation: 1 });
+    //     }
+
+    // }, [croppie]);
+
+    const close = () => {
+        setEditorState(false);
+        setEdit(false);
+    };
 
     if (!editorState) return undefined;
 
@@ -57,11 +108,21 @@ const ProfileEditor = ({
                                 width={200}
                                 height={200}
                                 alt="Profile"
+                                ref={previewRef}
                             />
-                            <div id="profile-editor" ref={profileEditorRef} style={{ width: 200, height: 200 }} />
+                            {
+                                edit ?
+                                    <div
+                                        id="profile-editor"
+                                        ref={profileEditorRef}
+                                        style={{ width: 200, height: 200 }}
+                                    /> :
+                                    ''
+                            }
+
                             <button
                                 className="btn-close btn-close-dark"
-                                onClick={() => setEditorState(false)}
+                                onClick={close}
                             />
                         </div>
                         <div className="p-2 text-dark border-top bg-white rounded-bottom">
@@ -71,7 +132,17 @@ const ProfileEditor = ({
                                     onClick={() => setEdit(!edit)}
                                 >Edit
                                 </button>
-                                <button className={`btn btn-outline-dark `}>Change Photo</button>
+                                <input
+                                    type="file"
+                                    id="image_input"
+                                    accept="image/jpeg, image/png, image/jpg"
+                                    ref={uploadInputRef}
+                                    style={{ display: 'none' }}
+                                />
+                                <label htmlFor="image_input">
+                                    <span className="btn btn-outline-dark" >Change Photo</span>
+                                    <div style={{}} />
+                                </label>
                             </div>
                         </div>
                     </div>
