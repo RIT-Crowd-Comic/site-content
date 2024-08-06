@@ -391,7 +391,7 @@ p#signature {
 /* [xxl] Extra extra large devices, 1400px and up */
 @media (min-width: 1400px) {
   div#signature {
-    position: absolute;
+    position: relative;
     align-content:end;
     align-items: center;
     display: flex;
@@ -400,6 +400,7 @@ p#signature {
     height: 100%;
     gap: 1%;
     bottom: -210px;
+    left: 0px;
   }
 
   p#signature {

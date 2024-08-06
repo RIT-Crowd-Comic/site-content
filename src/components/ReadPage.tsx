@@ -53,6 +53,7 @@ const ReadPage = ({ id }: Props) => {
             }
 
             const panelSetResponse = await apiCalls.getPanelSetByID(id) as PanelSet;
+            console.log(panelSetResponse);
             if (!updateError(panelSetResponse)) {
                 const authorResponse = await apiCalls.getUser(panelSetResponse.author_id);
                 if (!updateError(authorResponse)) {
@@ -181,7 +182,7 @@ const ReadPage = ({ id }: Props) => {
          Use the + looking symbol to toggle between horizontal and vertical view. This will only work for larger screen sizes.
          `}
                 visible={instructionsVisible} setVisibility={setInstructionsVisible}            />
-            <InfoBox text={`Author Name: ${author?.display_name}\nJoin Date: ${author?.created_at}`} setVisibility={validateAuthorCreditVisibility} visible={authorCreditVisible}/>
+            <InfoBox text={`Author Name: ${author?.display_name}\nCreated at: ${new Date(author?.created_at ?? '')}`} setVisibility={validateAuthorCreditVisibility} visible={authorCreditVisible}/>
         </>
     );
 };
