@@ -256,11 +256,11 @@
   .rowBodyH {
     height: fit-content;
   }
-  #hooksToggle {
+  /* #hooksToggle {
     bottom: 3vh;
     right: 4vw;
     padding: 5px;
-  }
+  } */
   #hooksToggle img{
     width:40px;
   }

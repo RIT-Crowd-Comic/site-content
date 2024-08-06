@@ -1,0 +1,52 @@
+.bookAnimation {
+    z-index: 105;
+    background-image: url(../../../public/images/GIFs/book-split/Frame8.gif);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 25vw;
+    height: 25vw;
+    filter: grayscale(1);
+
+    position: absolute;
+    /* left: -17%;*/
+    top: 45vh; 
+    margin:auto;
+
+    animation: open .5s infinite;
+    animation-fill-mode: forwards;
+}
+
+@keyframes open {
+    0% {
+        background-image: url(../../../public/images/GIFs/book-split/Frame1.gif);
+    }
+
+    5% {
+        background-image: url(../../../public/images/GIFs/book-split/Frame2.gif);
+    }
+
+    20% {
+        background-image: url(../../../public/images/GIFs/book-split/Frame3.gif);
+    }
+
+    45% {
+        background-image: url(../../../public/images/GIFs/book-split/Frame4.gif);
+    }
+
+    60% {
+        background-image: url(../../../public/images/GIFs/book-split/Frame5.gif);
+    }
+
+    75% {
+        background-image: url(../../../public/images/GIFs/book-split/Frame6.gif);
+    }
+
+    90% {
+        background-image: url(../../../public/images/GIFs/book-split/Frame7.gif);
+    }
+
+    100% {
+        background-image: url(../../../public/images/GIFs/book-split/Frame8.gif);
+    }
+
+}
