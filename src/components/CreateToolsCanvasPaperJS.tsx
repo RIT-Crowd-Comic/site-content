@@ -2291,7 +2291,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
 
             <InfoBtn toggle={infoDisplay} />
             <InfoBox
-                instructions="This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
+                text="This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
                         This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
                         This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
                         This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.

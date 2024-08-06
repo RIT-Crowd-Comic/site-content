@@ -36,13 +36,13 @@ const ReadPage = ({ id }: Props) => {
     const [currentUser, setCurrentUser] = useState<User>();
     const [panels, setPanels] = useState<Panel[]>([]);
     const [author, setAuthor] = useState<User>();
-    const [authorCredit, setAuthorCredit] = useState<boolean>(false);
+    const [authorCreditVisible, setAuthorCreditVisible] = useState<boolean>(false);
+    const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
             const session = await getSessionCookie();
             let userResponse = null;
-            let newUserId = '';
             if (session) {
                 userResponse = await apiCalls.getUserBySession(session.value);
                 setCurrentUser(userResponse)
@@ -56,6 +56,7 @@ const ReadPage = ({ id }: Props) => {
             if (!updateError(panelSetResponse)) {
                 const authorResponse = await apiCalls.getUser(panelSetResponse.author_id);
                 if (!updateError(authorResponse)) {
+                    console.log(authorResponse);
                     setAuthor(authorResponse)
                 }
                 const imageUrlsResponse = await apiCalls.getAllImageUrlsByPanelSetId(panelSetResponse.id);
@@ -113,26 +114,12 @@ const ReadPage = ({ id }: Props) => {
         return <div>{error}</div>;
     }
 
-    const infoDisplay = (visible: boolean) => {
-        const divs = document.querySelectorAll('div');
-        const modal = divs[divs.length - 2];
-        if (modal) {
-            if (visible) {
-                modal.style.display = 'block';
-            }
-            else {
-                modal.style.display = 'none';
-            }
-
-        }
-    };
-
-    const toggleAuthorCredit = () => {
+    const validateAuthorCreditVisibility = (b: boolean) => {
         if(window.innerWidth >= 1400) {
-            setAuthorCredit(false)
+            setAuthorCreditVisible(false)
         }
-        setAuthorCredit(!authorCredit);
-        console.log(!authorCredit)
+        setAuthorCreditVisible(b);
+        console.log(author)
     };
 
     const backVisibility: CSSProperties = parentPanelSet == undefined ?
@@ -153,7 +140,7 @@ const ReadPage = ({ id }: Props) => {
                 panel_set={panelSet}
                 user={currentUser}
             />
-            <Signature author={author} toggleAuthorCredit={toggleAuthorCredit}></Signature>
+            <Signature author={author} toggleAuthorCredit={validateAuthorCreditVisibility}></Signature>
             <div className={`${styles.controlBar}`}  >
                 <button
                     onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)}
@@ -181,9 +168,9 @@ const ReadPage = ({ id }: Props) => {
                     source_2={toggleLayoutVertIcon}
                 />
             </div>
-            <InfoBtn toggle={infoDisplay} />
+            <InfoBtn setVisibility={setInstructionsVisible} />
             <InfoBox 
-                instructions={`Read though different story lines by clicking through the panelhooks.
+                text={`Read though different story lines by clicking through the panel hooks.
 
          Use the lightbulb to toggle the hooks on and off
          - Red hooks (empty): do not currently have a comic panel connected to them and will take you to the create page
@@ -193,9 +180,8 @@ const ReadPage = ({ id }: Props) => {
          Use the back button to take you back to the parent panel.
          Use the + looking symbol to toggle between horizontal and vertical view. This will only work for larger screen sizes.
          `}
-                toggle={infoDisplay}
-            />
-            <InfoBox instructions={`Credit`} toggle={toggleAuthorCredit}/>
+                visible={instructionsVisible} setVisibility={setInstructionsVisible}            />
+            <InfoBox text={`Author Name: ${author?.display_name}\nJoin Date: ${author?.created_at}`} setVisibility={validateAuthorCreditVisibility} visible={authorCreditVisible}/>
         </>
     );
 };

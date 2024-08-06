@@ -250,7 +250,7 @@ const PublishPage = ({ id, sendError }: Props) => {
                 </div>
                 <InfoBtn toggle={infoDisplay} />
                 <InfoBox
-                    instructions={`
+                    text={`
             -click on the add hook button to start drawing a hook on the comic
             -once done, click on accept hook to keep or remove to delete the hook
              *hooks do have a minimum size and dimention so you can't make itty bitty unclickable hooks

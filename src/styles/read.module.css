@@ -257,11 +257,7 @@ p#signature {
   #comicPanels {
     padding: 0 100px;
   }
-  /* #hooksToggle {
-    bottom: 3vh;
-    right: 4vw;
-    padding: 5px;
-  } */
+  
   #hooksToggle img{
     width:40px;
   }
@@ -272,11 +268,7 @@ p#signature {
   .rowBodyH {
     height: fit-content;
   }
-  #hooksToggle {
-    bottom: 3vh;
-    right: 4vw;
-    padding: 5px;
-  }
+
   #hooksToggle img{
     width:40px;
   }

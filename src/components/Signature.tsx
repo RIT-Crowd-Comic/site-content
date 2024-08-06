@@ -3,12 +3,12 @@ import { User } from './interfaces';
 import styles from '@/styles/read.module.css';
 interface Props {
     author: User | null | undefined
-    toggleAuthorCredit: any
+    toggleAuthorCredit: (b: boolean) => void
 }
 export default function Signature( {author, toggleAuthorCredit} : Props) {
     return <div id={styles.signature}>
         <Image
-                onClick={() => {toggleAuthorCredit()}}
+                onClick={() => {toggleAuthorCredit(true)}}
                 id={styles.signature}
                 width={50}
                 height={50}

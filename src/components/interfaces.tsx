@@ -59,6 +59,7 @@ interface User {
     email: string
     display_name: string
     profile_picture: string
+    created_at: string
 }
 
 
