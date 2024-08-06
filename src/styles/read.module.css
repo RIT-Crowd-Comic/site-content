@@ -239,15 +239,9 @@
 }
 
 div#signature {
-  position: absolute;
-  align-content:end;
-  align-items: center;
-  display: flex;
-  justify-content: center; 
-  width: 100%;
-  height: 100%;
-  gap: 1%;
-  /* bottom: -210px; */
+  position: fixed;
+  right: 0px;
+  bottom: 76px;
 }
 
 img#signature {
@@ -255,8 +249,7 @@ img#signature {
 }
 
 p#signature {
-  color: white;
-  margin: 0px;
+  visibility: hidden;
 }
 
 @media only screen and (min-width: 700px) {
@@ -391,12 +384,7 @@ p#signature {
 /* No media query for `xs` since this is the default in Bootstrap */
 
 /* [sm] Small devices, 576px and up */
-@media (min-width: 576px) {
-  div#signature {
-    bottom: -825px;
-  }
-
-}
+@media (min-width: 576px) {}
 
 /* [md] Medium devices, 768px and up */
 @media (min-width: 768px) {}
@@ -408,4 +396,22 @@ p#signature {
 @media (min-width: 1200px) {}
 
 /* [xxl] Extra extra large devices, 1400px and up */
-@media (min-width: 1400px) {}
+@media (min-width: 1400px) {
+  div#signature {
+    position: absolute;
+    align-content:end;
+    align-items: center;
+    display: flex;
+    justify-content: center; 
+    width: 100%;
+    height: 100%;
+    gap: 1%;
+    bottom: -210px;
+  }
+
+  p#signature {
+    visibility: visible;
+    color: white;
+    margin: 0px;
+  }
+}

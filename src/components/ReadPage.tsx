@@ -36,21 +36,19 @@ const ReadPage = ({ id }: Props) => {
     const [currentUser, setCurrentUser] = useState<User>();
     const [panels, setPanels] = useState<Panel[]>([]);
     const [author, setAuthor] = useState<User>();
+    const [authorCredit, setAuthorCredit] = useState<boolean>(false);
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
             const session = await getSessionCookie();
-            console.log(session);
             let userResponse = null;
             let newUserId = '';
             if (session) {
-                console.log('Session exists');
                 userResponse = await apiCalls.getUserBySession(session.value);
                 setCurrentUser(userResponse)
             }
 
             else {
-                console.log('Failed to get session. User is not logged in. I think');
                 setCurrentUser(undefined);
             }
 
@@ -59,7 +57,6 @@ const ReadPage = ({ id }: Props) => {
                 const authorResponse = await apiCalls.getUser(panelSetResponse.author_id);
                 if (!updateError(authorResponse)) {
                     setAuthor(authorResponse)
-                    console.log(authorResponse)
                 }
                 const imageUrlsResponse = await apiCalls.getAllImageUrlsByPanelSetId(panelSetResponse.id);
                 const hookResponses = await apiCalls.getHooksFromPanelSetById(panelSetResponse.id) as Hook[];
@@ -128,8 +125,14 @@ const ReadPage = ({ id }: Props) => {
             }
 
         }
-        console.log(divs);
+    };
 
+    const toggleAuthorCredit = () => {
+        if(window.innerWidth >= 1400) {
+            setAuthorCredit(false)
+        }
+        setAuthorCredit(!authorCredit);
+        console.log(!authorCredit)
     };
 
     const backVisibility: CSSProperties = parentPanelSet == undefined ?
@@ -150,7 +153,7 @@ const ReadPage = ({ id }: Props) => {
                 panel_set={panelSet}
                 user={currentUser}
             />
-            <Signature author={author}></Signature>
+            <Signature author={author} toggleAuthorCredit={toggleAuthorCredit}></Signature>
             <div className={`${styles.controlBar}`}  >
                 <button
                     onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)}
@@ -179,7 +182,7 @@ const ReadPage = ({ id }: Props) => {
                 />
             </div>
             <InfoBtn toggle={infoDisplay} />
-            <InfoBox
+            <InfoBox 
                 instructions={`Read though different story lines by clicking through the panelhooks.
 
          Use the lightbulb to toggle the hooks on and off
@@ -192,6 +195,7 @@ const ReadPage = ({ id }: Props) => {
          `}
                 toggle={infoDisplay}
             />
+            <InfoBox instructions={`Credit`} toggle={toggleAuthorCredit}/>
         </>
     );
 };
