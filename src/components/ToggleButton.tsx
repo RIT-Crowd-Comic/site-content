@@ -31,7 +31,9 @@ const IconToggleButton = ({
 
 
     return (
-        <button onClick={toggleLayout} id={`${styles[buttonId]}`} ><img src={source} className={`${styles.buttonIcon}`} /></button>
+        <button onClick={toggleLayout} id={`${styles[buttonId]}`} >
+            <img src={source} className={`${styles.buttonIcon}`} alt={`toggle: ${setting}`} />
+        </button>
     );
 };
 

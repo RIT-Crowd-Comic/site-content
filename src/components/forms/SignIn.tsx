@@ -24,7 +24,7 @@ export function SignInForm() {
                 {/* LOGO */}
                 <Link href="/">
                     <div className={styles.loginImageDiv}>
-                        <Image className={styles.loginLogo} src={logo} alt="" />
+                        <Image className={styles.loginLogo} src={logo} alt="home page" />
                     </div>
                 </Link>
                 {/* FORM */}

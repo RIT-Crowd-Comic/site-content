@@ -7,6 +7,7 @@ import {
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { getSessionCookie } from '@/app/login/loginUtils';
 import * as apiCalls from '../api/apiCalls';
+import Signature from './Signature';
 interface Props {
     setting: string,
     hook_state: string,

@@ -33,13 +33,12 @@ const ReadPage = ({ id }: Props) => {
     const [panelSet, setPanelSet] = useState<PanelSet>();
     const [parentPanelSet, setParentPanelSet] = useState<PanelSet | undefined>();
     const [error, setError] = useState<string>('');
-    const [userId, setUserId] = useState<string>('');
+    const [currentUser, setCurrentUser] = useState<User>();
     const [panels, setPanels] = useState<Panel[]>([]);
     const [author, setAuthor] = useState<User>();
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
-
             const session = await getSessionCookie();
             console.log(session);
             let userResponse = null;
@@ -47,21 +46,21 @@ const ReadPage = ({ id }: Props) => {
             if (session) {
                 console.log('Session exists');
                 userResponse = await apiCalls.getUserBySession(session.value);
-                newUserId = userResponse.id;
-                const authorResponse = await apiCalls.getUser(newUserId);
-                if (!updateError(authorResponse)) {
-                    setAuthor(authorResponse)
-                    console.log(authorResponse)
-                }
+                setCurrentUser(userResponse)
             }
 
             else {
                 console.log('Failed to get session. User is not logged in. I think');
-                newUserId = '';
+                setCurrentUser(undefined);
             }
 
             const panelSetResponse = await apiCalls.getPanelSetByID(id) as PanelSet;
             if (!updateError(panelSetResponse)) {
+                const authorResponse = await apiCalls.getUser(panelSetResponse.author_id);
+                if (!updateError(authorResponse)) {
+                    setAuthor(authorResponse)
+                    console.log(authorResponse)
+                }
                 const imageUrlsResponse = await apiCalls.getAllImageUrlsByPanelSetId(panelSetResponse.id);
                 const hookResponses = await apiCalls.getHooksFromPanelSetById(panelSetResponse.id) as Hook[];
 
@@ -96,7 +95,6 @@ const ReadPage = ({ id }: Props) => {
                     }
                 }
             }
-            setUserId(newUserId);
             setIsLoading(false);
         }
         fetchData();
@@ -150,15 +148,16 @@ const ReadPage = ({ id }: Props) => {
                 currentId={id}
                 router={router}
                 panel_set={panelSet}
-                user={author}
+                user={currentUser}
             />
+            <Signature author={null}></Signature>
             <div className={`${styles.controlBar}`}  >
                 <button
                     onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)}
                     style={backVisibility}
                     id={`${styles.backButton}`}
                 >
-                    <img src={backIcon} className={`${styles.buttonIcon}`} />
+                    <img src={backIcon} className={`${styles.buttonIcon}`} alt="back button" />
                 </button>
                 <IconToggleButton
                     setting={hooks}
@@ -179,15 +178,14 @@ const ReadPage = ({ id }: Props) => {
                     source_2={toggleLayoutVertIcon}
                 />
             </div>
-            <Signature user={author}></Signature>
             <InfoBtn toggle={infoDisplay} />
             <InfoBox
                 instructions={`Read though different story lines by clicking through the panelhooks.
 
-         Use the lightbulb to toggle the hooks on and off.
-         - Red hooks (empty): do not currently have a comic panel connected to them and will take you to the create page.
-         - Blue hooks (filled): have a comic panel connected to them and you can click on them to explore that branch of the story.
-         - Grey hooks (blocked): have a comic panel connected to them. However, you are the author of the current panel set, so you cannot create a new panel set off this one.
+         Use the lightbulb to toggle the hooks on and off
+         - Red hooks (empty): do not currently have a comic panel connected to them and will take you to the create page
+         - Blue hooks (filled): have a comic panel connected to them and you can click on them to explore that branch of the story
+         - Grey hooks (blocked): have a comic panel connected to them. However, you are the author of the current panel set, so you cannot create a new panel set off this one
 
          Use the back button to take you back to the parent panel.
          Use the + looking symbol to toggle between horizontal and vertical view. This will only work for larger screen sizes.
