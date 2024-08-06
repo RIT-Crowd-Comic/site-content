@@ -240,8 +240,10 @@
 
 div#signature {
   position: fixed;
-  right: 0px;
-  bottom: 76px;
+  /* left: 20px; */
+  padding-left: 20px;
+  bottom: 0;
+  /* height: 100%; */
 }
 
 img#signature {
@@ -391,16 +393,13 @@ p#signature {
 /* [xxl] Extra extra large devices, 1400px and up */
 @media (min-width: 1400px) {
   div#signature {
-    position: relative;
-    align-content:end;
-    align-items: center;
+    position: absolute;
     display: flex;
-    justify-content: center; 
+    justify-content: start;
+    align-items: center;
     width: 100%;
-    height: 100%;
-    gap: 1%;
-    bottom: -210px;
-    left: 0px;
+    padding-bottom: 10px;
+    gap: 10px;
   }
 
   p#signature {
