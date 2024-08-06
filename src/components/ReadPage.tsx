@@ -115,14 +115,6 @@ const ReadPage = ({ id }: Props) => {
         return <div>{error}</div>;
     }
 
-    const validateAuthorCreditVisibility = (b: boolean) => {
-        if(window.innerWidth >= 1400) {
-            setAuthorCreditVisible(false)
-        }
-        setAuthorCreditVisible(b);
-        console.log(author)
-    };
-
     const backVisibility: CSSProperties = parentPanelSet == undefined ?
         {
             filter:        'brightness(0.2)',
@@ -141,7 +133,7 @@ const ReadPage = ({ id }: Props) => {
                 panel_set={panelSet}
                 user={currentUser}
             />
-            <Signature author={author} toggleAuthorCredit={validateAuthorCreditVisibility}></Signature>
+            <Signature author={author} toggleAuthorCredit={setAuthorCreditVisible}></Signature>
             <div className={`${styles.controlBar}`}  >
                 <button
                     onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)}
@@ -182,7 +174,7 @@ const ReadPage = ({ id }: Props) => {
          Use the + looking symbol to toggle between horizontal and vertical view. This will only work for larger screen sizes.
          `}
                 visible={instructionsVisible} setVisibility={setInstructionsVisible}            />
-            <InfoBox text={`Author Name: ${author?.display_name}\nCreated at: ${new Date(author?.created_at ?? '')}`} setVisibility={validateAuthorCreditVisibility} visible={authorCreditVisible}/>
+            <InfoBox text={`Author Name: ${author?.display_name}\nCreated at: ${new Date(author?.created_at ?? '')}`} setVisibility={setAuthorCreditVisible} visible={authorCreditVisible}/>
         </>
     );
 };
