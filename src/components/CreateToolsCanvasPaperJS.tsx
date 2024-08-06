@@ -680,7 +680,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
     const textTool = useRef<paper.Tool>(new paper.Tool());
     let textPath: paper.PointText;
 
-    const textToolTyperReference = useRef<HTMLTextAreaElement>(null);
+    const [textToolTyperReference,setTextToolTyperReference] = useState<HTMLTextAreaElement>();
 
     // Boolean that determines what state writing is in.  On first click, the user can continue typing into the textArea.  On second click it draws the content to the layer
     const [isWriting, setIsWriting] = useState<boolean>(false);
@@ -700,39 +700,38 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
             // Start the process of writing
             setIsWriting(true);
 
-            // if (!textToolTyperReference.current) 
-            //  {
-            //       throw new Error("textToolTyperReference is null");
-            // }
-            // textToolTyperReference.current.hidden = false;
-
             let canvasLT = canvasReference.current.getBoundingClientRect();
             let clickedViewPoint = event.point.add(canvasLT);
-
+            setStartTextPoint(event.point);
 
             // Create a textArea element for the user to write in 
             let textTyper = document.createElement('textarea');
             textTyper.style.position = "absolute";
             textTyper.style.left = `${clickedViewPoint.x}px`;
             textTyper.style.top = `${clickedViewPoint.y}px`;
+            setTextToolTyperReference(textTyper);
 
             // Add the textArea to the DOM
-            //document.body.appendChild(textTyper);
             document.querySelector(`#${styles.createPage}`)?.appendChild(textTyper);
         }
         else {
-            // Set the textContent to what the user has written in the textArea
-            // textToolTyperReference.current.textContent = textContent;
+            
+            if (!textToolTyperReference) 
+             {
+                  throw new Error("textToolTyperReference is null");
+            }
+            textToolTyperReference.hidden = true;
 
-            // Hide the text area
-            //  if (!textToolTyperReference.current) 
-            // {
-            // throw new Error("textToolTyperReference is null");
-            // }
-            // textToolTyperReference.current.hidden = true;
+            // Set the textContent to what the user has written in the textArea
+            //incorrect value??
+            let refTextContent = textToolTyperReference.value;
+            if(!refTextContent){
+                throw new Error("refText is null");
+            }
+            setTextContent(refTextContent);
 
             // Draw the user's writing to the layer
-            textPath = new paper.PointText(event.point);
+            textPath = new paper.PointText(startTextPoint);
             textPath.content = textContent;
             textPath.fontFamily = textFont;
             textPath.fontSize = textSize;
@@ -742,6 +741,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
 
             // Reset as the user is no longer writing and erase the textArea to set it up for the next write
             setIsWriting(false);
+            textToolTyperReference.remove();
         }
     };
 
