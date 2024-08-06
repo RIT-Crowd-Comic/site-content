@@ -246,6 +246,7 @@ div#signature {
 
 img#signature {
   background-color: white;
+  filter: grayscale(100%);
 }
 
 p#signature {
