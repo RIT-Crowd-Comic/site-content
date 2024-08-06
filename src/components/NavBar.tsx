@@ -149,7 +149,7 @@ const NavBar = () => {
                             <li className="nav-item">
                                 <Link className="nav-link" href="/team">Team</Link>
                             </li>
-                            <li className="nav-item">
+                            <li className="nav-item read-btn">
                                 <Link
                                     className="nav-link"
                                     id="comicLink"
@@ -159,7 +159,7 @@ const NavBar = () => {
                                         window.location.href = '/comic';
                                     }}
                                 >
-                                  Browse Comics
+                                    <div className="">Read</div>   
                                 </Link>
                             </li>
                             {!isSignedIn &&
