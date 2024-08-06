@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { getTrunks, getUserBySession } from '@/api/apiCalls';
 import { logout, getSessionCookie, updateSession } from '@/app/login/loginUtils';
+import ProfilePicture from './ProfilePicture';
 
 const NavBar = () => {
     const [pfp, updatePfp] = useState('/images/icons/Profile.svg');
@@ -81,13 +82,7 @@ const NavBar = () => {
                                     aria-expanded="false"
 
                                 >
-                                    <Image
-                                        src={`${pfp}`}
-                                        width={39}
-                                        height={39}
-                                        style = {{borderRadius: 100}}
-                                        alt="Profile"
-                                    />
+                                <ProfilePicture pfp={pfp} width={39} height={39}/>
 
                                 </button>
                                 <ul className="dropdown-menu dropdown-menu-lg-end">

@@ -85,7 +85,7 @@ export function Profile() {
                             type="file" 
                             accept="image/*"
                         ></input>
-                        <ProfilePicture pfp={pfp}/>
+                        <ProfilePicture pfp={pfp} width={200} height={200}/>
                         </div>
                         <div className={`mb-3 ${styles.formInputs}`}>
                             <label htmlFor="inputUsername" className={styles.loginLabel}>Display Name</label>
