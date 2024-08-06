@@ -8,7 +8,7 @@ interface Props {
 
 export default function ProfilePicture( {pfp, width, height} : Props) {
     return <Image
-        //id={styles.profileIcon}
+        id={styles.profileIcon}
         className="m-auto"
         src={`${pfp}`}
         width={width}

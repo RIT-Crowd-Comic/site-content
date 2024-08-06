@@ -7,7 +7,11 @@ import { getTrunks, getUserBySession } from '@/api/apiCalls';
 import { logout, getSessionCookie, updateSession } from '@/app/login/loginUtils';
 import ProfilePicture from './ProfilePicture';
 
-const NavBar = () => {
+interface Props {
+    p_pfp?: string
+}
+
+const NavBar = ({p_pfp}: Props) => {
     const [pfp, updatePfp] = useState('/images/icons/Profile.svg');
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
@@ -20,7 +24,7 @@ const NavBar = () => {
                 const user = await getUserBySession(session_id);
                 if (user && !user.message) {
                     setIsSignedIn(true);
-                    if(user.profile_picture) updatePfp(user.profile_picture);
+                    if(!p_pfp && user.profile_picture) updatePfp(user.profile_picture);
                     updateSession(session_id);
                     return;
                 }
@@ -82,7 +86,7 @@ const NavBar = () => {
                                     aria-expanded="false"
 
                                 >
-                                <ProfilePicture pfp={pfp} width={39} height={39}/>
+                                <ProfilePicture pfp={p_pfp ? p_pfp : pfp} width={39} height={39}/>
 
                                 </button>
                                 <ul className="dropdown-menu dropdown-menu-lg-end">

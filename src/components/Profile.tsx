@@ -52,13 +52,14 @@ export function Profile() {
             updateName(user.display_name);
             updateEmail(user.email);
             if(user.profile_picture) updatePfp(user.profile_picture);
+            else updatePfp('/images/icons/Profile.svg');
         };
         if(!user) getProfileValues();
     });
 
     return (
         <main className={styles.body}>
-            <Navbar />
+            <Navbar p_pfp={pfp}/>
             <section id={styles.profilePage} className="content">
                 <h1 className={`${styles.h1} pt-5 pb-3 px-3`}>Dashboard</h1>
                 <div className="mt-5 d-flex flex-fill gap-3 justify-content-center flex-wrap">
@@ -80,7 +81,6 @@ export function Profile() {
                                 const updatedUser = await getUserBySession(session_id);
                                 if(!updatedUser) return;
                                 updatePfp(updatedUser.profile_picture);
-                                window.history.go(); //TODO: Find more elegant solution than refreshing the page to update navbar
                             }} 
                             type="file" 
                             accept="image/*"
