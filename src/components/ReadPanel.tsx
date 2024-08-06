@@ -74,7 +74,7 @@ const ReadPanel = ({
                             <OverlayTrigger trigger={["focus", "hover"]} placement="bottom" overlay={  (
                                 <Popover id="popover">
                                     <Popover.Body>
-                                    <strong>{hook.next_panel_set_id === null && panel_set?.author_id === userId ? 'You cannot add to a comic panel you created!' : hook.next_panel_set_id == null ? 'Create a new comic panel.' : 'Continue the story.'}</strong>
+                                   {hook.next_panel_set_id === null && panel_set?.author_id === userId ? 'You cannot add to a comic panel you created!' : hook.next_panel_set_id == null ? 'Create a new comic panel.' : 'Continue the story.'}
                                     </Popover.Body>
                                 </Popover>
                             )}>
