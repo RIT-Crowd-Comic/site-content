@@ -33,13 +33,12 @@ const ReadPage = ({ id }: Props) => {
     const [panelSet, setPanelSet] = useState<PanelSet>();
     const [parentPanelSet, setParentPanelSet] = useState<PanelSet | undefined>();
     const [error, setError] = useState<string>('');
-    const [userId, setUserId] = useState<string>('');
+    const [currentUser, setCurrentUser] = useState<User>();
     const [panels, setPanels] = useState<Panel[]>([]);
     const [author, setAuthor] = useState<User>();
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
-
             const session = await getSessionCookie();
             console.log(session);
             let userResponse = null;
@@ -47,21 +46,21 @@ const ReadPage = ({ id }: Props) => {
             if (session) {
                 console.log('Session exists');
                 userResponse = await apiCalls.getUserBySession(session.value);
-                newUserId = userResponse.id;
-                const authorResponse = await apiCalls.getUser(newUserId);
-                if (!updateError(authorResponse)) {
-                    setAuthor(authorResponse)
-                    console.log(authorResponse)
-                }
+                setCurrentUser(userResponse)
             }
 
             else {
                 console.log('Failed to get session. User is not logged in. I think');
-                newUserId = '';
+                setCurrentUser(undefined);
             }
 
             const panelSetResponse = await apiCalls.getPanelSetByID(id) as PanelSet;
             if (!updateError(panelSetResponse)) {
+                const authorResponse = await apiCalls.getUser(panelSetResponse.author_id);
+                if (!updateError(authorResponse)) {
+                    setAuthor(authorResponse)
+                    console.log(authorResponse)
+                }
                 const imageUrlsResponse = await apiCalls.getAllImageUrlsByPanelSetId(panelSetResponse.id);
                 const hookResponses = await apiCalls.getHooksFromPanelSetById(panelSetResponse.id) as Hook[];
 
@@ -96,7 +95,6 @@ const ReadPage = ({ id }: Props) => {
                     }
                 }
             }
-            setUserId(newUserId);
             setIsLoading(false);
         }
         fetchData();
@@ -150,7 +148,7 @@ const ReadPage = ({ id }: Props) => {
                 currentId={id}
                 router={router}
                 panel_set={panelSet}
-                user={author}
+                user={currentUser}
             />
             <div className={`${styles.controlBar}`}  >
                 <button
@@ -179,7 +177,7 @@ const ReadPage = ({ id }: Props) => {
                     source_2={toggleLayoutVertIcon}
                 />
             </div>
-            <Signature user={author}></Signature>
+            <Signature author={author}></Signature>
             <InfoBtn toggle={infoDisplay} />
             <InfoBox
                 instructions={`Read though different story lines by clicking through the panelhooks.
