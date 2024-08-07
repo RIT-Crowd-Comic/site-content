@@ -706,6 +706,11 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
             textTyper.style.position = "absolute";
             textTyper.style.left = `${clickedViewPoint.x}px`;
             textTyper.style.top = `${clickedViewPoint.y - textTyper.cols}px`;
+            textTyper.style.fontFamily = textFont;
+            textTyper.style.fontSize = `${textSize}px`;
+            textTyper.style.fontWeight = textFontWeight;
+            textTyper.style.color = textColor;
+
             setTextToolTyperReference(textTyper);
 
             // Add the textArea to the DOM
