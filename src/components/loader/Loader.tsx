@@ -1,14 +1,24 @@
 import styles from './Loader.module.css';
-import React, { ReactNode, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 
-const Loader = (show:boolean) => {
+const Loader = ({ show }:{show:boolean}) => {
 
-    // const [showImage,setShowImage]=useState(true)
-    // setShowImage(show)
+    // const [showLoader,setShowLoader]=useState(true)
+
+
+    // useEffect(()=>{
+
+    //     //   setShow(true)
+    //       show=false
+
+    // },[])
     return (
-        <div style={show ? { display: 'block' } : { display: 'none' }} className={`${styles.bookAnimation}`} />
+        <div style={show ? { display: 'block' } : { display: 'none' }} className={styles.loadContainer}>
+            <div className={styles.glowRing} />
+            <div className={`${styles.loadAnimation}`} />
+        </div>
     );
 };
 

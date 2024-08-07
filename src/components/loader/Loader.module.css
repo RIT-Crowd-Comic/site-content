@@ -1,52 +1,136 @@
-.bookAnimation {
-    z-index: 105;
-    background-image: url(../../../public/images/GIFs/book-split/Frame8.gif);
+.loadContainer{
+    z-index: 1000;
+
+    position: fixed;
+    top: 50vh; 
+    left:50vw;
+
+    width: 10vw;
+    height: 10vw;
+}
+.loadAnimation {
+    position:absolute;
+    top:0;
+    background-image: url(../../../public/images/GIFs/loading-split/loading_7.png);
     background-size: contain;
     background-repeat: no-repeat;
-    width: 25vw;
-    height: 25vw;
-    filter: grayscale(1);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    
 
-    position: absolute;
-    /* left: -17%;*/
-    top: 45vh; 
-    margin:auto;
+    transform: translate(-50%,-50%);
+    /* filter:drop-shadow(0 0 10px var(--light-blue)); */
 
-    animation: open .5s infinite;
+    animation: brushCircle 1.5s ease infinite, colorCycle 4.5s linear infinite;
     animation-fill-mode: forwards;
+    
 }
 
-@keyframes open {
+.glowRing{
+    transform: translate(-50%,-50%);
+    width:80%;
+    height:80%;
+    border-radius: 50%;
+    background:radial-gradient(transparent 60%, #939393 90%);
+    box-shadow: 0px 0px 10px #939393;
+}
+
+@keyframes colorSwipe {
+    0%{
+        filter:drop-shadow(0px 0px 10px linear-gradient(var(--light-red) 0%,var(--light-blue) ))  
+    }
+    25%{
+        filter:drop-shadow(0px 0px 10px linear-gradient(var(--light-red) 90%,var(--light-blue) ))  
+    }
+    41%{
+        filter:drop-shadow(0px 0px 10px var(--yellow))  
+    }
+    58%{
+        filter:drop-shadow(0px 0px 10px var(--yellow))  
+    }
+    74%{
+        filter:drop-shadow(0px 0px 10px var(--light-blue))  
+    }
+    92%{
+        filter:drop-shadow(0px 0px 10px var(--light-blue))  
+    }
+    100%{
+        filter:drop-shadow(0px 0px 10px var(--light-red))  
+    }
+}
+
+@keyframes colorCycle{
+    0%{
+        filter:drop-shadow(0px 0px 10px var(--light-blue)) drop-shadow(0px 0px 5px #ffffff80)
+    }
+    /* 25%{
+        filter:drop-shadow(0px 0px 10px var(--light-blue)) drop-shadow(0px 0px 5px #ffffff80)
+    } */
+    41%{
+        filter:drop-shadow(0px 0px 10px var(--yellow)) drop-shadow(0px 0px 5px #ffffff80)
+    }
+    /* 58%{
+        filter:drop-shadow(0px 0px 10px var(--yellow)) drop-shadow(0px 0px 5px #ffffff80)
+    } */
+    74%{
+        filter:drop-shadow(0px 0px 10px var(--light-red)) drop-shadow(0px 0px 5px #ffffff80)
+    }
+    /* 92%{
+        filter:drop-shadow(0px 0px 10px var(--light-red)) drop-shadow(0px 0px 5px #ffffff80)
+    } */
+    100%{
+        filter:drop-shadow(0px 0px 10px var(--light-blue)) drop-shadow(0px 0px 5px #ffffff80)
+    }
+}
+
+@keyframes brushCircle {
     0% {
-        background-image: url(../../../public/images/GIFs/book-split/Frame1.gif);
+        background-image: url(../../../public/images/GIFs/loading-split/loading_1.png);
     }
-
-    5% {
-        background-image: url(../../../public/images/GIFs/book-split/Frame2.gif);
+    7% {
+        background-image: url(../../../public/images/GIFs/loading-split/loading_2.png);
     }
-
-    20% {
-        background-image: url(../../../public/images/GIFs/book-split/Frame3.gif);
+    14% {
+        background-image: url(../../../public/images/GIFs/loading-split/loading_3.png);
     }
-
-    45% {
-        background-image: url(../../../public/images/GIFs/book-split/Frame4.gif);
+    21% {
+        background-image: url(../../../public/images/GIFs/loading-split/loading_4.png);
     }
-
-    60% {
-        background-image: url(../../../public/images/GIFs/book-split/Frame5.gif);
+    28% {
+        background-image: url(../../../public/images/GIFs/loading-split/loading_5.png);
     }
-
-    75% {
-        background-image: url(../../../public/images/GIFs/book-split/Frame6.gif);
+    35% {
+        background-image: url(../../../public/images/GIFs/loading-split/loading_6.png);
     }
-
-    90% {
-        background-image: url(../../../public/images/GIFs/book-split/Frame7.gif);
+    42% {
+        background-image: url(../../../public/images/GIFs/loading-split/loading_7.png);
     }
-
+    49% {
+        background-image: url(../../../public/images/GIFs/loading-split/loading_8.png);
+    }
+    56% {
+        background-image: url(../../../public/images/GIFs/loading-split/loading_9.png);
+    }
+    63% {
+        background-image: url(../../../public/images/GIFs/loading-split/loading_10.png);
+    }
+    70% {
+        background-image: url(../../../public/images/GIFs/loading-split/loading_11.png);
+    }
+    77% {
+        background-image: url(../../../public/images/GIFs/loading-split/loading_12.png);
+    }
+    84% {
+        background-image: url(../../../public/images/GIFs/loading-split/loading_13.png);
+    }
+    93% {
+        background-image: url(../../../public/images/GIFs/loading-split/loading_14.png);
+    }
     100% {
-        background-image: url(../../../public/images/GIFs/book-split/Frame8.gif);
+        background-image: url(../../../public/images/GIFs/loading-split/loading_15.png);
     }
+
+  
 
 }
