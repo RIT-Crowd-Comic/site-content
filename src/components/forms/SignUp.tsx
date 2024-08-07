@@ -38,7 +38,7 @@ export function SignUpForm() {
         const password2 = formData.get('password2')
         if(!displayName){  setDisplayNameValid(false)}
         if(!email){  setEmailValid(false)}
-        if(!password){  setPasswordValid(false) };
+        if(!password){  setPasswordValid(false) }
         if(!password2){  setPasswordRetypeValid(false)}
         
         if (!emailValid || !passwordValid || !displayNameValid || !passwordRetypeValid) {
