@@ -508,6 +508,63 @@
     accent-color: rgb(126, 126, 126);
 }
 
+/* SHAPE SELECT BUTTONS */
+#ellipse{
+    background: url("../../public/images/icons/draw-icons/circle.png") no-repeat center/contain;
+}
+
+#triangle{
+    background: url("../../public/images/icons/draw-icons/triangle.png") no-repeat center/contain;
+}
+
+#line{
+    background: url("../../public/images/icons/draw-icons/line.png") no-repeat center/contain;
+}
+
+#rectangle{
+    background: url("../../public/images/icons/draw-icons/rectangle.png") no-repeat center/contain;
+}
+
+#hexagon{
+    background: url("../../public/images/icons/draw-icons/hexagonal.png") no-repeat center/contain;
+}
+
+#octagon{
+    background: url("../../public/images/icons/draw-icons/octagon.png") no-repeat center/contain;
+}
+
+#star{
+    background: url("../../public/images/icons/draw-icons/star.png") no-repeat center/contain;
+}
+
+#shapeSelect{
+    display: flex;
+}
+
+#ellipse, #triangle, #line, #rectangle, #hexagon, #octagon, #star{
+    filter: invert(1);
+    width: 25px;
+    height: 25px;
+    margin-left: 5px;
+    border: rgb(177, 177, 177) 3px solid;
+    background-color:rgb(177, 177, 177);
+}
+
+#ellipse:hover, #triangle:hover, #line:hover, #rectangle:hover, #hexagon:hover, #octagon:hover, #star:hover{
+    border: rgb(143, 143, 143) 3px solid;
+    background-color:rgb(143, 143, 143);
+}
+
+#ellipse.chosen, #triangle.chosen, #line.chosen, #rectangle.chosen, #hexagon.chosen, #octagon.chosen, #star.chosen{
+    border: rgb(0, 0, 0) 1px solid;
+}
+
+#ellipse input, #triangle input, #line input, #rectangle input, #hexagon input, #octagon input, #star input{
+    filter: opacity(0);
+    margin: 2px;
+}
+
+
 /* PALETTE BUTTONS GENERIC */
 #paletteButtons p, #fillPaletteButtons p, #borderPaletteButtons p, #textColor p{
     margin-bottom: 3px;
