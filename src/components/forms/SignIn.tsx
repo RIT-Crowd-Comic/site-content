@@ -8,6 +8,7 @@ import logo from '../../../public/images/logos/Crowd_Comic_Logo_BW.svg';
 
 import { useState } from 'react';
 import { loginAction } from '@/app/login/actions';
+import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
@@ -81,7 +82,7 @@ export function SignInForm() {
                               
                             />
                                 <Form.Control.Feedback type = 'invalid' className={styles.feedback}>
-                                    Please enter a valid email with "@" and ".".
+                                    {`Please enter a valid email with "@" and ".".`}
                                 </Form.Control.Feedback>
 
                         </Form.Group>
