@@ -19,7 +19,7 @@ const TeamPage = () => {
                 <h1 className={`${styles.teamTitle} pt-5 pb-3 px-3 `}>Meet the Creators!</h1>
                 <Filter />
                 <div className={`${styles.creatorGroup} p-3 pb-4 m-4 creatorGroup`} id="2024">
-                    <h2 className={`${styles.chapterTitle} py-1`}>Chapter 2024</h2>
+                    <h2 className={`${styles.chapterTitle} py-1`}>2024 Chapter</h2>
                     <div>
                         <div className="row">
                             <div className="d-flex flex-wrap justify-content-center">
