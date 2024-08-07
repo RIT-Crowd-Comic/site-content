@@ -1784,10 +1784,17 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
         layer3Reference.current?.importJSON(panel1LayerData.layer3);
         layer4Reference.current?.importJSON(panel1LayerData.layer4);
         try {
-            localStorage.setItem('image-1', String(canvasProject.current?.exportSVG({ asString: true, embedImages: false })));
+            const svg =  String(canvasProject.current?.exportSVG({ asString: true}));
+            const encoded = btoa(unescape(encodeURIComponent(svg)));
+
+            // Create a data URL
+            const data = `data:image/svg+xml;base64,${encoded}`;
+
+            localStorage.setItem('image-1', data);
             //console.log(localStorage.getItem('image-1'));
         }
         catch (error) {
+            console.log(error);
             sendError('Error publishing panel 1 to localStorage', 'Error', false, 4000, true);
             success = false;
         }
@@ -1808,9 +1815,16 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
         layer3Reference.current?.importJSON(panel2LayerData.layer3);
         layer4Reference.current?.importJSON(panel2LayerData.layer4);
         try {
-            localStorage.setItem('image-2', String(canvasProject.current?.exportSVG({ asString: true, embedImages: false })));
+            const svg =  String(canvasProject.current?.exportSVG({ asString: true }));
+            const encoded = btoa(unescape(encodeURIComponent(svg)));
+
+            // Create a data URL
+            const data = `data:image/svg+xml;base64,${encoded}`;
+
+            localStorage.setItem('image-2', data);
         }
         catch (error) {
+            console.log(error);
             sendError('Error publishing panel 2 to localStorage', 'Error', false, 4000, true);
             success = false;
         }
@@ -1831,10 +1845,16 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
         layer3Reference.current?.importJSON(panel3LayerData.layer3);
         layer4Reference.current?.importJSON(panel3LayerData.layer4);
         try {
-            localStorage.setItem('image-3', String(canvasProject.current?.exportSVG({ asString: true, embedImages: false })));
-            //console.log(localStorage.getItem('image-3'));
+            const svg =  String(canvasProject.current?.exportSVG({ asString: true}));
+            const encoded = btoa(unescape(encodeURIComponent(svg)));
+
+            // Create a data URL
+            const data = `data:image/svg+xml;base64,${encoded}`;
+
+            localStorage.setItem('image-3', data);
         }
         catch (error) {
+            console.log(error);
             sendError('Error publishing panel 3 to localStorage', 'Error', false, 4000, true);
             success = false;
         }

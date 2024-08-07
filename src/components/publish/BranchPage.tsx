@@ -51,13 +51,6 @@ const PublishPage = ({ id, sendError }: Props) => {
 
     const loadImageAndConvertToURL = (svgString: string | null) => {
         if (svgString) {
-
-            // if create page doesn't upload svg
-            if (!svgString.includes('<svg')) {
-                svgString = svgString.replace('<g', '<svg');
-                svgString = svgString.replace('/g>', '/svg>');
-            }
-
             // Convert the SVG string to a data URL
             // Encode the SVG string in Base64
             const encoded = btoa(unescape(encodeURIComponent(svgString)));
@@ -89,9 +82,9 @@ const PublishPage = ({ id, sendError }: Props) => {
 
         // retrieve comic images from create page using local storage
         const storedImageLinks = [
-            loadImageAndConvertToURL(localStorage.getItem('image-1')) || imageLinks[0],
-            loadImageAndConvertToURL(localStorage.getItem('image-2')) || imageLinks[1],
-            loadImageAndConvertToURL(localStorage.getItem('image-3')) || imageLinks[2]
+            localStorage.getItem('image-1') || imageLinks[0],
+            localStorage.getItem('image-2') || imageLinks[1],
+            localStorage.getItem('image-3') || imageLinks[2]
         ];
 
         setImageLinks(storedImageLinks);
