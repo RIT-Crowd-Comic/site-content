@@ -17,9 +17,11 @@ export function SignUpForm() {
     const [message, errorState] = useState('');
     const [passwordVisible, setPasswordVisibility] = useState(false);
     const [emailValid, setEmailValid] = useState(true);
+    const [emailValidMessage, setemailValidMessage] = useState('');
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordRetypeValid, setPasswordRetypeValid] = useState(true);
     const [displayNameValid, setDisplayNameValid] = useState(true);
+    const [displayNameValidMessage, setDisplayNameValidMessage] = useState('');
     const [passwordInvalidMessage, setPasswordInvalidMessage] = useState(Array<String>);
 
     const togglePasswordVisibility = () => {
@@ -27,7 +29,19 @@ export function SignUpForm() {
     };
 
     const handleSubmit = (event: any) => {
-        if (!emailValid || !passwordValid || !displayNameValid || !passwordRetypeValid) {
+        //validate filled fields
+        const formData = new FormData(event.target);
+        const displayName = formData.get('displayName')
+        const email = formData.get('email')
+        const password = formData.get('password')
+        const password2 = formData.get('password2')
+        let filled = true;
+        if(!displayName){ filled = false; setDisplayNameValid(false);};
+        if(!email){ filled = false; setEmailValid(false);};
+        if(!password){ filled = false; setPasswordValid(false);};
+        if(!password2){ filled = false; setPasswordRetypeValid(false);};
+        
+        if (!emailValid || !passwordValid || !displayNameValid || !passwordRetypeValid || !filled) {
             event.preventDefault();
             event.stopPropagation();
         }
@@ -36,14 +50,16 @@ export function SignUpForm() {
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target; 
         setEmailValid(value.includes('@') && value.includes('.'));
+        setemailValidMessage(`Please enter a valid email with "@" and "." .`)
     };
     const handleDisplayNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
         setDisplayNameValid(value.length >= 1 && value.length <= 30);
+        setDisplayNameValidMessage('Display name must be between 1 and 30 characters.')
     };
     const handlepasswordRetypeChange= (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        setPasswordRetypeValid(value.length >= 1 && value.length <= 30);
+        setPasswordRetypeValid(value.length >= 1 && value.length <= 30);  
     };
 
     // Handler to validate password input
@@ -116,9 +132,10 @@ export function SignUpForm() {
                                 required
                                 isInvalid = {!displayNameValid}
                                 onChange={handleDisplayNameChange}
+                                onSubmit={handleDisplayNameChange}
                             />
                             <Form.Control.Feedback type='invalid' className={styles.feedback}>
-                               Display name must be between 1 and 30 characters.
+                               {displayNameValidMessage}
                             </Form.Control.Feedback>
                         </Form.Group>
                     </Row>
@@ -138,7 +155,7 @@ export function SignUpForm() {
                                 required
                             />
                             <Form.Control.Feedback type='invalid' className={styles.feedback}>
-                                {`Please enter a valid email with "@" and "." .`}
+                                {emailValidMessage}
                             </Form.Control.Feedback>
                         </Form.Group>
                     </Row>
