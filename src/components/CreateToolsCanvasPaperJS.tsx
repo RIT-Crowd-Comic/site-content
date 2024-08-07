@@ -657,9 +657,6 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
     // Boolean used to determine if the text tools section is displayed and interactible.  This will be changed in the radioButtons onChange event
     const [textOptionsEnabled, setTextOptionsEnabled] = useState<boolean>(false);
 
-    // String that determines what text is printed to the layer
-    const [textContent, setTextContent] = useState<string>('Hello World!');
-
     // String that determines the font family of the text being printed to the layer
     // !!! Supports default fonts as well as any imported fonts
     const [textFont, setTextFont] = useState<string>('Arial');
@@ -737,7 +734,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                 textToolTyperReference.remove();
             }
 
-            // Reset as the user is no longer writing and erase the textArea to set it up for the next write
+            // Reset as the user is no longer writing
             setIsWriting(false);
         }
     };
@@ -2008,7 +2005,6 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                     />
                     <TextOptions
                         enabled={textOptionsEnabled}
-                        changeTextContent={setTextContent}
                         changeTextFont={setTextFont}
                         changeTextSize={setTextSize}
                         changeFontWeight={setTextFontWeight}
