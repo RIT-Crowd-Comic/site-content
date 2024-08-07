@@ -24,6 +24,7 @@ import { getSessionCookie, updateSession } from '@/app/login/loginUtils';
 import test from 'node:test';
 import type { addToastFunction } from './toast-notifications/interfaces';
 import local from 'next/font/local';
+
 interface Props {
     id: number
     sendError: addToastFunction
@@ -31,6 +32,8 @@ interface Props {
 
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
 const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
+
+const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
 
     // *** VARIABLES ***
     // === CANVAS ===
@@ -2363,16 +2366,16 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
             </div>
 
 
-            <InfoBtn toggle={infoDisplay} />
+            <InfoBtn setVisibility={setInstructionsVisible} />
             <InfoBox
-                instructions="This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
+                text="This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
                         This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
                         This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
                         This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
                         This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
                         This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
                         This is information about the drawing page and what you are able to do with it."
-                toggle={infoDisplay}
+                        visible={instructionsVisible} setVisibility={setInstructionsVisible}  
             />
         </div>
     );

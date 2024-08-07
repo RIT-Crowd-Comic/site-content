@@ -2,11 +2,12 @@
 import styles from '@/styles/read.module.css';
 import ReadPanel from './ReadPanel';
 import {
-    CreateHook, Hook, Panel as IPanel, PanelSet
+    CreateHook, Hook, Panel as IPanel, PanelSet, User
 } from './interfaces';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { getSessionCookie } from '@/app/login/loginUtils';
 import * as apiCalls from '../api/apiCalls';
+import Signature from './Signature';
 interface Props {
     setting: string,
     hook_state: string,
@@ -14,11 +15,11 @@ interface Props {
     panels: IPanel[],
     currentId: number,
     router: AppRouterInstance,
-    userId: string
+    user: User | null | undefined
 }
 
 const ComicPanels = ({
-    setting, panel_set, hook_state, panels, router, userId
+    setting, panel_set, hook_state, panels, router, user
 }: Props) => {
     const hidden = hook_state === 'hidden' ? true : false;
     let bodyHeight = '';
@@ -33,19 +34,16 @@ const ComicPanels = ({
 
         // if the hook is set up, go to the next panel set
         if (hook.next_panel_set_id) {
-            console.log('hook is linked');
             return router.push(`/comic?id=${hook.next_panel_set_id}`);
         }
         const session = await getSessionCookie();
 
         // if they are not signed in, go to the sign in page
         if (session instanceof Error || !session) {
-            console.log('user is not signed in');
             return router.push(`/sign-in`);
         }
         const dbSession = await apiCalls.getSession(session?.value);
         if (dbSession instanceof Error || !dbSession) {
-            console.log('user is not signed in');
             return router.push(`/sign-in`);
         }
 
@@ -55,12 +53,10 @@ const ComicPanels = ({
 
         // if they are the author, make it so they can't go to the create page
         if (panel_set?.author_id === user.id) {
-            console.log('user is author');
-            return router.push(`/comic?id=${panel_set?.id}`);
+            return;
         }
 
         // otherwise, make them go to the create page
-        console.log('user is not author');
         return router.push(`/comic/create?id=${(hook as Hook).id}`);
     }
 
@@ -77,7 +73,7 @@ const ComicPanels = ({
                         onHookClick={hookLink}
                         hidden={hidden}
                         panel_set={panel_set}
-                        userId={userId}
+                        userId={user != null ? user.id : "this should never happen"}
                     />
                 </div>
                 <div className={`${styles.secondPanel}`}>
@@ -87,7 +83,7 @@ const ComicPanels = ({
                         onHookClick={hookLink}
                         hidden={hidden}
                         panel_set={panel_set}
-                        userId={userId}
+                        userId={user != null ? user.id : "this should never happen"}
                     />
                 </div>
                 <div className={`${styles.thirdPanel}`}>
@@ -97,7 +93,7 @@ const ComicPanels = ({
                         onHookClick={hookLink}
                         hidden={hidden}
                         panel_set={panel_set}
-                        userId={userId}
+                        userId={user != null ? user.id : "this should never happen"}
                     />
                 </div>
             </div>
