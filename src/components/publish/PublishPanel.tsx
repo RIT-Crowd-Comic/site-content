@@ -181,8 +181,6 @@ const Panel = ({
                 width="500"
                 height="500"
                 unoptimized={true}
-                crossOrigin='anonymous'
-                progressiveRenderingEnabled = {true}
             />
 
             <svg className={`${styles.hookSvg} ${editingStyle}`} style={displayOnLoad}>
