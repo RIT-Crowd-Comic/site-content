@@ -550,12 +550,27 @@
 
         /* &:active::-webkit-slider-thumb{
             #sliderValue{
-                visibility: visible; */
-                /* background-color: #000000;
-                transform:scale(1,1) translateX(-50%); */
-            /* }
+                visibility: visible;
+            }
         } */
     }   
+
+    /* Not functional */
+    /* &:active {
+
+        &::-webkit-slider-thumb{
+            background: darken(#c7c7c7,10%);
+        }
+        &::-moz-range-thumb {
+            background:darken(#c7c7c7,10%);
+        }
+        + #slider-value {
+            opacity:1;
+            color: red;  */
+            /* visibility: visible;
+            transform:scale(1,1) translateX(-50%); */
+        /* }
+    } */
 }
 
 .rangeSlider::-webkit-slider-thumb:hover,
@@ -575,6 +590,8 @@
 
 #sliderValue{
     /* visibility: hidden; */
+    /* opacity: 0.2; */
+    /* display: none; */
     position:relative;
     display:block;
     width:20px;
@@ -588,12 +605,9 @@
     font-weight:bolder;
     z-index:5;
     transform: translateY(-4px);
-    transition: 0.15s top ease-in-out, 
-        0.15s opacity ease-in-out 0.05s, 
-        0.15s scale ease-in-out;
-        /* transition: margin-top 0.15s ease-in-out,
-        /* opacity 0.15s ease-in-out; */
+    /* transform: translateY(20px); */
 
+    /* The pointy side of the slider output */
     #pointy{
         position: absolute;
         width: 100%;
@@ -602,7 +616,7 @@
         left: 0;
         background-color: #fff;
         border-radius: 50% 50% 0 50%;
-        transform: rotate(45deg);
+        transform: rotate(45deg); 
         z-index: -1;
     }
 } 
