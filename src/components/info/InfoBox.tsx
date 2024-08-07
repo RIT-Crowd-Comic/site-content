@@ -1,5 +1,5 @@
 import styles from './InfoBox.module.css';
-import React, { ReactNode } from 'react';
+import React, { useState } from 'react';
 
 // use this function in the page you put this function on the page you use this component on
 
@@ -33,10 +33,25 @@ const InfoBox = ({ instructions, toggle }:{instructions:string, toggle:(stat:boo
         }
         return (d);
     };
+
+    const [visible, setVisible] = useState(false);// stat
+
+    document.addEventListener('keydown', (e)=>{
+        console.log(e.key);
+        if (e.key == 'escape') {
+            setVisible(false);
+        }
+    });
+
     return (
         <div id={styles.infoModal} className={styles.modal}>
             <div className={styles.modalContent}>
-                <span className={styles.closeModal} onClick={() => toggle(false)} />
+                <span
+                    tabIndex={1}
+                    className={styles.closeModal}
+                    style={visible ? { display: 'block' } : { display: 'none' }}
+                    onClick={() => toggle(false)}
+                />
                 <p className={styles.displayLinebreak}>{instructions}</p>
             </div>
         </div>
