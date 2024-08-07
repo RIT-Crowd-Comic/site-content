@@ -9,7 +9,7 @@ const loginAction = async (formData: FormData) => {
     };
     if (!rawFormData.email) return 'Please enter email';
     if (!rawFormData.password) return 'Please enter password';
-    return await loginUtils.login(rawFormData.email.toString(), rawFormData.password.toString());
+    return await loginUtils.login(rawFormData.email.toString().toLowerCase(), rawFormData.password.toString());
 };
 
 const registerAction = async (formData: FormData) => {
@@ -21,7 +21,7 @@ const registerAction = async (formData: FormData) => {
     };
     if (!(rawFormData.displayName && rawFormData.email && rawFormData.password && rawFormData.password2)) return 'Please fill all fields';
     if (rawFormData.password !== rawFormData.password2) return 'Password confirmation must match';
-    const response = await loginUtils.register(rawFormData.email.toString(), rawFormData.displayName.toString(), rawFormData.password.toString());
+    const response = await loginUtils.register(rawFormData.email.toString().toLowerCase(), rawFormData.displayName.toString(), rawFormData.password.toString());
     if (!response || response instanceof Error) return response.message;
     return 'Success';
 };
