@@ -16,10 +16,10 @@ import { FormLabel } from 'react-bootstrap';
 export function SignUpForm() {
     const [message, errorState] = useState('');
     const [passwordVisible, setPasswordVisibility] = useState(false);
-    const [emailValid, setEmailValid] = useState(false);
-    const [passwordValid, setPasswordValid] = useState(false);
-    const [passwordRetypeValid, setPasswordRetypeValid] = useState(false);
-    const [displayNameValid, setDisplayNameValid] = useState(false);
+    const [emailValid, setEmailValid] = useState(true);
+    const [passwordValid, setPasswordValid] = useState(true);
+    const [passwordRetypeValid, setPasswordRetypeValid] = useState(true);
+    const [displayNameValid, setDisplayNameValid] = useState(true);
     const [passwordInvalidMessage, setPasswordInvalidMessage] = useState(Array<String>);
 
     const togglePasswordVisibility = () => {
