@@ -45,7 +45,7 @@
 {
     border: 3px solid var(--grayscale-primary-color);
     border-radius: 6px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: #111;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -59,7 +59,7 @@
 {
     border: 3px solid var(--grayscale-primary-color);
     border-radius: 6px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: #111;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -72,10 +72,51 @@
 
 #profileIcon
 {
-    filter: invert(1);
+    background-color: white;
+    filter: grayscale(100%);
+    object-fit: cover;
     /* margin-bottom: 20px; */
     /* max-width: 75%;
     height: auto; */
+}
+
+#profileIconContainer {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+#profileIconContainer>#profileIconEdit {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: #00000000;
+    transition: background-color 0.3s;
+}
+#profileIconContainer>#profileIconEdit::after {
+    content: 'Edit';
+    text-align: center;
+    color: #ffffff00;
+    transition: color 0.3s;
+}
+
+#profileIconContainer:hover {
+    cursor: pointer;
+}
+
+#profileIconContainer:hover>#profileIconEdit {
+    background-color: #00000064;
+}
+
+#profileIconContainer:hover>#profileIconEdit::after {
+    color: #ffffffff;
 }
 
 .formInputs

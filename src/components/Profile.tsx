@@ -7,15 +7,21 @@ import Link from 'next/link';
 import logo from '../../public/images/logos/Crowd_Comic_Logo_BW.svg';
 import Navbar from '@/components/NavBar';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { nameAction, passwordAction } from '@/app/login/actions';
 import { getUserBySession } from '@/api/apiCalls';
 import { getSessionCookie } from '@/app/login/loginUtils';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import * as validation from './forms/utils';
+import { User } from './interfaces'
+import { ProfileEditor } from './ProfileEditor';
+import ProfilePicture from './ProfilePicture';
+
 
 export function Profile() {
+    const [session_id, setSession] = useState('');
+    const [user, setUser] = useState<User>();
     const [message, errorState] = useState('');
     const [displayName, updateName] = useState('Display Name');
     const [email, updateEmail] = useState('email@example.com');
@@ -25,6 +31,9 @@ export function Profile() {
     const [password, setPass] = useState('');
     const [newPass, setNewPass] = useState('');
     const [confPass, setConfPass] = useState('');
+    const [profileEditorState, setProfileEditorState] = useState(false);
+
+    const pfpRef = useRef<string | undefined>('/images/icons/Profile.svg');
 
     const [emailValid, setEmailValid] = useState(true);
     const [originalPasswordValid, setOriginalPasswordValid] = useState(true);
@@ -102,17 +111,20 @@ export function Profile() {
         const getProfileValues = async () => {
             const session = await getSessionCookie();
             if (!session) return;
+            setSession(session.value);
             const user = await getUserBySession(session.value);
             if (!user) return;
+            setUser(user);
             updateName(user.display_name);
             updateEmail(user.email);
+            if(user.profile_picture) pfpRef.current = user.profile_picture;
         };
-        getProfileValues();
+        if(!user) getProfileValues();
     });
 
     return (
         <main className={styles.body}>
-            <Navbar />
+            <Navbar p_pfp={pfpRef.current}/>
             <section id={styles.profilePage} className="content">
                 <h1 className={`${styles.h1} pt-5 pb-3 px-3`}>Dashboard</h1>
                 <div className="mt-5 d-flex flex-fill gap-3 justify-content-center flex-wrap">
@@ -126,16 +138,16 @@ export function Profile() {
                         }}
                     >
 
+
                         {/* USERNAME */}
                         <Row className={`mb-3 ${styles.formInputs}`}>
-                            <Image
-                                id={styles.profileIcon}
-                                className="m-auto"
-                                src="/images/icons/Profile.svg"
-                                width={200}
-                                height={200}
-                                alt="Profile"
-                            />
+                            {/*PROFILE PICTURE*/}
+                            <div className={`mb-3 ${styles.formInputs}`}>
+                                <div id={styles.profileIconContainer} className="m-auto">
+                                    <ProfilePicture pfp={pfpRef.current} width={200} height={200} />
+                                    <a id={styles.profileIconEdit} onClick={() => setProfileEditorState(!profileEditorState)}> </a>
+                                </div>
+                            </div>
                         </Row>
                         <Row className={`mb-3 ${styles.formInputs}`}>
                         <Form.Group>
@@ -299,6 +311,7 @@ export function Profile() {
                 {/* FORM */}
 
             </section>
+            <ProfileEditor editorState={profileEditorState} setEditorState={setProfileEditorState} pfpRef={pfpRef} email={email} />
         </main>
     );
 }
