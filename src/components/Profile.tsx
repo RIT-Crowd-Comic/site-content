@@ -315,4 +315,3 @@ export function Profile() {
         </main>
     );
 }
-

@@ -19,6 +19,7 @@ const PublishPage = ({ id, sendError }: Props) => {
     const [parentHookId, setParentHookId] = useState<number>();
     const [confirmHook, setConfirmHook] = useState<number>();
     const [selectedHook, setSelectedHook] = useState<{ panelIndex: number, hookIndex: number }>();
+    const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
     const [panelSet, setPanelSet] = useState<CreatePanelSet>({
         id:        0,
         author_id: '',
@@ -161,21 +162,6 @@ const PublishPage = ({ id, sendError }: Props) => {
         setAddingHook(false);
     };
 
-    const infoDisplay = (visible: boolean) => {
-        const divs = document.querySelectorAll('div');
-        const modal = divs[divs.length - 2];
-        if (modal) {
-            if (visible) {
-                modal.style.display = 'block';
-            }
-            else {
-                modal.style.display = 'none';
-            }
-
-        }
-
-    };
-
     return (
         <>
             <main className={`${styles.body}`}>
@@ -235,12 +221,12 @@ const PublishPage = ({ id, sendError }: Props) => {
                                 const queryString = new URLSearchParams({ id: response.panel_set }).toString();
 
                                 // Clear localStorage so that the user can create new panels in the future
-                                localStorage.setItem('panel-1-layerData', '');
-                                localStorage.setItem('panel-2-layerData', '');
-                                localStorage.setItem('panel-3-layerData', '');
-                                localStorage.setItem('image-1', '');
-                                localStorage.setItem('image-2', '');
-                                localStorage.setItem('image-3', '');
+                                localStorage.removeItem('panel-1-layerData');
+                                localStorage.removeItem('panel-2-layerData');
+                                localStorage.removeItem('panel-3-layerData');
+                                localStorage.removeItem('image-1');
+                                localStorage.removeItem('image-2');
+                                localStorage.removeItem('image-3');
 
                                 router.push(`/comic/?${queryString}`);
                             }
@@ -248,16 +234,15 @@ const PublishPage = ({ id, sendError }: Props) => {
                         hookCount={panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)}
                     />
                 </div>
-                <InfoBtn toggle={infoDisplay} />
+                <InfoBtn setVisibility={setInstructionsVisible}  />
                 <InfoBox
-                    instructions={`
+                    text={`
             -click on the add hook button to start drawing a hook on the comic
             -once done, click on accept hook to keep or remove to delete the hook
              *hooks do have a minimum size and dimention so you can't make itty bitty unclickable hooks
             - to remove a hook: click on the hook you wish to remove then click on remove hook to delete it\n 
             *YOU MUSH HAVE 3 HOOKS IN ORDER TO PUBLISH YOUR COMIC*
-            `}
-                    toggle={infoDisplay}
+            `} visible={instructionsVisible} setVisibility={setInstructionsVisible}                    
                 />
             </main>
         </>
