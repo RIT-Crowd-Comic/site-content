@@ -73,13 +73,14 @@ export function Profile() {
                         }}
                     >
 
-                        {/* USERNAME */}
+                        {/*PROFILE PICTURE*/}
                         <div className={`mb-3 ${styles.formInputs}`}>
-                            <div id={styles.profileIconContainer}>
-                            <ProfilePicture pfp={pfpRef.current} width={200} height={200}/>
-                            <a id={styles.profileIconEdit} onClick={() => setProfileEditorState(!profileEditorState)}> </a>
+                            <div id={styles.profileIconContainer} className="m-auto">
+                                <ProfilePicture pfp={pfpRef.current} width={200} height={200}/>
+                                <a id={styles.profileIconEdit} onClick={() => setProfileEditorState(!profileEditorState)}> </a>
                             </div>
                         </div>
+                        {/* USERNAME */}
                         <div className={`mb-3 ${styles.formInputs}`}>
                             <label htmlFor="inputUsername" className={styles.loginLabel}>Display Name</label>
                             <input
