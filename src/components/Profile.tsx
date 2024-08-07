@@ -11,7 +11,9 @@ import { useEffect, useState } from 'react';
 import { nameAction, passwordAction } from '@/app/login/actions';
 import { getUserBySession } from '@/api/apiCalls';
 import { getSessionCookie } from '@/app/login/loginUtils';
-
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import * as validation from './forms/utils';
 
 export function Profile() {
     const [message, errorState] = useState('');
@@ -24,6 +26,27 @@ export function Profile() {
     const [newPass, setNewPass] = useState('');
     const [confPass, setConfPass] = useState('');
 
+    const [emailValid, setEmailValid] = useState(true);
+    const [originalPasswordValid, setOriginalPasswordValid] = useState(true);
+    const [passwordValid, setPasswordValid] = useState(true);
+    const [passwordRetypeValid, setPasswordRetypeValid] = useState(true);
+    const [displayNameValid, setDisplayNameValid] = useState(true);
+    const [passwordInvalidMessage, setPasswordInvalidMessage] = useState(Array<String>);
+
+    const handleSubmitDisplayEmail = (event: any) => {
+        if (!emailValid || !displayNameValid) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    };
+
+    const handleSubmitPassword = (event: any) => {  
+        if (!passwordValid || !passwordRetypeValid || !originalPasswordValid) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    };
+
     const toggleCurrentPasswordVisibility = () => {
         setCurrentPasswordVisibility(!currentPasswordVisible);
     };
@@ -34,6 +57,31 @@ export function Profile() {
 
     const toggleRetypePasswordVisibility = () => {
         setRetypePasswordVisibility(!retypePasswordVisible);
+    };
+    const handleDisplayNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+        setDisplayNameValid(validation.validateDisplayName(value));
+    };
+
+    // Handler to validate password input
+    const handlePasswordChange = (e: any) => {
+        const { value } = e.target;
+        const errors = validation.validatePassword(value);
+
+        setPasswordValid(errors.length === 0);
+        console.log(passwordValid);
+        setPasswordInvalidMessage(errors);
+    };
+
+    const handlePasswordChangeSimpleOriginal = (e: any) => {
+        const { value } = e.target;
+        setOriginalPasswordValid(validation.validatePasswordSimple(value));
+
+    };
+
+    const handlePasswordChangeSimpleRetype= (e: any) => {
+        const { value } = e.target;
+        setPasswordRetypeValid(validation.validatePasswordSimple(value));
     };
 
     useEffect(() => {
@@ -54,7 +102,9 @@ export function Profile() {
             <section id={styles.profilePage} className="content">
                 <h1 className={`${styles.h1} pt-5 pb-3 px-3`}>Dashboard</h1>
                 <div className="mt-5 d-flex flex-fill gap-3 justify-content-center flex-wrap">
-                    <form
+                    <Form
+                        noValidate
+                        onSubmit={handleSubmitDisplayEmail}
                         id={styles.loginForm}
                         action={async (formData) => {
                             const response = await nameAction(formData);
@@ -63,7 +113,7 @@ export function Profile() {
                     >
 
                         {/* USERNAME */}
-                        <div className={`mb-3 ${styles.formInputs}`}>
+                        <Row className={`mb-3 ${styles.formInputs}`}>
                             <Image
                                 id={styles.profileIcon}
                                 className="m-auto"
@@ -72,44 +122,55 @@ export function Profile() {
                                 height={200}
                                 alt="Profile"
                             />
-                        </div>
-                        <div className={`mb-3 ${styles.formInputs}`}>
-                            <label htmlFor="inputUsername" className={styles.loginLabel}>Display Name</label>
-                            <input
+                        </Row>
+                        <Row className={`mb-3 ${styles.formInputs}`}>
+                        <Form.Group>
+                            <Form.Label htmlFor="inputUsername" className={styles.loginLabel}>Display Name</Form.Label>
+                            <Form.Control
                                 type="displayname"
                                 name="displayName"
                                 placeholder={`${displayName}`}
                                 className="form-control"
                                 id={styles.inputUsername}
-                                onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Enter Display Name Here')}
-                                onInput={e => (e.target as HTMLInputElement).setCustomValidity('')}
+                                isInvalid = {!displayNameValid}
+                                onChange={handleDisplayNameChange}
                                 required
                             />
-                        </div>
+                            <Form.Control.Feedback type='invalid' className={styles.feedback}>
+                               {'Must be between 1 and 30 characters.'}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        </Row>
                         {/* EMAIL */}
-                        <div className={`mb-3 ${styles.formInputs}`}>
-                            <label htmlFor="inputEmail" className={styles.loginLabel}>Email Address</label>
-                            <input
+                        <Row className={`mb-3 ${styles.formInputs}`}>
+                        <Form.Group>
+                            <Form.Label htmlFor="inputEmail" className={styles.loginLabel}>Email Address</Form.Label>
+                            <Form.Control
                                 type="email"
                                 name="email"
                                 placeholder={`${email}`}
                                 className="form-control"
                                 id={styles.inputEmail}
                                 aria-describedby="emailHelp"
-                                onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Enter Email Here')}
-                                onInput={e => (e.target as HTMLInputElement).setCustomValidity('')}
                                 required
                                 disabled
+                                isInvalid = {!emailValid}
                             />
-                        </div>
+                            <Form.Control.Feedback type='invalid' className={styles.feedback}>
+                               {'Email is invalid, must contain a "@" and a "." .'}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        </Row>
 
                         <div className={styles.buttonContainer}>
                             <button type="submit" id={styles.saveButton} className="btn btn-primary">Save</button>
                         </div>
-                    </form>
+                    </Form>
 
-                    <form
+                    <Form
                         id={styles.passwordForm}
+                        onSubmit={handleSubmitPassword}
+                        noValidate
                         action={async (formData) => {
                             const response = await passwordAction(formData);
                             errorState(response);
@@ -128,19 +189,19 @@ export function Profile() {
 
                         {/* PASSWORD */}
                         <div className="d-flex flex-column align-items-start w-100">
-                            <div className={`mb-3 ${styles.formInputs}`}>
-                                <label htmlFor="inputPassword" className={styles.loginLabel}>Current Password</label>
+                            <Row className={`mb-3 ${styles.formInputs}`}>
+                            <Form.Group>
+                                <Form.Label htmlFor="inputPassword" className={styles.loginLabel}>Current Password</Form.Label>
                                 <div className={styles.passwordContainer}>
-                                    <input
+                                    <Form.Control
                                         type={currentPasswordVisible ? 'text' : 'password'}
                                         name="oldPassword"
                                         value={password}
-                                        onChange={(e) => setPass(e.target.value)}
+                                        onChange={(e) => {setPass(e.target.value); handlePasswordChangeSimpleOriginal(e)} }
                                         placeholder="********"
                                         className="form-control"
+                                        isInvalid={!originalPasswordValid}
                                         id={`${styles.inputPassword}`}
-                                        onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Enter Password Here')}
-                                        onInput={e => (e.target as HTMLInputElement).setCustomValidity('')}
                                         required
                                     />
                                     <button
@@ -149,22 +210,26 @@ export function Profile() {
                                         onClick={toggleCurrentPasswordVisibility}
                                         style={{ backgroundImage: `url(${currentPasswordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
                                     />
+                                        <Form.Control.Feedback type='invalid' className={styles.feedback}>
+                                            {}
+                                        </Form.Control.Feedback>
                                 </div>
-                            </div>
-                            <div className={`mb-3 ${styles.formInputs}`}>
-                                <label htmlFor="inputPassword" className={styles.loginLabel}>New Password</label>
+                                </Form.Group>
+                            </Row>
+                            <Row className={`mb-3 ${styles.formInputs}`}>
+                            <Form.Group>
+                                <Form.Label htmlFor="inputPassword" className={styles.loginLabel}>New Password</Form.Label>
                                 <div className={styles.passwordContainer}>
-                                    <input
+                                    <Form.Control
                                         type={newPasswordVisible ? 'text' : 'password'}
                                         name="newPassword"
                                         value={newPass}
-                                        onChange={(e) => setNewPass(e.target.value)}
+                                        onChange={(e) => {setNewPass(e.target.value); handlePasswordChange(e)}}
                                         placeholder="********"
                                         className="form-control"
                                         id={`${styles.inputPassword}`}
-                                        onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Enter Password Here')}
-                                        onInput={e => (e.target as HTMLInputElement).setCustomValidity('')}
                                         required
+                                        isInvalid={!passwordValid}
                                     />
                                     <button
                                         type="button"
@@ -172,21 +237,29 @@ export function Profile() {
                                         onClick={toggleNewPasswordVisibility}
                                         style={{ backgroundImage: `url(${newPasswordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
                                     />
+                                      <Form.Control.Feedback type='invalid' className={styles.feedback}>
+                                            {<ul>
+                                                {passwordInvalidMessage.map((item, index) => (
+                                                    <li key={index}>{item}</li>
+                                                ))}
+                                            </ul>}
+                                        </Form.Control.Feedback>
                                 </div>
-                            </div>
-                            <div className={`mb-3 ${styles.formInputs}`}>
-                                <label htmlFor="inputPassword" className={styles.loginLabel}>Retype New Password</label>
+                                </Form.Group>
+                            </Row>
+                            <Row className={`mb-3 ${styles.formInputs}`}>
+                            <Form.Group>
+                                <Form.Label htmlFor="inputPassword" className={styles.loginLabel}>Retype New Password</Form.Label>
                                 <div className={styles.passwordContainer}>
-                                    <input
+                                    <Form.Control
                                         type={retypePasswordVisible ? 'text' : 'password'}
                                         name="confirmPassword"
                                         value={confPass}
-                                        onChange={(e) => setConfPass(e.target.value)}
+                                        onChange={(e) => {setConfPass(e.target.value); handlePasswordChangeSimpleRetype(e)}}
                                         placeholder="********"
                                         className="form-control"
                                         id={`${styles.inputPassword}`}
-                                        onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Enter Password Here')}
-                                        onInput={e => (e.target as HTMLInputElement).setCustomValidity('')}
+                                        isInvalid={!passwordValid || !passwordRetypeValid}
                                         required
                                     />
                                     <button
@@ -196,7 +269,8 @@ export function Profile() {
                                         style={{ backgroundImage: `url(${retypePasswordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
                                     />
                                 </div>
-                            </div>
+                                </Form.Group>
+                            </Row>
                         </div>
 
                         <div className={styles.buttonContainer}>
@@ -206,7 +280,7 @@ export function Profile() {
 
                         {!!message && <p>{message}</p>}
 
-                    </form>
+                    </Form>
                 </div>
                 {/* FORM */}
 

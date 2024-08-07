@@ -12,6 +12,7 @@ import { registerAction } from '@/app/login/actions';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { FormLabel } from 'react-bootstrap';
+import * as validation from './utils';
 
 export function SignUpForm() {
     const [message, errorState] = useState('');
@@ -38,10 +39,10 @@ export function SignUpForm() {
         let filled = true;
         if(!displayName){ filled = false; setDisplayNameValid(false);};
         if(!email){ filled = false; setEmailValid(false);};
-        if(!password){ filled = false; setPasswordValid(false);};
+        if(!password){ filled = false; setPasswordValid(false); };
         if(!password2){ filled = false; setPasswordRetypeValid(false);};
         
-        if (!emailValid || !passwordValid || !displayNameValid || !passwordRetypeValid || !filled) {
+        if (!emailValid || !passwordValid || !displayNameValid || !passwordRetypeValid) {
             event.preventDefault();
             event.stopPropagation();
         }
@@ -49,46 +50,23 @@ export function SignUpForm() {
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target; 
-        setEmailValid(value.includes('@') && value.includes('.'));
+        setEmailValid(validation.validateEmail(value));
         setemailValidMessage(`Please enter a valid email with "@" and "." .`)
     };
     const handleDisplayNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        setDisplayNameValid(value.length >= 1 && value.length <= 30);
+        setDisplayNameValid(validation.validateDisplayName(value));
         setDisplayNameValidMessage('Display name must be between 1 and 30 characters.')
     };
     const handlepasswordRetypeChange= (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        setPasswordRetypeValid(value.length >= 1 && value.length <= 30);  
+        setPasswordRetypeValid(validation.validateDisplayName(value)); //check between 1-30 same as display 
     };
 
     // Handler to validate password input
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        const errors: string[] = [];
-
-        if (value.length > 30) {
-            errors.push('Password must be 30 characters or less.');
-        }
-        if (value.length < 8) {
-            errors.push('Password must be 8 characters or more.');
-        }
-
-        if (!/[a-z]/.test(value)) {
-            errors.push('Password must contain at least one lowercase letter.');
-        }
-
-        if (!/[A-Z]/.test(value)) {
-            errors.push('Password must contain at least one uppercase letter.');
-        }
-
-        if (!/[\d!@#$%^&*()\-=_+[\]{}]/.test(value)) { 
-            errors.push('Password must contain at least one special character or number.');
-        }
-
-        if (/\s/.test(value)) {
-            errors.push('Password must not contain spaces.');
-        }
+        const errors = validation.validatePassword(value);
 
         setPasswordValid(errors.length === 0);
         setPasswordInvalidMessage(errors);

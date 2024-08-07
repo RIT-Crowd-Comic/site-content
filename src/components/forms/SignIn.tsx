@@ -11,6 +11,7 @@ import { loginAction } from '@/app/login/actions';
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import * as validation from './utils';
 
 export function SignInForm() {
     const [message, errorState] = useState('');
@@ -33,13 +34,13 @@ export function SignInForm() {
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        setEmailValid(value.includes('@') && value.includes('.'));
+        setEmailValid(validation.validateEmail(value));
     };
 
     // Handler to validate password input
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        setPasswordValid(value.length >= 8);
+        setPasswordValid(validation.validatePasswordSimple(value));
     };
 
     return (
@@ -78,8 +79,7 @@ export function SignInForm() {
                                 aria-describedby="emailHelp"
                                 required
                                 onChange={handleEmailChange}
-                                isInvalid={validated && !emailValid }
-                              
+                                isInvalid={validated && !emailValid }         
                             />
                                 <Form.Control.Feedback type = 'invalid' className={styles.feedback}>
                                     {`Please enter a valid email with "@" and ".".`}
@@ -108,7 +108,7 @@ export function SignInForm() {
                                     style={{ backgroundImage: `url(${passwordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
                                 />
                                     <Form.Control.Feedback type = 'invalid' className={styles.feedback}>
-                                        Password in invalid. Ensure it has at least 8 characters.
+                                        Password in invalid. Ensure it is between 8 and 30 characters.
                                     </Form.Control.Feedback>
                             </div>
 
