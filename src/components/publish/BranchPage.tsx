@@ -9,6 +9,7 @@ import { publishHandler } from '../../api/apiCalls';
 import { useRouter } from 'next/navigation';
 import { getHookByID } from '../../api/apiCalls';
 import { addToastFunction } from '../toast-notifications/interfaces';
+import Loader from '../loader/Loader';
 
 interface Props {
  id : number;
@@ -25,7 +26,8 @@ const PublishPage = ({ id, sendError }: Props) => {
         panels:    emptyPanelSet(),
     });
     const [activePanel, setActivePanel] = useState(0);
-    
+    const [showLoader, setShowLoader] = useState(false);
+
     const activePanelHooks = () => panelSet.panels[activePanel].hooks;
     const setActivePanelHooks = (hooks: CreateHook[], panelIndex: number) => {
         const panels = panelSet.panels;
@@ -179,6 +181,7 @@ const PublishPage = ({ id, sendError }: Props) => {
     return (
         <>
             <main className={`${styles.body}`}>
+                <Loader show={showLoader} />
                 <div id={styles.publishContainer}>
                     <div id={styles.publishSlideshow}>
                         <div className={`${styles.carouselInner} carousel-inner`}>
@@ -225,7 +228,11 @@ const PublishPage = ({ id, sendError }: Props) => {
                         removeHook={removeHook}
                         publish={async () => {
                             panelSet.previous_hook_id = parentHookId;
-                            const response = await publishHandler(panelSet);
+                            setShowLoader(true);
+                            const response = await publishHandler(panelSet).then((r)=>{
+                                setShowLoader(false);
+                                return r;
+                            });
 
                             if (response instanceof Error) {
                                 console.log(response.message);

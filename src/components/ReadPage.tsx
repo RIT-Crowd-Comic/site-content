@@ -9,6 +9,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Panel, PanelSet, Hook } from './interfaces';
 import InfoBox from './info/InfoBox';
 import InfoBtn from './info/InfoBtn';
+import Loader from './loader/Loader';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { getSessionCookie } from '@/app/login/loginUtils';
 
@@ -29,15 +30,19 @@ const ReadPage = ({ id }: Props) => {
     const searchParams = useSearchParams();
     const [layout, setLayout] = useState(`${styles.rowPanels}`);
     const [hooks, setHooks] = useState('visible');
-    const [isLoading, setIsLoading] = useState(false);
+
+    // const [isLoading, setIsLoading] = useState(false);
     const [panelSet, setPanelSet] = useState<PanelSet>();
     const [parentPanelSet, setParentPanelSet] = useState<PanelSet | undefined>();
     const [error, setError] = useState<string>('');
     const [userId, setUserId] = useState<string>('');
     const [panels, setPanels] = useState<Panel[]>([]);
+    const [showLoader, setShowLoader] = useState(true);
     useEffect(() => {
         async function fetchData() {
-            setIsLoading(true);
+
+            // setIsLoading(true);
+
 
             const session = await getSessionCookie();
             console.log(session);
@@ -89,7 +94,9 @@ const ReadPage = ({ id }: Props) => {
                 }
             }
             setUserId(newUserId);
-            setIsLoading(false);
+
+            // setIsLoading(false);
+            setShowLoader(false);
         }
         fetchData();
     }, [searchParams]);
@@ -103,9 +110,9 @@ const ReadPage = ({ id }: Props) => {
         return bool;
     }
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
+    // if (isLoading) {
+    //     return <div>Loading...</div>;
+    // }
     if (error !== '') {
         return <div>{error}</div>;
     }
@@ -132,6 +139,7 @@ const ReadPage = ({ id }: Props) => {
 
     return (
         <>
+            <Loader show={showLoader} />
             <ComicPanels
                 setting={layout}
                 hook_state={hooks}

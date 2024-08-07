@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import Hero from '../components/Hero';
 import Link from 'next/link';
@@ -25,11 +26,17 @@ import thirdPanelImage from '../../public/comic-panels/third_panel.png';
 import Navbar from '../components/NavBar';
 import Footer from '../components/Footer';
 import GetStarted from '../components/GetStartedButton';
+import Loader from '../components/loader/Loader';
+
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+    const [showLoader, setShowLoader] = useState(true);
+    useEffect(()=>{ setShowLoader(false); });
     return (
         <main className={styles.body}>
             <Navbar />
+            <Loader show={showLoader} />
             <Hero />
             {/* <ScrollToTop /> */}
             <section className="h-100">

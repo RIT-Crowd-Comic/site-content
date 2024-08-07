@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
 import Filter from '@/components/Filter';
@@ -10,11 +11,21 @@ import Cards from '@/api/cards.json';
 // footer and header
 import Navbar from '../../components/NavBar';
 import Footer from '../../components/Footer';
+import Loader from '@/components/loader/Loader';
+
+import { useEffect, useState } from 'react';
 
 const TeamPage = () => {
+
+    const [showLoader, setShowLoader] = useState(true);
+    useEffect(()=>{
+        setShowLoader(false);
+    }, []);
+
     return (
         <main className={styles.body}>
             <Navbar />
+            <Loader show={showLoader} />
             <div className="content text-center">
                 <h1 className={`${styles.teamTitle} pt-5 pb-3 px-3 `}>Meet the Creators!</h1>
                 <Filter />
