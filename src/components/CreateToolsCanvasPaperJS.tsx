@@ -1,8 +1,6 @@
 'use client';
 import { PaperOffset } from 'paperjs-offset';
-import {
-    use, useEffect, useRef, useState
-} from 'react';
+import {use, useEffect, useRef, useState} from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
 import paper from 'paper';
 import PenOptions from './create-tools/PenOptions';
@@ -25,6 +23,7 @@ import { CreateHook } from './interfaces';
 import { getSessionCookie, updateSession } from '@/app/login/loginUtils';
 import test from 'node:test';
 import type { addToastFunction } from './toast-notifications/interfaces';
+import local from 'next/font/local';
 interface Props {
     id: number
     sendError: addToastFunction
@@ -85,6 +84,9 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
 
     const layers = [backgroundLayerReference, layer1Reference, layer2Reference, layer3Reference, layer4Reference];
     const [currentLayerIndex, setCurrentLayerIndex] = useState<number>(1);
+
+    const [layerVisibilities, setLayerVisibilities] = useState<[boolean, boolean, boolean, boolean, boolean]>([true, true, true, true, true]);
+    const [layerNames, setLayerNames] = useState<[string, string, string, string, string]>(["Background", "Layer 1", "Layer 2", "Layer 3", "Layer 4"]);
 
     // Router for sending the user to other pages (used in toPublish())
     const router = useRouter();
@@ -359,7 +361,8 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         }
 
         // load background image
-        backgroundRaster = new paper.Raster('/images/shading.png');
+        backgroundRaster = new paper.Raster('/images/patterns/Dots_Compressed.GIF');
+
         backgroundRaster.position = view.center;
 
         // if there is no clip path create a tiny dot so it doesn't just shade the entire canvas
@@ -382,10 +385,10 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
             blendMode: 'source-over'
         });
 
-        // remove preview clip path
-        clipPath?.remove;
+        //remove preview clip path
+        clipPath?.remove();
+        //switch back to old layer
 
-        // switch back to old layer
         changeLayer();
 
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
@@ -1457,9 +1460,11 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
     const mergeLayer = () => {
 
         // Check to make sure that this is not being called on the bottom layer (backgroundLayer) that has nowhere to merge down to 
-        if (currentLayerIndex > 0) {
-            if (layers[currentLayerIndex]?.current && layers[currentLayerIndex - 1].current) {
-
+        if(currentLayerIndex > 0)
+        {
+            if(layers[currentLayerIndex]?.current && layers[currentLayerIndex - 1].current && 
+                layers[currentLayerIndex]?.current?.locked == false && layers[currentLayerIndex - 1]?.current?.locked == false)
+            {
                 // Import the layer's data to the layer below it
                 // NOTE: exportSVG must be used instead of exportJSON as importJSON will overwrite any preexisting changes to the layer, importSVG adds to the layer
                 const toSVG = layers[currentLayerIndex]?.current?.exportSVG({ asString: true });
@@ -1479,9 +1484,17 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
     const swapLayers = (currentIndex: number, swapIndex: number) => {
 
         // First make sure that the layer indicies exist
-        if (currentIndex >= 0 && swapIndex >= 0) {
-            const currentData = String(layers[currentIndex].current?.exportJSON({ asString: true }));
-            const swapData = String(layers[swapIndex].current?.exportJSON({ asString: true }));
+        if(currentIndex >= 0 && swapIndex >= 0)
+        {
+            // Get access to the layers' current data
+            const currentData = String(layers[currentIndex].current?.exportJSON({ asString: true}));
+            const swapData = String(layers[swapIndex].current?.exportJSON({ asString: true}));
+
+            // Clear both layers so that they are a blank slate for importing
+            layers[currentIndex].current?.removeChildren();
+            layers[swapIndex].current?.removeChildren();
+
+            // Import the layer data
             layers[currentIndex].current?.importJSON(swapData);
             layers[swapIndex].current?.importJSON(currentData);
         }
@@ -1496,7 +1509,19 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
             swapLayers(currentLayerIndex, currentLayerIndex + 1);
 
             // Swap layer titles between the two
+            let tempName = layerNames[currentLayerIndex];
+            layerNames[currentLayerIndex] = layerNames[currentLayerIndex + 1];
+            layerNames[currentLayerIndex + 1] = tempName;
+            setLayerNames(layerNames);
 
+            // Swap layer visibility
+
+
+            // Swap layer lock status
+
+
+            // Swap checked status
+            
         }
     };
 
@@ -1509,25 +1534,53 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
             swapLayers(currentLayerIndex, currentLayerIndex - 1);
 
             // Swap layer titles between the two
+            let tempName = layerNames[currentLayerIndex];
+            layerNames[currentLayerIndex] = layerNames[currentLayerIndex - 1];
+            layerNames[currentLayerIndex - 1] = tempName;
+            setLayerNames(layerNames);
 
+            // Swap layer visibility
+
+
+            // Swap layer lock status
+
+
+            // Swap checked status
+            
+            
         }
     };
 
     const toggleLayerVisibility = (event: ChangeEvent<HTMLInputElement>) => {
         if (backgroundLayerReference.current && event.target.value === '0') {
             backgroundLayerReference.current.visible = !backgroundLayerReference.current.visible;
+            layerVisibilities[0] = backgroundLayerReference.current.visible;
+            setLayerVisibilities(layerVisibilities);
+            console.log(layerVisibilities);
         }
         else if (layer1Reference.current && event.target.value === '1') {
             layer1Reference.current.visible = !layer1Reference.current.visible;
+            layerVisibilities[1] = layer1Reference.current.visible;
+            setLayerVisibilities(layerVisibilities);
+            console.log(layerVisibilities);
         }
         else if (layer2Reference.current && event.target.value === '2') {
             layer2Reference.current.visible = !layer2Reference.current.visible;
+            layerVisibilities[2] = layer2Reference.current.visible;
+            setLayerVisibilities(layerVisibilities);
+            console.log(layerVisibilities);
         }
         else if (layer3Reference.current && event.target.value === '3') {
             layer3Reference.current.visible = !layer3Reference.current.visible;
+            layerVisibilities[3] = layer3Reference.current.visible;
+            setLayerVisibilities(layerVisibilities);
+            console.log(layerVisibilities);
         }
         else if (layer4Reference.current && event.target.value === '4') {
             layer4Reference.current.visible = !layer4Reference.current.visible;
+            layerVisibilities[4] = layer4Reference.current.visible;
+            setLayerVisibilities(layerVisibilities);
+            console.log(layerVisibilities);
         }
     };
 
@@ -1728,7 +1781,8 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         layer3Reference.current?.importJSON(panel1LayerData.layer3);
         layer4Reference.current?.importJSON(panel1LayerData.layer4);
         try {
-            localStorage.setItem('image-1', String(canvasProject.current?.exportSVG({ asString: true })));
+            localStorage.setItem('image-1', String(canvasProject.current?.exportSVG({ asString: true, embedImages: false })));
+            //console.log(localStorage.getItem('image-1'));
         }
         catch (error) {
             sendError('Error publishing panel 1 to localStorage', 'Error', false, 4000, true);
@@ -1751,7 +1805,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         layer3Reference.current?.importJSON(panel2LayerData.layer3);
         layer4Reference.current?.importJSON(panel2LayerData.layer4);
         try {
-            localStorage.setItem('image-2', String(canvasProject.current?.exportSVG({ asString: true })));
+            localStorage.setItem('image-2', String(canvasProject.current?.exportSVG({ asString: true, embedImages: false })));
         }
         catch (error) {
             sendError('Error publishing panel 2 to localStorage', 'Error', false, 4000, true);
@@ -1774,7 +1828,8 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         layer3Reference.current?.importJSON(panel3LayerData.layer3);
         layer4Reference.current?.importJSON(panel3LayerData.layer4);
         try {
-            localStorage.setItem('image-3', String(canvasProject.current?.exportSVG({ asString: true })));
+            localStorage.setItem('image-3', String(canvasProject.current?.exportSVG({ asString: true, embedImages: false })));
+            //console.log(localStorage.getItem('image-3'));
         }
         catch (error) {
             sendError('Error publishing panel 3 to localStorage', 'Error', false, 4000, true);
@@ -1966,9 +2021,9 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                     </label>
                 </div>
 
-                <div id="backgroundUploadForm" className={`${styles.backgroundUploadForm} ${styles.sizeConsistency}`}>
+                {/*<div id="backgroundUploadForm" className={`${styles.backgroundUploadForm} ${styles.sizeConsistency}`}>
                     <form id={styles.backgroundUpload}>
-                        <label htmlFor="imageDropbox" className={`form-label ${styles.formLabel} ${styles.sizeConsistency}`}>{/* Upload a Background (Recommended Size: 1200x800p) */}
+                        <label htmlFor="imageDropbox" className={`form-label ${styles.formLabel} ${styles.sizeConsistency}`}>
                             <input
                                 className={`form-control ${styles.sizeConsistency}`}
                                 id="imageDropbox"
@@ -1982,7 +2037,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                             />
                         </label>
                     </form>
-                </div>
+                </div>*/}
             </fieldset>
 
             <canvas id={`${styles.canvas}`} ref={canvasReference} className={`${styles.canvas}`} />
@@ -2091,7 +2146,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                                     value="4"
                                     onChange={changeLayer}
                                 />
-                                <label htmlFor="layer4">Layer 4</label><br />
+                                <label htmlFor="layer4">{layerNames[4]}</label><br />
                             </div>
                         </div>
 
@@ -2130,7 +2185,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                                     value="3"
                                     onChange={changeLayer}
                                 />
-                                <label htmlFor="layer3">Layer 3</label><br />
+                                <label htmlFor="layer3">{layerNames[3]}</label><br />
                             </div>
                         </div>
 
@@ -2169,7 +2224,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                                     value="2"
                                     onChange={changeLayer}
                                 />
-                                <label htmlFor="layer2">Layer 2</label><br />
+                                <label htmlFor="layer2">{layerNames[2]}</label><br />
                             </div>
                         </div>
 
@@ -2209,7 +2264,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                                     defaultChecked
                                     onChange={changeLayer}
                                 />
-                                <label htmlFor="layer1">Layer 1</label><br />
+                                <label htmlFor="layer1">{layerNames[1]}</label><br />
                             </div>
                         </div>
 
@@ -2248,7 +2303,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                                     value="0"
                                     onChange={changeLayer}
                                 />
-                                <label htmlFor="background">Background</label><br />
+                                <label htmlFor="background">{layerNames[0]}</label><br />
                             </div>
                         </div>
                     </div>
