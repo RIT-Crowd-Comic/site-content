@@ -10,7 +10,6 @@ import { useState } from 'react';
 import { loginAction } from '@/app/login/actions';
 import React from 'react';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import * as validation from './utils';
 
 import { addToastFunction } from '../toast-notifications/interfaces';
@@ -73,7 +72,7 @@ export function SignInForm({sendToast} : Props) {
                 >
                     <h1 className={styles.h1}>Sign In</h1>
                     {/* EMAIL */}
-                    <Row className={`mb-3 ${styles.formInputs}`}>
+                    <div className={`mb-3 ${styles.formInputs}`}>
                         <Form.Group>
                             <Form.Label  htmlFor="inputEmail" className={styles.loginLabel}>Email Address</Form.Label>
                             <Form.Control
@@ -91,9 +90,9 @@ export function SignInForm({sendToast} : Props) {
                                 </Form.Control.Feedback>
 
                         </Form.Group>
-                    </Row>
+                    </div>
                     {/* PASSWORD */}
-                    <Row className={`mb-3 ${styles.formInputs}`}>
+                    <div className={`mb-3 ${styles.formInputs}`}>
                         <Form.Group>
                             <Form.Label htmlFor="inputPassword" className={styles.loginLabel}>Password</Form.Label>
                             <div className={styles.passwordContainer}>
@@ -117,7 +116,7 @@ export function SignInForm({sendToast} : Props) {
                                     </Form.Control.Feedback>
                             </div>
                         </Form.Group>
-                    </Row>
+                    </div>
                     {/* LOGIN */}
                     <button type="submit" id={styles.loginButton} className="btn btn-primary">Sign In</button>
 

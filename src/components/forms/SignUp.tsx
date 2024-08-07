@@ -10,7 +10,6 @@ import logo from '../../../public/images/logos/Crowd_Comic_Logo_BW.svg';
 import { useState } from 'react';
 import { registerAction } from '@/app/login/actions';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import { FormLabel } from 'react-bootstrap';
 import * as validation from './utils';
 import { addToastFunction } from '../toast-notifications/interfaces';
@@ -21,6 +20,7 @@ interface Props {
 }
 export function SignUpForm({sendToast} : Props) {
     const [passwordVisible, setPasswordVisibility] = useState(false);
+    const [confirmPasswordVisible, setConfirmPasswordVisibility] = useState(false);
     const [emailValid, setEmailValid] = useState(true);
     const [emailValidMessage, setemailValidMessage] = useState('');
     const [passwordValid, setPasswordValid] = useState(true);
@@ -33,6 +33,10 @@ export function SignUpForm({sendToast} : Props) {
 
     const togglePasswordVisibility = () => {
         setPasswordVisibility(!passwordVisible);
+    };
+
+    const toggleConfirmPasswordVisibility = () => {
+        setConfirmPasswordVisibility(!confirmPasswordVisible);
     };
 
     const handleSubmit = (event: any) => {
@@ -106,7 +110,7 @@ export function SignUpForm({sendToast} : Props) {
                 >
                     <h1 className={styles.h1}>Sign Up</h1>
                     {/* USERNAME */}
-                    <Row className={`mb-3 ${styles.formInputs}`}>
+                    <div className={`mb-3 ${styles.formInputs}`}>
                         <Form.Group>
                             <Form.Label htmlFor="inputUsername" className={styles.loginLabel}>Display Name</Form.Label>
                             <Form.Control
@@ -123,9 +127,9 @@ export function SignUpForm({sendToast} : Props) {
                                {displayNameValidMessage}
                             </Form.Control.Feedback>
                         </Form.Group>
-                    </Row>
+                    </div>
                     {/* EMAIL */}
-                    <Row className={`mb-3 ${styles.formInputs}`}>
+                    <div className={`mb-3 ${styles.formInputs}`}>
                         <Form.Group>
                             <Form.Label htmlFor="inputEmail" className={styles.loginLabel}>Email Address</Form.Label>
                             <Form.Control
@@ -143,9 +147,9 @@ export function SignUpForm({sendToast} : Props) {
                                 {emailValidMessage}
                             </Form.Control.Feedback>
                         </Form.Group>
-                    </Row>
+                    </div>
                     {/* PASSWORD */}
-                    <Row className={`mb-3 ${styles.formInputs}`}>
+                    <div className={`mb-3 ${styles.formInputs}`}>
                     <Form.Group>
                         <FormLabel htmlFor="inputPassword" className={styles.loginLabel}>Password</FormLabel>
                         <div className={styles.passwordContainer}>
@@ -175,9 +179,9 @@ export function SignUpForm({sendToast} : Props) {
                                 </Form.Control.Feedback>
                         </div>
                         </Form.Group>
-                    </Row>
+                    </div>
                     {/* CONFIRM PASSWORD */}
-                    <Row className={`mb-3 ${styles.formInputs}`}>
+                    <div className={`mb-3 ${styles.formInputs}`}>
                     <Form.Group>
                     <FormLabel htmlFor="inputPassword" className={styles.loginLabel}>Confirm Password</FormLabel>
                         <div className={styles.passwordContainer}>
@@ -194,8 +198,8 @@ export function SignUpForm({sendToast} : Props) {
                             <button
                                 type="button"
                                 className={styles.togglePassword}
-                                onClick={togglePasswordVisibility}
-                                style={{ backgroundImage: `url(${passwordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
+                                onClick={toggleConfirmPasswordVisibility}
+                                style={{ backgroundImage: `url(${confirmPasswordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
                             />
                         <Form.Control.Feedback type='invalid' className={styles.feedback}>
                                     {passwordInvalidRetypeMessage}
@@ -203,7 +207,7 @@ export function SignUpForm({sendToast} : Props) {
                         </div>
                         <i className="bi bi-eye-slash" id={styles.togglePassword} />
                         </Form.Group>
-                    </Row>
+                    </div>
 
                     {/* REGISTER */}
                     <button type="submit" id={styles.loginButton} className="btn btn-primary">Sign Up</button>
