@@ -120,6 +120,13 @@ export function SignUpForm() {
                             />
                         </div>
                         <i className="bi bi-eye-slash" id={styles.togglePassword} />
+                        <div className="form-text text-white pt-2" id="basic-addon4">
+                            <ul>
+                                <li className="small">must be atleast 8 characters long</li>
+                                <li className="small">must have a special character</li>
+                                <li className="small">must have atleast 1 uppercase & 1 lowercase character</li>
+                            </ul>
+                        </div>
                     </div>
                     {/* CONFIRM PASSWORD */}
                     <div className={`mb-3 ${styles.formInputs}`}>
