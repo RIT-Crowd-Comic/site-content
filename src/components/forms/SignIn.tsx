@@ -108,10 +108,9 @@ export function SignInForm() {
                                     style={{ backgroundImage: `url(${passwordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
                                 />
                                     <Form.Control.Feedback type = 'invalid' className={styles.feedback}>
-                                        Password in invalid. Ensure it is between 8 and 30 characters.
+                                        Password is invalid.
                                     </Form.Control.Feedback>
                             </div>
-
                         </Form.Group>
                     </Row>
                     {/* LOGIN */}

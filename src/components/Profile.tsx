@@ -41,6 +41,7 @@ export function Profile() {
     const [passwordRetypeValid, setPasswordRetypeValid] = useState(true);
     const [displayNameValid, setDisplayNameValid] = useState(true);
     const [passwordInvalidMessage, setPasswordInvalidMessage] = useState(Array<String>);
+    const [passwordInvalidRetypeMessage, setPasswordInvalidRetypeMessage] = useState('');
 
     const handleSubmitDisplayEmail = (event: any) => {
          //validate filled fields
@@ -90,10 +91,9 @@ export function Profile() {
     const handlePasswordChange = (e: any) => {
         const { value } = e.target;
         const errors = validation.validatePassword(value);
-
-        setPasswordValid(errors.length === 0);
-        console.log(passwordValid);
+        if(value === password) errors.push('New password cannot match old password.')
         setPasswordInvalidMessage(errors);
+        setPasswordValid(errors.length === 0);
     };
 
     const handlePasswordChangeSimpleOriginal = (e: any) => {
@@ -104,7 +104,9 @@ export function Profile() {
 
     const handlePasswordChangeSimpleRetype= (e: any) => {
         const { value } = e.target;
+        if(value != newPass){setPasswordRetypeValid(false); setPasswordInvalidRetypeMessage('Passwords must match.'); return;}
         setPasswordRetypeValid(validation.validatePasswordSimple(value));
+        setPasswordInvalidRetypeMessage('');
     };
 
     useEffect(() => {
@@ -294,6 +296,9 @@ export function Profile() {
                                         onClick={toggleRetypePasswordVisibility}
                                         style={{ backgroundImage: `url(${retypePasswordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
                                     />
+                                         <Form.Control.Feedback type='invalid' className={styles.feedback}>
+                                            {passwordInvalidRetypeMessage}
+                                        </Form.Control.Feedback>
                                 </div>
                                 </Form.Group>
                             </Row>
