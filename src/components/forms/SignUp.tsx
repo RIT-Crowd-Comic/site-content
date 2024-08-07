@@ -66,7 +66,7 @@ export function SignUpForm() {
                 >
                     <h1 className={styles.h1}>Sign Up</h1>
                     {/* USERNAME */}
-                    <Row className={`mb-3 ${styles.FormInputs}`}>
+                    <Row className={`mb-3 ${styles.formInputs}`}>
                         <Form.Group>
                             <Form.Label htmlFor="inputUsername" className={styles.loginLabel}>Display Name</Form.Label>
                             <Form.Control
@@ -109,8 +109,6 @@ export function SignUpForm() {
                                 placeholder="********"
                                 className="form-control"
                                 id={styles.inputPassword}
-                                onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Enter Password Here')}
-                                onInput={e => (e.target as HTMLInputElement).setCustomValidity('')}
                                 required
                             />
 
@@ -133,11 +131,8 @@ export function SignUpForm() {
                                 placeholder="********"
                                 className="form-control"
                                 id={styles.inputPassword}
-                                onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Confirm Password Here')}
-                                onInput={e => (e.target as HTMLInputElement).setCustomValidity('')}
                                 required
                             />
-
                             <button
                                 type="button"
                                 className={styles.togglePassword}
