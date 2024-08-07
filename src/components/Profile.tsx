@@ -264,11 +264,9 @@ export function Profile() {
                                         style={{ backgroundImage: `url(${newPasswordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
                                     />
                                       <Form.Control.Feedback type='invalid' className={styles.feedback}>
-                                            {<ul>
                                                 {passwordInvalidMessage.map((item, index) => (
-                                                    <li key={index}>{item}</li>
+                                                    <div>{item}</div>
                                                 ))}
-                                            </ul>}
                                         </Form.Control.Feedback>
                                 </div>
                                 </Form.Group>
