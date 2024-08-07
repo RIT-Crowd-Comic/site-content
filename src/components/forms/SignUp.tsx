@@ -24,6 +24,8 @@ export function SignUpForm() {
     const [displayNameValid, setDisplayNameValid] = useState(true);
     const [displayNameValidMessage, setDisplayNameValidMessage] = useState('');
     const [passwordInvalidMessage, setPasswordInvalidMessage] = useState(Array<String>);
+    const [passwordInvalidRetypeMessage, setPasswordInvalidRetypeMessage] = useState('');
+    const [password, setPass] = useState('');
 
     const togglePasswordVisibility = () => {
         setPasswordVisibility(!passwordVisible);
@@ -59,11 +61,13 @@ export function SignUpForm() {
     };
     const handlepasswordRetypeChange= (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
+        if(value != password) {setPasswordInvalidRetypeMessage('Password must match.'); setPasswordRetypeValid(false); return;}
         setPasswordRetypeValid(validation.validatePasswordSimple(value)); //check between 1-30 same as display 
+        setPasswordInvalidRetypeMessage('')
     };
 
     // Handler to validate password input
-    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handlePasswordChange = (e: any) => {
         const { value } = e.target;
         const errors = validation.validatePassword(value);
 
@@ -92,6 +96,7 @@ export function SignUpForm() {
                             errorState(response);
                             return;
                         }
+                        setPass('');
                         window.history.length > 2 ? await window.history.go(-1) : window.location.href = '/';
                     }}
                 >
@@ -148,7 +153,7 @@ export function SignUpForm() {
                                 id={styles.inputPassword}
                                 required
                                 isInvalid={!passwordValid}
-                                onChange={handlePasswordChange}
+                                onChange={(e) => {setPass(e.target.value); handlePasswordChange(e)}}
                             />
 
                             <button
@@ -158,12 +163,11 @@ export function SignUpForm() {
                                 style={{ backgroundImage: `url(${passwordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
                             />
                                 <Form.Control.Feedback type='invalid' className={styles.feedback}>
-                                {<ul>
+                                    {<ul>
                                         {passwordInvalidMessage.map((item, index) => (
                                             <li key={index}>{item}</li>
                                         ))}
                                     </ul>}
-
                                 </Form.Control.Feedback>
                         </div>
                         </Form.Group>
@@ -180,7 +184,7 @@ export function SignUpForm() {
                                 className="form-control"
                                 id={styles.inputPassword}
                                 required
-                                isInvalid={!passwordRetypeValid || !passwordValid}
+                                isInvalid={!passwordRetypeValid}
                                 onChange={handlepasswordRetypeChange}
                             />
                             <button
@@ -189,6 +193,9 @@ export function SignUpForm() {
                                 onClick={togglePasswordVisibility}
                                 style={{ backgroundImage: `url(${passwordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
                             />
+                        <Form.Control.Feedback type='invalid' className={styles.feedback}>
+                                    {passwordInvalidRetypeMessage}
+                        </Form.Control.Feedback>
                         </div>
                         <i className="bi bi-eye-slash" id={styles.togglePassword} />
                         </Form.Group>

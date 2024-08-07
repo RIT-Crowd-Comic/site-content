@@ -287,7 +287,7 @@ export function Profile() {
                                         placeholder="********"
                                         className="form-control"
                                         id={`${styles.inputPassword}`}
-                                        isInvalid={!passwordValid || !passwordRetypeValid}
+                                        isInvalid={!passwordRetypeValid}
                                         required
                                     />
                                     <button
