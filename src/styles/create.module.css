@@ -677,6 +677,35 @@
     height: 1.2em;
 }
 
+/* STICKER TOOL STYLING */
+#StickerTools{
+    display: flex;
+}
+#fxImgs, #bubbleImgs, #particleImgs, #actorImgs{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#fxImgs img, #bubbleImgs img, #particleImgs img, #actorImgs img{
+    width: 60px;
+    height: auto;
+    border: #000000 3px solid;
+    background-color:rgb(95, 95, 95);
+    margin: 2px;
+}
+
+#fxImgs img:hover, #bubbleImgs img:hover, #particleImgs img:hover, #actorImgs img:hover{
+    border: #ffffff 3px solid;
+    background-color:rgb(165, 165, 165);
+    margin: 2px;
+}
+
+#fxImgs img.chosen, #bubbleImgs img.chosen, #particleImgs img.chosen, #actorImgs img.chosen{
+    border: #000000 3px solid;
+    background-color:rgb(207, 207, 207);
+}
+
+
 /* SAVE & PUBLISH */
 #savePublish
 {

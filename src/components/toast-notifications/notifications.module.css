@@ -1,0 +1,24 @@
+.toastContainer {
+    --bs-bg-opacity: 1; 
+    background-color: #00000000;
+    color: #333;
+    font-style:var(--font-back-issues);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.toastHeader {
+    background-color: #dcdcdc;
+    color: #333;
+}
+
+.toastBody {
+    background-color: #e6e6e6;
+    color: #333;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+.toastError{
+    background-color: #D91911AA;
+    color: #000000;
+}
