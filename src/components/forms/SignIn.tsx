@@ -14,8 +14,9 @@ import Row from 'react-bootstrap/Row';
 export function SignInForm() {
     const [message, errorState] = useState('');
     const [passwordVisible, setPasswordVisibility] = useState(false);
-    const [emailValid, setEmailValid] = useState(true);
-    const [passwordValid, setPasswordValid] = useState(true);
+    const [emailValid, setEmailValid] = useState(false);
+    const [passwordValid, setPasswordValid] = useState(false);
+    const [validated, setValidated] = useState(false)
 
     const togglePasswordVisibility = () => {
         setPasswordVisibility(!passwordVisible);
@@ -26,19 +27,18 @@ export function SignInForm() {
             event.preventDefault();
             event.stopPropagation();
         }
+        setValidated(true);
     };
 
-    const handleEmailChange = (e: any) => {
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        let isValid = value.includes('@') && value.includes('.');  
-        setEmailValid(isValid);
+        setEmailValid(value.includes('@') && value.includes('.'));
     };
 
     // Handler to validate password input
-    const handlePasswordChange = (e: any) => {
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        const isValid = value.length >= 8;
-        setPasswordValid(isValid);
+        setPasswordValid(value.length >= 8);
     };
 
     return (
@@ -68,7 +68,7 @@ export function SignInForm() {
                     {/* EMAIL */}
                     <Row className={`mb-3 ${styles.formInputs}`}>
                         <Form.Group>
-                            <Form.Label className={styles.loginLabel}>Email Address</Form.Label>
+                            <Form.Label  htmlFor="inputEmail" className={styles.loginLabel}>Email Address</Form.Label>
                             <Form.Control
                                 type="email"
                                 name="email"
@@ -77,8 +77,8 @@ export function SignInForm() {
                                 aria-describedby="emailHelp"
                                 required
                                 onChange={handleEmailChange}
-                                isInvalid={!emailValid }
-                                className={`${emailValid ? styles.formControlValid : styles.formControlInvalid}`}
+                                isInvalid={validated && !emailValid }
+                              
                             />
                                 <Form.Control.Feedback type = 'invalid' className={styles.feedback}>
                                     Please enter a valid email with "@" and ".".
@@ -89,17 +89,16 @@ export function SignInForm() {
                     {/* PASSWORD */}
                     <Row className={`mb-3 ${styles.formInputs}`}>
                         <Form.Group>
-                            <Form.Label className={styles.loginLabel}>Password</Form.Label>
+                            <Form.Label htmlFor="inputPassword" className={styles.loginLabel}>Password</Form.Label>
                             <div className={styles.passwordContainer}>
                                 <Form.Control
                                     type={passwordVisible ? 'text' : 'password'}
                                     name="password"
                                     placeholder="********"
                                     id={`${styles.inputPassword}`}
-                                    isInvalid={!passwordValid}
+                                    isInvalid={ validated && !passwordValid}
                                     required
                                     onChange={handlePasswordChange}
-                                    className={`${passwordValid ? styles.formControlValid : styles.formControlInvalid}`}
                                 />
                                 <button
                                     type="button"

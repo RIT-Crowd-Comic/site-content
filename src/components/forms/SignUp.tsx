@@ -10,35 +10,71 @@ import { useState } from 'react';
 import { registerAction } from '@/app/login/actions';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import { FormLabel } from 'react-bootstrap';
 
 export function SignUpForm() {
     const [message, errorState] = useState('');
     const [passwordVisible, setPasswordVisibility] = useState(false);
     const [emailValid, setEmailValid] = useState(true);
     const [passwordValid, setPasswordValid] = useState(true);
+    const [passwordRetypeValid, setPasswordRetypeValid] = useState(true);
+    const [displayNameValid, setDisplayNameValid] = useState(true);
+    const [passwordInvalidMessage, setPasswordInvalidMessage] = useState(Array<String>);
 
     const togglePasswordVisibility = () => {
         setPasswordVisibility(!passwordVisible);
     };
 
     const handleSubmit = (event: any) => {
-        if (!emailValid || !passwordValid) {
+        if (!emailValid || !passwordValid || !displayNameValid) {
             event.preventDefault();
             event.stopPropagation();
         }
     };
 
-    const handleEmailChange = (e: any) => {
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target; 
+        setEmailValid(value.includes('@') && value.includes('.'));
+    };
+    const handleDisplayNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        let isValid = value.includes('@') && value.includes('.');  
-        setEmailValid(isValid);
+        setDisplayNameValid(value.length >= 1 && value.length <= 30);
+    };
+    const handlepasswordRetypeChange= (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+        setPasswordRetypeValid(value.length >= 1 && value.length <= 30);
     };
 
     // Handler to validate password input
-    const handlePasswordChange = (e: any) => {
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        const isValid = value.length >= 8;
-        setPasswordValid(isValid);
+        const errors: string[] = [];
+
+        if (value.length > 30) {
+            errors.push('Password must be 30 characters or less.');
+        }
+        if (value.length < 8) {
+            errors.push('Password must be 8 characters or more.');
+        }
+
+        if (!/[a-z]/.test(value)) {
+            errors.push('Password must contain at least one lowercase letter.');
+        }
+
+        if (!/[A-Z]/.test(value)) {
+            errors.push('Password must contain at least one uppercase letter.');
+        }
+
+        if (!/[!@#$%^&*()_+\[\]{};':"\\|,.<>/?]/.test(value)) {
+            errors.push('Password must contain at least one special character.');
+        }
+
+        if (/\s/.test(value)) {
+            errors.push('Password must not contain spaces.');
+        }
+
+        setPasswordValid(errors.length === 0);
+        setPasswordInvalidMessage(errors);
     };
 
     return (
@@ -52,6 +88,7 @@ export function SignUpForm() {
                 </Link>
                 {/* FORM */}
                 <Form
+                    onSubmit={handleSubmit}
                     id={styles.loginForm}
                     className="needs-validation"
                     noValidate
@@ -76,7 +113,12 @@ export function SignUpForm() {
                                 className="form-control"
                                 id={styles.inputUsername}
                                 required
+                                isInvalid = {!displayNameValid}
+                                onChange={handleDisplayNameChange}
                             />
+                            <Form.Control.Feedback type='invalid' className={styles.feedback}>
+                               Display name must be between 1 and 30 characters.
+                            </Form.Control.Feedback>
                         </Form.Group>
                     </Row>
                     {/* EMAIL */}
@@ -100,16 +142,19 @@ export function SignUpForm() {
                         </Form.Group>
                     </Row>
                     {/* PASSWORD */}
-                    <div className={`mb-3 ${styles.formInputs}`}>
-                        <label htmlFor="inputPassword" className={styles.loginLabel}>Password</label>
+                    <Row className={`mb-3 ${styles.formInputs}`}>
+                    <Form.Group>
+                        <FormLabel htmlFor="inputPassword" className={styles.loginLabel}>Password</FormLabel>
                         <div className={styles.passwordContainer}>
-                            <input
+                            <Form.Control
                                 type={passwordVisible ? 'text' : 'password'}
                                 name="password"
                                 placeholder="********"
                                 className="form-control"
                                 id={styles.inputPassword}
                                 required
+                                isInvalid={!passwordValid}
+                                onChange={handlePasswordChange}
                             />
 
                             <button
@@ -118,27 +163,30 @@ export function SignUpForm() {
                                 onClick={togglePasswordVisibility}
                                 style={{ backgroundImage: `url(${passwordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
                             />
+                                <Form.Control.Feedback type='invalid' className={styles.feedback}>
+                                    {<ul>
+                                        {passwordInvalidMessage.map((item, index) => (
+                                            <li key={index}>{item}</li>
+                                        ))}
+                                    </ul>}
+                                </Form.Control.Feedback>
                         </div>
-                        <i className="bi bi-eye-slash" id={styles.togglePassword} />
-                        <div className="form-text text-white pt-2" id="basic-addon4">
-                            <ul>
-                                <li className="small">must be atleast 8 characters long</li>
-                                <li className="small">must have a special character</li>
-                                <li className="small">must have atleast 1 uppercase & 1 lowercase character</li>
-                            </ul>
-                        </div>
-                    </div>
+                        </Form.Group>
+                    </Row>
                     {/* CONFIRM PASSWORD */}
-                    <div className={`mb-3 ${styles.formInputs}`}>
-                        <label htmlFor="inputPassword" className={styles.loginLabel}>Confirm Password</label>
+                    <Row className={`mb-3 ${styles.formInputs}`}>
+                    <Form.Group>
+                    <FormLabel htmlFor="inputPassword" className={styles.loginLabel}>Confirm Password</FormLabel>
                         <div className={styles.passwordContainer}>
-                            <input
+                            <Form.Control
                                 type={passwordVisible ? 'text' : 'password'}
                                 name="password2"
                                 placeholder="********"
                                 className="form-control"
                                 id={styles.inputPassword}
                                 required
+                                isInvalid={!passwordRetypeValid || !passwordValid}
+                                onChange={handlepasswordRetypeChange}
                             />
                             <button
                                 type="button"
@@ -148,7 +196,8 @@ export function SignUpForm() {
                             />
                         </div>
                         <i className="bi bi-eye-slash" id={styles.togglePassword} />
-                    </div>
+                        </Form.Group>
+                    </Row>
 
                     {/* REGISTER */}
                     <button type="submit" id={styles.loginButton} className="btn btn-primary">Sign Up</button>
