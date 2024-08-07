@@ -12,9 +12,8 @@ import topCreate from '../../public/images/background-boxes/bw/Create_Top_BW.svg
 import bottomCreate from '../../public/images/background-boxes/bw/Create_Bottom_BW.svg';
 
 // Desktop Assets
-import desktopMission from '../../public/images/background-boxes/bw/Desktop_Mission_BW.svg';
-import desktopRead from '../../public/images/background-boxes/bw/Desktop_Read_BW.svg';
-import desktopCreate from '../../public/images/background-boxes/bw/Desktop_Create_BW.svg';
+import desktopMission from "../../public/images/background-boxes/bw/Desktop_Mission_BW.svg"
+import desktopRead from "../../public/images/background-boxes/bw/Desktop_Read_BW.svg"
 
 // import arrow from "../../public/images/GIFs/Arrow.gif"
 
@@ -28,28 +27,27 @@ import Footer from '../components/Footer';
 import GetStarted from '../components/GetStartedButton';
 
 export default function Home() {
-    return (
-        <main className={styles.body}>
-            <Navbar />
-            <Hero />
-            {/* <ScrollToTop /> */}
-            <section className="h-100">
-                <div className={styles.missionSec}>
-                    <div className="mission row">
-                        <div className="col" />
-                        <div className="col-auto">
-                            <h2 className={styles.missionHeading}>Mission</h2>
-                        </div>
-                    </div>
-                    <div className={`${styles.missionImage} row card`}>
-                        <div className="card-img-overlay">
-                            <Image className={`${styles.bottomMission} card-img-top z-0`} src={bottomMission} alt="" />
-                            <Image className={`${styles.topMission} card-img-top z-0`} src={topMission} alt="" />
-
-                            <Image className={`${styles.desktopMission} card-img-top z-0`} src={desktopMission} alt="" />
-                        </div>
-                        <div className="card-body">
-                            <p className={`${styles.missionParagraph}`}>
+  return (
+    <main className={styles.body}>
+      <Navbar />
+      <Hero />
+      {/* <ScrollToTop /> */}
+      <section className="h-100">
+        <div className={styles.missionSec}>
+          <div className="mission row">
+            <div className="col"></div>
+            <div className="col-auto">
+              <h2 className={styles.missionHeading}>Mission</h2>
+            </div>
+          </div>
+          <div className={`${styles.missionImage} row card`}>
+            <div className="card-img-overlay">
+              <Image className={`${styles.bottomMission} card-img-top z-0`} src={bottomMission} alt="" />
+              <Image className={`${styles.topMission} card-img-top z-0`} src={topMission} alt="" />
+              <Image className={`${styles.desktopMission} card-img-top z-0`} src={desktopMission} alt="" />
+            </div>
+            <div className="card-body">
+              <p className={`${styles.missionParagraph}`}>
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis eum exercitationem maxime ab eveniet? Ducimus, sunt. Tempore porro, sapiente commodi ipsa veritatis sequi? Inventore quasi placeat fugit, perferendis velit hic, dolorem deleniti saepe at, assumenda similique quis esse atque nobis!
                             </p>
                         </div>
