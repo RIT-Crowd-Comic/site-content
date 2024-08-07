@@ -47,7 +47,7 @@ export function Profile() {
          const formData = new FormData(event.target);
          const displayName = formData.get('displayName')
          //const email = formData.get('email')
-         if(!displayName){  setDisplayNameValid(false)};
+         if(!displayName){  setDisplayNameValid(false)}
          //if(!email){  setEmailValid(false)};
 
         if (!emailValid || !displayNameValid) {
@@ -61,9 +61,9 @@ export function Profile() {
         const password = formData.get('password')
         const password2 = formData.get('password2')
         const oldPassword = formData.get('oldPassword')
-        if(!password){  setPasswordValid(false) };
-        if(!password2){  setPasswordRetypeValid(false)};  
-        if(!oldPassword){  setOriginalPasswordValid(false)};  
+        if(!password){  setPasswordValid(false) }
+        if(!password2){  setPasswordRetypeValid(false)}
+        if(!oldPassword){  setOriginalPasswordValid(false)}
         if (!passwordValid || !passwordRetypeValid || !originalPasswordValid) {
             event.preventDefault();
             event.stopPropagation();

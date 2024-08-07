@@ -36,11 +36,10 @@ export function SignUpForm() {
         const email = formData.get('email')
         const password = formData.get('password')
         const password2 = formData.get('password2')
-        let filled = true;
-        if(!displayName){ filled = false; setDisplayNameValid(false)};
-        if(!email){ filled = false; setEmailValid(false)};
-        if(!password){ filled = false; setPasswordValid(false) };
-        if(!password2){ filled = false; setPasswordRetypeValid(false)};
+        if(!displayName){  setDisplayNameValid(false)}
+        if(!email){  setEmailValid(false)}
+        if(!password){  setPasswordValid(false) };
+        if(!password2){  setPasswordRetypeValid(false)}
         
         if (!emailValid || !passwordValid || !displayNameValid || !passwordRetypeValid) {
             event.preventDefault();
