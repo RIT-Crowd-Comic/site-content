@@ -13,9 +13,13 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { FormLabel } from 'react-bootstrap';
 import * as validation from './utils';
+import { addToastFunction } from '../toast-notifications/interfaces';
 
-export function SignUpForm() {
-    const [message, errorState] = useState('');
+
+interface Props {
+    sendToast: addToastFunction
+}
+export function SignUpForm({sendToast} : Props) {
     const [passwordVisible, setPasswordVisibility] = useState(false);
     const [emailValid, setEmailValid] = useState(true);
     const [emailValidMessage, setemailValidMessage] = useState('');
@@ -93,7 +97,7 @@ export function SignUpForm() {
                     action={async (FormData) => {
                         const response = await registerAction(FormData);
                         if (response != 'Success') {
-                            errorState(response);
+                            sendToast(response, 'Error', false, 6000, true )
                             return;
                         }
                         setPass('');
@@ -206,7 +210,6 @@ export function SignUpForm() {
 
                     {/* LOGIN */}
                     <Link href="sign-in" replace={true}><button type="button" id={styles.registerButton} className="btn btn-primary">Back</button></Link>
-                    {!!message && <p>{message}</p>}
                 </Form>
             </section>
         </main>

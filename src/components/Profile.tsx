@@ -18,8 +18,13 @@ import { User } from './interfaces'
 import { ProfileEditor } from './ProfileEditor';
 import ProfilePicture from './ProfilePicture';
 
+import { addToastFunction } from './toast-notifications/interfaces';
 
-export function Profile() {
+
+interface Props {
+    sendToast: addToastFunction
+}
+export function Profile({sendToast} : Props) {
     const [session_id, setSession] = useState('');
     const [user, setUser] = useState<User>();
     const [message, errorState] = useState('');
@@ -136,7 +141,8 @@ export function Profile() {
                         id={styles.loginForm}
                         action={async (formData) => {
                             const response = await nameAction(formData);
-                            errorState(response);
+                            if(response.includes(`success`))sendToast(response, 'Success', false, 6000, false);
+                            else sendToast(response, 'Error', false, 6000, true);
                         }}
                     >
 
@@ -201,8 +207,9 @@ export function Profile() {
                         noValidate
                         action={async (formData) => {
                             const response = await passwordAction(formData);
-                            errorState(response);
-                            if (response != 'password successfully changed') {
+                            if(response === 'password successfully changed') sendToast(response, 'Success', false, 6000, false);
+                            else { 
+                                sendToast(response, 'Error', false, 6000, true); 
                                 return;
                             }
                             setPass('');
@@ -308,9 +315,6 @@ export function Profile() {
                             <button type="submit" id={styles.setPasswordButton} className="btn btn-primary">Set Password</button>
                             <Link href="" replace={true}><button type="button" id={styles.cancelButton} className="btn btn-primary">Cancel</button></Link>
                         </div>
-
-                        {!!message && <p>{message}</p>}
-
                     </Form>
                 </div>
                 {/* FORM */}
