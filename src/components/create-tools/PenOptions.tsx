@@ -34,6 +34,7 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
 
     }
 
+    // Toggle Visibility for Slider Output
     const showOutput=(visible: boolean) => {
         console.log("show output");
         // let sliderValue = document.querySelector('#sliderValue');
@@ -53,37 +54,20 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
         }  
     }
 
-    // const showOutput = (visible: boolean) => {
-    //     const sliderValue = document.getElementById("sliderValue");
-    //     if(sliderValue)
-    //     {
-    //         console.log("in if");
-    //         if(visible)
-    //         {
-    //             sliderValue.style.display = "block";
-    //         }
-    //         else
-    //         {
-    //             sliderValue.style.display = "none";
-    //         }   
-    //     }
-    //     console.log("sliderValue: "+sliderValue);
-    // }
-
     // If the component is set to be enabled, return HTML, otherwise, return nothing
-    if(enabled)
+    if(enabled)  //enabled & visible, enabled & not visible
     {
         return(
             <div id="penTools" className={styles.toolStyles}>
                 <h3>Pen Tools</h3>
                 <div id={styles.penSlider} className="toolSlider">
                     <label id="sliderLabel" htmlFor="penRange">Pen Size: {penSize}</label>
-                    <span id={styles.sliderValue} style={{left:`${penSize*3.3-3}%`}}>
+                    {/* <span id={styles.sliderValue} style={{left:`${penSize*3.3-3}%`}}>
                         <span>
                         {penSize}
                         <span id={styles.pointy}></span>
                         </span>
-                    </span>
+                    </span> */}
                     <div id={styles.progressBar} style={{width:`${penSize*3.32+1}%`}} onChange={updateSize} onClick={() => showOutput(true)} ></div>
                     <input type="range" min="1" max="20" defaultValue={penSize} step="1" id="rangeSlider" className={styles.rangeSlider} ref={sliderReference} onChange={updateSize} ></input>
                     {/* onClick={() => showOutput(true)} */}

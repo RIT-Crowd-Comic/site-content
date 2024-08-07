@@ -35,10 +35,10 @@ const ShaderOptions = ({enabled, shaderSize, changeShaderSize} : Props) =>
                 <h3>Shading Tool</h3>
                 <div id={styles.shadeSlider}>
                     <label id="sliderLabel" htmlFor="penRange">Size: {shaderSize}</label>
-                    <span id={styles.sliderValue} style={{left:`${shaderSize*3.3-3}%`}}>
+                    {/* <span id={styles.sliderValue} style={{left:`${shaderSize*3.3-3}%`}}>
                         {shaderSize}
                         <span id={styles.pointy}></span>
-                    </span>
+                    </span> */}
                     <div id={styles.progressBar} style={{width: `${shaderSize*3.32+1}%`}} onChange={updateSize}></div>
                     <div><input type="range" min="1" max="20" defaultValue={shaderSize} step="1" className={styles.rangeSlider} ref={sliderReference} onChange={updateSize}></input></div>
                 </div>
