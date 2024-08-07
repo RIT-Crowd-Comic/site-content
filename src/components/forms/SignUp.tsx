@@ -158,9 +158,12 @@ export function SignUpForm() {
                                 style={{ backgroundImage: `url(${passwordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
                             />
                                 <Form.Control.Feedback type='invalid' className={styles.feedback}>
-                                    {passwordInvalidMessage.map((item, index) => (
-                                        <div>{item}</div>
-                                    ))}
+                                {<ul>
+                                        {passwordInvalidMessage.map((item, index) => (
+                                            <li key={index}>{item}</li>
+                                        ))}
+                                    </ul>}
+
                                 </Form.Control.Feedback>
                         </div>
                         </Form.Group>

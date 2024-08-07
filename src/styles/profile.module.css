@@ -225,6 +225,9 @@
     width: 100%;
 }
 
+.feedback {
+    font-size: small;
+ }
 #inputPassword
 {
     width: 100%;
