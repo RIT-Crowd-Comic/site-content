@@ -37,10 +37,10 @@ export function SignUpForm() {
         const password = formData.get('password')
         const password2 = formData.get('password2')
         let filled = true;
-        if(!displayName){ filled = false; setDisplayNameValid(false);};
-        if(!email){ filled = false; setEmailValid(false);};
-        if(!password){ filled = false; setPasswordValid(false); };
-        if(!password2){ filled = false; setPasswordRetypeValid(false);};
+        if(!displayName){ filled = false; setDisplayNameValid(false)};
+        if(!email){ filled = false; setEmailValid(false)};
+        if(!password){ filled = false; setPasswordValid(false) };
+        if(!password2){ filled = false; setPasswordRetypeValid(false)};
         
         if (!emailValid || !passwordValid || !displayNameValid || !passwordRetypeValid) {
             event.preventDefault();
@@ -60,7 +60,7 @@ export function SignUpForm() {
     };
     const handlepasswordRetypeChange= (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        setPasswordRetypeValid(validation.validateDisplayName(value)); //check between 1-30 same as display 
+        setPasswordRetypeValid(validation.validatePasswordSimple(value)); //check between 1-30 same as display 
     };
 
     // Handler to validate password input
@@ -110,7 +110,6 @@ export function SignUpForm() {
                                 required
                                 isInvalid = {!displayNameValid}
                                 onChange={handleDisplayNameChange}
-                                onSubmit={handleDisplayNameChange}
                             />
                             <Form.Control.Feedback type='invalid' className={styles.feedback}>
                                {displayNameValidMessage}

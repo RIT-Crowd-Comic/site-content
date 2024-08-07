@@ -34,13 +34,27 @@ export function Profile() {
     const [passwordInvalidMessage, setPasswordInvalidMessage] = useState(Array<String>);
 
     const handleSubmitDisplayEmail = (event: any) => {
+         //validate filled fields
+         const formData = new FormData(event.target);
+         const displayName = formData.get('displayName')
+         //const email = formData.get('email')
+         if(!displayName){  setDisplayNameValid(false)};
+         //if(!email){  setEmailValid(false)};
+
         if (!emailValid || !displayNameValid) {
             event.preventDefault();
             event.stopPropagation();
         }
     };
 
-    const handleSubmitPassword = (event: any) => {  
+    const handleSubmitPassword = (event: any) => {
+        const formData = new FormData(event.target);
+        const password = formData.get('password')
+        const password2 = formData.get('password2')
+        const oldPassword = formData.get('oldPassword')
+        if(!password){  setPasswordValid(false) };
+        if(!password2){  setPasswordRetypeValid(false)};  
+        if(!oldPassword){  setOriginalPasswordValid(false)};  
         if (!passwordValid || !passwordRetypeValid || !originalPasswordValid) {
             event.preventDefault();
             event.stopPropagation();
@@ -58,7 +72,7 @@ export function Profile() {
     const toggleRetypePasswordVisibility = () => {
         setRetypePasswordVisibility(!retypePasswordVisible);
     };
-    const handleDisplayNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleDisplayNameChange = (e: any) => {
         const { value } = e.target;
         setDisplayNameValid(validation.validateDisplayName(value));
     };
