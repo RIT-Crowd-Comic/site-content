@@ -29,17 +29,6 @@ const TextOptions = ({enabled, changeTextContent, changeTextFont, changeTextSize
     const color4 = "rgb(64, 64, 64)";
     const color5 = "rgb(0, 0, 0)";
 
-    // Update the text content in CreateCanvasTools whenever the user selects a new font
-    function updateContent()
-    {
-        if (!textAreaReference.current) 
-        {
-            throw new Error("textAreaReference is null");
-        }
-
-        changeTextContent(textAreaReference.current.value);
-    }
-
     // Update the text font in CreateCanvasTools whenever the user selects a new font
     function updateFont()
     {
@@ -85,10 +74,6 @@ const TextOptions = ({enabled, changeTextContent, changeTextFont, changeTextSize
         return(
             <div id="textTools" className={styles.toolStyles}>
                 <h3>Text Tools</h3>
-                <div id="textTyper">
-                    <p id="contentText">Text: </p>
-                    <textarea ref={textAreaReference} onChange={updateContent}></textarea>
-                </div>
 
                 <div id="textFont">
                     <p id="fontText">Font:</p>

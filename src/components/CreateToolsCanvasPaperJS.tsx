@@ -680,68 +680,58 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
     const textTool = useRef<paper.Tool>(new paper.Tool());
     let textPath: paper.PointText;
 
-    const [textToolTyperReference,setTextToolTyperReference] = useState<HTMLTextAreaElement>();
+    // Reference to the textarea element (used to show an editable text form to the screen)
+    const [textToolTyperReference, setTextToolTyperReference] = useState<HTMLTextAreaElement>();
 
     // Boolean that determines what state writing is in.  On first click, the user can continue typing into the textArea.  On second click it draws the content to the layer
     const [isWriting, setIsWriting] = useState<boolean>(false);
 
-    // Point to draw the text starting at??
+    // Point to draw the text starting at
     const [startTextPoint, setStartTextPoint] = useState(new paper.Point(0, 0))
-
-    // useEffect(()=>{
-    //     const textArea = textToolTyperReference.current;
-    //     if (isWriting){
-    //         textArea?.focus;
-    //     }
-    // },[isWriting, /*selected element */])
 
     textTool.current.onMouseDown = function (event: paper.ToolEvent) {
         if (!isWriting && canvasReference.current) {
             // Start the process of writing
             setIsWriting(true);
 
+            // Sets up textarea and points for writing process
+            let textTyper = document.createElement('textarea');
             let canvasLT = canvasReference.current.getBoundingClientRect();
             let clickedViewPoint = event.point.add(canvasLT);
             setStartTextPoint(event.point);
 
-            // Create a textArea element for the user to write in 
-            let textTyper = document.createElement('textarea');
+            // Create a textArea element for the user to write in and sets up a ref to it
             textTyper.style.position = "absolute";
             textTyper.style.left = `${clickedViewPoint.x}px`;
-            textTyper.style.top = `${clickedViewPoint.y}px`;
+            textTyper.style.top = `${clickedViewPoint.y - textTyper.cols}px`;
             setTextToolTyperReference(textTyper);
 
             // Add the textArea to the DOM
             document.querySelector(`#${styles.createPage}`)?.appendChild(textTyper);
         }
         else {
-            
-            if (!textToolTyperReference) 
-             {
-                  throw new Error("textToolTyperReference is null");
-            }
-            textToolTyperReference.hidden = true;
-
-            // Set the textContent to what the user has written in the textArea
-            //incorrect value??
-            let refTextContent = textToolTyperReference.value;
-            if(!refTextContent){
-                throw new Error("refText is null");
-            }
-            setTextContent(refTextContent);
-
             // Draw the user's writing to the layer
             textPath = new paper.PointText(startTextPoint);
-            textPath.content = textContent;
             textPath.fontFamily = textFont;
             textPath.fontSize = textSize;
             textPath.fontWeight = textFontWeight;
             textPath.justification = textAlign;
             textPath.fillColor = new paper.Color(textColor);
 
+            // Checks if there is a reference before running code related to the textarea
+            if (textToolTyperReference) {
+                textToolTyperReference.hidden = true;
+
+                // Sets the textContent to what the user has written in the textArea if they have written something
+                if(textToolTyperReference.value){
+                    textPath.content = textToolTyperReference.value;
+                }
+
+                textToolTyperReference.remove();
+            }
+
             // Reset as the user is no longer writing and erase the textArea to set it up for the next write
             setIsWriting(false);
-            textToolTyperReference.remove();
         }
     };
 
