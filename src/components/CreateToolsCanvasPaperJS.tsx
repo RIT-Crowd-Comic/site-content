@@ -23,6 +23,7 @@ import { CreateHook } from './interfaces';
 import { getSessionCookie, updateSession } from '@/app/login/loginUtils';
 import test from 'node:test';
 import type { addToastFunction } from './toast-notifications/interfaces';
+import local from 'next/font/local';
 interface Props {
     id: number
     sendError : addToastFunction
@@ -1779,7 +1780,8 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         layer3Reference.current?.importJSON(panel1LayerData.layer3);
         layer4Reference.current?.importJSON(panel1LayerData.layer4);
         try {
-            localStorage.setItem('image-1', String(canvasProject.current?.exportSVG({ asString: true })));
+            localStorage.setItem('image-1', String(canvasProject.current?.exportSVG({ asString: true, embedImages: false })));
+            console.log(localStorage.getItem('image-1'));
         }
         catch (error) {
             sendError('Error publishing panel 1 to localStorage', 'Error', false, 4000, true);
