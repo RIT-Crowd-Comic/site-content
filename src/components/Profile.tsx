@@ -87,6 +87,7 @@ export function Profile({sendToast} : Props) {
     const toggleRetypePasswordVisibility = () => {
         setRetypePasswordVisibility(!retypePasswordVisible);
     };
+    
     const handleDisplayNameChange = (e: any) => {
         const { value } = e.target;
         setDisplayNameValid(validation.validateDisplayName(value));
