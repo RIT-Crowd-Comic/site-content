@@ -257,7 +257,6 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         if (!prevEdits.includes({ id: layer1Reference.current.id, svg: String(layer1Reference.current.exportSVG({ asString: true })) })) {
             prevEdits.push({ id: layer1Reference.current.id, svg: String(layer1Reference.current.exportSVG({ asString: true })) });
             setPrevEdits(prevEdits);
-            console.log(prevEdits);
         }
 
         setShowLoader(false);
@@ -1808,7 +1807,6 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
             }
 
         }
-        console.log(divs);
     };
 
     // Return the canvas HTMLElement and its associated functionality   1

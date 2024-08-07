@@ -16,7 +16,6 @@ const Footer = () => {
         if (!trunks) return '/';
         const psID = trunks[0]?.id;
         if (!psID) return '/';
-        console.log(`url: ${psID}`);
         return `/comic?id=${psID}`;
     };
 
@@ -39,7 +38,7 @@ const Footer = () => {
                             const url = await getTrunkUrl();
                             router.push(url);
                         }}
-                        >Comic
+                    >Read
                     </Link>
                     </li>
                 </ul>
@@ -61,7 +60,7 @@ const Footer = () => {
                 </ul>
             </div>
             <div className="copyright-div">
-                <p className="copyright">Copyright © {current_year}</p>
+                <small className="copyright">Copyright © {current_year}</small>
             </div>
             <div className="row" />
         </div>

@@ -24,6 +24,7 @@
 
 body {
     overflow: auto !important;
+    padding-right: 0 !important;
 }
 
 .card {
@@ -81,8 +82,9 @@ body {
     border-bottom: solid 4px #000000;
 }
 
-.nav-btn:active {
-    background-color: #3e3e3e;
+.nav-btn:active
+{   
+    background-color: #3e3e3e; 
     margin-top: 1px;
     border: solid 3px #000000;
 }
@@ -115,9 +117,17 @@ body {
 
 .offcanvas-header {
     font-size: 1.5rem;
+    padding: 20px 20px 5px 20px;
+    margin: 0;
 }
 
-.dropdown-item {
+.offcanvas-hello
+{
+    padding: 0px 20px 5px 35px;
+}
+
+.dropdown-item
+{
     font-size: 1rem;
 }
 

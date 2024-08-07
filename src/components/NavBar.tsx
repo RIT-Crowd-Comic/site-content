@@ -7,6 +7,7 @@ import { getTrunks, getUserBySession } from '@/api/apiCalls';
 import { logout, getSessionCookie, updateSession } from '@/app/login/loginUtils';
 
 const NavBar = () => {
+    const [displayName, setDisplayName] = useState('');
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
 
@@ -18,6 +19,7 @@ const NavBar = () => {
                 const user = await getUserBySession(session_id);
                 if (user && !user.message) {
                     setIsSignedIn(true);
+                    setDisplayName(user.display_name);
                     updateSession(session_id);
                     return;
                 }
@@ -68,8 +70,8 @@ const NavBar = () => {
                     {/* Crowd Comic */}
                 </Link>
 
-                <div className="d-flex order-lg-3 ms-auto me-3">
-                    {isSignedIn ?
+                <div className="d-flex order-lg-3 ms-auto me-4">
+                    {isSignedIn &&
                         (
                             <div className="dropdown">
                                 <button
@@ -92,9 +94,6 @@ const NavBar = () => {
                                     <li><button onClick={handleSignOut} className="dropdown-item">Sign Out</button></li>
                                 </ul>
                             </div>
-                        ) :
-                        (
-                            <Link href="/sign-in"><button className="nav-btn btn btn-outline-dark">Sign In</button></Link>
                         )}
                 </div>
 
@@ -129,8 +128,21 @@ const NavBar = () => {
                             aria-label="Close"
                         />
                     </div>
+                    {isSignedIn && isMobile &&
+                    <div className="d-flex align-items-center gap-2 offcanvas-hello">
+                        <Image
+                            src="/images/icons/Profile.svg"
+                            width={39}
+                            height={39}
+                            alt="Profile"
+                        />
+                        <h5 className="pt-2">Hi, {displayName}!</h5>
+                    </div>}
+
                     <div className="offcanvas-body">
+
                         <ul className="navbar-nav justify-content-end flex-grow-1">
+
                             <li className="nav-item">
                                 <Link className="nav-link" aria-current="page" href="/">Home</Link>
                             </li>
@@ -150,16 +162,13 @@ const NavBar = () => {
                                     <div className="">Read</div>
                                 </Link>
                             </li>
-                            {isSignedIn && isMobile && (
-                                <>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" href="/profile">Dashboard</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <button onClick={handleSignOut} className="nav-link btn-link">Sign Out</button>
-                                    </li>
-                                </>
-                            )}
+                            {!isSignedIn &&
+                            <li className="nav-item">
+                                <Link href="/sign-in" className="nav-link">
+                                    <button className="nav-btn btn btn-outline-dark">Sign In</button>
+                                </Link>
+                            </li>}
+
                         </ul>
                     </div>
                 </div>
