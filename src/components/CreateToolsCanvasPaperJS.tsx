@@ -1781,7 +1781,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         layer4Reference.current?.importJSON(panel1LayerData.layer4);
         try {
             localStorage.setItem('image-1', String(canvasProject.current?.exportSVG({ asString: true, embedImages: false })));
-            console.log(localStorage.getItem('image-1'));
+            //console.log(localStorage.getItem('image-1'));
         }
         catch (error) {
             sendError('Error publishing panel 1 to localStorage', 'Error', false, 4000, true);
@@ -1804,7 +1804,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         layer3Reference.current?.importJSON(panel2LayerData.layer3);
         layer4Reference.current?.importJSON(panel2LayerData.layer4);
         try {
-            localStorage.setItem('image-2', String(canvasProject.current?.exportSVG({ asString: true })));
+            localStorage.setItem('image-2', String(canvasProject.current?.exportSVG({ asString: true, embedImages: false })));
         }
         catch (error) {
             sendError('Error publishing panel 2 to localStorage', 'Error', false, 4000, true);
@@ -1827,7 +1827,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         layer3Reference.current?.importJSON(panel3LayerData.layer3);
         layer4Reference.current?.importJSON(panel3LayerData.layer4);
         try {
-            localStorage.setItem('image-3', String(canvasProject.current?.exportSVG({ asString: true })));
+            localStorage.setItem('image-3', String(canvasProject.current?.exportSVG({ asString: true, embedImages: false })));
             //console.log(localStorage.getItem('image-3'));
         }
         catch (error) {
