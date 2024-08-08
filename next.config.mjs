@@ -9,7 +9,7 @@ const nextConfig = {
             },
             {
                 protocol: 'http',
-                hostname: 'http://rit-igm-crowd-comic-s3-bucket.s3.amazonaws.com/',
+                hostname: 'http://rit-igm-crowd-comic-s3-bucket.s3.amazonaws.com',
             }
         ],
     },
