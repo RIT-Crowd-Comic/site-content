@@ -26,7 +26,7 @@ interface Props {
 }
 /**
  * Profile Component for the User Dashboard page
- * @param {Props} sendToast Toast notification property
+ * @param {{Props}} sendToast Toast notification property
  */
 export function Profile({sendToast} : Props) {
     const [session_id, setSession] = useState('');
