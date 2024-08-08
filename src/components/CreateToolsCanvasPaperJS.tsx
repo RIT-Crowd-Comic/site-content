@@ -185,15 +185,8 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
         setPanel3LayerData(defaultLayerData);
 
         let canvasBounds = view.bounds;
-        const scale = {x:(canvasBounds.width ?? 1200)/1200, y:(canvasBounds.height ?? 800)/800}
-        console.log(scale);
+        //const scale = {x:(canvasBounds.width ?? 1200)/1200, y:(canvasBounds.height ?? 800)/800};
         
-
-        //     const setScaleOnReload = () => setScale({
-        //         x: 1200 / (canvasReference.current?.clientWidth ?? 1200),
-        //         y: 800 / (canvasReference.current?.clientHeight ?? 800),
-        //     });
-
         // If previous layer data exists, set the layers to that, otherwise make new layers
         // Panel 1
         try {
@@ -207,12 +200,12 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                 // Need to show panel 1 on screen as it is the 1st panel you see in the editor
                 // Get rid of the background applied earlier
                 // backgroundLayerReference.current.removeChildren();
-                backgroundLayerReference.current.importJSON(layerData.background).scale(scale.x, scale.y);
-                shadingLayerRef.current.importJSON(layerData.shade).scale(scale.x, scale.y);
-                layer1Reference.current.importJSON(layerData.layer1).scale(scale.x, scale.y);
-                layer2Reference.current.importJSON(layerData.layer2).scale(scale.x, scale.y);
-                layer3Reference.current.importJSON(layerData.layer3).scale(scale.x, scale.y);
-                layer4Reference.current.importJSON(layerData.layer4).scale(scale.x, scale.y);
+                backgroundLayerReference.current.importJSON(layerData.background).fitBounds(canvasBounds);
+                shadingLayerRef.current.importJSON(layerData.shade).fitBounds(canvasBounds);
+                layer1Reference.current.importJSON(layerData.layer1).fitBounds(canvasBounds);
+                layer2Reference.current.importJSON(layerData.layer2).fitBounds(canvasBounds);
+                layer3Reference.current.importJSON(layerData.layer3).fitBounds(canvasBounds);
+                layer4Reference.current.importJSON(layerData.layer4).fitBounds(canvasBounds);
             }
         }
         catch (error) {
