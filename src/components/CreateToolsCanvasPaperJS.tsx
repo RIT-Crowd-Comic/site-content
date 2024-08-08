@@ -2395,7 +2395,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             <div id={styles.mergeWarning} className={showWarning}>
                 <span className={styles.closeModal} onClick={() => warnDisplay(true)} />
                 <p id={styles.warningText}>Merge is a Permanent Action</p>
-                <button id={styles.dontSeeButton} onClick={() => warnDisplay(false)}>Don't see this again</button>
+                <button id={styles.dontSeeButton} onClick={() => warnDisplay(false)}>Hide warning message</button>
             </div>
 
             <InfoBtn setVisibility={setInstructionsVisible} />
