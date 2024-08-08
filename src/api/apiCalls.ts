@@ -224,9 +224,9 @@ const createPanel = async (image: string, panelSetID: number) => {
 
 /**
  * Create a hook
- * @param position where the hook will be
- * @param currentPanelID which panel the hook will be a part of
- * @param nextPanelSetID the next panel set the hook leads to
+ * @param {object[]} position where the hook will be
+ * @param {number} currentPanelID which panel the hook will be a part of
+ * @param {number} nextPanelSetID the next panel set the hook leads to
  * @returns the API response as what was posted or an Error w/ message which must be handled since post method failed 
  */
 const createHook = async (position: object[], currentPanelID: number, nextPanelSetID: number) => {
@@ -243,9 +243,9 @@ const createHook = async (position: object[], currentPanelID: number, nextPanelS
 
 /**
  * Check if the user's credentials are correct
- * @param email 
- * @param password 
- * @returns 
+ * @param {string} email 
+ * @param {string} password 
+ * @returns {UserInfo} Info from the user with matching credentials
  */
 const authenticate = async (email: string, password: string) => {
     const response = await postAPICall(`/authenticate`, {
@@ -258,6 +258,13 @@ const authenticate = async (email: string, password: string) => {
     return response;
 };
 
+/**
+ * Change a user's password
+ * @param {string} email User's email
+ * @param {string} password User's old password
+ * @param {string} newPassword New password to change to
+ * @returns 
+ */
 const changePassword = async (email: string, password: string, newPassword: string) => {
     const response = await postAPICall(`/changePassword`, {
         email:       email,
@@ -270,6 +277,12 @@ const changePassword = async (email: string, password: string, newPassword: stri
     }
     return response;
 };
+
+/**
+ * Get all s3 image url's that belong to a panel set
+ * @param {number} id Id of panel set
+ * @returns 
+ */
 const getAllImageUrlsByPanelSetId = async (id: number) => {
     const response = await getAPICall(`/panel_set/${id}/images`);
     if (response.message) {
@@ -278,7 +291,12 @@ const getAllImageUrlsByPanelSetId = async (id: number) => {
     return response;
 };
 
-
+/**
+ * Change display name of a user
+ * @param {string} email User's email
+ * @param {string} newDisplayName User's new display name
+ * @returns
+ */
 const changeDisplayName = async (email: string, newDisplayName: string) => {
     const response = await postAPICall(`/changeDisplayName`, {
         email:          email,
@@ -297,7 +315,7 @@ const changeDisplayName = async (email: string, newDisplayName: string) => {
 
 /**
  * Get a list of hooks from a panel set
- * @param id the id of the panel set
+ * @param {number} id the id of the panel set
  * @returns 
  */
 const getHooksFromPanelSetById = async(id: number) => {
@@ -310,7 +328,7 @@ const getHooksFromPanelSetById = async(id: number) => {
 
 /**
  * Creates a session for a user in the database
- * @param user_id ID of the user to create session for
+ * @param {string} user_id ID of the user to create session for
  * @returns 
  */
 const insertSession = async (user_id: string) => {
@@ -418,6 +436,12 @@ const publish = async (image1 : File, image2 : File, image3 : File, hooks : Arra
     return response;
 };
 
+/**
+ * Change profile picture for a user (found with email) by giving it an image file
+ * @param {string} email Email of user
+ * @param {File} image New profile image
+ * @returns Url of image on success
+ */
 const changePfp = async (email: string, image: File) => {
     const data = { email: email };
     const formData = new FormData();

@@ -11,7 +11,7 @@ const expireDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 1 week
 
 /**
  * Insert the session into the data base and save the session id in a cookie
- * @param user_id User to save a session for
+ * @param {string} user_id User to save a session for
  */
 const saveSession = async (user_id: string) => {
     const session = await insertSession(user_id);
@@ -21,8 +21,8 @@ const saveSession = async (user_id: string) => {
 };
 
 /**
- * Refresh expiry date of a session
- * @param request 
+ * Refresh expiry date for a session
+ * @param {string} session_id 
  * @returns 
  */
 const updateSession = async (session_id: string) => {
@@ -40,16 +40,13 @@ const authenticateSession = async () => {
     const user = await getUserBySession(session.value);
     if (!user) return new Error('No user found for session');
     if (user instanceof Error) return user;
-
-    // Refresh the session expiry
-    // await updateSession(session_id);
     return user;
 };
 
 /**
- * Login user and create a session for them
- * @param email User's email 
- * @param password User's password
+ * Login a user and create a session for them
+ * @param {string} email User's email
+ * @param {string} password User's password
  * @returns 
  */
 const login = async (email: string, password: string) => {
@@ -63,9 +60,9 @@ const login = async (email: string, password: string) => {
 
 /**
  * Create a user and sign them in
- * @param email user email (needs to be unique)
- * @param displayName user display name
- * @param password user password
+ * @param {string} email user email (needs to be unique)
+ * @param {string} displayName user display name
+ * @param {string} password user password
  * @returns 
  */
 const register = async (email: string, displayName: string, password: string) => {
@@ -86,10 +83,19 @@ const logout = async () => {
     cookies().set('session', '', { expires: new Date(0) });
 };
 
+/**
+ * Get the active session cookie if there is one
+ * @returns Session cookie
+ */
 const getSessionCookie = () =>{
     return cookies().get('session');
 };
 
+/**
+ * Update a user's display name
+ * @param {string} newName User's new display name
+ * @returns 
+ */
 const updateDisplayName = async (newName: string) => {
     const session = getSessionCookie();
     if (!session || session instanceof Error) return session;
@@ -98,6 +104,13 @@ const updateDisplayName = async (newName: string) => {
     return await changeDisplayName(user.email, newName);
 };
 
+/**
+ * Change the user's password
+ * @param {string} oldPassword User's old password
+ * @param {string} newPassword Desired new password
+ * @param {string} passwordConfirm Confimation of new password (matches new password)
+ * @returns 
+ */
 const updatePassword = async (oldPassword: string, newPassword: string, passwordConfirm: string) => {
     if (newPassword != passwordConfirm) return 'Password Confirmation must match new password';
     const session = getSessionCookie();
