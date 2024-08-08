@@ -4,7 +4,7 @@ import styles from '@/styles/create.module.css';
 interface Props
 {
     enabled: boolean;               // Should the HTML of this component be displayed on the page currently?
-    changeTextContent: Function;    // Method for setting the content of the text
+
     changeTextFont: Function;       // Method for setting the font of the text
     changeTextSize: Function;       // Method for setting the size of the text
     changeFontWeight: Function;     // Method for setting the font weight of the text
@@ -14,7 +14,7 @@ interface Props
 
 // *** Text Options is used in order to changed the different values associated with the text tool in CreateToolsCanvas ***
 const TextOptions = ({
-    enabled, changeTextContent, changeTextFont, changeTextSize, changeFontWeight, changeTextAlignment, changeTextColor
+    enabled, changeTextFont, changeTextSize, changeFontWeight, changeTextAlignment, changeTextColor
 } : Props) => {
 
     // References to the dropdown menu HTML Elements
@@ -70,9 +70,8 @@ const TextOptions = ({
         return (
             <div id="textTools" className={styles.toolStyles}>
                 <h3>Text Tools</h3>
-
-                <div id="textFont">
-                    <p id="fontText">Font:</p>
+                <div id={styles.textFont}>
+                    <p id={styles.textFontTitle}>Font:</p>
                     <select
                         id="fontSelect"
                         className="form-select"
@@ -92,7 +91,7 @@ const TextOptions = ({
                     </select>
                 </div>
 
-                <div id="textSize">
+                <div id={styles.textSize}>
                     <select
                         id="sizeSelect"
                         className="form-select"
@@ -113,81 +112,95 @@ const TextOptions = ({
                 </div>
 
                 <div id={styles.textWeight}>
-                    <p id="weightText">Font Weight:</p>
-                    <div id="normal">
-                        <input
-                            type="radio"
-                            name="fontWeight"
-                            id="normalSelect"
-                            value="normal"
-                            defaultChecked
-                            onChange={updateWeight}
-                        />
-                        <label htmlFor="normalSelect">Normal</label>
-                    </div>
+                    <p id={styles.textWeightTitle}>Font Weight:</p>
+                    <div id={styles.textRadioSelects}>
+                        <div id={styles.radioSelect}>
+                            <div id={styles.normal} className={styles.radioDiv}>
+                                <label htmlFor="normalSelect">
+                                    <input
+                                        type="radio"
+                                        name="fontWeight"
+                                        id="normalSelect"
+                                        value="normal"
+                                        defaultChecked
+                                        onChange={updateWeight}
+                                    />
+                                </label>
+                            </div>
 
-                    <div id="bold">
-                        <input
-                            type="radio"
-                            name="fontWeight"
-                            id="boldSelect"
-                            value="bold"
-                            onChange={updateWeight}
-                        />
-                        <label htmlFor="boldSelect">Bold</label>
-                    </div>
+                            <div id={styles.bold} className={styles.radioDiv}>
+                                <label htmlFor="boldSelect">
+                                    <input
+                                        type="radio"
+                                        name="fontWeight"
+                                        id="boldSelect"
+                                        value="bold"
+                                        onChange={updateWeight}
+                                    />
+                                </label>
+                            </div>
 
-                    <div id="italic">
-                        <input
-                            type="radio"
-                            name="fontWeight"
-                            id="italicSelect"
-                            value="italic"
-                            onChange={updateWeight}
-                        />
-                        <label htmlFor="italicSelect">Italic</label>
+                            <div id={styles.italics} className={styles.radioDiv}>
+                                <label htmlFor="italicSelect">
+                                    <input
+                                        type="radio"
+                                        name="fontWeight"
+                                        id="italicSelect"
+                                        value="italic"
+                                        onChange={updateWeight}
+                                    />
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div id={styles.textAlignment}>
-                    <p id="alignText">Font Alignment:</p>
-                    <div id="leftAlign">
-                        <input
-                            type="radio"
-                            name="alignment"
-                            id="left"
-                            value="left"
-                            defaultChecked
-                            onChange={updateAlignment}
-                        />
-                        <label htmlFor="left">Left</label>
-                    </div>
+                    <p id={styles.textAlignmentTitle}>Font Alignment:</p>
+                    <div id={styles.textRadioSelects}>
+                        <div id={styles.radioSelect}>
+                            <div id={styles.leftAlign} className={styles.radioDiv}>
+                                <label htmlFor="left">
+                                    <input
+                                        type="radio"
+                                        name="alignment"
+                                        id="left"
+                                        value="left"
+                                        defaultChecked
+                                        onChange={updateAlignment}
+                                    />
+                                </label>
+                            </div>
 
-                    <div id="centerAlign">
-                        <input
-                            type="radio"
-                            name="alignment"
-                            id="center"
-                            value="center"
-                            onChange={updateAlignment}
-                        />
-                        <label htmlFor="center">Center</label>
-                    </div>
+                            <div id={styles.centerAlign} className={styles.radioDiv}>
+                                <label htmlFor="center">
+                                    <input
+                                        type="radio"
+                                        name="alignment"
+                                        id="center"
+                                        value="center"
+                                        onChange={updateAlignment}
+                                    />
+                                </label>
+                            </div>
 
-                    <div id="rightAlign">
-                        <input
-                            type="radio"
-                            name="alignment"
-                            id="right"
-                            value="right"
-                            onChange={updateAlignment}
-                        />
-                        <label htmlFor="right">Right</label>
+                            <div id={styles.rightAlign} className={styles.radioDiv}>
+                                <label htmlFor="right">
+                                    <input
+                                        type="radio"
+                                        name="alignment"
+                                        id="right"
+                                        value="right"
+                                        onChange={updateAlignment}
+                                    />
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div id={styles.textColor}>
-                    <p id="colorText">Colors:</p>
+                    <p id={styles.textColorTitle}>Colors:</p>
                     <button onClick={() => changeTextColor(color1)} id={styles.whiteButton} />
                     <button onClick={() => changeTextColor(color2)} id={styles.lightGrayButton} />
                     <button onClick={() => changeTextColor(color3)} id={styles.grayButton} />
