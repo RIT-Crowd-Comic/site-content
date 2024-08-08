@@ -103,11 +103,10 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
 
     // Redo tracking
     const [prevUndos, setPrevUndos] = useState<[{ id: number, svg: string }]>([{ id: -1, svg: '' }]);
-    //Redo tracking
-    let [prevUndos,setPrevUndos] = useState<[{id: Number,svg: string}]>([{id:-1,svg:""}]) 
 
     //warning symbol
-    let [showWarning, setShowWarning] = useState(false);
+    let [showWarning, setShowWarning] = useState(styles.noWarnMerge);
+    let [show, setShow] = useState(true);
 
     // Call useEffect() in order obtain the value of the canvas after the first render
     // Pass in an empty array so that useEffect is only called once, after the initial render
@@ -1466,7 +1465,6 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
 
     // If the selected layer isn't the last layer in the hierarchy, merge it a layer down
     const mergeLayer = () => {
-
         // Check to make sure that this is not being called on the bottom layer (backgroundLayer) that has nowhere to merge down to 
         if(currentLayerIndex > 0)
         {
@@ -1864,26 +1862,30 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             }
 
         }
+         console.log(divs) 
     };
-        console.log(divs) 
-    }
+       
+    
 
-    const warnDisplay = (visible: boolean) => {
-        const divs = document.querySelectorAll("div")
-        const modal = divs[divs.length-2]
-        if(modal)
+    const warnDisplayFromMerge = () => {
         {
-            if(visible)
+            if(show && showWarning == styles.noWarnMerge)
             {
-                modal.style.display = "block";
+                setShowWarning(styles.yesWarnMerge)
             }
             else
             {
-                modal.style.display = "none";
-            }
-            
+                mergeLayer()
+            }   
         }
-        console.log(divs) 
+    }
+
+    const warnDisplay = (reshow:boolean) => {
+        {
+            setShowWarning(styles.noWarnMerge)
+            if(reshow) setShow(true);
+            if(!reshow) setShow(false);
+        }
     }
 
     // Return the canvas HTMLElement and its associated functionality   1
@@ -2111,7 +2113,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                                     className={`${styles.sizeConsistency}`}
                                     title="Merge Layer Down"
                                     id="merge"
-                                    onClick={mergeLayer}
+                                    onClick={() => warnDisplayFromMerge()}
                                 />
                             </label>
                         </div>
@@ -2136,9 +2138,6 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                                     onClick={moveLayerDown}
                                 />
                             </label>
-                        </div>
-                        <div id={styles.mergeWarning} className={showWarning}>
-                            <label id={styles.warningText}></label>
                         </div>
                     </div>
                     <div id={styles.layersList}>
@@ -2393,17 +2392,11 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                 </div>
             </div>
 
-            
-            
-            <InfoBtn toggle={infoDisplay}></InfoBtn>
-            <InfoBox instructions="This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
-                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
-                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
-                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
-                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
-                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly. 
-                        This is information about the drawing page and what you are able to do with it." toggle={infoDisplay}></InfoBox>
-
+            <div id={styles.mergeWarning} className={showWarning}>
+                <span className={styles.closeModal} onClick={() => warnDisplay(true)} />
+                <p id={styles.warningText}>Merge is a Permanent Action</p>
+                <button id={styles.dontSeeButton} onClick={() => warnDisplay(false)}>Don't see this again</button>
+            </div>
 
             <InfoBtn setVisibility={setInstructionsVisible} />
             <InfoBox
@@ -2418,6 +2411,6 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             />
         </div>
     );
-};
+}
 
 export default CreateToolsCanvasPaperJS;
