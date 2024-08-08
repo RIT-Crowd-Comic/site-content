@@ -106,7 +106,7 @@ const NavBar = ({ p_pfp }: Props) => {
                 </button>
 
                 <div
-                    className="offcanvas offcanvas-end w-50"
+                    className="offcanvas offcanvas-end w-75"
                     tabIndex={-1}
                     id="offcanvasNavbar"
                     aria-labelledby="offcanvasNavbarLabel"

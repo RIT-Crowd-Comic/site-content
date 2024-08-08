@@ -14,11 +14,11 @@ import { FormLabel } from 'react-bootstrap';
 import * as validation from './utils';
 import { addToastFunction } from '../toast-notifications/interfaces';
 
-
 interface Props {
     sendToast: addToastFunction
 }
-export function SignUpForm({sendToast} : Props) {
+
+export function SignUpForm({ sendToast } : Props) {
     const [passwordVisible, setPasswordVisibility] = useState(false);
     const [confirmPasswordVisible, setConfirmPasswordVisibility] = useState(false);
     const [emailValid, setEmailValid] = useState(true);
@@ -27,10 +27,11 @@ export function SignUpForm({sendToast} : Props) {
     const [passwordRetypeValid, setPasswordRetypeValid] = useState(true);
     const [displayNameValid, setDisplayNameValid] = useState(true);
     const [displayNameValidMessage, setDisplayNameValidMessage] = useState('');
-    const [passwordInvalidMessage, setPasswordInvalidMessage] = useState(Array<String>);
+    const [passwordInvalidMessage, setPasswordInvalidMessage] = useState(Array<string>);
     const [passwordInvalidRetypeMessage, setPasswordInvalidRetypeMessage] = useState('');
     const [password, setPass] = useState('');
 
+    // Show the passwords
     const togglePasswordVisibility = () => {
         setPasswordVisibility(!passwordVisible);
     };
@@ -40,17 +41,18 @@ export function SignUpForm({sendToast} : Props) {
     };
 
     const handleSubmit = (event: any) => {
-        //validate filled fields
+
+        // validate filled fields
         const formData = new FormData(event.target);
-        const displayName = formData.get('displayName')
-        const email = formData.get('email')
-        const password = formData.get('password')
-        const password2 = formData.get('password2')
-        if(!displayName){  setDisplayNameValid(false)}
-        if(!email){  setEmailValid(false)}
-        if(!password){  setPasswordValid(false) }
-        if(!password2){  setPasswordRetypeValid(false)}
-        
+        const displayName = formData.get('displayName');
+        const email = formData.get('email');
+        const password = formData.get('password');
+        const password2 = formData.get('password2');
+        if (!displayName) { setDisplayNameValid(false); }
+        if (!email) { setEmailValid(false); }
+        if (!password) { setPasswordValid(false); }
+        if (!password2) { setPasswordRetypeValid(false); }
+
         if (!emailValid || !passwordValid || !displayNameValid || !passwordRetypeValid) {
             event.preventDefault();
             event.stopPropagation();
@@ -58,20 +60,20 @@ export function SignUpForm({sendToast} : Props) {
     };
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target; 
+        const { value } = e.target;
         setEmailValid(validation.validateEmail(value));
-        setemailValidMessage(`Please enter a valid email with "@" and "." .`)
+        setemailValidMessage(`Please enter a valid email with "@" and "." .`);
     };
     const handleDisplayNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
         setDisplayNameValid(validation.validateDisplayName(value));
-        setDisplayNameValidMessage('Display name must be between 1 and 30 characters.')
+        setDisplayNameValidMessage('Display name must be between 1 and 30 characters.');
     };
-    const handlepasswordRetypeChange= (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handlepasswordRetypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        if(value != password) {setPasswordInvalidRetypeMessage('Password must match.'); setPasswordRetypeValid(false); return;}
-        setPasswordRetypeValid(validation.validatePasswordSimple(value)); //check between 1-30 same as display 
-        setPasswordInvalidRetypeMessage('')
+        if (value != password) { setPasswordInvalidRetypeMessage('Password must match.'); setPasswordRetypeValid(false); return; }
+        setPasswordRetypeValid(validation.validatePasswordSimple(value)); // check between 1-30 same as display 
+        setPasswordInvalidRetypeMessage('');
     };
 
     // Handler to validate password input
@@ -101,7 +103,7 @@ export function SignUpForm({sendToast} : Props) {
                     action={async (FormData) => {
                         const response = await registerAction(FormData);
                         if (response != 'Success') {
-                            sendToast(response, 'Error', false, 6000, true )
+                            sendToast(response, 'Error', false, 6000, true);
                             return;
                         }
                         setPass('');
@@ -120,11 +122,11 @@ export function SignUpForm({sendToast} : Props) {
                                 className="form-control"
                                 id={styles.inputUsername}
                                 required
-                                isInvalid = {!displayNameValid}
+                                isInvalid={!displayNameValid}
                                 onChange={handleDisplayNameChange}
                             />
-                            <Form.Control.Feedback type='invalid' className={styles.feedback}>
-                               {displayNameValidMessage}
+                            <Form.Control.Feedback type="invalid" className={styles.feedback}>
+                                {displayNameValidMessage}
                             </Form.Control.Feedback>
                         </Form.Group>
                     </div>
@@ -143,69 +145,69 @@ export function SignUpForm({sendToast} : Props) {
                                 onChange={handleEmailChange}
                                 required
                             />
-                            <Form.Control.Feedback type='invalid' className={styles.feedback}>
+                            <Form.Control.Feedback type="invalid" className={styles.feedback}>
                                 {emailValidMessage}
                             </Form.Control.Feedback>
                         </Form.Group>
                     </div>
                     {/* PASSWORD */}
                     <div className={`mb-3 ${styles.formInputs}`}>
-                    <Form.Group>
-                        <FormLabel htmlFor="inputPassword" className={styles.loginLabel}>Password</FormLabel>
-                        <div className={styles.passwordContainer}>
-                            <Form.Control
-                                type={passwordVisible ? 'text' : 'password'}
-                                name="password"
-                                placeholder="********"
-                                className="form-control"
-                                id={styles.inputPassword}
-                                required
-                                isInvalid={!passwordValid}
-                                onChange={(e) => {setPass(e.target.value); handlePasswordChange(e)}}
-                            />
+                        <Form.Group>
+                            <FormLabel htmlFor="inputPassword" className={styles.loginLabel}>Password</FormLabel>
+                            <div className={styles.passwordContainer}>
+                                <Form.Control
+                                    type={passwordVisible ? 'text' : 'password'}
+                                    name="password"
+                                    placeholder="********"
+                                    className="form-control"
+                                    id={styles.inputPassword}
+                                    required
+                                    isInvalid={!passwordValid}
+                                    onChange={(e) => { setPass(e.target.value); handlePasswordChange(e); }}
+                                />
 
-                            <button
-                                type="button"
-                                className={styles.togglePassword}
-                                onClick={togglePasswordVisibility}
-                                style={{ backgroundImage: `url(${passwordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
-                            />
-                                <Form.Control.Feedback type='invalid' className={styles.feedback}>
-                                    {<ul>
+                                <button
+                                    type="button"
+                                    className={styles.togglePassword}
+                                    onClick={togglePasswordVisibility}
+                                    style={{ backgroundImage: `url(${passwordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
+                                />
+                                <Form.Control.Feedback type="invalid" className={styles.feedback}>
+                                    <ul>
                                         {passwordInvalidMessage.map((item, index) => (
                                             <li key={index}>{item}</li>
                                         ))}
-                                    </ul>}
+                                    </ul>
                                 </Form.Control.Feedback>
-                        </div>
+                            </div>
                         </Form.Group>
                     </div>
                     {/* CONFIRM PASSWORD */}
                     <div className={`mb-3 ${styles.formInputs}`}>
-                    <Form.Group>
-                    <FormLabel htmlFor="inputPassword" className={styles.loginLabel}>Confirm Password</FormLabel>
-                        <div className={styles.passwordContainer}>
-                            <Form.Control
-                                type={passwordVisible ? 'text' : 'password'}
-                                name="password2"
-                                placeholder="********"
-                                className="form-control"
-                                id={styles.inputPassword}
-                                required
-                                isInvalid={!passwordRetypeValid}
-                                onChange={handlepasswordRetypeChange}
-                            />
-                            <button
-                                type="button"
-                                className={styles.togglePassword}
-                                onClick={toggleConfirmPasswordVisibility}
-                                style={{ backgroundImage: `url(${confirmPasswordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
-                            />
-                        <Form.Control.Feedback type='invalid' className={styles.feedback}>
+                        <Form.Group>
+                            <FormLabel htmlFor="inputPassword" className={styles.loginLabel}>Confirm Password</FormLabel>
+                            <div className={styles.passwordContainer}>
+                                <Form.Control
+                                    type={passwordVisible ? 'text' : 'password'}
+                                    name="password2"
+                                    placeholder="********"
+                                    className="form-control"
+                                    id={styles.inputPassword}
+                                    required
+                                    isInvalid={!passwordRetypeValid}
+                                    onChange={handlepasswordRetypeChange}
+                                />
+                                <button
+                                    type="button"
+                                    className={styles.togglePassword}
+                                    onClick={toggleConfirmPasswordVisibility}
+                                    style={{ backgroundImage: `url(${confirmPasswordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
+                                />
+                                <Form.Control.Feedback type="invalid" className={styles.feedback}>
                                     {passwordInvalidRetypeMessage}
-                        </Form.Control.Feedback>
-                        </div>
-                        <i className="bi bi-eye-slash" id={styles.togglePassword} />
+                                </Form.Control.Feedback>
+                            </div>
+                            <i className="bi bi-eye-slash" id={styles.togglePassword} />
                         </Form.Group>
                     </div>
 
