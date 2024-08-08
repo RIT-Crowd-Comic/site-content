@@ -88,6 +88,9 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
     //Redo tracking
     let [prevUndos,setPrevUndos] = useState<[{id: Number,svg: string}]>([{id:-1,svg:""}]) 
 
+    //warning symbol
+    let [showWarning, setShowWarning] = useState(false);
+
     // Call useEffect() in order obtain the value of the canvas after the first render
     // Pass in an empty array so that useEffect is only called once, after the initial render
     useEffect(() => {
@@ -1462,8 +1465,25 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
             }
             
         }
-        console.log(divs)
-        
+        console.log(divs) 
+    }
+
+    const warnDisplay = (visible: boolean) => {
+        const divs = document.querySelectorAll("div")
+        const modal = divs[divs.length-2]
+        if(modal)
+        {
+            if(visible)
+            {
+                modal.style.display = "block";
+            }
+            else
+            {
+                modal.style.display = "none";
+            }
+            
+        }
+        console.log(divs) 
     }
 
     // Return the canvas HTMLElement and its associated functionality   1
@@ -1592,6 +1612,9 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                                 <input type="button" className={`${styles.sizeConsistency}`} title="TMove Layer Up" id="layerup" />
                             </label>
                         </div>
+                        <div id={styles.mergeWarning} className={showWarning}>
+                            <label id={styles.warningText}></label>
+                        </div>
                     </div>
                     <div id={styles.layersList}>
                         <div id="layer4" className={styles.layer}>
@@ -1709,6 +1732,7 @@ const CreateToolsCanvasPaperJS = ({ id }: Props) => {
                 </div>
             </div>
 
+            
             
             <InfoBtn toggle={infoDisplay}></InfoBtn>
             <InfoBox instructions="This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
