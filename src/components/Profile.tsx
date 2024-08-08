@@ -24,6 +24,10 @@ import { addToastFunction } from './toast-notifications/interfaces';
 interface Props {
     sendToast: addToastFunction
 }
+/**
+ * Profile Component for the User Dashboard page
+ * @param {Props} sendToast Toast notification property
+ */
 export function Profile({sendToast} : Props) {
     const [session_id, setSession] = useState('');
     const [user, setUser] = useState<User>();
@@ -51,7 +55,7 @@ export function Profile({sendToast} : Props) {
     const handleSubmitDisplayEmail = (event: any) => {
          //validate filled fields
          const formData = new FormData(event.target);
-         const displayName = formData.get('displayName')
+         const displayName = formData.get('displayName');
          //const email = formData.get('email')
          if(!displayName){  setDisplayNameValid(false)}
          //if(!email){  setEmailValid(false)};
@@ -116,6 +120,7 @@ export function Profile({sendToast} : Props) {
     };
 
     useEffect(() => {
+        // Set user values from the session cookie
         const getProfileValues = async () => {
             const session = await getSessionCookie();
             if (!session) return;
