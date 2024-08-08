@@ -15,9 +15,15 @@ interface CreatePanelSet{
 }
 
 const emptyPanelSet = () => [
-    {imgSrc: '', hooks: [], id: -1, index: 0 }, 
-    {imgSrc: '', hooks: [], id: -1, index: 1 }, 
-    {imgSrc: '', hooks: [], id: -1, index: 2 }
+    {
+        imgSrc: '', hooks: [], id: -1, index: 0
+    },
+    {
+        imgSrc: '', hooks: [], id: -1, index: 1
+    },
+    {
+        imgSrc: '', hooks: [], id: -1, index: 2
+    }
 ];
 
 interface CreateHook{
@@ -31,7 +37,7 @@ interface Panel {
     index: number,
     imgSrc: string,
     previous_hook?: Hook | undefined,
-    hooks: Hook[]
+    hooks: Hook[],
 }
 
 interface PanelSet{
@@ -39,6 +45,7 @@ interface PanelSet{
     author_id: string,
     panels: Panel[],
     hook?: Hook | undefined;
+    created_at: string
 }
 
 interface Hook{
@@ -48,6 +55,14 @@ interface Hook{
     next_panel_set_id?: number
 }
 
+interface User {
+    id: string
+    email: string
+    display_name: string
+    profile_picture: string
+    created_at: string
+}
+
 
 export type {
     CreatePanelSet,
@@ -55,9 +70,8 @@ export type {
     CreateHook,
     PanelSet,
     Panel,
-    Hook
-}
+    Hook,
+    User
+};
 
-export {
-    emptyPanelSet,
-}
+export { emptyPanelSet, };

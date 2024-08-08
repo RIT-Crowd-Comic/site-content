@@ -32,7 +32,6 @@ const TrunkCollection = () => {
             if (!updateError(trunkResponse)) {
                 const panelSets = [];
                 const imagesResponse = await Promise.all(trunkResponse.map(async (panelSet: any) => await apiCalls.getAllImageUrlsByPanelSetId(panelSet.id)));
-                console.log(imagesResponse);
                 if (!imagesResponse.some((response) => updateError(response))) {
                     for (let i = 0; i < trunkResponse.length; i++) {
                         const panelSet = trunkResponse[i];
@@ -40,7 +39,6 @@ const TrunkCollection = () => {
                         panelSets.push({ id: panelSet.id, name: panelSet.name, images: images.map((image: any) => image.url) } as PanelSet);
                     }
 
-                    panelSets.forEach(ps => console.log(ps.images[0]));
                     setPanelSets(panelSets);
                 }
 
@@ -63,7 +61,6 @@ const TrunkCollection = () => {
         if (!trunks) return '/';
         const psID = trunks[0]?.id;
         if (!psID) return '/';
-        console.log(`url: ${psID}`);
         return `/comic?id=${psID}`;
     };
 
@@ -82,8 +79,9 @@ const TrunkCollection = () => {
                     hoverPhoto={ps.images[1]}
                     link={`/comic?id=${ps.id}`}
                     bottomString="Author Name | Jul 22, 2024"
-                    year="" 
-                    newPage={false} />
+                    year=""
+                    newPage={false}
+                />
             ))}
             </ul>
         );

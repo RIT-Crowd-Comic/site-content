@@ -2,17 +2,20 @@ import React from 'react';
 import styles from './InfoBtn.module.css';
 
 
-const InfoBtn = ({toggle}:{toggle:(stat:boolean)=>void}) =>{
+interface Props {
+    setVisibility: (b: boolean) => void
+}
+const InfoBtn = ({ setVisibility }: Props) =>{
 
     return (
         <div id={styles.info}>
             <label>
-                <button id={styles.infoButton} onClick= {()=>toggle(true)}></button> 
+                <button id={styles.infoButton} onClick={()=>setVisibility(true)} />
             </label>
         </div>
 
-       
-    )
-}
+
+    );
+};
 
 export default InfoBtn;
