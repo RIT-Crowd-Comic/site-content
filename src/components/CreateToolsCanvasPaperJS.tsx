@@ -184,6 +184,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
         setPanel2LayerData(defaultLayerData);
         setPanel3LayerData(defaultLayerData);
 
+        //gets the bounds of the canvas for resizing purposes
         let canvasBounds = view.bounds;
         //const scale = {x:(canvasBounds.width ?? 1200)/1200, y:(canvasBounds.height ?? 800)/800};
         
@@ -200,6 +201,9 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                 // Need to show panel 1 on screen as it is the 1st panel you see in the editor
                 // Get rid of the background applied earlier
                 // backgroundLayerReference.current.removeChildren();
+
+                //fitBounds seems to work, but needs more testing
+                //applied fitbounds only to these imports for testing (NEED TO ADD TO OTHER IMPORTED LAYER DATA AFTER)
                 backgroundLayerReference.current.importJSON(layerData.background).fitBounds(canvasBounds);
                 shadingLayerRef.current.importJSON(layerData.shade).fitBounds(canvasBounds);
                 layer1Reference.current.importJSON(layerData.layer1).fitBounds(canvasBounds);
