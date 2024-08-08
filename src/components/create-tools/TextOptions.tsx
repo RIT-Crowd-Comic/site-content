@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import styles from '@/styles/create.module.css';
 
+
 interface Props {
     enabled: boolean;               // Should the HTML of this component be displayed on the page currently?
     changeTextContent: Function;    // Method for setting the content of the text
@@ -69,7 +70,6 @@ const TextOptions = ({
         return (
             <div id="textTools" className={styles.toolStyles}>
                 <h3>Text Tools</h3>
-
                 <div id={styles.textFont}>
                     <p id={styles.textFontTitle}>Font:</p>
                     <select
@@ -113,78 +113,88 @@ const TextOptions = ({
 
                 <div id={styles.textWeight}>
                     <p id={styles.textWeightTitle}>Font Weight:</p>
-                    <div id={styles.radioSelect}>
-                        <div id={styles.normal}>
-                            <input
-                                type="radio"
-                                name="fontWeight"
-                                id="normalSelect"
-                                value="normal"
-                                defaultChecked
-                                onChange={updateWeight}
-                            />
-                            <label htmlFor="normalSelect"><img src="../../../public/images/icons/draw-icons/normal_text.svg" /></label>
-                        </div>
+                    <div id={styles.textRadioSelects}>
+                        <div id={styles.radioSelect}>
+                            <div id={styles.normal} className={styles.radioDiv}>
+                                <label htmlFor="normalSelect">
+                                    <input
+                                        type="radio"
+                                        name="fontWeight"
+                                        id="normalSelect"
+                                        value="normal"
+                                        defaultChecked
+                                        onChange={updateWeight}
+                                    />
+                                </label>
+                            </div>
 
-                        <div id={styles.bold}>
-                            <input
-                                type="radio"
-                                name="fontWeight"
-                                id="boldSelect"
-                                value="bold"
-                                onChange={updateWeight}
-                            />
-                            <label htmlFor="boldSelect"><img src="../../../public/images/icons/draw-icons/bold.svg" /></label>
-                        </div>
+                            <div id={styles.bold} className={styles.radioDiv}>
+                                <label htmlFor="boldSelect">
+                                    <input
+                                        type="radio"
+                                        name="fontWeight"
+                                        id="boldSelect"
+                                        value="bold"
+                                        onChange={updateWeight}
+                                    />
+                                </label>
+                            </div>
 
-                        <div id={styles.italics}>
-                            <input
-                                type="radio"
-                                name="fontWeight"
-                                id="italicSelect"
-                                value="italic"
-                                onChange={updateWeight}
-                            />
-                            <label htmlFor="italicSelect"><img src="../../../public/images/icons/draw-icons/italics.svg" /></label>
+                            <div id={styles.italics} className={styles.radioDiv}>
+                                <label htmlFor="italicSelect">
+                                    <input
+                                        type="radio"
+                                        name="fontWeight"
+                                        id="italicSelect"
+                                        value="italic"
+                                        onChange={updateWeight}
+                                    />
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div id={styles.textAlignment}>
                     <p id={styles.textAlignmentTitle}>Font Alignment:</p>
-                    <div id={styles.radioSelect}>
-                        <div id={styles.leftAlign}>
-                            <input
-                                type="radio"
-                                name="alignment"
-                                id="left"
-                                value="left"
-                                defaultChecked
-                                onChange={updateAlignment}
-                            />
-                            <label htmlFor="left"><img src="../../../public/images/icons/draw-icons/normal_text.svg" /></label>
-                        </div>
+                    <div id={styles.textRadioSelects}>
+                        <div id={styles.radioSelect}>
+                            <div id={styles.leftAlign} className={styles.radioDiv}>
+                                <label htmlFor="left">
+                                    <input
+                                        type="radio"
+                                        name="alignment"
+                                        id="left"
+                                        value="left"
+                                        defaultChecked
+                                        onChange={updateAlignment}
+                                    />
+                                </label>
+                            </div>
 
-                        <div id={styles.centerAlign}>
-                            <input
-                                type="radio"
-                                name="alignment"
-                                id="center"
-                                value="center"
-                                onChange={updateAlignment}
-                            />
-                            <label htmlFor="center"><img src="../../../public/images/icons/draw-icons/normal_text.svg" /></label>
-                        </div>
+                            <div id={styles.centerAlign} className={styles.radioDiv}>
+                                <label htmlFor="center">
+                                    <input
+                                        type="radio"
+                                        name="alignment"
+                                        id="center"
+                                        value="center"
+                                        onChange={updateAlignment}
+                                    />
+                                </label>
+                            </div>
 
-                        <div id={styles.rightAlign}>
-                            <input
-                                type="radio"
-                                name="alignment"
-                                id="right"
-                                value="right"
-                                onChange={updateAlignment}
-                            />
-                            <label htmlFor="right"><img src="../../../public/images/icons/draw-icons/normal_text.svg" /></label>
+                            <div id={styles.rightAlign} className={styles.radioDiv}>
+                                <label htmlFor="right">
+                                    <input
+                                        type="radio"
+                                        name="alignment"
+                                        id="right"
+                                        value="right"
+                                        onChange={updateAlignment}
+                                    />
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>

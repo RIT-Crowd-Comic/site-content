@@ -630,14 +630,6 @@
 }
 
 /* TEXT TOOL STYLING*/
-.textBox {
-    margin-bottom: 10px;
-}
-
-#contentText {
-    margin-bottom: 0px;
-}
-
 #textFontTitle {
     margin-bottom: 0px;
 }
@@ -650,13 +642,50 @@
     margin-bottom: 10px;
 }
 
+#textRadioSelects [type=radio]{
+    opacity: 0;
+    width: 25px;
+    height: 25px;
+}
+
 #radioSelect {
     display: flex;
 }
 
-#radioSelect input {
-    display: none !important;
+.radioDiv{
+    width: 25px;
+    height: 25px;
 }
+
+#radioSelect label{
+    filter: invert(1);
+    width: 25px;
+    height: 25px;
+}
+
+#normal label {
+    background: url("../../public/images/icons/draw-icons/normal_text.svg") no-repeat center/contain;
+}
+#bold label {
+    background: url("../../public/images/icons/draw-icons/bold.svg") no-repeat center/contain;
+    margin-left: 10px;
+}
+#italics label {
+    background: url("../../public/images/icons/draw-icons/italics.svg") no-repeat center/contain;
+    margin-left: 20px;
+}
+#leftAlign label {
+    background: url("../../public/images/icons/draw-icons/left_align.svg") no-repeat center/contain;
+}
+#centerAlign label {
+    background: url("../../public/images/icons/draw-icons/middle_align.svg") no-repeat center/contain;
+    margin-left: 10px;
+}
+#rightAlign label {
+    background: url("../../public/images/icons/draw-icons/right_align.svg") no-repeat center/contain;
+    margin-left: 20px;
+}
+
 
 #textWeightTitle {
     margin-bottom: 0px;
@@ -670,15 +699,15 @@
     margin-bottom: 0px;
 }
 
-
-#textColor {
-    display: flex;
+.radioDiv:has([type=radio]:checked)
+{
+    filter: brightness(.5) !important;
 }
 
-#textColorTitle {
-    margin-right: 10px
+.radioDiv:has([type=radio]:hover)
+{
+    filter: brightness(.7) !important;
 }
-
 
 /* SAVE & PUBLISH */
 #savePublish {
