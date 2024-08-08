@@ -1,10 +1,10 @@
 import { useRef } from 'react';
 import styles from '@/styles/create.module.css';
 
+interface Props
+{
+    enabled: Boolean;               // Should the HTML of this component be displayed on the page currently?
 
-interface Props {
-    enabled: boolean;               // Should the HTML of this component be displayed on the page currently?
-    changeTextContent: Function;    // Method for setting the content of the text
     changeTextFont: Function;       // Method for setting the font of the text
     changeTextSize: Function;       // Method for setting the size of the text
     changeFontWeight: Function;     // Method for setting the font weight of the text
@@ -13,9 +13,8 @@ interface Props {
 }
 
 // *** Text Options is used in order to changed the different values associated with the text tool in CreateToolsCanvas ***
-const TextOptions = ({
-    enabled, changeTextContent, changeTextFont, changeTextSize, changeFontWeight, changeTextAlignment, changeTextColor
-}: Props) => {
+const TextOptions = ({enabled, changeTextFont, changeTextSize, changeFontWeight, changeTextAlignment, changeTextColor} : Props) =>
+{
 
     // References to the dropdown menu HTML Elements
     const fontDropdownReference = useRef<HTMLSelectElement>(null);
