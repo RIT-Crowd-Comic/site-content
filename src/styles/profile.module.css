@@ -29,19 +29,14 @@
 #profilePage
 {
     color: white;
-
     position: relative;
-    /* top: 0; */
-
-    /* height: 100%; */
-
     overflow: none;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#loginForm
+#loginForm, #passwordForm
 {
     border: 3px solid var(--grayscale-primary-color);
     border-radius: 6px;
@@ -50,34 +45,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* width: 80%; */
-    /* max-width: 500px; */
+    max-width: 400px;
     margin-bottom: 20px;
+    position: relative;
+    height: fit-content;
 }
-
-#passwordForm
-{
-    border: 3px solid var(--grayscale-primary-color);
-    border-radius: 6px;
-    background-color: #111;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* width: 80%; */
-    /* max-width: 500px; */
-    margin-bottom: 20px;
-}
-
 
 #profileIcon
 {
     background-color: white;
     filter: grayscale(100%);
     object-fit: cover;
-    /* margin-bottom: 20px; */
-    /* max-width: 75%;
-    height: auto; */
 }
 
 #profileIconContainer {
@@ -207,6 +185,8 @@
 {
     font-family: var(--font-inter);
     /* font-variant: small-caps; */
+    background-image: none;
+    box-shadow: none;
 }
 
 #inputEmail
@@ -218,10 +198,17 @@
 {
     position: relative;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    width: 100%;
+    /* width: 100%; */
 }
 
+.feedback {
+    font-size: small;
+    position: relative;
+    /* padding-top: 5px; */
+ }
+ 
 #inputPassword
 {
     width: 100%;
