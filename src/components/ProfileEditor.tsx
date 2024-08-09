@@ -86,9 +86,10 @@ const ProfileEditor = ({
     // Save the image in the croppie window to the database and update pfp use on the page
     const save = async () => {
         if (!croppie || !email) return;
-        croppie.result({ type: 'base64' }).then(async (resp) => {
-            const arr = resp.split(',') as string[];
-            let bstr = atob(arr[1]), n = bstr.length;
+        croppie.result({ type: 'base64' }).then(async (imgString) => {
+            const arr = imgString.split(',') as string[];
+            const bstr = atob(arr[1]);
+            let n = bstr.length;
             const u8arr = new Uint8Array(n);
             while (n--) {
                 u8arr[n] = bstr.charCodeAt(n);
