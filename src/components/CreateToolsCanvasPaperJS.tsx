@@ -264,10 +264,6 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
 
     }, []);
 
-    useEffect(() => {
-
-    }, []);
-
     // === TOOLS ===
     // !NOTE!: All PaperJS Tools MUST be in the form of a React useState hook in order to be updated when variables change
     // Create an enum with all of the different possible tool states
