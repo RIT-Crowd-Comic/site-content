@@ -18,11 +18,11 @@ import { addToastFunction } from '../toast-notifications/interfaces';
 interface Props {
     sendToast: addToastFunction
 }
-export function SignInForm({sendToast} : Props) {
+export function SignInForm({ sendToast } : Props) {
     const [passwordVisible, setPasswordVisibility] = useState(false);
     const [emailValid, setEmailValid] = useState(false);
     const [passwordValid, setPasswordValid] = useState(false);
-    const [validated, setValidated] = useState(false)
+    const [validated, setValidated] = useState(false);
 
     const togglePasswordVisibility = () => {
         setPasswordVisibility(!passwordVisible);
@@ -74,7 +74,7 @@ export function SignInForm({sendToast} : Props) {
                     {/* EMAIL */}
                     <div className={`mb-3 ${styles.formInputs}`}>
                         <Form.Group>
-                            <Form.Label  htmlFor="inputEmail" className={styles.loginLabel}>Email Address</Form.Label>
+                            <Form.Label htmlFor="inputEmail" className={styles.loginLabel}>Email Address</Form.Label>
                             <Form.Control
                                 type="email"
                                 name="email"
@@ -83,11 +83,11 @@ export function SignInForm({sendToast} : Props) {
                                 aria-describedby="emailHelp"
                                 required
                                 onChange={handleEmailChange}
-                                isInvalid={validated && !emailValid }         
+                                isInvalid={validated && !emailValid}
                             />
-                                <Form.Control.Feedback type = 'invalid' className={styles.feedback}>
-                                    {`Please enter a valid email with "@" and ".".`}
-                                </Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid" className={styles.feedback}>
+                                {`Please enter a valid email with "@" and ".".`}
+                            </Form.Control.Feedback>
 
                         </Form.Group>
                     </div>
@@ -101,7 +101,7 @@ export function SignInForm({sendToast} : Props) {
                                     name="password"
                                     placeholder="********"
                                     id={`${styles.inputPassword}`}
-                                    isInvalid={ validated && !passwordValid}
+                                    isInvalid={validated && !passwordValid}
                                     required
                                     onChange={handlePasswordChange}
                                 />
@@ -111,9 +111,9 @@ export function SignInForm({sendToast} : Props) {
                                     onClick={togglePasswordVisibility}
                                     style={{ backgroundImage: `url(${passwordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
                                 />
-                                    <Form.Control.Feedback type = 'invalid' className={styles.feedback}>
+                                <Form.Control.Feedback type="invalid" className={styles.feedback}>
                                         Password is invalid.
-                                    </Form.Control.Feedback>
+                                </Form.Control.Feedback>
                             </div>
                         </Form.Group>
                     </div>

@@ -1,6 +1,8 @@
 'use client';
 import { PaperOffset } from 'paperjs-offset';
-import {use, useEffect, useRef, useState} from 'react';
+import {
+    use, useEffect, useRef, useState
+} from 'react';
 import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
 import paper from 'paper';
 import PenOptions from './create-tools/PenOptions';
@@ -16,6 +18,8 @@ import { Istok_Web } from 'next/font/google';
 
 import InfoBox from './info/InfoBox';
 import InfoBtn from './info/InfoBtn';
+
+import Loader from './loader/Loader';
 
 import Link from 'next/link';
 import { getHookByID, getUserBySession } from '@/api/apiCalls';
@@ -33,7 +37,7 @@ interface Props {
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
 const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
 
-const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
+    const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
 
     // *** VARIABLES ***
     // === CANVAS ===
@@ -51,27 +55,27 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
     // Used to save the state of each panel whenever data needs to be saved (when the save button is pressed or when moving to the Publish page)
     const [panel1LayerData, setPanel1LayerData] = useState({
         background: '',
-        shade: '',
-        layer1: '',
-        layer2: '',
-        layer3: '',
-        layer4: ''
+        shade:      '',
+        layer1:     '',
+        layer2:     '',
+        layer3:     '',
+        layer4:     ''
     });
     const [panel2LayerData, setPanel2LayerData] = useState({
         background: '',
-        shade: '',
-        layer1: '',
-        layer2: '',
-        layer3: '',
-        layer4: ''
+        shade:      '',
+        layer1:     '',
+        layer2:     '',
+        layer3:     '',
+        layer4:     ''
     });
     const [panel3LayerData, setPanel3LayerData] = useState({
         background: '',
-        shade: '',
-        layer1: '',
-        layer2: '',
-        layer3: '',
-        layer4: ''
+        shade:      '',
+        layer1:     '',
+        layer2:     '',
+        layer3:     '',
+        layer4:     ''
     });
 
     // Saves the index of the current canvas being edited
@@ -89,7 +93,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
     const [currentLayerIndex, setCurrentLayerIndex] = useState<number>(1);
 
     const [layerVisibilities, setLayerVisibilities] = useState<[boolean, boolean, boolean, boolean, boolean]>([true, true, true, true, true]);
-    const [layerNames, setLayerNames] = useState<[string, string, string, string, string]>(["Background", "Layer 1", "Layer 2", "Layer 3", "Layer 4"]);
+    const [layerNames, setLayerNames] = useState<[string, string, string, string, string]>(['Background', 'Layer 1', 'Layer 2', 'Layer 3', 'Layer 4']);
 
     // Router for sending the user to other pages (used in toPublish())
     const router = useRouter();
@@ -100,17 +104,21 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
     const [justUndid, setJustUndid] = useState(false);
     const [parentHookId, setParentHookId] = useState<number>();
 
-
     // Redo tracking
-    const [prevUndos, setPrevUndos] = useState<[{ id: number, svg: string }]>([{ id: -1, svg: '' }]);
+    const [prevUndos, setPrevUndos] = useState<[{id: number, svg: string}]>([{ id: -1, svg: '' }]);
 
-    //warning symbol
-    let [showWarning, setShowWarning] = useState(styles.noWarnMerge);
-    let [show, setShow] = useState(true);
+    // toggling loader
+    const [showLoader, setShowLoader] = useState(true);
+
+    // warning symbol
+    const [showWarning, setShowWarning] = useState(styles.noWarnMerge);
+    const [show, setShow] = useState(true);
 
     // Call useEffect() in order obtain the value of the canvas after the first render
     // Pass in an empty array so that useEffect is only called once, after the initial render
     useEffect(() => {
+        setShowLoader(true);
+      
         // Redirect from create if not signed in
         const checkUserSession = async () => {
             const session = await getSessionCookie();
@@ -141,12 +149,13 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             if ((hook instanceof Error)) window.history.length > 2 ? window.history.go(-1) : router.push('/comic');
 
 
-             hook = hook as CreateHook;
+            hook = hook as CreateHook;
 
-             if (!hook.next_panel_set_id) {
-                 setParentHookId(id);
-                 return;
+            if (!hook.next_panel_set_id) {
+                setParentHookId(id);
+                return;
             }
+
             // use the next id to reroute to read
             router.push(`/comic/?id=${hook.next_panel_set_id}`);
         });
@@ -175,11 +184,11 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
         // Set up the panelLayerDatas with blank layer data
         const defaultLayerData = {
             background: String(backgroundLayerReference.current.exportJSON({ asString: true })),
-            shade: String(backgroundLayerReference.current.exportJSON({ asString: true })),
-            layer1: String(backgroundLayerReference.current.exportJSON({ asString: true })),
-            layer2: String(backgroundLayerReference.current.exportJSON({ asString: true })),
-            layer3: String(backgroundLayerReference.current.exportJSON({ asString: true })),
-            layer4: String(backgroundLayerReference.current.exportJSON({ asString: true }))
+            shade:      String(backgroundLayerReference.current.exportJSON({ asString: true })),
+            layer1:     String(backgroundLayerReference.current.exportJSON({ asString: true })),
+            layer2:     String(backgroundLayerReference.current.exportJSON({ asString: true })),
+            layer3:     String(backgroundLayerReference.current.exportJSON({ asString: true })),
+            layer4:     String(backgroundLayerReference.current.exportJSON({ asString: true }))
         };
 
         setPanel1LayerData(defaultLayerData);
@@ -261,21 +270,22 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             setPrevEdits(prevEdits);
         }
 
+        setShowLoader(false);
     }, []);
 
     // === TOOLS ===
     // !NOTE!: All PaperJS Tools MUST be in the form of a React useState hook in order to be updated when variables change
     // Create an enum with all of the different possible tool states
     const toolStates = Object.freeze({
-        PEN: 0,
-        ERASER: 1,
-        FILL: 2,
-        SHAPE: 3,
-        TEXT: 4,
-        STICKER: 5,
-        SELECT: 6,
+        PEN:       0,
+        ERASER:    1,
+        FILL:      2,
+        SHAPE:     3,
+        TEXT:      4,
+        STICKER:   5,
+        SELECT:    6,
         TRANSFORM: 7,
-        SHADER: 8
+        SHADER:    8
     });
 
     // --- PEN TOOL ---
@@ -385,14 +395,15 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
 
         // create shading render mask to only show the part of the raster background that we want to denote shading
         mask = new paper.Group({
-            children: [deleteShape, backgroundRaster],
-            clipped: true,
+            children:  [deleteShape, backgroundRaster],
+            clipped:   true,
             blendMode: 'source-over'
         });
 
-        //remove preview clip path
+        // remove preview clip path
         clipPath?.remove();
-        //switch back to old layer
+
+        // switch back to old layer
 
         changeLayer();
 
@@ -440,14 +451,14 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                 Source-over: Draws on top of prexisting canvas
                 Destination-out: Existing content is kept where it does not overlap with the new shape*/
             tmpGroup = new paper.Group({
-                children: canvasProject.current.activeLayer.removeChildren(),
+                children:  canvasProject.current.activeLayer.removeChildren(),
                 blendMode: 'source-out',
-                insert: false
+                insert:    false
             });
 
             // combine the path and group in another group with a blend of 'source-over'
             mask = new paper.Group({
-                children: [eraserPath, tmpGroup],
+                children:  [eraserPath, tmpGroup],
                 blendMode: 'source-over'
             });
         }
@@ -537,12 +548,12 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
 
     const shapeStates = Object.freeze({
         RECTANGLE: 0,
-        LINE: 1,
-        ELLIPSE: 2,
-        TRIANGLE: 3,
-        HEXAGON: 4,
-        OCTAGON: 5,
-        STAR: 6
+        LINE:      1,
+        ELLIPSE:   2,
+        TRIANGLE:  3,
+        HEXAGON:   4,
+        OCTAGON:   5,
+        STAR:      6
     });
 
     const [shapeSelected, setShapeSelected] = useState<number>(0);
@@ -694,21 +705,22 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
     const [isWriting, setIsWriting] = useState<boolean>(false);
 
     // Point to draw the text starting at
-    const [startTextPoint, setStartTextPoint] = useState(new paper.Point(0, 0))
+    const [startTextPoint, setStartTextPoint] = useState(new paper.Point(0, 0));
 
     textTool.current.onMouseDown = function (event: paper.ToolEvent) {
         if (!isWriting && canvasReference.current) {
+
             // Start the process of writing
             setIsWriting(true);
 
             // Sets up textarea and points for writing process
-            let textTyper = document.createElement('textarea');
-            let canvasLT = canvasReference.current.getBoundingClientRect();
-            let clickedViewPoint = event.point.add(canvasLT);
+            const textTyper = document.createElement('textarea');
+            const canvasLT = canvasReference.current.getBoundingClientRect();
+            const clickedViewPoint = event.point.add(canvasLT);
             setStartTextPoint(event.point);
 
             // Create a textArea element for the user to write in and sets up a ref to it
-            textTyper.style.position = "absolute";
+            textTyper.style.position = 'absolute';
             textTyper.style.left = `${clickedViewPoint.x}px`;
             textTyper.style.top = `${clickedViewPoint.y - textTyper.cols}px`;
             textTyper.style.fontFamily = textFont;
@@ -722,6 +734,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             document.querySelector(`#${styles.createPage}`)?.appendChild(textTyper);
         }
         else {
+
             // Draw the user's writing to the layer
             textPath = new paper.PointText(startTextPoint);
             textPath.fontFamily = textFont;
@@ -735,7 +748,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                 textToolTyperReference.hidden = true;
 
                 // Sets the textContent to what the user has written in the textArea if they have written something
-                if(textToolTyperReference.value){
+                if (textToolTyperReference.value) {
                     textPath.content = textToolTyperReference.value;
                 }
 
@@ -953,14 +966,14 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             Source-over: Draws on top of prexisting canvas
             Destination-out: Existing content is kept where it does not overlap with the new shape*/
             const tmpSelectionGroup = new paper.Group({
-                children: canvasProject.current.activeLayer.removeChildren(),
+                children:  canvasProject.current.activeLayer.removeChildren(),
                 blendMode: 'source-out',
-                insert: false
+                insert:    false
             });
 
             // combine the path and group in another group with a blend of 'source-over'
             const selectionMask = new paper.Group({
-                children: [eraserSelection, tmpSelectionGroup],
+                children:  [eraserSelection, tmpSelectionGroup],
                 blendMode: 'source-over'
             });
 
@@ -1009,6 +1022,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
     // sets transform action and does setup for that action
     transformTool.onMouseDown = function (event: paper.ToolEvent) {
         if (areaSelected && canvasProject.current && canvasProject.current.activeLayer.locked == false) {
+
             // hitTest checks if point clicked is on area selected (null if not on selected area)
             const hitResult = transformInfo[0].hitTest(event.point, hitOptions);
 
@@ -1307,25 +1321,25 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             // Save the current state of the panel being worked on
             const currentPanelData = {
                 background: String(backgroundLayerReference.current?.exportJSON({ asString: true })),
-                shade: String(shadingLayerRef.current?.exportJSON({ asString: true })),
-                layer1: String(layer1Reference.current?.exportJSON({ asString: true })),
-                layer2: String(layer2Reference.current?.exportJSON({ asString: true })),
-                layer3: String(layer3Reference.current?.exportJSON({ asString: true })),
-                layer4: String(layer4Reference.current?.exportJSON({ asString: true }))
+                shade:      String(shadingLayerRef.current?.exportJSON({ asString: true })),
+                layer1:     String(layer1Reference.current?.exportJSON({ asString: true })),
+                layer2:     String(layer2Reference.current?.exportJSON({ asString: true })),
+                layer3:     String(layer3Reference.current?.exportJSON({ asString: true })),
+                layer4:     String(layer4Reference.current?.exportJSON({ asString: true }))
             };
 
             switch (currentPanelIndex) {
-                case 0:
-                    setPanel1LayerData(currentPanelData);
-                    break;
-                case 1:
-                    setPanel2LayerData(currentPanelData);
-                    break;
-                case 2:
-                    setPanel3LayerData(currentPanelData);
-                    break;
-                default:
-                    break;
+            case 0:
+                setPanel1LayerData(currentPanelData);
+                break;
+            case 1:
+                setPanel2LayerData(currentPanelData);
+                break;
+            case 2:
+                setPanel3LayerData(currentPanelData);
+                break;
+            default:
+                break;
             }
         }
     };
@@ -1355,47 +1369,47 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
 
             // Change the layers to reflect the newly selected panel
             switch (Number(panelSelected?.value)) {
-                case 0:
+            case 0:
 
-                    // Switch the canvasProject to the newly selected panel
-                    backgroundLayerReference.current.importJSON(panel1LayerData.background);
-                    shadingLayerRef.current.importJSON(panel1LayerData.shade);
-                    layer1Reference.current.importJSON(panel1LayerData.layer1);
-                    layer2Reference.current.importJSON(panel1LayerData.layer2);
-                    layer3Reference.current.importJSON(panel1LayerData.layer3);
-                    layer4Reference.current.importJSON(panel1LayerData.layer4);
+                // Switch the canvasProject to the newly selected panel
+                backgroundLayerReference.current.importJSON(panel1LayerData.background);
+                shadingLayerRef.current.importJSON(panel1LayerData.shade);
+                layer1Reference.current.importJSON(panel1LayerData.layer1);
+                layer2Reference.current.importJSON(panel1LayerData.layer2);
+                layer3Reference.current.importJSON(panel1LayerData.layer3);
+                layer4Reference.current.importJSON(panel1LayerData.layer4);
 
-                    // Update the currentPanelIndex
-                    setCurrentPanelIndex(0);
-                    break;
-                case 1:
+                // Update the currentPanelIndex
+                setCurrentPanelIndex(0);
+                break;
+            case 1:
 
-                    // Switch the canvasProject to the newly selected panel
-                    backgroundLayerReference.current.importJSON(panel2LayerData.background);
-                    shadingLayerRef.current.importJSON(panel2LayerData.shade);
-                    layer1Reference.current.importJSON(panel2LayerData.layer1);
-                    layer2Reference.current.importJSON(panel2LayerData.layer2);
-                    layer3Reference.current.importJSON(panel2LayerData.layer3);
-                    layer4Reference.current.importJSON(panel2LayerData.layer4);
+                // Switch the canvasProject to the newly selected panel
+                backgroundLayerReference.current.importJSON(panel2LayerData.background);
+                shadingLayerRef.current.importJSON(panel2LayerData.shade);
+                layer1Reference.current.importJSON(panel2LayerData.layer1);
+                layer2Reference.current.importJSON(panel2LayerData.layer2);
+                layer3Reference.current.importJSON(panel2LayerData.layer3);
+                layer4Reference.current.importJSON(panel2LayerData.layer4);
 
-                    // Update the currentPanelIndex
-                    setCurrentPanelIndex(1);
-                    break;
-                case 2:
+                // Update the currentPanelIndex
+                setCurrentPanelIndex(1);
+                break;
+            case 2:
 
-                    // Switch the canvasProject to the newly selected panel
-                    backgroundLayerReference.current.importJSON(panel3LayerData.background);
-                    shadingLayerRef.current.importJSON(panel3LayerData.shade);
-                    layer1Reference.current.importJSON(panel3LayerData.layer1);
-                    layer2Reference.current.importJSON(panel3LayerData.layer2);
-                    layer3Reference.current.importJSON(panel3LayerData.layer3);
-                    layer4Reference.current.importJSON(panel3LayerData.layer4);
+                // Switch the canvasProject to the newly selected panel
+                backgroundLayerReference.current.importJSON(panel3LayerData.background);
+                shadingLayerRef.current.importJSON(panel3LayerData.shade);
+                layer1Reference.current.importJSON(panel3LayerData.layer1);
+                layer2Reference.current.importJSON(panel3LayerData.layer2);
+                layer3Reference.current.importJSON(panel3LayerData.layer3);
+                layer4Reference.current.importJSON(panel3LayerData.layer4);
 
-                    // Update the currentPanelIndex
-                    setCurrentPanelIndex(2);
-                    break;
-                default:
-                    break;
+                // Update the currentPanelIndex
+                setCurrentPanelIndex(2);
+                break;
+            default:
+                break;
             }
 
             if (canvasProject.current) {
@@ -1408,30 +1422,30 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
         const layerSelected = document.querySelector("input[name='layers']:checked") as HTMLInputElement;
 
         switch (Number(layerSelected.value)) {
-            case 0:
-                backgroundLayerReference.current?.activate();
-                setCurrentLayerIndex(0);
-                break;
-            case 1:
-                layer1Reference.current?.activate();
-                setCurrentLayerIndex(1);
-                break;
-            case 2:
-                layer2Reference.current?.activate();
-                setCurrentLayerIndex(2);
-                break;
-            case 3:
-                layer3Reference.current?.activate();
-                setCurrentLayerIndex(3);
-                break;
-            case 4:
-                layer4Reference.current?.activate();
-                setCurrentLayerIndex(4);
-                break;
-            default:
-                layer1Reference.current?.activate();
-                setCurrentLayerIndex(1);
-                break;
+        case 0:
+            backgroundLayerReference.current?.activate();
+            setCurrentLayerIndex(0);
+            break;
+        case 1:
+            layer1Reference.current?.activate();
+            setCurrentLayerIndex(1);
+            break;
+        case 2:
+            layer2Reference.current?.activate();
+            setCurrentLayerIndex(2);
+            break;
+        case 3:
+            layer3Reference.current?.activate();
+            setCurrentLayerIndex(3);
+            break;
+        case 4:
+            layer4Reference.current?.activate();
+            setCurrentLayerIndex(4);
+            break;
+        default:
+            layer1Reference.current?.activate();
+            setCurrentLayerIndex(1);
+            break;
         }
         if (canvasProject.current) {
             prevEdits.push({ id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({ asString: true })) });
@@ -1459,12 +1473,12 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
 
     // If the selected layer isn't the last layer in the hierarchy, merge it a layer down
     const mergeLayer = () => {
+
         // Check to make sure that this is not being called on the bottom layer (backgroundLayer) that has nowhere to merge down to 
-        if(currentLayerIndex > 0)
-        {
-            if(layers[currentLayerIndex]?.current && layers[currentLayerIndex - 1].current && 
-                layers[currentLayerIndex]?.current?.locked == false && layers[currentLayerIndex - 1]?.current?.locked == false)
-            {
+        if (currentLayerIndex > 0) {
+            if (layers[currentLayerIndex]?.current && layers[currentLayerIndex - 1].current &&
+                layers[currentLayerIndex]?.current?.locked == false && layers[currentLayerIndex - 1]?.current?.locked == false) {
+
                 // Import the layer's data to the layer below it
                 // NOTE: exportSVG must be used instead of exportJSON as importJSON will overwrite any preexisting changes to the layer, importSVG adds to the layer
                 const toSVG = layers[currentLayerIndex]?.current?.exportSVG({ asString: true });
@@ -1484,11 +1498,11 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
     const swapLayers = (currentIndex: number, swapIndex: number) => {
 
         // First make sure that the layer indicies exist
-        if(currentIndex >= 0 && swapIndex >= 0)
-        {
+        if (currentIndex >= 0 && swapIndex >= 0) {
+
             // Get access to the layers' current data
-            const currentData = String(layers[currentIndex].current?.exportJSON({ asString: true}));
-            const swapData = String(layers[swapIndex].current?.exportJSON({ asString: true}));
+            const currentData = String(layers[currentIndex].current?.exportJSON({ asString: true }));
+            const swapData = String(layers[swapIndex].current?.exportJSON({ asString: true }));
 
             // Clear both layers so that they are a blank slate for importing
             layers[currentIndex].current?.removeChildren();
@@ -1509,7 +1523,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             swapLayers(currentLayerIndex, currentLayerIndex + 1);
 
             // Swap layer titles between the two
-            let tempName = layerNames[currentLayerIndex];
+            const tempName = layerNames[currentLayerIndex];
             layerNames[currentLayerIndex] = layerNames[currentLayerIndex + 1];
             layerNames[currentLayerIndex + 1] = tempName;
             setLayerNames(layerNames);
@@ -1521,7 +1535,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
 
 
             // Swap checked status
-            
+
         }
     };
 
@@ -1534,7 +1548,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             swapLayers(currentLayerIndex, currentLayerIndex - 1);
 
             // Swap layer titles between the two
-            let tempName = layerNames[currentLayerIndex];
+            const tempName = layerNames[currentLayerIndex];
             layerNames[currentLayerIndex] = layerNames[currentLayerIndex - 1];
             layerNames[currentLayerIndex - 1] = tempName;
             setLayerNames(layerNames);
@@ -1546,8 +1560,8 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
 
 
             // Swap checked status
-            
-            
+
+
         }
     };
 
@@ -1597,7 +1611,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
         }
     };
 
-    /*const changeBackground = (event: ChangeEvent<HTMLInputElement>) => {
+    /* const changeBackground = (event: ChangeEvent<HTMLInputElement>) => {
 
         const file = (event.target as HTMLInputElement).files?.[0];
 
@@ -1714,26 +1728,26 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
 
     // Saves the project's layer image data to localStorage
     const save = (showAlert: boolean) => {
+
         // Save the layerData object to localStorage in JSON string form
         // Panel 1
         try {
-            if(currentPanelIndex == 0)
-            {
+            if (currentPanelIndex == 0) {
+
                 // Save the current state of the panel being worked on
                 const currentPanelData = {
                     background: String(backgroundLayerReference.current?.exportJSON({ asString: true })),
-                    shade: String(shadingLayerRef.current?.exportJSON({ asString: true })),
-                    layer1: String(layer1Reference.current?.exportJSON({ asString: true })),
-                    layer2: String(layer2Reference.current?.exportJSON({ asString: true })),
-                    layer3: String(layer3Reference.current?.exportJSON({ asString: true })),
-                    layer4: String(layer4Reference.current?.exportJSON({ asString: true }))
+                    shade:      String(shadingLayerRef.current?.exportJSON({ asString: true })),
+                    layer1:     String(layer1Reference.current?.exportJSON({ asString: true })),
+                    layer2:     String(layer2Reference.current?.exportJSON({ asString: true })),
+                    layer3:     String(layer3Reference.current?.exportJSON({ asString: true })),
+                    layer4:     String(layer4Reference.current?.exportJSON({ asString: true }))
                 };
 
                 setPanel1LayerData(currentPanelData);
                 localStorage.setItem('panel-1-layerData', JSON.stringify(currentPanelData));
             }
-            else
-            {
+            else {
                 localStorage.setItem('panel-1-layerData', JSON.stringify(panel1LayerData));
             }
         }
@@ -1743,23 +1757,22 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
 
         // Panel 2
         try {
-            if(currentPanelIndex == 1)
-            {
+            if (currentPanelIndex == 1) {
+
                 // Save the current state of the panel being worked on
                 const currentPanelData = {
                     background: String(backgroundLayerReference.current?.exportJSON({ asString: true })),
-                    shade: String(shadingLayerRef.current?.exportJSON({ asString: true })),
-                    layer1: String(layer1Reference.current?.exportJSON({ asString: true })),
-                    layer2: String(layer2Reference.current?.exportJSON({ asString: true })),
-                    layer3: String(layer3Reference.current?.exportJSON({ asString: true })),
-                    layer4: String(layer4Reference.current?.exportJSON({ asString: true }))
+                    shade:      String(shadingLayerRef.current?.exportJSON({ asString: true })),
+                    layer1:     String(layer1Reference.current?.exportJSON({ asString: true })),
+                    layer2:     String(layer2Reference.current?.exportJSON({ asString: true })),
+                    layer3:     String(layer3Reference.current?.exportJSON({ asString: true })),
+                    layer4:     String(layer4Reference.current?.exportJSON({ asString: true }))
                 };
 
                 setPanel2LayerData(currentPanelData);
                 localStorage.setItem('panel-2-layerData', JSON.stringify(currentPanelData));
             }
-            else
-            {
+            else {
                 localStorage.setItem('panel-2-layerData', JSON.stringify(panel2LayerData));
             }
         }
@@ -1769,23 +1782,22 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
 
         // Panel 3
         try {
-            if(currentPanelIndex == 2)
-            {
+            if (currentPanelIndex == 2) {
+
                 // Save the current state of the panel being worked on
                 const currentPanelData = {
                     background: String(backgroundLayerReference.current?.exportJSON({ asString: true })),
-                    shade: String(shadingLayerRef.current?.exportJSON({ asString: true })),
-                    layer1: String(layer1Reference.current?.exportJSON({ asString: true })),
-                    layer2: String(layer2Reference.current?.exportJSON({ asString: true })),
-                    layer3: String(layer3Reference.current?.exportJSON({ asString: true })),
-                    layer4: String(layer4Reference.current?.exportJSON({ asString: true }))
+                    shade:      String(shadingLayerRef.current?.exportJSON({ asString: true })),
+                    layer1:     String(layer1Reference.current?.exportJSON({ asString: true })),
+                    layer2:     String(layer2Reference.current?.exportJSON({ asString: true })),
+                    layer3:     String(layer3Reference.current?.exportJSON({ asString: true })),
+                    layer4:     String(layer4Reference.current?.exportJSON({ asString: true }))
                 };
 
                 setPanel3LayerData(currentPanelData);
                 localStorage.setItem('panel-3-layerData', JSON.stringify(currentPanelData));
             }
-            else
-            {
+            else {
                 localStorage.setItem('panel-3-layerData', JSON.stringify(panel3LayerData));
             }
         }
@@ -1807,7 +1819,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
         let success = true;
 
         // Save the current state of the canvas
-        let currentState = String(canvasProject.current?.exportSVG({ asString: true}));
+        const currentState = String(canvasProject.current?.exportSVG({ asString: true }));
 
         // Export Panel 1
         backgroundLayerReference.current?.importJSON(panel1LayerData.background);
@@ -1857,25 +1869,25 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             success = false;
         }
 
-        switch(currentPanelIndex)
-        {
-            case 0:
-                localStorage.setItem('image-1', currentState);
-                break;
-            case 1:
-                localStorage.setItem('image-2', currentState);
-                break;
-            case 2:
-                localStorage.setItem('image-3', currentState);
-                break;
-            default:
-                break;
+        switch (currentPanelIndex) {
+        case 0:
+            localStorage.setItem('image-1', currentState);
+            break;
+        case 1:
+            localStorage.setItem('image-2', currentState);
+            break;
+        case 2:
+            localStorage.setItem('image-3', currentState);
+            break;
+        default:
+            break;
         }
 
         // Save the SVG Image to localStorage
         // localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
 
         if (!success) return;
+
         // Send the user to the publish page
         router.replace(`/comic/create/publish?id=${parentHookId}`);
     };
@@ -1891,73 +1903,65 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                 modal.style.display = 'none';
             }
         }
-         console.log(divs) 
+        console.log(divs);
     };
-       
-    
+
+
 
     const warnDisplayFromMerge = () => {
         {
-            if(show && showWarning == styles.noWarnMerge)
-            {
-                setShowWarning(styles.yesWarnMerge)
+            if (show && showWarning == styles.noWarnMerge) {
+                setShowWarning(styles.yesWarnMerge);
             }
-            else
-            {
-                mergeLayer()
-            }   
+            else {
+                mergeLayer();
+            }
         }
-    }
+    };
 
     const warnDisplay = (reshow:boolean) => {
         {
-            setShowWarning(styles.noWarnMerge)
-            if(reshow) setShow(true);
-            if(!reshow) setShow(false);
+            setShowWarning(styles.noWarnMerge);
+            if (reshow) setShow(true);
+            if (!reshow) setShow(false);
         }
-    }
+    };
 
-    function hideAll()
-    {
+    function hideAll() {
         const allDivs = document.getElementsByClassName(styles.tabOptions);
 
-        for (let i = 0; i < allDivs.length; i++)
-        {
+        for (let i = 0; i < allDivs.length; i++) {
             const divType = allDivs[i];
-            if (divType instanceof HTMLElement)
-            {
-                divType.style.display = "none";
+            if (divType instanceof HTMLElement) {
+                divType.style.display = 'none';
             }
         }
     }
-    function showTools()
-    {
+    function showTools() {
         const showObject = document.getElementById(styles.toolOptions)!;
 
-        showObject.style.display = "inline";
+        showObject.style.display = 'inline';
     }
-    function showLayers()
-    {
+    function showLayers() {
         const showObject = document.getElementById(styles.layerOptions)!;
 
-        showObject.style.display = "inline";
+        showObject.style.display = 'inline';
     }
-    function showPanels()
-    {
-        const showObject = document.getElementById("panelSelect")!;
+    function showPanels() {
+        const showObject = document.getElementById('panelSelect')!;
 
-        showObject.style.display = "flex";
+        showObject.style.display = 'flex';
     }
-    function showSave()
-    {
+    function showSave() {
         const showObject = document.getElementById(styles.saveOptions)!;
 
-        showObject.style.display = "inline";
+        showObject.style.display = 'inline';
     }
 
     // Return the canvas HTMLElement and its associated functionality   1
     return (
         <div id={`${styles.createPage}`}>
+            <Loader show={showLoader} />
             <fieldset id={styles.fieldSet}>
                 <div id={styles.toolRadioSelects}>
                     <div id={styles.penTool} className={styles.toolStyling} >
@@ -2118,7 +2122,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                     </label>
                 </div>
 
-                {/*<div id="backgroundUploadForm" className={`${styles.backgroundUploadForm} ${styles.sizeConsistency}`}>
+                {/* <div id="backgroundUploadForm" className={`${styles.backgroundUploadForm} ${styles.sizeConsistency}`}>
                     <form id={styles.backgroundUpload}>
                         <label htmlFor="imageDropbox" className={`form-label ${styles.formLabel} ${styles.sizeConsistency}`}>
                             <input
@@ -2150,7 +2154,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                                 className={`${styles.tabStyles}`}
 
                                 defaultChecked
-                                onClick={function(event){hideAll(); showTools()}}
+                                onClick={function(event) { hideAll(); showTools(); }}
                             />
                         </label>
                     </div>
@@ -2163,7 +2167,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                                 name="tabBtn"
                                 className={`${styles.tabStyles}`}
 
-                                onClick={function(event){hideAll(); showLayers()}}
+                                onClick={function(event) { hideAll(); showLayers(); }}
                             />
                         </label>
                     </div>
@@ -2176,7 +2180,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                                 name="tabBtn"
                                 className={`${styles.tabStyles}`}
 
-                                onClick={function(event){hideAll(); showPanels()}}
+                                onClick={function(event) { hideAll(); showPanels(); }}
                             />
                         </label>
                     </div>
@@ -2189,7 +2193,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                                 name="tabBtn"
                                 className={`${styles.tabStyles}`}
 
-                                onClick={function(event){hideAll(); showSave()}}
+                                onClick={function(event) { hideAll(); showSave(); }}
                             />
                         </label>
                     </div>
@@ -2558,10 +2562,11 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                     Saving and Publishing: 
                     - Click the "Save" button in order to save your work in case you want to come back to it later
                     - Click the "Publish button when you are all done!  Make sure that you edit all three panels before publishing.  `}
-                        visible={instructionsVisible} setVisibility={setInstructionsVisible}  
+                visible={instructionsVisible}
+                setVisibility={setInstructionsVisible}
             />
         </div>
     );
-}
+};
 
 export default CreateToolsCanvasPaperJS;

@@ -425,9 +425,9 @@ const changePfp = async (email: string, image: File) => {
     formData.append('data', JSON.stringify(data, null, 2));
     const response = await postAPICallFormData('/changePfp', formData);
 
-    if(response.message) return new Error(response.message);
+    if (response.message) return new Error(response.message);
     return response;
-}
+};
 
 export {
     getAllImageUrlsByPanelSetId, getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, authenticate, changePassword, changeDisplayName, getHooksFromPanelSetById, insertSession, getSession, publishHandler, getUserBySession, changePfp

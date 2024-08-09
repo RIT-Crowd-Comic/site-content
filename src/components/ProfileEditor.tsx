@@ -18,7 +18,7 @@ interface Props {
 const ProfileEditor = ({
     editorState = false,
     setEditorState,
-    pfpRef, 
+    pfpRef,
     email
 }: Props) => {
 
@@ -94,19 +94,19 @@ const ProfileEditor = ({
         setEdit(false);
     };
 
-    //Save the image in the croppie window to the database and update pfp use on the page
+    // Save the image in the croppie window to the database and update pfp use on the page
     const save = async () => {
-        if(!croppie || !email) return;
-        croppie.result({type: 'base64'}).then( async (resp) => {
+        if (!croppie || !email) return;
+        croppie.result({ type: 'base64' }).then(async (resp) => {
             const arr = resp.split(',') as string[];
             let bstr = atob(arr[1]), n = bstr.length;
-            let u8arr = new Uint8Array(n);
-            while(n--){
+            const u8arr = new Uint8Array(n);
+            while (n--) {
                 u8arr[n] = bstr.charCodeAt(n);
             }
-            const file = new File([u8arr], 'image.png', {type:'image/png'});
+            const file = new File([u8arr], 'image.png', { type: 'image/png' });
             const url = await changePfp(email, file);
-            if(!pfpRef) return;
+            if (!pfpRef) return;
             pfpRef.current = url;
             close();
         });
@@ -128,7 +128,7 @@ const ProfileEditor = ({
                             <Image
                                 id={styles.profileIcon}
                                 className="m-auto"
-                                src={pfpRef?.current ? pfpRef.current : "/images/icons/Profile.svg"}
+                                src={pfpRef?.current ? pfpRef.current : '/images/icons/Profile.svg'}
                                 width={200}
                                 height={200}
                                 alt="Profile"

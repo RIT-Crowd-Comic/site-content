@@ -6,9 +6,12 @@ import { CSSProperties, useEffect, useState } from 'react';
 import ComicPanels from '@/components/ComicPanels';
 import * as apiCalls from '../api/apiCalls';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Panel, PanelSet, Hook, User } from './interfaces';
+import {
+    Panel, PanelSet, Hook, User
+} from './interfaces';
 import InfoBox from './info/InfoBox';
 import InfoBtn from './info/InfoBtn';
+import Loader from './loader/Loader';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { getSessionCookie } from '@/app/login/loginUtils';
 import Signature from './Signature';
@@ -30,23 +33,27 @@ const ReadPage = ({ id }: Props) => {
     const searchParams = useSearchParams();
     const [layout, setLayout] = useState(`${styles.rowPanels}`);
     const [hooks, setHooks] = useState('visible');
-    const [isLoading, setIsLoading] = useState(false);
+
+    // const [isLoading, setIsLoading] = useState(false);
     const [panelSet, setPanelSet] = useState<PanelSet>();
     const [parentPanelSet, setParentPanelSet] = useState<PanelSet | undefined>();
     const [error, setError] = useState<string>('');
     const [currentUser, setCurrentUser] = useState<User>();
     const [panels, setPanels] = useState<Panel[]>([]);
+    const [showLoader, setShowLoader] = useState(true);
     const [author, setAuthor] = useState<User>();
     const [authorCreditVisible, setAuthorCreditVisible] = useState<boolean>(false);
     const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
     useEffect(() => {
         async function fetchData() {
-            setIsLoading(true);
+
+            // setIsLoading(true);
+
             const session = await getSessionCookie();
             let userResponse = null;
             if (session) {
                 userResponse = await apiCalls.getUserBySession(session.value);
-                setCurrentUser(userResponse)
+                setCurrentUser(userResponse);
             }
 
             else {
@@ -59,7 +66,7 @@ const ReadPage = ({ id }: Props) => {
                 const authorResponse = await apiCalls.getUser(panelSetResponse.author_id);
                 if (!updateError(authorResponse)) {
                     console.log(authorResponse);
-                    setAuthor(authorResponse)
+                    setAuthor(authorResponse);
                 }
                 const imageUrlsResponse = await apiCalls.getAllImageUrlsByPanelSetId(panelSetResponse.id);
                 const hookResponses = await apiCalls.getHooksFromPanelSetById(panelSetResponse.id) as Hook[];
@@ -88,14 +95,16 @@ const ReadPage = ({ id }: Props) => {
                         const parentPanelResponse = await apiCalls.getPanelByID(Number(panelSetResponse?.hook?.current_panel_id));
                         if (!updateError(parentPanelResponse)) {
                             const previousPanelSetResponse = await apiCalls.getPanelSetByID(Number(parentPanelResponse.panel_set_id));
-                            if(!updateError(previousPanelSetResponse)) {
-                                setParentPanelSet(previousPanelSetResponse)
+                            if (!updateError(previousPanelSetResponse)) {
+                                setParentPanelSet(previousPanelSetResponse);
                             }
                         }
                     }
                 }
             }
-            setIsLoading(false);
+
+            // setIsLoading(false);
+            setShowLoader(false);
         }
         fetchData();
     }, [searchParams]);
@@ -109,21 +118,20 @@ const ReadPage = ({ id }: Props) => {
         return bool;
     }
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
+    // if (isLoading) {
+    //     return <div>Loading...</div>;
+    // }
     if (error !== '') {
         return <div>{error}</div>;
     }
 
     const backVisibility: CSSProperties = parentPanelSet == undefined ?
-        {
-            filter:        'brightness(0.2)',
-        } :
+        { filter: 'brightness(0.2)', } :
         { };
 
     return (
         <>
+            <Loader show={showLoader} />
             <ComicPanels
                 setting={layout}
                 hook_state={hooks}
@@ -133,17 +141,23 @@ const ReadPage = ({ id }: Props) => {
                 panel_set={panelSet}
                 user={currentUser}
             />
-            <Signature author={author} toggleAuthorCredit={setAuthorCreditVisible}></Signature>
+            <Signature author={author} toggleAuthorCredit={setAuthorCreditVisible} />
             <div className={`${styles.controlBar}`}  >
-                <OverlayTrigger trigger={["focus", "hover"]} placement="bottom" overlay={parentPanelSet ? (<div></div>):(
-                    <Popover>
-                        <Popover.Body>
+                <OverlayTrigger
+                    trigger={['focus', 'hover']}
+                    placement="bottom"
+                    overlay={parentPanelSet ?
+                        (<div />) :
+                        (
+                            <Popover>
+                                <Popover.Body>
                             You are at the start of the comic and cannot go back any further.
-                        </Popover.Body>
-                    </Popover>
-                )}>
+                                </Popover.Body>
+                            </Popover>
+                        )}
+                >
                     <button
-                        disabled = {!parentPanelSet}
+                        disabled={!parentPanelSet}
                         onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)}
                         style={backVisibility}
                         id={`${styles.backButton}`}
@@ -171,7 +185,7 @@ const ReadPage = ({ id }: Props) => {
                 />
             </div>
             <InfoBtn setVisibility={setInstructionsVisible} />
-            <InfoBox 
+            <InfoBox
                 text={`Read though different story lines by clicking through the panel hooks.
 
          Use the lightbulb to toggle the hooks on and off
@@ -182,8 +196,10 @@ const ReadPage = ({ id }: Props) => {
          Use the back button to take you back to the parent panel.
          Use the + looking symbol to toggle between horizontal and vertical view. This will only work for larger screen sizes.
          `}
-                visible={instructionsVisible} setVisibility={setInstructionsVisible}            />
-            <InfoBox text={`Author Name: ${author?.display_name}\nCreated at: ${new Date(author?.created_at ?? '')}`} setVisibility={setAuthorCreditVisible} visible={authorCreditVisible}/>
+                visible={instructionsVisible}
+                setVisibility={setInstructionsVisible}
+            />
+            <InfoBox text={`Author Name: ${author?.display_name}\nCreated at: ${new Date(author?.created_at ?? '')}`} setVisibility={setAuthorCreditVisible} visible={authorCreditVisible} />
         </>
     );
 };

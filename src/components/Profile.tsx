@@ -14,7 +14,7 @@ import { getSessionCookie } from '@/app/login/loginUtils';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import * as validation from './forms/utils';
-import { User } from './interfaces'
+import { User } from './interfaces';
 import { ProfileEditor } from './ProfileEditor';
 import ProfilePicture from './ProfilePicture';
 
@@ -24,7 +24,7 @@ import { addToastFunction } from './toast-notifications/interfaces';
 interface Props {
     sendToast: addToastFunction
 }
-export function Profile({sendToast} : Props) {
+export function Profile({ sendToast } : Props) {
     const [session_id, setSession] = useState('');
     const [user, setUser] = useState<User>();
     const [message, errorState] = useState('');
@@ -45,16 +45,19 @@ export function Profile({sendToast} : Props) {
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordRetypeValid, setPasswordRetypeValid] = useState(true);
     const [displayNameValid, setDisplayNameValid] = useState(true);
-    const [passwordInvalidMessage, setPasswordInvalidMessage] = useState(Array<String>);
+    const [passwordInvalidMessage, setPasswordInvalidMessage] = useState(Array<string>);
     const [passwordInvalidRetypeMessage, setPasswordInvalidRetypeMessage] = useState('');
 
     const handleSubmitDisplayEmail = (event: any) => {
-         //validate filled fields
-         const formData = new FormData(event.target);
-         const displayName = formData.get('displayName')
-         //const email = formData.get('email')
-         if(!displayName){  setDisplayNameValid(false)}
-         //if(!email){  setEmailValid(false)};
+
+        // validate filled fields
+        const formData = new FormData(event.target);
+        const displayName = formData.get('displayName');
+
+        // const email = formData.get('email')
+        if (!displayName) { setDisplayNameValid(false); }
+
+        // if(!email){  setEmailValid(false)};
 
         if (!emailValid || !displayNameValid) {
             event.preventDefault();
@@ -64,12 +67,12 @@ export function Profile({sendToast} : Props) {
 
     const handleSubmitPassword = (event: any) => {
         const formData = new FormData(event.target);
-        const password = formData.get('password')
-        const password2 = formData.get('password2')
-        const oldPassword = formData.get('oldPassword')
-        if(!password){  setPasswordValid(false) }
-        if(!password2){  setPasswordRetypeValid(false)}
-        if(!oldPassword){  setOriginalPasswordValid(false)}
+        const password = formData.get('password');
+        const password2 = formData.get('password2');
+        const oldPassword = formData.get('oldPassword');
+        if (!password) { setPasswordValid(false); }
+        if (!password2) { setPasswordRetypeValid(false); }
+        if (!oldPassword) { setOriginalPasswordValid(false); }
         if (!passwordValid || !passwordRetypeValid || !originalPasswordValid) {
             event.preventDefault();
             event.stopPropagation();
@@ -87,7 +90,7 @@ export function Profile({sendToast} : Props) {
     const toggleRetypePasswordVisibility = () => {
         setRetypePasswordVisibility(!retypePasswordVisible);
     };
-    
+
     const handleDisplayNameChange = (e: any) => {
         const { value } = e.target;
         setDisplayNameValid(validation.validateDisplayName(value));
@@ -97,7 +100,7 @@ export function Profile({sendToast} : Props) {
     const handlePasswordChange = (e: any) => {
         const { value } = e.target;
         const errors = validation.validatePassword(value);
-        if(value === password) errors.push('New password cannot match old password.')
+        if (value === password) errors.push('New password cannot match old password.');
         setPasswordInvalidMessage(errors);
         setPasswordValid(errors.length === 0);
     };
@@ -108,9 +111,9 @@ export function Profile({sendToast} : Props) {
 
     };
 
-    const handlePasswordChangeSimpleRetype= (e: any) => {
+    const handlePasswordChangeSimpleRetype = (e: any) => {
         const { value } = e.target;
-        if(value != newPass){setPasswordRetypeValid(false); setPasswordInvalidRetypeMessage('Passwords must match.'); return;}
+        if (value != newPass) { setPasswordRetypeValid(false); setPasswordInvalidRetypeMessage('Passwords must match.'); return; }
         setPasswordRetypeValid(validation.validatePasswordSimple(value));
         setPasswordInvalidRetypeMessage('');
     };
@@ -125,14 +128,14 @@ export function Profile({sendToast} : Props) {
             setUser(user);
             updateName(user.display_name);
             updateEmail(user.email);
-            if(user.profile_picture) pfpRef.current = user.profile_picture;
+            if (user.profile_picture) pfpRef.current = user.profile_picture;
         };
-        if(!user) getProfileValues();
+        if (!user) getProfileValues();
     });
 
     return (
         <main className={styles.body}>
-            <Navbar p_pfp={pfpRef.current}/>
+            <Navbar p_pfp={pfpRef.current} />
             <section id={styles.profilePage} className="content">
                 <h1 className={`${styles.h1} pt-5 pb-3 px-3`}>Dashboard</h1>
                 <div className="mt-5 d-flex flex-fill gap-3 justify-content-center flex-wrap">
@@ -142,7 +145,7 @@ export function Profile({sendToast} : Props) {
                         id={styles.loginForm}
                         action={async (formData) => {
                             const response = await nameAction(formData);
-                            if(response.includes(`success`))sendToast(response, 'Success', false, 6000, false);
+                            if (response.includes(`success`))sendToast(response, 'Success', false, 6000, false);
                             else sendToast(response, 'Error', false, 6000, true);
                         }}
                     >
@@ -150,7 +153,7 @@ export function Profile({sendToast} : Props) {
 
                         {/* USERNAME */}
                         <Row className={`mb-3 ${styles.formInputs}`}>
-                            {/*PROFILE PICTURE*/}
+                            {/* PROFILE PICTURE*/}
                             <div className={`mb-3 ${styles.formInputs}`}>
                                 <div id={styles.profileIconContainer} className="m-auto">
                                     <ProfilePicture pfp={pfpRef.current} width={200} height={200} />
@@ -159,42 +162,42 @@ export function Profile({sendToast} : Props) {
                             </div>
                         </Row>
                         <Row className={`mb-3 ${styles.formInputs}`}>
-                        <Form.Group>
-                            <Form.Label htmlFor="inputUsername" className={styles.loginLabel}>Display Name</Form.Label>
-                            <Form.Control
-                                type="displayname"
-                                name="displayName"
-                                placeholder={`${displayName}`}
-                                className="form-control"
-                                id={styles.inputUsername}
-                                isInvalid = {!displayNameValid}
-                                onChange={handleDisplayNameChange}
-                                required
-                            />
-                            <Form.Control.Feedback type='invalid' className={styles.feedback}>
-                               {'Must be between 1 and 30 characters.'}
-                            </Form.Control.Feedback>
-                        </Form.Group>
+                            <Form.Group>
+                                <Form.Label htmlFor="inputUsername" className={styles.loginLabel}>Display Name</Form.Label>
+                                <Form.Control
+                                    type="displayname"
+                                    name="displayName"
+                                    placeholder={`${displayName}`}
+                                    className="form-control"
+                                    id={styles.inputUsername}
+                                    isInvalid={!displayNameValid}
+                                    onChange={handleDisplayNameChange}
+                                    required
+                                />
+                                <Form.Control.Feedback type="invalid" className={styles.feedback}>
+                                    Must be between 1 and 30 characters.
+                                </Form.Control.Feedback>
+                            </Form.Group>
                         </Row>
                         {/* EMAIL */}
                         <Row className={`mb-3 ${styles.formInputs}`}>
-                        <Form.Group>
-                            <Form.Label htmlFor="inputEmail" className={styles.loginLabel}>Email Address</Form.Label>
-                            <Form.Control
-                                type="email"
-                                name="email"
-                                placeholder={`${email}`}
-                                className="form-control"
-                                id={styles.inputEmail}
-                                aria-describedby="emailHelp"
-                                required
-                                disabled
-                                isInvalid = {!emailValid}
-                            />
-                            <Form.Control.Feedback type='invalid' className={styles.feedback}>
-                               {'Email is invalid, must contain a "@" and a "." .'}
-                            </Form.Control.Feedback>
-                        </Form.Group>
+                            <Form.Group>
+                                <Form.Label htmlFor="inputEmail" className={styles.loginLabel}>Email Address</Form.Label>
+                                <Form.Control
+                                    type="email"
+                                    name="email"
+                                    placeholder={`${email}`}
+                                    className="form-control"
+                                    id={styles.inputEmail}
+                                    aria-describedby="emailHelp"
+                                    required
+                                    disabled
+                                    isInvalid={!emailValid}
+                                />
+                                <Form.Control.Feedback type="invalid" className={styles.feedback}>
+                                    Email is invalid, must contain a &quot@&quot and a &quot.&quot .
+                                </Form.Control.Feedback>
+                            </Form.Group>
                         </Row>
 
                         <div className={styles.buttonContainer}>
@@ -208,9 +211,9 @@ export function Profile({sendToast} : Props) {
                         noValidate
                         action={async (formData) => {
                             const response = await passwordAction(formData);
-                            if(response === 'password successfully changed') sendToast(response, 'Success', false, 6000, false);
-                            else { 
-                                sendToast(response, 'Error', false, 6000, true); 
+                            if (response === 'password successfully changed') sendToast(response, 'Success', false, 6000, false);
+                            else {
+                                sendToast(response, 'Error', false, 6000, true);
                                 return;
                             }
                             setPass('');
@@ -226,88 +229,88 @@ export function Profile({sendToast} : Props) {
                         {/* PASSWORD */}
                         <div className="d-flex flex-column align-items-start w-100">
                             <Row className={`mb-3 ${styles.formInputs}`}>
-                            <Form.Group>
-                                <Form.Label htmlFor="inputPassword" className={styles.loginLabel}>Current Password</Form.Label>
-                                <div className={styles.passwordContainer}>
-                                    <Form.Control
-                                        type={currentPasswordVisible ? 'text' : 'password'}
-                                        name="oldPassword"
-                                        value={password}
-                                        onChange={(e) => {setPass(e.target.value); handlePasswordChangeSimpleOriginal(e)} }
-                                        placeholder="********"
-                                        className="form-control"
-                                        isInvalid={!originalPasswordValid}
-                                        id={`${styles.inputPassword}`}
-                                        required
-                                    />
-                                    <button
-                                        type="button"
-                                        className={styles.togglePassword}
-                                        onClick={toggleCurrentPasswordVisibility}
-                                        style={{ backgroundImage: `url(${currentPasswordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
-                                    />
-                                        <Form.Control.Feedback type='invalid' className={styles.feedback}>
+                                <Form.Group>
+                                    <Form.Label htmlFor="inputPassword" className={styles.loginLabel}>Current Password</Form.Label>
+                                    <div className={styles.passwordContainer}>
+                                        <Form.Control
+                                            type={currentPasswordVisible ? 'text' : 'password'}
+                                            name="oldPassword"
+                                            value={password}
+                                            onChange={(e) => { setPass(e.target.value); handlePasswordChangeSimpleOriginal(e); }}
+                                            placeholder="********"
+                                            className="form-control"
+                                            isInvalid={!originalPasswordValid}
+                                            id={`${styles.inputPassword}`}
+                                            required
+                                        />
+                                        <button
+                                            type="button"
+                                            className={styles.togglePassword}
+                                            onClick={toggleCurrentPasswordVisibility}
+                                            style={{ backgroundImage: `url(${currentPasswordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
+                                        />
+                                        <Form.Control.Feedback type="invalid" className={styles.feedback}>
                                             {}
                                         </Form.Control.Feedback>
-                                </div>
+                                    </div>
                                 </Form.Group>
                             </Row>
                             <Row className={`mb-3 ${styles.formInputs}`}>
-                            <Form.Group>
-                                <Form.Label htmlFor="inputPassword" className={styles.loginLabel}>New Password</Form.Label>
-                                <div className={styles.passwordContainer}>
-                                    <Form.Control
-                                        type={newPasswordVisible ? 'text' : 'password'}
-                                        name="newPassword"
-                                        value={newPass}
-                                        onChange={(e) => {setNewPass(e.target.value); handlePasswordChange(e)}}
-                                        placeholder="********"
-                                        className="form-control"
-                                        id={`${styles.inputPassword}`}
-                                        required
-                                        isInvalid={!passwordValid}
-                                    />
-                                    <button
-                                        type="button"
-                                        className={styles.togglePassword}
-                                        onClick={toggleNewPasswordVisibility}
-                                        style={{ backgroundImage: `url(${newPasswordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
-                                    />
-                                      <Form.Control.Feedback type='invalid' className={styles.feedback}>
-                                            {<ul>
+                                <Form.Group>
+                                    <Form.Label htmlFor="inputPassword" className={styles.loginLabel}>New Password</Form.Label>
+                                    <div className={styles.passwordContainer}>
+                                        <Form.Control
+                                            type={newPasswordVisible ? 'text' : 'password'}
+                                            name="newPassword"
+                                            value={newPass}
+                                            onChange={(e) => { setNewPass(e.target.value); handlePasswordChange(e); }}
+                                            placeholder="********"
+                                            className="form-control"
+                                            id={`${styles.inputPassword}`}
+                                            required
+                                            isInvalid={!passwordValid}
+                                        />
+                                        <button
+                                            type="button"
+                                            className={styles.togglePassword}
+                                            onClick={toggleNewPasswordVisibility}
+                                            style={{ backgroundImage: `url(${newPasswordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
+                                        />
+                                        <Form.Control.Feedback type="invalid" className={styles.feedback}>
+                                            <ul>
                                                 {passwordInvalidMessage.map((item, index) => (
                                                     <li key={index}>{item}</li>
                                                 ))}
-                                            </ul>}
+                                            </ul>
                                         </Form.Control.Feedback>
-                                </div>
+                                    </div>
                                 </Form.Group>
                             </Row>
                             <Row className={`mb-3 ${styles.formInputs}`}>
-                            <Form.Group>
-                                <Form.Label htmlFor="inputPassword" className={styles.loginLabel}>Retype New Password</Form.Label>
-                                <div className={styles.passwordContainer}>
-                                    <Form.Control
-                                        type={retypePasswordVisible ? 'text' : 'password'}
-                                        name="confirmPassword"
-                                        value={confPass}
-                                        onChange={(e) => {setConfPass(e.target.value); handlePasswordChangeSimpleRetype(e)}}
-                                        placeholder="********"
-                                        className="form-control"
-                                        id={`${styles.inputPassword}`}
-                                        isInvalid={!passwordRetypeValid}
-                                        required
-                                    />
-                                    <button
-                                        type="button"
-                                        className={styles.togglePassword}
-                                        onClick={toggleRetypePasswordVisibility}
-                                        style={{ backgroundImage: `url(${retypePasswordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
-                                    />
-                                         <Form.Control.Feedback type='invalid' className={styles.feedback}>
+                                <Form.Group>
+                                    <Form.Label htmlFor="inputPassword" className={styles.loginLabel}>Retype New Password</Form.Label>
+                                    <div className={styles.passwordContainer}>
+                                        <Form.Control
+                                            type={retypePasswordVisible ? 'text' : 'password'}
+                                            name="confirmPassword"
+                                            value={confPass}
+                                            onChange={(e) => { setConfPass(e.target.value); handlePasswordChangeSimpleRetype(e); }}
+                                            placeholder="********"
+                                            className="form-control"
+                                            id={`${styles.inputPassword}`}
+                                            isInvalid={!passwordRetypeValid}
+                                            required
+                                        />
+                                        <button
+                                            type="button"
+                                            className={styles.togglePassword}
+                                            onClick={toggleRetypePasswordVisibility}
+                                            style={{ backgroundImage: `url(${retypePasswordVisible ? '/images/icons/draw-icons/eyeopen.svg' : '/images/icons/draw-icons/eyeclose.svg'})` }}
+                                        />
+                                        <Form.Control.Feedback type="invalid" className={styles.feedback}>
                                             {passwordInvalidRetypeMessage}
                                         </Form.Control.Feedback>
-                                </div>
+                                    </div>
                                 </Form.Group>
                             </Row>
                         </div>
@@ -321,7 +324,12 @@ export function Profile({sendToast} : Props) {
                 {/* FORM */}
 
             </section>
-            <ProfileEditor editorState={profileEditorState} setEditorState={setProfileEditorState} pfpRef={pfpRef} email={email} />
+            <ProfileEditor
+                editorState={profileEditorState}
+                setEditorState={setProfileEditorState}
+                pfpRef={pfpRef}
+                email={email}
+            />
         </main>
     );
 }
