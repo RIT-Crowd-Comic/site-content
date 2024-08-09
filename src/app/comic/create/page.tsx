@@ -10,18 +10,6 @@ const CreateToolsCanvasPaperJS = dynamic(
     }
 );
 
-const exportToPNG = () => {
-    //converts html canvas to png
-    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-    const imgURL = canvas.toDataURL("image/png");
-
-    //sets up downloading
-    let downloadLink = document.createElement('a');
-    downloadLink.download = 'canvas_image.png';
-    downloadLink.href = imgURL;
-    downloadLink.click();
-}
-
 const Create = ({
     params,
     searchParams,

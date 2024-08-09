@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import styles from "@/styles/create.module.css";
 
 interface Props

@@ -32,7 +32,7 @@ const ShaderOptions = ({enabled, shaderSize, changeShaderSize} : Props) =>
     {
         return(
             <div id="shadingTools">
-                <h3>Shading Tool Test</h3>
+                <h3>Shading Tools</h3>
                 <div id={styles.shadeSlider}>
                     <label id="sliderLabel" htmlFor="penRange">Size: {shaderSize}</label>
                     <input type="range" min="1" max="20" defaultValue={shaderSize} step="1" id="penRange" ref={sliderReference} onChange={updateSize}></input>

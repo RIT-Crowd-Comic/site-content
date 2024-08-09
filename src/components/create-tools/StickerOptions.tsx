@@ -193,7 +193,7 @@ const StickerOptions = ({ enabled, setSticker } : Props) => {
                     /><br />
                     <img
                         className={stickerChosen[23]}
-                        src="/stickers/monkeFace.png"
+                        src="/stickers/monkeFace.svg"
                         alt="Monkey Face Sticker"
                         onClick={() => changeSticker('/stickers/monkeFace.png', 23)}
                     /><br />
@@ -265,9 +265,9 @@ const StickerOptions = ({ enabled, setSticker } : Props) => {
                     /><br />
                     <img
                         className={stickerChosen[35]}
-                        src="/stickers/frgCryR.png"
+                        src="/stickers/frgCryL.png"
                         alt="Frog Cry Left Sticker"
-                        onClick={() => changeSticker('/stickers/frgCryR.png', 35)}
+                        onClick={() => changeSticker('/stickers/frgCryL.png', 35)}
                     /><br />
                     <img
                         className={stickerChosen[36]}
