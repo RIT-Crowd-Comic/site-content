@@ -19,21 +19,25 @@ const ShaderOptions = ({enabled, shaderSize, changeShaderSize} : Props) =>
     // Whenever the slider is adjusted, change the value of penSize.  This will update the label text as well as the value in the parent CreateCanvasTools component
     function updateSize()
     {
-        if (!sliderReference.current) 
-        {
+        if (!sliderReference.current) {
             throw new Error("sliderReference is null");
         }
-
         changeShaderSize(parseInt(sliderReference.current.value));
 
+        // Hide default progress bar placeholder
+        let progressBar = document.getElementById(styles.progressBar);
+        if(progressBar){
+            progressBar.style.display="none";
+        }
+
+        // Change slider background color based on the pen size
         let range = document.getElementById(styles.range);
         let rangeSlider = document.getElementById("rangeSlider");
-        const progress = (parseInt(sliderReference.current.value) / 20) * 100 -3;
+        const fill = (parseInt(sliderReference.current.value) / 20) * 100 -3;
         if(range){
-            range.style.background = `linear-gradient(to right, #c7c7c7 ${progress}%,  #6d6d6da1 ${progress}%)`;
+            range.style.background = `linear-gradient(to right, #c7c7c7 ${fill}%,  #6d6d6da1 ${fill}%)`;
             if(rangeSlider){
                 rangeSlider.style.backgroundColor="#0000";
-                console.log("mask"); 
             }
         }
     }
@@ -61,13 +65,14 @@ const ShaderOptions = ({enabled, shaderSize, changeShaderSize} : Props) =>
             <div id="shadingTools">
                 <h3>Shading Tool</h3>
                 <div id={styles.shadeSlider}>
-                    <label id="sliderLabel" htmlFor="penRange">Size: {shaderSize}</label>
+                    <label id="sliderLabel" htmlFor="ShderRange">Size: {shaderSize}</label>
                     {/* <span id={styles.sliderValue} style={{left:`${shaderSize*3.3-3}%`}}>
                         {shaderSize}
                         <span id={styles.pointy}></span>
                     </span> */}
                     <div id={styles.range} className="range" onChange={updateSize} onClick={() => showOutput(true)}>
-                        <div><input type="range" min="1" max="20" defaultValue={shaderSize} step="1" className={styles.rangeSlider} ref={sliderReference} onChange={updateSize}></input></div>
+                        <div id={styles.progressBar} style={{width:`${shaderSize*3.32+1}%`}} onMouseEnter={updateSize}></div>
+                        <div><input type="range" min="1" max="20" defaultValue={shaderSize} step="1" id="rangeSlider" className={styles.rangeSlider} ref={sliderReference} onMouseEnter={updateSize}></input></div>
                     </div>
                 </div>
             </div>

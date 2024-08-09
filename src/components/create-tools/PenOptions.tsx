@@ -31,14 +31,21 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
         }
         changePenSize(parseInt(sliderReference.current.value));
 
+
+        // Hide default progress bar placeholder
+        let progressBar = document.getElementById(styles.progressBar);
+        if(progressBar){
+            progressBar.style.display="none";
+        }
+
+        // Change slider background color based on the pen size
         let range = document.getElementById(styles.range);
         let rangeSlider = document.getElementById("rangeSlider");
-        const progress = (parseInt(sliderReference.current.value) / 20) * 100 -3;
+        const fill = (parseInt(sliderReference.current.value) / 20) * 100 -3;
         if(range){
-            range.style.background = `linear-gradient(to right, #c7c7c7 ${progress}%,  #6d6d6da1 ${progress}%)`;
+            range.style.background = `linear-gradient(to right, #c7c7c7 ${fill}%,  #6d6d6da1 ${fill}%)`;
             if(rangeSlider){
                 rangeSlider.style.backgroundColor="#0000";
-                console.log("mask"); 
             }
         }
     }
@@ -46,7 +53,6 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
     // Toggle Visibility for Slider Output
     const showOutput=(visible: boolean) => {
         let sliderValue = document.getElementById(styles.sliderValue);
-
         if(sliderValue){
             if(visible){
                 // sliderValue.style.visibility='visible';
@@ -66,7 +72,7 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
         return(
             <div id="penTools" className={styles.toolStyles}>
                 <h3>Pen Tools</h3>
-                <div id={styles.penSlider} className="toolSlider">
+                <div id={styles.penSlider}>
                     <label id="sliderLabel" htmlFor="penRange">Pen Size: {penSize}</label>
                     {/* <span id={styles.sliderValue} style={{left:`${penSize*3.3-3}%`}}>
                         <span>
@@ -75,7 +81,8 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
                         </span>
                     </span> */}
                     <div id={styles.range} className="range" onChange={updateSize} onClick={() => showOutput(true)}>
-                        <input type="range" min="1" max="20" defaultValue={penSize} step="1" id="rangeSlider" className={styles.rangeSlider} ref={sliderReference} onChange={updateSize} ></input>
+                        <div id={styles.progressBar} style={{width:`${penSize*3.32+1}%`}}  onMouseEnter={updateSize}></div>
+                        <input type="range" min="1" max="20" defaultValue={penSize} step="1" id="rangeSlider" className={styles.rangeSlider} ref={sliderReference} onMouseEnter={updateSize}></input>
                     </div>
                 </div>
                 <div id={styles.paletteButtons}>
@@ -93,7 +100,7 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
     //     return(
     //         <div id="penTools" className={styles.toolStyles}>
     //             <h3>Pen Tools</h3>
-    //             <div id={styles.penSlider} className="toolSlider">
+    //             <div id={styles.penSlider}>
     //                 <label id="sliderLabel" htmlFor="penRange">Pen Size: {penSize}</label>
     //                 <span id={styles.sliderValue} style={{left:`${penSize*3.3-3}%`}}>
     //                     <span>

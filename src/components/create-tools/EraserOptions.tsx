@@ -17,21 +17,26 @@ const EraserOptions = ({enabled, eraserSize, changeEraserSize} : Props) =>
     // Whenever the slider is adjusted, change the value of eraserSize.  This will update the label text as well as the value in the parent CreateCanvasTools component
     function updateSize()
     {
-        if (!sliderReference.current) 
-        {
+        if (!sliderReference.current) {
             throw new Error("sliderReference is null");
         }
-
         changeEraserSize(parseInt(sliderReference.current.value));
 
+
+        // Hide default progress bar placeholder
+        let progressBar = document.getElementById(styles.progressBar);
+        if(progressBar){
+            progressBar.style.display="none";
+        }
+
+        // Change slider background color based on the pen size
         let range = document.getElementById(styles.range);
         let rangeSlider = document.getElementById("rangeSlider");
-        const progress = (parseInt(sliderReference.current.value) / 20) * 100 -3;
+        const fill = (parseInt(sliderReference.current.value) / 20) * 100 -3;
         if(range){
-            range.style.background = `linear-gradient(to right, #c7c7c7 ${progress}%,  #6d6d6da1 ${progress}%)`;
+            range.style.background = `linear-gradient(to right, #c7c7c7 ${fill}%,  #6d6d6da1 ${fill}%)`;
             if(rangeSlider){
                 rangeSlider.style.backgroundColor="#0000";
-                console.log("mask");
             }
         }
     }
@@ -65,7 +70,8 @@ const EraserOptions = ({enabled, eraserSize, changeEraserSize} : Props) =>
                         <span id={styles.pointy}></span>
                     </span> */}
                     <div id={styles.range} className="range" onChange={updateSize} onClick={() => showOutput(true)}>
-                        <input type="range" min="1" max="20" defaultValue={eraserSize} step="1" className={styles.rangeSlider} ref={sliderReference} onChange={updateSize}></input>
+                        <div id={styles.progressBar} style={{width:`${eraserSize*3.32+1}%`}} onMouseEnter={updateSize}></div>
+                        <input type="range" min="1" max="20" defaultValue={eraserSize} step="1" id="rangeSlider" className={styles.rangeSlider} ref={sliderReference} onMouseEnter={updateSize}></input>
                     </div>
                 </div>
             </div>

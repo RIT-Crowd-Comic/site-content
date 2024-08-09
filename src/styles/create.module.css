@@ -611,11 +611,6 @@
     margin-top: 1px;
 }
 
-/* .rangeSlider::-webkit-slider-runnable-track:hover,
-.rangeSlider:hover{
-    background-color: #00000000;
-} */
-
 #sliderValue{
     /* visibility: hidden; */
     /* opacity: 0.2; */
@@ -648,6 +643,17 @@
         z-index: -1;
     }
 } 
+
+#progressBar{
+    width: 30px;
+    height: 15px;
+    background: #c7c7c7;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: absolute;
+    will-change: width;
+    overflow: hidden;
+}
 
 /* PALETTE BUTTONS GENERIC */
 #paletteButtons p, #fillPaletteButtons p, #borderPaletteButtons p, #textColor p{
