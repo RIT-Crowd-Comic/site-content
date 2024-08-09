@@ -132,7 +132,7 @@ const getPanelSetByID = async (id: number) => {
  *  id: (id of user)
  */
 const getUser = async (id: string) => {
-    const user = await getAPICall(`/user/${id}/`);
+    const user = await getAPICall(`/user/${id}`);
     if (user.message) {
         return Error(user.message);
     }
@@ -291,16 +291,7 @@ const changeDisplayName = async (email: string, newDisplayName: string) => {
     return response;
 };
 
-const changePfp = async (email: string, image: File) => {
-    const data = { email: email };
-    const formData = new FormData();
-    formData.append('image', image);
-    formData.append('data', JSON.stringify(data, null, 2));
-    const response = await postAPICallFormData('/changePfp', formData);
 
-    if(response.message) return new Error(response.message);
-    return response;
-}
 
 // const changeProfileIcon = async (email: string, )
 
@@ -426,6 +417,17 @@ const publish = async (image1 : File, image2 : File, image3 : File, hooks : Arra
     if (response.message) return new Error(response.message);
     return response;
 };
+
+const changePfp = async (email: string, image: File) => {
+    const data = { email: email };
+    const formData = new FormData();
+    formData.append('image', image);
+    formData.append('data', JSON.stringify(data, null, 2));
+    const response = await postAPICallFormData('/changePfp', formData);
+
+    if(response.message) return new Error(response.message);
+    return response;
+}
 
 export {
     getAllImageUrlsByPanelSetId, getHookByID, createUser, createPanelSet, createPanel, createHook, getPanelSets, getPanelByID, getHooksFromPanel, getPanelSetByID, getUser, getTrunks, authenticate, changePassword, changeDisplayName, getHooksFromPanelSetById, insertSession, getSession, publishHandler, getUserBySession, changePfp

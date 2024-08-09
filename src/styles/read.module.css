@@ -1,18 +1,6 @@
-/* .body
-{
-  background-image: url("/images/background-app-transparent.png");
-  background-position: center;
-  background-size:auto;
-  background-color: rgb(48, 48, 48);
-  filter: none;
-  position: absolute;
-  top:0;
-} */
-
 .body {
   background-color: rgb(48, 48, 48);
   background-image: url("../../public/images/backgrounds/background-app-transparent.png") !important;
-  /* background-position: center; */
   background-repeat: repeat;
   background-size: auto;
   width: 100%;
@@ -24,28 +12,12 @@
 
   min-height: 100%;
   height: fit-content;
+  z-index: -1;
 }
 
 .colBodyH {
   height: fit-content;
 }
-
-/* .rowBodyH {
-  height: 100%;
-} */
-
-/* .body:has(.rowPanels){} */
-
-/* .footer-bar{
-  position:fixed; 
-  bottom:0;
-  left:0;
-  width:100vw;
-  display:flex;
-  justify-content:space-between;
-  z-index:2;
-  font-size: 2em;
-}  */
 
 .footer-head a {
   font-size: 20px;
@@ -69,10 +41,6 @@
   padding: 0 50px;
   height: 100%;
 }
-
-/* #comicPanels>div {
-  width: 100%;
-} */
 
 #comicPanels img {
   max-width: 100%;
@@ -237,15 +205,27 @@
   visibility: hidden;
 }
 
+div#signature {
+  position: fixed;
+  padding-left: 20px;
+  bottom: 0;
+}
+
+img#signature {
+  background-color: white;
+  filter: grayscale(100%);
+  cursor: pointer;
+}
+
+p#signature {
+  visibility: hidden;
+}
+
 @media only screen and (min-width: 700px) {
   #comicPanels {
     padding: 0 100px;
   }
-  /* #hooksToggle {
-    bottom: 3vh;
-    right: 4vw;
-    padding: 5px;
-  } */
+  
   #hooksToggle img{
     width:40px;
   }
@@ -256,11 +236,7 @@
   .rowBodyH {
     height: fit-content;
   }
-  #hooksToggle {
-    bottom: 3vh;
-    right: 4vw;
-    padding: 5px;
-  }
+
   #hooksToggle img{
     width:40px;
   }
@@ -287,34 +263,6 @@
     max-width: 900px;
     max-height: 600px;
   }
-/* 
-  .controlBar {
-    position: relative;
-
-  } */
-
-  /* 
-  #backButton,
-  #hooksToggle {
-    visibility: visible;
-    position: fixed;
-    background-color: black;
-    border-radius: 50%;
-    border: none;
-  } */
-  /* 
-  #backButton {
-    top: 12vh;
-    left: 2vw;
-    width: 60px;
-    height: 60px;
-  } */
-
-  /* #hooksToggle {
-    bottom: 3vh;
-    right: 3vw;
-    padding: 5px;
-  } */
 
   #layoutToggle .buttonIcon {
     visibility: hidden;
@@ -409,4 +357,20 @@
 @media (min-width: 1200px) {}
 
 /* [xxl] Extra extra large devices, 1400px and up */
-@media (min-width: 1400px) {}
+@media (min-width: 1400px) {
+  div#signature {
+    position: absolute;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 10px;
+    gap: 10px;
+  }
+
+  p#signature {
+    visibility: visible;
+    color: white;
+    margin: 0px;
+  }
+}
