@@ -1,5 +1,5 @@
-import styles from './InfoBox.module.css';
-import React, { ReactNode } from 'react';
+import styles from '@/styles/InfoBox.module.css';
+import React from 'react';
 
 interface Props {
     text: string,

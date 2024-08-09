@@ -24,7 +24,7 @@
   }
 
   .closeModal {
-    background: url("../../../public/images/icons/draw-icons/clear.svg") no-repeat center/contain;
+    background: url(../../public/images/icons/draw-icons/clear.svg) no-repeat center/contain;
     float: right;
     font-size: 28px;
     font-weight: bold;

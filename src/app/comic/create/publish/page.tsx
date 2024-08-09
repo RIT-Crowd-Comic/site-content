@@ -13,7 +13,6 @@ import Loader from '@/components/loader/Loader';
 import { useEffect, useState } from 'react';
 
 const Publish = ({
-    params,
     searchParams,
 }: {
     params: { id: number }

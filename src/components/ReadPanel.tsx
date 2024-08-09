@@ -1,7 +1,7 @@
-import styles from './publish/Panel.module.css';
+import styles from '@/styles/Panel.module.css';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { CreateHook, Hook, PanelSet } from './interfaces';
-import { createSVGPath } from '@/utils';
+import { createSVGPath } from '@/scripts/utils';
 import Image from 'next/image';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 
@@ -68,6 +68,7 @@ const ReadPanel = ({
                     {
                         hooks.map((hook, i) => (
                             <OverlayTrigger
+                                key={i}
                                 trigger={['focus', 'hover']}
                                 placement="bottom"
                                 overlay={(

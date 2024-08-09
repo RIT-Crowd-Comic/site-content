@@ -1,5 +1,5 @@
 import { MouseEventHandler } from 'react';
-import styles from './BranchPageControls.module.css';
+import styles from '@/styles/BranchPageControls.module.css';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 
 const HookPageControls = ({
@@ -33,7 +33,6 @@ const HookPageControls = ({
                             className={`${styles.branchControlBtn}`}
                             onClick={addHook}
                         />}
-                    {/* <button id="add-branch-hook" className="branch-control-btn" onClick={addBranchHook}>Add Hook</button> */}
                     <button id={`${ addingHook ? styles.cancelBranchHook : styles.removeBranchHook}`} className={`${styles.branchControlBtn}`} onClick={removeHook} />
                 </div>
                 <div className={`${styles.branchHookText}`}>
@@ -50,7 +49,6 @@ const HookPageControls = ({
                                 <button id={`${styles.addBranchHook}`} className={`${styles.branchControlBtn} ${styles.selectedHook}`} onClick={confirmHook}>Accept Hook</button> :
                                 <button id={`${styles.addBranchHook}`} className={`${styles.branchControlBtn}`} onClick={addHook}>Add Hook</button>
                         }
-                        {/* <button id="add-branch-hook" className="branch-control-btn" onClick={addBranchHook}>Add Hook</button> */}
                         <button id={`${styles.removeBranchHook}`} className={`${styles.branchControlBtn}`} onClick={removeHook}>Remove Hook</button>
                     </div>
                     <div className={`${styles.branchHookText}`}>

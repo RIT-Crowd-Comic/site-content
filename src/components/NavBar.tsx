@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { getTrunks, getUserBySession } from '@/api/apiCalls';
+import { getUserBySession } from '@/api/apiCalls';
 import { logout, getSessionCookie, updateSession } from '@/app/login/loginUtils';
 import ProfilePicture from './ProfilePicture';
 

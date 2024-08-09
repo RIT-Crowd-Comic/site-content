@@ -74,6 +74,7 @@ const TrunkCollection = () => {
         return (
             <ul>{panelSets.map((ps: PanelSet) => (
                 <Card
+                    key={ps.id}
                     topString={ps.name}
                     staticPhoto={ps.images[0]}
                     hoverPhoto={ps.images[1]}

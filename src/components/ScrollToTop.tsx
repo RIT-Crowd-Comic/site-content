@@ -1,8 +1,8 @@
-"use client"
+'use client';
 
-import Image from "next/image"
+import Image from 'next/image';
 
-import arrow from "../../public/images/GIFs/Arrow.gif"
+import arrow from '../../public/images/GIFs/Arrow.gif';
 
 
 // const isBrowser = () => typeof window !== 'undefined'; //The approach recommended by Next.js
@@ -21,34 +21,40 @@ import arrow from "../../public/images/GIFs/Arrow.gif"
 //   );
 // }
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 
-export default function ScrollToTop(){
-  const [isVisible, setIsVisible] = useState(false)
+export default function ScrollToTop() {
+    const [isVisible, setIsVisible] = useState(false);
 
-  const toggleVisibility = () => {
-    if (window.scrollY > 200) {
-      setIsVisible(true)
-    } else {
-      setIsVisible(false)
-    }
-  }
+    const toggleVisibility = () => {
+        if (window.scrollY > 200) {
+            setIsVisible(true);
+        }
+        else {
+            setIsVisible(false);
+        }
+    };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth'})
-  }
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
-  useEffect(() => {
-    window.addEventListener('scroll', toggleVisibility)
+    useEffect(() => {
+        window.addEventListener('scroll', toggleVisibility);
 
-    return () => {
-      window.removeEventListener('scroll', toggleVisibility)
-    }
-  }, [])
+        return () => {
+            window.removeEventListener('scroll', toggleVisibility);
+        };
+    }, []);
 
-  return (
-    <button type="button" className="scollToTopBtn btn btn-floating btn-lg right" id="backToTop" onClick={scrollToTop}>
-        {isVisible && (<Image src={arrow} alt="" fill={true} />)}
-    </button>
-  )
+    return (
+        <button
+            type="button"
+            className="scollToTopBtn btn btn-floating btn-lg right"
+            id="backToTop"
+            onClick={scrollToTop}
+        >
+            {isVisible && (<Image src={arrow} alt="" fill={true} />)}
+        </button>
+    );
 }

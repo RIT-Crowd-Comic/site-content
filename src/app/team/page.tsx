@@ -35,6 +35,7 @@ const TeamPage = () => {
                             <div className="d-flex flex-wrap justify-content-center">
                                 {Cards.cards.map(card => (
                                     <Card
+                                        key={card.name}
                                         topString={card.name}
                                         bottomString={card.role}
                                         staticPhoto={card.img}

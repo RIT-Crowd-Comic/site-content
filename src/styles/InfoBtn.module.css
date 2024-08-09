@@ -7,7 +7,7 @@
 #infoButton{
     height:40px;
     width:40px;
-    background: url("../../../public/images/icons/draw-icons/info.svg") no-repeat center/contain;
+    background: url(../../public/images/icons/draw-icons/info.svg) no-repeat center/contain;
     border: none;
     filter: invert();
 }

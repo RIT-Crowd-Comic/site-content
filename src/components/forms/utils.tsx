@@ -1,4 +1,3 @@
-
 const validateDisplayName = (displayName : string | undefined)=>{
     if (!displayName) return false;
     return (displayName.length >= 1 && displayName.length <= 30);

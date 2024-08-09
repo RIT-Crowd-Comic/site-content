@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './InfoBtn.module.css';
+import styles from '@/styles/InfoBtn.module.css';
 
 
 interface Props {

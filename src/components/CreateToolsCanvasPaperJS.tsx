@@ -118,7 +118,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
     // Pass in an empty array so that useEffect is only called once, after the initial render
     useEffect(() => {
         setShowLoader(true);
-      
+
         // Redirect from create if not signed in
         const checkUserSession = async () => {
             const session = await getSessionCookie();

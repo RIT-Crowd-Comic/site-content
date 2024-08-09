@@ -29,7 +29,6 @@
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
-    /* font-size: 24px; */
 }
 
 #branchHookControls {
@@ -71,14 +70,11 @@
     max-width:28vw;
     height: auto;
     object-fit:contain;
-    content: url(../../../public/images/buttons/static-publish-button.png);
+    content: url(../../public/images/buttons/static-publish-button.png);
   }
 
 #publishBtn:hover:enabled img{
-    /* background-color: var(--light-red);
-    color: var(--yellow); */
-    /* transform: scale(1.5) translate(-.25, -.75); */
-    content: url(../../../public/images/GIFs/publish-button-rotating.gif);
+    content: url(../../public/images/GIFs/publish-button-rotating.gif);
 }
 
 button.branchControlBtn:hover {
@@ -136,7 +132,6 @@ button.branchControlBtn:hover {
         height: 100%;
         left: 0%;
         top: 45%;
-        /* right: 50%; */
         position: absolute;
         color: white;
         line-height: 0;

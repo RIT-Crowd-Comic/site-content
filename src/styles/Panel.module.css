@@ -1,9 +1,7 @@
 .preview {
     max-width: 100%;
     max-height: 100%;
-    /* width: auto;
-    height: auto; */
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 3 / 2 auto;
     background-color: white;
     z-index: 1;
     -moz-user-select: none;
@@ -26,18 +24,15 @@ img.preview {
     left: 0;
     padding: 0;
     margin: 0;
-    
-    
-    /* pointer-events: none; */
 }
+
 .hookPath{
     filter: opacity(50%);
 }
+
 .hookPath:hover {
     cursor: pointer;
-    /* filter: hue-rotate(-20deg); */
     filter: brightness(200%);
-    /* filter: opacity(10%); */
 }
 
 .hookPath.hidden {
@@ -77,24 +72,18 @@ img.preview {
     }
 }
 
-/* @keyframes pulse_4 {
-    0% {
-        filter:opacity(50%) drop-shadow(2px 4px 20px #939393) drop-shadow(2px 4px 20px #939393);
-    }
-    100% {
-        filter:opacity(50%) drop-shadow(2px 4px 50px #939393) drop-shadow(2px 4px 50px #939393);
-    }
-} */
-
-.hookBlocked:hover{
+.hookBlocked:hover {
     filter:none;
 }
-.hookEmpty:hover{
+
+.hookEmpty:hover {
     animation: pulse_3h 1s linear alternate-reverse infinite;
 }
-.hookTaken:hover{
+
+.hookTaken:hover {
     animation: pulse_2h 1s linear alternate-reverse infinite;
 }
+
 @keyframes pulse_2h {
     0% {
         filter:brightness(200%) opacity(50%) drop-shadow(2px 4px 20px #009BC6) drop-shadow(2px 4px 20px #009BC6);
@@ -113,15 +102,6 @@ img.preview {
     }
 }
 
-/* @keyframes pulse_4h {
-    0% {
-        filter:brightness(200%) opacity(50%) drop-shadow(2px 4px 20px #FFD172) drop-shadow(2px 4px 20px #FFD172);
-    }
-    100% {
-        filter:brightness(200%) opacity(50%) drop-shadow(2px 4px 50px #FFD172) drop-shadow(2px 4px 50px #FFD172);
-    }
-} */
-
 .hookSvg.editing {
     pointer-events: none;
 }
@@ -132,14 +112,12 @@ img.preview {
 .branchEditor {
     position: relative;
     height: 100%;
-    /* width: fit-content; */
     margin: auto;
 }
 
 
 @media only screen and (min-width: 700px) {
     .preview {
-        /* width: 100%; */
         max-height: 100%;
         aspect-ratio: 3 / 2;
     }

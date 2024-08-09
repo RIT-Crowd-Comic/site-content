@@ -1,10 +1,10 @@
 import {
     Dispatch, SetStateAction, useCallback, useEffect, useRef, useState
 } from 'react';
-import styles from '../styles/profileEditor.module.css';
+import styles from '@/styles/profileEditor.module.css';
 import Image from 'next/image';
 import Croppie from 'croppie';
-import '../styles/croppie-extended.css';
+import '@/styles/croppie-extended.css';
 import { changePfp } from '@/api/apiCalls';
 import { MutableRefObject } from 'react';
 
