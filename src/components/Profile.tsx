@@ -25,6 +25,11 @@ interface Props {
     sendToast: addToastFunction
 }
 export function Profile({ sendToast } : Props) {
+/**
+ * Profile Component for the User Dashboard page
+ * @param {{Props}} sendToast Toast notification property
+ */
+export function Profile({sendToast} : Props) {
     const [session_id, setSession] = useState('');
     const [user, setUser] = useState<User>();
     const [message, errorState] = useState('');
@@ -49,16 +54,14 @@ export function Profile({ sendToast } : Props) {
     const [passwordInvalidRetypeMessage, setPasswordInvalidRetypeMessage] = useState('');
 
     const handleSubmitDisplayEmail = (event: any) => {
+         //validate filled fields
+         const formData = new FormData(event.target);
+         const displayName = formData.get('displayName');
 
-        // validate filled fields
-        const formData = new FormData(event.target);
-        const displayName = formData.get('displayName');
+         //const email = formData.get('email')
+         if(!displayName){  setDisplayNameValid(false)}
 
-        // const email = formData.get('email')
-        if (!displayName) { setDisplayNameValid(false); }
-
-        // if(!email){  setEmailValid(false)};
-
+         //if(!email){  setEmailValid(false)};
         if (!emailValid || !displayNameValid) {
             event.preventDefault();
             event.stopPropagation();
@@ -119,6 +122,7 @@ export function Profile({ sendToast } : Props) {
     };
 
     useEffect(() => {
+        // Set user values from the session cookie
         const getProfileValues = async () => {
             const session = await getSessionCookie();
             if (!session) return;
@@ -181,23 +185,23 @@ export function Profile({ sendToast } : Props) {
                         </Row>
                         {/* EMAIL */}
                         <Row className={`mb-3 ${styles.formInputs}`}>
-                            <Form.Group>
-                                <Form.Label htmlFor="inputEmail" className={styles.loginLabel}>Email Address</Form.Label>
-                                <Form.Control
-                                    type="email"
-                                    name="email"
-                                    placeholder={`${email}`}
-                                    className="form-control"
-                                    id={styles.inputEmail}
-                                    aria-describedby="emailHelp"
-                                    required
-                                    disabled
-                                    isInvalid={!emailValid}
-                                />
-                                <Form.Control.Feedback type="invalid" className={styles.feedback}>
-                                    Email is invalid, must contain a &quot@&quot and a &quot.&quot .
-                                </Form.Control.Feedback>
-                            </Form.Group>
+                        <Form.Group>
+                            <Form.Label htmlFor="inputEmail" className={styles.loginLabel}>Email Address</Form.Label>
+                            <Form.Control
+                                type="email"
+                                name="email"
+                                placeholder={`${email}`}
+                                className="form-control"
+                                id={styles.inputEmail}
+                                aria-describedby="emailHelp"
+                                required
+                                disabled
+                                isInvalid = {!emailValid}
+                            />
+                            <Form.Control.Feedback type='invalid' className={styles.feedback}>
+                               {'Email is invalid, must contain a "@" and a "." .'}
+                            </Form.Control.Feedback>
+                        </Form.Group>
                         </Row>
 
                         <div className={styles.buttonContainer}>

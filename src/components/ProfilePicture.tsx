@@ -6,6 +6,10 @@ interface Props {
     height: number
 }
 
+/**
+ * Profile Picture component to display user pfp
+ * @param {Props} Props the url of, the width, and height of a user's profile picture
+ */
 export default function ProfilePicture({ pfp, width, height } : Props) {
     return (
         <Image

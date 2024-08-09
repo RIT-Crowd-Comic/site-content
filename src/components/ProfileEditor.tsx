@@ -15,6 +15,11 @@ interface Props {
     email?: string
 }
 
+/**
+ * Profile Editor component to change the user's profile picture on the suer dashboard
+ * @param {Props} Props An editorState boolean and an action to toggle that state. Optional parameters for a user email and
+ * a reference to a profile picture url value that can be read and written to
+ */
 const ProfileEditor = ({
     editorState = false,
     setEditorState,
@@ -28,7 +33,6 @@ const ProfileEditor = ({
     const [edit, setEdit] = useState(false);
     const [reloadEditorFlag, reloadEditor] = useState(false);
 
-    // const uploadInputRef = useRef<HTMLInputElement | null>(null);
 
     const initializeCropper = () => {
         if (profileEditorRef.current) {
@@ -64,13 +68,6 @@ const ProfileEditor = ({
                     console.log('reloading editor', !reloadEditorFlag);
                 };
             }
-
-            // const fileReader = new FileReader();
-            // fileReader.onload = (event) => {
-            //     const uploadedImage = event.target?.result;
-            //     if (uploadedImage) console.log(uploadedImage.)
-            // }
-            // fileReader.readAsArrayBuffer(node.files[0]);
         });
     }, []);
 
@@ -80,14 +77,6 @@ const ProfileEditor = ({
         console.log('edit changed', edit, reloadEditorFlag);
         initializeCropper();
     }, [edit, reloadEditorFlag]);
-
-    // bind the image to the croppie image editor
-    // useEffect(() => {
-    //     if (previewRef.current) {
-    //         croppie?.bind({ url: previewRef.current.src, orientation: 1 });
-    //     }
-
-    // }, [croppie]);
 
     const close = () => {
         setEditorState(false);

@@ -2,6 +2,11 @@
 
 import * as loginUtils from './loginUtils';
 
+/**
+ * Server Action to login a user given FormData from an input form
+ * @param {FormData} formData Object with the user's email and password
+ * @returns 
+ */
 const loginAction = async (formData: FormData) => {
     const rawFormData = {
         email:    formData.get('email'),
@@ -12,6 +17,11 @@ const loginAction = async (formData: FormData) => {
     return await loginUtils.login(rawFormData.email.toString().toLowerCase(), rawFormData.password.toString());
 };
 
+/**
+ * Server Action to register a new user given FormData from an input form
+ * @param {FormData} formData Object with an email, display name, password, and comfirmation password (same as password)
+ * @returns 
+ */
 const registerAction = async (formData: FormData) => {
     const rawFormData = {
         displayName: formData.get('displayName'),
@@ -26,6 +36,11 @@ const registerAction = async (formData: FormData) => {
     return 'Success';
 };
 
+/**
+ * Server Action to change a user's display name from an input form
+ * @param {FormData} formData Object containing a display name
+ * @returns
+ */
 const nameAction = async (formData: FormData) => {
     const rawFormData = { displayName: formData.get('displayName') };
     if (!rawFormData.displayName) return 'Please fill all fields';
@@ -34,6 +49,11 @@ const nameAction = async (formData: FormData) => {
     return 'Success';
 };
 
+/**
+ * Server Action to change a user's password with data from an input form
+ * @param formData Object containing a user's old password, desired new password, and a confirmation of that new password
+ * @returns 
+ */
 const passwordAction = async (formData: FormData) => {
     const rawFormData = {
         oldPassword:     formData.get('oldPassword'),

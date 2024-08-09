@@ -11,6 +11,11 @@ interface Props {
     p_pfp?: string
 }
 
+/**
+ * Gloabal Navigation Bar component for the site
+ * @param {Props} Prop Option profile picture url property if the user
+ * @returns 
+ */
 const NavBar = ({ p_pfp }: Props) => {
     const [pfp, updatePfp] = useState('/images/icons/Profile.svg');
     const [displayName, setDisplayName] = useState('');
@@ -18,6 +23,8 @@ const NavBar = ({ p_pfp }: Props) => {
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
+
+        // Check for a user session and set user states if one is present
         const checkUserSession = async () => {
             const session = await getSessionCookie();
             const session_id = session?.value;
@@ -32,7 +39,7 @@ const NavBar = ({ p_pfp }: Props) => {
                 }
             }
 
-            // If not signed in, redirect from user locked pages
+            // If not signed in, redirect from user forbidden pages
             const url = window.location.href;
             if (url.includes('/publish')) window.history.length > 2 ? await window.history.go(-1) : window.location.href = '/comic';
             if (url.includes('/profile')) window.history.length > 2 ? await window.history.go(-1) : window.location.href = '/';
@@ -50,6 +57,9 @@ const NavBar = ({ p_pfp }: Props) => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    /**
+     * Signout user and refresh page to update components accordingly
+     */
     const handleSignOut = async () => {
         await logout();
         setIsSignedIn(false);
@@ -106,7 +116,7 @@ const NavBar = ({ p_pfp }: Props) => {
                 </button>
 
                 <div
-                    className="offcanvas offcanvas-end w-50"
+                    className="offcanvas offcanvas-end w-75"
                     tabIndex={-1}
                     id="offcanvasNavbar"
                     aria-labelledby="offcanvasNavbarLabel"

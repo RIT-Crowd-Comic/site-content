@@ -5,11 +5,15 @@ interface Props {
     author: User | null | undefined
     toggleAuthorCredit: (b: boolean) => void
 }
-export default function Signature({ author, toggleAuthorCredit } : Props) {
-    return (
-        <div id={styles.signature}>
-            <Image
-                onClick={() => { toggleAuthorCredit(true); }}
+
+/**
+ * Signature component for user credit on comic read pages
+ * @param {Props} prop user object of the panel set's author and the state toggle for showing extra user info
+ */
+export default function Signature( {author, toggleAuthorCredit} : Props) {
+    return <div id={styles.signature}>
+        <Image
+                onClick={() => {toggleAuthorCredit(true)}}
                 id={styles.signature}
                 width={50}
                 height={50}

@@ -14,10 +14,10 @@ import { FormLabel } from 'react-bootstrap';
 import * as validation from './utils';
 import { addToastFunction } from '../toast-notifications/interfaces';
 
-
 interface Props {
     sendToast: addToastFunction
 }
+
 export function SignUpForm({ sendToast } : Props) {
     const [passwordVisible, setPasswordVisibility] = useState(false);
     const [confirmPasswordVisible, setConfirmPasswordVisibility] = useState(false);
@@ -31,6 +31,7 @@ export function SignUpForm({ sendToast } : Props) {
     const [passwordInvalidRetypeMessage, setPasswordInvalidRetypeMessage] = useState('');
     const [password, setPass] = useState('');
 
+    // Show the passwords
     const togglePasswordVisibility = () => {
         setPasswordVisibility(!passwordVisible);
     };
