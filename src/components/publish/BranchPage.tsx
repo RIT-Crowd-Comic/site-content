@@ -20,7 +20,6 @@ const PublishPage = ({ id, sendError }: Props) => {
     const [confirmHook, setConfirmHook] = useState<number>();
     const [selectedHook, setSelectedHook] = useState<{ panelIndex: number, hookIndex: number }>();
     const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
-    const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
     const [panelSet, setPanelSet] = useState<CreatePanelSet>({
         id:        0,
         author_id: '',

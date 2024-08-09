@@ -9,7 +9,7 @@ import { KeyPoint } from '../interfaces';
  * @returns 
  */
 const Key = (values:KeyPoint[])=>{
-
+    console.log('key!!!!');
     return (
         <ul>
             {
