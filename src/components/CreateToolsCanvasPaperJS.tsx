@@ -104,6 +104,10 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
     // Redo tracking
     const [prevUndos, setPrevUndos] = useState<[{ id: number, svg: string }]>([{ id: -1, svg: '' }]);
 
+    //warning symbol
+    let [showWarning, setShowWarning] = useState(styles.noWarnMerge);
+    let [show, setShow] = useState(true);
+
     // Call useEffect() in order obtain the value of the canvas after the first render
     // Pass in an empty array so that useEffect is only called once, after the initial render
     useEffect(() => {
@@ -124,7 +128,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             window.history.length > 2 ? window.history.go(-1) : router.push('/comic');
         };
 
-        checkUserSession();
+        // checkUserSession();
 
         const canvas = canvasReference.current;
 
@@ -134,19 +138,19 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
         }
 
         // route if the link contains an id already created - get the hook by id and check its next
-        getHookByID(id).then((hook) =>{
-            if ((hook instanceof Error)) window.history.length > 2 ? window.history.go(-1) : router.push('/comic');
+        // getHookByID(id).then((hook) =>{
+        //     if ((hook instanceof Error)) window.history.length > 2 ? window.history.go(-1) : router.push('/comic');
 
-            hook = hook as CreateHook;
+        //     hook = hook as CreateHook;
 
-            if (!hook.next_panel_set_id) {
-                setParentHookId(id);
-                return;
-            }
+        //     if (!hook.next_panel_set_id) {
+        //         setParentHookId(id);
+        //         return;
+        //     }
 
-            // use the next id to reroute to read
-            router.push(`/comic/?id=${hook.next_panel_set_id}`);
-        });
+        //     // use the next id to reroute to read
+        //     router.push(`/comic/?id=${hook.next_panel_set_id}`);
+        // });
 
 
         // Create a view for the canvas (setup for layers)
@@ -1458,7 +1462,6 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
 
     // If the selected layer isn't the last layer in the hierarchy, merge it a layer down
     const mergeLayer = () => {
-
         // Check to make sure that this is not being called on the bottom layer (backgroundLayer) that has nowhere to merge down to 
         if(currentLayerIndex > 0)
         {
@@ -1856,7 +1859,69 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             }
 
         }
+         console.log(divs) 
     };
+       
+    
+
+    const warnDisplayFromMerge = () => {
+        {
+            if(show && showWarning == styles.noWarnMerge)
+            {
+                setShowWarning(styles.yesWarnMerge)
+            }
+            else
+            {
+                mergeLayer()
+            }   
+        }
+    }
+
+    const warnDisplay = (reshow:boolean) => {
+        {
+            setShowWarning(styles.noWarnMerge)
+            if(reshow) setShow(true);
+            if(!reshow) setShow(false);
+        }
+    }
+
+    function hideAll()
+    {
+        const allDivs = document.getElementsByClassName(styles.tabOptions);
+
+        for (let i = 0; i < allDivs.length; i++)
+        {
+            const divType = allDivs[i];
+            if (divType instanceof HTMLElement)
+            {
+                divType.style.display = "none";
+            }
+        }
+    }
+    function showTools()
+    {
+        const showObject = document.getElementById(styles.toolOptions)!;
+
+        showObject.style.display = "inline";
+    }
+    function showLayers()
+    {
+        const showObject = document.getElementById(styles.layerOptions)!;
+
+        showObject.style.display = "inline";
+    }
+    function showPanels()
+    {
+        const showObject = document.getElementById("panelSelect")!;
+
+        showObject.style.display = "flex";
+    }
+    function showSave()
+    {
+        const showObject = document.getElementById(styles.saveOptions)!;
+
+        showObject.style.display = "inline";
+    }
 
     // Return the canvas HTMLElement and its associated functionality   1
     return (
@@ -2043,7 +2108,62 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             <canvas id={`${styles.canvas}`} ref={canvasReference} className={`${styles.canvas}`} />
 
             <div id={styles.pullOut}>
-                <div id={`${styles.toolOptions}`}>
+                <div id={styles.tabs}>
+                    <div className={styles.tabDiv}>
+                        <label htmlFor="toolBtn" className={`${styles.tabButtons}`} id={styles.toolButton}>
+                            <input
+                                type="radio"
+                                id="toolBtn"
+                                name="tabBtn"
+                                className={`${styles.tabStyles}`}
+
+                                defaultChecked
+                                onClick={function(event){hideAll(); showTools()}}
+                            />
+                        </label>
+                    </div>
+
+                    <div className={styles.tabDiv}>
+                        <label htmlFor="layerBtn" className={`${styles.tabButtons}`} id={styles.layerButton}>
+                            <input
+                                type="radio"
+                                id="layerBtn"
+                                name="tabBtn"
+                                className={`${styles.tabStyles}`}
+
+                                onClick={function(event){hideAll(); showLayers()}}
+                            />
+                        </label>
+                    </div>
+
+                    <div className={styles.tabDiv}>
+                        <label htmlFor="panelBtn" className={`${styles.tabButtons}`} id={styles.panelButton}>
+                            <input
+                                type="radio"
+                                id="panelBtn"
+                                name="tabBtn"
+                                className={`${styles.tabStyles}`}
+
+                                onClick={function(event){hideAll(); showPanels()}}
+                            />
+                        </label>
+                    </div>
+
+                    <div className={styles.tabDiv}>
+                        <label htmlFor="saveBtn" className={`${styles.tabButtons}`} id={styles.saveButton}>
+                            <input
+                                type="radio"
+                                id="saveBtn"
+                                name="tabBtn"
+                                className={`${styles.tabStyles}`}
+
+                                onClick={function(event){hideAll(); showSave()}}
+                            />
+                        </label>
+                    </div>
+                </div>
+
+                <div id={`${styles.toolOptions}`} className={styles.tabOptions}>
                     <PenOptions
                         enabled={penOptionsEnabled}
                         penSize={penSize}
@@ -2073,7 +2193,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                     <ShaderOptions enabled={shadeOptionsEnabled} shaderSize={shadeSize} changeShaderSize={setShadeSize} />
                 </div>
 
-                <div id={styles.layerOptions}>
+                <div id={styles.layerOptions} className={styles.tabOptions}>
                     <div id="settings" className={styles.layerSettings}>
                         <div id="mergeSetting" className={styles.layerStyling}>
                             <label htmlFor="merge" id={styles.mergeLabel} className={`${styles.sizeConsistency}`}>
@@ -2082,7 +2202,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                                     className={`${styles.sizeConsistency}`}
                                     title="Merge Layer Down"
                                     id="merge"
-                                    onClick={mergeLayer}
+                                    onClick={() => warnDisplayFromMerge()}
                                 />
                             </label>
                         </div>
@@ -2307,7 +2427,8 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                         </div>
                     </div>
                 </div>
-                <div id="panelSelect" className={styles.panelSelect}>
+
+                <div id="panelSelect" className={` ${styles.panelSelect} ${styles.tabOptions}`}>
                     <div id="panel1" className={styles.panelStyling}>
                         <label htmlFor="panel1Select" className={styles.panelLabel}>
                             <input
@@ -2351,6 +2472,14 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                         </label>
                     </div>
                 </div>
+
+                <div id={styles.saveOptions} className={styles.tabOptions}>
+                    <div id={styles.savePublish}>
+                        <button className={`btn ${styles.saveButton}`} id="saveButton" onClick={() => save(true)}>Save</button>
+                        <button className={`btn ${styles.publishButton}`} id="publishButton" onClick={toPublish}>Publish</button>
+                        <button className={`btn ${styles.backButton}`} id="backButton" onClick={(e) => { e.preventDefault(); history.go(-1); }}>Back</button>
+                    </div>
+                </div>
             </div>
 
             <div id={styles.miniNavbar}>
@@ -2361,6 +2490,11 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                 </div>
             </div>
 
+            <div id={styles.mergeWarning} className={showWarning}>
+                <span className={styles.closeModal} onClick={() => warnDisplay(true)} />
+                <p id={styles.warningText}>Merge is a Permanent Action</p>
+                <button id={styles.dontSeeButton} onClick={() => warnDisplay(false)}>Hide warning message</button>
+            </div>
 
             <InfoBtn setVisibility={setInstructionsVisible} />
             <InfoBox
@@ -2375,6 +2509,6 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             />
         </div>
     );
-};
+}
 
 export default CreateToolsCanvasPaperJS;

@@ -168,7 +168,7 @@
 
 .topMission {
     position: absolute;
-    top: -10%;
+    top: -12%;
     right: 0%;
     height: auto;
     width: 95vw;
@@ -176,7 +176,7 @@
 
 .bottomMission {
     position: absolute;
-    bottom: -17%;
+    bottom: -20%;
     right: 0%;
     height: auto;
     width: 95vw;
@@ -199,7 +199,7 @@
     position: relative;
     background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
     padding: 7vw;
-    margin: -5vh 1vw 0vh auto;
+    margin: -3vh 1vw 1vh auto;
     z-index: 1;
 }
 
@@ -214,16 +214,17 @@
 .topRead {
     position: absolute;
     height: auto;
-    top: 0%;
+    top: -10%;
     right: 6%;
+    height: 50vw;
     width: 88vw;
 }
 
 .bottomRead {
     position: absolute;
-    bottom: -5%;
+    bottom: -20%;
     right: 6%;
-    height: auto;
+    height: 50vw;
     width: 88vw;
 }
 
@@ -246,7 +247,7 @@
     position: relative;
     background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
     padding: 5vw 6vw 5vw 6vw;
-    margin: 2vh auto 2vh 1vw;
+    margin: 4vh auto 2vh 1vw;
     z-index: 1;
 }
 
@@ -261,14 +262,14 @@
 .topCreate {
     position: absolute;
     height: auto;
-    top: -5%;
+    top: -10%;
     right: 4%;
     width: 90vw;
 }
 
 .bottomCreate {
     position: absolute;
-    bottom: -5%;
+    bottom: -15%;
     right: 4%;
     height: auto;
     width: 90vw;
@@ -296,11 +297,11 @@
 
 .getStartedButton {
     border: 10px solid transparent;
-    background: url(../../public/images/background-boxes/bw/Get_Started_BW.svg) no-repeat center/contain;
-    filter: brightness(.5);
+    background: url(../../public/images/background-boxes/Get_Started.svg) no-repeat center/contain;
+    filter: grayscale(1);
     width: 100%;
     height: auto;
-    margin: 0 auto;
+    margin: 10px auto;
     padding: 4vw 10vw 5vw;
     font-size: 4.5vw;
     z-index: 2;
@@ -313,34 +314,42 @@
 @keyframes open {
     0% {
         background-image: url(../../public/images/GIFs/book-split/Frame1.gif);
+        filter: grayscale(0);
     }
 
     5% {
         background-image: url(../../public/images/GIFs/book-split/Frame2.gif);
+        filter: grayscale(0);
     }
 
     20% {
         background-image: url(../../public/images/GIFs/book-split/Frame3.gif);
+        filter: grayscale(0);
     }
 
     45% {
         background-image: url(../../public/images/GIFs/book-split/Frame4.gif);
+        filter: grayscale(0);
     }
 
     60% {
         background-image: url(../../public/images/GIFs/book-split/Frame5.gif);
+        filter: grayscale(0);
     }
 
     75% {
         background-image: url(../../public/images/GIFs/book-split/Frame6.gif);
+        filter: grayscale(0);
     }
 
     90% {
         background-image: url(../../public/images/GIFs/book-split/Frame7.gif);
+        filter: grayscale(0);
     }
 
     100% {
         background-image: url(../../public/images/GIFs/book-split/Frame8.gif);
+        filter: grayscale(0);
     }
 
 }
@@ -357,7 +366,7 @@
 
     position: absolute;
     left: -17%;
-    top: 0;
+    top: 10%;
 }
 
 .getStarted:hover .bookAnimation {
@@ -461,22 +470,28 @@
         background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
     }
 
-    15% {
+    20% {
         background-image: url(../../public/images/GIFs/arrow-split/frame2.png);
     }
 
-    65% {
+    35% {
         background-image: url(../../public/images/GIFs/arrow-split/frame3.png);
     }
 
-    70% {
+    55% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame3.png);
+    }
+
+    60% {
         background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
     }
 
-    90% {
-        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    80% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame5.png);
     }
-
+    98% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame7.png);
+    }
     100% {
         background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
     }
@@ -486,41 +501,46 @@
     0% {
         background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
     }
-
-    84.9% {
+    79.9% {
         background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
     }
 
-    85% {
+    80% {
         background-image: url(../../public/images/GIFs/arrow-split/frame2.png);
     }
 
-    90% {
+    82% {
         background-image: url(../../public/images/GIFs/arrow-split/frame3.png);
     }
 
-    94% {
+    85% {
         background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
     }
 
-    97% {
-        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    88% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame5.png);
     }
 
+    92% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame6.png);
+    }
+    95% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame7.png);
+    }
     100% {
         background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
     }
 }
 
 #scrollToTopButton {
-    width: 100px;
-    height: 70px;
+    width: 60px;
+    height: 90px;
+    padding: 0;
     padding-top: 15px;
     margin-top: 0px;
     background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
     background-size: contain;
     background-repeat: no-repeat;
-    transform: rotate(-90deg);
     animation: delay 3s linear infinite;
     position: relative;
     filter: grayscale(1);
@@ -595,7 +615,7 @@
     }
 
     .missionImage {
-        margin: -5vh auto 15vh auto;
+        margin: -5vh auto 10vh auto;
     }
 
     .topMission {
@@ -616,7 +636,7 @@
         display: grid;
         grid-template-rows: repeat(3, auto);
         width: 80vw;
-        margin: 30px auto 50px;
+        margin: 10px auto 20px;
     }
 
     .previewPanels {
@@ -685,7 +705,10 @@
 
     /* GET STARTED */
     .getStarted {
-        margin: -4vw auto 10vw;
+        margin: -14vw auto 10vw;
+    }
+    .bookAnimation {
+        top: 8%;
     }
 
     /* OUR TEAM */
@@ -699,7 +722,7 @@
         padding: 0;
         background-size: 100% 100%;
         text-align: center;
-        /* margin: 2vh auto 1vh; */
+        margin: -2vh auto 1vh;
     }
 
     .ourTeam button {
@@ -803,7 +826,7 @@
     .readHeading {
         background: url(../../public/images/background-boxes/bw/Desktop_Title_BW.svg) no-repeat center/contain;
         padding: 2.5rem;
-        margin: 30px 30px -30px;
+        margin: 30px 30px -50px;
     }
 
     .readImage {
@@ -815,7 +838,7 @@
         border: solid 5px black;
         padding: 1rem;
         width: 90%;
-        margin: 6px auto;
+        margin: 45px auto;
     }
 
     .topRead,
@@ -853,7 +876,7 @@
         
         padding: 1rem;
         width: 90%;
-        margin: -10px 0 20px 42px;
+        margin: -5px 0 20px 42px;
         
     }
 
@@ -885,7 +908,7 @@
         background-image: url(../../public/images/GIFs/book-split/Frame1.gif);
         width: 200px;
         height: 200px;
-        top: 20px;
+        top: 30px;
         left: -110px;
     }
 
@@ -933,8 +956,7 @@
     /* BACK TO TOP */
 
     #scrollToTopButton {
-        width: 100px;
-        height: 70px;
+        padding: 0;
         padding-top: 15px;
         margin-top: 0px;
     }
@@ -982,7 +1004,7 @@
     .readParagraph {
         padding: 1.2rem;
         width: 85%;
-        margin: 0px 80px 10px;
+        margin: 30px 80px 10px;
     }
 
     .desktopRead {
@@ -999,13 +1021,13 @@
 
     .createHeading {
         padding: 2.5rem;
-        margin: 0px 30px 20px;
+        margin: 10px 30px 20px;
     }
 
     .createParagraph {
         padding: 1.2rem;
         width: 85%;
-        margin: -30px 80px 10px;
+        margin: -10px 80px 10px;
     }
 
     .desktopCreate {
@@ -1114,7 +1136,7 @@
 
     .readParagraph {
         width: 85%;
-        margin: 30px 120px 60px;
+        margin: 60px 120px 60px;
     }
 
     .desktopRead {
@@ -1129,12 +1151,12 @@
     }
 
     .createHeading {
-        margin: 0px 30px 40px;
+        margin: 20px 30px 40px;
     }
 
     .createParagraph {
         width: 85%;
-        margin: -30px 115px 10px;
+        margin: -10px 115px 10px;
     }
 
     .desktopCreate {
