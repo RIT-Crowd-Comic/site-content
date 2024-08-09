@@ -16,7 +16,7 @@ export default function ProfilePicture({ pfp, width, height } : Props) {
         <Image
             id={styles.profileIcon}
             className=""
-            src={`${pfp}`}
+            src={pfp ? pfp : '/images/icons/Profile.svg'}
             width={width}
             height={height}
             style={{ borderRadius: 100 }}
