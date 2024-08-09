@@ -33,6 +33,8 @@ interface Props {
 // This component will create the Canvas HTML Element as well as the user tools and associated functionality used to edit the canvas
 const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
 
+    const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
+
     // *** VARIABLES ***
     // === CANVAS ===
     // Need to capture references to the HTML Elements.  canvasRef and contextRef is performed in useEffect().  
@@ -1783,7 +1785,8 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         // Save the SVG Image to localStorage
         // localStorage.setItem("image-1", String(canvasProject.current?.exportSVG({ asString: true })));
 
-        if(!success) return;
+        if (!success) return;
+
         // Send the user to the publish page
         router.replace(`/comic/create/publish?id=${parentHookId}`);
     };
@@ -2306,17 +2309,14 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                 </div>
             </div>
 
-
-            <InfoBtn toggle={infoDisplay} />
+            <InfoBtn setVisibility={setInstructionsVisible} />
             <InfoBox
-                instructions="This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
-                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
-                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
-                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
-                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
-                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
-                        This is information about the drawing page and what you are able to do with it."
-                toggle={infoDisplay}
+                text={`Use the tools to create three comic panels
+                    -You can use the panel icons on the bottom right to switch between them
+                    Once you have created three comics that you are happy with, press the save then the publish button to move to the next step
+                    -You can use your save button to save your progress if you would like to come back to it later, but careful,someone may have already published their owen set on that hook already by then`}
+                visible={instructionsVisible}
+                setVisibility={setInstructionsVisible}
             />
         </div>
     );

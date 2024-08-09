@@ -53,7 +53,13 @@ interface Hook{
     current_panel_id: number,
     next_panel_set_id?: number
 }
-
+interface User {
+    id: string
+    email: string
+    display_name: string
+    profile_picture: string
+    created_at: string
+}
 
 export type {
     CreatePanelSet,
@@ -61,7 +67,8 @@ export type {
     CreateHook,
     PanelSet,
     Panel,
-    Hook
+    Hook,
+    User
 };
 
 export { emptyPanelSet, };

@@ -19,13 +19,14 @@ const PublishPage = ({ id, sendError }: Props) => {
     const [parentHookId, setParentHookId] = useState<number>();
     const [confirmHook, setConfirmHook] = useState<number>();
     const [selectedHook, setSelectedHook] = useState<{ panelIndex: number, hookIndex: number }>();
+    const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
     const [panelSet, setPanelSet] = useState<CreatePanelSet>({
         id:        0,
         author_id: '',
         panels:    emptyPanelSet(),
     });
     const [activePanel, setActivePanel] = useState(0);
-    
+
     const activePanelHooks = () => panelSet.panels[activePanel].hooks;
     const setActivePanelHooks = (hooks: CreateHook[], panelIndex: number) => {
         const panels = panelSet.panels;
@@ -248,16 +249,17 @@ const PublishPage = ({ id, sendError }: Props) => {
                         hookCount={panelSet.panels.reduce((length, panel) => length + panel.hooks.length, 0)}
                     />
                 </div>
-                <InfoBtn toggle={infoDisplay} />
+                <InfoBtn setVisibility={setInstructionsVisible} />
                 <InfoBox
-                    instructions={`
-            -click on the add hook button to start drawing a hook on the comic
-            -once done, click on accept hook to keep or remove to delete the hook
-             *hooks do have a minimum size and dimention so you can't make itty bitty unclickable hooks
-            - to remove a hook: click on the hook you wish to remove then click on remove hook to delete it\n 
-            *YOU MUSH HAVE 3 HOOKS IN ORDER TO PUBLISH YOUR COMIC*
-            `}
-                    toggle={infoDisplay}
+                    text={`
+                        -click on the add hook button to start drawing a hook on the comic
+                        -once done, click on accept hook to keep or remove to delete the hook
+                        *hooks do have a minimum size and dimention so you can't make itty bitty unclickable hooks
+                        - to remove a hook: click on the hook you wish to remove then click on remove hook to delete it\n 
+                        *YOU MUSH HAVE 3 HOOKS IN ORDER TO PUBLISH YOUR COMIC*
+                        `}
+                    visible={instructionsVisible}
+                    setVisibility={setInstructionsVisible}
                 />
             </main>
         </>

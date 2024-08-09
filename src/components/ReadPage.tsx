@@ -6,7 +6,9 @@ import { CSSProperties, useEffect, useState } from 'react';
 import ComicPanels from '@/components/ComicPanels';
 import * as apiCalls from '../api/apiCalls';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Panel, PanelSet, Hook } from './interfaces';
+import {
+    Panel, PanelSet, Hook, User
+} from './interfaces';
 import InfoBox from './info/InfoBox';
 import InfoBtn from './info/InfoBtn';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
@@ -35,6 +37,9 @@ const ReadPage = ({ id }: Props) => {
     const [error, setError] = useState<string>('');
     const [userId, setUserId] = useState<string>('');
     const [panels, setPanels] = useState<Panel[]>([]);
+    const [author, setAuthor] = useState<User>();
+    const [authorCreditVisible, setAuthorCreditVisible] = useState<boolean>(false);
+    const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
@@ -122,9 +127,7 @@ const ReadPage = ({ id }: Props) => {
     };
 
     const backVisibility: CSSProperties = parentPanelSet == undefined ?
-        {
-            filter:        'brightness(0.2)',
-        } :
+        { filter: 'brightness(0.2)', } :
         { };
 
     return (
@@ -139,15 +142,21 @@ const ReadPage = ({ id }: Props) => {
                 userId={userId}
             />
             <div className={`${styles.controlBar}`}  >
-                <OverlayTrigger trigger={["focus", "hover"]} placement="bottom" overlay={parentPanelSet ? (<div></div>):(
-                    <Popover>
-                        <Popover.Body>
+                <OverlayTrigger
+                    trigger={['focus', 'hover']}
+                    placement="bottom"
+                    overlay={parentPanelSet ?
+                        (<div />) :
+                        (
+                            <Popover>
+                                <Popover.Body>
                             You are at the start of the comic and cannot go back any further.
-                        </Popover.Body>
-                    </Popover>
-                )}>
+                                </Popover.Body>
+                            </Popover>
+                        )}
+                >
                     <button
-                        disabled = {!parentPanelSet}
+                        disabled={!parentPanelSet}
                         onClick={() => router.push(`/comic?id=${parentPanelSet?.id}`)}
                         style={backVisibility}
                         id={`${styles.backButton}`}
@@ -174,9 +183,9 @@ const ReadPage = ({ id }: Props) => {
                     source_2={toggleLayoutVertIcon}
                 />
             </div>
-            <InfoBtn toggle={infoDisplay} />
+            <InfoBtn setVisibility={setInstructionsVisible} />
             <InfoBox
-                instructions={`Read though different story lines by clicking through the panelhooks.
+                text={`Read though different story lines by clicking through the panel hooks.
 
          Use the lightbulb to toggle the hooks on and off
          - Red hooks (empty): do not currently have a comic panel connected to them and will take you to the create page
@@ -186,7 +195,13 @@ const ReadPage = ({ id }: Props) => {
          Use the back button to take you back to the parent panel.
          Use the + looking symbol to toggle between horizontal and vertical view. This will only work for larger screen sizes.
          `}
-                toggle={infoDisplay}
+                visible={instructionsVisible}
+                setVisibility={setInstructionsVisible}
+            />
+            <InfoBox
+                text={`Author Name: ${author?.display_name}\nCreated at: ${new Date(author?.created_at ?? '')}`}
+                setVisibility={setAuthorCreditVisible}
+                visible={authorCreditVisible}
             />
         </>
     );
