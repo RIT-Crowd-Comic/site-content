@@ -110,6 +110,10 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
     // toggling loader
     const [showLoader, setShowLoader] = useState(true);
 
+    // warning symbol
+    const [showWarning, setShowWarning] = useState(styles.noWarnMerge);
+    const [show, setShow] = useState(true);
+
     // Call useEffect() in order obtain the value of the canvas after the first render
     // Pass in an empty array so that useEffect is only called once, after the initial render
     useEffect(() => {
@@ -144,6 +148,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         getHookByID(id).then((hook) =>{
             if ((hook instanceof Error)) window.history.length > 2 ? window.history.go(-1) : router.push('/comic');
 
+
             hook = hook as CreateHook;
 
             if (!hook.next_panel_set_id) {
@@ -154,7 +159,6 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
             // use the next id to reroute to read
             router.push(`/comic/?id=${hook.next_panel_set_id}`);
         });
-
 
         // Create a view for the canvas (setup for layers)
         paper.setup(canvas);
@@ -1567,31 +1571,26 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
             backgroundLayerReference.current.visible = !backgroundLayerReference.current.visible;
             layerVisibilities[0] = backgroundLayerReference.current.visible;
             setLayerVisibilities(layerVisibilities);
-            console.log(layerVisibilities);
         }
         else if (layer1Reference.current && event.target.value === '1') {
             layer1Reference.current.visible = !layer1Reference.current.visible;
             layerVisibilities[1] = layer1Reference.current.visible;
             setLayerVisibilities(layerVisibilities);
-            console.log(layerVisibilities);
         }
         else if (layer2Reference.current && event.target.value === '2') {
             layer2Reference.current.visible = !layer2Reference.current.visible;
             layerVisibilities[2] = layer2Reference.current.visible;
             setLayerVisibilities(layerVisibilities);
-            console.log(layerVisibilities);
         }
         else if (layer3Reference.current && event.target.value === '3') {
             layer3Reference.current.visible = !layer3Reference.current.visible;
             layerVisibilities[3] = layer3Reference.current.visible;
             setLayerVisibilities(layerVisibilities);
-            console.log(layerVisibilities);
         }
         else if (layer4Reference.current && event.target.value === '4') {
             layer4Reference.current.visible = !layer4Reference.current.visible;
             layerVisibilities[4] = layer4Reference.current.visible;
             setLayerVisibilities(layerVisibilities);
-            console.log(layerVisibilities);
         }
     };
 
@@ -1613,7 +1612,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         }
     };
 
-    const changeBackground = (event: ChangeEvent<HTMLInputElement>) => {
+    /* const changeBackground = (event: ChangeEvent<HTMLInputElement>) => {
 
         const file = (event.target as HTMLInputElement).files?.[0];
 
@@ -1642,7 +1641,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                 }
             });
         }
-    };
+    };*/
 
     // Undoes the last stroke to the canvas
     function undo() {
@@ -1732,13 +1731,27 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
     // Saves the project's layer image data to localStorage
     const save = (showAlert: boolean) => {
 
-        // Update the layerData variables with the most current edits
-        updateCurrentPanel();
-
         // Save the layerData object to localStorage in JSON string form
         // Panel 1
         try {
-            localStorage.setItem('panel-1-layerData', JSON.stringify(panel1LayerData));
+            if (currentPanelIndex == 0) {
+
+                // Save the current state of the panel being worked on
+                const currentPanelData = {
+                    background: String(backgroundLayerReference.current?.exportJSON({ asString: true })),
+                    shade:      String(shadingLayerRef.current?.exportJSON({ asString: true })),
+                    layer1:     String(layer1Reference.current?.exportJSON({ asString: true })),
+                    layer2:     String(layer2Reference.current?.exportJSON({ asString: true })),
+                    layer3:     String(layer3Reference.current?.exportJSON({ asString: true })),
+                    layer4:     String(layer4Reference.current?.exportJSON({ asString: true }))
+                };
+
+                setPanel1LayerData(currentPanelData);
+                localStorage.setItem('panel-1-layerData', JSON.stringify(currentPanelData));
+            }
+            else {
+                localStorage.setItem('panel-1-layerData', JSON.stringify(panel1LayerData));
+            }
         }
         catch (error) {
             sendError('Error saving panel 1s layer data to localStorage', 'Error', false, 4000, true);
@@ -1746,15 +1759,49 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
 
         // Panel 2
         try {
-            localStorage.setItem('panel-2-layerData', JSON.stringify(panel2LayerData));
+            if (currentPanelIndex == 1) {
+
+                // Save the current state of the panel being worked on
+                const currentPanelData = {
+                    background: String(backgroundLayerReference.current?.exportJSON({ asString: true })),
+                    shade:      String(shadingLayerRef.current?.exportJSON({ asString: true })),
+                    layer1:     String(layer1Reference.current?.exportJSON({ asString: true })),
+                    layer2:     String(layer2Reference.current?.exportJSON({ asString: true })),
+                    layer3:     String(layer3Reference.current?.exportJSON({ asString: true })),
+                    layer4:     String(layer4Reference.current?.exportJSON({ asString: true }))
+                };
+
+                setPanel2LayerData(currentPanelData);
+                localStorage.setItem('panel-2-layerData', JSON.stringify(currentPanelData));
+            }
+            else {
+                localStorage.setItem('panel-2-layerData', JSON.stringify(panel2LayerData));
+            }
         }
         catch (error) {
             sendError('Error saving panel 2s layer data to localStorage', 'Error', false, 4000, true);
         }
 
-        // Panel 1
+        // Panel 3
         try {
-            localStorage.setItem('panel-3-layerData', JSON.stringify(panel3LayerData));
+            if (currentPanelIndex == 2) {
+
+                // Save the current state of the panel being worked on
+                const currentPanelData = {
+                    background: String(backgroundLayerReference.current?.exportJSON({ asString: true })),
+                    shade:      String(shadingLayerRef.current?.exportJSON({ asString: true })),
+                    layer1:     String(layer1Reference.current?.exportJSON({ asString: true })),
+                    layer2:     String(layer2Reference.current?.exportJSON({ asString: true })),
+                    layer3:     String(layer3Reference.current?.exportJSON({ asString: true })),
+                    layer4:     String(layer4Reference.current?.exportJSON({ asString: true }))
+                };
+
+                setPanel3LayerData(currentPanelData);
+                localStorage.setItem('panel-3-layerData', JSON.stringify(currentPanelData));
+            }
+            else {
+                localStorage.setItem('panel-3-layerData', JSON.stringify(panel3LayerData));
+            }
         }
         catch (error) {
             sendError('Error saving panel 3s layer data to localStorage', 'Error', false, 4000, true);
@@ -1773,28 +1820,19 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         save(false);
         let success = true;
 
-        // Create a temp dummy layer to add layer data to publish
-        // let publishLayer = new paper.Layer();
+        // Save the current state of the canvas
+        const currentState = String(canvasProject.current?.exportSVG({ asString: true }));
 
         // Export Panel 1
-        /* publishLayer.importJSON(panel1LayerData.background);
-        publishLayer.importJSON(panel1LayerData.shade);
-        publishLayer.importJSON(panel1LayerData.layer1);
-        publishLayer.importJSON(panel1LayerData.layer2);
-        publishLayer.importJSON(panel1LayerData.layer3);
-        publishLayer.importJSON(panel1LayerData.layer4);
-        localStorage.setItem("image-1", String(publishLayer.exportSVG({ asString: true })));
-        publishLayer.removeChildren();*/
         backgroundLayerReference.current?.importJSON(panel1LayerData.background);
         shadingLayerRef.current?.importJSON(panel1LayerData.shade);
         layer1Reference.current?.importJSON(panel1LayerData.layer1);
         layer2Reference.current?.importJSON(panel1LayerData.layer2);
         layer3Reference.current?.importJSON(panel1LayerData.layer3);
         layer4Reference.current?.importJSON(panel1LayerData.layer4);
-        try {
-            localStorage.setItem('image-1', String(canvasProject.current?.exportSVG({ asString: true, embedImages: false })));
 
-            // console.log(localStorage.getItem('image-1'));
+        try {
+            localStorage.setItem('image-1', String(canvasProject.current?.exportSVG({ asString: true })));
         }
         catch (error) {
             sendError('Error publishing panel 1 to localStorage', 'Error', false, 4000, true);
@@ -1802,22 +1840,15 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         }
 
         // Export Panel 2
-        /* publishLayer.importJSON(panel2LayerData.background);
-        publishLayer.importJSON(panel2LayerData.shade);
-        publishLayer.importJSON(panel2LayerData.layer1);
-        publishLayer.importJSON(panel2LayerData.layer2);
-        publishLayer.importJSON(panel2LayerData.layer3);
-        publishLayer.importJSON(panel2LayerData.layer4);
-        localStorage.setItem("image-2", String(publishLayer.exportSVG({ asString: true })));
-        publishLayer.removeChildren();*/
         backgroundLayerReference.current?.importJSON(panel2LayerData.background);
         shadingLayerRef.current?.importJSON(panel2LayerData.shade);
         layer1Reference.current?.importJSON(panel2LayerData.layer1);
         layer2Reference.current?.importJSON(panel2LayerData.layer2);
         layer3Reference.current?.importJSON(panel2LayerData.layer3);
         layer4Reference.current?.importJSON(panel2LayerData.layer4);
+
         try {
-            localStorage.setItem('image-2', String(canvasProject.current?.exportSVG({ asString: true, embedImages: false })));
+            localStorage.setItem('image-2', String(canvasProject.current?.exportSVG({ asString: true })));
         }
         catch (error) {
             sendError('Error publishing panel 2 to localStorage', 'Error', false, 4000, true);
@@ -1825,28 +1856,33 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         }
 
         // Export Panel 3
-        /* publishLayer.importJSON(panel3LayerData.background);
-        publishLayer.importJSON(panel3LayerData.shade);
-        publishLayer.importJSON(panel3LayerData.layer1);
-        publishLayer.importJSON(panel3LayerData.layer2);
-        publishLayer.importJSON(panel3LayerData.layer3);
-        publishLayer.importJSON(panel3LayerData.layer4);
-        localStorage.setItem("image-3", String(publishLayer.exportSVG({ asString: true })));
-        publishLayer.removeChildren();*/
         backgroundLayerReference.current?.importJSON(panel3LayerData.background);
         shadingLayerRef.current?.importJSON(panel3LayerData.shade);
         layer1Reference.current?.importJSON(panel3LayerData.layer1);
         layer2Reference.current?.importJSON(panel3LayerData.layer2);
         layer3Reference.current?.importJSON(panel3LayerData.layer3);
         layer4Reference.current?.importJSON(panel3LayerData.layer4);
-        try {
-            localStorage.setItem('image-3', String(canvasProject.current?.exportSVG({ asString: true, embedImages: false })));
 
-            // console.log(localStorage.getItem('image-3'));
+        try {
+            localStorage.setItem('image-3', String(canvasProject.current?.exportSVG({ asString: true })));
         }
         catch (error) {
             sendError('Error publishing panel 3 to localStorage', 'Error', false, 4000, true);
             success = false;
+        }
+
+        switch (currentPanelIndex) {
+        case 0:
+            localStorage.setItem('image-1', currentState);
+            break;
+        case 1:
+            localStorage.setItem('image-2', currentState);
+            break;
+        case 2:
+            localStorage.setItem('image-3', currentState);
+            break;
+        default:
+            break;
         }
 
         // Save the SVG Image to localStorage
@@ -1870,7 +1906,60 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
             }
 
         }
+        console.log(divs);
     };
+
+
+
+    const warnDisplayFromMerge = () => {
+        {
+            if (show && showWarning == styles.noWarnMerge) {
+                setShowWarning(styles.yesWarnMerge);
+            }
+            else {
+                mergeLayer();
+            }
+        }
+    };
+
+    const warnDisplay = (reshow:boolean) => {
+        {
+            setShowWarning(styles.noWarnMerge);
+            if (reshow) setShow(true);
+            if (!reshow) setShow(false);
+        }
+    };
+
+    function hideAll() {
+        const allDivs = document.getElementsByClassName(styles.tabOptions);
+
+        for (let i = 0; i < allDivs.length; i++) {
+            const divType = allDivs[i];
+            if (divType instanceof HTMLElement) {
+                divType.style.display = 'none';
+            }
+        }
+    }
+    function showTools() {
+        const showObject = document.getElementById(styles.toolOptions)!;
+
+        showObject.style.display = 'inline';
+    }
+    function showLayers() {
+        const showObject = document.getElementById(styles.layerOptions)!;
+
+        showObject.style.display = 'inline';
+    }
+    function showPanels() {
+        const showObject = document.getElementById('panelSelect')!;
+
+        showObject.style.display = 'flex';
+    }
+    function showSave() {
+        const showObject = document.getElementById(styles.saveOptions)!;
+
+        showObject.style.display = 'inline';
+    }
 
     // Return the canvas HTMLElement and its associated functionality   1
     return (
@@ -2058,7 +2147,62 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
             <canvas id={`${styles.canvas}`} ref={canvasReference} className={`${styles.canvas}`} />
 
             <div id={styles.pullOut}>
-                <div id={`${styles.toolOptions}`}>
+                <div id={styles.tabs}>
+                    <div className={styles.tabDiv}>
+                        <label htmlFor="toolBtn" className={`${styles.tabButtons}`} id={styles.toolButton}>
+                            <input
+                                type="radio"
+                                id="toolBtn"
+                                name="tabBtn"
+                                className={`${styles.tabStyles}`}
+
+                                defaultChecked
+                                onClick={function(event) { hideAll(); showTools(); }}
+                            />
+                        </label>
+                    </div>
+
+                    <div className={styles.tabDiv}>
+                        <label htmlFor="layerBtn" className={`${styles.tabButtons}`} id={styles.layerButton}>
+                            <input
+                                type="radio"
+                                id="layerBtn"
+                                name="tabBtn"
+                                className={`${styles.tabStyles}`}
+
+                                onClick={function(event) { hideAll(); showLayers(); }}
+                            />
+                        </label>
+                    </div>
+
+                    <div className={styles.tabDiv}>
+                        <label htmlFor="panelBtn" className={`${styles.tabButtons}`} id={styles.panelButton}>
+                            <input
+                                type="radio"
+                                id="panelBtn"
+                                name="tabBtn"
+                                className={`${styles.tabStyles}`}
+
+                                onClick={function(event) { hideAll(); showPanels(); }}
+                            />
+                        </label>
+                    </div>
+
+                    <div className={styles.tabDiv}>
+                        <label htmlFor="saveBtn" className={`${styles.tabButtons}`} id={styles.saveButton}>
+                            <input
+                                type="radio"
+                                id="saveBtn"
+                                name="tabBtn"
+                                className={`${styles.tabStyles}`}
+
+                                onClick={function(event) { hideAll(); showSave(); }}
+                            />
+                        </label>
+                    </div>
+                </div>
+
+                <div id={`${styles.toolOptions}`} className={styles.tabOptions}>
                     <PenOptions
                         enabled={penOptionsEnabled}
                         penSize={penSize}
@@ -2088,7 +2232,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                     <ShaderOptions enabled={shadeOptionsEnabled} shaderSize={shadeSize} changeShaderSize={setShadeSize} />
                 </div>
 
-                <div id={styles.layerOptions}>
+                <div id={styles.layerOptions} className={styles.tabOptions}>
                     <div id="settings" className={styles.layerSettings}>
                         <div id="mergeSetting" className={styles.layerStyling}>
                             <label htmlFor="merge" id={styles.mergeLabel} className={`${styles.sizeConsistency}`}>
@@ -2097,7 +2241,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                                     className={`${styles.sizeConsistency}`}
                                     title="Merge Layer Down"
                                     id="merge"
-                                    onClick={mergeLayer}
+                                    onClick={() => warnDisplayFromMerge()}
                                 />
                             </label>
                         </div>
@@ -2322,7 +2466,8 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                         </div>
                     </div>
                 </div>
-                <div id="panelSelect" className={styles.panelSelect}>
+
+                <div id="panelSelect" className={` ${styles.panelSelect} ${styles.tabOptions}`}>
                     <div id="panel1" className={styles.panelStyling}>
                         <label htmlFor="panel1Select" className={styles.panelLabel}>
                             <input
@@ -2366,6 +2511,14 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                         </label>
                     </div>
                 </div>
+
+                <div id={styles.saveOptions} className={styles.tabOptions}>
+                    <div id={styles.savePublish}>
+                        <button className={`btn ${styles.saveButton}`} id="saveButton" onClick={() => save(true)}>Save</button>
+                        <button className={`btn ${styles.publishButton}`} id="publishButton" onClick={toPublish}>Publish</button>
+                        <button className={`btn ${styles.backButton}`} id="backButton" onClick={(e) => { e.preventDefault(); history.go(-1); }}>Back</button>
+                    </div>
+                </div>
             </div>
 
             <div id={styles.miniNavbar}>
@@ -2376,16 +2529,42 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                 </div>
             </div>
 
+            <div id={styles.mergeWarning} className={showWarning}>
+                <span className={styles.closeModal} onClick={() => warnDisplay(true)} />
+                <p id={styles.warningText}>Merge is a Permanent Action</p>
+                <button id={styles.dontSeeButton} onClick={() => warnDisplay(false)}>Hide warning message</button>
+            </div>
 
             <InfoBtn setVisibility={setInstructionsVisible} />
             <InfoBox
-                text="This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
-                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
-                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
-                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
-                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
-                        This is information about the drawing page and what you are able to do with it. This should teach you how to use this page properly.
-                        This is information about the drawing page and what you are able to do with it."
+                text={`
+                    Tools:
+                    - Use the Pen Tool to draw onto the canvas
+                    - Use the Eraser Tool to eraser anything on the canvas
+                    - Use the Pattern Tool to draw patterns to the canvas
+                    - Use the Shape Tool to draw shapes to the canvas
+                    - Use the Text Tool type text onto the canvas
+                    - Use the Sticker Tool to drag stickers onto the canvas
+                    - Use the Select Tool to select an area on the canvas
+                    - Use the Transform Tool to edit any previously selected areas of the canvas
+                    - Use Undo to undo your last edit to the canvas
+                    - Use Redo to redo your last edit to the canvas
+                    - Use clear to completely delete all edits done to a layer on the canvas
+                    
+                    Options: 
+                    - Adjust various attributes of the tools such as color and size on the top right side of the screen
+                    
+                    Layers:
+                    - Click on different layers in order to edit them.  Layers higher than  other will display their edits on top of them
+                    - Click the "eye" icon in order to show and hide your edits
+                    - Click the "lock" icon in order to lock the layer and prevent further edits from being done to it
+                    
+                    Panels:
+                    - Click on one of the three panel buttons in order to change which panel you are working on
+                    
+                    Saving and Publishing: 
+                    - Click the "Save" button in order to save your work in case you want to come back to it later
+                    - Click the "Publish button when you are all done!  Make sure that you edit all three panels before publishing.  `}
                 visible={instructionsVisible}
                 setVisibility={setInstructionsVisible}
             />
