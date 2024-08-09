@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from 'react';
 import styles from "@/styles/create.module.css";
 
 interface Props
@@ -37,6 +37,20 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
         STAR: 6
     });
 
+    const SHAPE_COUNT = 51; // Must be increased when new stickers are added
+    const [shapeChosen, setChosen] = useState<string[]>([]);
+    const [run, setRun] = useState(false);
+
+    /*
+    */
+    if (!run) {
+        for (let i = 0; i < SHAPE_COUNT; i++) {
+            shapeChosen.push('not'); // fills chosen array
+        }
+        setChosen(shapeChosen);
+        setRun(true);
+    }
+
     // Whenever the slider is adjusted, change the value of penSize.  This will update the label text as well as the value in the parent CreateCanvasTools component
     function updateSize()
     {
@@ -49,10 +63,17 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
     }
 
     // Whenever a new radioButton is selected, change the shape that is selected.  This will update which shape tool is used in the parent CreateCanvasTools component
-    function updateShape()
+    function updateShape(index:number)
     {
         let buttonSelected = document.querySelector("input[name='shape']:checked") as HTMLInputElement;
         changeShape(buttonSelected?.value);
+
+        for (let i = 0; i < shapeChosen.length; i++) {
+            shapeChosen[i] = styles.not;
+        }
+
+        shapeChosen[index] = styles.chosen;
+        setChosen(shapeChosen);
     }
 
     function updateDashedBorder()
@@ -68,35 +89,42 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
             <div id="shapeTools" className={styles.toolStyles}>
                 <h3>Shape Tools</h3>
                 <div id={styles.shapeSelect}>
-                    <div id="rectangleSelect">
-                        <input type="radio" name="shape" id="rectangle" value={shapeStates.RECTANGLE} defaultChecked onChange={updateShape}/>
-                        <label htmlFor="rectangle">Rectangle</label>
+                    <div id={styles.rectangleSelect}>
+                        <label id={styles.rectangle} htmlFor="rectangle" className={shapeChosen[0]} >
+                            <input type="radio" name="shape" id="rectangle" value={shapeStates.RECTANGLE} defaultChecked onChange={() => updateShape(0)}/>
+                        </label>
                     </div>
 
-                    <div id="lineSelect">
-                        <input type="radio" name="shape" id="line" value={shapeStates.LINE} onChange={updateShape}/>
-                        <label htmlFor="line">Line</label>
+                    <div id={styles.lineSelect}>
+                        <label id={styles.line} htmlFor="line" className={shapeChosen[1]}>
+                            <input type="radio" name="shape" id="line"  value={shapeStates.LINE} onChange={() => updateShape(1)}/>
+                        </label>
                     </div>
 
-                    <div id="ellipseSelect">
-                        <input type="radio" name="shape" id="ellipse" value={shapeStates.ELLIPSE} onChange={updateShape}/>
-                        <label htmlFor="ellipse">Ellipse</label>
+                    <div id={styles.ellipseSelect}>
+                        <label id={styles.ellipse} htmlFor="ellipse" className={shapeChosen[2]}>
+                            <input type="radio" name="shape" id="ellipse"  value={shapeStates.ELLIPSE} onChange={() => updateShape(2)}/>
+                        </label>
                     </div>
-                    <div id="triangleSelect">
-                        <input type="radio" name="shape" id="triangle" value={shapeStates.TRIANGLE} onChange={updateShape}/>
-                        <label htmlFor="triangle">Triangle</label>
+                    <div id={styles.triangleSelect}>
+                        <label id={styles.triangle} htmlFor="triangle" className={shapeChosen[3]}>
+                            <input type="radio" name="shape" id="triangle"  value={shapeStates.TRIANGLE} onChange={() => updateShape(3)}/>
+                        </label>
                     </div>
-                    <div id="hexagonSelect">
-                        <input type="radio" name="shape" id="hexagon" value={shapeStates.HEXAGON} onChange={updateShape}/>
-                        <label htmlFor="hexagon">Hexagon</label>
+                    <div id={styles.hexagonSelect}>
+                        <label id={styles.hexagon} htmlFor="hexagon" className={shapeChosen[4]}>
+                            <input type="radio" name="shape" id="hexagon"  value={shapeStates.HEXAGON} onChange={() => updateShape(4)}/>
+                        </label>
                     </div>
-                    <div id="octagonSelect">
-                        <input type="radio" name="shape" id="octagon" value={shapeStates.OCTAGON} onChange={updateShape}/>
-                        <label htmlFor="octagon">Octagon</label>
+                    <div id={styles.octagonSelect}>
+                        <label id={styles.octagon} htmlFor="octagon" className={shapeChosen[5]}>
+                            <input type="radio" name="shape" id="octagon"  value={shapeStates.OCTAGON} onChange={() => updateShape(5)}/>
+                        </label>
                     </div>
-                    <div id="starSelect">
-                        <input type="radio" name="shape" id="star" value={shapeStates.STAR} onChange={updateShape}/>
-                        <label htmlFor="star">Star</label>
+                    <div id={styles.starSelect}>
+                        <label id={styles.star} htmlFor="star" className={shapeChosen[6]}>
+                            <input type="radio" name="shape" id="star"  value={shapeStates.STAR} onChange={() => updateShape(6)}/>
+                        </label>
                     </div>
                 </div>
                 <div id={styles.shapeBorderSlider}>
@@ -108,7 +136,7 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
                     <label htmlFor="dashedBorderToggle">Dashed Border</label>
                 </div>
                 <div id={styles.borderPaletteButtons}>
-                    <label id="colorLabel">Border Colors:</label>
+                    <label id="colorLabel">Border:</label>
                     <button onClick={() => changeShapeBorderColor(color1)} id={styles.whiteButton}></button>
                     <button onClick={() => changeShapeBorderColor(color2)} id={styles.lightGrayButton}></button>
                     <button onClick={() => changeShapeBorderColor(color3)} id={styles.grayButton}></button>
@@ -117,7 +145,7 @@ const ShapeOptions = ({enabled, shapeBorderSize, changeShapeBorderSize, changeSh
                     <button onClick={() => changeShapeBorderColor(color6)} id={styles.emptyButton}></button>
                 </div>
                 <div id={styles.fillPaletteButtons}>
-                    <label id="colorLabel">Fill Colors:</label>
+                    <label id="colorLabel">Fill:</label>
                     <button onClick={() => changeShapeFillColor(color1)} id={styles.whiteButton}></button>
                     <button onClick={() => changeShapeFillColor(color2)} id={styles.lightGrayButton}></button>
                     <button onClick={() => changeShapeFillColor(color3)} id={styles.grayButton}></button>
