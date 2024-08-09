@@ -545,6 +545,55 @@
     margin: 2px;
 }
 
+/* MERGE WARNING */
+.noWarnMerge{
+    visibility: hidden;
+}
+
+.yesWarnMerge{
+    visibility: visible;
+    border: rgb(0, 0, 0) 2px solid;
+    background-color: rgb(255, 255, 255);
+    padding: 2px;
+    margin:auto;
+    height:55px;
+    width:260px;
+    align-items: center;
+    justify-content:center;
+    z-index: 9;
+
+    grid-area: canvas;
+}
+
+#warningText{
+    color: #000000;
+    font-size: 12px;
+    visibility: inherit;
+    margin: 3px 3px;
+    text-align: center;
+}
+
+.closeModal {
+    background: url("../../public/images/icons/draw-icons/x.svg") no-repeat center/contain;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    width:20px;
+    height:20px;
+    z-index: 50;
+    font-style:var(--font-back-issues);
+    border: #000000 2px solid;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  #dontSeeButton{
+    font-size: 10px;
+    justify-content: center;
+    position: relative;
+    left:4vw;
+  }
+
 
 /* PALETTE BUTTONS GENERIC */
 #paletteButtons p,

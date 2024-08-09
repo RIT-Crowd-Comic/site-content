@@ -104,6 +104,10 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
     // Redo tracking
     const [prevUndos, setPrevUndos] = useState<[{ id: number, svg: string }]>([{ id: -1, svg: '' }]);
 
+    //warning symbol
+    let [showWarning, setShowWarning] = useState(styles.noWarnMerge);
+    let [show, setShow] = useState(true);
+
     // Call useEffect() in order obtain the value of the canvas after the first render
     // Pass in an empty array so that useEffect is only called once, after the initial render
     useEffect(() => {
@@ -124,7 +128,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             window.history.length > 2 ? window.history.go(-1) : router.push('/comic');
         };
 
-        checkUserSession();
+        // checkUserSession();
 
         const canvas = canvasReference.current;
 
@@ -134,19 +138,19 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
         }
 
         // route if the link contains an id already created - get the hook by id and check its next
-        getHookByID(id).then((hook) =>{
-            if ((hook instanceof Error)) window.history.length > 2 ? window.history.go(-1) : router.push('/comic');
+        // getHookByID(id).then((hook) =>{
+        //     if ((hook instanceof Error)) window.history.length > 2 ? window.history.go(-1) : router.push('/comic');
 
-            hook = hook as CreateHook;
+        //     hook = hook as CreateHook;
 
-            if (!hook.next_panel_set_id) {
-                setParentHookId(id);
-                return;
-            }
+        //     if (!hook.next_panel_set_id) {
+        //         setParentHookId(id);
+        //         return;
+        //     }
 
-            // use the next id to reroute to read
-            router.push(`/comic/?id=${hook.next_panel_set_id}`);
-        });
+        //     // use the next id to reroute to read
+        //     router.push(`/comic/?id=${hook.next_panel_set_id}`);
+        // });
 
 
         // Create a view for the canvas (setup for layers)
@@ -1458,7 +1462,6 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
 
     // If the selected layer isn't the last layer in the hierarchy, merge it a layer down
     const mergeLayer = () => {
-
         // Check to make sure that this is not being called on the bottom layer (backgroundLayer) that has nowhere to merge down to 
         if(currentLayerIndex > 0)
         {
@@ -1856,7 +1859,31 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             }
 
         }
+         console.log(divs) 
     };
+       
+    
+
+    const warnDisplayFromMerge = () => {
+        {
+            if(show && showWarning == styles.noWarnMerge)
+            {
+                setShowWarning(styles.yesWarnMerge)
+            }
+            else
+            {
+                mergeLayer()
+            }   
+        }
+    }
+
+    const warnDisplay = (reshow:boolean) => {
+        {
+            setShowWarning(styles.noWarnMerge)
+            if(reshow) setShow(true);
+            if(!reshow) setShow(false);
+        }
+    }
 
     function hideAll()
     {
@@ -2175,7 +2202,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                                     className={`${styles.sizeConsistency}`}
                                     title="Merge Layer Down"
                                     id="merge"
-                                    onClick={mergeLayer}
+                                    onClick={() => warnDisplayFromMerge()}
                                 />
                             </label>
                         </div>
@@ -2463,6 +2490,11 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
                 </div>
             </div>
 
+            <div id={styles.mergeWarning} className={showWarning}>
+                <span className={styles.closeModal} onClick={() => warnDisplay(true)} />
+                <p id={styles.warningText}>Merge is a Permanent Action</p>
+                <button id={styles.dontSeeButton} onClick={() => warnDisplay(false)}>Hide warning message</button>
+            </div>
 
             <InfoBtn setVisibility={setInstructionsVisible} />
             <InfoBox
@@ -2477,6 +2509,6 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             />
         </div>
     );
-};
+}
 
 export default CreateToolsCanvasPaperJS;
