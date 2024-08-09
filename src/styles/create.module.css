@@ -6,7 +6,7 @@
     background-color: #2d2d2d;
     max-width: 100%;
     padding-right: 0 !important;
-    overflow: hidden;
+    overflow: hidden !important;
     background-image: radial-gradient(circle at center,
             #414141 0.15rem,
             transparent 0), radial-gradient(circle at center, #414141 0.15rem, transparent 0);
@@ -105,7 +105,7 @@
 }
 
 
-#toolOptions, #layerOptions
+#toolOptions, #layerOptions, #saveOptions
 {
     background-color: #00000062;
     border: 3px solid black;
@@ -139,6 +139,16 @@
 {
     height: 100%;
     overflow-x: hidden;
+}
+
+#tabs
+{
+    display: none;
+}
+
+#saveOptions
+{
+    display: none;
 }
 
 /* - TOOL OPTIONS */
@@ -645,6 +655,340 @@
     }
 }
 
+@media (max-height: 439px) and (orientation:landscape)
+{
+    #createPage
+    {
+        display: grid;
+
+        grid-template-columns: 40px calc(100% - 220px) 160px;
+        grid-template-rows: 100%;
+        grid-template-areas:
+        "toolBar canvas tools";
+
+        flex-direction: row;
+
+        height: 45vw;
+        max-height: 95vh;
+
+        width: auto;
+        max-width: 95vw;
+
+        column-gap: 10px;
+        
+        margin: 0 auto;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #fieldset
+    {
+        margin: 0;
+    }
+
+    #canvas
+    {
+        order: 1;
+        border: 3px solid black;
+        grid-area: canvas;
+
+        cursor: pointer;
+
+        height: 100% !important;
+        width: auto !important;
+
+        max-width: 100% !important;
+
+        aspect-ratio: 3 / 2;
+    }
+    
+    /* RIGHT SIDE BAR */
+
+    #pullOut
+    {
+        height: 100%;
+        max-height: 100%;
+
+        display: grid;
+        grid-template-rows: 30px calc(100% - 30px);
+
+        row-gap: 0;
+
+        grid-area: tools;
+
+        margin: 0;
+        width: 100%;
+    }
+
+    #pullOut div
+    {
+        max-width: 160px;
+    }
+
+    .tabOptions
+    {
+        height: 100%;
+        overflow-x: hidden;
+
+        position: relative;
+    }
+
+    #saveOptions
+    {
+        color: blue;
+    }
+
+    #layerOptions, .panelSelect, #saveOptions
+    {
+        display: none;
+    }
+
+    #savePublish
+    {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+    }
+
+    #savePublish button
+    {
+        width: 100%;
+        margin: 10px 0 !important;
+    }
+
+    /* TABS */
+    #tabs
+    {
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    #tabs div
+    {
+        width: 50px;
+        text-align: center;
+    }
+
+    /* - HIDES THE BUTTONS */
+    #tabs [type=radio]
+    {
+        opacity: 0;
+        width: 20px;
+        height: 20px;
+    }
+
+    /* - DECLARES ALL ICONS */
+    #toolButton
+    {
+        background: url("../../public/images/icons/draw-icons/options.svg") no-repeat center/contain;
+    }
+
+    #layerButton
+    {
+        background: url("../../public/images/icons/draw-icons/layers.svg") no-repeat center/contain;
+    }
+
+    #panelButton
+    {
+        background: url("../../public/images/icons/draw-icons/panels.svg") no-repeat center/contain;
+    }
+
+    #saveButton
+    {
+        background: url("../../public/images/icons/draw-icons/save.svg") no-repeat center/contain;
+    }
+
+    /* - ICON STYLING */
+    .tabDiv
+    {
+        height: 100%;
+        border: 3px solid transparent;
+    }
+    .tabDiv:has([type=radio]:checked)
+    {
+        border: 3px solid black;
+        border-bottom: transparent;
+    }
+    .tabButtons:has([type=radio]:hover)
+    {
+        filter: brightness(.7);
+    }
+
+    .tabButtons:has([type=radio]:checked)
+    {
+        filter: brightness(.5);
+    }
+
+    .tabStyles, .tabButtons
+    {
+        width: 20px;
+        height: 20px;
+        margin-top: 3px;
+    }
+
+    /* - TOOL OPTIONS */
+
+    .toolStyles
+    {
+        overflow-y: scroll;
+        overflow-x: hidden;
+
+        height: 100%;
+    }
+
+    /* - LAYER OPTIONS */
+
+    #layerOptions, .panelSelect
+    {
+        overflow: hidden;
+    }
+
+    .layerSelect
+    {
+        position: relative;
+        width: 100%;
+
+        margin: 0 0;
+        height: 100%;
+    }
+
+    .layerSelect label
+    {
+        margin: 10px 0;
+        height: 10%;
+    }
+
+    .layer
+    {
+        padding: 2px;
+        margin: 2px 0;
+        border: solid 3px white;
+        background-color: black;
+
+        display:flex;
+        flex-direction: row;
+
+        width: 95%;
+        height: 50%;
+        max-height: 50px;
+
+        overflow: hidden;
+    }
+
+    #layersList
+    {
+        overflow-y: scroll;
+        overflow-x: hidden;
+
+        height: 80%;
+    }
+
+    .layerSelectRadio
+    {
+        /* MAKES IT SO MOST OF LAYER BOX IS SELECTABLE */
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        position: absolute;
+        opacity: 0;
+    }
+
+    /* - LAYER SETTINGS OPTIONS */
+    .layerSettings
+    {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .layerStyling input
+    {
+        padding: 0;
+    }
+
+    /* - PREVIEW PANEL OPTIONS */
+
+    .panelSelect
+    {
+        flex-direction: row;
+        justify-content: space-around;
+
+        padding: 2px 6px;
+    }
+
+    .panelStyling, .panelLabel
+    {
+        margin-top: 10px;
+        height: 30px;
+    }
+
+    /* - SCROLLBAR */
+    .toolStyles::-webkit-scrollbar, #layersList::-webkit-scrollbar
+    {
+        display:none;
+    }
+
+    #fieldSet::-webkit-scrollbar
+    {
+        display:none;
+    }
+
+    #fieldSet::-webkit-scrollbar-thumb
+    {
+        display:none;
+    }
+
+    /* LEFT SIDE/TOOL BAR */
+
+    #fieldSet
+    {
+        width: 40px;
+    }
+
+    #toolRadioSelects, #functionButtons, .backgroundUploadForm
+    {
+        width: 18px;
+        margin: 0 auto;
+    }
+
+    /* ICONS */
+    /* - BUTTON CSS */
+
+    .toolStyling, .visibleStyling, .lockStyling, .sizeConsistency
+    {
+        width: 18px !important;
+        height: 18px !important;
+    }
+s
+    .panelLabel
+    {
+        height: 100%;
+    }
+
+    .layerSelect label, .layerSelectRadio
+    {
+        height: 15px;
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+}
+
+@media (max-height: 439px) and (orientation:landscape) and (max-width: 700px)
+{
+    #createPage
+    {
+        grid-template-columns: 40px calc(100% - 180px) 120px;
+    }
+
+    #pullOut div
+    {
+        max-width: 120px;
+    }
+}
+
 /* Portrait */
 @media (orientation: portrait)
 {
@@ -746,7 +1090,7 @@
 }
 
 /* [sm] Small devices, 576px and up */
-@media (min-width: 576px) {
+@media (min-width: 576px) and (min-height: 440px) {
 
     #createPage
     {
@@ -812,7 +1156,7 @@
 }
 
 /* [md] Medium devices, 768px and up */
-@media (min-width: 768px) {
+@media (min-width: 768px) and (min-height: 440px) {
     #createPage
     {
         display: grid;
@@ -825,7 +1169,7 @@
 
         flex-direction: row;
 
-        height: 35vw;
+        height: 45vw;
         max-height: 90vh;
 
         width: auto;
