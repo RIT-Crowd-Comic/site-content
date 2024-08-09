@@ -1,11 +1,12 @@
 import TrunkCollection from "./trunkCollection";
-import NavBar from "@/components/NavBar";
+// navbar
+import Navbar from "../../../components/NavBar"
 const Browse = () => {
     return (
-        <div>
-            <NavBar/> 
+        <main>
+            <Navbar/> 
             <TrunkCollection/>
-        </div>
+        </main>
     );
 
 }
