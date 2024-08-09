@@ -1860,11 +1860,15 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
 
     function hideAll()
     {
-        const allDivs = document.getElementsByClassName(styles.tabOptions) as HTMLCollectionOf<HTMLElement>;
+        const allDivs = document.getElementsByClassName(styles.tabOptions);
 
         for (let i = 0; i < allDivs.length; i++)
         {
-            allDivs[i].style.display = "none";
+            const divType = allDivs[i];
+            if (divType instanceof HTMLElement)
+            {
+                divType.style.display = "none";
+            }
         }
     }
     function showTools()
