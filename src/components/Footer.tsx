@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import linkedin from '../../public/images/icons/LinkedIn.svg';
 import github from '../../public/images/icons/Github.svg';
 
 const Footer = () => {

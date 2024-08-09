@@ -1,7 +1,5 @@
 "use client";
-import {useEffect, useState } from 'react';
 import styles from "@/styles/create.module.css";
-import react from 'react';
 
 interface Props {
     imgSrc_1:string, //active state image/icon
