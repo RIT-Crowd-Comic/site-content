@@ -31,14 +31,15 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
         }
         changePenSize(parseInt(sliderReference.current.value));
 
-        const range = document.getElementById(styles.range);
+        let range = document.getElementById(styles.range);
         let rangeSlider = document.getElementById("rangeSlider");
         const progress = (parseInt(sliderReference.current.value) / 20) * 100 -3;
         if(range){
             range.style.background = `linear-gradient(to right, #c7c7c7 ${progress}%,  #6d6d6da1 ${progress}%)`;
-            if(rangeSlider)   
+            if(rangeSlider){
                 rangeSlider.style.backgroundColor="#0000";
                 console.log("mask"); 
+            }
         }
     }
 
@@ -73,7 +74,7 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
                         <span id={styles.pointy}></span>
                         </span>
                     </span> */}
-                    <div id={styles.range} onChange={updateSize} onClick={() => showOutput(true)}>
+                    <div id={styles.range} className="range" onChange={updateSize} onClick={() => showOutput(true)}>
                         <input type="range" min="1" max="20" defaultValue={penSize} step="1" id="rangeSlider" className={styles.rangeSlider} ref={sliderReference} onChange={updateSize} ></input>
                     </div>
                 </div>
