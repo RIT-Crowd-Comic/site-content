@@ -102,7 +102,6 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
     // Call useEffect() in order obtain the value of the canvas after the first render
     // Pass in an empty array so that useEffect is only called once, after the initial render
     useEffect(() => {
-
         // Redirect from create if not signed in
         const checkUserSession = async () => {
             const session = await getSessionCookie();

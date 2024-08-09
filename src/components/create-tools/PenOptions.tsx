@@ -24,38 +24,43 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
 
     // Whenever the slider is adjusted, change the value of penSize.  This will update the label text as well as the value in the parent CreateCanvasTools component
     function updateSize()
-    {
+    {    
         if (!sliderReference.current) 
         {
             throw new Error("sliderReference is null");
         }
-
         changePenSize(parseInt(sliderReference.current.value));
 
+        const range = document.getElementById(styles.range);
+        let rangeSlider = document.getElementById("rangeSlider");
+        const progress = (parseInt(sliderReference.current.value) / 20) * 100 -3;
+        if(range){
+            range.style.background = `linear-gradient(to right, #c7c7c7 ${progress}%,  #6d6d6da1 ${progress}%)`;
+            if(rangeSlider)   
+                rangeSlider.style.backgroundColor="#0000";
+                console.log("mask"); 
+        }
     }
 
     // Toggle Visibility for Slider Output
     const showOutput=(visible: boolean) => {
-        console.log("show output");
-        // let sliderValue = document.querySelector('#sliderValue');
         let sliderValue = document.getElementById(styles.sliderValue);
-        
+
         if(sliderValue){
             if(visible){
                 // sliderValue.style.visibility='visible';
-                sliderValue.style.display="block";              
-                console.log("block");
+                sliderValue.style.display="block"; 
             }
             else{
                 // sliderValue.style.visibility='hidden';
                 sliderValue.style.display="none";
-                console.log("none");
             } 
         }  
     }
 
     // If the component is set to be enabled, return HTML, otherwise, return nothing
-    if(enabled)  //enabled & visible, enabled & not visible
+    if(enabled) //enabled & visible, enabled & not visible
+    // if(enabled && visible)  
     {
         return(
             <div id="penTools" className={styles.toolStyles}>
@@ -68,9 +73,9 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
                         <span id={styles.pointy}></span>
                         </span>
                     </span> */}
-                    <div id={styles.progressBar} style={{width:`${penSize*3.32+1}%`}} onChange={updateSize} onClick={() => showOutput(true)} ></div>
-                    <input type="range" min="1" max="20" defaultValue={penSize} step="1" id="rangeSlider" className={styles.rangeSlider} ref={sliderReference} onChange={updateSize} ></input>
-                    {/* onClick={() => showOutput(true)} */}
+                    <div id={styles.range} onChange={updateSize} onClick={() => showOutput(true)}>
+                        <input type="range" min="1" max="20" defaultValue={penSize} step="1" id="rangeSlider" className={styles.rangeSlider} ref={sliderReference} onChange={updateSize} ></input>
+                    </div>
                 </div>
                 <div id={styles.paletteButtons}>
                     <p id="colorText">Colors:</p>
@@ -83,6 +88,33 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
             </div>
         )
     }
+    // else if( enabled && !visible){
+    //     return(
+    //         <div id="penTools" className={styles.toolStyles}>
+    //             <h3>Pen Tools</h3>
+    //             <div id={styles.penSlider} className="toolSlider">
+    //                 <label id="sliderLabel" htmlFor="penRange">Pen Size: {penSize}</label>
+    //                 <span id={styles.sliderValue} style={{left:`${penSize*3.3-3}%`}}>
+    //                     <span>
+    //                     {penSize}
+    //                     <span id={styles.pointy}></span>
+    //                     </span>
+    //                 </span>
+    //                 <div id={styles.range} onChange={updateSize} onClick={() => showOutput(true)}>
+    //                     <input type="range" min="1" max="20" defaultValue={penSize} step="1" id="rangeSlider" className={styles.rangeSlider} ref={sliderReference} onChange={updateSize} ></input>
+    //                 </div>
+    //             </div>
+    //             <div id={styles.paletteButtons}>
+    //                 <p id="colorText">Colors:</p>
+    //                 <button onClick={() => changePenColor(color1)} id={styles.whiteButton}></button>
+    //                 <button onClick={() => changePenColor(color2)} id={styles.lightGrayButton}></button>
+    //                 <button onClick={() => changePenColor(color3)} id={styles.grayButton}></button>
+    //                 <button onClick={() => changePenColor(color4)} id={styles.darkGrayButton}></button>
+    //                 <button onClick={() => changePenColor(color5)} id={styles.blackButton}></button>
+    //             </div>
+    //         </div>
+    //     )
+    // }
     else
     {
         return(null)
