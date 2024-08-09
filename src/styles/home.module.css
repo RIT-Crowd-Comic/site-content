@@ -314,34 +314,42 @@
 @keyframes open {
     0% {
         background-image: url(../../public/images/GIFs/book-split/Frame1.gif);
+        filter: grayscale(0);
     }
 
     5% {
         background-image: url(../../public/images/GIFs/book-split/Frame2.gif);
+        filter: grayscale(0);
     }
 
     20% {
         background-image: url(../../public/images/GIFs/book-split/Frame3.gif);
+        filter: grayscale(0);
     }
 
     45% {
         background-image: url(../../public/images/GIFs/book-split/Frame4.gif);
+        filter: grayscale(0);
     }
 
     60% {
         background-image: url(../../public/images/GIFs/book-split/Frame5.gif);
+        filter: grayscale(0);
     }
 
     75% {
         background-image: url(../../public/images/GIFs/book-split/Frame6.gif);
+        filter: grayscale(0);
     }
 
     90% {
         background-image: url(../../public/images/GIFs/book-split/Frame7.gif);
+        filter: grayscale(0);
     }
 
     100% {
         background-image: url(../../public/images/GIFs/book-split/Frame8.gif);
+        filter: grayscale(0);
     }
 
 }
@@ -462,22 +470,28 @@
         background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
     }
 
-    15% {
+    20% {
         background-image: url(../../public/images/GIFs/arrow-split/frame2.png);
     }
 
-    65% {
+    35% {
         background-image: url(../../public/images/GIFs/arrow-split/frame3.png);
     }
 
-    70% {
+    55% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame3.png);
+    }
+
+    60% {
         background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
     }
 
-    90% {
-        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    80% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame5.png);
     }
-
+    98% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame7.png);
+    }
     100% {
         background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
     }
@@ -487,41 +501,46 @@
     0% {
         background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
     }
-
-    84.9% {
+    79.9% {
         background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
     }
 
-    85% {
+    80% {
         background-image: url(../../public/images/GIFs/arrow-split/frame2.png);
     }
 
-    90% {
+    82% {
         background-image: url(../../public/images/GIFs/arrow-split/frame3.png);
     }
 
-    94% {
+    85% {
         background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
     }
 
-    97% {
-        background-image: url(../../public/images/GIFs/arrow-split/frame4.png);
+    88% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame5.png);
     }
 
+    92% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame6.png);
+    }
+    95% {
+        background-image: url(../../public/images/GIFs/arrow-split/frame7.png);
+    }
     100% {
         background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
     }
 }
 
 #scrollToTopButton {
-    width: 100px;
-    height: 70px;
+    width: 60px;
+    height: 90px;
+    padding: 0;
     padding-top: 15px;
     margin-top: 0px;
     background-image: url(../../public/images/GIFs/arrow-split/frame1.png);
     background-size: contain;
     background-repeat: no-repeat;
-    transform: rotate(-90deg);
     animation: delay 3s linear infinite;
     position: relative;
     filter: grayscale(1);
@@ -937,8 +956,7 @@
     /* BACK TO TOP */
 
     #scrollToTopButton {
-        width: 100px;
-        height: 70px;
+        padding: 0;
         padding-top: 15px;
         margin-top: 0px;
     }
