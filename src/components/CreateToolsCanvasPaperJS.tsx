@@ -128,7 +128,7 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
             window.history.length > 2 ? window.history.go(-1) : router.push('/comic');
         };
 
-        checkUserSession();
+        // checkUserSession();
 
         const canvas = canvasReference.current;
 
@@ -138,19 +138,19 @@ const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
         }
 
         // route if the link contains an id already created - get the hook by id and check its next
-        getHookByID(id).then((hook) =>{
-            if ((hook instanceof Error)) window.history.length > 2 ? window.history.go(-1) : router.push('/comic');
+        // getHookByID(id).then((hook) =>{
+        //     if ((hook instanceof Error)) window.history.length > 2 ? window.history.go(-1) : router.push('/comic');
 
-            hook = hook as CreateHook;
+        //     hook = hook as CreateHook;
 
-            if (!hook.next_panel_set_id) {
-                setParentHookId(id);
-                return;
-            }
+        //     if (!hook.next_panel_set_id) {
+        //         setParentHookId(id);
+        //         return;
+        //     }
 
-            // use the next id to reroute to read
-            router.push(`/comic/?id=${hook.next_panel_set_id}`);
-        });
+        //     // use the next id to reroute to read
+        //     router.push(`/comic/?id=${hook.next_panel_set_id}`);
+        // });
 
 
         // Create a view for the canvas (setup for layers)

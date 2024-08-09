@@ -570,9 +570,6 @@
 }
 
 .yesWarnMerge{
-    position: relative;
-    bottom: 10vh;
-    right:14vw;
     visibility: visible;
     border: rgb(0, 0, 0) 2px solid;
     background-color: rgb(255, 255, 255);
@@ -583,7 +580,8 @@
     align-items: center;
     justify-content:center;
     z-index: 9;
-    float: right;
+
+    grid-area: canvas;
 }
 
 #warningText{
