@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import { Profile } from '@/components/Profile';
 import Notifications from '@/components/toast-notifications/notifications';
 import useNotifications from '@/components/toast-notifications/useNotifications';
@@ -10,10 +10,12 @@ export default function ProfilePage() {
         removeToast,
     } = useNotifications();
     return (
-    <>
-    <Notifications
-     toasts={toasts}
-     onClose={removeToast}/>
-    <Profile sendToast = {addToast}/>
-    </>);
+        <>
+            <Notifications
+                toasts={toasts}
+                onClose={removeToast}
+            />
+            <Profile sendToast={addToast} />
+        </>
+    );
 }

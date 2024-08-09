@@ -1,12 +1,16 @@
 'use client';
 import styles from '@/styles/read.module.css';
 import ReadPanel from './ReadPanel';
+import Loader from './loader/Loader';
 import {
     CreateHook, Hook, Panel as IPanel, PanelSet, User
 } from './interfaces';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { getSessionCookie } from '@/app/login/loginUtils';
 import * as apiCalls from '../api/apiCalls';
+import React from 'react';
+import { useState } from 'react';
+
 import Signature from './Signature';
 interface Props {
     setting: string,
@@ -30,6 +34,8 @@ const ComicPanels = ({
         bodyHeight = 'colBodyH';
     }
 
+    const [showLoader, setShowLoader] = useState(false);
+
     async function hookLink(hook: Hook | CreateHook) {
 
         // if the hook is set up, go to the next panel set
@@ -48,8 +54,11 @@ const ComicPanels = ({
         }
 
         // if they are signed in check to see if they made the current panel set
-
-        const user = await apiCalls.getUserBySession(session.value);
+        setShowLoader(true);
+        const user = await apiCalls.getUserBySession(session.value).then((u)=>{
+            setShowLoader(false);
+            return u;
+        });
 
         // if they are the author, make it so they can't go to the create page
         if (panel_set?.author_id === user.id) {
@@ -65,6 +74,7 @@ const ComicPanels = ({
 
     return (
         <main className={`${styles.body} ${styles[bodyHeight]}`}>
+            <Loader show={showLoader} />
             <div id={`${styles.comicPanels}`} className={`${setting}`}>
                 <div className={`${styles.firstPanel}`}>
                     <ReadPanel
@@ -73,7 +83,7 @@ const ComicPanels = ({
                         onHookClick={hookLink}
                         hidden={hidden}
                         panel_set={panel_set}
-                        userId={user != null ? user.id : "this should never happen"}
+                        userId={user != null ? user.id : 'this should never happen'}
                     />
                 </div>
                 <div className={`${styles.secondPanel}`}>
@@ -83,7 +93,7 @@ const ComicPanels = ({
                         onHookClick={hookLink}
                         hidden={hidden}
                         panel_set={panel_set}
-                        userId={user != null ? user.id : "this should never happen"}
+                        userId={user != null ? user.id : 'this should never happen'}
                     />
                 </div>
                 <div className={`${styles.thirdPanel}`}>
@@ -93,7 +103,7 @@ const ComicPanels = ({
                         onHookClick={hookLink}
                         hidden={hidden}
                         panel_set={panel_set}
-                        userId={user != null ? user.id : "this should never happen"}
+                        userId={user != null ? user.id : 'this should never happen'}
                     />
                 </div>
             </div>

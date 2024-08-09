@@ -41,8 +41,8 @@ const passwordAction = async (formData: FormData) => {
         confirmPassword: formData.get('confirmPassword')
     };
     if (!rawFormData.oldPassword || !rawFormData.newPassword || !rawFormData.confirmPassword) return 'Please fill all fields';
-    if(rawFormData.newPassword != rawFormData.confirmPassword) return 'Retyped password does not match new password';
-    if(rawFormData.newPassword == rawFormData.oldPassword) return 'New password cannot be same as old password';
+    if (rawFormData.newPassword != rawFormData.confirmPassword) return 'Retyped password does not match new password';
+    if (rawFormData.newPassword == rawFormData.oldPassword) return 'New password cannot be same as old password';
     const response = await loginUtils.updatePassword(rawFormData.oldPassword.toString(), rawFormData.newPassword.toString(), rawFormData.confirmPassword.toString());
     if (!response || response instanceof Error) return response.message;
     return 'Success';

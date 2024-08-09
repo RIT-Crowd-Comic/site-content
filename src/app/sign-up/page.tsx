@@ -1,11 +1,10 @@
-"use client"
-import {SignUpForm} from "@/components/forms/SignUp";
+'use client';
+import { SignUpForm } from '@/components/forms/SignUp';
 import Notifications from '@/components/toast-notifications/notifications';
 import useNotifications from '@/components/toast-notifications/useNotifications';
 
 
-export default function SignUp()
-{
+export default function SignUp() {
     const {
         toasts,
         addToast,
@@ -14,9 +13,11 @@ export default function SignUp()
 
     return (
         <>
-            <Notifications toasts={toasts}
-                onClose={removeToast} />
-            <SignUpForm  sendToast = {addToast}/>
+            <Notifications
+                toasts={toasts}
+                onClose={removeToast}
+            />
+            <SignUpForm sendToast={addToast} />
         </>
 
     );

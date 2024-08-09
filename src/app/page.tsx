@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import Hero from '../components/Hero';
 import Link from 'next/link';
@@ -12,8 +13,8 @@ import topCreate from '../../public/images/background-boxes/bw/Create_Top_BW.svg
 import bottomCreate from '../../public/images/background-boxes/bw/Create_Bottom_BW.svg';
 
 // Desktop Assets
-import desktopMission from "../../public/images/background-boxes/bw/Desktop_Mission_BW.svg"
-import desktopRead from "../../public/images/background-boxes/bw/Desktop_Read_BW.svg"
+import desktopMission from '../../public/images/background-boxes/bw/Desktop_Mission_BW.svg';
+import desktopRead from '../../public/images/background-boxes/bw/Desktop_Read_BW.svg';
 
 // import arrow from "../../public/images/GIFs/Arrow.gif"
 
@@ -25,17 +26,23 @@ import thirdPanelImage from '../../public/comic-panels/third_panel.png';
 import Navbar from '../components/NavBar';
 import Footer from '../components/Footer';
 import GetStarted from '../components/GetStartedButton';
+import Loader from '../components/loader/Loader';
+
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+    const [showLoader, setShowLoader] = useState(true);
+    useEffect(()=>{ setShowLoader(false); });
     return (
         <main className={styles.body}>
             <Navbar />
+            <Loader show={showLoader} />
             <Hero />
             {/* <ScrollToTop /> */}
             <section className="h-100">
                 <div className={styles.missionSec}>
                     <div className="mission row">
-                        <div className="col"></div>
+                        <div className="col" />
                         <div className="col-auto">
                             <h2 className={styles.missionHeading}>Mission</h2>
                         </div>
@@ -48,7 +55,7 @@ export default function Home() {
                         </div>
                         <div className="card-body">
                             <p className={`${styles.missionParagraph}`}>
-                                Crowd Comic is a collaborative art project created by a community of readers, writers, and artists.  Users will help to create a branching narrative greater than the sum of its parts.  We are looking to capture the beautiful disharmony that comes from individual visions for how a story unfolds.
+                            Crowd Comic is a collaborative art project created by a community of readers, writers, and artists.  Users will help to create a branching narrative greater than the sum of its parts.  We are looking to capture the beautiful disharmony that comes from individual visions for how a story unfolds.
                             </p>
                         </div>
                     </div>
