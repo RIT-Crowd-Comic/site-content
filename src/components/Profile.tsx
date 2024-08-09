@@ -24,7 +24,6 @@ interface Props {
  * @param {{Props}} sendToast Toast notification property
  */
 export function Profile({ sendToast } : Props) {
-    const [session, setSession] = useState('');
     const [user, setUser] = useState<User>();
     const [displayName, updateName] = useState('Display Name');
     const [email, updateEmail] = useState('email@example.com');
@@ -121,7 +120,6 @@ export function Profile({ sendToast } : Props) {
         const getProfileValues = async () => {
             const session = await getSessionCookie();
             if (!session) return;
-            setSession(session.value);
             const user = await getUserBySession(session.value);
             if (!user) return;
             setUser(user);
