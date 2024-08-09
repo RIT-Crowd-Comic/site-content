@@ -187,7 +187,7 @@ export function SignUpForm({ sendToast } : Props) {
                             <FormLabel htmlFor="inputPassword" className={styles.loginLabel}>Confirm Password</FormLabel>
                             <div className={styles.passwordContainer}>
                                 <Form.Control
-                                    type={passwordVisible ? 'text' : 'password'}
+                                    type={confirmPasswordVisible ? 'text' : 'password'}
                                     name="password2"
                                     placeholder="********"
                                     className="form-control"
