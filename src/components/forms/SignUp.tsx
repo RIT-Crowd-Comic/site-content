@@ -3,21 +3,19 @@
 import styles from '@/styles/login.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
-
 import logo from '../../../public/images/logos/Crowd_Comic_Logo_BW.svg';
-
+import React from 'react';
+import Form from 'react-bootstrap/Form';
+import * as validation from './utils';
 import { useState } from 'react';
 import { registerAction } from '@/app/login/actions';
-import Form from 'react-bootstrap/Form';
 import { FormLabel } from 'react-bootstrap';
-import * as validation from './utils';
 import { addToastFunction } from '../toast-notifications/interfaces';
-
 
 interface Props {
     sendToast: addToastFunction
 }
+
 export function SignUpForm({ sendToast } : Props) {
     const [passwordVisible, setPasswordVisibility] = useState(false);
     const [confirmPasswordVisible, setConfirmPasswordVisibility] = useState(false);
@@ -31,6 +29,7 @@ export function SignUpForm({ sendToast } : Props) {
     const [passwordInvalidRetypeMessage, setPasswordInvalidRetypeMessage] = useState('');
     const [password, setPass] = useState('');
 
+    // Show the passwords
     const togglePasswordVisibility = () => {
         setPasswordVisibility(!passwordVisible);
     };
@@ -47,6 +46,7 @@ export function SignUpForm({ sendToast } : Props) {
         const email = formData.get('email');
         const password = formData.get('password');
         const password2 = formData.get('password2');
+
         if (!displayName) { setDisplayNameValid(false); }
         if (!email) { setEmailValid(false); }
         if (!password) { setPasswordValid(false); }
@@ -187,7 +187,7 @@ export function SignUpForm({ sendToast } : Props) {
                             <FormLabel htmlFor="inputPassword" className={styles.loginLabel}>Confirm Password</FormLabel>
                             <div className={styles.passwordContainer}>
                                 <Form.Control
-                                    type={passwordVisible ? 'text' : 'password'}
+                                    type={confirmPasswordVisible ? 'text' : 'password'}
                                     name="password2"
                                     placeholder="********"
                                     className="form-control"

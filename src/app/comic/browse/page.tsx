@@ -1,7 +1,6 @@
 import TrunkCollection from './trunkCollection';
-
-// navbar
 import Navbar from '../../../components/NavBar';
+
 const Browse = () => {
     return (
         <main>
@@ -9,7 +8,6 @@ const Browse = () => {
             <TrunkCollection />
         </main>
     );
-
 };
 
 export default Browse;

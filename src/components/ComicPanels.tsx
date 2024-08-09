@@ -11,7 +11,6 @@ import * as apiCalls from '../api/apiCalls';
 import React from 'react';
 import { useState } from 'react';
 
-import Signature from './Signature';
 interface Props {
     setting: string,
     hook_state: string,

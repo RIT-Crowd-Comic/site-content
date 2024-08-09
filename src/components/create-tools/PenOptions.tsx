@@ -1,75 +1,77 @@
-import { useRef } from "react";
-import styles from "@/styles/create.module.css";
+import { useRef } from 'react';
+import styles from '@/styles/create.module.css';
 
 interface Props
 {
-    enabled: Boolean;               // Should the HTML of this component be displayed on the page currently?
+    enabled: boolean;               // Should the HTML of this component be displayed on the page currently?
     penSize: number;                // Default size of the pen brush
     changePenSize: Function;        // Method for setting the size of the pen brush
     changePenColor: Function;       // Method for setting the color of the pen brush
 }
 
 // *** Pen Options is used in order to changed the different values associated with the pen tool in CreateToolsCanvas ***
-const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =>
-{
+const PenOptions = ({
+    enabled, penSize, changePenSize, changePenColor
+} : Props) => {
+
     // Reference to the size slider HTML Element
     const sliderReference = useRef<HTMLInputElement>(null);
 
     // Colors for the user to select.  Currently only a greyscale color palette
-    const color1 = "rgb(255, 255, 255)";
-    const color2 = "rgb(192, 192, 192)";
-    const color3 = "rgb(128, 128, 128)";
-    const color4 = "rgb(64, 64, 64)";
-    const color5 = "rgb(0, 0, 0)";
+    const color1 = 'rgb(255, 255, 255)';
+    const color2 = 'rgb(192, 192, 192)';
+    const color3 = 'rgb(128, 128, 128)';
+    const color4 = 'rgb(64, 64, 64)';
+    const color5 = 'rgb(0, 0, 0)';
 
     // Whenever the slider is adjusted, change the value of penSize.  This will update the label text as well as the value in the parent CreateCanvasTools component
-    function updateSize()
-    {    
-        if (!sliderReference.current) 
-        {
-            throw new Error("sliderReference is null");
+    function updateSize() {
+        if (!sliderReference.current) {
+            throw new Error('sliderReference is null');
         }
         changePenSize(parseInt(sliderReference.current.value));
 
 
         // Hide default progress bar placeholder
-        let progressBar = document.getElementById(styles.progressBar);
-        if(progressBar){
-            progressBar.style.display="none";
+        const progressBar = document.getElementById(styles.progressBar);
+        if (progressBar) {
+            progressBar.style.display = 'none';
         }
 
         // Change slider background color based on the pen size
-        let range = document.getElementById(styles.range);
-        let rangeSlider = document.getElementById("rangeSlider");
-        const fill = (parseInt(sliderReference.current.value) / 20) * 100 -3;
-        if(range){
+        const range = document.getElementById(styles.range);
+        const rangeSlider = document.getElementById('rangeSlider');
+        const fill = (parseInt(sliderReference.current.value) / 20) * 100 - 3;
+        if (range) {
             range.style.background = `linear-gradient(to right, #c7c7c7 ${fill}%,  #6d6d6da1 ${fill}%)`;
-            if(rangeSlider){
-                rangeSlider.style.backgroundColor="#0000";
+            if (rangeSlider) {
+                rangeSlider.style.backgroundColor = '#0000';
             }
         }
     }
 
     // Toggle Visibility for Slider Output
-    const showOutput=(visible: boolean) => {
-        let sliderValue = document.getElementById(styles.sliderValue);
-        if(sliderValue){
-            if(visible){
+    const showOutput = (visible: boolean) => {
+        const sliderValue = document.getElementById(styles.sliderValue);
+        if (sliderValue) {
+            if (visible) {
+
                 // sliderValue.style.visibility='visible';
-                sliderValue.style.display="block"; 
+                sliderValue.style.display = 'block';
             }
-            else{
+            else {
+
                 // sliderValue.style.visibility='hidden';
-                sliderValue.style.display="none";
-            } 
-        }  
-    }
+                sliderValue.style.display = 'none';
+            }
+        }
+    };
 
     // If the component is set to be enabled, return HTML, otherwise, return nothing
-    if(enabled) //enabled & visible, enabled & not visible
+    if (enabled) // enabled & visible, enabled & not visible
     // if(enabled && visible)  
     {
-        return(
+        return (
             <div id="penTools" className={styles.toolStyles}>
                 <h3>Pen Tools</h3>
                 <div id={styles.penSlider}>
@@ -80,22 +82,38 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
                         <span id={styles.pointy}></span>
                         </span>
                     </span> */}
-                    <div id={styles.range} className="range" onChange={updateSize} onClick={() => showOutput(true)}>
-                        <div id={styles.progressBar} style={{width:`${penSize*3.32+1}%`}}  onMouseEnter={updateSize}></div>
-                        <input type="range" min="1" max="20" defaultValue={penSize} step="1" id="rangeSlider" className={styles.rangeSlider} ref={sliderReference} onMouseEnter={updateSize}></input>
+                    <div
+                        id={styles.range}
+                        className="range"
+                        onChange={updateSize}
+                        onClick={() => showOutput(true)}
+                    >
+                        <div id={styles.progressBar} style={{ width: `${penSize * 3.32 + 1}%` }} onMouseEnter={updateSize} />
+                        <input
+                            type="range"
+                            min="1"
+                            max="20"
+                            defaultValue={penSize}
+                            step="1"
+                            id="rangeSlider"
+                            className={styles.rangeSlider}
+                            ref={sliderReference}
+                            onMouseEnter={updateSize}
+                        />
                     </div>
                 </div>
                 <div id={styles.paletteButtons}>
                     <p id="colorText">Colors:</p>
-                    <button onClick={() => changePenColor(color1)} id={styles.whiteButton}></button>
-                    <button onClick={() => changePenColor(color2)} id={styles.lightGrayButton}></button>
-                    <button onClick={() => changePenColor(color3)} id={styles.grayButton}></button>
-                    <button onClick={() => changePenColor(color4)} id={styles.darkGrayButton}></button>
-                    <button onClick={() => changePenColor(color5)} id={styles.blackButton}></button>
+                    <button onClick={() => changePenColor(color1)} id={styles.whiteButton} />
+                    <button onClick={() => changePenColor(color2)} id={styles.lightGrayButton} />
+                    <button onClick={() => changePenColor(color3)} id={styles.grayButton} />
+                    <button onClick={() => changePenColor(color4)} id={styles.darkGrayButton} />
+                    <button onClick={() => changePenColor(color5)} id={styles.blackButton} />
                 </div>
             </div>
-        )
+        );
     }
+
     // else if( enabled && !visible){
     //     return(
     //         <div id="penTools" className={styles.toolStyles}>
@@ -123,11 +141,10 @@ const PenOptions = ({enabled, penSize, changePenSize, changePenColor} : Props) =
     //         </div>
     //     )
     // }
-    else
-    {
-        return(null)
+    else {
+        return (null);
     }
 
-}
+};
 
-export default PenOptions
+export default PenOptions;

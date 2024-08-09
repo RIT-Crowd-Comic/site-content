@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import linkedin from '../../public/images/icons/LinkedIn.svg';
 import github from '../../public/images/icons/Github.svg';
 
 const Footer = () => {
@@ -29,17 +28,18 @@ const Footer = () => {
                 </div>
                 <ul className="footer-nav-list">
                     <li><Link href="/">Home</Link></li>
-                    <li><Link href="/team" >Team</Link></li>
-                    <li><Link
-                        id="comicLink"
-                        href=""
-                        onClick={async (e) => {
-                            e.preventDefault();
-                            const url = await getTrunkUrl();
-                            router.push(url);
-                        }}
-                    >Read
-                    </Link>
+                    <li><Link href="/team">Team</Link></li>
+                    <li>
+                        <Link
+                            id="comicLink"
+                            href=""
+                            onClick={async (e) => {
+                                e.preventDefault();
+                                const url = await getTrunkUrl();
+                                router.push(url);
+                            }}
+                        > Read
+                        </Link>
                     </li>
                 </ul>
             </div>

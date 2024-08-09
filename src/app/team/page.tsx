@@ -1,5 +1,4 @@
 'use client';
-import Image from 'next/image';
 import Link from 'next/link';
 import Filter from '@/components/Filter';
 import Card from '@/components/Card';
@@ -36,6 +35,7 @@ const TeamPage = () => {
                             <div className="d-flex flex-wrap justify-content-center">
                                 {Cards.cards.map(card => (
                                     <Card
+                                        key={card.name}
                                         topString={card.name}
                                         bottomString={card.role}
                                         staticPhoto={card.img}

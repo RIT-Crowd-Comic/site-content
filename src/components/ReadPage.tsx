@@ -142,7 +142,7 @@ const ReadPage = ({ id }: Props) => {
                 user={currentUser}
             />
             <Signature author={author} toggleAuthorCredit={setAuthorCreditVisible} />
-            <div className={`${styles.controlBar}`}  >
+            <div className={`${styles.controlBar}`}>
                 <OverlayTrigger
                     trigger={['focus', 'hover']}
                     placement="bottom"

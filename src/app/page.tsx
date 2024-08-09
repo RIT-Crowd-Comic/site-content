@@ -120,7 +120,7 @@ export default function Home() {
                 </div>
             </section>
             <div className={`${styles.ourTeam}`}>
-                <button className="button"><Link href="/team" >Our Team</Link></button>
+                <button className="button"><Link href="/team">Our Team</Link></button>
             </div>
             <div className={`${styles.backToTop}`}>
                 <Link className="arrowLink" href="#"><button type="button" className="arrowAnimation mb-6 mr-6 z-10 btn btn-lg my-8 " id={`${styles.scrollToTopButton}`} /></Link>

@@ -1,12 +1,8 @@
 'use client';
 
 import styles from '@/styles/profile.module.css';
-import Image from 'next/image';
 import Link from 'next/link';
-
-import logo from '../../public/images/logos/Crowd_Comic_Logo_BW.svg';
 import Navbar from '@/components/NavBar';
-
 import { useEffect, useState, useRef } from 'react';
 import { nameAction, passwordAction } from '@/app/login/actions';
 import { getUserBySession } from '@/api/apiCalls';
@@ -17,17 +13,18 @@ import * as validation from './forms/utils';
 import { User } from './interfaces';
 import { ProfileEditor } from './ProfileEditor';
 import ProfilePicture from './ProfilePicture';
-
 import { addToastFunction } from './toast-notifications/interfaces';
-
 
 interface Props {
     sendToast: addToastFunction
 }
+
+/**
+ * Profile Component for the User Dashboard page
+ * @param {{Props}} sendToast Toast notification property
+ */
 export function Profile({ sendToast } : Props) {
-    const [session_id, setSession] = useState('');
     const [user, setUser] = useState<User>();
-    const [message, errorState] = useState('');
     const [displayName, updateName] = useState('Display Name');
     const [email, updateEmail] = useState('email@example.com');
     const [currentPasswordVisible, setCurrentPasswordVisibility] = useState(false);
@@ -40,7 +37,7 @@ export function Profile({ sendToast } : Props) {
 
     const pfpRef = useRef<string | undefined>('/images/icons/Profile.svg');
 
-    const [emailValid, setEmailValid] = useState(true);
+    const [emailValid] = useState(true);
     const [originalPasswordValid, setOriginalPasswordValid] = useState(true);
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordRetypeValid, setPasswordRetypeValid] = useState(true);
@@ -58,7 +55,6 @@ export function Profile({ sendToast } : Props) {
         if (!displayName) { setDisplayNameValid(false); }
 
         // if(!email){  setEmailValid(false)};
-
         if (!emailValid || !displayNameValid) {
             event.preventDefault();
             event.stopPropagation();
@@ -119,10 +115,11 @@ export function Profile({ sendToast } : Props) {
     };
 
     useEffect(() => {
+
+        // Set user values from the session cookie
         const getProfileValues = async () => {
             const session = await getSessionCookie();
             if (!session) return;
-            setSession(session.value);
             const user = await getUserBySession(session.value);
             if (!user) return;
             setUser(user);
@@ -149,8 +146,6 @@ export function Profile({ sendToast } : Props) {
                             else sendToast(response, 'Error', false, 6000, true);
                         }}
                     >
-
-
                         {/* USERNAME */}
                         <Row className={`mb-3 ${styles.formInputs}`}>
                             {/* PROFILE PICTURE*/}
@@ -195,7 +190,7 @@ export function Profile({ sendToast } : Props) {
                                     isInvalid={!emailValid}
                                 />
                                 <Form.Control.Feedback type="invalid" className={styles.feedback}>
-                                    Email is invalid, must contain a &quot@&quot and a &quot.&quot .
+                                    Email is invalid, must contain a `&quot;`@`&quot;` and a `&quot;`.`&quot;`.
                                 </Form.Control.Feedback>
                             </Form.Group>
                         </Row>

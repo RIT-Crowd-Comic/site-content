@@ -169,18 +169,18 @@ const ShapeOptions = ({
                 </div>
                 <div id={styles.shapeBorderSlider} className="toolSlider">
                     <label id="sliderLabel" htmlFor="shapeBorderRange">Border Size: {shapeBorderSize}</label>
-                    <div id={styles.progressBar} style={{width:`${shapeBorderSize*3.32+1}%`}} onChange={updateSize}></div>
-                    <input 
-                      type="range" 
-                      min="1" 
-                      max="20" 
-                      defaultValue={shapeBorderSize} 
-                      step="1" 
-                      id="shapeBorderRange" 
-                      className={styles.rangeSlider}  
-                      ref={sliderReference} 
-                      onChange={updateSize}>
-                  </input>
+                    <div id={styles.progressBar} style={{ width: `${shapeBorderSize * 3.32 + 1}%` }} onChange={updateSize} />
+                    <input
+                        type="range"
+                        min="1"
+                        max="20"
+                        defaultValue={shapeBorderSize}
+                        step="1"
+                        id="shapeBorderRange"
+                        className={styles.rangeSlider}
+                        ref={sliderReference}
+                        onChange={updateSize}
+                    />
                 </div>
                 <div id="dashedBorder">
                     <input type="checkbox" id="dashedBorderToggle" onChange={updateDashedBorder} />

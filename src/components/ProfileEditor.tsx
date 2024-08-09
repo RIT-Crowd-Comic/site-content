@@ -1,10 +1,10 @@
 import {
     Dispatch, SetStateAction, useCallback, useEffect, useRef, useState
 } from 'react';
-import styles from '../styles/profileEditor.module.css';
+import styles from '@/styles/profileEditor.module.css';
 import Image from 'next/image';
 import Croppie from 'croppie';
-import '../styles/croppie-extended.css';
+import '@/styles/croppie-extended.css';
 import { changePfp } from '@/api/apiCalls';
 import { MutableRefObject } from 'react';
 
@@ -15,6 +15,11 @@ interface Props {
     email?: string
 }
 
+/**
+ * Profile Editor component to change the user's profile picture on the suer dashboard
+ * @param {Props} Props An editorState boolean and an action to toggle that state. Optional parameters for a user email and
+ * a reference to a profile picture url value that can be read and written to
+ */
 const ProfileEditor = ({
     editorState = false,
     setEditorState,
@@ -28,7 +33,6 @@ const ProfileEditor = ({
     const [edit, setEdit] = useState(false);
     const [reloadEditorFlag, reloadEditor] = useState(false);
 
-    // const uploadInputRef = useRef<HTMLInputElement | null>(null);
 
     const initializeCropper = () => {
         if (profileEditorRef.current) {
@@ -64,13 +68,6 @@ const ProfileEditor = ({
                     console.log('reloading editor', !reloadEditorFlag);
                 };
             }
-
-            // const fileReader = new FileReader();
-            // fileReader.onload = (event) => {
-            //     const uploadedImage = event.target?.result;
-            //     if (uploadedImage) console.log(uploadedImage.)
-            // }
-            // fileReader.readAsArrayBuffer(node.files[0]);
         });
     }, []);
 
@@ -81,14 +78,6 @@ const ProfileEditor = ({
         initializeCropper();
     }, [edit, reloadEditorFlag]);
 
-    // bind the image to the croppie image editor
-    // useEffect(() => {
-    //     if (previewRef.current) {
-    //         croppie?.bind({ url: previewRef.current.src, orientation: 1 });
-    //     }
-
-    // }, [croppie]);
-
     const close = () => {
         setEditorState(false);
         setEdit(false);
@@ -97,9 +86,10 @@ const ProfileEditor = ({
     // Save the image in the croppie window to the database and update pfp use on the page
     const save = async () => {
         if (!croppie || !email) return;
-        croppie.result({ type: 'base64' }).then(async (resp) => {
-            const arr = resp.split(',') as string[];
-            let bstr = atob(arr[1]), n = bstr.length;
+        croppie.result({ type: 'base64' }).then(async (imgString) => {
+            const arr = imgString.split(',') as string[];
+            const bstr = atob(arr[1]);
+            let n = bstr.length;
             const u8arr = new Uint8Array(n);
             while (n--) {
                 u8arr[n] = bstr.charCodeAt(n);
@@ -164,7 +154,7 @@ const ProfileEditor = ({
                                     style={{ display: 'none' }}
                                 />
                                 <label htmlFor="image_input">
-                                    <span className="btn btn-outline-dark" >Change Photo</span>
+                                    <span className="btn btn-outline-dark">Change Photo</span>
                                     <div style={{}} />
                                 </label>
                                 <button

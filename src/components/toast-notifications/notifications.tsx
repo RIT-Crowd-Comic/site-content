@@ -1,7 +1,7 @@
 import React from 'react';
 import { ToastContainer, Toast } from 'react-bootstrap';
-import styles from './notifications.module.css';
-import {ToastData} from './interfaces'
+import styles from '@/styles/notifications.module.css';
+import { ToastData } from './interfaces';
 
 interface ErrorNotificationProps {
     toasts: ToastData[];
@@ -14,7 +14,7 @@ interface ErrorNotificationProps {
  */
 const Notification: React.FC<ErrorNotificationProps> = ({ toasts, onClose }) => {
     return (
-        <ToastContainer className={`${styles.toastContainer}`} position={'bottom-center'}>
+        <ToastContainer className={`${styles.toastContainer}`} position="bottom-center">
             {toasts.map((toast) => (
                 <Toast
                     key={toast.id}

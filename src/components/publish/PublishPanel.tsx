@@ -1,11 +1,11 @@
-import styles from './Panel.module.css';
+import styles from '@/styles/Panel.module.css';
 import {
     SyntheticEvent, useEffect, useLayoutEffect, useRef, useState
 } from 'react';
 import { CreateHook, Hook } from '../interfaces';
 import {
     createSVGPath, calculateArea, checkForMin, findCenter
-} from '@/utils';
+} from '@/scripts/utils';
 import Image from 'next/image';
 
 
@@ -190,7 +190,7 @@ const Panel = ({
                         hooks.map((hook, i) => (
                             <path
                                 d={createSVGPath((hook as CreateHook).points ?? (hook as Hook).position.map(p => [p.x, p.y]) ?? '')}
-                                fill={(selectedHook?.hookIndex ?? -1) === i ? HIGHLIGHT_COLOR :  FILL_COLOR }
+                                fill={(selectedHook?.hookIndex ?? -1) === i ? HIGHLIGHT_COLOR : FILL_COLOR}
                                 onClick={() => { if (onHookClick) onHookClick(hook, i); }}
                                 className={`${styles.hookPath}  ${styles['hookTaken']}`}
                                 key={i}

@@ -1,9 +1,7 @@
 'use client';
 import { PaperOffset } from 'paperjs-offset';
-import {
-    use, useEffect, useRef, useState
-} from 'react';
-import { ChangeEvent, MouseEvent, TouchEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { ChangeEvent } from 'react';
 import paper from 'paper';
 import PenOptions from './create-tools/PenOptions';
 import EraserOptions from './create-tools/EraserOptions';
@@ -14,20 +12,16 @@ import StickerOptions from './create-tools/StickerOptions';
 import ShaderOptions from './create-tools/ShaderOptions';
 import styles from '@/styles/create.module.css';
 import { useRouter } from 'next/navigation';
-import { Istok_Web } from 'next/font/google';
 
 import InfoBox from './info/InfoBox';
 import InfoBtn from './info/InfoBtn';
 
 import Loader from './loader/Loader';
 
-import Link from 'next/link';
 import { getHookByID, getUserBySession } from '@/api/apiCalls';
 import { CreateHook } from './interfaces';
 import { getSessionCookie, updateSession } from '@/app/login/loginUtils';
-import test from 'node:test';
 import type { addToastFunction } from './toast-notifications/interfaces';
-import local from 'next/font/local';
 
 interface Props {
     id: number
@@ -118,7 +112,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
     // Pass in an empty array so that useEffect is only called once, after the initial render
     useEffect(() => {
         setShowLoader(true);
-      
+
         // Redirect from create if not signed in
         const checkUserSession = async () => {
             const session = await getSessionCookie();
@@ -322,7 +316,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
     };
 
     // Saves edit to edit stack on mouse up 
-    penTool.current.onMouseUp = function (event: paper.ToolEvent) {
+    penTool.current.onMouseUp = function () {
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             prevEdits.push({ id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({ asString: true })) });
             if (prevEdits.length > UNDO_CAP) {
@@ -516,7 +510,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
     };
 
     // undo tool for edit tracking
-    fillTool.current.onMouseUp = function (event: paper.ToolEvent) {
+    fillTool.current.onMouseUp = function () {
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             prevEdits.push({ id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({ asString: true })) });
             if (prevEdits.length > UNDO_CAP) {
@@ -557,9 +551,6 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
     });
 
     const [shapeSelected, setShapeSelected] = useState<number>(0);
-
-    // The current potential shape being created
-    let currentShape: paper.Path;
 
     // Boolean to check if user dragged mouse
     const [mouseDragged, setMouseDragged] = useState(false);
@@ -760,7 +751,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         }
     };
 
-    textTool.current.onMouseUp = function (event: paper.ToolEvent) {
+    textTool.current.onMouseUp = function () {
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             prevEdits.push({ id: canvasProject.current.activeLayer.id, svg: String(canvasProject.current.activeLayer.exportSVG({ asString: true })) });
             if (prevEdits.length > UNDO_CAP) {
@@ -1102,7 +1093,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
     };
 
     // finishes transform action and resets states (depending on set transform action)
-    transformTool.onMouseUp = function (event: paper.ToolEvent) {
+    transformTool.onMouseUp = function () {
         if (canvasProject.current && canvasProject.current.activeLayer.locked == false) {
             if (transformAction == 'resizing' && transformMouseDragged) {
 
@@ -1892,22 +1883,6 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
         router.replace(`/comic/create/publish?id=${parentHookId}`);
     };
 
-    const infoDisplay = (visible: boolean) => {
-        const divs = document.querySelectorAll('div');
-        const modal = divs[divs.length - 2];
-        if (modal) {
-            if (visible) {
-                modal.style.display = 'block';
-            }
-            else {
-                modal.style.display = 'none';
-            }
-        }
-        console.log(divs);
-    };
-
-
-
     const warnDisplayFromMerge = () => {
         {
             if (show && showWarning == styles.noWarnMerge) {
@@ -2154,7 +2129,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                                 className={`${styles.tabStyles}`}
 
                                 defaultChecked
-                                onClick={function(event) { hideAll(); showTools(); }}
+                                onClick={function() { hideAll(); showTools(); }}
                             />
                         </label>
                     </div>
@@ -2167,7 +2142,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                                 name="tabBtn"
                                 className={`${styles.tabStyles}`}
 
-                                onClick={function(event) { hideAll(); showLayers(); }}
+                                onClick={function() { hideAll(); showLayers(); }}
                             />
                         </label>
                     </div>
@@ -2180,7 +2155,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                                 name="tabBtn"
                                 className={`${styles.tabStyles}`}
 
-                                onClick={function(event) { hideAll(); showPanels(); }}
+                                onClick={function() { hideAll(); showPanels(); }}
                             />
                         </label>
                     </div>
@@ -2193,7 +2168,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                                 name="tabBtn"
                                 className={`${styles.tabStyles}`}
 
-                                onClick={function(event) { hideAll(); showSave(); }}
+                                onClick={function() { hideAll(); showSave(); }}
                             />
                         </label>
                     </div>

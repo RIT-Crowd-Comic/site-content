@@ -8,17 +8,13 @@ const CreateToolsCanvasPaperJS = dynamic(
     { ssr: false }
 );
 
-const Create = ({
-    params,
-    searchParams,
-}: {
+const Create = ({ searchParams, }: {
     params: { id: number }
     searchParams: { [key: string]: number | undefined }
   }) => {
 
     // redirect if link is incorrect
     const { id } = searchParams;
-
 
     const {
         toasts,

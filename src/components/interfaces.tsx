@@ -74,4 +74,4 @@ export type {
     User
 };
 
-export { emptyPanelSet, };
+export { emptyPanelSet };

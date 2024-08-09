@@ -66,7 +66,7 @@ export default function RootLayout({ children, }: Readonly<{
 }>) {
     return (
         <html lang="en" className={`${inter.variable} ${cevicheOne.variable} ${comicNeue.variable} ${backIssues.variable}`}>
-            <body >
+            <body>
                 <BootstrapClient />
                 {children}
             </body>

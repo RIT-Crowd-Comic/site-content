@@ -18,7 +18,7 @@ const calculateArea = (points: number[][]) =>{
 };
 
 /**
- * check to see if al the vertiies are at least a certain distance from the center or a certain distance from the centerx/y axies
+ * check to see if al the vertices are at least a certain distance from the center or a certain distance from the centerx/y axies
  * returns false if one point is less than the set minimum distance from the center of the points
  * @param verticies [[x,y]...]
  * @param center center of points [x,y]

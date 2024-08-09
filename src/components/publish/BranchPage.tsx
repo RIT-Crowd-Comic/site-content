@@ -1,4 +1,4 @@
-import styles from './BranchPage.module.css';
+import styles from '@/styles/BranchPage.module.css';
 import { useEffect, useState } from 'react';
 import { CreateHook, emptyPanelSet, CreatePanelSet } from '../interfaces';
 import Panel from './PublishPanel';
