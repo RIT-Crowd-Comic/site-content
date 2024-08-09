@@ -1,8 +1,5 @@
-interface Props{
-    key:string
-    value:string;
-    bullet:boolean;// weather or not it is bulletpointed 
-}
+import styles from './Key.module.css';
+import { KeyPoint } from '../interfaces';
 
 /**
  * will be given an array of key value object pairs
@@ -11,26 +8,23 @@ interface Props{
  * @param values :Props[]  
  * @returns 
  */
-const Key = (values:Props[])=>{
-    const container = document.createElement('ul');
-    for (const v of values) {
-        const li = document.createElement('li');
-        const example = document.createElement('div');// the 'box' on the left that will be described
+const Key = (values:KeyPoint[])=>{
 
-        const value = document.createTextNode(v.value);
-        example.className = 'keyIcons';
+    return (
+        <ul>
+            {
+                values.map((v)=>{
+                    console.log(v.bullet);
+                    return (
+                        <li className={`${v.bullet ? styles.keyBullet : ''}`}>
+                            <div style={{ background: `${v.key}` }} className={`${styles.keyIcons}`} />
+                            {v.value}
+                        </li>
+                    );
 
-        if (v.key != null) { // checks if there is a key at all 
-            example.style.background = v.key;
-            li.appendChild(example);
-        }
-        if (v.bullet) {
-            example.className = 'keybullet';
-        }
-
-        li.appendChild(value);
-        container.appendChild(li);
-    }
-    return ({ container });
+                })
+            }
+        </ul>
+    );
 };
 export default Key;

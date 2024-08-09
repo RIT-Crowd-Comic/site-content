@@ -61,6 +61,12 @@ interface User {
     created_at: string
 }
 
+interface KeyPoint{
+    key:string
+    value:string;
+    bullet:boolean;// weather or not it is bulletpointed 
+}
+
 export type {
     CreatePanelSet,
     CreatePanel,
@@ -68,7 +74,10 @@ export type {
     PanelSet,
     Panel,
     Hook,
-    User
+    User,
+    KeyPoint
 };
+
+
 
 export { emptyPanelSet, };

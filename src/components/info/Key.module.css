@@ -4,6 +4,8 @@
     background-repeat: no-repeat;
     object-fit:contain;
     list-style-type: none;
+    width:25px;
+    height:25px;
 }
 .keyBullet{
     list-style-type: circle;
