@@ -45,6 +45,7 @@ interface PanelSet{
     author_id: string,
     panels: Panel[],
     hook?: Hook | undefined;
+    created_at: string
 }
 
 interface Hook{

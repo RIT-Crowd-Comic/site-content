@@ -20,6 +20,7 @@ const PublishPage = ({ id, sendError }: Props) => {
     const [confirmHook, setConfirmHook] = useState<number>();
     const [selectedHook, setSelectedHook] = useState<{ panelIndex: number, hookIndex: number }>();
     const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
+    const [instructionsVisible, setInstructionsVisible] = useState<boolean>(false);
     const [panelSet, setPanelSet] = useState<CreatePanelSet>({
         id:        0,
         author_id: '',
@@ -162,21 +163,6 @@ const PublishPage = ({ id, sendError }: Props) => {
         setAddingHook(false);
     };
 
-    const infoDisplay = (visible: boolean) => {
-        const divs = document.querySelectorAll('div');
-        const modal = divs[divs.length - 2];
-        if (modal) {
-            if (visible) {
-                modal.style.display = 'block';
-            }
-            else {
-                modal.style.display = 'none';
-            }
-
-        }
-
-    };
-
     return (
         <>
             <main className={`${styles.body}`}>
@@ -236,12 +222,12 @@ const PublishPage = ({ id, sendError }: Props) => {
                                 const queryString = new URLSearchParams({ id: response.panel_set }).toString();
 
                                 // Clear localStorage so that the user can create new panels in the future
-                                localStorage.setItem('panel-1-layerData', '');
-                                localStorage.setItem('panel-2-layerData', '');
-                                localStorage.setItem('panel-3-layerData', '');
-                                localStorage.setItem('image-1', '');
-                                localStorage.setItem('image-2', '');
-                                localStorage.setItem('image-3', '');
+                                localStorage.removeItem('panel-1-layerData');
+                                localStorage.removeItem('panel-2-layerData');
+                                localStorage.removeItem('panel-3-layerData');
+                                localStorage.removeItem('image-1');
+                                localStorage.removeItem('image-2');
+                                localStorage.removeItem('image-3');
 
                                 router.push(`/comic/?${queryString}`);
                             }

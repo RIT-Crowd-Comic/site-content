@@ -7,12 +7,13 @@ import ComicPanels from '@/components/ComicPanels';
 import * as apiCalls from '../api/apiCalls';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
-    Panel, PanelSet, Hook, User, KeyPoint
+    Panel, PanelSet, Hook, User,  KeyPoint
 } from './interfaces';
-import InfoBox from './info/InfoBox';
 import InfoBtn from './info/InfoBtn';
+import InfoBox from './info/InfoBox';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { getSessionCookie } from '@/app/login/loginUtils';
+import Signature from './Signature';
 
 // import icons and background
 const backIcon = '/images/back-button-pressed.png';
@@ -35,7 +36,7 @@ const ReadPage = ({ id }: Props) => {
     const [panelSet, setPanelSet] = useState<PanelSet>();
     const [parentPanelSet, setParentPanelSet] = useState<PanelSet | undefined>();
     const [error, setError] = useState<string>('');
-    const [userId, setUserId] = useState<string>('');
+    const [currentUser, setCurrentUser] = useState<User>();
     const [panels, setPanels] = useState<Panel[]>([]);
     const [author, setAuthor] = useState<User>();
     const [authorCreditVisible, setAuthorCreditVisible] = useState<boolean>(false);
@@ -43,21 +44,25 @@ const ReadPage = ({ id }: Props) => {
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
-
             const session = await getSessionCookie();
             let userResponse = null;
-            let newUserId = '';
             if (session) {
                 userResponse = await apiCalls.getUserBySession(session.value);
-                newUserId = userResponse.id;
+                setCurrentUser(userResponse);
             }
 
             else {
-                newUserId = '';
+                setCurrentUser(undefined);
             }
 
             const panelSetResponse = await apiCalls.getPanelSetByID(id) as PanelSet;
+            console.log(panelSetResponse);
             if (!updateError(panelSetResponse)) {
+                const authorResponse = await apiCalls.getUser(panelSetResponse.author_id);
+                if (!updateError(authorResponse)) {
+                    console.log(authorResponse);
+                    setAuthor(authorResponse);
+                }
                 const imageUrlsResponse = await apiCalls.getAllImageUrlsByPanelSetId(panelSetResponse.id);
                 const hookResponses = await apiCalls.getHooksFromPanelSetById(panelSetResponse.id) as Hook[];
 
@@ -85,12 +90,13 @@ const ReadPage = ({ id }: Props) => {
                         const parentPanelResponse = await apiCalls.getPanelByID(Number(panelSetResponse?.hook?.current_panel_id));
                         if (!updateError(parentPanelResponse)) {
                             const previousPanelSetResponse = await apiCalls.getPanelSetByID(Number(parentPanelResponse.panel_set_id));
-                            setParentPanelSet(previousPanelSetResponse);
+                            if (!updateError(previousPanelSetResponse)) {
+                                setParentPanelSet(previousPanelSetResponse);
+                            }
                         }
                     }
                 }
             }
-            setUserId(newUserId);
             setIsLoading(false);
         }
         fetchData();
@@ -112,20 +118,6 @@ const ReadPage = ({ id }: Props) => {
         return <div>{error}</div>;
     }
 
-    const infoDisplay = (visible: boolean) => {
-        const divs = document.querySelectorAll('div');
-        const modal = divs[divs.length - 2];
-        if (modal) {
-            if (visible) {
-                modal.style.display = 'block';
-            }
-            else {
-                modal.style.display = 'none';
-            }
-
-        }
-    };
-
     const backVisibility: CSSProperties = parentPanelSet == undefined ?
         { filter: 'brightness(0.2)', } :
         { };
@@ -139,8 +131,9 @@ const ReadPage = ({ id }: Props) => {
                 currentId={id}
                 router={router}
                 panel_set={panelSet}
-                userId={userId}
+                user={currentUser}
             />
+            <Signature author={author} toggleAuthorCredit={setAuthorCreditVisible} />
             <div className={`${styles.controlBar}`}  >
                 <OverlayTrigger
                     trigger={['focus', 'hover']}
