@@ -7,7 +7,7 @@ import ComicPanels from '@/components/ComicPanels';
 import * as apiCalls from '../api/apiCalls';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
-    Panel, PanelSet, Hook, User
+    Panel, PanelSet, Hook, User, KeyPoint
 } from './interfaces';
 import InfoBox from './info/InfoBox';
 import InfoBtn from './info/InfoBtn';
@@ -185,21 +185,38 @@ const ReadPage = ({ id }: Props) => {
             </div>
             <InfoBtn setVisibility={setInstructionsVisible} />
             <InfoBox
-                text={`Read though different story lines by clicking through the panel hooks.
+                text={
+                    [
+                        `Read though different story lines by clicking through the panel hooks.
 
-         Use the lightbulb to toggle the hooks on and off
-         - Red hooks (empty): do not currently have a comic panel connected to them and will take you to the create page
-         - Blue hooks (filled): have a comic panel connected to them and you can click on them to explore that branch of the story
-         - Grey hooks (blocked): have a comic panel connected to them. However, you are the author of the current panel set, so you cannot create a new panel set off this one
-
-         Use the back button to take you back to the parent panel.
-         Use the + looking symbol to toggle between horizontal and vertical view. This will only work for larger screen sizes.
-         `}
+                        Use the lightbulb to toggle the hooks on and off`,
+                        [
+                            ({
+                                value:  'Blue hooks (empty): do not currently have a comic panel connected to them and will take you to the create page',
+                                key:    'var(--light-light)',
+                                bullet: true
+                            }as KeyPoint),
+                            {
+                                value:  '(filled): have a comic panel connected to them and you can click on them to explore that branch of the story',
+                                key:    'var(--light-red)',
+                                bullet: true
+                            },
+                            {
+                                value:  '(blocked): have a comic panel connected to them. However, you are the author of the current panel set, so you cannot create a new panel set off this one',
+                                key:    'var(--light-red)',
+                                bullet: true
+                            }
+                        ],
+                        `Use the back button to take you back to the parent panel.
+                        Use the + looking symbol to toggle between horizontal and vertical view. This will only work for larger screen sizes.
+                        `
+                    ]
+                }
                 visible={instructionsVisible}
                 setVisibility={setInstructionsVisible}
             />
             <InfoBox
-                text={`Author Name: ${author?.display_name}\nCreated at: ${new Date(author?.created_at ?? '')}`}
+                text={[`Author Name: ${author?.display_name}`, `Created at: ${new Date(author?.created_at ?? '')}`]}
                 setVisibility={setAuthorCreditVisible}
                 visible={authorCreditVisible}
             />

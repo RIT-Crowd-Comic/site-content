@@ -251,13 +251,35 @@ const PublishPage = ({ id, sendError }: Props) => {
                 </div>
                 <InfoBtn setVisibility={setInstructionsVisible} />
                 <InfoBox
-                    text={`
-                        -click on the add hook button to start drawing a hook on the comic
-                        -once done, click on accept hook to keep or remove to delete the hook
-                        *hooks do have a minimum size and dimention so you can't make itty bitty unclickable hooks
-                        - to remove a hook: click on the hook you wish to remove then click on remove hook to delete it\n 
-                        *YOU MUSH HAVE 3 HOOKS IN ORDER TO PUBLISH YOUR COMIC*
-                        `}
+                    text={
+                        [
+                            ``,
+                            [
+                                {
+                                    value:  `click on the add hook button to start drawing a hook on the comic`,
+                                    key:    '',
+                                    bullet: true
+                                },
+                                {
+                                    value:  `once done, click on accept hook to keep or remove to delete the hook`,
+                                    key:    '',
+                                    bullet: true
+                                },
+                                {
+                                    value:  `*hooks do have a minimum size and dimention so you can't make itty bitty unclickable hooks`,
+                                    key:    '',
+                                    bullet: true
+                                },
+                                {
+                                    value:  `to remove a hook: click on the hook you wish to remove then click on remove hook to delete i`,
+                                    key:    '',
+                                    bullet: true
+                                },
+                            ],
+                            '',
+                            `*YOU MUSH HAVE 3 HOOKS IN ORDER TO PUBLISH YOUR COMIC*`
+                        ]
+                    }
                     visible={instructionsVisible}
                     setVisibility={setInstructionsVisible}
                 />

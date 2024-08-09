@@ -2311,10 +2311,26 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
 
             <InfoBtn setVisibility={setInstructionsVisible} />
             <InfoBox
-                text={`Use the tools to create three comic panels
-                    -You can use the panel icons on the bottom right to switch between them
-                    Once you have created three comics that you are happy with, press the save then the publish button to move to the next step
-                    -You can use your save button to save your progress if you would like to come back to it later, but careful,someone may have already published their owen set on that hook already by then`}
+                text={
+                    [
+                        `Use the tools to create three comic panels`,
+                        [
+                            {
+                                value:  'You can use the panel icons on the bottom right to switch between them',
+                                key:    '',
+                                bullet: true
+                            }
+                        ],
+                        'Once you have created three comics that you are happy with, press the save then the publish button to move to the next step',
+                        [
+                            {
+                                value:  'You can use your save button to save your progress if you would like to come back to it later, but careful,someone may have already published their owen set on that hook already by then',
+                                key:    '',
+                                bullet: true
+                            }
+                        ]
+                    ]
+                }
                 visible={instructionsVisible}
                 setVisibility={setInstructionsVisible}
             />
