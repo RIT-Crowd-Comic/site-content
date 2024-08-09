@@ -195,7 +195,7 @@ export function Profile({ sendToast } : Props) {
                                     isInvalid={!emailValid}
                                 />
                                 <Form.Control.Feedback type="invalid" className={styles.feedback}>
-                                    Email is invalid, must contain a "@" and a "." .
+                                    Email is invalid, must contain a &quot@&quot and a &quot.&quot .
                                 </Form.Control.Feedback>
                             </Form.Group>
                         </Row>
