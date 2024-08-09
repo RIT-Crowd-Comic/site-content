@@ -118,7 +118,7 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
     // Pass in an empty array so that useEffect is only called once, after the initial render
     useEffect(() => {
         setShowLoader(true);
-
+      
         // Redirect from create if not signed in
         const checkUserSession = async () => {
             const session = await getSessionCookie();
@@ -883,7 +883,6 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                     // translates canvas coordinates to pixel coordinates (for getting subraster in transform)
                     const pixelStartPoint = startSelectPoint.subtract(rasterLT).multiply(canvasProject.current.view.pixelRatio);
                     const pixelEndPoint = endSelectPoint.subtract(rasterLT).multiply(canvasProject.current.view.pixelRatio);
-
 
                     // gets the selected area of the rasterized canvas
                     const selectedArea = new paper.Rectangle(pixelStartPoint, pixelEndPoint);
@@ -1681,7 +1680,6 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
                 layer4Reference.current.importSVG(change.svg);
                 layer4Reference.current.activate();
             }
-
             setPrevUndos(prevUndos);
         }
         setPrevEdits(prevEdits);
@@ -1904,7 +1902,6 @@ const CreateToolsCanvasPaperJS = ({ id, sendError }: Props) => {
             else {
                 modal.style.display = 'none';
             }
-
         }
         console.log(divs);
     };

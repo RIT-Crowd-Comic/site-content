@@ -72,10 +72,8 @@
 #fieldSet {
     overflow-y: scroll;
     overflow-x: hidden;
-
     height: 100%;
     width: 40px;
-
     background-color: #00000062;
     border: 3px solid black;
 }
@@ -100,7 +98,6 @@
 {
     background-color: #00000062;
     border: 3px solid black;
-
     padding: 7px;
 }
 
@@ -115,12 +112,9 @@
     margin-left: 20px;
     height: 100%;
     max-height: 100%;
-
     display: grid;
     grid-template-rows: auto 40% 10%;
-
     row-gap: 10px;
-
     display: none;
 }
 
@@ -146,7 +140,6 @@
 .toolStyles {
     overflow-y: scroll;
     overflow-x: hidden;
-
     height: 100%;
 }
 
@@ -175,21 +168,17 @@
     margin: 2px 0;
     border: solid 3px white;
     background-color: black;
-
-    display: flex;
+    display:flex;
     flex-direction: row;
-
     width: 95%;
     height: 50%;
     max-height: 50px;
-
     overflow: hidden;
 }
 
 #layersList {
     overflow-y: scroll;
     overflow-x: hidden;
-
     height: 80%;
 }
 
@@ -198,7 +187,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-
     position: absolute;
     opacity: 0;
 }
@@ -474,7 +462,6 @@
 .backgroundUploadForm {
     width: 20px;
     height: 20px;
-
     margin-bottom: 5px;
 }
 
@@ -487,6 +474,166 @@
 #textAlignment,
 #shadeSlider {
     accent-color: rgb(126, 126, 126);
+    position: relative;
+}
+
+/* Range Slider */
+#range{
+    background-color: linear-gradient(to right, #c7c7c7 50%, #6d6d6da2 50%);
+    width: 70%;
+    height: 15px;
+    border-radius: 10px;
+    margin-left: 1px;
+    z-index: 2;
+}
+
+.rangeSlider{
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance:none;
+    cursor: pointer;
+    /* creating a custom design */
+    background-color: #6d6d6da2;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 15px;
+    border-radius: 10px;
+
+    /* Thumb or circle button for range slider*/
+    /* Chrome, Edge, Safari */
+    &::-webkit-slider-thumb{
+        -webkit-appearance: none;
+        appearance:none;
+        border-radius: 20px solid #ababab;
+        background: #c7c7c7;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        cursor: pointer;
+        outline: 0;
+        /* z-index: 1; */
+    }
+    
+    &::-webkit-slider-runnable-track {
+        -webkit-appearance: none;
+        appearance:none;
+        background-color: #0000003f;
+        border-radius: 10px;
+        height: 15px;
+        width: 100%;
+        /* z-index: 0; */
+    }
+
+    /* Firefox */
+    &::-moz-range-thumb{
+        -webkit-appearance: none;
+        appearance:none;
+        border-radius: 20px solid #ababab;
+        background: #c7c7c7;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: .2s ease-in-out;
+        outline: 0;
+
+        /* &:active::-webkit-slider-thumb{
+            #sliderValue{
+                visibility: visible;
+            }
+        } */
+    }   
+
+    &::-moz-range-track{
+        background-color: #6d6d6da2;
+        border-radius: 10px;
+        height: 15px;
+        width: 100%;
+    }
+
+    &::-moz-range-progress {
+        background-color: #c7c7c7; 
+    }
+
+    /* IE */
+    &::-ms-fill-lower {
+        background-color: #c7c7c7; 
+    }
+
+    &::-ms-fill-upper {  
+        background-color: #6d6d6da2;
+    }
+
+    /* Not functional */
+    /* &:active {
+
+        &::-webkit-slider-thumb{
+            background: darken(#c7c7c7,10%);
+        }
+        &::-moz-range-thumb {
+            background:darken(#c7c7c7,10%);
+        }
+        + #slider-value {
+            opacity:1;
+            color: red;  */
+            /* visibility: visible;
+            transform:scale(1,1) translateX(-50%); */
+        /* }
+    } */
+}
+
+.rangeSlider::-webkit-slider-thumb:hover,
+.rangeSlider::-webkit-slider-thumb:focus{
+    width: 13px;
+    height: 13px;
+    transform: scale(1.2);
+    box-shadow: inset 0 0 0 1.5px #4d4d4d;
+    border: none;
+    margin-top: 1px;
+}
+
+#sliderValue{
+    /* visibility: hidden; */
+    /* opacity: 0.2; */
+    /* display: none; */
+    position:relative;
+    display:block;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    line-height:22px;
+    background-color: #fff;
+    color:#000;
+    text-align:center;
+    font-size: 10px;
+    font-weight:bolder;
+    z-index:5;
+    transform: translateY(-4px);
+    /* transform: translateY(20px); */
+
+    /* The pointy side of the slider output */
+    #pointy{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: #fff;
+        border-radius: 50% 50% 0 50%;
+        transform: rotate(45deg); 
+        z-index: -1;
+    }
+} 
+
+#progressBar{
+    width: 30px;
+    height: 15px;
+    background: #c7c7c7;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: absolute;
+    will-change: width;
+    overflow: hidden;
 }
 
 /* SHAPE SELECT BUTTONS */
@@ -816,7 +963,6 @@
     border: solid 3px #000000;
     top: 1px;
 }
-
 
 
 /* FOR PORTRAIT MODE ONLY */
@@ -1215,10 +1361,8 @@ s
     #fieldSet {
         overflow-y: scroll;
         overflow-x: hidden;
-
         height: 100%;
         width: 30px;
-
         background-color: #00000062;
         border: 3px solid black;
     }
@@ -1299,10 +1443,8 @@ s
     #fieldSet {
         overflow-y: scroll;
         overflow-x: hidden;
-
         height: 100%;
         width: 30px;
-
         background-color: #00000062;
         border: 3px solid black;
     }
