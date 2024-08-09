@@ -20,9 +20,6 @@ const TextOptions = ({enabled, changeTextFont, changeTextSize, changeFontWeight,
     const fontDropdownReference = useRef<HTMLSelectElement>(null);
     const sizeDropdownReference = useRef<HTMLSelectElement>(null);
 
-    // Reference to the textArea HTML Element
-    const textAreaReference = useRef<HTMLTextAreaElement>(null);
-
     // Colors for the user to select.  Currently only a greyscale color palette
     const color1 = 'rgb(255, 255, 255)';
     const color2 = 'rgb(192, 192, 192)';
