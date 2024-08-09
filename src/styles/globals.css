@@ -332,11 +332,6 @@ body {
         padding: 8px;
     }
 
-
-    .read-btn {
-        background: url(../../public/images/background-boxes/readButton.svg) no-repeat center/contain;
-    }
-
     .nav-btn:hover {
         border: solid 3px #000000;
         border-bottom: solid 4px #000000;
