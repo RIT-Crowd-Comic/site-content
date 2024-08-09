@@ -11,7 +11,7 @@ interface Props {
     p_pfp?: string
 }
 
-const NavBar = ({p_pfp}: Props) => {
+const NavBar = ({ p_pfp }: Props) => {
     const [pfp, updatePfp] = useState('/images/icons/Profile.svg');
     const [displayName, setDisplayName] = useState('');
     const [isSignedIn, setIsSignedIn] = useState(false);
@@ -25,7 +25,7 @@ const NavBar = ({p_pfp}: Props) => {
                 const user = await getUserBySession(session_id);
                 if (user && !user.message) {
                     setIsSignedIn(true);
-                    if(!p_pfp && user.profile_picture) updatePfp(user.profile_picture);
+                    if (!p_pfp && user.profile_picture) updatePfp(user.profile_picture);
                     setDisplayName(user.display_name);
                     updateSession(session_id);
                     return;
@@ -50,14 +50,6 @@ const NavBar = ({p_pfp}: Props) => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const getTrunkUrl = async () => {
-        const trunks = await getTrunks();
-        if (!trunks) return '/';
-        const psID = trunks[0]?.id;
-        if (!psID) return '/';
-        return `/comic?id=${psID}`;
-    };
-
     const handleSignOut = async () => {
         await logout();
         setIsSignedIn(false);
@@ -77,28 +69,25 @@ const NavBar = ({p_pfp}: Props) => {
                     {/* Crowd Comic */}
                 </Link>
 
-                <div className="d-flex order-lg-3 ms-auto me-4">
-                    {isSignedIn &&
-                        (
-                            <div className="dropdown">
-                                <button
-                                    className="nav-btn btn btn-outline-dark text-color-white"
-                                    type="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
+                {isSignedIn && (
+                    <div className="d-flex order-lg-3 ms-auto me-4">
+                        <div className="dropdown">
+                            <button
+                                className="nav-btn btn btn-outline-dark text-color-white"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                <ProfilePicture pfp={p_pfp ? p_pfp : pfp} width={39} height={39} />
+                            </button>
+                            <ul className="dropdown-menu dropdown-menu-lg-end">
+                                <li><Link href="/profile"><button className="dropdown-item">Dashboard</button></Link></li>
+                                <li><button onClick={handleSignOut} className="dropdown-item">Sign Out</button></li>
+                            </ul>
+                        </div>
 
-                                >
-                                
-                                <ProfilePicture pfp={p_pfp ? p_pfp : pfp} width={39} height={39}/>
-
-                                </button>
-                                <ul className="dropdown-menu dropdown-menu-lg-end">
-                                    <li><Link href="/profile"><button className="dropdown-item">Dashboard</button></Link></li>
-                                    <li><button onClick={handleSignOut} className="dropdown-item">Sign Out</button></li>
-                                </ul>
-                            </div>
-                        )}
-                </div>
+                    </div>
+                )}
 
                 <button
                     className="navbar-toggler order-lg-2"
@@ -133,7 +122,7 @@ const NavBar = ({p_pfp}: Props) => {
                     </div>
                     {isSignedIn && isMobile &&
                     <div className="d-flex align-items-center gap-2 offcanvas-hello">
-                        <ProfilePicture pfp={p_pfp ? p_pfp : pfp} width={39} height={39}/>
+                        <ProfilePicture pfp={p_pfp ? p_pfp : pfp} width={39} height={39} />
                         <h5 className="pt-2">Hi, {displayName}!</h5>
                     </div>}
 
@@ -157,7 +146,7 @@ const NavBar = ({p_pfp}: Props) => {
                                         window.location.href = '/comic';
                                     }}
                                 >
-                                    <div className="">Read</div>   
+                                    <div className="read-btn">Read</div>
                                 </Link>
                             </li>
                             {!isSignedIn &&

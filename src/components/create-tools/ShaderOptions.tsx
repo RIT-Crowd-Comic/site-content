@@ -63,7 +63,7 @@ const ShaderOptions = ({enabled, shaderSize, changeShaderSize} : Props) =>
     {
         return(
             <div id="shadingTools">
-                <h3>Shading Tool</h3>
+                <h3>Shading Tools</h3>
                 <div id={styles.shadeSlider}>
                     <label id="sliderLabel" htmlFor="ShderRange">Size: {shaderSize}</label>
                     {/* <span id={styles.sliderValue} style={{left:`${shaderSize*3.3-3}%`}}>

@@ -1,21 +1,9 @@
-/* .body
-{
-  background-image: url("/images/background-app-transparent.png");
-  background-position: center;
-  background-size:auto;
-  background-color: rgb(48, 48, 48);
-  filter: none;
-  position: absolute;
-  top:0;
-} */
-
 .body {
   background-color: rgb(48, 48, 48);
   background-image: url("../../public/images/backgrounds/background-app-transparent.png") !important;
-  /* background-position: center; */
   background-repeat: repeat;
   background-size: auto;
-  width: 100%;
+  width: 100vw;
 
   filter: none;
   position: absolute;
@@ -24,28 +12,12 @@
 
   min-height: 100%;
   height: fit-content;
+  z-index: -1;
 }
 
 .colBodyH {
   height: fit-content;
 }
-
-/* .rowBodyH {
-  height: 100%;
-} */
-
-/* .body:has(.rowPanels){} */
-
-/* .footer-bar{
-  position:fixed; 
-  bottom:0;
-  left:0;
-  width:100vw;
-  display:flex;
-  justify-content:space-between;
-  z-index:2;
-  font-size: 2em;
-}  */
 
 .footer-head a {
   font-size: 20px;
@@ -69,10 +41,6 @@
   padding: 0 50px;
   height: 100%;
 }
-
-/* #comicPanels>div {
-  width: 100%;
-} */
 
 #comicPanels img {
   max-width: 100%;
@@ -237,30 +205,90 @@
   visibility: hidden;
 }
 
+div#signature {
+  position: fixed;
+  padding-left: 20px;
+  bottom: 0;
+}
+
+img#signature {
+  background-color: white;
+  filter: grayscale(100%);
+  cursor: pointer;
+}
+
+p#signature {
+  visibility: hidden;
+}
+
 @media only screen and (min-width: 700px) {
   #comicPanels {
     padding: 0 100px;
   }
-  /* #hooksToggle {
-    bottom: 3vh;
-    right: 4vw;
-    padding: 5px;
-  } */
+  
   #hooksToggle img{
     width:40px;
   }
 
+  
+  .rowPanels#comicPanels
+  {
+    flex-direction: row;
+  }
+
+  #comicPanels div img
+  {
+    width: 100%;
+    height: 100%;
+  }
+
+  .controlBar {
+    position: fixed;
+    background-color: rgb(0, 0, 0);
+    width: 80px;
+    height: 230px;
+    padding: 25px 0 0 0;
+    border-radius: 50px;
+    border: 4px solid black;
+    margin: auto 1%;
+    top: 50%;
+    left: 2%;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translate(-50%, -50%);
+
+    visibility: visible;
+  }
+
+  
+  #layoutToggle .buttonIcon:hover {
+    filter: invert(7%) sepia(99%) saturate(7263%) hue-rotate(357deg) brightness(106%) contrast(124%);
+  }
+
+  #backButton,
+  #hooksToggle,
+  #layoutToggle {
+    display: block;
+    margin: 0px auto;
+    position: relative;
+    left: 0;
+    top: 0;
+    padding: 10px;
+    font-size: 18px;
+    width: 60px;
+    border: none;
+    background-color: #ffffff00;
+  }
+
+  #layoutToggle .buttonIcon {
+    visibility: visible;
+  }
 }
 
 @media (min-width: 1200px) {
   .rowBodyH {
     height: fit-content;
   }
-  #hooksToggle {
-    bottom: 3vh;
-    right: 4vw;
-    padding: 5px;
-  }
+
   #hooksToggle img{
     width:40px;
   }
@@ -287,34 +315,6 @@
     max-width: 900px;
     max-height: 600px;
   }
-/* 
-  .controlBar {
-    position: relative;
-
-  } */
-
-  /* 
-  #backButton,
-  #hooksToggle {
-    visibility: visible;
-    position: fixed;
-    background-color: black;
-    border-radius: 50%;
-    border: none;
-  } */
-  /* 
-  #backButton {
-    top: 12vh;
-    left: 2vw;
-    width: 60px;
-    height: 60px;
-  } */
-
-  /* #hooksToggle {
-    bottom: 3vh;
-    right: 3vw;
-    padding: 5px;
-  } */
 
   #layoutToggle .buttonIcon {
     visibility: hidden;
@@ -403,7 +403,25 @@
 @media (min-width: 768px) {}
 
 /* [lg] Large desktops, 992px and up */
-@media (min-width: 992px) {}
+@media (min-width: 992px) {
+    div#signature {
+    position: fixed;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 10px;
+    gap: 10px;
+  }
+
+  p#signature {
+    visibility: visible;
+    color: white;
+    margin: 0px;
+  }
+
+
+}
 
 /* [xl] Extra large devices 1200px and up */
 @media (min-width: 1200px) {}
