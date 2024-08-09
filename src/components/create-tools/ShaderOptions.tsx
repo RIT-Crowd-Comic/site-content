@@ -78,8 +78,8 @@ const ShaderOptions = ({ enabled, shaderSize, changeShaderSize } : Props) => {
                                defaultValue={shaderSize} 
                                step="1" id="rangeSlider" 
                                className={styles.rangeSlider} 
-                               ref={sliderReference} o
-                               nMouseEnter={updateSize}>
+                               ref={sliderReference} 
+                               onMouseEnter={updateSize}>
                           </input>
                         </div>
                     </div>
