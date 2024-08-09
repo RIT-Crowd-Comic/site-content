@@ -64,10 +64,8 @@ const ImagePreview = ({ panelNum } : Props) => {
                     type="file"
                     accept="image/*"
                     name="image"
-
-                    // When the form takes an image inputted by the user, set the image link to the inputted image
+                    onChange={handleChange} // When the form takes an image inputted by the user, set the image link to the inputted image
                     // If the file does not exist, set the image link to the default image
-                    onChange={handleChange}
                 />
             </form>
         </div>

@@ -10,9 +10,7 @@ import { useEffect, useState } from 'react';
 import Loader from '@/components/loader/Loader';
 
 // set the base trunks to display by default on read
-const Read = ({
-    searchParams,
-}: {
+const Read = ({ searchParams, }: {
     params: { id: number }
     searchParams: { [key: string]: number | undefined }
   }) => {

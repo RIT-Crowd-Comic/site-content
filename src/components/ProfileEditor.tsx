@@ -153,7 +153,7 @@ const ProfileEditor = ({
                                     style={{ display: 'none' }}
                                 />
                                 <label htmlFor="image_input">
-                                    <span className="btn btn-outline-dark" >Change Photo</span>
+                                    <span className="btn btn-outline-dark">Change Photo</span>
                                     <div style={{}} />
                                 </label>
                                 <button

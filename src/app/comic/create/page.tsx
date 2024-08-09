@@ -8,9 +8,7 @@ const CreateToolsCanvasPaperJS = dynamic(
     { ssr: false }
 );
 
-const Create = ({
-    searchParams,
-}: {
+const Create = ({ searchParams, }: {
     params: { id: number }
     searchParams: { [key: string]: number | undefined }
   }) => {
