@@ -296,8 +296,8 @@
 
 .getStartedButton {
     border: 10px solid transparent;
-    background: url(../../public/images/background-boxes/bw/Get_Started_BW.svg) no-repeat center/contain;
-    filter: brightness(.5);
+    background: url(../../public/images/background-boxes/Get_Started.svg) no-repeat center/contain;
+    filter: grayscale(1);
     width: 100%;
     height: auto;
     margin: 0 auto;

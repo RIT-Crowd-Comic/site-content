@@ -146,7 +146,7 @@ const NavBar = ({ p_pfp }: Props) => {
                                         window.location.href = '/comic';
                                     }}
                                 >
-                                    <div className="">Read</div>
+                                    <div className="read-btn">Read</div>
                                 </Link>
                             </li>
                             {!isSignedIn &&
