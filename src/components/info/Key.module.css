@@ -1,0 +1,10 @@
+
+.keyIcons{
+    background-size:25px 25px;
+    background-repeat: no-repeat;
+    object-fit:contain;
+    list-style-type: none;
+}
+.keyBullet{
+    list-style-type: circle;
+}
