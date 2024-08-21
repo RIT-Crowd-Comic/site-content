@@ -15,12 +15,12 @@ export default function ProfilePicture({ pfp, width, height } : Props) {
     return (
         <Image
             id={styles.profileIcon}
-            className=""
             src={pfp ? pfp : '/images/icons/Profile.svg'}
             width={width}
             height={height}
             style={{ borderRadius: 100 }}
             alt="Profile Picture"
+            unoptimized={true}
         />
     );
 }
